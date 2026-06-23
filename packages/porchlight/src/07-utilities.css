@@ -1,0 +1,77 @@
+/*
+ * Porchlight — utilities
+ * ===========================================================================
+ * A small, finite set of single-purpose helpers for repeated a11y, layout, and
+ * typography needs. NOT a utility-first framework — there is deliberately no
+ * utility for every CSS property. Each utility earns its place by serving a
+ * recurring need a component shouldn't own.
+ *
+ * Allow-list for !important: utilities is the SECOND place it's permitted
+ * (after reset [hidden] and themes reduced-motion). .u-visually-hidden uses it
+ * because the rule MUST win over any component/context — hiding text from
+ * sighted users while keeping it for AT is an a11y guarantee that can't be
+ * accidentally overridden.
+ *
+ * Naming: .u-* (utility); --u-* are instance-config tokens (e.g. --u-flow-space).
+ */
+@layer porchlight.utilities {
+  /* Visually hide content while keeping it available to assistive tech — the
+     canonical sr-only pattern. The element collapses to a 1px box, is clipped,
+     and is removed from the flow. Used for icon-only buttons, skip links, etc. */
+  :where(.u-visually-hidden) {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  /* Restore visibility (overrides .u-visually-hidden when focused/active). */
+  :where(.u-visually-hidden:focus, .u-visually-hidden:active) {
+    position: static !important;
+    inline-size: auto !important;
+    block-size: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+    margin: 0 !important;
+  }
+
+  /* One-line truncation — table cells, breadcrumb items, file names. */
+  :where(.u-truncate) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Vertical rhythm for prose blocks — sibling selector adds space between
+     top-level children, not before the first / after the last. Tune via
+     --u-flow-space. */
+  :where(.u-flow) > * + * {
+    margin-block-start: var(--u-flow-space, var(--pl-space-4));
+  }
+
+  /* A surface treatment for ad-hoc grouping (not a full .c-card): bg, text,
+     border, radius. For when you need panel styling without a component. */
+  :where(.u-surface) {
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+
+  /* Muted text — secondary/caption copy. */
+  :where(.u-muted) {
+    color: var(--pl-color-text-muted);
+  }
+
+  /* Full-bleed — break an element out to the viewport edges inside a
+     constrained container (e.g. a wide table or image in a prose column). */
+  :where(.u-full-bleed) {
+    inline-size: 100vi;
+    margin-inline: calc(50% - 50vi);
+  }
+}

@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Utilities** (`.u-*`). A small, finite set of single-purpose helpers in
+  `@layer porchlight.utilities`: `.u-visually-hidden` (the canonical sr-only
+  pattern — one of the few `!important` allow-list spots, restored on
+  focus/active), `.u-truncate` (one-line ellipsis), `.u-flow` (prose rhythm via
+  sibling selector, tunable via `--u-flow-space`), `.u-surface` (ad-hoc panel
+  styling), `.u-muted` (secondary text), and `.u-full-bleed` (break out to
+  viewport edges inside a constrained container).
 - **Data table** (`.c-table-wrap` + `.c-table`). An enterprise data table —
   sticky headers, horizontal scroll with a stable `scrollbar-gutter`, container-
   query padding, row hover (`surface-2` wash), numeric column alignment

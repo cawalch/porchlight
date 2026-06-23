@@ -215,4 +215,18 @@ test.describe("docs scaffold", () => {
       "true",
     );
   });
+
+  test("utilities page renders every utility", async ({ page }) => {
+    await page.goto("./preview/utilities");
+    await expect(
+      page.getByRole("heading", { name: "Utilities", exact: true }),
+    ).toBeVisible();
+    // The visually-hidden text exists in the DOM (even though it's not visible).
+    await expect(page.getByText("Settings", { exact: true })).toBeAttached();
+    // The truncate utility is applied.
+    await expect(page.locator(".u-truncate")).toHaveCSS(
+      "text-overflow",
+      "ellipsis",
+    );
+  });
 });
