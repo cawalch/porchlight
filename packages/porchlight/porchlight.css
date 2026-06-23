@@ -1,5 +1,5 @@
 /*
- * Porchlight — entry point
+ * Porchlight: entry point
  * ===========================================================================
  * Import this single file to load the framework. Each module is self-wrapped
  * in its `@layer porchlight.<name>` so order is explicit and files are usable
@@ -11,7 +11,7 @@
  *   @layer porchlight, app;
  *   @import "@cawalch/porchlight/porchlight.css";
  *
- * Do NOT add `layer(...)` to this import — modules self-layer.
+ * Do NOT add `layer(...)` to this import: modules self-layer.
  */
 @import "src/00-layer-order.css";
 @import "src/01-reset.css";
@@ -26,10 +26,10 @@
 @import "src/06-components/popover-menu.css";
 @import "src/06-components/dialog.css";
 @import "src/06-components/data-table.css";
+@import "src/07-utilities.css";
 
 /* ---------------------------------------------------------------------------
- * Phase 3 (components) complete. Next phases:
- *   @import 'src/07-utilities.css';     // Phase 4 — utilities
- *   @import 'src/08-enhancements.css';  // Phase 4 — @supports-gated Tier B
- *   @import 'src/09-print.css';         // Phase 4 — print
+ * Phase 4 in progress. Remaining:
+ *   @import 'src/08-enhancements.css';  // Phase 4: @supports-gated Tier B
+ *   @import 'src/09-print.css';         // Phase 4: print
  * ------------------------------------------------------------------------- */

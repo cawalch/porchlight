@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Data table** (`.c-table-wrap` + `.c-table`). An enterprise data table —
+- **Utilities** (`.u-*`). A small, finite set of single-purpose helpers in
+  `@layer porchlight.utilities`: `.u-visually-hidden` (the canonical sr-only
+  pattern, one of the few `!important` allow-list spots, restored on
+  focus/active), `.u-truncate` (one-line ellipsis), `.u-flow` (prose rhythm via
+  sibling selector, tunable via `--u-flow-space`), `.u-surface` (ad-hoc panel
+  styling), `.u-muted` (secondary text), and `.u-full-bleed` (break out to
+  viewport edges inside a constrained container).
+- **Data table** (`.c-table-wrap` + `.c-table`). An enterprise data table:
   sticky headers, horizontal scroll with a stable `scrollbar-gutter`, container-
   query padding, row hover (`surface-2` wash), numeric column alignment
   (`[data-align="end"]` + `tabular-nums`), and `aria-selected` row selection.
@@ -20,9 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `@starting-style` (opacity + scale) with `transition-behavior: allow-discrete`.
   Header + body + footer slots; a `.c-dialog__close` ✕ button; responsive
   sizing (`min(100% - 2rem, --c-dialog-size)` + scrollable max height).
-- **Popover menu** (`.c-menu`). First overlay component — a dropdown menu
+- **Popover menu** (`.c-menu`). First overlay component, a dropdown menu
   anchored to its trigger via the native Popover API (top-layer, light-dismiss,
-  focus management — no JS) and CSS anchor positioning (`position-anchor` /
+  focus management, no JS) and CSS anchor positioning (`position-anchor` /
   `position-area`, `@supports`-gated). Enter/exit animation via `@starting-style`
   - `transition-behavior: allow-discrete` on `overlay`/`display`. Menu items are
     real `<a>`/`<button>` (full-width, keyboard-focusable); `[data-tone="danger"]`
@@ -32,20 +39,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   tags. Tones via `[data-tone]` (`accent`/`success`/`warning`/`danger`, plus a
   neutral default) consume the WCAG-AA `-bg`/`-text` token pairs, so they're
   legible in both themes by construction. Optional `.c-badge__dot` status pip.
-- **Card** (`.c-card`). A raised surface for grouping related content —
-  header + body (+ optional footer). Elevation comes from a soft shadow, not a
+- **Card** (`.c-card`). A raised surface for grouping related content
+  (header + body + optional footer). Elevation comes from a soft shadow, not a
   bg contrast. The header collapses to a stack via a container query when the
   card is narrow (&lt; 28rem). An interactive variant (`data-interactive` or
   `<a.c-card>`) gets a hover lift + focus ring. First component to exercise
   the `--pl-shadow-*` elevation tokens.
 - **Field** (`.c-field`). A labeled form control wrapping native
-  `<input>`/`<select>`/`<textarea>` — label, control, and hint. State is driven
+  `<input>`/`<select>`/`<textarea>`: label, control, and hint. State is driven
   by native pseudos and reflected onto the border/hint via `:has()`: focus
   draws a token-colored border **plus a 2px ring** (a 1px border swap alone is
   below the perceptual affordance threshold); invalid uses `:user-invalid`
   (Baseline 2024); disabled mutes the field. Native checkbox/radio/color inputs
   themed via `accent-color`.
-- **Button** (`.c-button`). First component — the canonical action control,
+- **Button** (`.c-button`). First component, the canonical action control,
   native `<button>`/`<a>`, in `@layer porchlight.components` via `@scope`.
   Variants `primary` / `secondary` / `ghost`; theme-aware `color-mix()` hover,
   `translateY` active, `aria-pressed`, disabled/`aria-disabled`, an inset
@@ -80,20 +87,20 @@ build` bundles the source `porchlight.css` (@imports inlined) into
 
 - **A11y contrast fixes (axe-found).** A new axe-core scan caught three
   issues the token-pair contrast tests missed: the ghost-button pressed state
-  (accent text on an accent-tint can't clear AA — same hue family; now uses
+  (accent text on an accent-tint can't clear AA; same hue family. Now uses
   the accent TINT as the selection signal with default high-contrast text),
   the layout KPI deltas (used `--pl-color-success` directly as text; now uses
   the AA `--pl-color-success-text` pair), and the demo scroll region/handle.
 - **Button hover collapsed to transparent.** The hover rule reassigned
-  `--c-button-bg` to `color-mix(... var(--c-button-bg) ...)` — a self-
+  `--c-button-bg` to `color-mix(... var(--c-button-bg) ...)`, a self-
   referential custom-property cycle that CSS resolves to guaranteed-invalid,
   making every button's fill transparent on hover. Rewritten to set the
   `background-color` longhand instead. Ghost hover (which mixed text into
   transparent → a near-invisible veil) now gets a real accent wash.
-- **`--pl-color-surface-2` too close to `--pl-color-bg` in light** (ΔL 0.02) —
+- **`--pl-color-surface-2` too close to `--pl-color-bg` in light** (ΔL 0.02):
   secondary buttons and raised panels disappeared into the page. Widened to
   ΔL 0.04 (light-mode surface-2 96%→94%).
-- **Pressed ghost/secondary tint too faint** (12% alpha) — bumped to 20% so the
+- **Pressed ghost/secondary tint too faint** (12% alpha): bumped to 20% so the
   selected state reads.
 
 ### Added (tooling)
@@ -101,7 +108,7 @@ build` bundles the source `porchlight.css` (@imports inlined) into
 - **Deterministic perceptual color checks.** A reusable `tests/lib/color.ts`
   (parses resolved `oklch`/`oklab`/`rgb`, computes luminance, contrast, ΔL,
   alpha, source-over composite) plus three guards: WCAG text contrast (refactored
-  to the lib), adjacent-surface distinguishability (ΔL ≥ 0.03 — catches the
+  to the lib), adjacent-surface distinguishability (ΔL ≥ 0.03, catches the
   surface-2 bug), and interactive-state affordance (hover/pressed ΔL + an alpha
   floor that catches faint-veil hovers). These read resolved colors from the
   browser, so a token/component edit that reintroduces an invisible affordance

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * Scaffold smoke tests — confirm the site builds and the accessible chrome
+ * Scaffold smoke tests: confirm the site builds and the accessible chrome
  * (skip link, heading, title) is present. Per-component visual + axe suites
  * arrive with the components in Phase 3.
  */
@@ -213,6 +213,20 @@ test.describe("docs scaffold", () => {
     await expect(page.locator("tbody tr").first()).toHaveAttribute(
       "aria-selected",
       "true",
+    );
+  });
+
+  test("utilities page renders every utility", async ({ page }) => {
+    await page.goto("./preview/utilities");
+    await expect(
+      page.getByRole("heading", { name: "Utilities", exact: true }),
+    ).toBeVisible();
+    // The visually-hidden text exists in the DOM (even though it's not visible).
+    await expect(page.getByText("Settings", { exact: true })).toBeAttached();
+    // The truncate utility is applied.
+    await expect(page.locator(".u-truncate")).toHaveCSS(
+      "text-overflow",
+      "ellipsis",
     );
   });
 });

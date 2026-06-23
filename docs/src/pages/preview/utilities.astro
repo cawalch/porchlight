@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Utilities · Porchlight">
+  <h1>Utilities</h1>
+  <p>
+    A small, finite set of single-purpose helpers for accessibility, layout,
+    and typography needs that recur but don't belong to a component. Porchlight
+    is not utility-first: each utility earns its place by serving a recurring
+    need.
+  </p>
+
+  <h2><code>.u-visually-hidden</code></h2>
+  <p>
+    Hide content from sighted users while keeping it for assistive tech
+    (icon-only buttons, skip links, extra context). The only utility (and one
+    of the few places in the framework) that uses <code>!important</code>,
+    because it's an a11y guarantee that must win.
+  </p>
+  <div class="demo">
+    <button class="c-button" data-variant="ghost" aria-label="Settings">
+      ⚙ <span class="u-visually-hidden">Settings</span>
+    </button>
+    <span aria-hidden="true">← the "Settings" text is visually hidden but read by AT</span>
+  </div>
+
+  <h2><code>.u-truncate</code></h2>
+  <p>One-line truncation with an ellipsis. Use for table cells, breadcrumbs, file names.</p>
+  <div class="demo">
+    <div class="truncate-box">
+      <span class="u-truncate">a-very-long-account-name-that-should-truncate-with-an-ellipsis.webp</span>
+    </div>
+  </div>
+
+  <h2><code>.u-flow</code></h2>
+  <p>Vertical rhythm for a prose block: space between children, not before/after.</p>
+  <div class="demo">
+    <div class="u-flow">
+      <p>First paragraph: no top margin.</p>
+      <p>Second paragraph: spaced from the first via the sibling selector.</p>
+      <p>Third paragraph: consistent rhythm throughout.</p>
+    </div>
+  </div>
+
+  <h2><code>.u-surface</code></h2>
+  <p>Panel styling for ad-hoc grouping (when you don't need a full <code>.c-card</code>): bg, text, border, radius.</p>
+  <div class="demo">
+    <div class="u-surface" style="padding: var(--pl-space-4);">
+      An ad-hoc surface: useful for inline callouts that don't deserve a component.
+    </div>
+  </div>
+
+  <h2><code>.u-muted</code></h2>
+  <p>Secondary/caption text color.</p>
+  <div class="demo">
+    <p>Primary text. <span class="u-muted">Secondary, muted text.</span></p>
+  </div>
+
+  <h2><code>.u-full-bleed</code></h2>
+  <p>Break an element out to the viewport edges inside a constrained container (a wide table or image in a prose column).</p>
+  <div class="demo narrow">
+    <div class="u-surface u-full-bleed" style="padding: var(--pl-space-3); text-align: center;">
+      This breaks out beyond the narrow demo container to the viewport edges.
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .demo {
+    margin-block-end: var(--pl-space-5);
+  }
+  .truncate-box {
+    max-inline-size: 20rem;
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    padding: var(--pl-space-2);
+  }
+  .narrow {
+    max-inline-size: 24rem;
+    border-inline: 2px solid var(--pl-color-accent);
+    padding: var(--pl-space-3);
+  }
+</style>

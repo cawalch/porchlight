@@ -1,0 +1,82 @@
+---
+title: Utilities
+description: A small, finite set of single-purpose helpers for accessibility, layout, and typography. Not a utility-first framework.
+order: 2
+---
+
+# Utilities
+
+Porchlight utilities are a **small, finite set** of single-purpose helpers.
+This is deliberately not a utility-first framework: there is no utility for
+every CSS property. Each utility earns its place by serving a recurring need
+that doesn't belong to a component.
+
+## `.u-visually-hidden`
+
+Hide content from sighted users while keeping it available to assistive tech.
+The canonical sr-only pattern. Use for icon-only buttons, skip links, and
+extra context for AT.
+
+```html
+<button aria-label="Settings">
+  ⚙ <span class="u-visually-hidden">Settings</span>
+</button>
+```
+
+This is the one utility (and one of the few places in the framework) that uses
+`!important`. It's an a11y guarantee that must win over any context. It
+restores itself automatically on `:focus` / `:active` (e.g. a skip link
+becomes visible when tabbed to).
+
+## `.u-truncate`
+
+One-line truncation with an ellipsis.
+
+```html
+<span class="u-truncate">a-very-long-file-name.webp</span>
+```
+
+## `.u-flow`
+
+Vertical rhythm for a prose block. The sibling selector (`> * + *`) adds space
+between top-level children: no top margin on the first, no bottom on the last.
+Tune the step via `--u-flow-space`.
+
+```html
+<div class="u-flow">
+  <p>...</p>
+  <p>...</p>
+</div>
+```
+
+## `.u-surface`
+
+Panel styling for ad-hoc grouping: background, text color, border, radius.
+For inline callouts that don't need a full `.c-card`.
+
+```html
+<div class="u-surface">An ad-hoc surface.</div>
+```
+
+## `.u-muted`
+
+Secondary/caption text color.
+
+```html
+<span class="u-muted">Updated 2 hours ago</span>
+```
+
+## `.u-full-bleed`
+
+Break an element out to the viewport edges inside a constrained container (a
+wide table or image in a prose column).
+
+```html
+<figure class="u-full-bleed">...</figure>
+```
+
+## Tokens exposed
+
+| Token            | Default        | Purpose                        |
+| ---------------- | -------------- | ------------------------------ |
+| `--u-flow-space` | `--pl-space-4` | The rhythm step for `.u-flow`. |
