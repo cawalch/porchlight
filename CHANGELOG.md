@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Card** (`.c-card`). A raised surface for grouping related content —
+  header + body (+ optional footer). Elevation comes from a soft shadow, not a
+  bg contrast. The header collapses to a stack via a container query when the
+  card is narrow (&lt; 28rem). An interactive variant (`data-interactive` or
+  `<a.c-card>`) gets a hover lift + focus ring. First component to exercise
+  the `--pl-shadow-*` elevation tokens.
 - **Field** (`.c-field`). A labeled form control wrapping native
   `<input>`/`<select>`/`<textarea>` — label, control, and hint. State is driven
   by native pseudos and reflected onto the border/hint via `:has()`: focus

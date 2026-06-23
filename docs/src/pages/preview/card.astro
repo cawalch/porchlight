@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+// SaaS card patterns: a KPI summary card, a content card with header action,
+// an interactive (clickable) card, and the container-query header collapse.
+const accounts = [
+  ['Acme Ops', 'Enterprise', '$2,400', 'Active'],
+  ['Northwind', 'Pro', '$980', 'Trialing'],
+  ['Globex', 'Pro', '$980', 'Past due'],
+] as const;
+---
+<BaseLayout title="Card · Porchlight">
+  <h1>Card</h1>
+  <p>
+    A raised surface grouping related content — the workhorse of SaaS
+    dashboards. Header + body (+ optional footer) slots. The header adapts to
+    the card's OWN width via a container query: it stacks vertically when the
+    card is narrow, even on a wide screen (resize the demo panels). Elevation
+    comes from a soft shadow, not a heavy bg shift.
+  </p>
+
+  <h2>Standard card</h2>
+  <div class="l-grid" style="--l-grid-min: 18rem;">
+    <section class="c-card">
+      <header class="c-card__header">
+        <h2 class="c-card__title">Quarterly usage</h2>
+        <button class="c-button" data-variant="ghost">
+          <Icon name="download" /> Export
+        </button>
+      </header>
+      <div class="c-card__body">
+        API calls this quarter: 1.2M (+8% QoQ). Peak: 18k/hour on Mar 14.
+      </div>
+    </section>
+
+    <section class="c-card">
+      <header class="c-card__header">
+        <h2 class="c-card__title">Billing</h2>
+      </header>
+      <div class="c-card__body">
+        Next invoice: $4,800 on Jul 1. Payment method: Visa •••• 4242.
+      </div>
+      <footer class="c-card__footer">
+        <button class="c-button" data-variant="ghost">View invoices</button>
+        <button class="c-button" data-variant="primary">Update card</button>
+      </footer>
+    </section>
+  </div>
+
+  <h2>Interactive (clickable) cards</h2>
+  <p>Add <code>data-interactive</code> (or use an <code>&lt;a class="c-card"&gt;</code>) for a hover lift + focus ring. Use these for navigation tiles and selectable list items.</p>
+  <div class="l-grid" style="--l-grid-min: 16rem;">
+    {accounts.map(([name, plan, mrr, status]) => (
+      <a class="c-card" href="#">
+        <header class="c-card__header">
+          <h2 class="c-card__title">{name}</h2>
+          <span class="status" data-status={status.toLowerCase().replace(' ', '-')}>{status}</span>
+        </header>
+        <div class="c-card__body">
+          {plan} plan · {mrr}/mo
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <h2>Container-query header collapse</h2>
+  <p>The two cards below are in a fixed narrow panel. Even on a wide screen, their headers stack because the <em>card</em> is narrow (&lt; 28rem), not the viewport.</p>
+  <div class="narrow-panel">
+    {accounts.slice(0, 2).map(([name]) => (
+      <section class="c-card">
+        <header class="c-card__header">
+          <h2 class="c-card__title">{name}</h2>
+          <button class="c-button" data-variant="ghost">Open</button>
+        </header>
+        <div class="c-card__body">Header stacks when the card is narrow.</div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .status {
+    padding: var(--pl-space-1) var(--pl-space-2);
+    border-radius: var(--pl-radius-pill);
+    font-size: var(--pl-text-xs);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .status[data-status='active'] {
+    background: var(--pl-color-success-bg);
+    color: var(--pl-color-success-text);
+  }
+  .status[data-status='trialing'] {
+    background: var(--pl-color-accent);
+    color: var(--pl-color-accent-text);
+  }
+  .status[data-status='past-due'] {
+    background: var(--pl-color-danger-bg);
+    color: var(--pl-color-danger-text);
+  }
+  .narrow-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--pl-space-4);
+  }
+</style>
