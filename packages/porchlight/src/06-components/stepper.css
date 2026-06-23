@@ -1,0 +1,163 @@
+/*
+ * Porchlight — stepper component
+ * ===========================================================================
+ * A horizontal (default) or vertical (container-query collapse) multi-step
+ * indicator. Each step has a visual marker (circle with number or check) and
+ * a label. Connectors between steps are CSS-only (no SVG).
+ *
+ * State is driven by attributes:
+ *   [data-state="completed"]  - done (checkmark, accent fill)
+ *   [data-state="current"]    - active (accent ring, bold label)
+ *   [data-state="upcoming"]   - pending (muted)
+ *
+ * Structure:
+ *   <ol class="c-stepper">
+ *     <li class="c-stepper__step" data-state="completed">
+ *       <span class="c-stepper__marker">1</span>
+ *       <span class="c-stepper__label">Account</span>
+ *     </li>
+ *     <li class="c-stepper__step" data-state="current">
+ *       <span class="c-stepper__marker">2</span>
+ *       <span class="c-stepper__label">Profile</span>
+ *     </li>
+ *     <li class="c-stepper__step" data-state="upcoming">
+ *       <span class="c-stepper__marker">3</span>
+ *       <span class="c-stepper__label">Confirm</span>
+ *     </li>
+ *   </ol>
+ *
+ * Responsive: collapses to vertical below ~36rem container width.
+ */
+@layer porchlight.components {
+  @scope (.c-stepper) {
+    :scope {
+      --c-stepper-marker-size: 2rem;
+      --c-stepper-gap: var(--pl-space-4);
+
+      display: flex;
+      align-items: flex-start;
+      gap: var(--c-stepper-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .c-stepper__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--pl-space-2);
+      flex: 1;
+      position: relative;
+      text-align: center;
+
+      /* Connector line to the next step. */
+      &::before {
+        content: "";
+        position: absolute;
+        inset-block-start: calc(var(--c-stepper-marker-size) / 2);
+        inset-inline: calc(50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2) calc(-50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2);
+        block-size: 2px;
+        background: var(--pl-color-border);
+        z-index: 0;
+      }
+
+      /* No connector after the last step. */
+      &:last-child::before {
+        content: none;
+      }
+    }
+
+    /* Completed step connector: accent fill. */
+    .c-stepper__step[data-state="completed"]::before {
+      background: var(--pl-color-accent);
+    }
+
+    .c-stepper__marker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: var(--c-stepper-marker-size);
+      block-size: var(--c-stepper-marker-size);
+      border-radius: 50%;
+      border: 2px solid var(--pl-color-border);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: 600;
+      z-index: 1;
+      transition: all var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    /* Completed: accent fill + white text. */
+    .c-stepper__step[data-state="completed"] .c-stepper__marker {
+      border-color: var(--pl-color-accent);
+      background: var(--pl-color-accent);
+      color: var(--pl-color-accent-text);
+    }
+
+    /* Current: accent ring, bold. */
+    .c-stepper__step[data-state="current"] .c-stepper__marker {
+      border-color: var(--pl-color-accent);
+      color: var(--pl-color-accent);
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--pl-color-accent), transparent 80%);
+    }
+
+    .c-stepper__label {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+      line-height: 1.3;
+    }
+
+    .c-stepper__step[data-state="current"] .c-stepper__label {
+      color: var(--pl-color-text);
+      font-weight: 600;
+    }
+
+    /* Container-query collapse to vertical. */
+    @container (max-width: 36rem) {
+      :scope {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .c-stepper__step {
+        flex-direction: row;
+        align-items: center;
+        flex: none;
+        text-align: start;
+        padding-block-end: var(--pl-space-4);
+
+        &::before {
+          inset-block-start: var(--c-stepper-marker-size);
+          inset-inline: calc(var(--c-stepper-marker-size) / 2) auto;
+          inline-size: 2px;
+          block-size: var(--pl-space-4);
+        }
+      }
+    }
+
+    /* Container query context (applied outside @scope). */
+  }
+
+  /* Container query context. */
+  :where(.c-stepper) {
+    container-type: inline-size;
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-stepper__marker) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-stepper__step[data-state="completed"] .c-stepper__marker) {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    :where(.c-stepper__step[data-state="current"] .c-stepper__marker) {
+      border-color: Highlight;
+    }
+  }
+}

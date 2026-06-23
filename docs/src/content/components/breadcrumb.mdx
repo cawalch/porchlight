@@ -1,0 +1,37 @@
+---
+title: Breadcrumb
+description: Navigation trail showing site hierarchy. CSS-only separators via gap decorations.
+status: stable
+since: 1.0.0
+---
+
+# Breadcrumb
+
+The `.c-breadcrumb` renders a trail of links showing the user's location in
+the hierarchy. Separators are CSS-only: gap decorations where supported,
+`::after` fallback otherwise.
+
+## Semantic HTML
+
+```html
+<nav class="c-breadcrumb" aria-label="Breadcrumb">
+  <ol class="c-breadcrumb__list">
+    <li class="c-breadcrumb__item">
+      <a class="c-breadcrumb__link" href="/">Home</a>
+    </li>
+    <li class="c-breadcrumb__item">
+      <span class="c-breadcrumb__current" aria-current="page">Current</span>
+    </li>
+  </ol>
+</nav>
+```
+
+## Class contract
+
+| Selector                | Role                                      |
+| ----------------------- | ----------------------------------------- |
+| `.c-breadcrumb`         | Nav wrapper.                             |
+| `.c-breadcrumb__list`   | Ordered list (flex).                     |
+| `.c-breadcrumb__item`   | List item (separator via ::after).       |
+| `.c-breadcrumb__link`   | Navigation link.                         |
+| `.c-breadcrumb__current`| Current page (aria-current="page").      |

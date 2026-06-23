@@ -58,6 +58,10 @@ const PAGES = [
   "/preview/drawer",
   "/preview/toast",
   "/preview/scroll-progress",
+  "/preview/breadcrumb",
+  "/preview/stepper",
+  "/preview/timeline",
+  "/preview/textarea-auto",
   "/preview/utilities",
   "/preview/enhancements",
 ];

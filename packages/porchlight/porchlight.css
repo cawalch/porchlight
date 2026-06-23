@@ -43,6 +43,10 @@
 @import "src/06-components/toast.css";
 @import "src/06-components/scroll-progress.css";
 @import "src/06-components/reveal.css";
+@import "src/06-components/breadcrumb.css";
+@import "src/06-components/stepper.css";
+@import "src/06-components/timeline.css";
+@import "src/06-components/textarea-auto.css";
 @import "src/07-utilities.css";
 @import "src/08-enhancements.css";
 

@@ -1,0 +1,33 @@
+---
+title: Timeline
+description: Vertical activity feed with tone-colored markers and connector lines.
+status: stable
+since: 1.0.0
+---
+
+# Timeline
+
+The `.c-timeline` renders a vertical activity feed. Each item has a
+tone-colored dot on a connector line, with a header (title + time) and body.
+
+## Semantic HTML
+
+```html
+<ol class="c-timeline">
+  <li class="c-timeline__item" data-tone="success">
+    <span class="c-timeline__dot"></span>
+    <div class="c-timeline__content">
+      <div class="c-timeline__header">
+        <span class="c-timeline__title">Deployed</span>
+        <time class="c-timeline__time">2m ago</time>
+      </div>
+      <p class="c-timeline__body">v2.4.1 deployed.</p>
+    </div>
+  </li>
+</ol>
+```
+
+## Tone variants
+
+Set `[data-tone]` on `.c-timeline__item`: `success`, `warning`, `danger`
+(default = accent).
