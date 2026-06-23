@@ -25,11 +25,10 @@
 @import "src/06-components/badge.css";
 @import "src/06-components/popover-menu.css";
 @import "src/06-components/dialog.css";
+@import "src/06-components/data-table.css";
 
 /* ---------------------------------------------------------------------------
- * Roadmap (added in later PRs — listed here to make the target order visible):
- *
- *   @import 'src/06-components/data-table.css';  // Phase 3
+ * Phase 3 (components) complete. Next phases:
  *   @import 'src/07-utilities.css';     // Phase 4 — utilities
  *   @import 'src/08-enhancements.css';  // Phase 4 — @supports-gated Tier B
  *   @import 'src/09-print.css';         // Phase 4 — print

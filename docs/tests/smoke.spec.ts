@@ -197,4 +197,22 @@ test.describe("docs scaffold", () => {
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
   });
+
+  test("data table renders rows with sticky headers", async ({ page }) => {
+    await page.goto("./preview/data-table");
+    await expect(
+      page.getByRole("heading", { name: "Data table", exact: true }),
+    ).toBeVisible();
+    // Headers are real <th> with scope.
+    await expect(
+      page.getByRole("columnheader", { name: "Account" }),
+    ).toBeVisible();
+    // Body rows render (first account).
+    await expect(page.getByText("Acme Ops").first()).toBeVisible();
+    // The first row is marked selected.
+    await expect(page.locator("tbody tr").first()).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+  });
 });

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Data table** (`.c-table-wrap` + `.c-table`). An enterprise data table —
+  sticky headers, horizontal scroll with a stable `scrollbar-gutter`, container-
+  query padding, row hover (`surface-2` wash), numeric column alignment
+  (`[data-align="end"]` + `tabular-nums`), and `aria-selected` row selection.
+  Wraps a native `<table>`. Closes Phase 3.
 - **Dialog** (`.c-dialog`). A modal dialog using the native `<dialog>` element
   with `showModal()` (top-layer, modal focus trap, Esc to close). The
   `::backdrop` provides a dimmed, blurred scrim. Enter/exit animation via
