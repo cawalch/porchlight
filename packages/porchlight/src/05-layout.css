@@ -47,10 +47,12 @@
   /* Sidebar + main — settings/filter panels, master-detail regions. The
      default is the desktop two-column layout. It collapses to a single
      column when its nearest ANCESTOR query container is narrower than 48rem
-     (an element cannot query its own size; set container-type: inline-size on
-     the wrapping panel, or nest inside .l-app-shell__main). */
+     (an element cannot query its own size). Note: .l-sidebar does NOT declare
+     container-type itself — that would be misleading (self-querying is
+     impossible) and adds containment side-effects. Wrap it in a
+     container-type: inline-size element, or nest it inside
+     .l-app-shell__main (which is a container) to get the collapse. */
   :where(.l-sidebar) {
-    container-type: inline-size;
     display: grid;
     gap: var(--l-sidebar-gap, var(--pl-space-4));
     grid-template-columns:

@@ -119,8 +119,8 @@
       oklch(87% 0.02 260deg),
       oklch(33% 0.03 260deg)
     );
-    --pl-color-accent: var(--pl-brand-6);
-    --pl-color-accent-text: white;
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(15% 0.02 260deg));
     --pl-color-accent-hover: color-mix(
       in oklab,
       var(--pl-color-accent),
@@ -136,7 +136,23 @@
       oklch(90% 0.05 25deg)
     );
     --pl-color-success: oklch(56% 0.16 150deg);
-    --pl-color-warning: oklch(76% 0.16 80deg);
+    --pl-color-success-bg: light-dark(
+      oklch(96% 0.03 150deg),
+      oklch(24% 0.06 150deg)
+    );
+    --pl-color-success-text: light-dark(
+      oklch(36% 0.13 150deg),
+      oklch(80% 0.13 150deg)
+    );
+    --pl-color-warning: oklch(58% 0.17 80deg);
+    --pl-color-warning-bg: light-dark(
+      oklch(96% 0.05 80deg),
+      oklch(26% 0.07 80deg)
+    );
+    --pl-color-warning-text: light-dark(
+      oklch(42% 0.15 80deg),
+      oklch(82% 0.13 80deg)
+    );
 
     /* Controls */
     --pl-control-block-size: 2.5rem;

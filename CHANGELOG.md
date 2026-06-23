@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Token WCAG + status pairs** (fix). `--pl-color-accent` is now theme-aware
+  (`light-dark(brand-7, brand-4)`) with a paired `--pl-color-accent-text`
+  (`white` in light, near-black in dark) so both link-as-text and button-label
+  uses clear WCAG 2.2 AA (>=4.5:1) in **both** themes; the prior fixed
+  `brand-6` + `white` pairing sat at 4.38:1. `success` and `warning` gain
+  `-bg`/`-text` pairs mirroring `danger`, and `warning` is darkened so its
+  solid form clears the >=3:1 non-text threshold. `.l-sidebar` no longer
+  declares `container-type` on itself (an element can't query its own size);
+  the collapse correctly targets an ancestor container.
 - **Layer architecture & reset** (`@cawalch/porchlight`). First framework CSS:
   every rule lives inside one top-level `@layer porchlight { … }` with nine
   deterministic sub-layers; a minimal `:where()`-based reset replaces any
