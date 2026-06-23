@@ -105,8 +105,8 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     gap: 0.5rem;
     margin-block-end: 1.5rem;
     padding: 0.75rem 1rem;
-    border: 1px solid var(--doc-border);
-    border-radius: var(--doc-radius);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
   }
   .toggles legend {
     font-weight: 600;
@@ -114,17 +114,17 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
   }
   .toggles button {
     padding: 0.35rem 0.75rem;
-    border: 1px solid var(--doc-border);
-    border-radius: var(--doc-radius);
-    background: var(--doc-surface);
-    color: var(--doc-text);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
     cursor: pointer;
     font: inherit;
   }
   .toggles button[aria-pressed='true'] {
-    background: var(--doc-accent);
+    background: var(--pl-color-accent);
     color: #fff;
-    border-color: var(--doc-accent);
+    border-color: var(--pl-color-accent);
   }
 
   .playground {
