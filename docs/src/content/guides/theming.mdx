@@ -1,0 +1,142 @@
+---
+title: Theming
+description: Override design tokens, create brand themes, and understand the light-dark() color system.
+order: 2
+---
+
+# Theming
+
+Porchlight is fully token-driven. Every color, spacing value, font size,
+radius, and motion duration is a CSS custom property you can override. This
+guide covers the token architecture, how to create a brand theme, and how
+the light/dark system works.
+
+## Token hierarchy
+
+Tokens are split into two layers:
+
+| Layer | Prefix | Purpose |
+|-------|--------|---------|
+| **Primitive** (`02-tokens.css`) | `--pl-*` | Raw design scales: font sizes, spacing steps, OKLCH color ramp, radii, motion, shadows |
+| **Semantic** (`02-tokens.css`) | `--pl-color-*` | Foreground/background pairs: `bg`, `surface`, `text`, `border`, `accent`, `danger-*`, `success-*`, `warning-*` |
+| **Component-local** | `--c-*` | Per-component tokens defined inside `@scope` (e.g., `--c-alert-tone`) |
+
+Semantic tokens use `light-dark()` so they automatically adapt to the
+user's color scheme. Override primitives to retheme the entire system;
+override semantic tokens to fine-tune specific roles.
+
+## Light and dark
+
+Porchlight uses the CSS `color-scheme` property to drive `light-dark()`
+color pairs. Two ways to control the active scheme:
+
+### System preference (default)
+
+Omit the `data-theme` attribute. The browser follows the OS setting:
+
+```html
+<html>
+  <!-- follows prefers-color-scheme -->
+</html>
+```
+
+### Explicit theme
+
+Set `data-theme` on the root element:
+
+```html
+<html data-theme="dark">
+  <!-- always dark -->
+</html>
+```
+
+Valid values: `light`, `dark`, or omit for system.
+
+## Creating a brand theme
+
+Override the accent color pair to instantly rebrand. Both the accent and
+its text color need to meet WCAG-AA contrast (4.5:1 minimum):
+
+```css
+@layer app {
+  :root {
+    /* Your brand color in OKLCH */
+    --pl-color-accent: oklch(55% 0.22 290deg);
+    --pl-color-accent-text: oklch(98% 0.01 290deg);
+
+    /* The accent ramp is derived from these via color-mix().
+       Override individual steps if you need full control: */
+    /* --pl-color-accent-300: oklch(...); */
+    /* --pl-color-accent-700: oklch(...); */
+  }
+
+  /* Dark theme brand override */
+  :root[data-theme="dark"] {
+    --pl-color-accent: oklch(70% 0.18 290deg);
+    --pl-color-accent-text: oklch(20% 0.05 290deg);
+  }
+}
+```
+
+To go deeper, override the semantic surface/text tokens:
+
+```css
+@layer app {
+  :root {
+    --pl-color-bg: oklch(99% 0.005 260deg);
+    --pl-color-surface: oklch(97% 0.008 260deg);
+    --pl-color-text: oklch(25% 0.02 260deg);
+  }
+}
+```
+
+## Density modes
+
+Three density presets control component geometry (padding, height, gap):
+
+```html
+<div data-density="compact">Tighter controls</div>
+<div data-density="comfortable">Default</div>
+<div data-density="touch">Larger touch targets</div>
+```
+
+Set on any ancestor. Density changes only affect `--pl-control-block-size`,
+`--pl-control-padding-inline`, and `--pl-control-gap`. Type, spacing, and
+radius are unchanged.
+
+## Reduced motion
+
+Porchlight respects `prefers-reduced-motion: reduce` automatically:
+
+- `--pl-motion-scale` drops to `0`, which zeroes all duration tokens
+- A universal `transition-duration: 1ms !important` clamp fires on every
+  element, guaranteeing no stray transitions outlast the preference
+- Scroll behavior reverts to `auto`
+
+You don't need to do anything. This is one of the few places `!important`
+is used (it's an accessibility guarantee).
+
+## Forced colors (High Contrast)
+
+Under Windows High Contrast mode, all semantic tokens remap to system
+colors (`Canvas`, `CanvasText`, `ButtonBorder`, `Highlight`). The UI
+remains legible without any action from you.
+
+## Component-level theming
+
+Each component defines `--c-*` tokens inside its `@scope`. Override these
+to fine-tune a specific component without touching the global palette:
+
+```css
+@layer app {
+  .c-card {
+    --c-card-pad: var(--pl-space-6);
+    --c-card-radius: var(--pl-radius-xl);
+  }
+}
+```
+
+## Token reference
+
+For the complete list of tokens with live values, see the
+[token reference pages](../../tokens).

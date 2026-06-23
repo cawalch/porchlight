@@ -7,6 +7,7 @@
  * will consume --pl-* tokens instead.
  */
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -24,12 +25,21 @@ const b = import.meta.env.BASE_URL;
 const link = (path: string) => `${b}${path.replace(/^\//, '')}`;
 
 const nav = [
+  { href: link('guides/getting-started'), label: 'Docs', external: false },
   { href: link('preview'), label: 'Preview', external: false },
   { href: 'https://github.com/cawalch/porchlight', label: 'GitHub', external: true },
 ];
 
 const here = Astro.url.pathname.replace(/\/$/, '');
-const isActive = (href: string) => !href.startsWith('http') && here === href.replace(/\/$/, '');
+const isActive = (href: string) => {
+  if (href.startsWith('http')) return false;
+  const clean = href.replace(/\/$/, '');
+  // Exact match, or prefix match for nav sections (Docs matches /guides/* and /tokens/* and /components/*)
+  if (here === clean) return true;
+  if (clean.endsWith('getting-started') && (here.includes('/guides/') || here.includes('/tokens/') || here.includes('/components/'))) return true;
+  if (clean.endsWith('preview') && here.includes('/preview/')) return true;
+  return false;
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -40,6 +50,7 @@ const isActive = (href: string) => !href.startsWith('http') && here === href.rep
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

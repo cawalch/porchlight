@@ -1,0 +1,102 @@
+---
+title: Spacing, Radius & Motion
+category: space
+---
+
+# Spacing, Radius & Motion Tokens
+
+## Spacing scale
+
+A t-shirt-sized scale based on `rem` (not `px`) for accessibility:
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--pl-space-0` | `0` | No gap |
+| `--pl-space-1` | `0.25rem` (4px) | Inline gaps, icon insets |
+| `--pl-space-2` | `0.5rem` (8px) | Compact padding |
+| `--pl-space-3` | `0.75rem` (12px) | Default button padding, field gaps |
+| `--pl-space-4` | `1rem` (16px) | Card padding, section spacing |
+| `--pl-space-5` | `1.25rem` (20px) | Larger card padding |
+| `--pl-space-6` | `1.5rem` (24px) | Sidebar gaps, section breaks |
+| `--pl-space-8` | `2rem` (32px) | Large section spacing |
+| `--pl-space-10` | `2.5rem` (40px) | Page-level spacing |
+| `--pl-space-12` | `3rem` (48px) | Hero spacing |
+
+## Radius scale
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--pl-radius-xs` | `0.25rem` | Small chips, badges |
+| `--pl-radius-sm` | `0.375rem` | Inputs, small buttons |
+| `--pl-radius-md` | `0.5rem` | Default controls |
+| `--pl-radius-lg` | `0.75rem` | Cards, panels |
+| `--pl-radius-xl` | `1rem` | Large containers |
+| `--pl-radius-pill` | `999rem` | Avatars, pills, toggle switches |
+
+The registered `@property --pl-radius-control` (default `0.5rem`) drives
+interactive control corners globally.
+
+## Motion
+
+All durations multiply by `--pl-motion-scale`, which drops to `0` under
+`prefers-reduced-motion: reduce`:
+
+| Token | Base | At scale=1 | Purpose |
+|-------|------|-----------|---------|
+| `--pl-duration-1` | `120ms` | `120ms` | Fast: hover, focus |
+| `--pl-duration-2` | `180ms` | `180ms` | Default: open, close, slide |
+| `--pl-duration-3` | `260ms` | `260ms` | Slow: width transitions, large reveals |
+
+### Easing
+
+| Token | Curve | Character |
+|-------|-------|-----------|
+| `--pl-ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Smooth, natural deceleration |
+| `--pl-ease-emphasized` | `cubic-bezier(0.2, 0, 0, 1.2)` | Slight overshoot, playful |
+
+## Z-index scale
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--pl-z-base` | `0` | Default content |
+| `--pl-z-raised` | `10` | Sticky headers, sticky table rows |
+| `--pl-z-sticky` | `100` | Sticky bars, sticky-shell |
+| `--pl-z-overlay` | `1000` | Dialogs, drawers, popovers |
+| `--pl-z-toast` | `1100` | Toast notifications (above overlays) |
+
+## Control geometry
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--pl-control-block-size` | `2.5rem` | Input/button height |
+| `--pl-control-padding-inline` | `--pl-space-4` | Horizontal padding |
+| `--pl-control-gap` | `--pl-space-2` | Internal gap (icon + label) |
+| `--pl-control-border-width` | `1px` | Border thickness |
+| `--pl-control-radius` | `--pl-radius-control` | Corner radius |
+
+Density presets (`data-density`) override these:
+
+| Density | Block size | Padding inline | Gap |
+|---------|-----------|----------------|-----|
+| `compact` | `2rem` | `--pl-space-3` | `--pl-space-1` |
+| `comfortable` (default) | `2.5rem` | `--pl-space-4` | `--pl-space-2` |
+| `touch` | `2.75rem` | `--pl-space-5` | `--pl-space-2` |
+
+## Shadows
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--pl-shadow-1` | `0 1px 2px oklch(0% / 12%)` | Cards, subtle elevation |
+| `--pl-shadow-2` | `0 6px 18px oklch(0% / 16%)` | Hovered cards, sticky bars |
+| `--pl-shadow-3` | `0 16px 48px oklch(0% / 20%)` | Popovers, dialogs |
+
+## Registered properties
+
+Three custom properties are registered with `@property` so they animate
+smoothly and inherit predictably:
+
+| Property | Syntax | Initial | Purpose |
+|----------|--------|---------|---------|
+| `--pl-motion-scale` | `<number>` | `1` | Global motion multiplier (0 = no motion) |
+| `--pl-radius-control` | `<length>` | `0.5rem` | Control corner radius |
+| `--pl-focus-size` | `<length>` | `2px` | Focus ring thickness |

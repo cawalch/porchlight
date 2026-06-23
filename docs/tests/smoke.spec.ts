@@ -385,4 +385,78 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-avatar-group").first()).toBeVisible();
     await expect(page.locator(".c-avatar-group__more")).toBeVisible();
   });
+
+  test("getting-started guide has install and layer instructions", async ({
+    page,
+  }) => {
+    await page.goto("./guides/getting-started");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Getting Started", exact: true }),
+    ).toBeVisible();
+    // Should mention npm/pnpm install.
+    await expect(content.getByText("npm install")).toBeVisible();
+    // Should mention the layer pattern.
+    await expect(content.getByText("@layer porchlight, app")).toBeVisible();
+  });
+
+  test("theming guide covers tokens and density", async ({ page }) => {
+    await page.goto("./guides/theming");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Theming", exact: true }),
+    ).toBeVisible();
+    await expect(content.getByText("data-density").first()).toBeVisible();
+    await expect(content.getByText("light-dark()").first()).toBeVisible();
+  });
+
+  test("browser-support guide has the support matrix", async ({ page }) => {
+    await page.goto("./guides/browser-support");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Browser Support", exact: true }),
+    ).toBeVisible();
+    await expect(
+      content.getByRole("heading", { name: "How degradation works" }),
+    ).toBeVisible();
+  });
+
+  test("color token reference shows semantic pairs", async ({ page }) => {
+    await page.goto("./tokens/color");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Color Tokens", exact: true }),
+    ).toBeVisible();
+    await expect(content.getByText("--pl-color-accent", { exact: true })).toBeVisible();
+    await expect(content.getByText("--pl-color-bg", { exact: true })).toBeVisible();
+  });
+
+  test("typography token reference shows type scale", async ({ page }) => {
+    await page.goto("./tokens/typography");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Typography Tokens", exact: true }),
+    ).toBeVisible();
+    await expect(content.getByText("--pl-text-md")).toBeVisible();
+  });
+
+  test("spacing token reference shows all scales", async ({ page }) => {
+    await page.goto("./tokens/spacing");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", { name: "Spacing, Radius & Motion Tokens", exact: true }),
+    ).toBeVisible();
+    await expect(content.getByText("--pl-space-4", { exact: true }).first()).toBeVisible();
+    await expect(content.getByText("--pl-z-toast").first()).toBeVisible();
+  });
+
+  test("homepage shows feature highlights and stats", async ({ page }) => {
+    await page.goto("./");
+    await expect(
+      page.getByRole("heading", { name: "Porchlight", exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText("Zero JavaScript")).toBeVisible();
+    await expect(page.getByText("WCAG-AA verified")).toBeVisible();
+    await expect(page.getByText("pnpm add @cawalch/porchlight")).toBeVisible();
+  });
 });

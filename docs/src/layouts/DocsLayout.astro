@@ -1,0 +1,184 @@
+---
+/**
+ * DocsLayout — wraps BaseLayout with a sidebar navigation.
+ *
+ * Used by guide pages, token reference pages, and component docs.
+ * Preview pages and the homepage continue using BaseLayout directly
+ * (they're full-width kitchen-sink demos, not docs content).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const b = import.meta.env.BASE_URL;
+
+// Fetch collections for the sidebar nav.
+const components = (await getCollection('components')).sort((a, z) =>
+  a.data.title.localeCompare(z.data.title),
+);
+const guides = (await getCollection('guides')).sort((a, z) =>
+  (a.data.order ?? 0) - (z.data.order ?? 0),
+);
+
+const here = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (href: string) => {
+  const clean = href.replace(/^\//, '');
+  return here.endsWith(clean) || here === clean.replace(/\/$/, '');
+};
+---
+<BaseLayout title={title} description={description}>
+  <div class="docs-shell">
+    <aside class="docs-sidebar" aria-label="Documentation navigation">
+      <nav class="docs-nav">
+        <div class="docs-nav__section">
+          <h2 class="docs-nav__heading">Getting Started</h2>
+          <ul>
+            {guides.filter((g) => g.id !== 'architecture' && g.id !== 'utilities' && g.id !== 'enhancements').map((guide) => (
+              <li>
+                <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
+                  {guide.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="docs-nav__section">
+          <h2 class="docs-nav__heading">Foundations</h2>
+          <ul>
+            {guides.filter((g) => ['architecture', 'utilities', 'enhancements'].includes(g.id)).map((guide) => (
+              <li>
+                <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
+                  {guide.data.title}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={`${b}tokens`} aria-current={isActive('/tokens') ? 'page' : undefined}>Token reference</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-nav__section">
+          <h2 class="docs-nav__heading">Components</h2>
+          <ul>
+            {components.map((comp) => (
+              <li>
+                <a href={`${b}components/${comp.id}`} aria-current={isActive(`/components/${comp.id}`) ? 'page' : undefined}>
+                  {comp.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="docs-nav__section">
+          <h2 class="docs-nav__heading">Examples</h2>
+          <ul>
+            <li><a href={`${b}preview/dashboard`}>Dashboard</a></li>
+            <li><a href={`${b}preview/settings`}>Settings</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="docs-content">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .docs-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: var(--pl-space-6);
+    align-items: start;
+    max-inline-size: 80rem;
+    margin-inline: auto;
+    padding-inline: var(--doc-pad);
+  }
+
+  .docs-sidebar {
+    position: sticky;
+    inset-block-start: calc(2.75rem + 1px + var(--pl-space-4));
+    max-block-size: calc(100vh - 5rem);
+    overflow-y: auto;
+    padding-block-end: var(--pl-space-4);
+  }
+
+  .docs-nav__section + .docs-nav__section {
+    margin-block-start: var(--pl-space-5);
+  }
+
+  .docs-nav__heading {
+    margin-block-end: var(--pl-space-2);
+    padding-inline-start: var(--pl-space-3);
+    font-size: var(--pl-text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--pl-color-text-muted);
+  }
+
+  .docs-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .docs-nav a {
+    display: block;
+    padding: var(--pl-space-1) var(--pl-space-3);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .docs-nav a:hover {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+    color: var(--pl-color-text);
+  }
+
+  .docs-nav a[aria-current='page'] {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+
+  .docs-content {
+    padding-block-end: var(--pl-space-8);
+    min-inline-size: 0;
+  }
+
+  /* Override the default main constraint for docs pages */
+  :global(main:has(.docs-shell)) {
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-inline: 0;
+    padding-block-start: var(--pl-space-5);
+  }
+
+  @media (width < 48rem) {
+    .docs-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .docs-sidebar {
+      position: relative;
+      inset-block-start: 0;
+      max-block-size: none;
+      border-block-end: 1px solid var(--pl-color-border);
+      padding-block-end: var(--pl-space-4);
+    }
+  }
+</style>

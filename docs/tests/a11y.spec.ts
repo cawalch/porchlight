@@ -14,6 +14,18 @@ import AxeBuilder from "@axe-core/playwright";
  */
 
 const PAGES = [
+  "/",
+  "/guides/",
+  "/guides/getting-started",
+  "/guides/theming",
+  "/guides/browser-support",
+  "/guides/architecture",
+  "/guides/utilities",
+  "/guides/enhancements",
+  "/tokens/",
+  "/tokens/color",
+  "/tokens/typography",
+  "/tokens/spacing",
   "/preview/",
   "/preview/reset",
   "/preview/tokens",
