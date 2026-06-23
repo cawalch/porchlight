@@ -115,9 +115,13 @@
       --c-button-bg: color-mix(
         in oklab,
         var(--pl-color-accent),
-        transparent 80%
+        transparent 82%
       );
-      --c-button-fg: var(--pl-color-accent);
+
+      /* Default text (not accent) on the accent tint: accent-text on an
+         accent-hue tint can't clear AA (same hue family, low ΔL). The TINT
+         is the selection signal; the default text guarantees contrast. */
+      --c-button-fg: var(--pl-color-text);
     }
 
     :scope:is(:disabled, [aria-disabled="true"]) {

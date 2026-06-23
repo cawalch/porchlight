@@ -78,6 +78,12 @@ build` bundles the source `porchlight.css` (@imports inlined) into
 
 ### Fixed
 
+- **A11y contrast fixes (axe-found).** A new axe-core scan caught three
+  issues the token-pair contrast tests missed: the ghost-button pressed state
+  (accent text on an accent-tint can't clear AA — same hue family; now uses
+  the accent TINT as the selection signal with default high-contrast text),
+  the layout KPI deltas (used `--pl-color-success` directly as text; now uses
+  the AA `--pl-color-success-text` pair), and the demo scroll region/handle.
 - **Button hover collapsed to transparent.** The hover rule reassigned
   `--c-button-bg` to `color-mix(... var(--c-button-bg) ...)` — a self-
   referential custom-property cycle that CSS resolves to guaranteed-invalid,
