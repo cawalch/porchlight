@@ -1,0 +1,119 @@
+/*
+ * Porchlight — card component
+ * ===========================================================================
+ * A raised surface grouping related content — the workhorse of SaaS dashboards
+ * (KPI tiles, list items, settings sections, detail panels). Header + body
+ * slots; the header adapts to the card's OWN width via a container query (not
+ * the viewport), so a card in a narrow split pane stacks its header even on a
+ * wide screen.
+ *
+ * Elevation comes from shadow, not bg contrast — surface is intentionally close
+ * to bg (a ~2% step); the border + a soft shadow define the card. This is the
+ * modern approach (subtle depth over heavy fill differences).
+ *
+ * Interactive variant: add [data-interactive] (or use an <a.c-card>) to get a
+ * hover lift + focus ring — for clickable cards (recent items, navigation
+ * tiles). Motion respects --pl-motion-scale.
+ *
+ * Token-driven via --c-card-* aliases. Density comes from --pl-space-*.
+ */
+@layer porchlight.components {
+  @scope (.c-card) {
+    :scope {
+      --c-card-padding: var(--pl-space-5);
+      --c-card-bg: var(--pl-color-surface);
+      --c-card-border: var(--pl-color-border);
+      --c-card-shadow: var(--pl-shadow-1);
+      --c-card-radius: var(--pl-radius-xl);
+
+      container: c-card / inline-size;
+      display: grid;
+      gap: var(--pl-space-4);
+
+      /* When cards sit in an .l-grid (equal-height rows via align-items:
+         stretch), a shorter card gets stretched to match its tallest sibling.
+         Without this, the card's grid rows absorb the extra height —
+         inflating the header row and pushing the title down inconsistently. */
+      align-content: start;
+      padding: var(--c-card-padding);
+      border: 1px solid var(--c-card-border);
+      border-radius: var(--c-card-radius);
+      background: var(--c-card-bg);
+      box-shadow: var(--c-card-shadow);
+    }
+
+    .c-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+
+      /* Match the control height so the title centers at the same Y whether or
+         not the header has a button. (align-content: start on the card above
+         prevents this row from absorbing stretch-height from .l-grid.) */
+      min-block-size: var(--pl-control-block-size);
+    }
+
+    .c-card__title {
+      margin: 0;
+      font-size: var(--pl-text-lg);
+      font-weight: 700;
+      line-height: var(--pl-leading-tight);
+      text-wrap: balance;
+    }
+
+    .c-card__body {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--pl-space-2);
+      padding-block-start: var(--pl-space-2);
+      border-block-start: 1px solid var(--c-card-border);
+    }
+
+    /* Header collapses to a stack when the CARD is narrow (container query). */
+    @container c-card (inline-size < 28rem) {
+      .c-card__header {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+
+    /* Interactive cards — hover lift + focus ring. Inside @scope (same as
+       the button pattern); [data-hover] is an attribute, not a live pseudo, so
+       it applies reliably within @scope. */
+    :scope[data-interactive],
+    :scope[href] {
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition:
+        transform var(--pl-duration-2) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    :scope[data-interactive]:is(:hover, [data-hover]),
+    :scope[href]:is(:hover, [data-hover]) {
+      transform: translateY(-2px);
+      box-shadow: var(--pl-shadow-2);
+    }
+
+    :scope[data-interactive]:focus-visible,
+    :scope[href]:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--pl-focus-color),
+        var(--pl-shadow-2);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-card) {
+      border-color: ButtonBorder;
+    }
+  }
+}

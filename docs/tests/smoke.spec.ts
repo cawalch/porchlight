@@ -137,4 +137,16 @@ test.describe("docs scaffold", () => {
     const input = page.locator(".c-field__control").first();
     await expect(input).toHaveAttribute("required", "");
   });
+
+  test("card page renders cards with headers and bodies", async ({ page }) => {
+    await page.goto("./preview/card");
+    await expect(
+      page.getByRole("heading", { name: "Card", exact: true }),
+    ).toBeVisible();
+    // The standard card has its title and body.
+    await expect(page.getByText("Quarterly usage")).toBeVisible();
+    // Interactive cards are real links.
+    const link = page.locator("a.c-card").first();
+    await expect(link).toHaveAttribute("href", "#");
+  });
 });
