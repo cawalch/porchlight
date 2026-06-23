@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const events = [
+  { title: 'Deployment succeeded', time: '2 minutes ago', body: 'Version 2.4.1 deployed to production.', tone: 'success' },
+  { title: 'Pull request opened', time: '1 hour ago', body: 'Sarah opened PR #142: Add dark mode toggle.', tone: '' },
+  { title: 'Build warning', time: '3 hours ago', body: 'Bundle size exceeded 250kb threshold.', tone: 'warning' },
+  { title: 'API key expired', time: '1 day ago', body: 'The production API key expired. Generate a new one.', tone: 'danger' },
+  { title: 'Repository created', time: '2 days ago', body: 'porchlight-framework was initialized.', tone: '' },
+];
+---
+<BaseLayout title="Timeline · Porchlight">
+  <h1>Timeline</h1>
+  <p>
+    A vertical activity feed with markers and connector lines. Each item has
+    a tone-colored dot. Componentizes the ad-hoc feed pattern from the
+    dashboard.
+  </p>
+
+  <h2>Activity feed</h2>
+  <ol class="c-timeline">
+    {events.map((e) => (
+      <li class="c-timeline__item" data-tone={e.tone || undefined}>
+        <span class="c-timeline__dot"></span>
+        <div class="c-timeline__content">
+          <div class="c-timeline__header">
+            <span class="c-timeline__title">{e.title}</span>
+            <time class="c-timeline__time">{e.time}</time>
+          </div>
+          <p class="c-timeline__body">{e.body}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>

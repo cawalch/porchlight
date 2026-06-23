@@ -1,0 +1,33 @@
+---
+title: Auto-Growing Textarea
+description: Textarea that grows to fit content via field-sizing. Zero JavaScript.
+status: stable
+since: 1.0.0
+---
+
+# Auto-Growing Textarea
+
+The `.c-textarea-auto` grows to fit its content using
+`field-sizing: content` (Chrome 123+). No JavaScript auto-resize.
+
+## Semantic HTML
+
+```html
+<textarea class="c-textarea-auto" rows="2"></textarea>
+```
+
+## Progressive enhancement
+
+Where `field-sizing: content` is not supported, the textarea retains its
+`rows` attribute (fixed height).
+
+## Max height cap
+
+Cap the growth with `--c-textarea-max-block`:
+
+```html
+<textarea class="c-textarea-auto" style="--c-textarea-max-block: 8rem;">
+</textarea>
+```
+
+Beyond the cap, the textarea scrolls instead of growing.

@@ -557,4 +557,54 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-reveal[data-delay='1']")).toBeAttached();
     await expect(page.locator(".c-reveal[data-delay='3']")).toBeAttached();
   });
+
+  test("breadcrumb renders trail with current page", async ({ page }) => {
+    await page.goto("./preview/breadcrumb");
+    await expect(
+      page.getByRole("heading", { name: "Breadcrumb", exact: true }),
+    ).toBeVisible();
+    // Links exist.
+    await expect(page.locator(".c-breadcrumb__link").first()).toBeVisible();
+    // Current page exists.
+    await expect(page.locator(".c-breadcrumb__current").first()).toBeVisible();
+    // Multiple items (trail).
+    const items = page.locator(".c-breadcrumb__item");
+    expect(await items.count()).toBeGreaterThanOrEqual(3);
+  });
+
+  test("stepper renders steps with all states", async ({ page }) => {
+    await page.goto("./preview/stepper");
+    await expect(
+      page.getByRole("heading", { name: "Stepper", exact: true }),
+    ).toBeVisible();
+    // All three states exist.
+    await expect(page.locator(".c-stepper__step[data-state='completed']").first()).toBeVisible();
+    await expect(page.locator(".c-stepper__step[data-state='current']").first()).toBeVisible();
+    await expect(page.locator(".c-stepper__step[data-state='upcoming']").first()).toBeVisible();
+    // Markers exist.
+    await expect(page.locator(".c-stepper__marker").first()).toBeVisible();
+  });
+
+  test("timeline renders items with dots and content", async ({ page }) => {
+    await page.goto("./preview/timeline");
+    await expect(
+      page.getByRole("heading", { name: "Timeline", exact: true }),
+    ).toBeVisible();
+    const items = page.locator(".c-timeline__item");
+    expect(await items.count()).toBeGreaterThanOrEqual(3);
+    await expect(page.locator(".c-timeline__dot").first()).toBeVisible();
+    await expect(page.locator(".c-timeline__title").first()).toBeVisible();
+    // Tone variant exists.
+    await expect(page.locator(".c-timeline__item[data-tone='success']")).toBeVisible();
+  });
+
+  test("textarea-auto renders with field-sizing", async ({ page }) => {
+    await page.goto("./preview/textarea-auto");
+    await expect(
+      page.getByRole("heading", { name: "Auto-Growing Textarea", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-textarea-auto").first()).toBeVisible();
+    // Disabled variant exists.
+    await expect(page.locator(".c-textarea-auto[disabled]")).toBeVisible();
+  });
 });

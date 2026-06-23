@@ -1,0 +1,73 @@
+/*
+ * Porchlight — auto-growing textarea component
+ * ===========================================================================
+ * A textarea that grows to fit its content automatically using
+ * field-sizing: content (Chrome 123+). No JavaScript auto-resize needed.
+ *
+ * @supports-gated: where field-sizing is not supported, the textarea
+ * retains its default rows attribute (graceful degradation to a fixed
+ * height).
+ *
+ * Usage:
+ *   <textarea class="c-textarea-auto" rows="3"></textarea>
+ *
+ * Set [data-max-rows] to cap the growth (CSS can't count rows, so this is
+ * a max-height via the --c-textarea-max-block token).
+ */
+@layer porchlight.components {
+  @scope (.c-textarea-auto) {
+    :scope {
+      --c-textarea-max-block: 24rem;
+
+      inline-size: 100%;
+      padding: var(--pl-space-3);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      resize: vertical;
+      transition: border-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    :scope:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+      border-color: var(--pl-color-accent);
+    }
+
+    :scope:user-invalid {
+      border-color: var(--pl-color-danger);
+    }
+
+    :scope:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Auto-grow: field-sizing: content. */
+    @supports (field-sizing: content) {
+      :scope {
+        field-sizing: content;
+
+        /* Cap the growth so very long text scrolls instead of growing
+           indefinitely. */
+        max-block-size: var(--c-textarea-max-block);
+        overflow-y: auto;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-textarea-auto) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+
+    :where(.c-textarea-auto:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}

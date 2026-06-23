@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Breadcrumb · Porchlight">
+  <h1>Breadcrumb</h1>
+  <p>
+    A trail of navigation links showing hierarchy. Separators are CSS-only
+    (gap decorations where supported, <code>::after</code> fallback). The last
+    item has <code>aria-current="page"</code>.
+  </p>
+
+  <h2>Basic</h2>
+  <nav class="c-breadcrumb" aria-label="Breadcrumb">
+    <ol class="c-breadcrumb__list">
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Home</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Projects</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <span class="c-breadcrumb__current" aria-current="page">API Redesign</span>
+      </li>
+    </ol>
+  </nav>
+
+  <h2>Long trail</h2>
+  <nav class="c-breadcrumb" aria-label="Breadcrumb">
+    <ol class="c-breadcrumb__list">
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Home</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Settings</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Team</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Members</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <a class="c-breadcrumb__link" href="#">Invitations</a>
+      </li>
+      <li class="c-breadcrumb__item">
+        <span class="c-breadcrumb__current" aria-current="page">Pending</span>
+      </li>
+    </ol>
+  </nav>
+</BaseLayout>
