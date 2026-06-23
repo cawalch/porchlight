@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter ./docs dev",
-    "build": "pnpm --filter ./docs build",
+    "build": "pnpm --filter @cawalch/porchlight build && pnpm --filter ./docs build",
     "test": "pnpm --filter ./docs test",
     "lint": "stylelint \"**/*.css\" --allow-empty-input",
     "format": "prettier --write ."

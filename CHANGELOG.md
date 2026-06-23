@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Single-file distributable build**. `pnpm --filter @cawalch/porchlight
+build` bundles the source `porchlight.css` (@imports inlined) into
+  `dist/porchlight.css` (readable) and `dist/porchlight.min.css` via Lightning
+  CSS, targeting Chrome 149+. No consumer bundler required: a no-build app can
+  `<link>` the dist file directly. Source stays available for bundler users via
+  the `.` export; dist is exposed at `@cawalch/porchlight/dist/porchlight.min.css`.
 - **Token WCAG + status pairs** (fix). `--pl-color-accent` is now theme-aware
   (`light-dark(brand-7, brand-4)`) with a paired `--pl-color-accent-text`
   (`white` in light, near-black in dark) so both link-as-text and button-label
