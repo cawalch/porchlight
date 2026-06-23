@@ -24,7 +24,7 @@ packages/porchlight   # the CSS framework (the product)
 docs/                 # Astro showcase + reference site (imports the real CSS)
 ```
 
-The docs site imports `@cawalch/porchlight` directly from the workspace, so the showcase **never drifts** from source — the documentation *is* the preview.
+The docs site imports `@cawalch/porchlight` directly from the workspace, so the showcase **never drifts** from source — the documentation _is_ the preview.
 
 ## Branching & pull requests
 
