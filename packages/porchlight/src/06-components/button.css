@@ -75,16 +75,29 @@
       --c-button-border: transparent;
     }
 
-    /* Hover: mix a little of the text color into the bg. Theme-aware by
-       construction — darkens in light, lightens in dark. */
+    /* Hover: mix a little of the text color into the current fill. Done via
+       the background-color LONGHAND, NOT by reassigning --c-button-bg —
+       reassigning a custom property in terms of itself is a cycle, which CSS
+       resolves to guaranteed-invalid and collapses the fill to transparent.
+       Theme-aware by construction (darkens in light, lightens in dark). */
     :scope:is(:hover, [data-hover]) {
-      --c-button-bg: color-mix(
+      background-color: color-mix(
         in oklab,
         var(--c-button-bg),
-        var(--pl-color-text) 7%
+        var(--pl-color-text) 12%
       );
-
       cursor: pointer;
+    }
+
+    /* Ghost has no fill to mix into (transparent) — mixing text into
+       transparent yields a ~7%-alpha veil that reads as "barely there".
+       Give it a real, visible accent wash instead. */
+    :scope[data-variant="ghost"]:is(:hover, [data-hover]) {
+      background-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 85%
+      );
     }
 
     /* Active + pressed: a small tactile dip. */
@@ -92,7 +105,9 @@
       transform: translateY(1px);
     }
 
-    /* A pressed ghost/secondary also gets a faint tint so the state reads. */
+    /* A pressed ghost/secondary also gets an accent tint so the selected/
+       pressed state reads clearly (a ~12%-alpha veil is too faint — see the
+       affordance test). */
     :scope:is(
         [data-variant="ghost"],
         [data-variant="secondary"]
@@ -100,7 +115,7 @@
       --c-button-bg: color-mix(
         in oklab,
         var(--pl-color-accent),
-        transparent 88%
+        transparent 80%
       );
       --c-button-fg: var(--pl-color-accent);
     }
