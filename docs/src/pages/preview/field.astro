@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Field · Porchlight">
+  <h1>Field</h1>
+  <p>
+    A labeled form control — label, native input, and hint. Wraps real
+    <code>&lt;input&gt;</code>/<code>&lt;select&gt;</code>/<code>&lt;textarea&gt;</code>
+    so it inherits all native behavior (constraint validation, autofill, IME).
+    State is driven by native pseudos and reflected onto the border/hint via
+    <code>:has()</code> — no class toggles, no JS.
+  </p>
+
+  <h2>Text input</h2>
+  <div class="demo">
+    <label class="c-field">
+      <span class="c-field__label">Workspace name</span>
+      <input class="c-field__control" required placeholder="Acme Ops" />
+      <span class="c-field__hint">Use a name your team recognizes.</span>
+    </label>
+  </div>
+
+  <h2>Focus state</h2>
+  <p>Focus the field below — the border shifts to the focus color <em>and</em> a 2px ring appears (a border swap alone is below the perceptual threshold).</p>
+  <div class="demo">
+    <label class="c-field">
+      <span class="c-field__label">Email</span>
+      <input class="c-field__control" type="email" placeholder="you@example.com" />
+      <span class="c-field__hint">Focus me to see the focus ring.</span>
+    </label>
+  </div>
+
+  <h2>Invalid state</h2>
+  <p>Type something invalid then tab away — <code>:user-invalid</code> fires on blur, so an empty required field doesn't scream on load.</p>
+  <div class="demo">
+    <label class="c-field">
+      <span class="c-field__label">Workspace URL</span>
+      <input class="c-field__control" type="url" required placeholder="https://" />
+      <span class="c-field__hint">Must be a valid https:// URL.</span>
+    </label>
+  </div>
+
+  <h2>Disabled</h2>
+  <div class="demo">
+    <label class="c-field">
+      <span class="c-field__label">Read-only key</span>
+      <input class="c-field__control" value="pk_live_••••" disabled />
+      <span class="c-field__hint">Copied automatically on focus.</span>
+    </label>
+  </div>
+
+  <h2>Native controls themed via accent-color</h2>
+  <div class="demo l-cluster">
+    <label class="c-field c-field--inline">
+      <input class="c-field__control c-field__control--check" type="checkbox" checked />
+      <span class="c-field__label">Send receipts</span>
+    </label>
+    <label class="c-field c-field--inline">
+      <input class="c-field__control c-field__control--check" type="radio" name="plan" checked />
+      <span class="c-field__label">Monthly</span>
+    </label>
+    <label class="c-field c-field--inline">
+      <input class="c-field__control" type="color" value="#3b5bdb" />
+      <span class="c-field__label">Brand color</span>
+    </label>
+  </div>
+
+  <h2>Density</h2>
+  <div class="demo" data-density="compact">
+    <label class="c-field">
+      <span class="c-field__label">compact</span>
+      <input class="c-field__control" placeholder="compact density" />
+    </label>
+  </div>
+</BaseLayout>
+
+<style>
+  .demo {
+    padding: var(--pl-space-5);
+    margin-block-end: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-3);
+  }
+  /* Inline variant for checkboxes/radios: label + control on one line. */
+  .c-field--inline {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--pl-space-2);
+  }
+  .c-field__control--check {
+    inline-size: 1.125rem;
+    min-block-size: 1.125rem;
+  }
+</style>

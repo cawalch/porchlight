@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Field** (`.c-field`). A labeled form control wrapping native
+  `<input>`/`<select>`/`<textarea>` — label, control, and hint. State is driven
+  by native pseudos and reflected onto the border/hint via `:has()`: focus
+  draws a token-colored border **plus a 2px ring** (a 1px border swap alone is
+  below the perceptual affordance threshold); invalid uses `:user-invalid`
+  (Baseline 2024); disabled mutes the field. Native checkbox/radio/color inputs
+  themed via `accent-color`.
 - **Button** (`.c-button`). First component — the canonical action control,
   native `<button>`/`<a>`, in `@layer porchlight.components` via `@scope`.
   Variants `primary` / `secondary` / `ghost`; theme-aware `color-mix()` hover,
