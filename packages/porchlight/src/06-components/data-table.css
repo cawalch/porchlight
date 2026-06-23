@@ -1,0 +1,106 @@
+/*
+ * Porchlight — data table component
+ * ===========================================================================
+ * An enterprise data table: sticky headers, horizontal scroll with a stable
+ * scrollbar gutter, container-query padding, and a hover affordance on rows.
+ * This is the final Phase 3 component and the most data-heavy — SaaS apps
+ * live in tables.
+ *
+ * Structure: .c-table-wrap (the scroll container + query container) wraps a
+ * native <table class="c-table">. The wrap handles overflow + the gutter; the
+ * table sets column min-widths and cell geometry. Sticky headers stay pinned
+ * while the body scrolls.
+ *
+ * Horizontal scroll is the SaaS reality (wide data); scrollbar-gutter: stable
+ * prevents layout shift when the bar appears. Row hover (via :hover on tbody
+ * tr) aids scanning dense rows.
+ */
+@layer porchlight.components {
+  @scope (.c-table-wrap) {
+    :scope {
+      container: c-table-wrap / inline-size;
+      overflow: auto;
+      scrollbar-gutter: stable;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+    }
+
+    .c-table {
+      inline-size: 100%;
+
+      /* The table can be wider than the wrap (horizontal scroll). Min keeps
+         columns readable rather than squished. */
+      min-inline-size: var(--c-table-min, 48rem);
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .c-table :where(th, td) {
+      padding: var(--pl-space-3) var(--pl-space-4);
+      border-block-end: 1px solid var(--pl-color-border);
+      text-align: start;
+      vertical-align: middle;
+
+      /* nowrap for data cells keeps tabular columns aligned; long text wraps
+         only where you add a modifier (future). */
+      white-space: nowrap;
+    }
+
+    .c-table :where(td) {
+      color: var(--pl-color-text);
+    }
+
+    .c-table :where(th) {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: var(--pl-z-raised);
+      background: var(--pl-color-surface);
+      font-size: var(--pl-text-sm);
+      font-weight: 600;
+      color: var(--pl-color-text-muted);
+
+      /* Keep the header border visible above the first scrolling row. */
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+
+    /* Tighten cell padding when the wrap is narrow (container query). */
+    @container c-table-wrap (inline-size < 40rem) {
+      .c-table :where(th, td) {
+        padding-inline: var(--pl-space-3);
+      }
+    }
+
+    /* Numeric columns — right-align for tabular scanning (counts, currency). */
+    .c-table :where([data-align="end"]) {
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .c-table :where([data-align="center"]) {
+      text-align: center;
+    }
+  }
+
+  /* Row hover — OUTSIDE @scope (live-state pseudo on tbody tr doesn't reliably
+     apply inside @scope; same lesson as .c-field item hovers). A subtle
+     surface-2 wash aids scanning without screaming. */
+  :where(.c-table) tbody tr {
+    transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+  }
+
+  :where(.c-table) tbody tr:hover {
+    background: var(--pl-color-surface-2);
+  }
+
+  /* Selection — a row carrying [aria-selected="true"] gets an accent wash. */
+  :where(.c-table) tbody tr[aria-selected="true"] {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-table) :where(th, td) {
+      border-block-end-color: CanvasText;
+    }
+  }
+}

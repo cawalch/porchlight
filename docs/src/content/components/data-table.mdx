@@ -1,0 +1,88 @@
+---
+title: Data table
+description: An enterprise data table — sticky headers, horizontal scroll with stable gutter, container-query padding, row hover, numeric alignment.
+status: stable
+since: 0.1.0
+---
+
+# Data table
+
+The `.c-table-wrap` + `.c-table` pair is an enterprise data table: sticky
+headers, horizontal scroll with a stable scrollbar gutter, container-query
+padding, row hover, and numeric column alignment.
+
+## Semantic HTML
+
+```html
+<div class="c-table-wrap">
+  <table class="c-table">
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th data-align="end">MRR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr aria-selected="true">
+        <td>Acme Ops</td>
+        <td data-align="end">$2,400</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+## Class contract
+
+| Selector                         | Role                                              |
+| -------------------------------- | ------------------------------------------------- |
+| `.c-table-wrap`                  | The scroll + query container (bordered, rounded). |
+| `.c-table`                       | The native `<table>`.                             |
+| `th`, `td`                       | Cells (styled via descendant selectors).          |
+| `[data-align="end"]`             | Right-align + `tabular-nums` for numeric columns. |
+| `[data-align="center"]`          | Center-align.                                     |
+| `tbody tr:hover`                 | Row hover wash (scanning aid).                    |
+| `tbody tr[aria-selected="true"]` | Selected row (accent wash).                       |
+
+## Tokens consumed
+
+`--pl-color-{surface,surface-2,text,text-muted,border,accent}`,
+`--pl-radius-lg`, `--pl-z-raised`, `--pl-text-sm`,
+`--pl-space-{3,4}`, `--pl-duration-1`, `--pl-ease-standard`.
+
+## Tokens exposed
+
+| Token           | Default | Purpose                                     |
+| --------------- | ------- | ------------------------------------------- |
+| `--c-table-min` | `48rem` | Min table width (drives horizontal scroll). |
+
+## Sticky headers
+
+`th { position: sticky; inset-block-start: 0; z-index: var(--pl-z-raised) }`
+pins headers to the top of the scroll container. The header's `background`
+covers scrolling rows beneath it.
+
+## Horizontal scroll
+
+`.c-table-wrap` has `overflow: auto` and `scrollbar-gutter: stable` — the
+gutter reserves space so content doesn't shift when the scrollbar appears (a
+common SaaS jitter bug). The table's `min-inline-size: var(--c-table-min)`
+ensures columns stay readable rather than squished.
+
+## Accessibility
+
+- **Semantics:** native `<table>` / `<thead>` / `<tbody>` / `<th scope="col">`
+  — full screen-reader support. Add `scope="col"` to headers for explicit
+  association (the framework styles any `th`).
+- **Row selection:** use `aria-selected="true"` on `<tr>` for selected rows;
+  pair with a checkbox or keyboard handler for full widget semantics (a future
+  data-grid component will own the full ARIA grid pattern).
+- **Numeric alignment:** `data-align="end"` right-aligns numbers and applies
+  `tabular-nums` so digits line up vertically — essential for scanning
+  currency/counts.
+
+## Theme & RTL
+
+Light/dark via tokens; RTL via logical properties (`inline-size`,
+`inset-block-start`, `padding-inline`, `border-block-end`, `text-align: end`).
+Forced-colors falls back to `CanvasText` borders.

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// A realistic SaaS table — accounts with plans, status, MRR, seats.
+const accounts = [
+  ['Acme Ops', 'Enterprise', 'Active', '$2,400', 48],
+  ['Northwind', 'Pro', 'Trialing', '$980', 12],
+  ['Globex', 'Pro', 'Past due', '$980', 8],
+  ['Initech', 'Team', 'Active', '$420', 5],
+  ['Umbrella', 'Enterprise', 'Active', '$2,400', 60],
+  ['Stark Industries', 'Pro', 'Active', '$980', 14],
+  ['Wayne Enterprises', 'Enterprise', 'Trialing', '$2,400', 32],
+  ['Hooli', 'Team', 'Past due', '$420', 4],
+] as const;
+---
+<BaseLayout title="Data table · Porchlight">
+  <h1>Data table</h1>
+  <p>
+    An enterprise data table — sticky headers, horizontal scroll with a stable
+    scrollbar gutter, container-query padding, row hover, and numeric column
+    alignment. Wrap a native <code>&lt;table class="c-table"&gt;</code> in a
+    <code>.c-table-wrap</code> for the scroll behavior. This is the most
+    data-heavy component — SaaS apps live in tables.
+  </p>
+
+  <h2>Account list</h2>
+  <div class="c-table-wrap">
+    <table class="c-table">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Plan</th>
+          <th>Status</th>
+          <th data-align="end">MRR</th>
+          <th data-align="end">Seats</th>
+        </tr>
+      </thead>
+      <tbody>
+        {accounts.map(([name, plan, status, mrr, seats], i) => (
+          <tr aria-selected={i === 0 ? 'true' : undefined}>
+            <td>{name}</td>
+            <td>{plan}</td>
+            <td><span class="c-badge" data-tone={status.toLowerCase().replace(' ', '-')}>{status}</span></td>
+            <td data-align="end">{mrr}</td>
+            <td data-align="end">{seats}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Horizontal scroll</h2>
+  <p>The table below has more columns than the panel can show — scroll horizontally. The stable gutter prevents layout shift.</p>
+  <div class="c-table-wrap narrow" style="--c-table-min: 60rem;">
+    <table class="c-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Plan</th>
+          <th>Status</th>
+          <th data-align="end">MRR</th>
+          <th data-align="end">Seats</th>
+          <th data-align="end">Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {accounts.slice(0, 4).map(([name, plan, status, mrr, seats], i) => (
+          <tr>
+            <td>ACC-{1001 + i}</td>
+            <td>{name}</td>
+            <td>billing@{name.toLowerCase().replace(/[^a-z]/g, '')}.com</td>
+            <td>{plan}</td>
+            <td>{status}</td>
+            <td data-align="end">{mrr}</td>
+            <td data-align="end">{seats}</td>
+            <td data-align="end">2024-0{1 + i}-15</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Features</h2>
+  <ul>
+    <li><strong>Sticky headers</strong> — stay pinned while the body scrolls.</li>
+    <li><strong>Row hover</strong> — a subtle <code>surface-2</code> wash aids scanning.</li>
+    <li><strong>Numeric columns</strong> — <code>data-align="end"</code> right-aligns + uses <code>tabular-nums</code>.</li>
+    <li><strong>Selection</strong> — <code>aria-selected="true"</code> gets an accent wash (first row above).</li>
+    <li><strong>Container-query padding</strong> — tightens when the wrap is narrow.</li>
+  </ul>
+</BaseLayout>
+
+<style>
+  /* A narrow wrap to force horizontal scroll at desktop width. */
+  .narrow {
+    max-inline-size: 100%;
+  }
+</style>
