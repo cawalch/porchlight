@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * Scaffold smoke tests — confirm the site builds and the accessible chrome
+ * Scaffold smoke tests: confirm the site builds and the accessible chrome
  * (skip link, heading, title) is present. Per-component visual + axe suites
  * arrive with the components in Phase 3.
  */

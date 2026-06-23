@@ -1,13 +1,13 @@
 ---
 title: Utilities
-description: A small, finite set of single-purpose helpers for accessibility, layout, and typography — not a utility-first framework.
+description: A small, finite set of single-purpose helpers for accessibility, layout, and typography. Not a utility-first framework.
 order: 2
 ---
 
 # Utilities
 
 Porchlight utilities are a **small, finite set** of single-purpose helpers.
-This is deliberately not a utility-first framework — there is no utility for
+This is deliberately not a utility-first framework: there is no utility for
 every CSS property. Each utility earns its place by serving a recurring need
 that doesn't belong to a component.
 
@@ -24,7 +24,7 @@ extra context for AT.
 ```
 
 This is the one utility (and one of the few places in the framework) that uses
-`!important` — it's an a11y guarantee that must win over any context. It
+`!important`. It's an a11y guarantee that must win over any context. It
 restores itself automatically on `:focus` / `:active` (e.g. a skip link
 becomes visible when tabbed to).
 
@@ -39,7 +39,7 @@ One-line truncation with an ellipsis.
 ## `.u-flow`
 
 Vertical rhythm for a prose block. The sibling selector (`> * + *`) adds space
-between top-level children — no top margin on the first, no bottom on the last.
+between top-level children: no top margin on the first, no bottom on the last.
 Tune the step via `--u-flow-space`.
 
 ```html
@@ -51,7 +51,7 @@ Tune the step via `--u-flow-space`.
 
 ## `.u-surface`
 
-Panel styling for ad-hoc grouping — background, text color, border, radius.
+Panel styling for ad-hoc grouping: background, text color, border, radius.
 For inline callouts that don't need a full `.c-card`.
 
 ```html
@@ -68,8 +68,8 @@ Secondary/caption text color.
 
 ## `.u-full-bleed`
 
-Break an element out to the viewport edges inside a constrained container — a
-wide table or image in a prose column.
+Break an element out to the viewport edges inside a constrained container (a
+wide table or image in a prose column).
 
 ```html
 <figure class="u-full-bleed">...</figure>

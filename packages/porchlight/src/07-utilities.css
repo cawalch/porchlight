@@ -1,22 +1,22 @@
 /*
- * Porchlight — utilities
+ * Porchlight: utilities
  * ===========================================================================
- * A small, finite set of single-purpose helpers for repeated a11y, layout, and
- * typography needs. NOT a utility-first framework — there is deliberately no
- * utility for every CSS property. Each utility earns its place by serving a
- * recurring need a component shouldn't own.
+ * A small, finite set of single-purpose helpers for repeated a11y, layout,
+ * and typography needs. NOT a utility-first framework: there is deliberately
+ * no utility for every CSS property. Each utility earns its place by serving
+ * a recurring need a component shouldn't own.
  *
  * Allow-list for !important: utilities is the SECOND place it's permitted
  * (after reset [hidden] and themes reduced-motion). .u-visually-hidden uses it
- * because the rule MUST win over any component/context — hiding text from
+ * because the rule MUST win over any component/context. Hiding text from
  * sighted users while keeping it for AT is an a11y guarantee that can't be
  * accidentally overridden.
  *
  * Naming: .u-* (utility); --u-* are instance-config tokens (e.g. --u-flow-space).
  */
 @layer porchlight.utilities {
-  /* Visually hide content while keeping it available to assistive tech — the
-     canonical sr-only pattern. The element collapses to a 1px box, is clipped,
+  /* Visually hide content while keeping it available to assistive tech (the
+     canonical sr-only pattern). The element collapses to a 1px box, is clipped,
      and is removed from the flow. Used for icon-only buttons, skip links, etc. */
   :where(.u-visually-hidden) {
     position: absolute !important;
@@ -40,16 +40,16 @@
     margin: 0 !important;
   }
 
-  /* One-line truncation — table cells, breadcrumb items, file names. */
+  /* One-line truncation: table cells, breadcrumb items, file names. */
   :where(.u-truncate) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  /* Vertical rhythm for prose blocks — sibling selector adds space between
-     top-level children, not before the first / after the last. Tune via
-     --u-flow-space. */
+  /* Vertical rhythm for prose blocks. The sibling selector adds space
+     between top-level children, not before the first / after the last. Tune
+     via --u-flow-space. */
   :where(.u-flow) > * + * {
     margin-block-start: var(--u-flow-space, var(--pl-space-4));
   }
@@ -63,12 +63,12 @@
     border-radius: var(--pl-radius-lg);
   }
 
-  /* Muted text — secondary/caption copy. */
+  /* Muted text: secondary/caption copy. */
   :where(.u-muted) {
     color: var(--pl-color-text-muted);
   }
 
-  /* Full-bleed — break an element out to the viewport edges inside a
+  /* Full-bleed: break an element out to the viewport edges inside a
      constrained container (e.g. a wide table or image in a prose column). */
   :where(.u-full-bleed) {
     inline-size: 100vi;

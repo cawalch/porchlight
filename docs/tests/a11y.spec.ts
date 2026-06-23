@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 /**
- * Deterministic accessibility scan — the PLAN §18 mandated check.
+ * Deterministic accessibility scan, the PLAN §18 mandated check.
  *
  * Runs axe-core against every preview page and asserts zero serious/critical
  * violations at WCAG 2.2 AA. This is the deterministic a11y layer that can't
@@ -54,7 +54,7 @@ for (const path of PAGES) {
           serious
             .map(
               (v) =>
-                `  ${v.impact} — ${v.id}: ${v.description}\n` +
+                `  ${v.impact}: ${v.id}: ${v.description}\n` +
                 v.nodes
                   .slice(0, 3)
                   .map((n) => `      target: ${JSON.stringify(n.target)}`)
