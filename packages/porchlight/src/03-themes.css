@@ -1,0 +1,79 @@
+/*
+ * Porchlight — themes
+ * ===========================================================================
+ * Theme, density, and accessibility-media overrides. These do NOT redefine the
+ * palette — they steer it:
+ *
+ *   - [data-theme]      sets color-scheme, which drives light-dark() in tokens.
+ *   - [data-density]    resizes controls via the control tokens.
+ *   - prefers-reduced-motion  zeroes the motion scale (and any transitions).
+ *   - forced-colors     remaps semantic tokens to Windows system colors so the
+ *                       UI stays legible under High Contrast mode.
+ *
+ * `:where()` keeps every selector at zero specificity, so an app can override
+ * any of this without a fight. The `!important` rules under reduced-motion are
+ * accessibility-critical (PLAN's allow-list): motion must stop regardless of
+ * component-level transition declarations.
+ */
+@layer porchlight.themes {
+  /* Explicit theme. Omit the attribute to inherit the system color-scheme. */
+  :where([data-theme="light"]) {
+    color-scheme: light;
+  }
+
+  :where([data-theme="dark"]) {
+    color-scheme: dark;
+  }
+
+  /* Density — control geometry only; spacing/type/radius are unchanged. */
+  :where([data-density="compact"]) {
+    --pl-control-block-size: 2rem;
+    --pl-control-padding-inline: var(--pl-space-3);
+    --pl-control-gap: var(--pl-space-1);
+  }
+
+  :where([data-density="comfortable"]) {
+    --pl-control-block-size: 2.5rem;
+  }
+
+  :where([data-density="touch"]) {
+    --pl-control-block-size: 2.75rem;
+    --pl-control-padding-inline: var(--pl-space-5);
+  }
+
+  /* Motion: respect the OS preference. Scale token kills framework motion;
+     the universal rule guarantees no stray transition outlasts it. */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --pl-motion-scale: 0;
+
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
+
+  /* Forced colors (Windows High Contrast): remap to system colors. */
+  @media (forced-colors: active) {
+    :root {
+      --pl-color-bg: Canvas;
+      --pl-color-surface: Canvas;
+      --pl-color-surface-2: Canvas;
+      --pl-color-text: CanvasText;
+      --pl-color-text-muted: CanvasText;
+      --pl-color-border: ButtonBorder;
+      --pl-color-accent: Highlight;
+      --pl-color-accent-text: HighlightText;
+      --pl-focus-color: Highlight;
+      --pl-shadow-1: none;
+      --pl-shadow-2: none;
+      --pl-shadow-3: none;
+    }
+  }
+}
