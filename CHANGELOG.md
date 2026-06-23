@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Badge** (`.c-badge`). A compact inline label for statuses, counts, and
+  tags. Tones via `[data-tone]` (`accent`/`success`/`warning`/`danger`, plus a
+  neutral default) consume the WCAG-AA `-bg`/`-text` token pairs, so they're
+  legible in both themes by construction. Optional `.c-badge__dot` status pip.
 - **Card** (`.c-card`). A raised surface for grouping related content —
   header + body (+ optional footer). Elevation comes from a soft shadow, not a
   bg contrast. The header collapses to a stack via a container query when the
