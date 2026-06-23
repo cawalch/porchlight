@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   every rule lives inside one top-level `@layer porchlight { … }` with nine
   deterministic sub-layers; a minimal `:where()`-based reset replaces any
   normalize.css dependency. Consumers override via `@layer porchlight, app;`.
+- **Primitive tokens** (`--pl-*`). Registered `@property` tokens
+  (motion-scale, radius-control, focus-size) plus raw scales: fonts, fluid
+  type, leading, spacing, radius, motion, z-index, a 9-step OKLCH brand ramp,
+  control sizing, focus geometry, and shadows. Semantic colors and theme /
+  density / forced-colors machinery follow in the next release.
 
 ## [0.0.0] - in development
 

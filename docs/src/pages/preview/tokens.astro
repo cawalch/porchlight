@@ -1,0 +1,93 @@
+---
+import tokensCss from '@cawalch/porchlight/src/02-tokens.css?raw';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Swatch from '../../components/Swatch.astro';
+import { parseTokens, isColorValue } from '../../lib/tokens';
+
+const { registered, groups } = parseTokens(tokensCss);
+---
+<BaseLayout title="Tokens · Porchlight">
+  <h1>Primitive tokens</h1>
+  <p>
+    Raw design scales, parsed live from
+    <code>packages/porchlight/src/02-tokens.css</code> at build time — so this
+    page can never drift from the source. Semantic colors, theme, density,
+    reduced-motion, and forced-colors tokens land next.
+  </p>
+
+  <h2>Registered properties</h2>
+  <p>
+    <code>@property</code> gives these a type and initial value, so they animate
+    cleanly and inherit predictably.
+  </p>
+  <table class="tokens">
+    <thead>
+      <tr><th scope="col">Name</th><th scope="col">Syntax</th><th scope="col">Inherits</th><th scope="col">Initial</th></tr>
+    </thead>
+    <tbody>
+      {registered.map((p) => (
+        <tr>
+          <td><code>{p.name}</code></td>
+          <td><code>{p.syntax}</code></td>
+          <td>{p.inherits ? 'yes' : 'no'}</td>
+          <td><code>{p.initialValue}</code></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {groups.map((group) => (
+    <section>
+      <h2>{group.name}</h2>
+      <ul class="token-grid">
+        {group.tokens.map((t) => (
+          <li>
+            {isColorValue(t.value)
+              ? <Swatch name={t.name} value={t.value} />
+              : <div class="kv">
+                  <code class="kv__name">{t.name}</code>
+                  <code class="kv__value">{t.value}</code>
+                </div>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>
+
+<style>
+  .tokens {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+  .tokens :where(th, td) {
+    padding: 0.5rem;
+    border-block-end: 1px solid var(--doc-border);
+    text-align: start;
+    vertical-align: middle;
+  }
+  .tokens th {
+    color: var(--doc-text-muted);
+    font-size: 0.875rem;
+  }
+  .token-grid {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0;
+    margin-block-end: 2rem;
+    list-style: none;
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 0.75rem;
+  }
+  .kv__name {
+    font-weight: 600;
+  }
+  .kv__value {
+    color: var(--doc-text-muted);
+    font-size: 0.8125rem;
+    word-break: break-word;
+  }
+</style>
