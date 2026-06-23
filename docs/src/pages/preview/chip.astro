@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Chip · Porchlight">
+  <h1>Chip</h1>
+  <p>
+    A compact tag/pill with optional remove button. Uses relative color syntax
+    (<code>oklch(from ...)</code>) to derive tinted backgrounds from tokens.
+    Four tones, small size variant, and a wrapping group container.
+  </p>
+
+  <h2>Tones</h2>
+  <div class="c-chip-group">
+    <span class="c-chip">Default</span>
+    <span class="c-chip" data-tone="success">Active</span>
+    <span class="c-chip" data-tone="warning">Pending</span>
+    <span class="c-chip" data-tone="danger">Blocked</span>
+  </div>
+
+  <h2>Removable</h2>
+  <div class="c-chip-group">
+    <span class="c-chip">
+      JavaScript
+      <button class="c-chip__remove" aria-label="Remove JavaScript">x</button>
+    </span>
+    <span class="c-chip" data-tone="success">
+      TypeScript
+      <button class="c-chip__remove" aria-label="Remove TypeScript">x</button>
+    </span>
+    <span class="c-chip" data-tone="warning">
+      Python
+      <button class="c-chip__remove" aria-label="Remove Python">x</button>
+    </span>
+    <span class="c-chip" data-tone="danger">
+      Rust
+      <button class="c-chip__remove" aria-label="Remove Rust">x</button>
+    </span>
+  </div>
+
+  <h2>Sizes</h2>
+  <div class="c-chip-group">
+    <span class="c-chip" data-size="sm">Small chip</span>
+    <span class="c-chip">Default chip</span>
+    <span class="c-chip" data-size="sm" data-tone="success">Small success</span>
+  </div>
+
+  <h2>In context (filter bar)</h2>
+  <div class="c-toolbar" style="margin-block-start: var(--pl-space-4);">
+    <div class="c-toolbar__leading">
+      <span class="u-muted" style="font-size: var(--pl-text-sm);">Filters:</span>
+      <div class="c-chip-group">
+        <span class="c-chip" data-tone="success">
+          Status: Open
+          <button class="c-chip__remove" aria-label="Remove filter">x</button>
+        </span>
+        <span class="c-chip">
+          Assignee: Me
+          <button class="c-chip__remove" aria-label="Remove filter">x</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

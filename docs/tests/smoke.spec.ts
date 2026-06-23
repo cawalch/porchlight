@@ -459,4 +459,53 @@ test.describe("docs scaffold", () => {
     await expect(page.getByText("WCAG-AA verified")).toBeVisible();
     await expect(page.getByText("pnpm add @cawalch/porchlight")).toBeVisible();
   });
+
+  test("tooltip renders trigger and tooltip body", async ({ page }) => {
+    await page.goto("./preview/tooltip");
+    await expect(
+      page.getByRole("heading", { name: "Tooltip", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-tooltip__trigger").first()).toBeVisible();
+    await expect(page.locator(".c-tooltip__body").first()).toHaveAttribute(
+      "role",
+      "tooltip",
+    );
+  });
+
+  test("accordion renders details and summary", async ({ page }) => {
+    await page.goto("./preview/accordion");
+    await expect(
+      page.getByRole("heading", { name: "Accordion", exact: true }),
+    ).toBeVisible();
+    const items = page.locator(".c-accordion__item");
+    expect(await items.count()).toBeGreaterThanOrEqual(3);
+    await expect(page.locator(".c-accordion__icon").first()).toBeVisible();
+    // The open-by-default item exists.
+    await expect(page.locator(".c-accordion__item[open]")).toBeVisible();
+  });
+
+  test("switch renders tracks and thumbs", async ({ page }) => {
+    await page.goto("./preview/switch");
+    await expect(
+      page.getByRole("heading", { name: "Switch", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-switch__track").first()).toBeVisible();
+    await expect(page.locator(".c-switch__thumb").first()).toBeVisible();
+    await expect(page.locator(".c-switch[data-size='sm']").first()).toBeVisible();
+    await expect(page.locator(".c-switch[data-size='lg']").first()).toBeVisible();
+  });
+
+  test("chip renders all tones and remove buttons", async ({ page }) => {
+    await page.goto("./preview/chip");
+    await expect(
+      page.getByRole("heading", { name: "Chip", exact: true }),
+    ).toBeVisible();
+    for (const tone of ["success", "warning", "danger"]) {
+      await expect(
+        page.locator(`.c-chip[data-tone='${tone}']`).first(),
+      ).toBeVisible();
+    }
+    await expect(page.locator(".c-chip__remove").first()).toBeVisible();
+    await expect(page.locator(".c-chip-group").first()).toBeVisible();
+  });
 });

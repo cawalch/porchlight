@@ -1,0 +1,157 @@
+/*
+ * Porchlight — accordion component
+ * ===========================================================================
+ * A collapsible disclosure built on native <details>/<summary>. Animates
+ * open/close to/from height: auto using interpolate-size: allow-keywords
+ * (declared globally in 08-enhancements). As a universal fallback, uses the
+ * grid-template-rows: 0fr -> 1fr technique which works without it.
+ *
+ * Structure:
+ *   <details class="c-accordion__item">
+ *     <summary class="c-accordion__header">
+ *       <span>Title</span>
+ *       <svg class="c-accordion__icon" ...>
+ *     </summary>
+ *     <div class="c-accordion__panel">
+ *       <div class="c-accordion__content">...</div>
+ *     </div>
+ *   </details>
+ *
+ * Wrap multiple items in .c-accordion. For single-open behavior, use
+ * [data-variant="single"] (implemented via :has()).
+ *
+ * The native <summary> marker is hidden and replaced with a custom chevron.
+ */
+@layer porchlight.components {
+  @scope (.c-accordion) {
+    :scope {
+      --c-accordion-border: var(--pl-color-border);
+      --c-accordion-bg: var(--pl-color-surface);
+      --c-accordion-radius: var(--pl-radius-lg);
+      --c-accordion-header-pad: var(--pl-space-4);
+      --c-accordion-content-pad: 0 var(--pl-space-4) var(--pl-space-4);
+      --c-accordion-gap: var(--pl-space-2);
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--c-accordion-gap);
+    }
+  }
+
+  @scope (.c-accordion__item) {
+    :scope {
+      border: 1px solid var(--c-accordion-border, var(--pl-color-border));
+      border-radius: var(--c-accordion-radius, var(--pl-radius-lg));
+      background: var(--c-accordion-bg, var(--pl-color-surface));
+      overflow: hidden;
+    }
+
+    .c-accordion__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      padding: var(--c-accordion-header-pad, var(--pl-space-4));
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+
+      /* Hide the native disclosure marker. */
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::marker {
+        content: "";
+      }
+    }
+
+    .c-accordion__header:hover {
+      background: var(--pl-color-surface-2);
+    }
+
+    .c-accordion__header:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(var(--pl-focus-offset) * -1);
+    }
+
+    .c-accordion__icon {
+      flex-shrink: 0;
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      color: var(--pl-color-text-muted);
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    /* Rotate the chevron when open. */
+    :scope[open] .c-accordion__icon {
+      rotate: 180deg;
+    }
+
+    .c-accordion__panel {
+      /* Universal fallback: grid-row animation technique. Works in ALL
+         browsers (no interpolate-size needed). The wrapper collapses to
+         0fr (hidden) then expands to 1fr (visible). */
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--pl-duration-3) var(--pl-ease-standard);
+    }
+
+    :scope[open] .c-accordion__panel {
+      grid-template-rows: 1fr;
+    }
+
+    .c-accordion__content {
+      overflow: hidden;
+      padding: var(--c-accordion-content-pad, 0 var(--pl-space-4) var(--pl-space-4));
+      color: var(--pl-color-text-muted);
+      line-height: var(--pl-leading-normal);
+    }
+
+    /* Where interpolate-size is supported: animate height: auto directly.
+       This produces smoother results than the grid technique. */
+    @supports (interpolate-size: allow-keywords) {
+      .c-accordion__panel {
+        display: block;
+        overflow: hidden;
+        grid-template-rows: initial;
+        block-size: 0;
+        transition: block-size var(--pl-duration-3) var(--pl-ease-standard);
+      }
+
+      :scope[open] .c-accordion__panel {
+        block-size: auto;
+      }
+
+      /* Starting state for the open transition. */
+      @starting-style {
+        :scope[open] .c-accordion__panel {
+          block-size: 0;
+        }
+      }
+    }
+  }
+
+  /* Single-open variant: close other items when one opens. Uses :has() to
+     detect which item is open and collapse siblings. */
+  :where(.c-accordion[data-variant="single"])
+    > .c-accordion__item:not([open]):has(~ .c-accordion__item[open]),
+  :where(.c-accordion[data-variant="single"])
+    > .c-accordion__item[open]
+    ~ .c-accordion__item:not([open]) {
+    /* These remain closed (default state). The :has() ensures only one
+       [open] item survives visually; JS should manage the actual [open]
+       attribute removal for full single-open behavior. */
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-accordion__item) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-accordion__header:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}

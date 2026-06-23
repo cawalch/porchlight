@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Switch · Porchlight">
+  <h1>Switch</h1>
+  <p>
+    A CSS-only toggle switch built on a native checkbox. No JavaScript for the
+    toggle itself: the checked state drives the thumb position via CSS.
+    RTL-aware, keyboard accessible, reduced-motion safe.
+  </p>
+
+  <h2>Basic</h2>
+  <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+    <label class="c-switch">
+      <input type="checkbox" role="switch" class="c-switch__input" />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Enable notifications</span>
+    </label>
+
+    <label class="c-switch">
+      <input type="checkbox" role="switch" class="c-switch__input" checked />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Dark mode</span>
+    </label>
+
+    <label class="c-switch">
+      <input type="checkbox" role="switch" class="c-switch__input" />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Auto-save drafts</span>
+    </label>
+  </div>
+
+  <h2>Sizes</h2>
+  <div class="l-stack" style="--l-stack-gap: var(--pl-space-3); margin-block-start: var(--pl-space-4);">
+    <label class="c-switch" data-size="sm">
+      <input type="checkbox" role="switch" class="c-switch__input" checked />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Small</span>
+    </label>
+
+    <label class="c-switch">
+      <input type="checkbox" role="switch" class="c-switch__input" checked />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Default</span>
+    </label>
+
+    <label class="c-switch" data-size="lg">
+      <input type="checkbox" role="switch" class="c-switch__input" checked />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Large</span>
+    </label>
+  </div>
+
+  <h2>Disabled</h2>
+  <div style="margin-block-start: var(--pl-space-4);">
+    <label class="c-switch">
+      <input type="checkbox" role="switch" class="c-switch__input" disabled />
+      <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+      <span class="c-switch__label">Disabled (off)</span>
+    </label>
+  </div>
+</BaseLayout>

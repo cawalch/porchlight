@@ -1,0 +1,51 @@
+---
+title: Accordion
+description: Collapsible disclosure using native details/summary with auto-height animation.
+status: stable
+since: 1.0.0
+---
+
+# Accordion
+
+The `.c-accordion` wraps `<details>/<summary>` elements for a collapsible
+disclosure UI. Animates open/close to/from `height: auto` using
+`interpolate-size: allow-keywords` where supported, with a universal
+`grid-template-rows: 0fr to 1fr` fallback.
+
+## Semantic HTML
+
+```html
+<div class="c-accordion">
+  <details class="c-accordion__item">
+    <summary class="c-accordion__header">
+      <span>Section title</span>
+      <svg class="c-accordion__icon">...</svg>
+    </summary>
+    <div class="c-accordion__panel">
+      <div class="c-accordion__content">
+        Content goes here.
+      </div>
+    </div>
+  </details>
+</div>
+```
+
+## Animation strategy
+
+Two techniques are used, layered:
+
+1. **Universal fallback:** `grid-template-rows: 0fr to 1fr` on the panel
+   wrapper. Works in all browsers. Smooth height transition.
+2. **Enhanced:** Where `interpolate-size: allow-keywords` is supported,
+   `block-size: 0 to auto` animates directly. Produces smoother results.
+
+## Class contract
+
+| Selector                | Role                                      |
+| ----------------------- | ----------------------------------------- |
+| `.c-accordion`          | Container for items.                     |
+| `.c-accordion__item`    | A `<details>` element.                   |
+| `.c-accordion__header`  | The `<summary>` (click target).          |
+| `.c-accordion__icon`    | Chevron icon (rotates on open).          |
+| `.c-accordion__panel`   | Animated wrapper (grid/auto-height).     |
+| `.c-accordion__content` | Inner content (padding + overflow).       |

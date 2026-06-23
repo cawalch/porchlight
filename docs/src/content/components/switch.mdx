@@ -1,0 +1,46 @@
+---
+title: Switch
+description: CSS-only toggle switch built on a native checkbox. No JavaScript for the toggle.
+status: stable
+since: 1.0.0
+---
+
+# Switch
+
+The `.c-switch` is a toggle switch built on a native checkbox. The thumb
+slides via CSS transition on `inset-inline-start`. The `:checked` state
+drives the on/off styling. No JavaScript required for the toggle itself.
+
+## Semantic HTML
+
+```html
+<label class="c-switch">
+  <input type="checkbox" role="switch" class="c-switch__input" />
+  <span class="c-switch__track">
+    <span class="c-switch__thumb"></span>
+  </span>
+  <span class="c-switch__label">Enable feature</span>
+</label>
+```
+
+## Accessibility
+
+The native checkbox is visually hidden but accessible to assistive
+technology. The `role="switch"` attribute communicates the toggle semantics.
+Keyboard: Space toggles. Focus ring appears on the track.
+
+## RTL support
+
+The thumb slides in the correct logical direction automatically because it
+uses `inset-inline-start` (not `left`), which flips under `dir="rtl"`.
+
+## Class contract
+
+| Selector              | Role                                      |
+| --------------------- | ----------------------------------------- |
+| `.c-switch`           | Container label (flex row).              |
+| `.c-switch__input`    | Visually hidden checkbox.                |
+| `.c-switch__track`    | The pill background.                     |
+| `.c-switch__thumb`    | The sliding circle.                      |
+| `.c-switch__label`    | Text label.                              |
+| `[data-size]`         | `sm`, default, `lg`.                     |

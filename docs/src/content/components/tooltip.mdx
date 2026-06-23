@@ -1,0 +1,43 @@
+---
+title: Tooltip
+description: Hover/focus tooltip using CSS Anchor Positioning. Zero JavaScript for positioning.
+status: stable
+since: 1.0.0
+---
+
+# Tooltip
+
+The `.c-tooltip` wraps a trigger element and displays a tooltip body on
+hover or keyboard focus. Positioning uses CSS Anchor Positioning
+(`anchor-name`, `position-anchor`, `position-area`) with
+`position-try-fallbacks` for collision handling.
+
+## Semantic HTML
+
+```html
+<span class="c-tooltip" style="--c-tooltip-anchor: --tip-1;">
+  <span class="c-tooltip__trigger">
+    <button aria-describedby="tip-1">Help</button>
+  </span>
+  <span class="c-tooltip__body" role="tooltip" id="tip-1">
+    Helpful context here.
+  </span>
+</span>
+```
+
+Each tooltip instance needs a unique `--c-tooltip-anchor` value.
+
+## Progressive enhancement
+
+Without anchor positioning support, the tooltip body is hidden entirely
+(`@supports not (position-anchor: --x)`) to avoid misleading placement.
+The trigger remains fully functional via `aria-describedby`.
+
+## Class contract
+
+| Selector              | Role                                   |
+| --------------------- | -------------------------------------- |
+| `.c-tooltip`          | Wrapper (inline-flex, relative).      |
+| `.c-tooltip__trigger` | The anchor element (`anchor-name`).   |
+| `.c-tooltip__body`    | The tooltip text (`role="tooltip"`).  |
+| `--c-tooltip-anchor`  | Unique anchor name per instance.       |
