@@ -1,0 +1,38 @@
+---
+title: Scroll Progress
+description: A fixed progress bar that fills as you scroll. Zero JavaScript via scroll-driven animations.
+status: stable
+since: 1.0.0
+---
+
+# Scroll Progress
+
+The `.c-scroll-progress` renders a fixed bar at the viewport top that fills
+proportionally as the user scrolls the page. Uses scroll-driven animations
+(`animation-timeline: scroll(root)`) with zero JavaScript.
+
+## Semantic HTML
+
+```html
+<div class="c-scroll-progress"></div>
+<!-- Place at the top of <body> -->
+```
+
+## Progressive enhancement
+
+Where `animation-timeline: scroll()` is not supported, the bar is hidden
+entirely via `@supports not` to avoid showing a misleading partial fill.
+
+## Per-section progress
+
+To track a scroll container instead of the root, override
+`animation-timeline` with a named scroll container:
+
+```css
+.my-scroll-area {
+  scroll-timeline-name: --my-scroll;
+}
+.my-scroll-area .c-scroll-progress {
+  animation-timeline: --my-scroll;
+}
+```

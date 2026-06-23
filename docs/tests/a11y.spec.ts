@@ -55,6 +55,9 @@ const PAGES = [
   "/preview/accordion",
   "/preview/switch",
   "/preview/chip",
+  "/preview/drawer",
+  "/preview/toast",
+  "/preview/scroll-progress",
   "/preview/utilities",
   "/preview/enhancements",
 ];

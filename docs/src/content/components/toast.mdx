@@ -1,0 +1,48 @@
+---
+title: Toast
+description: Transient notifications with @starting-style enter animation. Auto-stacking via fixed container.
+status: stable
+since: 1.0.0
+---
+
+# Toast
+
+The `.c-toast` is a transient notification that slides in from the screen
+edge. Unlike alerts (inline), toasts are overlay-level (z-index 1100) and
+auto-dismiss via a JavaScript timer. The CSS handles the visual
+entrance/exit via `@starting-style`.
+
+## Semantic HTML
+
+```html
+<div class="c-toast-stack" role="region" aria-label="Notifications">
+  <div class="c-toast" data-tone="success" data-visible role="status">
+    <span class="c-toast__icon"><svg>...</svg></span>
+    <div class="c-toast__content">
+      <span class="c-toast__title">Saved</span>
+      <span class="c-toast__body">Changes were saved.</span>
+    </div>
+    <button class="c-toast__close" aria-label="Dismiss">x</button>
+  </div>
+</div>
+```
+
+## Enter/exit
+
+The `[data-visible]` attribute triggers the enter transition. Removing it
+triggers the exit. JavaScript should set this attribute when adding a toast,
+and remove it (then delete the element after the transition) on dismiss.
+
+## Class contract
+
+| Selector              | Role                                      |
+| --------------------- | ----------------------------------------- |
+| `.c-toast-stack`      | Fixed container (bottom corner).         |
+| `.c-toast`            | Individual toast notification.           |
+| `.c-toast__icon`      | Leading icon (tone-colored).             |
+| `.c-toast__content`   | Title + body wrapper.                    |
+| `.c-toast__title`     | Bold heading.                            |
+| `.c-toast__body`      | Supporting text (muted).                 |
+| `.c-toast__close`     | Dismiss button.                          |
+| `[data-visible]`      | Triggers enter transition.               |
+| `[data-tone]`         | `success`, `warning`, `danger` (default = accent). |

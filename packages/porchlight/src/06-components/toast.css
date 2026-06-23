@@ -1,0 +1,163 @@
+/*
+ * Porchlight — toast notification component
+ * ===========================================================================
+ * A transient notification that slides in from a screen edge. Unlike alerts
+ * (inline), toasts are overlay-level and auto-dismiss (via JS timer; the CSS
+ * handles the visual entrance/exit).
+ *
+ * Uses @starting-style for the enter animation. The toast stack is a fixed-
+ * position flex column at the bottom-corner of the screen.
+ *
+ * Structure:
+ *   <div class="c-toast-stack" role="region" aria-label="Notifications">
+ *     <div class="c-toast" data-tone="success" role="status">
+ *       <span class="c-toast__icon">...</span>
+ *       <div class="c-toast__content">
+ *         <span class="c-toast__title">Saved</span>
+ *         <span class="c-toast__body">Changes were saved.</span>
+ *       </div>
+ *       <button class="c-toast__close" aria-label="Dismiss">x</button>
+ *     </div>
+ *   </div>
+ *
+ * Tones: default (info), success, warning, danger.
+ * z-index: --pl-z-toast (1100, above overlays/dialogs at 1000).
+ */
+@layer porchlight.components {
+  /* Toast stack: fixed positioning, bottom-corner. */
+  :where(.c-toast-stack) {
+    position: fixed;
+    inset-block-end: var(--pl-space-4);
+    inset-inline-end: var(--pl-space-4);
+    z-index: var(--pl-z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-2);
+    inline-size: min(24rem, calc(100vi - 2 * var(--pl-space-4)));
+
+    /* Prevent the stack from stealing pointer events in empty areas. */
+    pointer-events: none;
+  }
+
+  @scope (.c-toast) {
+    :scope {
+      --c-toast-tone: var(--pl-color-accent);
+      --c-toast-pad: var(--pl-space-3) var(--pl-space-4);
+      --c-toast-radius: var(--pl-radius-lg);
+      --c-toast-gap: var(--pl-space-3);
+
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--c-toast-gap);
+      align-items: start;
+      padding: var(--c-toast-pad);
+      border: 1px solid var(--pl-color-border);
+      border-inline-start: 4px solid var(--c-toast-tone);
+      border-radius: var(--c-toast-radius);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-3);
+      pointer-events: auto;
+
+      /* Enter animation: slide in from the right + fade. */
+      opacity: 0;
+      transform: translateX(100%);
+      transition:
+        opacity var(--pl-duration-3) var(--pl-ease-standard),
+        transform var(--pl-duration-3) var(--pl-ease-standard);
+
+      /* Use @starting-style so the initial render animates from hidden. */
+      interpolate-size: allow-keywords;
+    }
+
+    /* Settled state (after enter). */
+    :scope[data-visible] {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @starting-style {
+      :scope[data-visible] {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+
+    /* Tone variants. */
+    :scope[data-tone="success"] {
+      --c-toast-tone: var(--pl-color-success);
+    }
+
+    :scope[data-tone="warning"] {
+      --c-toast-tone: var(--pl-color-warning);
+    }
+
+    :scope[data-tone="danger"] {
+      --c-toast-tone: var(--pl-color-danger);
+    }
+
+    .c-toast__icon {
+      display: flex;
+      align-items: flex-start;
+      color: var(--c-toast-tone);
+      flex-shrink: 0;
+    }
+
+    .c-toast__icon svg {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
+
+    .c-toast__content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+      min-inline-size: 0;
+    }
+
+    .c-toast__title {
+      font-weight: 600;
+      font-size: var(--pl-text-sm);
+    }
+
+    .c-toast__body {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-toast__close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-toast__close:hover {
+      background: var(--pl-color-surface-2);
+    }
+
+    .c-toast__close:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-toast) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+
+    :where(.c-toast__close:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}
