@@ -1,0 +1,39 @@
+---
+title: Reveal
+description: Elements that fade/slide in as they enter the viewport. Zero JavaScript via scroll-driven animations.
+status: stable
+since: 1.0.0
+---
+
+# Reveal
+
+The `.c-reveal` component applies a fade-and-slide animation triggered by
+scroll position. Uses `animation-timeline: view()` with zero JavaScript
+and no IntersectionObserver.
+
+## Semantic HTML
+
+```html
+<div class="c-reveal">
+  <h2>Section title</h2>
+  <p>Content fades in as this enters the viewport.</p>
+</div>
+```
+
+## Delay variants
+
+Stagger reveals with `[data-delay]`:
+
+```html
+<div class="l-grid">
+  <div class="c-card c-reveal">Card 1</div>
+  <div class="c-card c-reveal" data-delay="1">Card 2</div>
+  <div class="c-card c-reveal" data-delay="2">Card 3</div>
+  <div class="c-card c-reveal" data-delay="3">Card 4</div>
+</div>
+```
+
+## Progressive enhancement
+
+Where `animation-timeline: view()` is not supported, elements are always
+visible (`opacity: 1`, no transform). No content is ever hidden.

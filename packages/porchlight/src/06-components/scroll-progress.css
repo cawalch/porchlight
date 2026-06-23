@@ -1,0 +1,66 @@
+/*
+ * Porchlight — scroll progress bar component
+ * ===========================================================================
+ * A fixed bar at the viewport top that fills as the user scrolls the page.
+ * Uses scroll-driven animations (animation-timeline: scroll()) — zero
+ * JavaScript for the progress tracking.
+ *
+ * @supports-gated: where scroll-driven animations are not supported, the bar
+ * is hidden entirely (no misleading partial fill).
+ *
+ * Structure:
+ *   <div class="c-scroll-progress" data-tone="accent"></div>
+ *
+ * Place at the top of the page (fixed position). Tone variants via [data-tone].
+ * For per-section progress, set animation-timeline to a named scroll
+ * container instead of the root.
+ */
+@layer porchlight.components {
+  /* Scroll-driven progress bar. */
+  @supports (animation-timeline: scroll()) {
+    :where(.c-scroll-progress) {
+      --c-progress-tone: var(--pl-color-accent);
+
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      z-index: var(--pl-z-sticky);
+      block-size: 3px;
+      transform-origin: inline-start;
+      background: var(--c-progress-tone);
+
+      /* Animate scaleX from 0 to 1 as the page scrolls. */
+      animation: c-scroll-progress-grow auto linear;
+      animation-timeline: scroll(root);
+    }
+
+    :where(.c-scroll-progress[data-tone="success"]) {
+      --c-progress-tone: var(--pl-color-success);
+    }
+
+    :where(.c-scroll-progress[data-tone="warning"]) {
+      --c-progress-tone: var(--pl-color-warning);
+    }
+
+    :where(.c-scroll-progress[data-tone="danger"]) {
+      --c-progress-tone: var(--pl-color-danger);
+    }
+  }
+
+  /* Without scroll-driven animation support, hide the bar. */
+  @supports not (animation-timeline: scroll()) {
+    :where(.c-scroll-progress) {
+      display: none;
+    }
+  }
+
+  @keyframes c-scroll-progress-grow {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}

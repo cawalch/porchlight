@@ -1,0 +1,47 @@
+---
+title: Drawer
+description: Off-canvas slide-over panel using Popover API with @starting-style animation.
+status: stable
+since: 1.0.0
+---
+
+# Drawer
+
+The `.c-drawer` is an off-canvas panel that slides in from a viewport edge.
+It uses the native Popover API for top-layer rendering and light-dismiss,
+combined with `@starting-style` for a smooth enter/exit animation.
+
+## Semantic HTML
+
+```html
+<button popovertarget="my-drawer">Open</button>
+
+<div popover class="c-drawer" id="my-drawer" data-side="end">
+  <div class="c-drawer__header">
+    <h2 class="c-drawer__title">Title</h2>
+    <button popovertarget="my-drawer" aria-label="Close">x</button>
+  </div>
+  <div class="c-drawer__body">Content</div>
+  <div class="c-drawer__footer">
+    <button class="c-button" data-variant="ghost">Cancel</button>
+    <button class="c-button" data-variant="primary">Save</button>
+  </div>
+</div>
+```
+
+## Side variants
+
+| `[data-side]` | Direction |
+|---------------|-----------|
+| `start` (default `end`) | Slides from inline-start (left in LTR) |
+| `end` | Slides from inline-end (right in LTR) |
+
+## Class contract
+
+| Selector           | Role                                      |
+| ------------------ | ----------------------------------------- |
+| `.c-drawer`        | The panel (popover, fixed to edge).      |
+| `.c-drawer__header`| Sticky header with title + close.        |
+| `.c-drawer__title` | Panel heading.                           |
+| `.c-drawer__body`  | Scrollable content area.                 |
+| `.c-drawer__footer`| Bottom action bar.                       |

@@ -39,6 +39,10 @@
 @import "src/06-components/accordion.css";
 @import "src/06-components/switch.css";
 @import "src/06-components/chip.css";
+@import "src/06-components/drawer.css";
+@import "src/06-components/toast.css";
+@import "src/06-components/scroll-progress.css";
+@import "src/06-components/reveal.css";
 @import "src/07-utilities.css";
 @import "src/08-enhancements.css";
 

@@ -508,4 +508,53 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-chip__remove").first()).toBeVisible();
     await expect(page.locator(".c-chip-group").first()).toBeVisible();
   });
+
+  test("drawer renders with popover and side variants", async ({ page }) => {
+    await page.goto("./preview/drawer");
+    await expect(
+      page.getByRole("heading", { name: "Drawer", exact: true }),
+    ).toBeVisible();
+    // The drawer elements exist with popover attribute.
+    await expect(page.locator(".c-drawer[popover]").first()).toBeAttached();
+    // Both side variants exist.
+    await expect(page.locator(".c-drawer[data-side='start']")).toBeAttached();
+    await expect(page.locator(".c-drawer[data-side='end']")).toBeAttached();
+    // Drawer has header, body, footer.
+    await expect(page.locator(".c-drawer__header").first()).toBeAttached();
+    await expect(page.locator(".c-drawer__body").first()).toBeAttached();
+  });
+
+  test("toast renders tones and close buttons", async ({ page }) => {
+    await page.goto("./preview/toast");
+    await expect(
+      page.getByRole("heading", { name: "Toast", exact: true }),
+    ).toBeVisible();
+    // Toast stack exists.
+    await expect(page.locator(".c-toast-stack")).toBeVisible();
+    // All tones present.
+    for (const tone of ["success", "warning", "danger"]) {
+      await expect(
+        page.locator(`.c-toast[data-tone='${tone}']`),
+      ).toBeVisible();
+    }
+    // Default (no tone) toast exists.
+    await expect(page.locator(".c-toast:not([data-tone])")).toBeVisible();
+    // Close buttons exist.
+    await expect(page.locator(".c-toast__close").first()).toBeVisible();
+  });
+
+  test("scroll-progress bar and reveal sections exist", async ({ page }) => {
+    await page.goto("./preview/scroll-progress");
+    await expect(
+      page.getByRole("heading", { name: "Scroll Progress", exact: true }),
+    ).toBeVisible();
+    // The progress bar element is attached.
+    await expect(page.locator(".c-scroll-progress")).toBeAttached();
+    // Reveal sections exist.
+    const reveals = page.locator(".c-reveal");
+    expect(await reveals.count()).toBeGreaterThanOrEqual(4);
+    // Delay variants exist.
+    await expect(page.locator(".c-reveal[data-delay='1']")).toBeAttached();
+    await expect(page.locator(".c-reveal[data-delay='3']")).toBeAttached();
+  });
 });

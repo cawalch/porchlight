@@ -1,0 +1,63 @@
+/*
+ * Porchlight — scroll reveal component
+ * ===========================================================================
+ * Elements that fade/slide in as they enter the viewport. Uses scroll-driven
+ * animations (animation-timeline: view()) — zero JavaScript, no
+ * IntersectionObserver.
+ *
+ * @supports-gated: where scroll-driven animations are not supported, elements
+ * are always visible (no invisible content).
+ *
+ * Structure:
+ *   <div class="c-reveal">Content that fades in on scroll</div>
+ *
+ * The reveal triggers as the element enters the scrollport, completing when
+ * 30% of it is covered. Use on sections, cards, or images below the fold.
+ *
+ * For varied timing, add [data-delay="1"|"2"|"3"] which shifts the
+ * animation-range start.
+ */
+@layer porchlight.components {
+  /* Scroll-driven reveal. */
+  @supports (animation-timeline: view()) {
+    :where(.c-reveal) {
+      animation: c-reveal-enter both linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+
+    /* Delay variants: shift the animation range start later. */
+    :where(.c-reveal[data-delay="1"]) {
+      animation-range: entry 10% cover 35%;
+    }
+
+    :where(.c-reveal[data-delay="2"]) {
+      animation-range: entry 20% cover 40%;
+    }
+
+    :where(.c-reveal[data-delay="3"]) {
+      animation-range: entry 30% cover 45%;
+    }
+  }
+
+  /* Without scroll-driven animation support, elements are always visible. */
+  @supports not (animation-timeline: view()) {
+    :where(.c-reveal) {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes c-reveal-enter {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

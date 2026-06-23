@@ -1,0 +1,118 @@
+/*
+ * Porchlight — drawer (slide-over panel) component
+ * ===========================================================================
+ * An off-canvas panel that slides in from a viewport edge. Uses the native
+ * Popover API for top-layer rendering + light-dismiss, combined with
+ * @starting-style for a smooth enter/exit animation (mirrors the dialog
+ * and popover-menu pattern).
+ *
+ * The drawer element MUST have the `popover` attribute in HTML:
+ *   <div popover class="c-drawer" id="my-drawer" data-side="end">
+ *     <header class="c-drawer__header">...</header>
+ *     <div class="c-drawer__body">...</div>
+ *   </div>
+ * The trigger uses `popovertarget="my-drawer"` to open it declaratively.
+ *
+ * [data-side="start"] slides from the inline-start edge (left in LTR).
+ * [data-side="end"] slides from the inline-end edge (right in LTR).
+ * Default is "end".
+ *
+ * A backdrop scrim is created via ::backdrop pseudo-element on the popover.
+ */
+@layer porchlight.components {
+  @scope (.c-drawer) {
+    :scope {
+      --c-drawer-inline: min(24rem, 100vi);
+      --c-drawer-block: 100vb;
+      --c-drawer-bg: var(--pl-color-surface);
+      --c-drawer-pad: var(--pl-space-4);
+      --c-drawer-gap: var(--pl-space-3);
+
+      /* Position: stretch from the side edge. */
+      inset-inline-end: 0;
+      inset-block: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-inline-start: 1px solid var(--pl-color-border);
+      inline-size: var(--c-drawer-inline);
+      block-size: var(--c-drawer-block);
+      background: var(--c-drawer-bg);
+      box-shadow: var(--pl-shadow-3);
+
+      /* Animation: slide + fade. */
+      opacity: 0;
+      transform: translateX(100%);
+      transition:
+        opacity var(--pl-duration-3) var(--pl-ease-standard),
+        transform var(--pl-duration-3) var(--pl-ease-standard),
+        overlay var(--pl-duration-3) var(--pl-ease-standard) allow-discrete,
+        display var(--pl-duration-3) var(--pl-ease-standard) allow-discrete;
+    }
+
+    /* Start side: slide from inline-start. */
+    :scope[data-side="start"] {
+      inset-inline: 0 auto;
+      border-inline-start: 0;
+      border-inline-end: 1px solid var(--pl-color-border);
+      transform: translateX(-100%);
+    }
+
+    /* Open state: visible + settled. */
+    :scope:popover-open {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Enter: initial state before the open transition starts. */
+    @starting-style {
+      :scope:popover-open {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+
+      :scope[data-side="start"]:popover-open {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Backdrop scrim (native ::backdrop on popovers). */
+    :scope::backdrop {
+      background: oklch(0% 0 0deg / 40%);
+    }
+
+    /* Layout inside the drawer. */
+    .c-drawer__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--c-drawer-gap);
+      padding: var(--c-drawer-pad);
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+
+    .c-drawer__title {
+      font-size: var(--pl-text-lg);
+      font-weight: 600;
+    }
+
+    .c-drawer__body {
+      padding: var(--c-drawer-pad);
+      overflow-y: auto;
+    }
+
+    .c-drawer__footer {
+      display: flex;
+      gap: var(--c-drawer-gap);
+      padding: var(--c-drawer-pad);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-drawer) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+  }
+}
