@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+// Realistic SaaS dashboard data.
+const stats = [
+  { label: 'Monthly revenue', value: '$48,200', unit: '/mo', direction: 'up', trend: '12.4% vs last month', spark: 'M0 32 L10 28 L20 30 L30 22 L40 24 L50 14 L60 10 L70 4' },
+  { label: 'Active accounts', value: '247', unit: '', direction: 'up', trend: '8 new this week', spark: 'M0 28 L10 26 L20 24 L30 20 L40 18 L50 14 L60 12 L70 6' },
+  { label: 'Churn rate', value: '2.1', unit: '%', direction: 'down', trend: '-0.4% vs last month', spark: 'M0 8 L10 12 L20 10 L30 18 L40 16 L50 22 L60 28 L70 32' },
+  { label: 'Avg. response time', value: '142', unit: 'ms', direction: 'flat', trend: 'no change', spark: 'M0 18 L10 16 L20 20 L30 18 L40 16 L50 18 L60 20 L70 18' },
+];
+
+const accounts = [
+  ['Acme Ops', 'Enterprise', 'Active', '$2,400', 48],
+  ['Northwind', 'Pro', 'Trialing', '$980', 12],
+  ['Globex', 'Pro', 'Active', '$980', 8],
+  ['Initech', 'Team', 'Past due', '$420', 5],
+  ['Umbrella', 'Enterprise', 'Active', '$2,400', 60],
+  ['Stark Industries', 'Pro', 'Active', '$980', 14],
+  ['Wayne Enterprises', 'Enterprise', 'Trialing', '$2,400', 32],
+] as const;
+
+const nav = [
+  ['Dashboard', true],
+  ['Accounts', false],
+  ['Billing', false],
+  ['Usage', false],
+  ['Settings', false],
+] as const;
+
+const toneFor = (status: string) =>
+  ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[status] ?? 'accent');
+---
+<BaseLayout title="Enterprise dashboard · Porchlight">
+  <h1>Enterprise dashboard</h1>
+  <p>
+    A complete SaaS dashboard composing every Porchlight component — stat tiles,
+    data table with toolbar, tabs, pagination, and an empty state — all inside
+    the app shell layout. This is the integration proof: native CSS, no JS in
+    the framework, every component composed from tokens.
+  </p>
+
+  <!-- KPI row -->
+  <section aria-labelledby="kpi-heading">
+    <h2 id="kpi-heading" class="section-title">Key metrics</h2>
+    <div class="l-grid">
+      {stats.map((s) => (
+        <div class="c-card">
+          <div class="c-card__body">
+            <div class="c-stat">
+              <span class="c-stat__label">{s.label}</span>
+              <div class="c-stat__value">{s.value}<span class="c-stat__unit">{s.unit}</span></div>
+              <span class="c-stat__trend" data-direction={s.direction}>{s.trend}</span>
+              <div class="c-stat__spark">
+                <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
+                  <path d={s.spark} fill="none" stroke={s.direction === 'up' ? 'var(--pl-color-success)' : s.direction === 'down' ? 'var(--pl-color-danger)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Data table with toolbar + tabs -->
+  <section aria-labelledby="table-heading" class="table-section">
+    <h2 id="table-heading" class="section-title">Accounts</h2>
+    <div class="c-card">
+      <!-- Toolbar above the table -->
+      <div class="c-toolbar">
+        <div class="c-toolbar__group">
+          <label class="c-field c-field--inline">
+            <span class="u-visually-hidden">Search accounts</span>
+            <input class="c-field__control" type="search" placeholder="Search accounts…" />
+          </label>
+          <button class="c-button" data-variant="ghost">Filter</button>
+        </div>
+        <div class="c-toolbar__group">
+          <button class="c-button" data-variant="ghost">Export</button>
+          <div class="c-toolbar__divider"></div>
+          <button class="c-button" data-variant="primary"><Icon name="plus" /> New account</button>
+        </div>
+      </div>
+
+      <!-- Tabs for view switching -->
+      <div class="c-tabs dashboard-tabs">
+        <div class="c-tabs__list" role="tablist" aria-label="Account views">
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="true" id="dash-tab-all" aria-controls="dash-panel-all">All <span class="c-tabs__count">247</span></button>
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-active" aria-controls="dash-panel-active" tabindex="-1">Active <span class="c-tabs__count">198</span></button>
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-trial" aria-controls="dash-panel-trial" tabindex="-1">Trialing <span class="c-tabs__count">32</span></button>
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-past" aria-controls="dash-panel-past" tabindex="-1">Past due <span class="c-tabs__count">17</span></button>
+        </div>
+
+        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-all" aria-labelledby="dash-tab-all">
+          <div class="c-table-wrap" style="border: 0; border-radius: 0;">
+            <table class="c-table">
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Plan</th>
+                  <th>Status</th>
+                  <th data-align="end">MRR</th>
+                  <th data-align="end">Seats</th>
+                </tr>
+              </thead>
+              <tbody>
+                {accounts.map(([name, plan, status, mrr, seats], i) => (
+                  <tr aria-selected={i === 0 ? 'true' : undefined}>
+                    <td>{name}</td>
+                    <td>{plan}</td>
+                    <td><span class="c-badge" data-tone={toneFor(status)}>{status}</span></td>
+                    <td data-align="end">{mrr}</td>
+                    <td data-align="end">{seats}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-active" aria-labelledby="dash-tab-active" hidden><p class="panel-placeholder">Active accounts view.</p></div>
+        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-trial" aria-labelledby="dash-tab-trial" hidden><p class="panel-placeholder">Trialing accounts view.</p></div>
+        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-past" aria-labelledby="dash-tab-past" hidden><p class="panel-placeholder">Past due accounts view.</p></div>
+      </div>
+
+      <!-- Table footer with pagination -->
+      <div class="c-toolbar dashboard-footer">
+        <div class="c-toolbar__group">
+          <span class="u-muted" style="font-size: var(--pl-text-sm);">Showing 1–7 of 247</span>
+        </div>
+        <div class="c-toolbar__group">
+          <nav class="c-pagination" aria-label="Table pagination" data-size="sm">
+            <button class="c-pagination__nav" disabled>‹</button>
+            <button class="c-pagination__page" aria-current="page">1</button>
+            <button class="c-pagination__page">2</button>
+            <button class="c-pagination__page">3</button>
+            <span class="c-pagination__ellipsis">…</span>
+            <button class="c-pagination__page">36</button>
+            <button class="c-pagination__nav">›</button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Side-by-side: recent activity + loading skeleton -->
+  <section aria-labelledby="side-heading" class="side-section">
+    <h2 id="side-heading" class="section-title">Activity &amp; loading states</h2>
+    <div class="l-grid">
+      <div class="c-card">
+        <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+          <div class="c-toolbar__group"><strong>Recent activity</strong></div>
+          <div class="c-toolbar__group"><button class="c-button" data-variant="ghost">View all</button></div>
+        </div>
+        <div class="c-card__body">
+          <div class="l-stack">
+            <div class="activity-item">
+              <span class="c-badge" data-tone="success">created</span>
+              <span>Umbrella account created</span>
+              <span class="u-muted">2m ago</span>
+            </div>
+            <div class="activity-item">
+              <span class="c-badge" data-tone="warning">updated</span>
+              <span>Globex plan upgraded to Pro</span>
+              <span class="u-muted">1h ago</span>
+            </div>
+            <div class="activity-item">
+              <span class="c-badge" data-tone="danger">alert</span>
+              <span>Initech payment past due</span>
+              <span class="u-muted">3h ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+          <div class="c-toolbar__group"><strong>Loading report…</strong></div>
+        </div>
+        <div class="c-card__body">
+          <div class="c-skeleton-group">
+            <div class="c-skeleton" data-shape="text" style="--c-skeleton-w: 40%;"></div>
+            <div class="c-skeleton" data-shape="text"></div>
+            <div class="c-skeleton" data-shape="text" style="--c-skeleton-w: 85%;"></div>
+            <div class="c-skeleton" data-shape="text" data-line="sm" style="--c-skeleton-w: 60%;"></div>
+            <div class="c-skeleton" data-shape="rect" style="--c-skeleton-w: 5rem; margin-block-start: var(--pl-space-2);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Docs-only tab switching.
+  document.querySelectorAll('.dashboard-tabs').forEach((group) => {
+    const tabs = group.querySelectorAll('.c-tabs__tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', String(selected));
+          t.setAttribute('tabindex', selected ? '0' : '-1');
+          const panel = group.querySelector(`#${t.getAttribute('aria-controls')}`);
+          if (panel) panel.toggleAttribute('hidden', !selected);
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .section-title {
+    margin-block: var(--pl-space-6) var(--pl-space-3);
+    font-size: var(--pl-text-xl);
+    font-weight: 700;
+  }
+  .table-section { margin-block-end: var(--pl-space-6); }
+  .side-section { margin-block-end: var(--pl-space-6); }
+  .dashboard-tabs .c-table-wrap { border-radius: 0; }
+  .dashboard-footer {
+    border-block-end: 0;
+    border-block-start: 1px solid var(--pl-color-border);
+    justify-content: space-between;
+  }
+  .dashboard-footer .c-toolbar__group:last-child { justify-content: flex-end; }
+  .panel-placeholder {
+    padding: var(--pl-space-5);
+    color: var(--pl-color-text-muted);
+  }
+  .activity-item {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    font-size: var(--pl-text-sm);
+  }
+  .activity-item .u-muted { margin-inline-start: auto; white-space: nowrap; }
+</style>

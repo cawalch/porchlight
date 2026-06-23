@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Sparkline path data — pre-computed for the demo (no JS needed).
+const spark1 = 'M0 32 L10 28 L20 30 L30 22 L40 24 L50 14 L60 10 L70 4';
+const spark2 = 'M0 8 L10 12 L20 10 L30 18 L40 16 L50 22 L60 28 L70 32';
+---
+<BaseLayout title="Stat · Porchlight">
+  <h1>Stat</h1>
+  <p>
+    A KPI / metric tile for dashboards. Displays a number with a label, unit,
+    trend indicator (up/down/flat with an arrow glyph, not just color), and an
+    optional sparkline. Uses <code>tabular-nums</code> so numbers don't jitter.
+  </p>
+
+  <h2>KPI tiles</h2>
+  <div class="l-grid">
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Monthly revenue</span>
+          <div class="c-stat__value">$48,200<span class="c-stat__unit">/mo</span></div>
+          <span class="c-stat__trend" data-direction="up">12.4% vs last month</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Active accounts</span>
+          <div class="c-stat__value">247</div>
+          <span class="c-stat__trend" data-direction="up">8 new this week</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Churn rate</span>
+          <div class="c-stat__value">2.1<span class="c-stat__unit">%</span></div>
+          <span class="c-stat__trend" data-direction="down">-0.4% vs last month</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Avg. response time</span>
+          <div class="c-stat__value">142<span class="c-stat__unit">ms</span></div>
+          <span class="c-stat__trend" data-direction="flat">no change</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>With sparkline</h2>
+  <div class="l-grid" style="--l-grid-min: 22rem;">
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Revenue (30d)</span>
+          <div class="c-stat__value">$48,200</div>
+          <span class="c-stat__trend" data-direction="up">12.4%</span>
+          <div class="c-stat__spark">
+            <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
+              <path d={spark1} fill="none" stroke="var(--pl-color-success)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card__body">
+        <div class="c-stat">
+          <span class="c-stat__label">Churn (30d)</span>
+          <div class="c-stat__value">2.1%</div>
+          <span class="c-stat__trend" data-direction="down">-0.4%</span>
+          <div class="c-stat__spark">
+            <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
+              <path d={spark2} fill="none" stroke="var(--pl-color-danger)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

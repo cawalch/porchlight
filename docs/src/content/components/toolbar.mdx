@@ -1,0 +1,45 @@
+---
+title: Toolbar
+description: An action bar grouping controls above a data region — search, filters, and primary actions in one row.
+status: stable
+since: 1.0.0
+---
+
+# Toolbar
+
+The `.c-toolbar` groups actions above a table, list, or canvas. A leading
+cluster (search, filters) and a trailing cluster (primary actions) wrap
+independently on narrow containers.
+
+## When to use
+
+- Above a data table (search, filter, export, create).
+- Inside a card header (title + actions).
+- In a table footer (results count + pagination).
+
+## Semantic HTML
+
+```html
+<div class="c-toolbar">
+  <div class="c-toolbar__group">
+    <input class="c-field__control" type="search" placeholder="Search…" />
+    <button class="c-button" data-variant="ghost">Filter</button>
+  </div>
+  <div class="c-toolbar__group">
+    <div class="c-toolbar__divider"></div>
+    <button class="c-button" data-variant="primary">New item</button>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector              | Role                                      |
+| --------------------- | ----------------------------------------- |
+| `.c-toolbar`          | The container (flex + wrap + container query). |
+| `.c-toolbar__group`   | A cluster of actions. Last-child aligns right. |
+| `.c-toolbar__divider` | A thin vertical separator.                |
+
+## Tokens consumed
+
+`--pl-color-{surface,border}`, `--pl-space-{2,3}`, `--pl-radius-{md,lg}`.

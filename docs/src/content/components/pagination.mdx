@@ -1,0 +1,36 @@
+---
+title: Pagination
+description: Navigation control for paginated data — previous/next + numbered pages with aria-current for the active page.
+status: stable
+since: 1.0.0
+---
+
+# Pagination
+
+The `.c-pagination` component provides navigation for paginated data. Previous
+and Next buttons flank numbered page buttons. The active page uses
+`aria-current="page"`.
+
+## Semantic HTML
+
+```html
+<nav class="c-pagination" aria-label="Page navigation">
+  <button class="c-pagination__nav" disabled>‹ Prev</button>
+  <button class="c-pagination__page" aria-current="page">1</button>
+  <button class="c-pagination__page">2</button>
+  <button class="c-pagination__page">3</button>
+  <span class="c-pagination__ellipsis">…</span>
+  <button class="c-pagination__page">12</button>
+  <button class="c-pagination__nav">Next ›</button>
+</nav>
+```
+
+## Class contract
+
+| Selector                 | Role                                      |
+| ------------------------ | ----------------------------------------- |
+| `.c-pagination`          | The container.                           |
+| `.c-pagination__page`    | A numbered page button.                  |
+| `.c-pagination__nav`     | Previous/Next button.                    |
+| `.c-pagination__ellipsis`| Non-interactive "…" spacer.              |
+| `[data-size="sm"]`       | Compact variant for embedded use.        |

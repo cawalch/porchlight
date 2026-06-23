@@ -1,0 +1,107 @@
+/*
+ * Porchlight — stat component
+ * ===========================================================================
+ * A KPI / metric tile — the workhorse of SaaS dashboards. Displays a single
+ * number with a label, an optional unit, a trend indicator (up/down/flat), and
+ * an optional sparkline slot. Designed to sit inside .l-grid (auto-fitting
+ * dashboard widgets) or inside .c-card bodies.
+ *
+ * Structure: .c-stat > .c-stat__label + .c-stat__value (+ .c-stat__unit) +
+ * .c-stat__trend + .c-stat__spark. The value uses tabular-nums so numbers
+ * don't jitter when they update. The trend uses semantic colors + an arrow
+ * glyph, not just color (colorblind-safe).
+ *
+ * This is a display component — no interactive states. It composes with .c-card
+ * when you need elevation: place .c-stat inside a .c-card for a raised tile.
+ */
+@layer porchlight.components {
+  @scope (.c-stat) {
+    :scope {
+      --c-stat-gap: var(--pl-space-1);
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-2);
+    }
+
+    .c-stat__label {
+      font-size: var(--pl-text-sm);
+      font-weight: 600;
+      color: var(--pl-color-text-muted);
+      line-height: 1;
+    }
+
+    .c-stat__value {
+      display: flex;
+      align-items: baseline;
+      gap: var(--pl-space-2);
+      font-size: clamp(1.75rem, 1.5rem + 1vi, 2.25rem);
+      font-weight: 700;
+      line-height: var(--pl-leading-tight);
+      color: var(--pl-color-text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .c-stat__unit {
+      font-size: var(--pl-text-md);
+      font-weight: 500;
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-stat__trend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      font-size: var(--pl-text-sm);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--pl-color-text-muted);
+    }
+
+    /* Trend directions — semantic colors. The arrow glyph is always present
+       so color is not the sole signal (colorblind-safe). */
+    .c-stat__trend[data-direction="up"] {
+      color: var(--pl-color-success-text);
+    }
+
+    .c-stat__trend[data-direction="down"] {
+      color: var(--pl-color-danger-text);
+    }
+
+    /* The arrow lives in a ::before so app HTML doesn't need a glyph icon. */
+    .c-stat__trend::before {
+      display: inline-block;
+      font-size: 0.7em;
+      line-height: 1;
+    }
+
+    .c-stat__trend[data-direction="up"]::before {
+      content: "▲";
+    }
+
+    .c-stat__trend[data-direction="down"]::before {
+      content: "▼";
+    }
+
+    .c-stat__trend[data-direction="flat"]::before {
+      content: "▶";
+      transform: rotate(-90deg);
+    }
+
+    /* Optional sparkline slot — an inline SVG or canvas. */
+    .c-stat__spark {
+      margin-block-start: var(--pl-space-1);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-stat__trend)[data-direction="up"] {
+      color: CanvasText;
+    }
+
+    :where(.c-stat__trend)[data-direction="down"] {
+      color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+/*
+ * Porchlight — toolbar component
+ * ===========================================================================
+ * A horizontal bar grouping actions above a data region — the SaaS "action bar"
+ * on top of tables, lists, and canvases. Pairs a leading cluster (search,
+ * filters, bulk actions) with a trailing cluster (primary actions, overflow
+ * menu). On narrow containers the two halves wrap independently.
+ *
+ * Pure structural styling (flex + gap + a divider). It composes .c-button,
+ * .c-field, and .c-menu — it is NOT a button system. The toolbar's job is
+ * alignment and wrapping; the components inside provide their own visuals.
+ *
+ * Container-query aware: padding and gap tighten when the toolbar itself is
+ * narrow (inside a split pane), not when the viewport changes.
+ */
+@layer porchlight.components {
+  @scope (.c-toolbar) {
+    :scope {
+      --c-toolbar-gap: var(--pl-space-3);
+      --c-toolbar-pad: var(--pl-space-3);
+      --c-toolbar-min: 10rem;
+
+      container: c-toolbar / inline-size;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--c-toolbar-gap);
+      padding: var(--c-toolbar-pad);
+      border-block-end: 1px solid var(--pl-color-border);
+      background: var(--pl-color-surface);
+    }
+
+    /* Leading group — search, filters, selection count. Grows to fill. */
+    .c-toolbar__group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: var(--c-toolbar-min);
+
+      /* The first group can grow to push the trailing group to the right. */
+      flex: 1 1 auto;
+    }
+
+    /* Trailing group (last-child) — primary actions, pagination, overflow. */
+    .c-toolbar__group:last-child {
+      justify-content: flex-end;
+      flex: 0 1 auto;
+    }
+
+    /* A divider between toolbar items — a thin vertical rule. */
+    .c-toolbar__divider {
+      flex-shrink: 0;
+      inline-size: 1px;
+      block-size: 1.5rem;
+      align-self: center;
+      background: var(--pl-color-border);
+    }
+
+    /* Tighten padding when the toolbar is narrow (container query). */
+    @container c-toolbar (inline-size < 36rem) {
+      :scope {
+        --c-toolbar-pad: var(--pl-space-2);
+        --c-toolbar-gap: var(--pl-space-2);
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-toolbar) {
+      border-block-end-color: CanvasText;
+    }
+
+    :where(.c-toolbar__divider) {
+      background: CanvasText;
+    }
+  }
+}

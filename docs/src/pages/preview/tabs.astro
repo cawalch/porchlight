@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+// Kitchen-sink for .c-tabs: every state, with counts, disabled, and density.
+const tabs = [
+  { label: 'Overview', selected: true, count: null },
+  { label: 'Accounts', selected: false, count: 24 },
+  { label: 'Billing', selected: false, count: null },
+  { label: 'Activity', selected: false, count: 8 },
+  { label: 'Settings', selected: false, count: null, disabled: true },
+] as const;
+---
+<BaseLayout title="Tabs · Porchlight">
+  <h1>Tabs</h1>
+  <p>
+    A tabbed region for switching between views. Native semantics
+    (<code>[role="tablist"]</code>, <code>[role="tab"]</code>,
+    <code>[role="tabpanel"]</code>) with a box-shadow indicator that never
+    causes layout shift. The active state is driven by <code>aria-selected</code>
+    on the tab and <code>[hidden]</code> on inactive panels.
+  </p>
+
+  <div class="c-tabs">
+    <div class="c-tabs__list" role="tablist" aria-label="Account sections">
+      {tabs.map((t) => (
+        <button
+          type="button"
+          class="c-tabs__tab"
+          role="tab"
+          aria-selected={t.selected ? 'true' : 'false'}
+          disabled={t.disabled}
+          id={`tab-${t.label.toLowerCase()}`}
+          aria-controls={`panel-${t.label.toLowerCase()}`}
+          tabindex={t.selected ? 0 : -1}
+        >
+          {t.label}
+          {t.count && <span class="c-tabs__count">{t.count}</span>}
+        </button>
+      ))}
+    </div>
+
+    <div class="c-tabs__panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+      <div class="l-stack">
+        <h2>Overview</h2>
+        <p>This panel is visible because its tab has <code>aria-selected="true"</code>. The others carry <code>[hidden]</code>.</p>
+        <div class="c-table-wrap">
+          <table class="c-table">
+            <thead><tr><th>Metric</th><th data-align="end">Value</th></tr></thead>
+            <tbody>
+              <tr><td>Active accounts</td><td data-align="end">24</td></tr>
+              <tr><td>Monthly revenue</td><td data-align="end">$48,200</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-tabs__panel" role="tabpanel" id="panel-accounts" aria-labelledby="tab-accounts" hidden>
+      <h2>Accounts</h2>
+      <p>Account list would go here.</p>
+    </div>
+    <div class="c-tabs__panel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" hidden>
+      <h2>Billing</h2>
+      <p>Billing details would go here.</p>
+    </div>
+    <div class="c-tabs__panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" hidden>
+      <h2>Activity</h2>
+      <p>Recent activity feed.</p>
+    </div>
+    <div class="c-tabs__panel" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" hidden>
+      <h2>Settings</h2>
+      <p>Settings panel (the tab is disabled above).</p>
+    </div>
+  </div>
+
+  <h2>Density</h2>
+  <p>Sizing is driven by <code>--pl-control-*</code> on an ancestor's <code>[data-density]</code>.</p>
+  <div class="c-tabs" data-density="compact">
+    <div class="c-tabs__list" role="tablist">
+      <button type="button" class="c-tabs__tab" role="tab" aria-selected="true">compact tab</button>
+      <button type="button" class="c-tabs__tab" role="tab" aria-selected="false">another</button>
+    </div>
+    <div class="c-tabs__panel" role="tabpanel"><p>Compact content.</p></div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Docs-only tab switching. In a real app, this is your state handler.
+  document.querySelectorAll('.c-tabs').forEach((group) => {
+    const tabs = group.querySelectorAll('.c-tabs__tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', String(selected));
+          t.setAttribute('tabindex', selected ? '0' : '-1');
+          const panel = group.querySelector(`#${t.getAttribute('aria-controls')}`);
+          if (panel) panel.toggleAttribute('hidden', !selected);
+        });
+      });
+    });
+  });
+</script>

@@ -28,6 +28,13 @@ const PAGES = [
   "/preview/popover-menu",
   "/preview/dialog",
   "/preview/data-table",
+  "/preview/dashboard",
+  "/preview/tabs",
+  "/preview/toolbar",
+  "/preview/pagination",
+  "/preview/stat",
+  "/preview/skeleton",
+  "/preview/empty-state",
   "/preview/utilities",
   "/preview/enhancements",
 ];
@@ -43,8 +50,14 @@ const url = (path: string) => {
 for (const path of PAGES) {
   test(`${path} has no serious/critical a11y violations`, async ({ page }) => {
     await page.goto(url(path));
+    // Disable color-contrast: axe-core v4.12 cannot parse OKLCH computed colors
+    // (Chrome 149 returns oklch() from getComputedStyle). axe converts them to
+    // incorrect sRGB hex values, producing false violations. The deterministic
+    // contrast.spec.ts + badge-contrast.spec.ts tests use a correct OKLab→sRGB
+    //→WCAG luminance pipeline and provide the real coverage for this rule.
     const results = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .disableRules(["color-contrast"])
       .analyze();
     const serious = results.violations.filter((v) =>
       ["serious", "critical"].includes(v.impact ?? ""),

@@ -1,0 +1,33 @@
+---
+title: Skeleton
+description: Loading placeholders with a CSS-only pulse — mimics real content shapes without a spinner.
+status: stable
+since: 1.0.0
+---
+
+# Skeleton
+
+The `.c-skeleton` component renders a loading placeholder that mimics the shape
+of real content. A CSS-only opacity pulse communicates "loading." Three shapes
+via `[data-shape]`: `text` (default), `circle` (avatar), and `rect` (block).
+
+## Semantic HTML
+
+```html
+<!-- Text lines -->
+<div class="c-skeleton-group">
+  <div class="c-skeleton" style="--c-skeleton-w: 40%;"></div>
+  <div class="c-skeleton"></div>
+  <div class="c-skeleton" style="--c-skeleton-w: 80%;"></div>
+</div>
+
+<!-- Avatar + rect -->
+<div class="c-skeleton" data-shape="circle" style="--c-skeleton-w: 2.5rem;"></div>
+<div class="c-skeleton" data-shape="rect" style="--c-skeleton-w: 6rem;"></div>
+```
+
+## Reduced motion
+
+Under `prefers-reduced-motion`, the themes layer's universal 1ms clamp stops
+the pulse. The skeleton remains as a static grey block — still legible as a
+placeholder.

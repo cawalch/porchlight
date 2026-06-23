@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+---
+<BaseLayout title="Toolbar · Porchlight">
+  <h1>Toolbar</h1>
+  <p>
+    An action bar for grouping controls above a data region. Leading cluster
+    (search, filters) and trailing cluster (primary actions, overflow). Wraps
+    independently on narrow containers via a container query.
+  </p>
+
+  <h2>Table toolbar</h2>
+  <div class="c-toolbar">
+    <div class="c-toolbar__group">
+      <label class="c-field c-field--inline">
+        <span class="u-visually-hidden">Search accounts</span>
+        <input class="c-field__control" type="search" placeholder="Search accounts…" />
+      </label>
+      <button class="c-button" data-variant="ghost">Filter</button>
+      <span class="c-badge">3 selected</span>
+    </div>
+    <div class="c-toolbar__group">
+      <button class="c-button" data-variant="ghost">Export</button>
+      <div class="c-toolbar__divider"></div>
+      <button class="c-button" data-variant="primary"><Icon name="plus" /> New account</button>
+    </div>
+  </div>
+
+  <h2>Compact (embedded)</h2>
+  <div class="c-toolbar" data-density="compact">
+    <div class="c-toolbar__group">
+      <button class="c-button" data-variant="ghost">Bulk edit</button>
+      <button class="c-button" data-variant="ghost">Archive</button>
+    </div>
+    <div class="c-toolbar__group">
+      <button class="c-button" data-variant="ghost" style="color: var(--pl-color-danger-text);">Delete</button>
+    </div>
+  </div>
+
+  <h2>Inside a card</h2>
+  <div class="c-card">
+    <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+      <div class="c-toolbar__group">
+        <strong>Recent activity</strong>
+      </div>
+      <div class="c-toolbar__group">
+        <button class="c-button" data-variant="ghost">View all</button>
+      </div>
+    </div>
+    <div class="c-card__body">
+      <p>Card body with a toolbar header.</p>
+    </div>
+  </div>
+</BaseLayout>
