@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const alerts = [
+  { tone: 'info', title: 'New feature available', body: 'Workspace insights are now live. Check the analytics tab to see your team activity.' },
+  { tone: 'success', title: 'Payment received', body: 'Your invoice for $2,400 has been paid successfully.' },
+  { tone: 'warning', title: 'Approaching seat limit', body: 'You have used 58 of 60 seats. Consider upgrading your plan.' },
+  { tone: 'danger', title: 'Action required', body: 'Your API key expires in 3 days. Generate a new one to avoid service interruption.' },
+] as const;
+---
+<BaseLayout title="Alert · Porchlight">
+  <h1>Alert</h1>
+  <p>
+    Inline notifications for contextual feedback. Four tones via
+    <code>[data-tone]</code>, each consuming WCAG-AA semantic color pairs.
+    A leading icon anchors the tone visually.
+  </p>
+
+  <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+    {alerts.map((a) => (
+      <div class="c-alert" data-tone={a.tone === 'info' ? undefined : a.tone}>
+        <div class="c-alert__icon">
+          {a.tone === 'success' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" /></svg>}
+          {a.tone === 'warning' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>}
+          {a.tone === 'danger' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" stroke-linecap="round" /></svg>}
+          {a.tone === 'info' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" stroke-linecap="round" /></svg>}
+        </div>
+        <div class="c-alert__content">
+          <div class="c-alert__title">{a.title}</div>
+          <div class="c-alert__body">{a.body}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>With actions</h2>
+  <div class="c-alert" data-tone="warning">
+    <div class="c-alert__icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
+    </div>
+    <div class="c-alert__content">
+      <div class="c-alert__title">Unsaved changes</div>
+      <div class="c-alert__body">You have unsaved changes. Save or discard before leaving.</div>
+      <div class="l-cluster" style="margin-block-start: var(--pl-space-2);">
+        <button class="c-button" data-variant="primary" data-size="sm">Save changes</button>
+        <button class="c-button" data-variant="ghost">Discard</button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

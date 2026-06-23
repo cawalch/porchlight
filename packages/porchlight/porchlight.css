@@ -26,10 +26,19 @@
 @import "src/06-components/popover-menu.css";
 @import "src/06-components/dialog.css";
 @import "src/06-components/data-table.css";
+@import "src/06-components/tabs.css";
+@import "src/06-components/toolbar.css";
+@import "src/06-components/pagination.css";
+@import "src/06-components/skeleton.css";
+@import "src/06-components/empty-state.css";
+@import "src/06-components/stat.css";
+@import "src/06-components/alert.css";
+@import "src/06-components/progress.css";
+@import "src/06-components/avatar.css";
 @import "src/07-utilities.css";
 @import "src/08-enhancements.css";
 
 /* ---------------------------------------------------------------------------
- * Phase 4 in progress. Remaining:
- *   @import 'src/09-print.css';         // Phase 4: print
+ * Phase 5 (enterprise components) in progress. These are post-1.0 candidates
+ * that shipped early as part of the dashboard integration proof.
  * ------------------------------------------------------------------------- */

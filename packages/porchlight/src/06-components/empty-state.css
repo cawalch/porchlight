@@ -1,0 +1,85 @@
+/*
+ * Porchlight — empty state component
+ * ===========================================================================
+ * The "no data yet" placeholder — what users see in a table, list, or chart
+ * before there is anything to show. A centered illustration or icon, a title,
+ * a description, and an optional call-to-action. The psychological anchor that
+ * turns a blank screen into an invitation.
+ *
+ * Structure: .c-empty > .c-empty__media (icon/illustration) + .c-empty__title
+ * + .c-empty__description + .c-empty__actions. All slots except the title are
+ * optional. Token-driven; centered via grid for robust vertical centering.
+ *
+ * Tone variants via [data-tone]: default (neutral), "danger" (error states),
+ * "success" (completed/empty-by-design). The media gets the tone color.
+ */
+@layer porchlight.components {
+  @scope (.c-empty) {
+    :scope {
+      --c-empty-pad: var(--pl-space-8);
+      --c-empty-tone: var(--pl-color-text-muted);
+
+      display: grid;
+      justify-items: center;
+      gap: var(--pl-space-3);
+      padding: var(--c-empty-pad);
+      text-align: center;
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-empty__media {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 3rem;
+      block-size: 3rem;
+      color: var(--c-empty-tone);
+      opacity: 0.6;
+    }
+
+    .c-empty__media svg,
+    .c-empty__media img {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    .c-empty__title {
+      margin: 0;
+      font-size: var(--pl-text-lg);
+      font-weight: 600;
+      color: var(--pl-color-text);
+      text-wrap: balance;
+    }
+
+    .c-empty__description {
+      max-inline-size: 36ch;
+      margin: 0;
+      font-size: var(--pl-text-sm);
+      text-wrap: pretty;
+    }
+
+    .c-empty__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: var(--pl-space-2);
+      margin-block-start: var(--pl-space-2);
+    }
+
+    /* Tone variants — recolor the media. */
+    :scope[data-tone="danger"] {
+      --c-empty-tone: var(--pl-color-danger);
+    }
+
+    :scope[data-tone="success"] {
+      --c-empty-tone: var(--pl-color-success);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-empty__media) {
+      color: CanvasText;
+    }
+  }
+}

@@ -14,6 +14,21 @@ const AA = 4.5;
 
 const pairs = [
   {
+    name: "text on bg",
+    bg: "var(--pl-color-bg)",
+    fg: "var(--pl-color-text)",
+  },
+  {
+    name: "text-muted on bg",
+    bg: "var(--pl-color-bg)",
+    fg: "var(--pl-color-text-muted)",
+  },
+  {
+    name: "text-muted on surface",
+    bg: "var(--pl-color-surface)",
+    fg: "var(--pl-color-text-muted)",
+  },
+  {
     name: "accent (link) on bg",
     bg: "var(--pl-color-bg)",
     fg: "var(--pl-color-accent)",

@@ -1,0 +1,35 @@
+---
+title: Progress
+description: A linear progress indicator — determinate or indeterminate, with tone variants.
+status: stable
+since: 1.0.0
+---
+
+# Progress
+
+The `.c-progress` component renders a linear progress bar. Determinate mode
+shows a fill proportional to a value; indeterminate shows an animated sweep.
+
+## Semantic HTML
+
+```html
+<!-- Determinate -->
+<div class="c-progress">
+  <div class="c-progress__bar" style="inline-size: 65%;"></div>
+</div>
+
+<!-- Indeterminate -->
+<div class="c-progress" data-indeterminate>
+  <div class="c-progress__bar"></div>
+</div>
+```
+
+## Class contract
+
+| Selector             | Role                                      |
+| -------------------- | ----------------------------------------- |
+| `.c-progress`        | The track (rounded bar).                 |
+| `.c-progress__bar`   | The fill (animates width).               |
+| `[data-tone]`        | `success`, `warning`, `danger` (default = accent). |
+| `[data-indeterminate]`| Animated sweep mode.                     |
+| `--c-progress-height`| Track height token (default 0.375rem).   |

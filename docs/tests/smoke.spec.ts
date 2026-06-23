@@ -229,4 +229,160 @@ test.describe("docs scaffold", () => {
       "ellipsis",
     );
   });
+
+  test("dashboard composes stat tiles, table, and toolbar", async ({ page }) => {
+    await page.goto("./preview/dashboard");
+    await expect(
+      page.getByRole("heading", { name: "Enterprise dashboard", exact: true }),
+    ).toBeVisible();
+    // KPI stat tiles render.
+    await expect(page.getByText("Monthly revenue").first()).toBeVisible();
+    await expect(page.locator(".c-stat").first()).toBeVisible();
+    // The data table inside the dashboard.
+    await expect(
+      page.getByRole("columnheader", { name: "Account" }).first(),
+    ).toBeVisible();
+    // The toolbar with search and primary action.
+    await expect(page.locator(".c-toolbar").first()).toBeVisible();
+    // Tabs with counts.
+    await expect(
+      page.locator(".c-tabs__tab[aria-selected='true']").first(),
+    ).toBeVisible();
+    // Pagination at the bottom.
+    await expect(
+      page.locator(".c-pagination").first(),
+    ).toBeVisible();
+    // Skeleton loading state.
+    await expect(page.locator(".c-skeleton").first()).toBeVisible();
+  });
+
+  test("tabs page renders tablist and panels", async ({ page }) => {
+    await page.goto("./preview/tabs");
+    await expect(
+      page.getByRole("heading", { name: "Tabs", exact: true }),
+    ).toBeVisible();
+    // The selected tab is visible.
+    const selected = page.locator(".c-tabs__tab[aria-selected='true']").first();
+    await expect(selected).toBeVisible();
+    await expect(await selected.textContent()).toContain("Overview");
+    // A disabled tab exists.
+    await expect(page.locator(".c-tabs__tab[disabled]")).toBeDisabled();
+    // The active panel is visible (not hidden).
+    await expect(page.locator("#panel-overview")).toBeVisible();
+    // Inactive panels are hidden.
+    await expect(page.locator("#panel-accounts")).toHaveAttribute("hidden");
+  });
+
+  test("toolbar renders groups and a divider", async ({ page }) => {
+    await page.goto("./preview/toolbar");
+    await expect(
+      page.getByRole("heading", { name: "Toolbar", exact: true }),
+    ).toBeVisible();
+    // At least two groups (leading + trailing).
+    const groups = page.locator(".c-toolbar__group");
+    expect(await groups.count()).toBeGreaterThanOrEqual(2);
+    // A divider exists.
+    await expect(page.locator(".c-toolbar__divider").first()).toBeVisible();
+  });
+
+  test("pagination renders active page and nav buttons", async ({ page }) => {
+    await page.goto("./preview/pagination");
+    await expect(
+      page.getByRole("heading", { name: "Pagination", exact: true }),
+    ).toBeVisible();
+    // The active page carries aria-current.
+    await expect(
+      page.locator(".c-pagination__page[aria-current='page']").first(),
+    ).toBeVisible();
+    // Prev is disabled on page 1.
+    await expect(
+      page.locator(".c-pagination__nav").first(),
+    ).toBeDisabled();
+    // An ellipsis exists.
+    await expect(page.locator(".c-pagination__ellipsis").first()).toBeVisible();
+  });
+
+  test("stat renders value, label, and trend", async ({ page }) => {
+    await page.goto("./preview/stat");
+    await expect(
+      page.getByRole("heading", { name: "Stat", exact: true }),
+    ).toBeVisible();
+    // KPI tiles.
+    await expect(page.getByText("Monthly revenue")).toBeVisible();
+    await expect(page.getByText("$48,200").first()).toBeVisible();
+    // Trend with direction.
+    const up = page.locator(".c-stat__trend[data-direction='up']").first();
+    await expect(up).toBeVisible();
+    // A sparkline SVG exists.
+    await expect(page.locator(".c-stat__spark svg").first()).toBeVisible();
+  });
+
+  test("skeleton renders text, circle, and rect shapes", async ({ page }) => {
+    await page.goto("./preview/skeleton");
+    await expect(
+      page.getByRole("heading", { name: "Skeleton", exact: true }),
+    ).toBeVisible();
+    // Text shape (default).
+    await expect(page.locator(".c-skeleton[data-shape='text']").first()).toBeVisible();
+    // Circle shape.
+    await expect(page.locator(".c-skeleton[data-shape='circle']").first()).toBeVisible();
+    // Rect shape.
+    await expect(page.locator(".c-skeleton[data-shape='rect']").first()).toBeVisible();
+  });
+
+  test("empty state renders title, description, and actions", async ({ page }) => {
+    await page.goto("./preview/empty-state");
+    await expect(
+      page.getByRole("heading", { name: "Empty state", exact: true }),
+    ).toBeVisible();
+    // The first empty state has a title.
+    await expect(page.getByText("No accounts yet")).toBeVisible();
+    // The actions row has a primary button.
+    await expect(
+      page.locator(".c-empty__actions .c-button[data-variant='primary']").first(),
+    ).toBeVisible();
+    // The danger tone variant exists.
+    await expect(page.locator(".c-empty[data-tone='danger']")).toBeVisible();
+  });
+
+  test("alert renders every tone with title and body", async ({ page }) => {
+    await page.goto("./preview/alert");
+    await expect(
+      page.getByRole("heading", { name: "Alert", exact: true }),
+    ).toBeVisible();
+    for (const tone of ["success", "warning", "danger"]) {
+      await expect(
+        page.locator(`.c-alert[data-tone='${tone}']`).first(),
+      ).toBeVisible();
+    }
+    await expect(page.locator(".c-alert:not([data-tone])").first()).toBeVisible();
+    await expect(page.locator(".c-alert__icon svg").first()).toBeVisible();
+  });
+
+  test("progress renders determinate and indeterminate", async ({ page }) => {
+    await page.goto("./preview/progress");
+    await expect(
+      page.getByRole("heading", { name: "Progress", exact: true }),
+    ).toBeVisible();
+    const bars = page.locator(".c-progress__bar");
+    expect(await bars.count()).toBeGreaterThanOrEqual(2);
+    await expect(
+      page.locator(".c-progress[data-indeterminate]"),
+    ).toBeVisible();
+    await expect(
+      page.locator(".c-progress[data-tone='danger']"),
+    ).toBeVisible();
+  });
+
+  test("avatar renders initials, image, and group", async ({ page }) => {
+    await page.goto("./preview/avatar");
+    await expect(
+      page.getByRole("heading", { name: "Avatar", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-avatar[data-size='sm']").first()).toBeVisible();
+    await expect(page.locator(".c-avatar[data-size='lg']").first()).toBeVisible();
+    await expect(page.locator(".c-avatar__img").first()).toBeVisible();
+    await expect(page.locator(".c-avatar-group").first()).toBeVisible();
+    await expect(page.locator(".c-avatar-group__more")).toBeVisible();
+  });
 });
