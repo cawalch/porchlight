@@ -15,6 +15,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.0.0",
+    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.49.0",
     "@types/node": "^22.0.0",
     "astro": "^5.0.0",

@@ -87,7 +87,7 @@ const rows = [
 
   <h2><code>.l-scroll-area</code> — data pane</h2>
   <p>Independent scroll with a stable gutter (no layout shift when the bar appears) and contained overscroll.</p>
-  <div class="l-scroll-area data-pane">
+  <div class="l-scroll-area data-pane" tabindex="0">
     <table>
       <thead><tr><th>Account</th><th>Plan</th><th>Status</th><th>MRR</th></tr></thead>
       <tbody>
@@ -109,14 +109,15 @@ const rows = [
 </BaseLayout>
 
 <script>
-  // Docs-only resize handle so reviewers can cross the 48rem container boundary.
+  // Docs-only resize handle — purely decorative (no drag wiring). Hidden from
+  // AT rather than given role='separator' (a focusable separator requires
+  // slider-widget semantics it doesn't have). It exists only to hint that the
+  // panel is resizable for sighted reviewers.
   const panel = document.querySelector('[data-resizable]');
   if (panel) {
     const handle = document.createElement('div');
-    handle.setAttribute('role', 'separator');
-    handle.setAttribute('aria-label', 'Resize demo panel');
+    handle.setAttribute('aria-hidden', 'true');
     handle.className = 'demo-panel__handle';
-    handle.tabIndex = 0;
     panel.append(handle);
   }
 </script>
@@ -145,7 +146,7 @@ const rows = [
     font-weight: 700;
   }
   .widget__delta {
-    color: var(--pl-color-success);
+    color: var(--pl-color-success-text);
     font-size: var(--pl-text-sm);
   }
 
