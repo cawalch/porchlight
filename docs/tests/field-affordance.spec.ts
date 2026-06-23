@@ -1,74 +1,86 @@
 import { test, expect } from "@playwright/test";
-import { deltaL } from "./lib/color";
+import { deltaL, toOklab } from "./lib/color";
 
 /**
  * Field affordance guard — same rigor as the button affordance test.
  *
- * A field's state must be perceptually distinct from its default. The classic
- * failure is a focus state that only swaps a 1px border color to a near-identical
- * shade (invisible affordance). This asserts both:
- *   - focus: the control's border-color (which flips to --pl-focus-color) shifts
- *     by a clear perceptual step from the default border.
- *   - invalid: the danger border reads as different from the neutral default.
- *
- * Reads the control's computed border-color directly — the simplest robust probe.
+ * The focus/invalid indicator is a box-shadow RING around the control (not a
+ * border-color change). This asserts the ring is present and uses the focus /
+ * danger color at a clearly perceptible lightness step from the page surface —
+ * i.e. the indicator is actually visible, not a faint veil. It also guards
+ * against the previous bug where `0 0 0 4px` (no blur) read as a hard
+ * translucent "second stroke" beside the border.
  */
 
-const STATE_DL = 0.03;
+const RING_DL = 0.25; // ring color must differ from a neutral surface by ≥25% L
 
-test("field focus border is perceptibly distinct from default", async ({
-  page,
-}) => {
+/** Extract the first color from a computed box-shadow string ("none" → null). */
+function ringColor(boxShadow: string): string | null {
+  if (!boxShadow || boxShadow === "none") return null;
+  // Chrome serializes each shadow layer; the first color token is the ring.
+  const ok = boxShadow.match(/oklch\([^)]+\)|oklab\([^)]+\)|rgba?\([^)]+\)/);
+  return ok ? ok[0] : null;
+}
+
+test("field focus draws a visible accent ring", async ({ page }) => {
   await page.goto("./preview/field");
-  // :focus-visible requires KEYBOARD focus, not programmatic .focus(). Tab into
-  // the real first field on the page — the actual user path.
-  const input = page.locator(".c-field__control").first();
-  const def = await input.evaluate(
-    (el) => getComputedStyle(el).borderLeftColor,
+  // The page surface behind the control.
+  const surface = await page.evaluate(
+    () => getComputedStyle(document.body).backgroundColor,
   );
+  const input = page.locator(".c-field__control").first();
+
+  // Default: no ring.
+  const defRing = await input.evaluate((el) => getComputedStyle(el).boxShadow);
+  expect(defRing, "default field must have no ring").toBe("none");
+
+  // :focus-visible requires KEYBOARD focus (not programmatic .focus()).
   await input.focus();
   await page.keyboard.press("Tab");
-  // Tab moved away; focus the field again via keyboard.
   await page.keyboard.press("Shift+Tab");
-  // Wait for the 120ms border-color transition to settle before reading.
+  // Wait for the box-shadow transition to settle before reading.
   await page.waitForTimeout(300);
-  const focused = await input.evaluate(
-    (el) => getComputedStyle(el).borderLeftColor,
+
+  const focusRing = await input.evaluate(
+    (el) => getComputedStyle(el).boxShadow,
   );
-  const dl = deltaL(def, focused);
+  const color = ringColor(focusRing);
+  expect(color, "focus must draw a ring").not.toBeNull();
+  const dl = deltaL(color!, surface);
   console.log(
-    `[field] default border=${def} focus border=${focused} ΔL=${dl.toFixed(4)}`,
+    `[field] focus ring=${color} surface=${surface} ΔL=${dl.toFixed(4)}`,
   );
   expect(
     dl,
-    `field focus border must differ from default by ≥ ${STATE_DL}`,
-  ).toBeGreaterThanOrEqual(STATE_DL);
+    `focus ring must differ from the surface by ≥ ${RING_DL}`,
+  ).toBeGreaterThanOrEqual(RING_DL);
+  // Sanity: the ring color is in the focus-color family (low a/b toward blue,
+  // not neutral gray).
+  const lab = toOklab(color!);
+  expect(lab.a, "ring is not neutral (has chroma)").toBeLessThan(-0.01);
 });
 
-test("field invalid border is perceptibly distinct from default", async ({
-  page,
-}) => {
+test("field invalid draws a visible danger ring", async ({ page }) => {
   await page.goto("./preview/field");
-  // The page's URL field (third demo) is type=url + required. Type invalid
-  // text and blur — :user-invalid fires on real interaction (programmatic
-  // checkValidity() alone does NOT set it).
-  const urlField = page.locator(".c-field__control[type='url']");
-  const def = await urlField.evaluate(
-    (el) => getComputedStyle(el).borderLeftColor,
+  const surface = await page.evaluate(
+    () => getComputedStyle(document.body).backgroundColor,
   );
+  // The page's URL field is type=url + required. Type invalid text and blur —
+  // :user-invalid fires on real interaction (checkValidity() alone won't set it).
+  const urlField = page.locator(".c-field__control[type='url']");
   await urlField.fill("not-a-url");
   await urlField.blur();
-  // Wait for the border-color transition to settle.
   await page.waitForTimeout(300);
-  const invalid = await urlField.evaluate(
-    (el) => getComputedStyle(el).borderLeftColor,
-  );
-  const dl = deltaL(def, invalid);
+
+  const ring = await urlField.evaluate((el) => getComputedStyle(el).boxShadow);
+  const color = ringColor(ring);
+  expect(color, "invalid must draw a ring").not.toBeNull();
+  const dl = deltaL(color!, surface);
   console.log(
-    `[field] default border=${def} invalid border=${invalid} ΔL=${dl.toFixed(4)}`,
+    `[field] invalid ring=${color} surface=${surface} ΔL=${dl.toFixed(4)}`,
   );
   expect(
     dl,
-    `field invalid border must differ from default by ≥ ${STATE_DL}`,
-  ).toBeGreaterThanOrEqual(STATE_DL);
+    `invalid ring must differ from the surface by ≥ ${RING_DL}`,
+  ).toBeGreaterThanOrEqual(RING_DL);
 });

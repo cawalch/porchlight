@@ -71,22 +71,26 @@
      need direct element matching. Keeping them in the same layer, just
      unscoped, with a :where() prefix for low specificity. */
 
-  /* Focus: border shifts to the focus color, plus a SOFT outer glow — a 4px,
-     low-opacity halo rather than a tight 2px wire ring. The hard ring reads as a
-     browser default outline; the glow is the modern SaaS input pattern
-     (Linear/Vercel/Stripe). Border-color alone is below the perceptual
-     threshold; the glow is what makes focus legible. */
+  /* Focus indicator: a single crisp 2px ring in the focus color, plus a
+     genuinely BLURRED outer glow. The border is NOT recolored — recoloring it
+     produced a “double blue stroke” (solid recolored border + a translucent
+     ring stacked beside it). The ring is the focus indicator; the border
+     stays as the neutral field edge. (The previous `0 0 0 4px` had no blur,
+     so it was a hard translucent ring, not the intended glow.) */
   :where(.c-field) .c-field__control:focus-visible {
-    border-color: var(--pl-focus-color);
-    box-shadow: 0 0 0 4px
-      color-mix(in oklab, var(--pl-focus-color), transparent 82%);
+    box-shadow:
+      0 0 0 2px var(--pl-focus-color),
+      0 4px 12px -2px
+        color-mix(in oklab, var(--pl-focus-color), transparent 55%);
   }
 
-  /* Invalid: border to danger + a matching soft glow for consistency. */
+  /* Invalid: same single-ring + glow treatment, in danger. The hint still
+     flips to danger-text via :has() on the wrapper (below). */
   :where(.c-field) .c-field__control:user-invalid {
-    border-color: var(--pl-color-danger);
-    box-shadow: 0 0 0 4px
-      color-mix(in oklab, var(--pl-color-danger), transparent 82%);
+    box-shadow:
+      0 0 0 2px var(--pl-color-danger),
+      0 4px 12px -2px
+        color-mix(in oklab, var(--pl-color-danger), transparent 55%);
   }
 
   :where(.c-field):has(.c-field__control:user-invalid) .c-field__hint {
