@@ -1,6 +1,6 @@
 # Porchlight
 
-> A no-dependency, native-CSS design substrate for enterprise SaaS — built for Chrome 149+ (June 2026) with progressive enhancement everywhere else.
+> A no-dependency, native-CSS framework.
 
 [![status: pre-1.0](https://img.shields.io/badge/status-pre--1.0-orange)](#)
 [![target: Chrome 149+](https://img.shields.io/badge/chrome-%E2%89%A5149-4285F4)](#)
