@@ -1,0 +1,92 @@
+/*
+ * Porchlight — avatar component
+ * ===========================================================================
+ * A user identity chip — initials in a colored circle, or an image. Used in
+ * headers, lists, comments, and mentions. Three sizes via [data-size]:
+ * "sm" (1.5rem), default (2.5rem), "lg" (3rem).
+ *
+ * When no image is provided, initials render on a deterministic accent
+ * background derived from the name. The app sets the initials; the framework
+ * styles the circle. For an image, use <img class="c-avatar__img"> inside.
+ *
+ * Group stacking: .c-avatar-group overlaps multiple avatars with a negative
+ * margin and a ring for separation.
+ */
+@layer porchlight.components {
+  @scope (.c-avatar) {
+    :scope {
+      --c-avatar-size: 2.5rem;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      inline-size: var(--c-avatar-size);
+      block-size: var(--c-avatar-size);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-accent);
+      color: var(--pl-color-accent-text);
+      font-size: calc(var(--c-avatar-size) * 0.4);
+      font-weight: 600;
+      line-height: 1;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    :scope[data-size="sm"] {
+      --c-avatar-size: 1.5rem;
+
+      font-size: var(--pl-text-xs);
+    }
+
+    :scope[data-size="lg"] {
+      --c-avatar-size: 3rem;
+
+      font-size: var(--pl-text-lg);
+    }
+
+    .c-avatar__img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Avatar group — overlapping stack. */
+  :where(.c-avatar-group) {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  :where(.c-avatar-group) .c-avatar {
+    border: 2px solid var(--pl-color-surface);
+    margin-inline-start: calc(var(--c-avatar-size, 2.5rem) * -0.35);
+  }
+
+  :where(.c-avatar-group) .c-avatar:first-child {
+    margin-inline-start: 0;
+  }
+
+  /* A count overflow chip at the end of a group. */
+  :where(.c-avatar-group__more) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: var(--pl-radius-pill);
+    border: 2px solid var(--pl-color-surface);
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    font-weight: 600;
+    margin-inline-start: calc(2.5rem * -0.35);
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-avatar) {
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
+}

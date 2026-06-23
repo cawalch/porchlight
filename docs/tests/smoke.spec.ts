@@ -344,4 +344,45 @@ test.describe("docs scaffold", () => {
     // The danger tone variant exists.
     await expect(page.locator(".c-empty[data-tone='danger']")).toBeVisible();
   });
+
+  test("alert renders every tone with title and body", async ({ page }) => {
+    await page.goto("./preview/alert");
+    await expect(
+      page.getByRole("heading", { name: "Alert", exact: true }),
+    ).toBeVisible();
+    for (const tone of ["success", "warning", "danger"]) {
+      await expect(
+        page.locator(`.c-alert[data-tone='${tone}']`).first(),
+      ).toBeVisible();
+    }
+    await expect(page.locator(".c-alert:not([data-tone])").first()).toBeVisible();
+    await expect(page.locator(".c-alert__icon svg").first()).toBeVisible();
+  });
+
+  test("progress renders determinate and indeterminate", async ({ page }) => {
+    await page.goto("./preview/progress");
+    await expect(
+      page.getByRole("heading", { name: "Progress", exact: true }),
+    ).toBeVisible();
+    const bars = page.locator(".c-progress__bar");
+    expect(await bars.count()).toBeGreaterThanOrEqual(2);
+    await expect(
+      page.locator(".c-progress[data-indeterminate]"),
+    ).toBeVisible();
+    await expect(
+      page.locator(".c-progress[data-tone='danger']"),
+    ).toBeVisible();
+  });
+
+  test("avatar renders initials, image, and group", async ({ page }) => {
+    await page.goto("./preview/avatar");
+    await expect(
+      page.getByRole("heading", { name: "Avatar", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-avatar[data-size='sm']").first()).toBeVisible();
+    await expect(page.locator(".c-avatar[data-size='lg']").first()).toBeVisible();
+    await expect(page.locator(".c-avatar__img").first()).toBeVisible();
+    await expect(page.locator(".c-avatar-group").first()).toBeVisible();
+    await expect(page.locator(".c-avatar-group__more")).toBeVisible();
+  });
 });

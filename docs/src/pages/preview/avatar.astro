@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Avatar · Porchlight">
+  <h1>Avatar</h1>
+  <p>
+    A user identity chip — initials on a colored circle, or an image. Three
+    sizes via <code>[data-size]</code>. Group stacking via
+    <code>.c-avatar-group</code>.
+  </p>
+
+  <h2>Sizes</h2>
+  <div class="l-cluster">
+    <div class="c-avatar" data-size="sm">JD</div>
+    <div class="c-avatar">JD</div>
+    <div class="c-avatar" data-size="lg">JD</div>
+  </div>
+
+  <h2>With image</h2>
+  <div class="l-cluster">
+    <div class="c-avatar"><img class="c-avatar__img" src="https://i.pravatar.cc/100?img=1" alt="Jane Doe" /></div>
+    <div class="c-avatar"><img class="c-avatar__img" src="https://i.pravatar.cc/100?img=2" alt="John Smith" /></div>
+    <div class="c-avatar" data-size="lg"><img class="c-avatar__img" src="https://i.pravatar.cc/100?img=3" alt="Alice Wong" /></div>
+  </div>
+
+  <h2>Initials with different tones</h2>
+  <div class="l-cluster">
+    <div class="c-avatar" style="background: var(--pl-color-accent);">AB</div>
+    <div class="c-avatar" style="background: var(--pl-color-success);">CD</div>
+    <div class="c-avatar" style="background: var(--pl-color-warning);">EF</div>
+    <div class="c-avatar" style="background: var(--pl-color-danger);">GH</div>
+  </div>
+
+  <h2>Group</h2>
+  <div class="c-avatar-group">
+    <div class="c-avatar" data-size="sm">JD</div>
+    <div class="c-avatar" data-size="sm">AB</div>
+    <div class="c-avatar" data-size="sm">CD</div>
+    <div class="c-avatar" data-size="sm">EF</div>
+    <div class="c-avatar-group__more">+8</div>
+  </div>
+</BaseLayout>

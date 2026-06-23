@@ -35,6 +35,10 @@ const PAGES = [
   "/preview/stat",
   "/preview/skeleton",
   "/preview/empty-state",
+  "/preview/alert",
+  "/preview/progress",
+  "/preview/avatar",
+  "/preview/settings",
   "/preview/utilities",
   "/preview/enhancements",
 ];

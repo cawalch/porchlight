@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Progress · Porchlight">
+  <h1>Progress</h1>
+  <p>
+    A linear progress indicator. Determinate (<code>data-value</code>) shows a
+    fill proportional to the value; indeterminate shows an animated sweep.
+    Tone variants via <code>[data-tone]</code>.
+  </p>
+
+  <h2>Determinate</h2>
+  <div class="l-stack" style="--l-stack-gap: var(--pl-space-4);">
+    {[
+      { label: 'Profile completeness', value: 85, tone: undefined },
+      { label: 'Storage used', value: 64, tone: 'warning' },
+      { label: 'API quota', value: 92, tone: 'danger' },
+      { label: 'Onboarding complete', value: 100, tone: 'success' },
+    ].map((p) => (
+      <div>
+        <div class="progress-label">
+          <span>{p.label}</span>
+          <span class="u-muted">{p.value}%</span>
+        </div>
+        <div class="c-progress" data-tone={p.tone}>
+          <div class="c-progress__bar" style={`inline-size: ${p.value}%;`}></div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>Indeterminate</h2>
+  <p>Use when the task duration is unknown.</p>
+  <div class="c-progress" data-indeterminate>
+    <div class="c-progress__bar"></div>
+  </div>
+
+  <h2>Sizes</h2>
+  <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+    <div class="c-progress" style="--c-progress-height: 0.25rem;">
+      <div class="c-progress__bar" style="inline-size: 60%;"></div>
+    </div>
+    <div class="c-progress">
+      <div class="c-progress__bar" style="inline-size: 60%;"></div>
+    </div>
+    <div class="c-progress" style="--c-progress-height: 0.625rem;">
+      <div class="c-progress__bar" style="inline-size: 60%;"></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--pl-text-sm);
+    margin-block-end: var(--pl-space-1);
+  }
+</style>

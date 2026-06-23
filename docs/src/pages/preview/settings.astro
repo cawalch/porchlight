@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const sections = [
+  ['General', true],
+  ['Team', false],
+  ['Billing', false],
+  ['Integrations', false],
+  ['Security', false],
+  ['Audit log', false],
+] as const;
+---
+<BaseLayout title="Settings · Porchlight">
+  <h1>Settings</h1>
+  <p>
+    A SaaS settings page composing sidebar navigation, tabs, form fields,
+    alerts, and progress — the other canonical enterprise layout (after the
+    dashboard). Demonstrates the master-detail pattern and form density.
+  </p>
+
+  <div class="settings-layout">
+    <!-- Sidebar nav -->
+    <nav class="settings-nav" aria-label="Settings sections">
+      {sections.map(([label, active]) => (
+        <a href="#" class="settings-nav__item" aria-current={active ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
+
+    <!-- Main settings area -->
+    <div class="settings-main">
+      <!-- Alert banner -->
+      <div class="c-alert" data-tone="warning">
+        <div class="c-alert__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
+        </div>
+        <div class="c-alert__content">
+          <div class="c-alert__title">Plan changes pending</div>
+          <div class="c-alert__body">Your plan upgrade to Enterprise takes effect on the next billing cycle.</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="c-tabs">
+        <div class="c-tabs__list" role="tablist" aria-label="Workspace settings">
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="true">Profile</button>
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Preferences</button>
+          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Danger zone</button>
+        </div>
+
+        <!-- Profile tab -->
+        <div class="c-tabs__panel" role="tabpanel">
+          <div class="c-card">
+            <div class="c-card__header">
+              <h2 class="c-card__title">Workspace profile</h2>
+            </div>
+            <div class="c-card__body">
+              <div class="l-stack">
+                <div class="form-row">
+                  <div class="c-avatar" data-size="lg">AO</div>
+                  <div class="l-cluster">
+                    <button class="c-button" data-variant="secondary">Upload logo</button>
+                    <button class="c-button" data-variant="ghost">Remove</button>
+                  </div>
+                </div>
+
+                <label class="c-field">
+                  <span class="c-field__label">Workspace name</span>
+                  <input class="c-field__control" value="Acme Ops" />
+                  <span class="c-field__hint">Visible to all team members.</span>
+                </label>
+
+                <label class="c-field">
+                  <span class="c-field__label">Workspace URL</span>
+                  <input class="c-field__control" type="url" value="https://acme-ops.porchlight.app" />
+                </label>
+
+                <label class="c-field">
+                  <span class="c-field__label">Default timezone</span>
+                  <select class="c-field__control">
+                    <option>America/New_York (UTC-5)</option>
+                    <option>Europe/London (UTC+0)</option>
+                    <option>Asia/Tokyo (UTC+9)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="c-card__footer">
+              <button class="c-button" data-variant="ghost">Cancel</button>
+              <button class="c-button" data-variant="primary">Save changes</button>
+            </div>
+          </div>
+
+          <!-- Storage usage card -->
+          <div class="c-card" style="margin-block-start: var(--pl-space-4);">
+            <div class="c-card__header">
+              <h2 class="c-card__title">Storage</h2>
+              <span class="c-badge" data-tone="warning">64% used</span>
+            </div>
+            <div class="c-card__body">
+              <div class="l-stack">
+                <div class="c-progress" data-tone="warning">
+                  <div class="c-progress__bar" style="inline-size: 64%;"></div>
+                </div>
+                <p class="u-muted">128 GB of 200 GB used. <a href="#">Upgrade plan</a> for more storage.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Docs-only tab switching.
+  document.querySelectorAll('.settings-main .c-tabs').forEach((group) => {
+    const tabs = group.querySelectorAll('.c-tabs__tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', String(selected));
+          t.setAttribute('tabindex', selected ? '0' : '-1');
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .settings-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+    gap: var(--pl-space-5);
+    align-items: start;
+  }
+  .settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-1);
+    position: sticky;
+    inset-block-start: var(--pl-space-4);
+  }
+  .settings-nav__item {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+    font-size: var(--pl-text-sm);
+    font-weight: 500;
+  }
+  .settings-nav__item:hover {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text);
+  }
+  .settings-nav__item[aria-current='page'] {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+  .form-row {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-3);
+  }
+  @media (width < 40rem) {
+    .settings-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
