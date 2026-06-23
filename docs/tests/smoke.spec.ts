@@ -86,4 +86,22 @@ test.describe("docs scaffold", () => {
     const sidebar = page.locator(".demo-panel .l-sidebar");
     await expect(sidebar).toHaveCSS("grid-template-columns", /.+ .+/);
   });
+
+  test("app shell renders topbar/sidebar/main and collapses the sidebar", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-shell");
+    await expect(
+      page.getByRole("heading", { name: "App shell", exact: true }),
+    ).toBeVisible();
+    // All three regions exist.
+    await expect(page.locator(".l-app-shell__topbar")).toBeVisible();
+    await expect(page.locator(".l-app-shell__sidebar")).toBeVisible();
+    await expect(page.locator(".l-app-shell__main")).toBeVisible();
+    // The collapse toggle shrinks the sidebar via data-sidebar.
+    const rail = page.locator(".l-app-shell__sidebar");
+    await expect(rail).toHaveAttribute("data-sidebar", "expanded");
+    await page.getByRole("button", { name: /Collapse sidebar/ }).click();
+    await expect(rail).toHaveAttribute("data-sidebar", "collapsed");
+  });
 });

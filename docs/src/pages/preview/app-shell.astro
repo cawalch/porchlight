@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// A believable desktop SaaS app shell: sticky topbar with brand + actions,
+// persistent nav sidebar, scrolling main work area. Toggles below flip the
+// sidebar between expanded / collapsed (the data-sidebar attribute) so the
+// manual-collapse rail is demonstrable without a real component.
+const nav = [
+  ['Dashboard', '#'],
+  ['Accounts', '#'],
+  ['Billing', '#'],
+  ['Usage', '#'],
+  ['Settings', '#'],
+  ['Audit log', '#'],
+] as const;
+---
+<BaseLayout title="App shell · Porchlight">
+  <h1>App shell</h1>
+  <p>
+    The desktop SaaS layout — sticky topbar, persistent sidebar, scrolling main
+    work area — in <code>@layer porchlight.layout</code>. This is the one place
+    the framework uses a viewport media query: below 60rem the sidebar drops
+    out so the work surface stays usable. The main region is also a query
+    container, so any <code>.l-sidebar</code> nested inside it collapses at
+    narrow app widths without a manual wrapper.
+  </p>
+
+  <div class="toggles">
+    <button type="button" data-toggle="collapse" aria-pressed="false">Collapse sidebar</button>
+    <span class="toggles__hint">or narrow the window below 60rem to auto-hide it</span>
+  </div>
+
+  <!--
+    Full-height demo. The .shell fills the section; .l-app-shell provides the
+    grid + topbar/sidebar/main areas. Inline styles stand in for real components.
+  -->
+  <section class="shell">
+    <div class="l-app-shell" data-app-shell>
+      <header class="l-app-shell__topbar topbar">
+        <div class="topbar__brand">Acme Console</div>
+        <div class="l-cluster topbar__actions">
+          <button type="button" class="ghost-btn">Search</button>
+          <button type="button" class="ghost-btn">Notifications</button>
+          <button type="button" class="ghost-btn ghost-btn--avatar">JD</button>
+        </div>
+      </header>
+
+      <aside class="l-app-shell__sidebar sidebar" data-sidebar="expanded">
+        <nav class="sidebar__nav" aria-label="Primary">
+          {nav.map(([label], i) => (
+            <a class="nav-item" href="#" aria-current={i === 0 ? 'page' : undefined}>
+              <span class="nav-item__icon" aria-hidden="true">●</span>
+              <span class="nav-item__label">{label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+
+      <main class="l-app-shell__main main">
+        <div class="l-stack" style="--l-stack-gap: var(--pl-space-5);">
+          <div class="main__header">
+            <h2>Dashboard</h2>
+            <button type="button" class="primary-btn">New report</button>
+          </div>
+
+          <!-- A nested .l-sidebar inside .main collapses correctly because
+               .l-app-shell__main is a container (the audit-fix payoff). -->
+          <div class="l-sidebar" style="--l-sidebar-size: 10rem;">
+            <div class="filters">
+              <h3>Filters</h3>
+              <ul>
+                <li>Active</li>
+                <li>Trial</li>
+                <li>Past due</li>
+              </ul>
+            </div>
+            <div class="content">
+              <p>Main work content. Narrow the <em>window</em> below ~60rem to hide the app sidebar; narrow this <em>panel</em> (not possible here, but in a real split pane) to collapse the inner filter sidebar.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Docs-only: flip data-sidebar on the rail. The framework does the rest.
+  const shell = document.querySelector('[data-app-shell]');
+  const sidebar = shell?.querySelector('.l-app-shell__sidebar');
+  document.querySelector('[data-toggle="collapse"]')?.addEventListener('click', (e) => {
+    if (!sidebar) return;
+    const collapsed = sidebar.getAttribute('data-sidebar') === 'collapsed';
+    sidebar.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+    (e.currentTarget as HTMLElement).setAttribute(
+      'aria-pressed',
+      String(!collapsed),
+    );
+  });
+</script>
+
+<style>
+  .toggles {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-3);
+    margin-block-end: var(--pl-space-4);
+  }
+  .toggles__hint {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+  }
+  .ghost-btn,
+  .primary-btn {
+    min-block-size: var(--pl-control-block-size);
+    padding-inline: var(--pl-control-padding-inline);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-control-radius);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+  .primary-btn {
+    background: var(--pl-color-accent);
+    border-color: var(--pl-color-accent);
+    color: var(--pl-color-accent-text);
+  }
+  .ghost-btn--avatar {
+    border-radius: var(--pl-radius-pill);
+    inline-size: var(--pl-control-block-size);
+    padding-inline: 0;
+  }
+
+  /* The demo shell — constrained height so the layout is visible on one screen. */
+  .shell {
+    block-size: clamp(22rem, 60vh, 36rem);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-xl);
+    overflow: hidden;
+    background: var(--pl-color-bg);
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+    padding-inline: var(--pl-space-5);
+    block-size: 3.5rem;
+    background: var(--pl-color-surface);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+  .topbar__brand {
+    font-weight: 700;
+  }
+
+  .sidebar {
+    padding-block: var(--pl-space-3);
+    background: var(--pl-color-surface);
+    border-inline-end: 1px solid var(--pl-color-border);
+  }
+  .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-1);
+    padding-inline: var(--pl-space-3);
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-3);
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .nav-item:hover {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text);
+  }
+  .nav-item[aria-current='page'] {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+  .nav-item__icon {
+    flex-shrink: 0;
+    font-size: 0.5rem;
+    color: var(--pl-color-text-muted);
+  }
+
+  .main {
+    padding: var(--pl-space-5);
+  }
+  .main__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+  }
+  .filters h3 {
+    margin-block-end: var(--pl-space-2);
+    font-size: var(--pl-text-sm);
+    color: var(--pl-color-text-muted);
+  }
+  .filters ul {
+    margin: 0;
+    padding-inline-start: var(--pl-space-4);
+  }
+  .content {
+    color: var(--pl-color-text-muted);
+  }
+</style>

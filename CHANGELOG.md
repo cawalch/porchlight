@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **App shell** (`.l-app-shell`). Desktop SaaS grid: sticky topbar,
+  persistent sidebar, scrolling main work area. `.l-app-shell__main` is a
+  query container, so any `.l-sidebar` nested inside it collapses at narrow
+  app widths without a manual wrapper. The sidebar supports an explicit
+  `data-sidebar="collapsed"` toggle (icon rail) in addition to the viewport
+  fallback (hidden below 60rem). Completes the layout layer.
 - **Single-file distributable build**. `pnpm --filter @cawalch/porchlight
 build` bundles the source `porchlight.css` (@imports inlined) into
   `dist/porchlight.css` (readable) and `dist/porchlight.min.css` via Lightning
