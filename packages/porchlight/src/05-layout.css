@@ -1,0 +1,82 @@
+/*
+ * Porchlight — layout primitives
+ * ===========================================================================
+ * Small, composable layout helpers for the regions AROUND components — not
+ * opinionated page designs. They are deliberately quiet: low specificity
+ * (:where), token-driven gaps, and local --l-* config tokens every primitive
+ * exposes for instance tuning (e.g. --l-stack-gap), each with a sensible
+ * framework default.
+ *
+ * Built for desktop SaaS / web-app surfaces: the default states assume
+ * comfortable desktop density; container queries adapt a layout to its PANEL
+ * width (a nested app region), not only to the viewport. Viewport media logic
+ * is reserved for the app shell (05 app-shell block, next PR).
+ *
+ * Naming: .l-* primitives; --l-* are instance-config tokens consumed only by
+ * the layout layer.
+ */
+@layer porchlight.layout {
+  /* Vertical flow — forms, settings sections, stacked panels. */
+  :where(.l-stack) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--l-stack-gap, var(--pl-space-4));
+  }
+
+  /* Horizontal wrapping group — action bars, button rows, toolbar items. */
+  :where(.l-cluster) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--l-cluster-align, center);
+    justify-content: var(--l-cluster-justify, flex-start);
+    gap: var(--l-cluster-gap, var(--pl-space-3));
+  }
+
+  /* Auto-fitting grid — dashboard widgets, KPI cards, result tiles. Each
+     track is at least --l-grid-min wide (clamped to 100% so a single item
+     never overflows) and grows to fill. */
+  :where(.l-grid) {
+    display: grid;
+    gap: var(--l-grid-gap, var(--pl-space-4));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(var(--l-grid-min, 16rem), 100%), 1fr)
+    );
+  }
+
+  /* Sidebar + main — settings/filter panels, master-detail regions. The
+     default is the desktop two-column layout. It collapses to a single
+     column when its nearest ANCESTOR query container is narrower than 48rem
+     (an element cannot query its own size; set container-type: inline-size on
+     the wrapping panel, or nest inside .l-app-shell__main). */
+  :where(.l-sidebar) {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--l-sidebar-gap, var(--pl-space-4));
+    grid-template-columns:
+      minmax(0, var(--l-sidebar-size, 16rem))
+      minmax(0, 1fr);
+  }
+
+  @container (inline-size < 48rem) {
+    :where(.l-sidebar) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Readable content column centered within a wide app surface. Default max
+     is generous (88rem) for dashboards; tighten via --l-page-max for prose. */
+  :where(.l-page) {
+    inline-size: min(100% - 2 * var(--pl-space-4), var(--l-page-max, 88rem));
+    margin-inline: auto;
+  }
+
+  /* Independent scroll region — data panes, log viewers, long lists. Stable
+     gutter prevents layout shift when scrollbars appear/disappear; contain
+     stops scroll chaining to the page. */
+  :where(.l-scroll-area) {
+    overflow: auto;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+}

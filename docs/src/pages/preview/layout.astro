@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Believable SaaS fragments. The dashed borders + surface-2 are docs-chrome
+// crutches so the *layout* (the thing under test) is visible; real components
+// replace them in Phase 3.
+const kpis = [
+  ['Active seats', '1,284', '+4.2%'],
+  ['MRR', '$48.2k', '+1.1%'],
+  ['Churn', '1.4%', '-0.3%'],
+  ['Open tickets', '23', ''],
+] as const;
+
+const filters = ['All', 'Active', 'Trialing', 'Past due', 'Churned'] as const;
+
+const rows = [
+  ['Acme Ops', 'Enterprise', 'Active', '$2,400'],
+  ['Northwind', 'Pro', 'Trialing', '$980'],
+  ['Globex', 'Pro', 'Past due', '$980'],
+  ['Initech', 'Team', 'Active', '$420'],
+  ['Umbrella', 'Enterprise', 'Active', '$2,400'],
+  ['Stark Industries', 'Pro', 'Active', '$980'],
+] as const;
+---
+<BaseLayout title="Layout · Porchlight">
+  <h1>Layout primitives</h1>
+  <p>
+    Composable regions for desktop SaaS / web-app surfaces — not opinionated
+    page designs. Low specificity (<code>:where()</code>), token-driven gaps,
+    and each primitive exposes <code>--l-*</code> instance-config tokens with
+    framework defaults. Defaults assume comfortable desktop density;
+    <code>.l-sidebar</code> adapts to its <em>panel</em> width via a container
+    query, not the viewport.
+  </p>
+
+  <h2><code>.l-grid</code> — dashboard widgets</h2>
+  <p>Auto-fitting tracks; set <code>--l-grid-min</code> for a wider floor.</p>
+  <div class="l-grid widget-grid">
+    {kpis.map(([label, value, delta]) => (
+      <article class="widget">
+        <span class="widget__label">{label}</span>
+        <span class="widget__value">{value}</span>
+        {delta && <span class="widget__delta">{delta}</span>}
+      </article>
+    ))}
+  </div>
+
+  <h2><code>.l-cluster</code> — action bar</h2>
+  <p>A wrapping row of filters and actions; <code>--l-cluster-justify: flex-end</code> to right-align.</p>
+  <div class="action-bar">
+    <div class="l-cluster filter-row">
+      {filters.map((f, i) => (
+        <button type="button" class="pill" aria-pressed={i === 0 ? 'true' : undefined}>{f}</button>
+      ))}
+    </div>
+    <div class="l-cluster actions" style="--l-cluster-justify: flex-end;">
+      <button type="button" class="btn">Export</button>
+      <button type="button" class="btn btn--primary">New account</button>
+    </div>
+  </div>
+
+  <h2><code>.l-stack</code> + <code>.l-sidebar</code> — settings panel</h2>
+  <p>
+    Resize the demo panel's handle (or narrow the window) to cross 48rem:
+    the sidebar collapses to a single column because the
+    <strong>wrapping panel</strong> (<code>.demo-panel</code>) is the container.
+  </p>
+  <div class="demo-panel" data-resizable>
+    <div class="l-sidebar" style="--l-sidebar-size: 12rem;">
+      <nav class="l-stack side-nav" style="--l-stack-gap: var(--pl-space-1);">
+        <a class="side-nav__item is-current" href="#general">General</a>
+        <a class="side-nav__item" href="#billing">Billing</a>
+        <a class="side-nav__item" href="#team">Team</a>
+        <a class="side-nav__item" href="#integrations">Integrations</a>
+        <a class="side-nav__item" href="#audit">Audit log</a>
+      </nav>
+      <div class="l-stack detail">
+        <h3>General</h3>
+        <p>Workspace name, default locale, and session preferences live here.</p>
+        <div class="l-cluster" style="--l-cluster-justify: flex-end;">
+          <button type="button" class="btn">Cancel</button>
+          <button type="button" class="btn btn--primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2><code>.l-scroll-area</code> — data pane</h2>
+  <p>Independent scroll with a stable gutter (no layout shift when the bar appears) and contained overscroll.</p>
+  <div class="l-scroll-area data-pane">
+    <table>
+      <thead><tr><th>Account</th><th>Plan</th><th>Status</th><th>MRR</th></tr></thead>
+      <tbody>
+        {rows.map(([account, plan, status, mrr]) => (
+          <tr><td>{account}</td><td>{plan}</td><td>{status}</td><td>{mrr}</td></tr>
+        ))}
+        {rows.map(([account, plan, status, mrr]) => (
+          <tr><td>{account}</td><td>{plan}</td><td>{status}</td><td>{mrr}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2><code>.l-page</code> — readable column</h2>
+  <p>Centered content within a wide surface; tighten <code>--l-page-max</code> for prose.</p>
+  <div class="l-page prose">
+    <p>Long-form guidance, release notes, or policy text — kept readable even when the surrounding app runs edge-to-edge.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  // Docs-only resize handle so reviewers can cross the 48rem container boundary.
+  const panel = document.querySelector('[data-resizable]');
+  if (panel) {
+    const handle = document.createElement('div');
+    handle.setAttribute('role', 'separator');
+    handle.setAttribute('aria-label', 'Resize demo panel');
+    handle.className = 'demo-panel__handle';
+    handle.tabIndex = 0;
+    panel.append(handle);
+  }
+</script>
+
+<style>
+  /* Docs chrome to make the *layout* visible — these stand in for real
+     components (Phase 3) and are intentionally plain. */
+  .widget-grid {
+    --l-grid-min: 13rem;
+  }
+  .widget {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+  .widget__label {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+  }
+  .widget__value {
+    font-size: var(--pl-text-xl);
+    font-weight: 700;
+  }
+  .widget__delta {
+    color: var(--pl-color-success);
+    font-size: var(--pl-text-sm);
+  }
+
+  .action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+    padding: var(--pl-space-3);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+  .filter-row {
+    --l-cluster-gap: var(--pl-space-2);
+  }
+  .pill, .btn {
+    min-block-size: var(--pl-control-block-size);
+    padding-inline: var(--pl-control-padding-inline);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-control-radius);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+  .pill[aria-pressed='true'] {
+    background: var(--pl-color-surface-2);
+    border-color: var(--pl-color-accent);
+    color: var(--pl-color-accent);
+  }
+  .btn--primary {
+    background: var(--pl-color-accent);
+    border-color: var(--pl-color-accent);
+    color: var(--pl-color-accent-text);
+  }
+
+  .demo-panel {
+    position: relative;
+    container-type: inline-size;
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+  .demo-panel__handle {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: 6px;
+    cursor: col-resize;
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 70%);
+    border-start-end-radius: var(--pl-radius-lg);
+    border-end-end-radius: var(--pl-radius-lg);
+  }
+  .side-nav__item {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+  }
+  .side-nav__item:hover {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text);
+  }
+  .side-nav__item.is-current {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+  .detail {
+    padding-inline: var(--pl-space-2);
+  }
+
+  .data-pane {
+    max-block-size: 16rem;
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+  .data-pane table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+  .data-pane :where(th, td) {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    text-align: start;
+    white-space: nowrap;
+  }
+  .data-pane th {
+    position: sticky;
+    inset-block-start: 0;
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+  }
+
+  .prose {
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+</style>
