@@ -29,6 +29,12 @@
       container: c-card / inline-size;
       display: grid;
       gap: var(--pl-space-4);
+
+      /* When cards sit in an .l-grid (equal-height rows via align-items:
+         stretch), a shorter card gets stretched to match its tallest sibling.
+         Without this, the card's grid rows absorb the extra height —
+         inflating the header row and pushing the title down inconsistently. */
+      align-content: start;
       padding: var(--c-card-padding);
       border: 1px solid var(--c-card-border);
       border-radius: var(--c-card-radius);
@@ -41,6 +47,11 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--pl-space-3);
+
+      /* Match the control height so the title centers at the same Y whether or
+         not the header has a button. (align-content: start on the card above
+         prevents this row from absorbing stretch-height from .l-grid.) */
+      min-block-size: var(--pl-control-block-size);
     }
 
     .c-card__title {
