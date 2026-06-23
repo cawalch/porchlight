@@ -1,0 +1,24 @@
+{
+  "name": "@cawalch/porchlight-docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Porchlight documentation site (Astro).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "playwright test",
+    "test:serve": "astro build && astro preview --port 4321 --host",
+    "astro:check": "astro check"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.0.0",
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0",
+    "astro": "^5.0.0",
+    "sharp": "^0.33.5",
+    "typescript": "^5.6.0"
+  }
+}

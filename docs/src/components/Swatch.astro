@@ -1,0 +1,41 @@
+---
+/**
+ * <Swatch> — displays a single color token as a chip + name + value.
+ *
+ * For now it takes an explicit value prop. Once the token-reference generator
+ * lands (Phase 1), it will be fed from the parsed token list.
+ */
+interface Props {
+  name: string;
+  value: string;
+}
+const { name, value } = Astro.props;
+---
+<div class="swatch">
+  <span class="swatch__chip" style={`background: ${value}`}></span>
+  <code class="swatch__name">{name}</code>
+  <code class="swatch__value">{value}</code>
+</div>
+
+<style>
+  .swatch {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.25rem 0.75rem;
+  }
+  .swatch__chip {
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    grid-row: span 2;
+    border-radius: 0.5rem;
+    border: 1px solid var(--doc-border);
+  }
+  .swatch__name {
+    font-weight: 600;
+  }
+  .swatch__value {
+    color: var(--doc-text-muted);
+    font-size: 0.8125rem;
+  }
+</style>

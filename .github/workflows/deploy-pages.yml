@@ -1,0 +1,48 @@
+name: Deploy docs
+
+# Builds the docs site and deploys it to the ROOT of the gh-pages branch.
+# GitHub Pages serves the gh-pages branch (configured once in repo Settings).
+# keep_files: true preserves the per-PR previews under /pr/.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (production base)
+        run: pnpm --filter ./docs build
+        env:
+          ASTRO_BASE: /porchlight/
+
+      - name: Deploy to gh-pages (root)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/dist
+          keep_files: true # preserve /pr/<n>/ previews
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "docs: deploy site"

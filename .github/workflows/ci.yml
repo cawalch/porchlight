@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A single CI job that lint/builds the docs site and runs the Playwright suite.
+# Stylelint + per-component visual/axe suites are the primary review signal.
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint CSS
+        run: pnpm lint
+
+      - name: Build docs
+        run: pnpm --filter ./docs build
+
+      - name: Install Playwright browser
+        run: pnpm --filter ./docs exec playwright install --with-deps chromium
+
+      - name: Run tests
+        run: pnpm --filter ./docs test
