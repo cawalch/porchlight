@@ -24,6 +24,20 @@ Production target: **Chrome 149 stable** (June 2026). Tier B features (gap decor
 
 🚧 **In active development — not yet 1.0.** Token names, class contracts, and the layer structure may change before `v1.0.0`.
 
+## Install
+
+```sh
+pnpm add @cawalch/porchlight
+```
+
+```css
+/* Place the framework in the cascade before importing it, so your app wins. */
+@layer porchlight, app;
+@import "@cawalch/porchlight/porchlight.css";
+```
+
+The package is pre-1.0; the npm release follows `v1.0.0`.
+
 ## Development
 
 Porchlight is a pnpm workspace: `packages/porchlight` (the framework) and `docs/` (the Astro showcase & reference site).

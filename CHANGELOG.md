@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+
+- **Layer architecture & reset** (`@cawalch/porchlight`). First framework CSS:
+  every rule lives inside one top-level `@layer porchlight { … }` with nine
+  deterministic sub-layers; a minimal `:where()`-based reset replaces any
+  normalize.css dependency. Consumers override via `@layer porchlight, app;`.
 
 ## [0.0.0] - in development
 

@@ -1,0 +1,69 @@
+---
+title: Architecture & layer model
+description: How Porchlight is layered, and how host applications override it.
+order: 1
+---
+
+# Architecture & the layer model
+
+Porchlight is a single CSS file authored as small modules. Every rule lives
+inside one top-level cascade layer: **`porchlight`**.
+
+## The wrap
+
+```css
+@layer porchlight {
+  @layer reset, tokens, themes, base, layout, components, utilities,
+    enhancements, print;
+}
+```
+
+Inside `porchlight`, nine sub-layers declare a deterministic order. Later
+layers win over earlier ones, so a component always beats base, a utility
+always beats a component — and nothing needs `!important`.
+
+| Layer          | Purpose                                              |
+| -------------- | ---------------------------------------------------- |
+| `reset`        | Minimal browser normalization only.                  |
+| `tokens`       | Primitive and semantic design tokens.                |
+| `themes`       | Theme, brand, density, contrast, and mode overrides. |
+| `base`         | HTML element defaults.                               |
+| `layout`       | Layout primitives and page/app shells.               |
+| `components`   | Component classes (`.c-button`, `.c-card`, …).       |
+| `utilities`    | Small single-purpose helpers.                        |
+| `enhancements` | Progressive `@supports`-gated features.              |
+| `print`        | Print behavior.                                      |
+
+## How a host app overrides Porchlight
+
+Place the framework in the cascade **before** you import it:
+
+```css
+/* app.css */
+@layer porchlight, app; /* app wins */
+@import "@cawalch/porchlight/porchlight.css";
+
+@layer app {
+  /* your product styles here */
+}
+```
+
+Unlayered styles always beat layered styles, so unlayered app CSS wins too.
+Either way, you never fight `!important` — Porchlight reserves `!important`
+for accessibility-critical utilities only (visually-hidden, `[hidden]`).
+
+> Do **not** pass `layer(...)` to the `@import`. Each Porchlight module
+> self-wraps in `@layer porchlight.<name>`; adding `layer(...)` would
+> double-nest it.
+
+## Why no internal `overrides` layer?
+
+Some frameworks ship a trailing `overrides` layer for consumers. With the
+top-level `porchlight` wrap that's redundant: overrides live in your own
+layers outside `porchlight` (or unlayered). One wrap, one mental model.
+
+## Current status
+
+This page documents the target architecture. The layers above are declared as
+of this release; only `reset` is populated so far. Tokens, themes, and base
+land next (Phase 1).

@@ -1,0 +1,53 @@
+/*
+ * Porchlight — reset
+ * ---------------------------------------------------------------------------
+ * Minimal browser normalization. No normalize.css, no opinionated defaults —
+ * those belong in the `base` layer. `:where()` keeps specificity at zero so
+ * every rule here is trivially overridable.
+ *
+ * Logical properties throughout (block/inline/start/end) for RTL/LTR parity.
+ * `!important` appears only on `[hidden]`, an accessibility-critical guarantee
+ * that nothing can accidentally un-hide hidden content.
+ */
+@layer porchlight.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :where(html) {
+    color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  :where(body) {
+    margin: 0;
+    min-block-size: 100dvb;
+  }
+
+  :where(img, svg, video, canvas) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+  }
+
+  :where(button, [role="button"], input, select, textarea, summary) {
+    touch-action: manipulation;
+  }
+
+  :where(table) {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  :where([hidden]) {
+    display: none !important;
+  }
+}

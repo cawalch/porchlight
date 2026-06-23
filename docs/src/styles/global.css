@@ -1,6 +1,16 @@
 /*
  * Porchlight docs chrome.
  *
+ * Imports the real framework from the workspace package — single source of
+ * truth. The framework is fully layered (`@layer porchlight.*`), and this
+ * docs chrome is intentionally UNLAYERED so it overrides the framework while
+ * the token system (Phase 1, PR 4) is still being built. Once `--pl-*` tokens
+ * land, this file is refactored to consume them. */
+@import "@cawalch/porchlight/porchlight.css";
+
+/*
+ * Porchlight docs chrome.
+ *
  * Temporary site styling in its own --doc-* namespace. It is NOT the Porchlight
  * framework — that lives in packages/porchlight and begins in Phase 1 (PR 3).
  * Once the framework's --pl-* token system lands, this file is refactored to

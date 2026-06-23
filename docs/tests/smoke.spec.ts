@@ -27,4 +27,10 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Preview gallery" }),
     ).toBeVisible();
   });
+
+  test("reset preview page renders and lists the layers", async ({ page }) => {
+    await page.goto("./preview/reset");
+    await expect(page.getByRole("heading", { name: "Reset" })).toBeVisible();
+    await expect(page.getByText("porchlight.reset")).toBeVisible();
+  });
 });
