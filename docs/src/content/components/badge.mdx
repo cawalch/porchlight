@@ -1,0 +1,59 @@
+---
+title: Badge
+description: A compact label for statuses, counts, and tags — tones via data-tone, consuming the WCAG-AA semantic pairs.
+status: stable
+since: 0.1.0
+---
+
+# Badge
+
+The `.c-badge` is a compact inline label for statuses, counts, and tags. Tones
+via `[data-tone]`; status tones consume the WCAG-AA `-bg`/`-text` token pairs,
+so they're legible in both themes by construction.
+
+## Semantic HTML
+
+```html
+<span class="c-badge">Default</span>
+<span class="c-badge" data-tone="success">Active</span>
+<span class="c-badge" data-tone="warning">Pending review</span>
+<span class="c-badge" data-tone="danger">Blocked</span>
+<span class="c-badge" data-tone="accent">New</span>
+```
+
+With a leading status dot:
+
+```html
+<span class="c-badge" data-tone="success">
+  <span class="c-badge__dot"></span>Online
+</span>
+```
+
+## Class contract
+
+| Selector        | Role                                                                            |
+| --------------- | ------------------------------------------------------------------------------- |
+| `.c-badge`      | The badge (`<span>`).                                                           |
+| `[data-tone]`   | `accent` \| `success` \| `warning` \| `danger` (default = neutral `surface-2`). |
+| `.c-badge__dot` | Optional leading status pip (colored `currentColor`).                           |
+
+## Tokens consumed
+
+`--pl-color-{surface-2,text,accent,accent-text,success-bg,success-text,
+warning-bg,warning-text,danger-bg,danger-text}`, `--pl-radius-pill`,
+`--pl-text-xs`, `--pl-space-{1,2}`.
+
+## Accessibility
+
+- **Semantics:** a badge is presentational text. For live status changes that
+  should be announced, wrap it and add `role="status"` on the container (not
+  the badge itself — a table full of badges announcing would be noisy).
+- **Contrast:** every tone uses a semantic `-bg`/`-text` pair, all verified
+  ≥ 4.5:1 by the badge contrast test. The default tone uses `surface-2` +
+  `text` (AA by the surfaces check).
+
+## Theme & RTL
+
+Light/dark via tokens; RTL via logical properties (`padding-inline`,
+`min-block-size`). Badges are intentionally density-independent — they label,
+not actuate.

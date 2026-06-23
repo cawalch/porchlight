@@ -149,4 +149,16 @@ test.describe("docs scaffold", () => {
     const link = page.locator("a.c-card").first();
     await expect(link).toHaveAttribute("href", "#");
   });
+
+  test("badge page renders every tone", async ({ page }) => {
+    await page.goto("./preview/badge");
+    await expect(
+      page.getByRole("heading", { name: "Badge", exact: true }),
+    ).toBeVisible();
+    for (const tone of ["accent", "success", "warning", "danger"]) {
+      await expect(
+        page.locator(`.c-badge[data-tone='${tone}']`).first(),
+      ).toBeVisible();
+    }
+  });
 });

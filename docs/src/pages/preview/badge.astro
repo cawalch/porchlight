@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Badge · Porchlight">
+  <h1>Badge</h1>
+  <p>
+    A compact label for statuses, counts, and tags. Inline-flex pill; tones via
+    <code>[data-tone]</code>. Status tones consume the WCAG-AA
+    <code>-bg</code>/<code>-text</code> token pairs, so they're legible in both
+    themes by construction.
+  </p>
+
+  <h2>Tones</h2>
+  <div class="row">
+    <span class="c-badge">Default</span>
+    <span class="c-badge" data-tone="accent">New</span>
+    <span class="c-badge" data-tone="success">Active</span>
+    <span class="c-badge" data-tone="warning">Pending review</span>
+    <span class="c-badge" data-tone="danger">Blocked</span>
+  </div>
+
+  <h2>With a leading dot</h2>
+  <p>A status pip for at-a-glance scanning.</p>
+  <div class="row">
+    <span class="c-badge" data-tone="success"><span class="c-badge__dot"></span>Online</span>
+    <span class="c-badge" data-tone="warning"><span class="c-badge__dot"></span>Degraded</span>
+    <span class="c-badge" data-tone="danger"><span class="c-badge__dot"></span>Outage</span>
+  </div>
+
+  <h2>In context</h2>
+  <p>Badges pair naturally with table cells, list items, and headers.</p>
+  <div class="context">
+    <table>
+      <thead><tr><th>Account</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Acme Ops</td><td><span class="c-badge" data-tone="success">Active</span></td></tr>
+        <tr><td>Northwind</td><td><span class="c-badge" data-tone="warning">Trialing</span></td></tr>
+        <tr><td>Globex</td><td><span class="c-badge" data-tone="danger">Past due</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</BaseLayout>
+
+<style>
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pl-space-2);
+    margin-block-end: var(--pl-space-5);
+  }
+  .context {
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+  .context table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+  .context :where(th, td) {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    text-align: start;
+  }
+  .context th {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+  }
+</style>

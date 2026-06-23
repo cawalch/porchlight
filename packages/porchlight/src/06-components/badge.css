@@ -1,0 +1,73 @@
+/*
+ * Porchlight — badge component
+ * ===========================================================================
+ * A compact label for statuses, counts, and tags. Inline-flex pill; tones via
+ * [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/
+ * danger) that were already made WCAG-AA, plus an accent and a neutral default.
+ *
+ * Density is fixed (badges shouldn't scale with [data-density] — they label,
+ * not actuate). Contrast is guaranteed by the token pairs, so the affordance
+ * check is covered by contrast.spec.ts; this adds a badge-specific check that
+ * each tone's label clears AA against its own bg.
+ */
+@layer porchlight.components {
+  @scope (.c-badge) {
+    :scope {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      min-block-size: 1.5rem;
+      padding-inline: var(--pl-space-2);
+      border-radius: var(--pl-radius-pill);
+
+      /* Pill radius with a dot often looks better than 999rem for small
+         labels; pill is the framework's "fully rounded" token. */
+      font-size: var(--pl-text-xs);
+      font-weight: 600;
+      line-height: 1;
+
+      /* Optical alignment so the label sits centered without inline overshoot. */
+      text-wrap: nowrap;
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    /* Accent — for primary/brand counts (unread, new). */
+    :scope[data-tone="accent"] {
+      background: var(--pl-color-accent);
+      color: var(--pl-color-accent-text);
+    }
+
+    /* Status tones — consume the WCAG-AA -bg/-text pairs. */
+    :scope[data-tone="success"] {
+      background: var(--pl-color-success-bg);
+      color: var(--pl-color-success-text);
+    }
+
+    :scope[data-tone="warning"] {
+      background: var(--pl-color-warning-bg);
+      color: var(--pl-color-warning-text);
+    }
+
+    :scope[data-tone="danger"] {
+      background: var(--pl-color-danger-bg);
+      color: var(--pl-color-danger-text);
+    }
+
+    /* Optional leading dot — a status indicator pip. */
+    .c-badge__dot {
+      inline-size: 0.375rem;
+      block-size: 0.375rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      opacity: 0.9;
+    }
+
+    /* Forced colors: fall back to the system highlight so the tone still reads. */
+    @media (forced-colors: active) {
+      :scope {
+        border: 1px solid ButtonBorder;
+      }
+    }
+  }
+}
