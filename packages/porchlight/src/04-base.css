@@ -17,6 +17,11 @@
     font-family: var(--pl-font-sans);
     background: var(--pl-color-bg);
     color: var(--pl-color-text);
+
+    /* Theme every native checkbox/radio/range/color/date input app-wide so the
+       brand accent is consistent without per-control styling. Inherits, so a
+       single root declaration covers the whole document. */
+    accent-color: var(--pl-color-accent);
   }
 
   :where(body) {

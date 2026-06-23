@@ -63,11 +63,6 @@
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
     }
-
-    /* Native checkbox/radio/color/date inputs: theme the accent. */
-    :where(.c-field__control) {
-      accent-color: var(--pl-color-accent);
-    }
   }
 
   /* State rules OUTSIDE @scope. Live-state pseudos (:focus-visible,
@@ -75,14 +70,23 @@
      focused control — @scope evaluates subtree membership but state pseudos
      need direct element matching. Keeping them in the same layer, just
      unscoped, with a :where() prefix for low specificity. */
+
+  /* Focus: border shifts to the focus color, plus a SOFT outer glow — a 4px,
+     low-opacity halo rather than a tight 2px wire ring. The hard ring reads as a
+     browser default outline; the glow is the modern SaaS input pattern
+     (Linear/Vercel/Stripe). Border-color alone is below the perceptual
+     threshold; the glow is what makes focus legible. */
   :where(.c-field) .c-field__control:focus-visible {
     border-color: var(--pl-focus-color);
-    box-shadow: 0 0 0 var(--pl-focus-size)
-      color-mix(in oklab, var(--pl-focus-color), transparent 55%);
+    box-shadow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-focus-color), transparent 82%);
   }
 
+  /* Invalid: border to danger + a matching soft glow for consistency. */
   :where(.c-field) .c-field__control:user-invalid {
     border-color: var(--pl-color-danger);
+    box-shadow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-color-danger), transparent 82%);
   }
 
   :where(.c-field):has(.c-field__control:user-invalid) .c-field__hint {

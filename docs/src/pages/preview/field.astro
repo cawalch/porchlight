@@ -21,12 +21,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 
   <h2>Focus state</h2>
-  <p>Focus the field below — the border shifts to the focus color <em>and</em> a 2px ring appears (a border swap alone is below the perceptual threshold).</p>
+  <p>Focus the field below — the border shifts to the focus color and a soft accent glow appears (a border swap alone is below the perceptual threshold).</p>
   <div class="demo">
     <label class="c-field">
       <span class="c-field__label">Email</span>
       <input class="c-field__control" type="email" placeholder="you@example.com" />
-      <span class="c-field__hint">Focus me to see the focus ring.</span>
+      <span class="c-field__hint">Focus me to see the glow.</span>
     </label>
   </div>
 
@@ -49,20 +49,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </label>
   </div>
 
-  <h2>Native controls themed via accent-color</h2>
-  <div class="demo l-cluster">
-    <label class="c-field c-field--inline">
-      <input class="c-field__control c-field__control--check" type="checkbox" checked />
-      <span class="c-field__label">Send receipts</span>
-    </label>
-    <label class="c-field c-field--inline">
-      <input class="c-field__control c-field__control--check" type="radio" name="plan" checked />
-      <span class="c-field__label">Monthly</span>
-    </label>
-    <label class="c-field c-field--inline">
-      <input class="c-field__control" type="color" value="#3b5bdb" />
-      <span class="c-field__label">Brand color</span>
-    </label>
+  <h2>Checkboxes &amp; radios</h2>
+  <p>
+    Native checkbox/radio/range/color inputs inherit the brand accent
+    automatically (set in the base layer) — no custom widgets, no JS. Pair them
+    with a <code>.choice-group</code> for accessible, aligned lists.
+  </p>
+  <div class="demo choice-grid">
+    <fieldset class="choice-group">
+      <legend class="choice-group__legend">Notifications</legend>
+      <label class="choice">
+        <input type="checkbox" checked />
+        <span>Send receipts</span>
+      </label>
+      <label class="choice">
+        <input type="checkbox" checked />
+        <span>Weekly summary</span>
+      </label>
+      <label class="choice">
+        <input type="checkbox" />
+        <span>Product updates</span>
+      </label>
+    </fieldset>
+    <fieldset class="choice-group">
+      <legend class="choice-group__legend">Billing plan</legend>
+      <label class="choice">
+        <input type="radio" name="plan" checked />
+        <span>Monthly</span>
+      </label>
+      <label class="choice">
+        <input type="radio" name="plan" />
+        <span>Annual — save 20%</span>
+      </label>
+    </fieldset>
   </div>
 
   <h2>Density</h2>
@@ -85,14 +104,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     flex-direction: column;
     gap: var(--pl-space-3);
   }
-  /* Inline variant for checkboxes/radios: label + control on one line. */
-  .c-field--inline {
-    grid-template-columns: auto 1fr;
-    align-items: center;
+
+  /* Choice groups (checkbox/radio lists) — a common SaaS settings pattern.
+     Native inputs carry accent-color from the base layer; this just aligns. */
+  .choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--pl-space-5);
+  }
+  .choice-group {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    flex-direction: column;
     gap: var(--pl-space-2);
   }
-  .c-field__control--check {
-    inline-size: 1.125rem;
-    min-block-size: 1.125rem;
+  .choice-group__legend {
+    padding: 0;
+    margin-block-end: var(--pl-space-1);
+    font-size: var(--pl-text-sm);
+    font-weight: 600;
+    color: var(--pl-color-text-muted);
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    cursor: pointer;
+  }
+  .choice input {
+    inline-size: 1.0625rem;
+    block-size: 1.0625rem;
+    margin: 0;
+    /* accent-color comes from the base layer (:root). */
+  }
+  .choice:hover span {
+    color: var(--pl-color-accent);
   }
 </style>
