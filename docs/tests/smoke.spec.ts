@@ -72,4 +72,18 @@ test.describe("docs scaffold", () => {
     await expect(page.getByText("--pl-text-xl", { exact: true })).toBeVisible();
     await expect(page.getByText("--pl-text-xs", { exact: true })).toBeVisible();
   });
+
+  test("layout page renders grid widgets and the sidebar collapse", async ({
+    page,
+  }) => {
+    await page.goto("./preview/layout");
+    await expect(
+      page.getByRole("heading", { name: "Layout primitives", exact: true }),
+    ).toBeVisible();
+    // The dashboard grid renders its KPI widgets.
+    await expect(page.getByText("Active seats")).toBeVisible();
+    // The sidebar defaults to two columns at desktop width.
+    const sidebar = page.locator(".demo-panel .l-sidebar");
+    await expect(sidebar).toHaveCSS("grid-template-columns", /.+ .+/);
+  });
 });

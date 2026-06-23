@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and color, link color and underline geometry, `:focus-visible` outline,
   tight-balanced headings, zeroed block margins, monospace code, and an
   accent-tinted `::selection`. All `:where()` (zero specificity).
+- **Layout primitives** (`.l-*`). Composable regions for desktop SaaS / web-app
+  surfaces: `.l-stack` (vertical flow), `.l-cluster` (wrapping action bar),
+  `.l-grid` (auto-fitting dashboard widgets), `.l-sidebar` (panel-driven
+  master/detail that collapses under 48rem via a container query), `.l-page`
+  (centered readable column), and `.l-scroll-area` (independent scroll pane
+  with a stable gutter). Each exposes `--l-*` instance-config tokens.
 
 ## [0.0.0] - in development
 

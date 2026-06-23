@@ -18,11 +18,11 @@
 @import "src/02-tokens.css";
 @import "src/03-themes.css";
 @import "src/04-base.css";
+@import "src/05-layout.css";
 
 /* ---------------------------------------------------------------------------
  * Roadmap (added in later PRs — listed here to make the target order visible):
  *
- *   @import 'src/05-layout.css';        // Phase 2 — layout primitives + shell
  *   @import 'src/06-components/*.css';  // Phase 3 — one file per component
  *   @import 'src/07-utilities.css';     // Phase 4 — utilities
  *   @import 'src/08-enhancements.css';  // Phase 4 — @supports-gated Tier B
