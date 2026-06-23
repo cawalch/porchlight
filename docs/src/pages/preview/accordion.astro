@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Accordion · Porchlight">
+  <h1>Accordion</h1>
+  <p>
+    A collapsible disclosure built on native <code>&lt;details&gt;</code>/
+    <code>&lt;summary&gt;</code>. Animates open/close to/from
+    <code>height: auto</code> using <code>interpolate-size</code>, with a
+    <code>grid-template-rows: 0fr to 1fr</code> universal fallback.
+  </p>
+
+  <h2>Multiple open (default)</h2>
+  <div class="c-accordion">
+    <details class="c-accordion__item">
+      <summary class="c-accordion__header">
+        <span>What is Porchlight?</span>
+        <svg class="c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </summary>
+      <div class="c-accordion__panel">
+        <div class="c-accordion__content">
+          Porchlight is a no-dependency, native-CSS framework. It ships as a
+          single stylesheet with tokens, themes, layout, and components.
+        </div>
+      </div>
+    </details>
+
+    <details class="c-accordion__item">
+      <summary class="c-accordion__header">
+        <span>Does it use JavaScript?</span>
+        <svg class="c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </summary>
+      <div class="c-accordion__panel">
+        <div class="c-accordion__content">
+          No. The framework ships zero JavaScript. All interactivity is native
+          HTML (details, popover, dialog) or CSS-driven.
+        </div>
+      </div>
+    </details>
+
+    <details class="c-accordion__item">
+      <summary class="c-accordion__header">
+        <span>What browsers are supported?</span>
+        <svg class="c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </summary>
+      <div class="c-accordion__panel">
+        <div class="c-accordion__content">
+          Baseline 2025+ browsers. Core features work everywhere; advanced
+          features are gated behind <code>@supports</code>.
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <h2>Open by default</h2>
+  <div class="c-accordion" style="margin-block-start: var(--pl-space-4);">
+    <details class="c-accordion__item" open>
+      <summary class="c-accordion__header">
+        <span>This item starts open</span>
+        <svg class="c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </summary>
+      <div class="c-accordion__panel">
+        <div class="c-accordion__content">
+          Add the <code>open</code> attribute to <code>&lt;details&gt;</code> to
+          start expanded.
+        </div>
+      </div>
+    </details>
+  </div>
+</BaseLayout>

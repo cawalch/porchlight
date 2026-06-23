@@ -1,0 +1,133 @@
+/*
+ * Porchlight — switch (toggle) component
+ * ===========================================================================
+ * A CSS-only toggle switch built on a native checkbox. No JavaScript for the
+ * toggle itself: <input type="checkbox" role="switch"> + <label>.
+ *
+ * The track and thumb are styled entirely in CSS. The thumb slides via
+ * transition on inset-inline-start. :checked drives the on/off state.
+ * RTL-aware: thumb slides in the correct logical direction automatically.
+ *
+ * Structure:
+ *   <label class="c-switch">
+ *     <input type="checkbox" role="switch" class="c-switch__input" />
+ *     <span class="c-switch__track">
+ *       <span class="c-switch__thumb"></span>
+ *     </span>
+ *     <span class="c-switch__label">Enable feature</span>
+ *   </label>
+ */
+@layer porchlight.components {
+  @scope (.c-switch) {
+    :scope {
+      --c-switch-track-w: 2.75rem;
+      --c-switch-track-h: 1.5rem;
+      --c-switch-thumb: calc(var(--c-switch-track-h) - 0.25rem);
+      --c-switch-gap: var(--pl-space-2);
+      --c-switch-on: var(--pl-color-accent);
+      --c-switch-off: var(--pl-color-surface-2);
+
+      display: inline-flex;
+      align-items: center;
+      gap: var(--c-switch-gap);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    :scope[disabled],
+    :scope:has(.c-switch__input:disabled) {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Visually hide the native checkbox (accessible to AT). */
+    .c-switch__input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Track: the pill background. */
+    .c-switch__track {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      inline-size: var(--c-switch-track-w);
+      block-size: var(--c-switch-track-h);
+      border-radius: var(--pl-radius-pill);
+      background: var(--c-switch-off);
+      border: 1px solid var(--pl-color-border);
+      transition: background-color var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    /* Thumb: the sliding circle. */
+    .c-switch__thumb {
+      position: absolute;
+      inline-size: var(--c-switch-thumb);
+      block-size: var(--c-switch-thumb);
+      border-radius: 50%;
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-1);
+      inset-inline-start: 0.125rem;
+      transition: inset-inline-start var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    /* Checked state: track turns accent, thumb slides to the end. */
+    :scope:has(.c-switch__input:checked) .c-switch__track {
+      background: var(--c-switch-on);
+      border-color: transparent;
+    }
+
+    :scope:has(.c-switch__input:checked) .c-switch__thumb {
+      inset-inline-start: calc(var(--c-switch-track-w) - var(--c-switch-thumb) - 0.125rem);
+    }
+
+    /* Focus ring on the track. */
+    :scope:has(.c-switch__input:focus-visible) .c-switch__track {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    /* Size variants. */
+    :scope[data-size="sm"] {
+      --c-switch-track-w: 2.25rem;
+      --c-switch-track-h: 1.25rem;
+    }
+
+    :scope[data-size="lg"] {
+      --c-switch-track-w: 3.25rem;
+      --c-switch-track-h: 1.75rem;
+    }
+
+    .c-switch__label {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-switch__track) {
+      background: ButtonFace;
+      border-color: ButtonText;
+    }
+
+    :where(.c-switch:has(.c-switch__input:checked) .c-switch__track) {
+      background: Highlight;
+    }
+
+    :where(.c-switch__thumb) {
+      background: ButtonText;
+    }
+
+    :where(.c-switch:has(.c-switch__input:checked) .c-switch__thumb) {
+      background: HighlightText;
+    }
+  }
+}

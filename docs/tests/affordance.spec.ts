@@ -104,3 +104,114 @@ test("button hover/pressed are perceptibly distinct from default", async ({
     }
   }
 });
+
+/* ------------------------------------------------------------------
+ * Switch: checked vs unchecked track must be perceptually distinct.
+ * ------------------------------------------------------------------ */
+test("switch checked state is visually distinct from unchecked", async ({
+  page,
+}) => {
+  await page.goto("./preview/switch");
+
+  const states = await page.evaluate(() => {
+    const shell = document.querySelector("main") as HTMLElement;
+    const wrap = document.createElement("div");
+    wrap.style.padding = "1rem";
+    shell.append(wrap);
+
+    const unchecked = document.createElement("label");
+    unchecked.className = "c-switch";
+    unchecked.innerHTML =
+      '<input type="checkbox" class="c-switch__input"><span class="c-switch__track"><span class="c-switch__thumb"></span></span>';
+
+    const checked = document.createElement("label");
+    checked.className = "c-switch";
+    checked.innerHTML =
+      '<input type="checkbox" class="c-switch__input" checked><span class="c-switch__track"><span class="c-switch__thumb"></span></span>';
+
+    wrap.append(unchecked, checked);
+    const uTrack = getComputedStyle(
+      unchecked.querySelector(".c-switch__track")!,
+    ).backgroundColor;
+    const cTrack = getComputedStyle(
+      checked.querySelector(".c-switch__track")!,
+    ).backgroundColor;
+    wrap.remove();
+    return { unchecked: uTrack, checked: cTrack };
+  });
+
+  console.log(
+    `[switch] unchecked=${states.unchecked} checked=${states.checked}`,
+  );
+
+  expect(
+    deltaL(states.unchecked, states.checked),
+    "checked track must differ from unchecked by a visible lightness step",
+  ).toBeGreaterThanOrEqual(0.03);
+});
+
+/* ------------------------------------------------------------------
+ * Accordion: open item icon must be rotated vs closed.
+ * ------------------------------------------------------------------ */
+test("accordion open icon is rotated from closed", async ({ page }) => {
+  await page.goto("./preview/accordion");
+
+  const rotations = await page.evaluate(() => {
+    const closed = document.querySelector(
+      ".c-accordion__item:not([open]) .c-accordion__icon",
+    ) as HTMLElement;
+    const open = document.querySelector(
+      ".c-accordion__item[open] .c-accordion__icon",
+    ) as HTMLElement;
+    if (!closed || !open) return null;
+    return {
+      closed: getComputedStyle(closed).rotate,
+      open: getComputedStyle(open).rotate,
+    };
+  });
+
+  console.log(
+    `[accordion] closed-rotate=${rotations?.closed} open-rotate=${rotations?.open}`,
+  );
+
+  expect(rotations).not.toBeNull();
+  expect(rotations!.closed).not.toBe(rotations!.open);
+});
+
+/* ------------------------------------------------------------------
+ * Chip: different tones must have perceptually distinct backgrounds.
+ * ------------------------------------------------------------------ */
+test("chip tones are visually distinct", async ({ page }) => {
+  await page.goto("./preview/chip");
+
+  const bgs = await page.evaluate(() => {
+    const shell = document.querySelector("main") as HTMLElement;
+    const tones = ["", "success", "warning", "danger"];
+    const results: Record<string, string> = {};
+    const wrap = document.createElement("div");
+    wrap.style.padding = "1rem";
+    shell.append(wrap);
+    for (const tone of tones) {
+      const chip = document.createElement("span");
+      chip.className = "c-chip";
+      if (tone) chip.dataset.tone = tone;
+      chip.textContent = tone || "default";
+      wrap.append(chip);
+      results[tone || "default"] = getComputedStyle(chip).backgroundColor;
+    }
+    wrap.remove();
+    return results;
+  });
+
+  console.log("[chip] backgrounds:", bgs);
+
+  // Each tone should differ from the default by a visible lightness step.
+  const def = bgs["default"];
+  for (const [tone, bg] of Object.entries(bgs)) {
+    if (tone === "default") continue;
+    expect(
+      deltaL(def, bg),
+      `[${tone}] chip must differ from default by a visible step`,
+    ).toBeGreaterThanOrEqual(0.02);
+  }
+});

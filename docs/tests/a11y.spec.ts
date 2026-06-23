@@ -51,6 +51,10 @@ const PAGES = [
   "/preview/progress",
   "/preview/avatar",
   "/preview/settings",
+  "/preview/tooltip",
+  "/preview/accordion",
+  "/preview/switch",
+  "/preview/chip",
   "/preview/utilities",
   "/preview/enhancements",
 ];
