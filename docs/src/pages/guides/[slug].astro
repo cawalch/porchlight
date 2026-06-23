@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import '../../styles/prose.css';
 
 export async function getStaticPaths() {
   const entries = await getCollection('guides');
@@ -19,98 +20,3 @@ const title = `${entry.data.title} · Porchlight`;
     <Content />
   </article>
 </DocsLayout>
-
-<style>
-  .prose :where(h1) {
-    margin-block-end: var(--pl-space-4);
-    font-size: var(--pl-text-xl);
-  }
-
-  .prose :where(h2) {
-    margin-block-start: var(--pl-space-6);
-    margin-block-end: var(--pl-space-3);
-    font-size: var(--pl-text-lg);
-  }
-
-  .prose :where(h3) {
-    margin-block-start: var(--pl-space-4);
-    margin-block-end: var(--pl-space-2);
-    font-size: var(--pl-text-md);
-    font-weight: 600;
-  }
-
-  .prose :where(p) {
-    margin-block-end: var(--pl-space-3);
-    line-height: var(--pl-leading-normal);
-  }
-
-  .prose :where(ul, ol) {
-    margin-block-end: var(--pl-space-3);
-    padding-inline-start: var(--pl-space-5);
-  }
-
-  .prose :where(li) {
-    margin-block-end: var(--pl-space-1);
-  }
-
-  .prose :where(li)::marker {
-    color: var(--pl-color-text-muted);
-  }
-
-  .prose :where(code) {
-    padding: 0.1rem 0.3rem;
-    border-radius: var(--pl-radius-sm);
-    background: var(--pl-color-surface-2);
-    font-size: 0.875em;
-    font-family: var(--pl-font-mono);
-  }
-
-  .prose :where(pre) {
-    margin-block: var(--pl-space-4);
-    padding: var(--pl-space-4);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface-2);
-    overflow-x: auto;
-    font-size: var(--pl-text-sm);
-    line-height: var(--pl-leading-normal);
-  }
-
-  .prose :where(pre) :where(code) {
-    padding: 0;
-    background: none;
-  }
-
-  .prose :where(table) {
-    inline-size: 100%;
-    border-collapse: collapse;
-    margin-block: var(--pl-space-4);
-  }
-
-  .prose :where(th, td) {
-    padding: var(--pl-space-2) var(--pl-space-3);
-    border-block-end: 1px solid var(--pl-color-border);
-    text-align: start;
-    vertical-align: top;
-  }
-
-  .prose :where(th) {
-    color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
-    font-weight: 600;
-  }
-
-  .prose :where(blockquote) {
-    margin-block: var(--pl-space-4);
-    padding: var(--pl-space-3) var(--pl-space-4);
-    border-inline-start: 3px solid var(--pl-color-accent);
-    background: var(--pl-color-surface-2);
-    border-radius: var(--pl-radius-md);
-    color: var(--pl-color-text-muted);
-  }
-
-  .prose :where(a) {
-    color: var(--pl-color-accent);
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-  }
-</style>

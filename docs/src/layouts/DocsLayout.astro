@@ -156,8 +156,10 @@ const isActive = (href: string) => {
   }
 
   .docs-content {
-    padding-block-end: var(--pl-space-8);
+    padding-block: var(--pl-space-6) var(--pl-space-10);
     min-inline-size: 0;
+    /* Constrain content width for readability within the grid column */
+    max-inline-size: 52rem;
   }
 
   /* Override the default main constraint for docs pages */
