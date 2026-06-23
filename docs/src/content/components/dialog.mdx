@@ -1,0 +1,104 @@
+---
+title: Dialog
+description: A modal dialog using the native dialog element — confirmation, forms, detail views. ::backdrop scrim, @starting-style entry/exit, header/body/footer.
+status: stable
+since: 0.1.0
+---
+
+# Dialog
+
+The `.c-dialog` is a modal dialog using the **native `<dialog>` element**. It
+uses `showModal()` for top-layer rendering, modal focus trapping, and native
+Esc-to-close. The `::backdrop` pseudo-element provides the page scrim.
+
+## Semantic HTML
+
+```html
+<button onclick="document.getElementById('confirm').showModal()">
+  Delete account
+</button>
+
+<dialog class="c-dialog" id="confirm">
+  <header class="c-dialog__header">
+    <h2 class="c-dialog__title">Delete account?</h2>
+    <button
+      class="c-dialog__close"
+      type="button"
+      aria-label="Close"
+      onclick="this.closest('dialog').close()"
+    >
+      ✕
+    </button>
+  </header>
+  <div class="c-dialog__body">
+    <p>This action cannot be undone.</p>
+  </div>
+  <footer class="c-dialog__footer">
+    <button
+      class="c-button"
+      data-variant="ghost"
+      onclick="this.closest('dialog').close()"
+    >
+      Cancel
+    </button>
+    <button
+      class="c-button"
+      data-variant="danger"
+      onclick="this.closest('dialog').close()"
+    >
+      Delete
+    </button>
+  </footer>
+</dialog>
+```
+
+Open the dialog with `el.showModal()` from your app's event handler. Close it
+with `el.close()` or pressing `Esc` (native behavior).
+
+## Class contract
+
+| Selector            | Role                                           |
+| ------------------- | ---------------------------------------------- |
+| `.c-dialog`         | The `<dialog>` element.                        |
+| `.c-dialog__header` | Title + close button row.                      |
+| `.c-dialog__title`  | The heading (`<h2>`).                          |
+| `.c-dialog__close`  | The close button (top-right ✕).                |
+| `.c-dialog__body`   | Main content.                                  |
+| `.c-dialog__footer` | Action row (flex, right-aligned, top divider). |
+
+## Tokens consumed
+
+`--pl-color-{surface,surface-2,text,text-muted,border}`,
+`--pl-shadow-3`, `--pl-radius-{xl,md}`, `--pl-control-block-size`,
+`--pl-space-{3,5}`, `--pl-text-lg`, `--pl-leading-tight`,
+`--pl-duration-{1,2}`, `--pl-ease-standard`.
+
+## Tokens exposed
+
+| Token             | Default | Purpose                               |
+| ----------------- | ------- | ------------------------------------- |
+| `--c-dialog-size` | `42rem` | Max inline-size. Override per-dialog. |
+
+## Responsive sizing
+
+`inline-size: min(100% - 2rem, var(--c-dialog-size))` — the dialog never
+overflows its viewport (the `100% - 2rem` gives 1rem gutters on each side).
+`max-block-size: min(100dvb - 2rem, 80dvb)` + `overflow: auto` keeps tall
+dialogs scrollable.
+
+## Enter / exit animation
+
+The dialog animates with `@starting-style` (opacity + scale) and
+`transition-behavior: allow-discrete` on `overlay`/`display` so the **exit**
+transition runs (normally `display: none` kills transitions instantly).
+
+## Accessibility
+
+- **Modal focus trap:** native — `showModal()` traps focus inside the dialog
+  until it closes.
+- **Esc to close:** native — pressing `Esc` calls `close()` and returns focus
+  to the trigger.
+- **Close button:** provide a visible ✕ button; also close on footer actions.
+- **Semantics:** the `<dialog>` element has an implicit `role="dialog"` and
+  `aria-modal="true"` when shown via `showModal()`. Add `aria-labelledby`
+  pointing at the title `<h2>`'s id for explicit association.

@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Dialog** (`.c-dialog`). A modal dialog using the native `<dialog>` element
+  with `showModal()` (top-layer, modal focus trap, Esc to close). The
+  `::backdrop` provides a dimmed, blurred scrim. Enter/exit animation via
+  `@starting-style` (opacity + scale) with `transition-behavior: allow-discrete`.
+  Header + body + footer slots; a `.c-dialog__close` ✕ button; responsive
+  sizing (`min(100% - 2rem, --c-dialog-size)` + scrollable max height).
 - **Popover menu** (`.c-menu`). First overlay component — a dropdown menu
   anchored to its trigger via the native Popover API (top-layer, light-dismiss,
   focus management — no JS) and CSS anchor positioning (`position-anchor` /
