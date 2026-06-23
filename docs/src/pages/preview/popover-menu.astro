@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+---
+<BaseLayout title="Popover menu · Porchlight">
+  <h1>Popover menu</h1>
+  <p>
+    A dropdown menu anchored to its trigger — account menus, action menus,
+    context menus. Built on the native Popover API (top-layer, light-dismiss,
+    focus management) + CSS anchor positioning (tethered to the trigger) +
+    <code>@starting-style</code> for a native enter/exit animation. No
+    JavaScript required — the trigger's <code>popovertarget</code> opens it
+    declaratively.
+  </p>
+
+  <h2>Account menu</h2>
+  <p>The canonical SaaS pattern: avatar → account/settings/sign-out.</p>
+  <div class="demo-row">
+    <div class="c-menu">
+      <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="account-menu">
+        <Icon name="gear" /> Account
+      </button>
+      <div class="c-menu__popover" id="account-menu" popover>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Billing</a>
+        <hr class="c-menu__divider" />
+        <button type="button" data-tone="danger">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Action menu</h2>
+  <p>A compact actions menu — row-level actions in a data table.</p>
+  <div class="demo-row">
+    <div class="c-menu">
+      <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="row-menu" aria-label="Row actions">
+        <Icon name="gear" />
+      </button>
+      <div class="c-menu__popover" id="row-menu" popover>
+        <button type="button">Edit</button>
+        <button type="button">Duplicate</button>
+        <button type="button">Export</button>
+        <hr class="c-menu__divider" />
+        <button type="button" data-tone="danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Multiple menus</h2>
+  <p>Each menu needs a unique anchor name — set <code>--c-menu-anchor</code> per instance.</p>
+  <div class="demo-row">
+    <div class="c-menu" style="--c-menu-anchor: --menu-a;">
+      <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-a">Menu A</button>
+      <div class="c-menu__popover" id="menu-a" popover>
+        <button type="button">Item A1</button>
+        <button type="button">Item A2</button>
+      </div>
+    </div>
+    <div class="c-menu" style="--c-menu-anchor: --menu-b;">
+      <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-b">Menu B</button>
+      <div class="c-menu__popover" id="menu-b" popover>
+        <button type="button">Item B1</button>
+        <button type="button">Item B2</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Keyboard interaction</h2>
+  <ul>
+    <li><kbd>Tab</kbd> to the trigger, <kbd>Enter</kbd>/<kbd>Space</kbd> to open.</li>
+    <li><kbd>Esc</kbd> closes and returns focus to the trigger.</li>
+    <li>Click outside (light-dismiss) closes.</li>
+  </ul>
+</BaseLayout>
+
+<style>
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pl-space-4);
+    margin-block-end: var(--pl-space-5);
+  }
+</style>

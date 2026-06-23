@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Popover menu** (`.c-menu`). First overlay component — a dropdown menu
+  anchored to its trigger via the native Popover API (top-layer, light-dismiss,
+  focus management — no JS) and CSS anchor positioning (`position-anchor` /
+  `position-area`, `@supports`-gated). Enter/exit animation via `@starting-style`
+  - `transition-behavior: allow-discrete` on `overlay`/`display`. Menu items are
+    real `<a>`/`<button>` (full-width, keyboard-focusable); `[data-tone="danger"]`
+    for destructive items; `.c-menu__divider` for groups. Multiple menus need
+    unique `--c-menu-anchor` values.
 - **Badge** (`.c-badge`). A compact inline label for statuses, counts, and
   tags. Tones via `[data-tone]` (`accent`/`success`/`warning`/`danger`, plus a
   neutral default) consume the WCAG-AA `-bg`/`-text` token pairs, so they're
