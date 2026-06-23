@@ -68,7 +68,8 @@ function oklabToLinearSrgb(
 }
 
 function num(token: string | undefined, fallback = 0): number {
-  return token && token !== "none" ? +token : fallback;
+  if (!token || token === "none") return fallback;
+  return parseFloat(token);
 }
 
 /** Parse a computed color string ("oklch(...)" | "oklab(...)" | "rgb(...)") to OKLab. */
@@ -85,7 +86,7 @@ export function toOklab(color: string): OkLab {
     return { L, a: num(lab[2]), b: num(lab[3]), alpha };
   }
   const ok = color.match(
-    /oklch\(\s*([\d.]+|%|none)[\s/]+([\d.]+|none)[\s/]+([\d.]+|none)(?:\s*\/\s*([\d.]+%?|none))?\s*\)/i,
+    /oklch\(\s*([\d.]+%?|none)[\s/]+([\d.]+|none)[\s/]+([\d.]+(?:deg|rad|grad|turn)?|none)(?:\s*\/\s*([\d.]+%?|none))?\s*\)/i,
   );
   if (ok) {
     let L = num(ok[1]);
