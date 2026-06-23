@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocsLayout from '../../layouts/DocsLayout.astro';
 
 // Renders a component reference page from src/content/components/*.mdx.
 export async function getStaticPaths() {
@@ -14,12 +14,12 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const title = `${entry.data.title} · Porchlight`;
 ---
-<BaseLayout title={title} description={entry.data.description}>
-  <p><a href={`../../preview/${entry.id}`}>View live preview →</a></p>
+<DocsLayout title={title} description={entry.data.description}>
+  <p><a href={`../../preview/${entry.id}`}>View live preview</a></p>
   <article class="prose">
     <Content />
   </article>
-</BaseLayout>
+</DocsLayout>
 
 <style>
   .prose :where(h2) {

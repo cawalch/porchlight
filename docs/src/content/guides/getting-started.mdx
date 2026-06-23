@@ -1,0 +1,129 @@
+---
+title: Getting Started
+description: Install Porchlight, import the CSS, and set up the cascade layer for host overrides.
+order: 0
+---
+
+# Getting Started
+
+Porchlight is a **single CSS file** with zero JavaScript dependencies. It
+ships as a complete design system: tokens, themes, base styles, layout
+primitives, 16+ components, and progressive enhancements.
+
+## Install
+
+```sh
+npm install @cawalch/porchlight
+# or
+pnpm add @cawalch/porchlight
+```
+
+## Import
+
+Import the framework at the top of your CSS entry point:
+
+```css
+@import "@cawalch/porchlight/porchlight.css";
+```
+
+That's it. The framework self-registers all cascade layers, tokens, and
+components. No configuration, no build step, no JavaScript.
+
+## The layer model
+
+Porchlight wraps everything in a single top-level cascade layer:
+`@layer porchlight`. Inside it, nine sub-layers declare a deterministic
+order:
+
+```
+@layer porchlight {
+  @layer reset, tokens, themes, base, layout,
+         components, utilities, enhancements, print;
+}
+```
+
+Later layers win over earlier ones, so a component always beats base, a
+utility always beats a component, and nothing needs `!important`.
+
+## Host overrides
+
+To override Porchlight from your application CSS, place your own layer
+**after** the framework:
+
+```css
+/* app.css */
+@layer porchlight, app; /* app wins */
+@import "@cawalch/porchlight/porchlight.css";
+
+@layer app {
+  /* your product styles here */
+  .my-button {
+    /* overrides .c-button */
+  }
+}
+```
+
+Unlayered styles always beat layered styles too, so plain CSS outside any
+`@layer` also wins. You never fight `!important`: Porchlight reserves it
+for accessibility-critical utilities only (`[hidden]`, visually-hidden,
+reduced-motion).
+
+> Do **not** pass `layer(...)` to the `@import`. Each Porchlight module
+> self-wraps in `@layer porchlight.<name>`; adding `layer(...)` would
+> double-nest it.
+
+## Using components
+
+Each component is a class prefix: `.c-*`. Drop them into your HTML:
+
+```html
+<button class="c-button" data-variant="primary">Save</button>
+
+<div class="c-card">
+  <div class="c-card__header">
+    <h2 class="c-card__title">Title</h2>
+  </div>
+  <div class="c-card__body">Content</div>
+</div>
+```
+
+Browse the [component reference](../../components/button) or the
+[preview gallery](../../preview) to see every component with live examples.
+
+## Using layout primitives
+
+Layout helpers use the `.l-*` prefix:
+
+```html
+<div class="l-grid" style="--l-grid-min: 16rem;">
+  <div class="c-card">A</div>
+  <div class="c-card">B</div>
+  <div class="c-card">C</div>
+</div>
+```
+
+## Using utilities
+
+Utilities use the `.u-*` prefix. A small, finite set:
+
+```html
+<span class="u-muted">Secondary text</span>
+<span class="u-truncate">very-long-filename.webp</span>
+<div class="u-visually-hidden">Screen reader only</div>
+```
+
+## Browser support
+
+Porchlight targets **Baseline 2025+** browsers. The core (layers, custom
+properties, `:has()`, `@scope`, `color-mix()`, OKLCH) works in all modern
+browsers. Advanced features (anchor positioning, scroll-driven animations,
+`interpolate-size`) are `@supports`-gated and degrade gracefully.
+
+See the [Browser Support guide](../browser-support) for the full feature
+matrix.
+
+## Next steps
+
+- [Theming guide](../theming) — override tokens, create a brand theme
+- [Architecture guide](../architecture) — deep dive into the layer model
+- [Preview gallery](../../preview) — see every component live

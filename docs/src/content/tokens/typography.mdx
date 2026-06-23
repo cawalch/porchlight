@@ -1,0 +1,49 @@
+---
+title: Typography
+category: type
+---
+
+# Typography Tokens
+
+Porchlight uses a fluid type scale with `clamp()` so text smoothly scales
+between mobile and desktop without media queries.
+
+## Font stacks
+
+| Token | Stack |
+|-------|-------|
+| `--pl-font-sans` | `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif` |
+| `--pl-font-mono` | `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace` |
+
+## Type scale
+
+Five steps. The `clamp()` ranges ensure minimum readability on small
+screens and comfortable scaling on large ones:
+
+| Token | Min | Max | Example use |
+|-------|-----|-----|-------------|
+| `--pl-text-xs` | `0.75rem` (12px) | `0.8125rem` (13px) | Captions, labels, timestamps |
+| `--pl-text-sm` | `0.875rem` (14px) | `0.9375rem` (15px) | Body small, secondary text |
+| `--pl-text-md` | `1rem` (16px) | `1rem` (16px) | Body text (default) |
+| `--pl-text-lg` | `1.125rem` (18px) | `1.25rem` (20px) | Card titles, section headings |
+| `--pl-text-xl` | `1.25rem` (20px) | `1.625rem` (26px) | Page titles |
+
+The viewport-relative unit (`vi`) in the `clamp()` values means text scales
+with **1% of the viewport inline size**, not the root font size.
+
+## Line height (leading)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--pl-leading-tight` | `1.2` | Headings, UI labels |
+| `--pl-leading-normal` | `1.5` | Body text |
+| `--pl-leading-loose` | `1.7` | Long-form prose |
+
+## Text wrapping
+
+These are applied globally, not as tokens:
+
+| Property | Value | Usage |
+|----------|-------|-------|
+| `text-wrap: balance` | Global | Headings (H1-H4) distribute lines evenly |
+| `text-wrap: pretty` | Global | Paragraphs avoid orphan words on last line |

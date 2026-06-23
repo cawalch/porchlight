@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const guides = (await getCollection('guides')).sort((a, z) =>
+  (a.data.order ?? 0) - (z.data.order ?? 0),
+);
+
+const b = import.meta.env.BASE_URL;
+---
+<DocsLayout title="Guides · Porchlight">
+  <h1>Guides</h1>
+  <p>
+    How-to guides for installing, theming, and extending Porchlight.
+  </p>
+  <ul>
+    {guides.map((guide) => (
+      <li>
+        <a href={`${b}guides/${guide.id}`}>
+          <strong>{guide.data.title}</strong>
+        </a>
+        {guide.data.description && (
+          <span class="u-muted"> — {guide.data.description}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</DocsLayout>

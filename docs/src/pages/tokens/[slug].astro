@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('tokens');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const title = `${entry.data.title} · Porchlight`;
+---
+<DocsLayout title={title}>
+  <article class="prose">
+    <Content />
+  </article>
+</DocsLayout>
+
+<style>
+  .prose :where(h1) {
+    margin-block-end: var(--pl-space-4);
+    font-size: var(--pl-text-xl);
+  }
+
+  .prose :where(h2) {
+    margin-block-start: var(--pl-space-6);
+    margin-block-end: var(--pl-space-3);
+    font-size: var(--pl-text-lg);
+  }
+
+  .prose :where(p) {
+    margin-block-end: var(--pl-space-3);
+    line-height: var(--pl-leading-normal);
+  }
+
+  .prose :where(ul) {
+    margin-block-end: var(--pl-space-3);
+    padding-inline-start: var(--pl-space-5);
+  }
+
+  .prose :where(li)::marker {
+    color: var(--pl-color-text-muted);
+  }
+
+  .prose :where(code) {
+    padding: 0.1rem 0.3rem;
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface-2);
+    font-size: 0.875em;
+    font-family: var(--pl-font-mono);
+  }
+
+  .prose :where(pre) {
+    margin-block: var(--pl-space-4);
+    padding: var(--pl-space-4);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface-2);
+    overflow-x: auto;
+    font-size: var(--pl-text-sm);
+  }
+
+  .prose :where(pre) :where(code) {
+    padding: 0;
+    background: none;
+  }
+
+  .prose :where(table) {
+    inline-size: 100%;
+    border-collapse: collapse;
+    margin-block: var(--pl-space-4);
+  }
+
+  .prose :where(th, td) {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .prose :where(th) {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    font-weight: 600;
+  }
+
+  .prose :where(a) {
+    color: var(--pl-color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+</style>
