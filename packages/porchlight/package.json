@@ -14,19 +14,30 @@
     "url": "https://github.com/cawalch/porchlight/issues"
   },
   "author": "cawalch",
-  "style": "porchlight.css",
+  "style": "dist/porchlight.css",
   "exports": {
     ".": "./porchlight.css",
     "./porchlight.css": "./porchlight.css",
+    "./dist": "./dist/porchlight.css",
+    "./dist/porchlight.css": "./dist/porchlight.css",
+    "./dist/porchlight.min.css": "./dist/porchlight.min.css",
     "./src/*": "./src/*"
   },
   "files": [
     "porchlight.css",
     "src",
+    "dist",
     "README.md"
   ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "prepublishOnly": "pnpm build"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
+  },
+  "devDependencies": {
+    "lightningcss": "^1.32.0"
   }
 }
