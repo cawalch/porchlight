@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Button** (`.c-button`). First component — the canonical action control,
+  native `<button>`/`<a>`, in `@layer porchlight.components` via `@scope`.
+  Variants `primary` / `secondary` / `ghost`; theme-aware `color-mix()` hover,
+  `translateY` active, `aria-pressed`, disabled/`aria-disabled`, an inset
+  top-highlight on filled variants, `text-box` optical alignment behind
+  `@supports`, and forced-colors fallback. Sizing flows from the control
+  tokens, so `[data-density]` just works. Sets the component-authoring pattern
+  (component-local `--c-*` tokens, a `.mdx` reference page, a kitchen-sink
+  preview) every subsequent component follows.
 - **App shell** (`.l-app-shell`). Desktop SaaS grid: sticky topbar,
   persistent sidebar, scrolling main work area. `.l-app-shell__main` is a
   query container, so any `.l-sidebar` nested inside it collapses at narrow
