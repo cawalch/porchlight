@@ -1,0 +1,120 @@
+/*
+ * Porchlight — primitive tokens
+ * ===========================================================================
+ * Raw design scales only: fonts, type, leading, spacing, radius, motion,
+ * z-index, brand palette, control sizing, focus geometry, and shadows.
+ *
+ * These are NOT semantic. Semantic foreground/background pairs (bg / surface /
+ * text / border / accent / danger / success / warning) and the theme, density,
+ * reduced-motion, and forced-colors machinery all use light-dark() and land in
+ * the next PR (03-themes.css). Primitives never encode a light/dark decision.
+ *
+ * Registered custom properties (@property) get a type and initial value so they
+ * animate cleanly and inherit predictably. Everything else is a plain custom
+ * property on :root. All values use rem/em/logical units (no px for text or
+ * spacing); OKLCH for color.
+ *
+ * Token prefix: --pl-* (global framework). Component-local tokens are --c-*.
+ */
+@layer porchlight.tokens {
+  @property --pl-motion-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+  }
+
+  @property --pl-radius-control {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0.5rem;
+  }
+
+  @property --pl-focus-size {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 2px;
+  }
+
+  :root {
+    /* Fonts */
+    --pl-font-sans:
+      system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu,
+      Cantarell, "Noto Sans", sans-serif;
+    --pl-font-mono:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      monospace;
+
+    /* Type */
+    --pl-text-xs: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
+    --pl-text-sm: clamp(0.875rem, 0.84rem + 0.1vi, 0.9375rem);
+    --pl-text-md: 1rem;
+    --pl-text-lg: clamp(1.125rem, 1.05rem + 0.25vi, 1.25rem);
+    --pl-text-xl: clamp(1.25rem, 1.1rem + 0.55vi, 1.625rem);
+
+    /* Leading */
+    --pl-leading-tight: 1.2;
+    --pl-leading-normal: 1.5;
+    --pl-leading-loose: 1.7;
+
+    /* Spacing */
+    --pl-space-0: 0;
+    --pl-space-1: 0.25rem;
+    --pl-space-2: 0.5rem;
+    --pl-space-3: 0.75rem;
+    --pl-space-4: 1rem;
+    --pl-space-5: 1.25rem;
+    --pl-space-6: 1.5rem;
+    --pl-space-8: 2rem;
+    --pl-space-10: 2.5rem;
+    --pl-space-12: 3rem;
+
+    /* Radius */
+    --pl-radius-xs: 0.25rem;
+    --pl-radius-sm: 0.375rem;
+    --pl-radius-md: 0.5rem;
+    --pl-radius-lg: 0.75rem;
+    --pl-radius-xl: 1rem;
+    --pl-radius-pill: 999rem;
+
+    /* Motion */
+    --pl-duration-1: calc(120ms * var(--pl-motion-scale));
+    --pl-duration-2: calc(180ms * var(--pl-motion-scale));
+    --pl-duration-3: calc(260ms * var(--pl-motion-scale));
+    --pl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --pl-ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+
+    /* Z-index */
+    --pl-z-base: 0;
+    --pl-z-raised: 10;
+    --pl-z-sticky: 100;
+    --pl-z-overlay: 1000;
+    --pl-z-toast: 1100;
+
+    /* Brand — raw OKLCH ramp at hue 260 (blue); scale 1 (lightest) → 9 (darkest). */
+    --pl-brand-1: oklch(96% 0.02 260deg);
+    --pl-brand-2: oklch(88% 0.06 260deg);
+    --pl-brand-3: oklch(78% 0.12 260deg);
+    --pl-brand-4: oklch(68% 0.16 260deg);
+    --pl-brand-5: oklch(63% 0.17 260deg);
+    --pl-brand-6: oklch(58% 0.18 260deg);
+    --pl-brand-7: oklch(50% 0.18 260deg);
+    --pl-brand-8: oklch(42% 0.16 260deg);
+    --pl-brand-9: oklch(32% 0.12 260deg);
+
+    /* Controls */
+    --pl-control-block-size: 2.5rem;
+    --pl-control-padding-inline: var(--pl-space-4);
+    --pl-control-gap: var(--pl-space-2);
+    --pl-control-border-width: 1px;
+    --pl-control-radius: var(--pl-radius-control);
+
+    /* Focus — geometry only; color lands with semantic tokens in 03-themes */
+    --pl-focus-offset: 2px;
+    --pl-focus-size: 2px;
+
+    /* Shadows */
+    --pl-shadow-1: 0 1px 2px oklch(0% 0 0deg / 12%);
+    --pl-shadow-2: 0 6px 18px oklch(0% 0 0deg / 16%);
+    --pl-shadow-3: 0 16px 48px oklch(0% 0 0deg / 20%);
+  }
+}

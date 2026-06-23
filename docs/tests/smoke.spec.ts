@@ -33,4 +33,19 @@ test.describe("docs scaffold", () => {
     await expect(page.getByRole("heading", { name: "Reset" })).toBeVisible();
     await expect(page.getByText("porchlight.reset")).toBeVisible();
   });
+
+  test("tokens page lists registered properties and a brand ramp", async ({
+    page,
+  }) => {
+    await page.goto("./preview/tokens");
+    await expect(
+      page.getByRole("heading", { name: "Primitive tokens" }),
+    ).toBeVisible();
+    // Registered property name (exact: the value cells also mention it via calc()).
+    await expect(
+      page.getByText("--pl-motion-scale", { exact: true }),
+    ).toBeVisible();
+    // A brand primitive rendered as a swatch name.
+    await expect(page.getByText("--pl-brand-6", { exact: true })).toBeVisible();
+  });
 });
