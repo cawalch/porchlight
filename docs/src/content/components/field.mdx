@@ -1,0 +1,94 @@
+---
+title: Field
+description: A labeled form control wrapping native inputs — label, control, and hint, with focus/invalid/disabled driven by native pseudos.
+status: stable
+since: 0.1.0
+---
+
+import FieldPreview from "../../components/FieldPreview.astro";
+
+# Field
+
+The `.c-field` is a labeled form control. It wraps a **native** `<input>`,
+`<select>`, or `<textarea>` (never a custom widget), so you inherit all native
+behavior: constraint validation, autofill, IME, spellcheck, the works.
+
+State is driven entirely by native pseudos and reflected onto the border and
+hint — no class toggles, no JavaScript. (The hint's invalid color still uses
+`:has()` on the wrapper; the focus/invalid borders target the control
+directly, outside `@scope`, because live-state pseudos inside `@scope` did not
+reliably apply to the focused control.)
+
+<FieldPreview />
+
+## Semantic HTML
+
+```html
+<label class="c-field">
+  <span class="c-field__label">Workspace name</span>
+  <input class="c-field__control" required placeholder="Acme Ops" />
+  <span class="c-field__hint">Use a name your team recognizes.</span>
+</label>
+```
+
+## Class contract
+
+| Selector            | Role                                                              |
+| ------------------- | ----------------------------------------------------------------- |
+| `.c-field`          | The wrapper `<label>`. Establishes the label↔control association. |
+| `.c-field__label`   | The visible label text.                                           |
+| `.c-field__control` | The native input/select/textarea.                                 |
+| `.c-field__hint`    | Helper / error text below the control.                            |
+
+## Tokens consumed
+
+`--pl-color-{border,surface,text,text-muted,danger,danger-text}`,
+`--pl-focus-color`, `--pl-focus-size`,
+`--pl-control-{block-size,padding-inline,radius,border-width}`,
+`--pl-duration-1`, `--pl-ease-standard`.
+
+## Tokens exposed (component-local)
+
+| Token              | Default              | Purpose                                      |
+| ------------------ | -------------------- | -------------------------------------------- |
+| `--c-field-border` | `--pl-color-border`  | Control border; overridden on focus/invalid. |
+| `--c-field-bg`     | `--pl-color-surface` | Control fill.                                |
+| `--c-field-fg`     | `--pl-color-text`    | Control text.                                |
+
+## States
+
+| State       | Selector                   | Behavior                                   |
+| ----------- | -------------------------- | ------------------------------------------ |
+| focus       | `:focus-visible` (control) | crisp accent ring + soft glow (box-shadow) |
+| invalid     | `:user-invalid` (control)  | danger ring + glow, hint → danger-text     |
+| disabled    | `:disabled` (control)      | field muted (0.55 opacity), not-allowed    |
+| placeholder | `::placeholder`            | text-muted                                 |
+
+## Accessibility
+
+- **Label association:** the wrapper is a `<label>`, so clicking the label
+  focuses the control (the logical equivalent of `for`/`id` with no extra DOM).
+- **Focus:** the control draws a **crisp 2px accent ring with a soft blurred
+  glow** (a layered `box-shadow`). The border is intentionally NOT recolored —
+  recoloring it alongside a ring produced a “double blue stroke” (solid border
+  - translucent ring). The ring is the single focus indicator; the border
+    stays as the neutral field edge. This reads as a modern SaaS input rather
+    than a browser default outline.
+- **Invalidity:** uses `:user-invalid` (Baseline 2024), which respects
+  `placeholder-shown` and only fires after interaction/blur — so an empty
+  required field doesn't error on load. Never rely on color alone: the hint
+  text color also changes to `danger-text`.
+- **Error text association:** for screen-reader users, add `aria-describedby`
+  on the control pointing at the hint's `id` (the wrapper-label association
+  covers the label; the hint needs the explicit link).
+
+## Theme, density, RTL, motion
+
+- **Light/dark:** all colors via tokens (`light-dark()`).
+- **Density:** sizing from `--pl-control-block-size`; `[data-density]` on an
+  ancestor.
+- **RTL:** logical properties throughout (`padding-inline`, `inline-size`,
+  `min-block-size`).
+- **Reduced motion:** the border/box-shadow transitions are zeroed by the
+  themes layer.
+- **Forced colors:** border falls back to `ButtonBorder`.

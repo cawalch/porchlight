@@ -121,4 +121,20 @@ test.describe("docs scaffold", () => {
       page.locator(".c-button[data-variant='primary'][disabled]"),
     ).toBeDisabled();
   });
+
+  test("field page renders labels and the hint", async ({ page }) => {
+    await page.goto("./preview/field");
+    await expect(
+      page.getByRole("heading", { name: "Field", exact: true }),
+    ).toBeVisible();
+    // The label text is rendered.
+    await expect(page.getByText("Workspace name")).toBeVisible();
+    // The hint is rendered.
+    await expect(
+      page.getByText("Use a name your team recognizes."),
+    ).toBeVisible();
+    // The control is a real required input.
+    const input = page.locator(".c-field__control").first();
+    await expect(input).toHaveAttribute("required", "");
+  });
 });

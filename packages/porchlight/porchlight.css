@@ -20,11 +20,11 @@
 @import "src/04-base.css";
 @import "src/05-layout.css";
 @import "src/06-components/button.css";
+@import "src/06-components/field.css";
 
 /* ---------------------------------------------------------------------------
  * Roadmap (added in later PRs — listed here to make the target order visible):
  *
- *   @import 'src/06-components/field.css';    // Phase 3
  *   @import 'src/06-components/card.css';     // Phase 3
  *   @import 'src/07-utilities.css';     // Phase 4 — utilities
  *   @import 'src/08-enhancements.css';  // Phase 4 — @supports-gated Tier B

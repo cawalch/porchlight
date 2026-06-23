@@ -1,0 +1,113 @@
+/*
+ * Porchlight — field component
+ * ===========================================================================
+ * A labeled form control: label, native input, and hint. Wraps native
+ * <input>/<select>/<textarea> so we inherit all their behavior (constraint
+ * validation, autofill, IME, autofill). No JS, no custom widgets.
+ *
+ * State is driven entirely by native pseudos: :focus-visible, :user-invalid,
+ * :disabled. Focus draws a token-colored border AND a 2px ring (box-shadow);
+ * invalid flips the border to danger and the hint to danger-text. State rules
+ * live OUTSIDE @scope — :focus-visible / :user-invalid inside @scope (.c-field)
+ * did not reliably apply to the focused control. They stay in the same layer,
+ * with :where() for low specificity.
+ *
+ * Token-driven via --c-field-* aliases. Density comes from --pl-control-*
+ * (set [data-density] on an ancestor).
+ *
+ * Modern CSS: :user-invalid (Baseline 2024) replaces
+ * :invalid:not(:placeholder-shown). accent-color themes native checkbox/radio/color.
+ */
+@layer porchlight.components {
+  @scope (.c-field) {
+    :scope {
+      --c-field-border: var(--pl-color-border);
+      --c-field-bg: var(--pl-color-surface);
+      --c-field-fg: var(--pl-color-text);
+
+      display: grid;
+      gap: var(--pl-space-2);
+      color: var(--c-field-fg);
+    }
+
+    .c-field__label {
+      font-size: var(--pl-text-sm);
+      font-weight: 600;
+
+      /* Logical "for" association: clicking the label focuses the input it wraps. */
+    }
+
+    .c-field__control {
+      /* appearance: none — we fully restyle the control; the UA's native
+         input chrome (including its :focus border ring) would otherwise win
+         over our border-color/box-shadow and freeze the border at the UA gray. */
+      appearance: none;
+      inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      padding-block: var(--pl-space-2);
+      padding-inline: var(--pl-control-padding-inline);
+      border: var(--pl-control-border-width) solid var(--c-field-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--c-field-bg);
+      color: var(--c-field-fg);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-field__control::placeholder {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-field__hint {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+    }
+  }
+
+  /* State rules OUTSIDE @scope. Live-state pseudos (:focus-visible,
+     :user-invalid) inside @scope (.c-field) do not reliably apply to the
+     focused control — @scope evaluates subtree membership but state pseudos
+     need direct element matching. Keeping them in the same layer, just
+     unscoped, with a :where() prefix for low specificity. */
+
+  /* Focus indicator: a single crisp 2px ring in the focus color, plus a
+     genuinely BLURRED outer glow. The border is NOT recolored — recoloring it
+     produced a “double blue stroke” (solid recolored border + a translucent
+     ring stacked beside it). The ring is the focus indicator; the border
+     stays as the neutral field edge. (The previous `0 0 0 4px` had no blur,
+     so it was a hard translucent ring, not the intended glow.) */
+  :where(.c-field) .c-field__control:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--pl-focus-color),
+      0 4px 12px -2px
+        color-mix(in oklab, var(--pl-focus-color), transparent 55%);
+  }
+
+  /* Invalid: same single-ring + glow treatment, in danger. The hint still
+     flips to danger-text via :has() on the wrapper (below). */
+  :where(.c-field) .c-field__control:user-invalid {
+    box-shadow:
+      0 0 0 2px var(--pl-color-danger),
+      0 4px 12px -2px
+        color-mix(in oklab, var(--pl-color-danger), transparent 55%);
+  }
+
+  :where(.c-field):has(.c-field__control:user-invalid) .c-field__hint {
+    color: var(--pl-color-danger-text);
+  }
+
+  :where(.c-field):has(.c-field__control:disabled) {
+    opacity: 0.55;
+  }
+
+  :where(.c-field):has(.c-field__control:disabled) .c-field__control {
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-field) .c-field__control {
+      border-color: ButtonBorder;
+    }
+  }
+}
