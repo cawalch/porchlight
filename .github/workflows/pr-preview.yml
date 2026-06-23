@@ -1,0 +1,49 @@
+name: PR Preview
+
+# Builds the docs site for each PR with a PR-scoped base path and deploys it to
+# /pr/<number>/ on the gh-pages branch. The action posts the preview URL as a
+# PR comment and removes the preview when the PR is closed.
+#
+# Requires GitHub Pages to be configured to serve the gh-pages branch.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: pr-preview-${{ github.event.number }}
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (PR base path)
+        if: github.event.action != 'closed'
+        run: pnpm --filter ./docs build
+        env:
+          # Match the action's native deploy path: pr-preview/pr-<n>/.
+          ASTRO_BASE: /porchlight/pr-preview/pr-${{ github.event.number }}/
+
+      - name: Manage PR preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: docs/dist

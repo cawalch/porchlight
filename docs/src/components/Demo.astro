@@ -1,0 +1,38 @@
+---
+/**
+ * <Demo> — renders a live HTML example inside a framed stage.
+ *
+ * Used inside component .mdx docs. The slot content is plain semantic HTML
+ * styled by the real Porchlight CSS (once the framework package is wired in).
+ */
+interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+<figure class="demo">
+  {label && <figcaption class="demo__label">{label}</figcaption>}
+  <div class="demo__stage"><slot /></div>
+</figure>
+
+<style>
+  .demo {
+    margin: 0;
+  }
+  .demo__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--doc-text-muted);
+    margin-block-end: 0.5rem;
+  }
+  .demo__stage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-border);
+    border-radius: var(--doc-radius);
+  }
+</style>

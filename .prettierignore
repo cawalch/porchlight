@@ -1,0 +1,19 @@
+# Build output
+dist/
+.astro/
+out/
+
+# Dependencies
+node_modules/
+
+# Test artifacts
+test-results/
+playwright-report/
+docs/tests/visual/test-results/
+
+# Lockfile (machine-generated)
+pnpm-lock.yaml
+
+# Cache
+.cache/
+.stylelintcache
