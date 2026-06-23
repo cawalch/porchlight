@@ -1,0 +1,5 @@
+packages:
+  # The CSS framework (the product)
+  - "packages/*"
+  # Astro showcase + reference site
+  - "docs"

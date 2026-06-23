@@ -1,0 +1,30 @@
+{
+  "name": "porchlight",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A no-dependency, native-CSS design substrate for enterprise SaaS.",
+  "license": "MIT",
+  "homepage": "https://cawalch.github.io/porchlight",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cawalch/porchlight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cawalch/porchlight/issues"
+  },
+  "author": "cawalch",
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
