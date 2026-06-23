@@ -1,0 +1,130 @@
+/*
+ * Porchlight — dialog component
+ * ===========================================================================
+ * A modal dialog for confirmations, forms, and detail views. Uses the native
+ * <dialog> element with showModal() (top-layer, modal focus trap, Esc to
+ * close). The ::backdrop pseudo-element provides the scrim.
+ *
+ * Open state is styled via [open] (or :modal for showModal). Entry/exit
+ * animation uses @starting-style + transition-behavior: allow-discrete on
+ * overlay/display — the same pattern as .c-menu, so the EXIT transition runs
+ * (display: none normally kills transitions instantly).
+ *
+ * Header + body + footer slots (like .c-card). The close button in the header
+ * is a standard pattern. Open the dialog with el.showModal() in your app JS.
+ *
+ * Token-driven via --c-dialog-* aliases. Responsive by default:
+ * inline-size is min(100% - 2rem, --c-dialog-size) so it never overflows.
+ */
+@layer porchlight.components {
+  @scope (.c-dialog) {
+    :scope {
+      --c-dialog-size: 42rem;
+
+      inline-size: min(100% - 2rem, var(--c-dialog-size));
+      max-block-size: min(100dvb - 2rem, 80dvb);
+      padding: 0;
+      margin: auto;
+      overflow: auto;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-xl);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      box-shadow: var(--pl-shadow-3);
+
+      /* Entry/exit: opacity + slight scale. allow-discrete keeps the element
+         visible during the EXIT transition. */
+      opacity: 0;
+      transform: scale(0.98) translateY(8px);
+      transition:
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        transform var(--pl-duration-2) var(--pl-ease-standard),
+        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
+        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    /* Open: settled state. :modal covers showModal(); [open] covers show(). */
+    :scope:modal,
+    :scope[open] {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Enter: the initial state BEFORE the open transition. */
+    @starting-style {
+      :scope:modal,
+      :scope[open] {
+        opacity: 0;
+        transform: scale(0.98) translateY(8px);
+      }
+    }
+
+    /* Scrim — dim the page behind the dialog. */
+    :scope::backdrop {
+      background: oklch(0% 0 0deg / 45%);
+      backdrop-filter: blur(2px);
+    }
+
+    .c-dialog__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      min-block-size: var(--pl-control-block-size);
+      padding: var(--pl-space-5);
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+
+    .c-dialog__title {
+      margin: 0;
+      font-size: var(--pl-text-lg);
+      font-weight: 700;
+      line-height: var(--pl-leading-tight);
+      text-wrap: balance;
+    }
+
+    /* Close button — a ghost-icon button top-right. */
+    .c-dialog__close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      inline-size: var(--pl-control-block-size);
+      block-size: var(--pl-control-block-size);
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-md);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-dialog__close:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-dialog__body {
+      padding: var(--pl-space-5);
+    }
+
+    .c-dialog__footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-5);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+
+    @media (forced-colors: active) {
+      :scope {
+        border-color: ButtonBorder;
+      }
+    }
+  }
+}

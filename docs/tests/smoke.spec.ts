@@ -179,4 +179,22 @@ test.describe("docs scaffold", () => {
     await page.keyboard.press("Escape");
     await expect(popover).toBeHidden();
   });
+
+  test("dialog opens via trigger and closes via Esc", async ({ page }) => {
+    await page.goto("./preview/dialog");
+    await expect(
+      page.getByRole("heading", { name: "Dialog", exact: true }),
+    ).toBeVisible();
+    // The dialog exists but is closed initially.
+    const dialog = page.locator("#confirm-dialog");
+    await expect(dialog).toBeHidden();
+    // Click the trigger to open.
+    await page.locator("[data-open='confirm-dialog']").click();
+    await expect(dialog).toBeVisible();
+    // The title is visible inside the dialog.
+    await expect(dialog.getByText("Delete account?")).toBeVisible();
+    // Esc closes.
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+  });
 });
