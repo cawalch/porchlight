@@ -81,4 +81,73 @@
     scrollbar-gutter: stable;
     overscroll-behavior: contain;
   }
+
+  /* --------------------------------------------------------------------- */
+
+  /* App shell — the one place viewport logic belongs. A desktop SaaS app
+     is typically: a sticky topbar, a persistent sidebar, and a scrolling
+     main work area. Below 60rem (a phone or a narrow split pane) the sidebar
+     drops out so the work surface stays usable.
+
+     .l-app-shell__main is a query container so any .l-sidebar nested inside
+     it collapses correctly at narrow app widths WITHOUT a manual wrapper
+     (closes the container-ancestor story from the audit fix). */
+  :where(.l-app-shell) {
+    min-block-size: 100dvb;
+    display: grid;
+    grid-template:
+      "topbar topbar" auto
+      "sidebar main" minmax(0, 1fr)
+      / auto minmax(0, 1fr);
+  }
+
+  :where(.l-app-shell__topbar) {
+    grid-area: topbar;
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--pl-z-sticky);
+  }
+
+  :where(.l-app-shell__sidebar) {
+    grid-area: sidebar;
+
+    /* Manual collapse: apps set data-sidebar="collapsed" to shrink the rail
+       to an icon strip without hiding it (PLAN only hid on narrow viewports).
+       --app-sidebar-size tunes the expanded width; --app-sidebar-collapsed
+       the icon width. */
+    inline-size: var(--app-sidebar-size, 16rem);
+    overflow-inline: clip;
+    transition: inline-size var(--pl-duration-2) var(--pl-ease-standard);
+  }
+
+  :where(.l-app-shell__sidebar[data-sidebar="collapsed"]) {
+    inline-size: var(--app-sidebar-collapsed, 3.5rem);
+  }
+
+  :where(.l-app-shell__main) {
+    grid-area: main;
+    min-inline-size: 0;
+
+    /* Main is the container .l-sidebar collapses against (see header note). */
+    container-type: inline-size;
+    overflow: auto;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+
+  /* Viewport fallback: on a genuinely narrow viewport the sidebar is hidden
+     (the work surface takes priority). This is the ONLY viewport media query
+     in the layout layer — components adapt via container queries. */
+  @media (width < 60rem) {
+    :where(.l-app-shell) {
+      grid-template:
+        "topbar" auto
+        "main" minmax(0, 1fr)
+        / minmax(0, 1fr);
+    }
+
+    :where(.l-app-shell__sidebar) {
+      display: none;
+    }
+  }
 }
