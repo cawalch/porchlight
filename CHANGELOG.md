@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (compact/comfortable/touch) resizes controls; `prefers-reduced-motion` zeroes
   the motion scale; `forced-colors` remaps semantic tokens to Windows system
   colors.
+- **Base layer**. On-token element defaults for bare HTML: `html`/`body` font
+  and color, link color and underline geometry, `:focus-visible` outline,
+  tight-balanced headings, zeroed block margins, monospace code, and an
+  accent-tinted `::selection`. All `:where()` (zero specificity).
 
 ## [0.0.0] - in development
 

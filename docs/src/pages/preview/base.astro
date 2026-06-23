@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// The fluid type scale, each row rendered at its own token so the clamp()+vi
+// responsiveness is visible. Colors/leading come from the framework tokens.
+const scale = [
+  ['--pl-text-xs', 'xs'],
+  ['--pl-text-sm', 'sm'],
+  ['--pl-text-md', 'md'],
+  ['--pl-text-lg', 'lg'],
+  ['--pl-text-xl', 'xl'],
+] as const;
+---
+<BaseLayout title="Base · Porchlight">
+  <h1>Base layer</h1>
+  <p>
+    Element defaults in <code>@layer porchlight.base</code> — bare HTML gets a
+    sensible, on-token appearance before any component class is applied. All
+    rules are <code>:where()</code> (zero specificity), so they are trivially
+    overridable. Color and type come from the token layers; theme/density/
+    forced-colors come from <code>03-themes</code>.
+  </p>
+
+  <h2>What the base layer does</h2>
+  <ul>
+    <li><code>html</code>/<code>body</code> get the sans stack, the semantic bg/text tokens, <code>--pl-text-md</code>, and normal leading.</li>
+    <li>Links use the accent color with readable underline geometry; hover shifts to <code>--pl-color-accent-hover</code>.</li>
+    <li><code>:focus-visible</code> draws a token-driven outline (size, color, offset) — keyboard focus is never removed without a replacement.</li>
+    <li>Headings get tight leading and <code>text-wrap: balance</code>; block flow elements have their UA margins zeroed.</li>
+    <li><code>code</code>/<code>kbd</code>/<code>samp</code>/<code>pre</code> use the mono stack.</li>
+    <li><code>::selection</code> tints with a translucent accent.</li>
+  </ul>
+
+  <h2>Type scale (fluid)</h2>
+  <p>Each size uses <code>clamp()</code> with viewport-inline units — resize the window to see them flex.</p>
+  <dl class="scale">
+    {scale.map(([token, label]) => (
+      <div class="scale__row">
+        <dt><code>{token}</code></dt>
+        <dd style={`font-size: var(${token})`}>Porchlight {label}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <h2>Elements</h2>
+  <div class="sample">
+    <h3>Heading level 3</h3>
+    <p>
+      A paragraph with a <a href="#focus">link</a>, some
+      <code>inline code</code>, and a <kbd>kbd</kbd> keycap. Try selecting this
+      text to see the accent-tinted <code>::selection</code>.
+    </p>
+    <button type="button" id="focus" class="focus-target">Tab to me to see :focus-visible</button>
+  </div>
+</BaseLayout>
+
+<style>
+  .scale {
+    margin: 0 0 2rem;
+  }
+  .scale__row {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.25rem;
+    border-block-end: 1px solid var(--doc-border);
+  }
+  .scale__row code {
+    color: var(--doc-text-muted);
+    font-size: 0.8125rem;
+  }
+  .scale__row dd {
+    margin: 0;
+    line-height: 1.2;
+  }
+  .sample {
+    padding: 1.5rem;
+    border: 1px dashed var(--doc-border);
+    border-radius: var(--doc-radius);
+  }
+  .sample :where(h3) {
+    margin-block-end: 0.5rem;
+  }
+  .sample :where(p) {
+    margin-block-end: 1rem;
+  }
+  .focus-target {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--doc-border);
+    border-radius: var(--doc-radius);
+    background: var(--doc-surface);
+    color: var(--doc-text);
+    font: inherit;
+    cursor: pointer;
+  }
+</style>

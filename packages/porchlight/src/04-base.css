@@ -1,0 +1,62 @@
+/*
+ * Porchlight — base layer
+ * ===========================================================================
+ * Element defaults. These give bare HTML a sensible, on-token appearance so
+ * pages are usable before any component class is applied.
+ *
+ * Everything is `:where()` (zero specificity) so every rule is trivially
+ * overridable by a component or an application. Logical properties throughout.
+ * No `!important` here — the reset already handles the only a11y-critical case
+ * (`[hidden]`).
+ *
+ * Color and type come from the token layers; theme/density/forced-colors are
+ * handled by `03-themes`. This layer only assembles them onto elements.
+ */
+@layer porchlight.base {
+  :where(html) {
+    font-family: var(--pl-font-sans);
+    background: var(--pl-color-bg);
+    color: var(--pl-color-text);
+  }
+
+  :where(body) {
+    font-size: var(--pl-text-md);
+    line-height: var(--pl-leading-normal);
+    background: var(--pl-color-bg);
+    color: var(--pl-color-text);
+    text-rendering: optimizeLegibility;
+  }
+
+  :where(a) {
+    color: var(--pl-color-accent);
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.08em;
+  }
+
+  :where(a:hover) {
+    color: var(--pl-color-accent-hover);
+  }
+
+  :where(:focus-visible) {
+    outline: var(--pl-focus-size) solid var(--pl-focus-color);
+    outline-offset: var(--pl-focus-offset);
+  }
+
+  :where(h1, h2, h3, h4) {
+    line-height: var(--pl-leading-tight);
+    text-wrap: balance;
+    margin-block: 0;
+  }
+
+  :where(p, ul, ol, dl, figure, blockquote) {
+    margin-block: 0;
+  }
+
+  :where(code, kbd, samp, pre) {
+    font-family: var(--pl-font-mono);
+  }
+
+  :where(::selection) {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 72%);
+  }
+}
