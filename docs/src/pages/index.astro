@@ -165,8 +165,14 @@ const stats = [
   .features {
     display: grid;
     gap: var(--pl-space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    grid-template-columns: repeat(2, 1fr);
     padding-block: var(--pl-space-8);
+  }
+
+  @media (width < 36rem) {
+    .features {
+      grid-template-columns: 1fr;
+    }
   }
 
   .feature {
@@ -180,8 +186,9 @@ const stats = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2.5rem;
+    min-inline-size: 2.5rem;
     block-size: 2.5rem;
+    padding-inline: var(--pl-space-2);
     margin-block-end: var(--pl-space-3);
     border-radius: var(--pl-radius-md);
     background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
@@ -189,6 +196,9 @@ const stats = [
     font-family: var(--pl-font-mono);
     font-size: var(--pl-text-xs);
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .feature__title {
