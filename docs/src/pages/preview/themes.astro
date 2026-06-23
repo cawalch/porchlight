@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Semantic palette shown as live swatches. Each chip's background is the token
+// itself, so it reacts to the playground's data-theme / color-scheme.
+const palette = [
+  ['--pl-color-bg', 'bg'],
+  ['--pl-color-surface', 'surface'],
+  ['--pl-color-surface-2', 'surface-2'],
+  ['--pl-color-border', 'border'],
+  ['--pl-color-text', 'text'],
+  ['--pl-color-text-muted', 'text-muted'],
+  ['--pl-color-accent', 'accent'],
+  ['--pl-color-accent-hover', 'accent-hover'],
+  ['--pl-color-danger', 'danger'],
+  ['--pl-color-success', 'success'],
+  ['--pl-color-warning', 'warning'],
+] as const;
+
+const densities = ['compact', 'comfortable', 'touch'] as const;
+---
+<BaseLayout title="Themes & density · Porchlight">
+  <h1>Themes &amp; density</h1>
+  <p>
+    The playground below is a single container with
+    <code>data-theme</code> and <code>data-density</code> attributes. Setting
+    <code>data-theme</code> flips <code>color-scheme</code>, which drives the
+    <code>light-dark()</code> tokens; <code>data-density</code> resizes controls
+    via the control tokens. No JavaScript is needed in the framework — the
+    toggles here just change two attributes.
+  </p>
+
+  <fieldset class="toggles">
+    <legend>Theme</legend>
+    <button type="button" data-toggle="theme" data-value="">auto</button>
+    <button type="button" data-toggle="theme" data-value="light">light</button>
+    <button type="button" data-toggle="theme" data-value="dark">dark</button>
+  </fieldset>
+
+  <fieldset class="toggles">
+    <legend>Density</legend>
+    {densities.map((d) => (
+      <button type="button" data-toggle="density" data-value={d}>{d}</button>
+    ))}
+  </fieldset>
+
+  <section class="playground" data-theme="light" data-density="comfortable">
+    <h2>Live preview</h2>
+    <p>
+      This whole panel uses <code>--pl-color-bg</code>,
+      <code>--pl-color-text</code>, and <code>--pl-color-border</code>. The
+      control below uses <code>--pl-control-block-size</code> — change density
+      to see it resize.
+    </p>
+
+    <div class="control-mock">A control-height bar</div>
+
+    <h3>Palette</h3>
+    <ul class="palette">
+      {palette.map(([token, label]) => (
+        <li class="chip" style={`background: var(${token})`}>
+          <span class="chip__label">{label}</span>
+          <code class="chip__token">{token}</code>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <h2>Reduced motion &amp; forced colors</h2>
+  <p>
+    <code>prefers-reduced-motion</code> zeroes <code>--pl-motion-scale</code>.
+    <code>forced-colors</code> (Windows High Contrast) remaps the semantic
+    tokens to system colors. Toggle these in your OS or DevTools rendering pane
+    to verify.
+  </p>
+</BaseLayout>
+
+<script>
+  // Tiny, dependency-free toggle: sets data-theme / data-density on the
+  // playground container and marks the active button.
+  const root = document.querySelector('.playground');
+  document.querySelectorAll('[data-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const kind = btn.getAttribute('data-toggle');
+      const value = btn.getAttribute('data-value') ?? '';
+      if (!root || !kind) return;
+      if (value === '') root.removeAttribute(`data-${kind}`);
+      else root.setAttribute(`data-${kind}`, value);
+      document
+        .querySelectorAll(`[data-toggle="${kind}"]`)
+        .forEach((b) => b.removeAttribute('aria-pressed'));
+      btn.setAttribute('aria-pressed', 'true');
+    });
+  });
+  // Mark the initial state.
+  document.querySelector('[data-toggle="theme"][data-value="light"]')?.setAttribute('aria-pressed', 'true');
+  document.querySelector('[data-toggle="density"][data-value="comfortable"]')?.setAttribute('aria-pressed', 'true');
+</script>
+
+<style>
+  .toggles {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block-end: 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--doc-border);
+    border-radius: var(--doc-radius);
+  }
+  .toggles legend {
+    font-weight: 600;
+    padding-inline: 0.25rem;
+  }
+  .toggles button {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--doc-border);
+    border-radius: var(--doc-radius);
+    background: var(--doc-surface);
+    color: var(--doc-text);
+    cursor: pointer;
+    font: inherit;
+  }
+  .toggles button[aria-pressed='true'] {
+    background: var(--doc-accent);
+    color: #fff;
+    border-color: var(--doc-accent);
+  }
+
+  .playground {
+    padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-bg);
+    color: var(--pl-color-text);
+  }
+  .playground h2 {
+    margin-block-end: 0.5rem;
+  }
+
+  .control-mock {
+    display: flex;
+    align-items: center;
+    padding-inline: var(--pl-control-padding-inline);
+    min-block-size: var(--pl-control-block-size);
+    inline-size: fit-content;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-control-radius);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-sm);
+    margin-block: 1rem;
+    transition: min-block-size var(--pl-duration-2) var(--pl-ease-standard);
+  }
+
+  .palette {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    padding: 0;
+    list-style: none;
+  }
+  .chip {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-block-size: 4rem;
+    padding: 0.6rem;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text);
+  }
+  .chip__label {
+    font-weight: 600;
+    /* The swatch background is the token; keep its label readable on any hue. */
+    background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--pl-radius-sm);
+    align-self: flex-start;
+  }
+  .chip__token {
+    font-size: 0.75rem;
+    background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--pl-radius-sm);
+    word-break: break-all;
+  }
+</style>

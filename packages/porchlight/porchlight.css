@@ -16,11 +16,11 @@
 @import "src/00-layer-order.css";
 @import "src/01-reset.css";
 @import "src/02-tokens.css";
+@import "src/03-themes.css";
 
 /* ---------------------------------------------------------------------------
  * Roadmap (added in later PRs — listed here to make the target order visible):
  *
- *   @import 'src/03-themes.css';        // Phase 1 — theme/density/a11y media
  *   @import 'src/04-base.css';          // Phase 1 — element defaults
  *   @import 'src/05-layout.css';        // Phase 2 — layout primitives + shell
  *   @import 'src/06-components/*.css';  // Phase 3 — one file per component

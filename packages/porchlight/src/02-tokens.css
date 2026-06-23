@@ -101,6 +101,43 @@
     --pl-brand-8: oklch(42% 0.16 260deg);
     --pl-brand-9: oklch(32% 0.12 260deg);
 
+    /* Semantic colors — light/dark via light-dark(), driven by color-scheme.
+       Forced-colors overrides live in 03-themes. Foreground/background are
+       defined as pairs so contrast is intentional, not accidental. */
+    --pl-color-bg: light-dark(oklch(98% 0.01 260deg), oklch(15% 0.02 260deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(19% 0.02 260deg));
+    --pl-color-surface-2: light-dark(
+      oklch(96% 0.01 260deg),
+      oklch(23% 0.025 260deg)
+    );
+    --pl-color-text: light-dark(oklch(20% 0.02 260deg), oklch(96% 0.01 260deg));
+    --pl-color-text-muted: light-dark(
+      oklch(46% 0.03 260deg),
+      oklch(75% 0.02 260deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(87% 0.02 260deg),
+      oklch(33% 0.03 260deg)
+    );
+    --pl-color-accent: var(--pl-brand-6);
+    --pl-color-accent-text: white;
+    --pl-color-accent-hover: color-mix(
+      in oklab,
+      var(--pl-color-accent),
+      black 8%
+    );
+    --pl-color-danger: oklch(58% 0.2 25deg);
+    --pl-color-danger-bg: light-dark(
+      oklch(96% 0.03 25deg),
+      oklch(24% 0.06 25deg)
+    );
+    --pl-color-danger-text: light-dark(
+      oklch(38% 0.15 25deg),
+      oklch(90% 0.05 25deg)
+    );
+    --pl-color-success: oklch(56% 0.16 150deg);
+    --pl-color-warning: oklch(76% 0.16 80deg);
+
     /* Controls */
     --pl-control-block-size: 2.5rem;
     --pl-control-padding-inline: var(--pl-space-4);
@@ -108,7 +145,11 @@
     --pl-control-border-width: 1px;
     --pl-control-radius: var(--pl-radius-control);
 
-    /* Focus — geometry only; color lands with semantic tokens in 03-themes */
+    /* Focus */
+    --pl-focus-color: light-dark(
+      oklch(56% 0.22 260deg),
+      oklch(78% 0.16 260deg)
+    );
     --pl-focus-offset: 2px;
     --pl-focus-size: 2px;
 

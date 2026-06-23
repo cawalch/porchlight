@@ -48,4 +48,18 @@ test.describe("docs scaffold", () => {
     // A brand primitive rendered as a swatch name.
     await expect(page.getByText("--pl-brand-6", { exact: true })).toBeVisible();
   });
+
+  test("themes playground toggles density and updates the control", async ({
+    page,
+  }) => {
+    await page.goto("./preview/themes");
+    await expect(
+      page.getByRole("heading", { name: "Themes & density" }),
+    ).toBeVisible();
+    const playground = page.locator(".playground");
+    await expect(playground).toHaveAttribute("data-density", "comfortable");
+    // Switch to touch density; the attribute (and thus --pl-control-block-size) changes.
+    await page.getByRole("button", { name: "touch" }).click();
+    await expect(playground).toHaveAttribute("data-density", "touch");
+  });
 });

@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   type, leading, spacing, radius, motion, z-index, a 9-step OKLCH brand ramp,
   control sizing, focus geometry, and shadows. Semantic colors and theme /
   density / forced-colors machinery follow in the next release.
+- **Semantic tokens & themes**. Semantic foreground/background color pairs via
+  `light-dark()` (bg/surface/text/border/accent/danger/success/warning), plus
+  the themes layer: `[data-theme]` drives `color-scheme`; `[data-density]`
+  (compact/comfortable/touch) resizes controls; `prefers-reduced-motion` zeroes
+  the motion scale; `forced-colors` remaps semantic tokens to Windows system
+  colors.
 
 ## [0.0.0] - in development
 
