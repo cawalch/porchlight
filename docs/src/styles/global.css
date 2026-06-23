@@ -1,71 +1,32 @@
 /*
  * Porchlight docs chrome.
  *
- * Imports the real framework from the workspace package — single source of
- * truth. The framework is fully layered (`@layer porchlight.*`), and this
- * docs chrome is intentionally UNLAYERED so it overrides the framework while
- * the token system (Phase 1, PR 4) is still being built. Once `--pl-*` tokens
- * land, this file is refactored to consume them. */
+ * The docs site consumes the REAL framework: global.css imports
+ * @cawalch/porchlight, and this file now adds only site-chrome layout
+ * (header, nav, footer, skip-link, hero, preview grid, page shell) on top of
+ * the framework's own base layer.
+ *
+ * What used to be a parallel --doc-* token system is retired. Colors, fonts,
+ * radius, focus, and element defaults all come from the framework (--pl-*
+ * tokens + @layer porchlight.base). Two genuinely docs-specific layout values
+ * remain: --doc-max-inline and --doc-pad (there is no framework layout token
+ * yet — those land with Phase 2). The framework is layered; this chrome is
+ * intentionally UNLAYERED so it wins where it needs to without fighting
+ * specificity.
+ */
 @import "@cawalch/porchlight/porchlight.css";
 
-/*
- * Porchlight docs chrome.
- *
- * Temporary site styling in its own --doc-* namespace. It is NOT the Porchlight
- * framework — that lives in packages/porchlight and begins in Phase 1 (PR 3).
- * Once the framework's --pl-* token system lands, this file is refactored to
- * consume those tokens. In the meantime it showcases modern CSS (OKLCH,
- * light-dark(), logical properties, color-mix(), container-friendly layout).
- */
-
 :root {
-  color-scheme: light dark;
-
-  --doc-bg: light-dark(oklch(98% 0.005 250deg), oklch(16% 0.01 250deg));
-  --doc-surface: light-dark(oklch(100% 0 0deg), oklch(20% 0.012 250deg));
-  --doc-text: light-dark(oklch(22% 0.02 250deg), oklch(95% 0.005 250deg));
-  --doc-text-muted: light-dark(oklch(46% 0.03 250deg), oklch(72% 0.02 250deg));
-  --doc-border: light-dark(oklch(88% 0.015 250deg), oklch(32% 0.025 250deg));
-  --doc-accent: light-dark(oklch(55% 0.2 255deg), oklch(72% 0.16 255deg));
-  --doc-radius: 0.75rem;
   --doc-max-inline: 72rem;
   --doc-pad: clamp(1rem, 0.6rem + 2vi, 2rem);
-  --doc-font-sans:
-    system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
-  --doc-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: var(--doc-font-sans);
-  background: var(--doc-bg);
-  color: var(--doc-text);
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
-  min-block-size: 100dvb;
+  /* Sticky-footer layout: reset owns margin/min-block-size, base owns
+     font/color/leading; chrome only adds the flex column. */
   display: flex;
   flex-direction: column;
   line-height: 1.6;
-}
-
-a {
-  color: var(--doc-accent);
-  text-underline-offset: 0.18em;
-}
-
-a:hover {
-  text-decoration-thickness: 0.08em;
-}
-
-:focus-visible {
-  outline: 2px solid var(--doc-accent);
-  outline-offset: 2px;
 }
 
 /* Accessibility: visible-on-focus skip link. */
@@ -75,9 +36,9 @@ a:hover {
   inset-block-start: 1rem;
   z-index: 100;
   padding: 0.5rem 0.75rem;
-  background: var(--doc-accent);
-  color: #fff;
-  border-radius: var(--doc-radius);
+  background: var(--pl-color-accent);
+  color: var(--pl-color-accent-text);
+  border-radius: var(--pl-radius-lg);
   text-decoration: none;
   transform: translateY(-200%);
 }
@@ -96,15 +57,15 @@ a:hover {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.75rem var(--doc-pad);
-  background: color-mix(in oklab, var(--doc-surface), transparent 12%);
+  background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
   backdrop-filter: blur(8px);
-  border-block-end: 1px solid var(--doc-border);
+  border-block-end: 1px solid var(--pl-color-border);
 }
 
 .site-header__brand {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--doc-text);
+  color: var(--pl-color-text);
   text-decoration: none;
 }
 
@@ -119,19 +80,19 @@ a:hover {
 .site-nav a {
   display: inline-block;
   padding: 0.4rem 0.75rem;
-  border-radius: var(--doc-radius);
-  color: var(--doc-text-muted);
+  border-radius: var(--pl-radius-lg);
+  color: var(--pl-color-text-muted);
   font-size: 0.9375rem;
   text-decoration: none;
 }
 
 .site-nav a:hover {
-  background: color-mix(in oklab, var(--doc-accent), transparent 90%);
-  color: var(--doc-text);
+  background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+  color: var(--pl-color-text);
 }
 
 .site-nav a[aria-current="page"] {
-  color: var(--doc-accent);
+  color: var(--pl-color-accent);
   font-weight: 600;
 }
 
@@ -144,8 +105,8 @@ main {
 
 .site-footer {
   padding: 2rem var(--doc-pad);
-  border-block-start: 1px solid var(--doc-border);
-  color: var(--doc-text-muted);
+  border-block-start: 1px solid var(--pl-color-border);
+  color: var(--pl-color-text-muted);
   font-size: 0.875rem;
   text-align: center;
 }
@@ -160,7 +121,7 @@ main {
 
 .hero__lede {
   max-inline-size: 40ch;
-  color: var(--doc-text-muted);
+  color: var(--pl-color-text-muted);
   font-size: clamp(1.125rem, 1rem + 0.5vi, 1.375rem);
 }
 
@@ -171,15 +132,15 @@ main {
 .hero__cta {
   display: inline-block;
   padding: 0.75rem 1.25rem;
-  border-radius: var(--doc-radius);
-  background: var(--doc-accent);
-  color: #fff;
+  border-radius: var(--pl-radius-lg);
+  background: var(--pl-color-accent);
+  color: var(--pl-color-accent-text);
   font-weight: 600;
   text-decoration: none;
 }
 
 .hero__cta:hover {
-  color: #fff;
+  color: var(--pl-color-accent-text);
   filter: brightness(1.08);
 }
 
@@ -188,20 +149,15 @@ main {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  padding: 0;
+  list-style: none;
 }
 
 .placeholder {
+  display: block;
   padding: 1.5rem;
-  color: var(--doc-text-muted);
-  border: 1px dashed var(--doc-border);
-  border-radius: var(--doc-radius);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 1ms !important;
-    transition-duration: 1ms !important;
-  }
+  color: var(--pl-color-text-muted);
+  border: 1px dashed var(--pl-color-border);
+  border-radius: var(--pl-radius-lg);
+  text-decoration: none;
 }
