@@ -1,0 +1,94 @@
+/*
+ * Porchlight: progressive enhancements
+ * ===========================================================================
+ * Tier B features, all gated behind @supports. The framework is fully usable
+ * without any of these; they layer on where the browser supports them, with
+ * zero behavior change where it doesn't.
+ *
+ * Features:
+ *   1. interpolate-size: allow-keywords on :root, so height/width can animate
+ *      to/from auto and content-keyword sizes (Baseline 2026; enables
+ *      disclosure/collapsible animations without measuring JS).
+ *   2. scroll-state container queries: a .c-sticky-shell that gains a shadow
+ *      when it becomes stuck (the "app-bar shadow on scroll" pattern, no JS).
+ *   3. text-box: trim-both cap alphabetic on buttons/badges, removing the
+ *      cap-height half-leading for optically-centered labels.
+ *   4. rule (CSS Gap Decorations): dividers between grid/flex items via
+ *      [data-dividers] on .l-grid, purely visual (no layout impact).
+ *   5. Advanced typed attr(): a .c-swatch that reads its color from a
+ *      data-color attribute, type-checked as <color>.
+ *
+ * Each block stands alone and degrades cleanly. Nothing here is in the
+ * critical path; everything below is opt-in via @supports.
+ */
+@layer porchlight.enhancements {
+  /* 1. Allow animating to/from intrinsic sizes (content, auto). Enables
+     native disclosure/collapsible animations and @starting-style on
+     auto-sized elements. */
+  @supports (interpolate-size: allow-keywords) {
+    :root {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  /* 2. Scroll-state container queries: the sticky-shell shadow pattern.
+     A scroll container becomes a scroll-state query container; when its
+     sticky child is "stuck to top", the inner bar gains an elevation shadow.
+     Replaces the JS scroll-listener pattern entirely. */
+  @supports (container-type: scroll-state) {
+    .c-sticky-shell {
+      container-type: scroll-state;
+    }
+
+    .c-sticky-shell__bar {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: var(--pl-z-sticky);
+      background: var(--pl-color-surface);
+      transition:
+        box-shadow var(--pl-duration-2) var(--pl-ease-standard),
+        background-color var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    @container scroll-state(stuck: top) {
+      .c-sticky-shell__bar {
+        box-shadow: var(--pl-shadow-2);
+        background: color-mix(
+          in oklab,
+          var(--pl-color-surface),
+          transparent 12%
+        );
+        backdrop-filter: blur(8px);
+      }
+    }
+  }
+
+  /* 3. text-box: optical alignment. Trims the cap-height half-leading so a
+     single-line label sits visually centered without the inline-box overshoot
+     that makes controls look 1px off. */
+  @supports (text-box: trim-both cap alphabetic) {
+    :where(.c-button, .c-badge, .c-dialog__close) {
+      text-box: trim-both cap alphabetic;
+    }
+  }
+
+  /* 4. CSS Gap Decorations: vertical dividers between grid items, purely
+     visual (the gap stays, a rule is drawn in it). Opt in via
+     [data-dividers="true"] on .l-grid. The `rule` properties are behind
+     @supports so unsupported browsers just show the normal gap. */
+  @supports (rule: 1px solid CanvasText) {
+    :where(.l-grid[data-dividers="true"]) {
+      rule: 1px solid var(--pl-color-border);
+      rule-visibility-items: between;
+    }
+  }
+
+  /* 5. Advanced typed attr(): a swatch that reads its color directly from a
+     data-color attribute, type-checked as <color> (with a token fallback).
+     Removes the need for inline style="" for static color chips. */
+  @supports (background: attr(data-color type(<color>))) {
+    .c-swatch {
+      background: attr(data-color type(<color>), var(--pl-color-border));
+    }
+  }
+}

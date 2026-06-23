@@ -3,6 +3,12 @@
   "ignoreFiles": ["node_modules/**", "dist/**", "**/dist/**", ".astro/**"],
   "rules": {
     "at-rule-no-unknown": null,
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": ["rule", "rule-visibility-items"]
+      }
+    ],
     "no-descending-specificity": null,
     "selector-class-pattern": null,
     "custom-property-pattern": null,

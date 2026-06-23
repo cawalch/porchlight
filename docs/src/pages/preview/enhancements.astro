@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// The enhancements layer is all @supports-gated, so this page both demos them
+// and serves as a feature-detection reference: a feature either renders (the
+// browser supports it) or degrades to the plain version.
+---
+<BaseLayout title="Enhancements · Porchlight">
+  <h1>Enhancements</h1>
+  <p>
+    Tier B modern CSS, all gated behind <code>@supports</code>. The framework
+    is fully usable without any of these; they layer on where the browser
+    supports them, with zero behavior change where it doesn't. Open this page
+    in Chrome 149+ to see them; older browsers see the plain versions.
+  </p>
+
+  <h2>Scroll-state sticky-shell shadow</h2>
+  <p>
+    A sticky bar that gains an elevation shadow when it scrolls to the top of
+    its container. The whole pattern is CSS: no JS scroll listener, no
+    IntersectionObserver. Scroll the panel below to see the bar activate.
+  </p>
+  <div class="c-sticky-shell sticky-demo" tabindex="0" role="region" aria-label="Sticky-shell scroll demo">
+    <header class="c-sticky-shell__bar">
+      <strong>Sticky bar</strong> <span class="u-muted">shadow appears when stuck</span>
+    </header>
+    <div class="sticky-demo__content">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <p>Row {i + 1} — scroll up and down to make the sticky bar stick to the top of this panel.</p>
+      ))}
+    </div>
+  </div>
+
+  <h2>Grid dividers</h2>
+  <p>
+    Vertical dividers between grid items, drawn purely in the gap (the gap
+    stays). Opt in with <code>data-dividers="true"</code> on <code>.l-grid</code>.
+  </p>
+  <div class="l-grid" data-dividers="true" style="--l-grid-min: 12rem;">
+    {['Widget A', 'Widget B', 'Widget C', 'Widget D'].map((label) => (
+      <div class="grid-item">{label}</div>
+    ))}
+  </div>
+
+  <h2>Typed attr() swatch</h2>
+  <p>
+    A color chip that reads its color from a <code>data-color</code> attribute,
+    type-checked as <code>&lt;color&gt;</code>. No inline <code>style=""</code>
+    needed for static color chips.
+  </p>
+  <div class="l-cluster">
+    <span class="c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
+    <span class="c-swatch" data-color="oklch(56% 0.16 150deg)"></span>
+    <span class="c-swatch" data-color="oklch(58% 0.17 80deg)"></span>
+    <span class="c-swatch" data-color="oklch(58% 0.2 25deg)"></span>
+  </div>
+
+  <h2>text-box optical alignment</h2>
+  <p>
+    Buttons and badges trim the cap-height half-leading so single-line labels
+    sit visually centered without the inline-box overshoot that makes controls
+    look ~1px off. (The effect is subtle; toggle the layer off to compare.)
+  </p>
+  <div class="l-cluster">
+    <button class="c-button" data-variant="primary">Primary</button>
+    <span class="c-badge" data-tone="accent">New</span>
+  </div>
+
+  <h2>interpolate-size</h2>
+  <p>
+    Set on <code>:root</code>, this allows height/width to animate
+    to/from <code>auto</code> and content-keyword sizes. It's the foundation
+    for native disclosure/collapsible animations. (No visible demo here; it
+    enables <code>@starting-style</code> on auto-sized elements in components.)
+  </p>
+</BaseLayout>
+
+<style>
+  .sticky-demo {
+    block-size: 14rem;
+    overflow: auto;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+  .sticky-demo__bar,
+  .c-sticky-shell__bar {
+    padding: var(--pl-space-3) var(--pl-space-4);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+  .sticky-demo__content {
+    padding: var(--pl-space-4);
+  }
+  .sticky-demo__content p {
+    margin-block-end: var(--pl-space-3);
+    color: var(--pl-color-text-muted);
+  }
+  .grid-item {
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+  }
+  .c-swatch {
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: var(--pl-radius-md);
+    border: 1px solid var(--pl-color-border);
+  }
+</style>
