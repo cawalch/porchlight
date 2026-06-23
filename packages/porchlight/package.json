@@ -1,0 +1,32 @@
+{
+  "name": "@cawalch/porchlight",
+  "version": "0.0.0",
+  "description": "A no-dependency, native-CSS design substrate for enterprise SaaS.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://cawalch.github.io/porchlight",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cawalch/porchlight.git",
+    "directory": "packages/porchlight"
+  },
+  "bugs": {
+    "url": "https://github.com/cawalch/porchlight/issues"
+  },
+  "author": "cawalch",
+  "style": "porchlight.css",
+  "exports": {
+    ".": "./porchlight.css",
+    "./porchlight.css": "./porchlight.css",
+    "./src/*": "./src/*"
+  },
+  "files": [
+    "porchlight.css",
+    "src",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

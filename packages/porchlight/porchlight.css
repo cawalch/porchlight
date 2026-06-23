@@ -1,0 +1,30 @@
+/*
+ * Porchlight — entry point
+ * ===========================================================================
+ * Import this single file to load the framework. Each module is self-wrapped
+ * in its `@layer porchlight.<name>` so order is explicit and files are usable
+ * standalone. A bundler (Astro/Vite + Lightning CSS, esbuild, Lightning CSS
+ * standalone) inlines these @imports into one distributable stylesheet.
+ *
+ * Consumers place the framework in the cascade before importing:
+ *
+ *   @layer porchlight, app;
+ *   @import "@cawalch/porchlight/porchlight.css";
+ *
+ * Do NOT add `layer(...)` to this import — modules self-layer.
+ */
+@import "src/00-layer-order.css";
+@import "src/01-reset.css";
+
+/* ---------------------------------------------------------------------------
+ * Roadmap (added in later PRs — listed here to make the target order visible):
+ *
+ *   @import 'src/02-tokens.css';        // Phase 1 — primitive + semantic tokens
+ *   @import 'src/03-themes.css';        // Phase 1 — theme/density/a11y media
+ *   @import 'src/04-base.css';          // Phase 1 — element defaults
+ *   @import 'src/05-layout.css';        // Phase 2 — layout primitives + shell
+ *   @import 'src/06-components/*.css';  // Phase 3 — one file per component
+ *   @import 'src/07-utilities.css';     // Phase 4 — utilities
+ *   @import 'src/08-enhancements.css';  // Phase 4 — @supports-gated Tier B
+ *   @import 'src/09-print.css';         // Phase 4 — print
+ * ------------------------------------------------------------------------- */

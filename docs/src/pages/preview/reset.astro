@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Demonstrates what the reset layer normalizes. Because the docs chrome is
+// unlayered it sits on top of the framework; this page renders a raw sample to
+// confirm the reset loads and nothing is broken. Full visual styling arrives
+// with tokens (PR 4) and base (PR 6).
+const layers = [
+  ['reset', 'Minimal browser normalization'],
+  ['tokens', 'Primitive and semantic design tokens'],
+  ['themes', 'Theme, brand, density, contrast, mode overrides'],
+  ['base', 'HTML element defaults'],
+  ['layout', 'Layout primitives and page/app shells'],
+  ['components', 'Component classes'],
+  ['utilities', 'Small single-purpose helpers'],
+  ['enhancements', 'Progressive @supports-gated features'],
+  ['print', 'Print behavior'],
+] as const;
+---
+<BaseLayout title="Reset preview · Porchlight">
+  <h1>Reset</h1>
+  <p>
+    The <code>porchlight.reset</code> layer is minimal browser normalization —
+    no normalize.css, no opinionated defaults. <code>:where()</code> keeps
+    every rule at zero specificity so it is trivially overridable.
+  </p>
+
+  <h2>What it normalizes</h2>
+  <ul>
+    <li><code>box-sizing: border-box</code> on everything.</li>
+    <li><code>color-scheme: light dark</code> and 100% text-size adjust on <code>html</code>.</li>
+    <li><code>margin: 0</code> and <code>min-block-size: 100dvb</code> on <code>body</code>.</li>
+    <li>Replaced elements (<code>img</code>, <code>svg</code>, <code>video</code>) are block and width-constrained.</li>
+    <li>Form controls inherit font and color.</li>
+    <li><code>touch-action: manipulation</code> on interactive controls (no 300ms tap delay).</li>
+    <li><code>table</code> uses separated borders with zero spacing.</li>
+    <li><code>[hidden]</code> is forcibly removed from the render tree.</li>
+  </ul>
+
+  <h2>Raw sample</h2>
+  <p>A handful of unstyled elements, to confirm the reset loads cleanly:</p>
+  <div class="raw-sample">
+    <img src="https://placehold.co/320x96/cccccc/666666?text=img+is+block" alt="placeholder" width="320" height="96" />
+    <button type="button">A native button</button>
+    <input type="text" placeholder="A native text input" />
+    <table>
+      <caption>A native table</caption>
+      <thead><tr><th>Column</th><th>Column</th></tr></thead>
+      <tbody><tr><td>Cell</td><td>Cell</td></tr></tbody>
+    </table>
+  </div>
+
+  <h2>Layer order</h2>
+  <p>Declared in <code>00-layer-order.css</code>; only <code>reset</code> is populated yet.</p>
+  <ol class="layer-list">
+    {layers.map(([name, purpose]) => (
+      <li>
+        <code>{name}</code>
+        <span>{purpose}</span>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>
+
+<style>
+  .raw-sample {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border: 1px dashed var(--doc-border);
+    border-radius: var(--doc-radius);
+  }
+  .raw-sample :where(table) {
+    inline-size: 100%;
+  }
+  .layer-list {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0;
+    list-style: decimal inside;
+  }
+  .layer-list code {
+    display: inline-block;
+    min-inline-size: 9rem;
+    font-weight: 600;
+  }
+</style>

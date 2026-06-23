@@ -19,6 +19,10 @@ importers:
         version: 36.0.1(stylelint@16.26.1(typescript@5.9.3))
 
   docs:
+    dependencies:
+      '@cawalch/porchlight':
+        specifier: workspace:*
+        version: link:../packages/porchlight
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.4
@@ -41,6 +45,8 @@ importers:
       typescript:
         specifier: ^5.6.0
         version: 5.9.3
+
+  packages/porchlight: {}
 
 packages:
 
