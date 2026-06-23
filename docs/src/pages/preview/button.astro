@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+// Kitchen-sink for .c-button: every variant, key states, with icons, and the
+// density scaling (driven by [data-density] on the group).
+const variants = ['primary', 'secondary', 'ghost'] as const;
+---
+<BaseLayout title="Button · Porchlight">
+  <h1>Button</h1>
+  <p>
+    The canonical action control — native <code>&lt;button&gt;</code>, token-driven
+    via <code>--c-button-*</code> aliases. Variants set the fill; hover derives a
+    theme-aware shade via <code>color-mix()</code>; active gives a tactile dip.
+    All sizing comes from <code>--pl-control-*</code>, so density just works.
+  </p>
+
+  <h2>Variants</h2>
+  <div class="l-cluster row">
+    {variants.map((v) => (
+      <button type="button" class="c-button" data-variant={v}>{v}</button>
+    ))}
+    <button type="button" class="c-button">default</button>
+  </div>
+
+  <h2>With an icon</h2>
+  <div class="l-cluster row">
+    <button type="button" class="c-button" data-variant="primary">
+      <Icon name="plus" /> New report
+    </button>
+    <button type="button" class="c-button" data-variant="secondary">
+      <Icon name="download" /> Export
+    </button>
+    <button type="button" class="c-button" data-variant="ghost" aria-label="Settings">
+      <Icon name="gear" />
+    </button>
+  </div>
+
+  <h2>States</h2>
+  <div class="l-cluster row">
+    <button type="button" class="c-button" data-variant="primary">Default</button>
+    <button type="button" class="c-button" data-variant="primary" data-hover>Hover</button>
+    <button type="button" class="c-button" data-variant="primary" aria-pressed="true">Pressed</button>
+    <button type="button" class="c-button" data-variant="primary" disabled>Disabled</button>
+  </div>
+  <div class="l-cluster row">
+    <button type="button" class="c-button" data-variant="secondary">Default</button>
+    <button type="button" class="c-button" data-variant="secondary" data-hover>Hover</button>
+    <button type="button" class="c-button" data-variant="secondary" aria-pressed="true">Pressed</button>
+    <button type="button" class="c-button" data-variant="secondary" disabled>Disabled</button>
+  </div>
+  <div class="l-cluster row">
+    <button type="button" class="c-button" data-variant="ghost">Default</button>
+    <button type="button" class="c-button" data-variant="ghost" data-hover>Hover</button>
+    <button type="button" class="c-button" data-variant="ghost" aria-pressed="true">Pressed</button>
+    <button type="button" class="c-button" data-variant="ghost" disabled>Disabled</button>
+  </div>
+
+  <h2>Density</h2>
+  <p>Sizing is driven by <code>--pl-control-block-size</code> on an ancestor's <code>[data-density]</code>.</p>
+  <div class="l-cluster row" data-density="compact">
+    <button type="button" class="c-button" data-variant="primary">compact</button>
+    <button type="button" class="c-button" data-variant="secondary">compact</button>
+  </div>
+  <div class="l-cluster row" data-density="touch">
+    <button type="button" class="c-button" data-variant="primary">touch</button>
+    <button type="button" class="c-button" data-variant="secondary">touch</button>
+  </div>
+
+  <h2>As a link</h2>
+  <p>Use <code>&lt;a class="c-button"&gt;</code> only when it is genuinely navigation.</p>
+  <div class="l-cluster row">
+    <a class="c-button" data-variant="primary" href="#">View docs</a>
+    <a class="c-button" data-variant="ghost" href="#">Cancel</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .row {
+    margin-block-end: var(--pl-space-4);
+  }
+</style>

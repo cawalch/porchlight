@@ -1,0 +1,150 @@
+/*
+ * Porchlight — button component
+ * ===========================================================================
+ * The canonical action control. Native <button> (or <a> when it is genuinely
+ * navigation). Token-driven via component-local --c-button-* aliases that
+ * default to framework semantic tokens, so an app can theme one button or all
+ * of them without leaving the component.
+ *
+ * Variants: [data-variant="primary" | "secondary" | "ghost"] (default =
+ * secondary). States: hover, active, aria-pressed, disabled / aria-disabled,
+ * focus-visible (inherited outline from base, never removed). Density comes
+ * for free from --pl-control-* (set [data-density] on an ancestor).
+ *
+ * Modern polish: color-mix() hover derives a theme-aware shade from the
+ * button's own bg + the text color; a subtle inset top-highlight on filled
+ * variants gives depth without a heavy shadow; transform active gives tactile
+ * feedback. All motion respects --pl-motion-scale (zeroed under reduced
+ * motion). text-box optical alignment is gated behind @supports.
+ */
+@layer porchlight.components {
+  @scope (.c-button) {
+    :scope {
+      --c-button-bg: var(--pl-color-surface);
+      --c-button-fg: var(--pl-color-text);
+      --c-button-border: var(--pl-color-border);
+      --c-button-highlight: transparent;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--pl-control-gap);
+      min-block-size: var(--pl-control-block-size);
+      min-inline-size: var(--pl-control-block-size);
+      padding-inline: var(--pl-control-padding-inline);
+      border: var(--pl-control-border-width) solid var(--c-button-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--c-button-bg);
+      color: var(--c-button-fg);
+      font-family: inherit;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: default;
+      user-select: none;
+
+      /* Inset top catch gives filled controls a subtle lift; transparent by
+         default so outlined/ghost variants stay flat. */
+      box-shadow: inset 0 1px 0 var(--c-button-highlight);
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        transform var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    /* Primary — the accent fill. Carries accent-text for WCAG-AA contrast. */
+    :scope[data-variant="primary"] {
+      --c-button-bg: var(--pl-color-accent);
+      --c-button-fg: var(--pl-color-accent-text);
+      --c-button-border: var(--pl-color-accent);
+      --c-button-highlight: oklch(100% 0 0deg / 12%);
+    }
+
+    /* Secondary — a raised surface (surface-2) with a border. */
+    :scope[data-variant="secondary"] {
+      --c-button-bg: var(--pl-color-surface-2);
+    }
+
+    /* Ghost — transparent; for low-emphasis actions in dense toolbars. */
+    :scope[data-variant="ghost"] {
+      --c-button-bg: transparent;
+      --c-button-border: transparent;
+    }
+
+    /* Hover: mix a little of the text color into the current fill. Done via
+       the background-color LONGHAND, NOT by reassigning --c-button-bg —
+       reassigning a custom property in terms of itself is a cycle, which CSS
+       resolves to guaranteed-invalid and collapses the fill to transparent.
+       Theme-aware by construction (darkens in light, lightens in dark). */
+    :scope:is(:hover, [data-hover]) {
+      background-color: color-mix(
+        in oklab,
+        var(--c-button-bg),
+        var(--pl-color-text) 12%
+      );
+      cursor: pointer;
+    }
+
+    /* Ghost has no fill to mix into (transparent) — mixing text into
+       transparent yields a ~7%-alpha veil that reads as "barely there".
+       Give it a real, visible accent wash instead. */
+    :scope[data-variant="ghost"]:is(:hover, [data-hover]) {
+      background-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 85%
+      );
+    }
+
+    /* Active + pressed: a small tactile dip. */
+    :scope:is(:active, [aria-pressed="true"]) {
+      transform: translateY(1px);
+    }
+
+    /* A pressed ghost/secondary also gets an accent tint so the selected/
+       pressed state reads clearly (a ~12%-alpha veil is too faint — see the
+       affordance test). */
+    :scope:is(
+        [data-variant="ghost"],
+        [data-variant="secondary"]
+      )[aria-pressed="true"] {
+      --c-button-bg: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 80%
+      );
+      --c-button-fg: var(--pl-color-accent);
+    }
+
+    :scope:is(:disabled, [aria-disabled="true"]) {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Optical alignment: trim the cap-height half-leading so the label sits
+       visually centered without the inline-box overshoot. Progressive only. */
+    @supports (text-box: trim-both cap alphabetic) {
+      :scope {
+        text-box: trim-both cap alphabetic;
+      }
+    }
+
+    /* Forced colors (Windows High Contrast): fall back to system colors. */
+    @media (forced-colors: active) {
+      :scope {
+        border-color: ButtonBorder;
+      }
+
+      :scope[data-variant="primary"] {
+        background: Highlight;
+        color: HighlightText;
+        border-color: Highlight;
+      }
+    }
+  }
+}

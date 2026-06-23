@@ -1,0 +1,89 @@
+---
+title: Button
+description: The canonical action control — native button, token-driven, with primary/secondary/ghost variants.
+status: stable
+since: 0.1.0
+---
+
+import ButtonPreview from "../../components/ButtonPreview.astro";
+
+# Button
+
+The `.c-button` is the canonical action control. Use a native `<button>` (or an
+`<a>` only when it is genuinely navigation). All visuals flow through
+component-local `--c-button-*` aliases that default to framework semantic
+tokens, so you can theme one button or all of them without leaving the
+component.
+
+<ButtonPreview />
+
+## When to use what
+
+- **Primary** — one per view; the main forward action ("Save", "Create").
+- **Secondary** — co-equal or alternative actions ("Cancel", "Export").
+- **Ghost** — low-emphasis actions in dense toolbars, or on colored surfaces.
+
+## Semantic HTML
+
+```html
+<button class="c-button" data-variant="primary">Save changes</button>
+<button class="c-button" data-variant="secondary">Cancel</button>
+<button class="c-button" data-variant="ghost" aria-pressed="true">
+  Preview
+</button>
+```
+
+## Class contract
+
+| Selector         | Role                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| `.c-button`      | The component (native `<button>` or `<a>`).                  |
+| `[data-variant]` | `primary` \| `secondary` \| `ghost` (default = `secondary`). |
+
+## Tokens consumed
+
+`--pl-color-{accent,accent-text,accent-hover,surface,surface-2,text,border}`,
+`--pl-control-{block-size,padding-inline,gap,border-width,radius}`,
+`--pl-duration-1`, `--pl-ease-standard`.
+
+## Tokens exposed (component-local)
+
+| Token                  | Default              | Purpose                                              |
+| ---------------------- | -------------------- | ---------------------------------------------------- |
+| `--c-button-bg`        | `--pl-color-surface` | Fill. Variants override.                             |
+| `--c-button-fg`        | `--pl-color-text`    | Label color.                                         |
+| `--c-button-border`    | `--pl-color-border`  | Border color.                                        |
+| `--c-button-highlight` | `transparent`        | Inset top-catch; `oklch(100% 0 0 / 12%)` on primary. |
+
+## States
+
+| State         | How                                   | Behavior                                   |
+| ------------- | ------------------------------------- | ------------------------------------------ |
+| default       | —                                     | variant fill                               |
+| hover         | `:hover`, `[data-hover]`              | `color-mix()` shade (theme-aware), pointer |
+| active        | `:active`                             | `translateY(1px)` dip                      |
+| pressed       | `[aria-pressed="true"]`               | dip + (ghost/secondary) faint accent tint  |
+| focus-visible | `:focus-visible`                      | token outline (from base; never removed)   |
+| disabled      | `:disabled`, `[aria-disabled="true"]` | 0.55 opacity, `not-allowed`, no highlight  |
+
+## Accessibility
+
+- **Keyboard:** native `<button>` → Enter/Space activate; focus ring is the
+  base-layer `:focus-visible` outline (token color/size/offset). Never removed.
+- **Disabled vs aria-disabled:** `disabled` removes the button from the
+  activation path entirely; `aria-disabled="true"` keeps it focusable (use when
+  you want to announce "disabled" but still show a tooltip).
+- **Icon-only:** provide an `aria-label`.
+- **Contrast:** primary uses `--pl-color-accent` + `--pl-color-accent-text`
+  (AA in both themes — see the contrast test).
+
+## Theme, density, RTL, motion
+
+- **Light/dark:** tokens resolve via `light-dark()`. Hover shade is
+  theme-aware by construction (`color-mix` with `--pl-color-text`).
+- **Density:** sizing comes from `--pl-control-block-size`; set
+  `[data-density]` on an ancestor — no per-component work.
+- **RTL:** no physical properties; icon + label order follows the writing mode.
+- **Reduced motion:** the transform/box-shadow transitions are zeroed by the
+  themes layer's motion guard (`--pl-motion-scale: 0`).
+- **Forced colors:** falls back to `ButtonBorder` / `Highlight` / `HighlightText`.

@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Button** (`.c-button`). First component — the canonical action control,
+  native `<button>`/`<a>`, in `@layer porchlight.components` via `@scope`.
+  Variants `primary` / `secondary` / `ghost`; theme-aware `color-mix()` hover,
+  `translateY` active, `aria-pressed`, disabled/`aria-disabled`, an inset
+  top-highlight on filled variants, `text-box` optical alignment behind
+  `@supports`, and forced-colors fallback. Sizing flows from the control
+  tokens, so `[data-density]` just works. Sets the component-authoring pattern
+  (component-local `--c-*` tokens, a `.mdx` reference page, a kitchen-sink
+  preview) every subsequent component follows.
 - **App shell** (`.l-app-shell`). Desktop SaaS grid: sticky topbar,
   persistent sidebar, scrolling main work area. `.l-app-shell__main` is a
   query container, so any `.l-sidebar` nested inside it collapses at narrow
@@ -30,6 +39,32 @@ build` bundles the source `porchlight.css` (@imports inlined) into
   solid form clears the >=3:1 non-text threshold. `.l-sidebar` no longer
   declares `container-type` on itself (an element can't query its own size);
   the collapse correctly targets an ancestor container.
+
+### Fixed
+
+- **Button hover collapsed to transparent.** The hover rule reassigned
+  `--c-button-bg` to `color-mix(... var(--c-button-bg) ...)` — a self-
+  referential custom-property cycle that CSS resolves to guaranteed-invalid,
+  making every button's fill transparent on hover. Rewritten to set the
+  `background-color` longhand instead. Ghost hover (which mixed text into
+  transparent → a near-invisible veil) now gets a real accent wash.
+- **`--pl-color-surface-2` too close to `--pl-color-bg` in light** (ΔL 0.02) —
+  secondary buttons and raised panels disappeared into the page. Widened to
+  ΔL 0.04 (light-mode surface-2 96%→94%).
+- **Pressed ghost/secondary tint too faint** (12% alpha) — bumped to 20% so the
+  selected state reads.
+
+### Added (tooling)
+
+- **Deterministic perceptual color checks.** A reusable `tests/lib/color.ts`
+  (parses resolved `oklch`/`oklab`/`rgb`, computes luminance, contrast, ΔL,
+  alpha, source-over composite) plus three guards: WCAG text contrast (refactored
+  to the lib), adjacent-surface distinguishability (ΔL ≥ 0.03 — catches the
+  surface-2 bug), and interactive-state affordance (hover/pressed ΔL + an alpha
+  floor that catches faint-veil hovers). These read resolved colors from the
+  browser, so a token/component edit that reintroduces an invisible affordance
+  fails CI.
+
 - **Layer architecture & reset** (`@cawalch/porchlight`). First framework CSS:
   every rule lives inside one top-level `@layer porchlight { … }` with nine
   deterministic sub-layers; a minimal `:where()`-based reset replaces any

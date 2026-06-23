@@ -104,4 +104,21 @@ test.describe("docs scaffold", () => {
     await page.getByRole("button", { name: /Collapse sidebar/ }).click();
     await expect(rail).toHaveAttribute("data-sidebar", "collapsed");
   });
+
+  test("button page renders every variant", async ({ page }) => {
+    await page.goto("./preview/button");
+    await expect(
+      page.getByRole("heading", { name: "Button", exact: true }),
+    ).toBeVisible();
+    // All three variants are present as real buttons.
+    for (const v of ["primary", "secondary", "ghost"]) {
+      await expect(
+        page.getByRole("button", { name: v, exact: true }),
+      ).toBeVisible();
+    }
+    // The disabled primary is actually disabled.
+    await expect(
+      page.locator(".c-button[data-variant='primary'][disabled]"),
+    ).toBeDisabled();
+  });
 });
