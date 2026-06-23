@@ -31,6 +31,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Get Playwright version
+        id: pw-version
+        run: |
+          PW_VERSION=$(node -p "require('./docs/node_modules/@playwright/test/package.json').version")
+          echo "version=$PW_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browser
+        id: cache-playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pw-version.outputs.version }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Lint CSS
         run: pnpm lint
 
@@ -41,7 +56,12 @@ jobs:
         run: pnpm --filter ./docs build
 
       - name: Install Playwright browser
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
         run: pnpm --filter ./docs exec playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.cache-playwright.outputs.cache-hit == 'true'
+        run: pnpm --filter ./docs exec playwright install-deps chromium
 
       - name: Run tests
         run: pnpm --filter ./docs test
