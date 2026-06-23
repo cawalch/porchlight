@@ -1,0 +1,84 @@
+---
+title: Popover menu
+description: A dropdown menu anchored to its trigger — native Popover API, CSS anchor positioning, @starting-style entry/exit animation.
+status: stable
+since: 0.1.0
+---
+
+# Popover menu
+
+The `.c-menu` is a dropdown menu anchored to its trigger. It uses the **native
+Popover API** (top-layer rendering, light-dismiss, focus management) + **CSS
+anchor positioning** (tethered to the trigger) + **`@starting-style`** for a
+native enter/exit animation. No JavaScript required.
+
+## Semantic HTML
+
+```html
+<div class="c-menu">
+  <button class="c-button c-menu__trigger" popovertarget="account-menu">
+    Account
+  </button>
+  <div class="c-menu__popover" id="account-menu" popover>
+    <a href="#">Settings</a>
+    <a href="#">Billing</a>
+    <hr class="c-menu__divider" />
+    <button type="button" data-tone="danger">Sign out</button>
+  </div>
+</div>
+```
+
+The trigger's `popovertarget="id"` opens the popover declaratively — no JS.
+The popover element MUST have the `popover` attribute.
+
+## Class contract
+
+| Selector                | Role                                                 |
+| ----------------------- | ---------------------------------------------------- |
+| `.c-menu`               | The wrapper (inline-block).                          |
+| `.c-menu__trigger`      | The opening button (gets `anchor-name`).             |
+| `.c-menu__popover`      | The `popover` element.                               |
+| `.c-menu__divider`      | A horizontal rule between item groups.               |
+| Items `<a>`, `<button>` | Direct children of `.c-menu__popover`.               |
+| `[data-tone="danger"]`  | Destructive item (danger-text / danger-bg on hover). |
+
+## Multiple menus
+
+Each menu needs a **unique anchor name**. Set `--c-menu-anchor` per instance:
+
+```html
+<div class="c-menu" style="--c-menu-anchor: --menu-a;">...</div>
+<div class="c-menu" style="--c-menu-anchor: --menu-b;">...</div>
+```
+
+The default `--pl-menu-anchor` works for a single menu on the page.
+
+## Tokens consumed
+
+`--pl-color-{surface,surface-2,border,text,danger-bg,danger-text}`,
+`--pl-focus-color`, `--pl-shadow-3`, `--pl-radius-{lg,sm}`,
+`--pl-space-{1,2,3}`, `--pl-duration-2`, `--pl-ease-standard`.
+
+## Anchor positioning
+
+Anchor positioning is `@supports`-gated. Chrome 149+ tethers the popover to
+the trigger's `block-end span-inline-end` corner via `position-area`. Browsers
+without anchor support fall back to the UA's default centering. `inset: auto`
+resets the UA centering so the anchor positioning takes over.
+
+## Enter / exit animation
+
+The popover animates with `@starting-style` (opacity + translateY) and
+`transition-behavior: allow-discrete` on `overlay`/`display` so the **exit**
+transition runs (normally `display: none` kills transitions instantly).
+
+## Accessibility
+
+- **Keyboard:** `Tab` to the trigger, `Enter`/`Space` to open. `Esc` closes
+  and returns focus to the trigger (native Popover API behavior). Light-dismiss
+  (click outside) also closes.
+- **Focus management:** the Popover API handles focus trap and restore
+  natively — no JS needed.
+- **Items:** each item is a real `<a>` or `<button>` (full-width,
+  keyboard-focusable, semantic role).
+- **Forced colors:** border falls back to `ButtonBorder`, focus to `Highlight`.

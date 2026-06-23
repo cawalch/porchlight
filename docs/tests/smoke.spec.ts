@@ -161,4 +161,22 @@ test.describe("docs scaffold", () => {
       ).toBeVisible();
     }
   });
+
+  test("popover menu opens and closes", async ({ page }) => {
+    await page.goto("./preview/popover-menu");
+    await expect(
+      page.getByRole("heading", { name: "Popover menu", exact: true }),
+    ).toBeVisible();
+    // The popover exists but is closed initially.
+    const popover = page.locator("#account-menu");
+    await expect(popover).toBeHidden();
+    // Click the trigger to open.
+    await page.locator("[popovertarget='account-menu']").click();
+    await expect(popover).toBeVisible();
+    // Items are real links/buttons.
+    await expect(page.locator("#account-menu a").first()).toBeVisible();
+    // Esc closes.
+    await page.keyboard.press("Escape");
+    await expect(popover).toBeHidden();
+  });
 });

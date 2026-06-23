@@ -1,0 +1,136 @@
+/*
+ * Porchlight — popover menu component
+ * ===========================================================================
+ * A dropdown menu anchored to its trigger — account menus, action menus,
+ * context menus. Uses the native Popover API (top-layer, light-dismiss,
+ * focus management) + CSS anchor positioning (tethered to the trigger) +
+ * @starting-style for a native enter/exit animation.
+ *
+ * The popover element MUST have the `popover` attribute in HTML:
+ *   <div popover class="c-menu__popover" id="...">...</div>
+ * The trigger uses `popovertarget="id"` to open it declaratively — no JS.
+ *
+ * Anchor positioning is @supports-gated: browsers without it fall back to the
+ * UA's default centering; Chrome 149+ positions the popover at the trigger's
+ * block-end / inline-end corner via position-area.
+ *
+ * Multiple menus on one page need unique anchor names — set --c-menu-anchor
+ * per instance (defaults to --pl-menu-anchor; works for a single menu).
+ */
+@layer porchlight.components {
+  @scope (.c-menu) {
+    :scope {
+      --c-menu-anchor: --pl-menu-anchor;
+
+      display: inline-block;
+    }
+
+    .c-menu__trigger {
+      anchor-name: var(--c-menu-anchor);
+    }
+
+    .c-menu__popover {
+      margin: 0;
+      padding: var(--pl-space-2);
+      min-inline-size: 12rem;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      box-shadow: var(--pl-shadow-3);
+
+      /* Entry/exit animation: opacity + translate. transition-behavior:
+         allow-discrete keeps the element visible during the EXIT transition
+         (display/overlay normally kill transitions instantly). */
+      opacity: 0;
+      transform: translateY(-4px);
+      transition:
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        transform var(--pl-duration-2) var(--pl-ease-standard),
+        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
+        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    /* Anchor positioning — tether the popover to the trigger. @supports-gated
+       so browsers without anchor support fall back gracefully. inset: auto
+       resets the UA's default centering for popovers. */
+    @supports (position-anchor: --x) {
+      .c-menu__popover {
+        inset: auto;
+        position: absolute;
+        position-anchor: var(--c-menu-anchor);
+        position-area: block-end span-inline-end;
+        margin-block-start: var(--pl-space-2);
+      }
+    }
+
+    /* Open state: visible + settled. */
+    .c-menu__popover:popover-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Enter: @starting-style sets the initial state BEFORE the open transition. */
+    @starting-style {
+      .c-menu__popover:popover-open {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+    }
+
+    .c-menu__divider {
+      margin-block: var(--pl-space-1);
+      border: 0;
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+  }
+
+  /* Menu items — OUTSIDE @scope (live-state pseudos :hover/:focus-visible on
+     descendants don't reliably apply inside @scope; same lesson as .c-field).
+     Each item is a full-width <a> or <button> for keyboard access. */
+  :where(.c-menu__popover) > :is(a, button) {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    inline-size: 100%;
+    min-block-size: 2.25rem;
+    padding-inline: var(--pl-space-3);
+    border: 0;
+    border-radius: var(--pl-radius-sm);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  :where(.c-menu__popover) > :is(a, button):is(:hover, :focus-visible) {
+    background: var(--pl-color-surface-2);
+  }
+
+  :where(.c-menu__popover) > :is(a, button):focus-visible {
+    outline: 2px solid var(--pl-focus-color);
+    outline-offset: -2px;
+  }
+
+  /* Destructive item — sign out, delete. */
+  :where(.c-menu__popover) > :is(a, button)[data-tone="danger"] {
+    color: var(--pl-color-danger-text);
+  }
+
+  :where(.c-menu__popover)
+    > :is(a, button)[data-tone="danger"]:is(:hover, :focus-visible) {
+    background: var(--pl-color-danger-bg);
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-menu__popover) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-menu__popover) > :is(a, button):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
