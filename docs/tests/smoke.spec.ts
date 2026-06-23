@@ -62,4 +62,14 @@ test.describe("docs scaffold", () => {
     await page.getByRole("button", { name: "touch" }).click();
     await expect(playground).toHaveAttribute("data-density", "touch");
   });
+
+  test("base page renders the fluid type scale", async ({ page }) => {
+    await page.goto("./preview/base");
+    await expect(
+      page.getByRole("heading", { name: "Base layer", exact: true }),
+    ).toBeVisible();
+    // The scale lists every text token.
+    await expect(page.getByText("--pl-text-xl", { exact: true })).toBeVisible();
+    await expect(page.getByText("--pl-text-xs", { exact: true })).toBeVisible();
+  });
 });
