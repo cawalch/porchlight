@@ -29,6 +29,7 @@ const PAGES = [
   "/preview/dialog",
   "/preview/data-table",
   "/preview/utilities",
+  "/preview/enhancements",
 ];
 
 // Normalize each path to the base-path-aware form Playwright expects.

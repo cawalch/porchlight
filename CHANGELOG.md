@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Enhancements** (Tier B, `@supports`-gated). All in
+  `@layer porchlight.enhancements`, each degrading cleanly where unsupported:
+  `interpolate-size: allow-keywords` on `:root` (enables auto-size
+  animation); a scroll-state `.c-sticky-shell` that gains a shadow + blurred
+  scrim when stuck (no JS scroll listener); `text-box: trim-both cap
+alphabetic` on buttons/badges (optical centering); CSS Gap Decorations on
+  `.l-grid[data-dividers="true"]` (purely visual dividers); and a typed
+  `attr()` `.c-swatch` that reads color from a `data-color` attribute.
 - **Utilities** (`.u-*`). A small, finite set of single-purpose helpers in
   `@layer porchlight.utilities`: `.u-visually-hidden` (the canonical sr-only
   pattern, one of the few `!important` allow-list spots, restored on

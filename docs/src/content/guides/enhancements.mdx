@@ -1,0 +1,69 @@
+---
+title: Enhancements
+description: Tier B modern CSS, all @supports-gated. The framework is fully usable without them; they layer on where the browser supports them.
+order: 3
+---
+
+# Enhancements
+
+The enhancements layer is **Tier B** modern CSS, all gated behind
+`@supports`. The framework is fully usable without any of these; they layer
+on where the browser supports them, with zero behavior change where it
+doesn't. Nothing here is in the critical path.
+
+Each block stands alone and degrades cleanly. Open the
+[`/preview/enhancements`](../../preview/enhancements) page in Chrome 149+ to
+see them; older browsers see the plain versions.
+
+## `interpolate-size: allow-keywords`
+
+Set on `:root` where supported. Allows height/width to animate to/from `auto`
+and content-keyword sizes. The foundation for native disclosure/collapsible
+animations and `@starting-style` on auto-sized elements.
+
+## Scroll-state sticky-shell shadow
+
+A sticky bar that gains an elevation shadow when it scrolls to the top of its
+container. The entire "app-bar shadow on scroll" pattern in pure CSS: no JS
+scroll listener, no IntersectionObserver.
+
+```html
+<div class="c-sticky-shell">
+  <header class="c-sticky-shell__bar">Sticky bar</header>
+  <!-- content -->
+</div>
+```
+
+Wrap any scroll region in `.c-sticky-shell` and put the sticky element in
+`.c-sticky-shell__bar`. The bar gets `box-shadow-2` + a translucent
+`backdrop-filter: blur` background when stuck.
+
+## `text-box` optical alignment
+
+Buttons, badges, and the dialog close button trim the cap-height half-leading
+(`text-box: trim-both cap alphabetic`) so single-line labels sit visually
+centered without the inline-box overshoot that makes controls look ~1px off.
+Subtle but real.
+
+## Grid dividers
+
+Vertical dividers between grid items, drawn purely in the gap (the gap stays).
+Opt in with `data-dividers="true"` on `.l-grid`:
+
+```html
+<div class="l-grid" data-dividers="true">
+  <div>Item</div>
+  <div>Item</div>
+</div>
+```
+
+Uses the CSS Gap Decorations `rule` / `rule-visibility-items` properties.
+
+## Typed `attr()` swatch
+
+A color chip that reads its color from a `data-color` attribute, type-checked
+as `<color>`. No inline `style=""` needed for static color chips:
+
+```html
+<span class="c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
+```
