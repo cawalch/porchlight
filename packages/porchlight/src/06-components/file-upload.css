@@ -67,7 +67,7 @@
     /* Focus ring (when the hidden input is focused). */
     :scope:has(input:focus-visible) .c-file-upload__zone {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
-      outline-offset: 2px;
+      outline-offset: var(--pl-focus-offset);
     }
 
     /* Disabled. */

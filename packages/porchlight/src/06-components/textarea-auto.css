@@ -29,17 +29,24 @@
       font-size: var(--pl-text-sm);
       line-height: var(--pl-leading-normal);
       resize: vertical;
-      transition: border-color var(--pl-duration-1) var(--pl-ease-standard);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
     :scope:focus-visible {
-      outline: var(--pl-focus-size) solid var(--pl-focus-color);
-      outline-offset: var(--pl-focus-offset);
-      border-color: var(--pl-color-accent);
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--pl-focus-color),
+        0 4px 12px -2px
+          color-mix(in oklab, var(--pl-focus-color), transparent 55%);
     }
 
     :scope:user-invalid {
-      border-color: var(--pl-color-danger);
+      box-shadow:
+        0 0 0 2px var(--pl-color-danger),
+        0 4px 12px -2px
+          color-mix(in oklab, var(--pl-color-danger), transparent 55%);
     }
 
     :scope:disabled {

@@ -31,8 +31,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      inline-size: 3rem;
-      block-size: 3rem;
+      inline-size: var(--c-empty-media-size, 3rem);
+      block-size: var(--c-empty-media-size, 3rem);
       color: var(--c-empty-tone);
       opacity: 0.6;
     }

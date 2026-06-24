@@ -31,12 +31,17 @@
       border-radius: var(--pl-radius-md);
       background: var(--pl-color-surface);
       cursor: text;
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
     :scope:focus-within {
-      border-color: var(--pl-color-accent);
-      outline: var(--pl-focus-size) solid var(--pl-focus-color);
-      outline-offset: var(--pl-focus-offset);
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--pl-focus-color),
+        0 4px 12px -2px
+          color-mix(in oklab, var(--pl-focus-color), transparent 55%);
     }
 
     .c-tag-input__field {
