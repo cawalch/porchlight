@@ -82,7 +82,8 @@
     }
 
     /* Hover on non-checked. */
-    .c-segmented__item:not(:has(input:checked)) span:hover {
+    .c-segmented__item:not(:has(input:checked), :has(input:disabled))
+      span:hover {
       color: var(--pl-color-text);
     }
 

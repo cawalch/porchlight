@@ -20,7 +20,7 @@ inside one top-level cascade layer: **`porchlight`**.
 
 Inside `porchlight`, nine sub-layers declare a deterministic order. Later
 layers win over earlier ones, so a component always beats base, a utility
-always beats a component  -  and nothing needs `!important`.
+always beats a component - and nothing needs `!important`.
 
 | Layer          | Purpose                                              |
 | -------------- | ---------------------------------------------------- |
@@ -49,7 +49,7 @@ Place the framework in the cascade **before** you import it:
 ```
 
 Unlayered styles always beat layered styles, so unlayered app CSS wins too.
-Either way, you never fight `!important`  -  Porchlight reserves `!important`
+Either way, you never fight `!important` - Porchlight reserves `!important`
 for accessibility-critical utilities only (visually-hidden, `[hidden]`).
 
 > Do **not** pass `layer(...)` to the `@import`. Each Porchlight module

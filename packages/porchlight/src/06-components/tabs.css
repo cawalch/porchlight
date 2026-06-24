@@ -39,6 +39,12 @@
       margin: 0;
       list-style: none;
       border-block-end: 1px solid var(--pl-color-border);
+      overflow-x: auto;
+      scrollbar-width: none; /* Hide scrollbar in Firefox */
+
+      &::-webkit-scrollbar {
+        display: none; /* Hide scrollbar in Chrome/Safari */
+      }
     }
 
     .c-tabs__tab {
@@ -47,6 +53,7 @@
       appearance: none;
       display: inline-flex;
       align-items: center;
+      flex-shrink: 0;
       gap: var(--pl-space-2);
       padding: var(--pl-space-2) var(--c-tabs-tab-padding);
       border: 0;

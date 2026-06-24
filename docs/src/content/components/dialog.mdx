@@ -81,7 +81,7 @@ with `el.close()` or pressing `Esc` (native behavior).
 
 ## Responsive sizing
 
-`inline-size: min(100% - 2rem, var(--c-dialog-size))`  -  the dialog never
+`inline-size: min(100% - 2rem, var(--c-dialog-size))` - the dialog never
 overflows its viewport (the `100% - 2rem` gives 1rem gutters on each side).
 `max-block-size: min(100dvb - 2rem, 80dvb)` + `overflow: auto` keeps tall
 dialogs scrollable.
@@ -94,9 +94,9 @@ transition runs (normally `display: none` kills transitions instantly).
 
 ## Accessibility
 
-- **Modal focus trap:** native  -  `showModal()` traps focus inside the dialog
+- **Modal focus trap:** native - `showModal()` traps focus inside the dialog
   until it closes.
-- **Esc to close:** native  -  pressing `Esc` calls `close()` and returns focus
+- **Esc to close:** native - pressing `Esc` calls `close()` and returns focus
   to the trigger.
 - **Close button:** provide a visible ✕ button; also close on footer actions.
 - **Semantics:** the `<dialog>` element has an implicit `role="dialog"` and

@@ -22,12 +22,16 @@ via `[data-shape]`: `text` (default), `circle` (avatar), and `rect` (block).
 </div>
 
 <!-- Avatar + rect -->
-<div class="c-skeleton" data-shape="circle" style="--c-skeleton-w: 2.5rem;"></div>
+<div
+  class="c-skeleton"
+  data-shape="circle"
+  style="--c-skeleton-w: 2.5rem;"
+></div>
 <div class="c-skeleton" data-shape="rect" style="--c-skeleton-w: 6rem;"></div>
 ```
 
 ## Reduced motion
 
 Under `prefers-reduced-motion`, the themes layer's universal 1ms clamp stops
-the pulse. The skeleton remains as a static grey block  -  still legible as a
+the pulse. The skeleton remains as a static grey block - still legible as a
 placeholder.

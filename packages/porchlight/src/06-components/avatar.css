@@ -54,13 +54,25 @@
 
   /* Avatar group  -  overlapping stack. */
   :where(.c-avatar-group) {
+    --c-avatar-group-size: 2.5rem;
+
     display: inline-flex;
     align-items: center;
   }
 
+  :where(.c-avatar-group[data-size="sm"]) {
+    --c-avatar-group-size: 1.5rem;
+  }
+
+  :where(.c-avatar-group[data-size="lg"]) {
+    --c-avatar-group-size: 3rem;
+  }
+
   :where(.c-avatar-group) .c-avatar {
+    --c-avatar-size: var(--c-avatar-group-size);
+
     border: 2px solid var(--pl-color-surface);
-    margin-inline-start: calc(var(--c-avatar-size, 2.5rem) * -0.35);
+    margin-inline-start: calc(var(--c-avatar-group-size) * -0.35);
   }
 
   :where(.c-avatar-group) .c-avatar:first-child {
@@ -72,15 +84,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2.5rem;
-    block-size: 2.5rem;
+    inline-size: var(--c-avatar-group-size, 2.5rem);
+    block-size: var(--c-avatar-group-size, 2.5rem);
     border-radius: var(--pl-radius-pill);
     border: 2px solid var(--pl-color-surface);
     background: var(--pl-color-surface-2);
     color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
+    font-size: calc(var(--c-avatar-group-size, 2.5rem) * 0.4);
     font-weight: 600;
-    margin-inline-start: calc(2.5rem * -0.35);
+    margin-inline-start: calc(var(--c-avatar-group-size, 2.5rem) * -0.35);
   }
 
   @media (forced-colors: active) {

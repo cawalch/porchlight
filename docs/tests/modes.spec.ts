@@ -26,7 +26,9 @@ import { test, expect } from "@playwright/test";
 // Guard against the silent 404 problem: confirm the real page rendered before
 // asserting anything about its layout or tokens.
 async function reach(page: import("@playwright/test").Page, heading: string) {
-  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: heading, exact: true }),
+  ).toBeVisible();
 }
 
 // ---------------------------------------------------------------------------

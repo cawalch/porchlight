@@ -29,7 +29,7 @@
       --c-drawer-gap: var(--pl-space-3);
 
       /* Position: stretch from the side edge. */
-      inset-inline-end: 0;
+      inset-inline: auto 0;
       inset-block: 0;
       margin: 0;
       padding: 0;

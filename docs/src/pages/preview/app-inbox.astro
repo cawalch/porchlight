@@ -41,7 +41,7 @@ const messages = [
     </nav>
 
     <!-- Master-detail via .l-sidebar (collapses inside narrow containers) -->
-    <div class="l-sidebar" style="--l-sidebar-size: 20rem; --l-sidebar-gap: 0;">
+    <div class="l-sidebar" style="--l-sidebar-size: 20rem; --l-sidebar-gap: var(--pl-space-4);">
       <!-- Message list -->
       <div class="msg-list">
         <div class="msg-list__toolbar">
@@ -120,9 +120,21 @@ const messages = [
 
   <style>
     .inbox-shell {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 14rem minmax(0, 1fr);
       gap: var(--pl-space-4);
+      align-items: start;
+    }
+    @media (width < 60rem) {
+      .inbox-shell {
+        grid-template-columns: 1fr;
+      }
+      .inbox-shell .c-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-block-end: 1px solid var(--pl-color-border);
+        padding-block-end: var(--pl-space-4);
+      }
     }
     .msg-list {
       display: flex;
@@ -211,11 +223,10 @@ const messages = [
       margin-block-end: var(--pl-space-3);
       line-height: 1.6;
     }
-    /* Break out of main constraint */
+    /* Break out of main constraint to a wider layout */
     :global(main:has(.inbox-shell)) {
-      inline-size: 100%;
-      max-inline-size: none;
-      margin-inline: 0;
+      inline-size: min(100% - 2 * var(--doc-pad), 80rem);
+      margin-inline: auto;
     }
   </style>
 </BaseLayout>

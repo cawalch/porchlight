@@ -22,21 +22,42 @@ that switch between `[role="tabpanel"]`s. The active state is APP state: set
 ```html
 <div class="c-tabs">
   <div class="c-tabs__list" role="tablist" aria-label="Sections">
-    <button class="c-tabs__tab" role="tab" aria-selected="true"
-      id="tab-overview" aria-controls="panel-overview" tabindex="0">
+    <button
+      class="c-tabs__tab"
+      role="tab"
+      aria-selected="true"
+      id="tab-overview"
+      aria-controls="panel-overview"
+      tabindex="0"
+    >
       Overview
     </button>
-    <button class="c-tabs__tab" role="tab" aria-selected="false"
-      id="tab-settings" aria-controls="panel-settings" tabindex="-1">
+    <button
+      class="c-tabs__tab"
+      role="tab"
+      aria-selected="false"
+      id="tab-settings"
+      aria-controls="panel-settings"
+      tabindex="-1"
+    >
       Settings
     </button>
   </div>
-  <div class="c-tabs__panel" role="tabpanel" id="panel-overview"
-    aria-labelledby="tab-overview">
+  <div
+    class="c-tabs__panel"
+    role="tabpanel"
+    id="panel-overview"
+    aria-labelledby="tab-overview"
+  >
     <p>Active panel.</p>
   </div>
-  <div class="c-tabs__panel" role="tabpanel" id="panel-settings"
-    aria-labelledby="tab-settings" hidden>
+  <div
+    class="c-tabs__panel"
+    role="tabpanel"
+    id="panel-settings"
+    aria-labelledby="tab-settings"
+    hidden
+  >
     <p>Hidden panel.</p>
   </div>
 </div>
@@ -44,13 +65,13 @@ that switch between `[role="tabpanel"]`s. The active state is APP state: set
 
 ## Class contract
 
-| Selector          | Role                                                        |
-| ----------------- | ----------------------------------------------------------- |
-| `.c-tabs`         | Wrapper  -  provides grid + gap.                             |
-| `.c-tabs__list`   | The `[role="tablist"]` container.                          |
-| `.c-tabs__tab`    | A tab button (`[role="tab"]`).                             |
-| `.c-tabs__count`  | Optional count chip inside a tab.                          |
-| `.c-tabs__panel`  | A panel (`[role="tabpanel"]`). Inactive ones carry `[hidden]`. |
+| Selector         | Role                                                           |
+| ---------------- | -------------------------------------------------------------- |
+| `.c-tabs`        | Wrapper - provides grid + gap.                                 |
+| `.c-tabs__list`  | The `[role="tablist"]` container.                              |
+| `.c-tabs__tab`   | A tab button (`[role="tab"]`).                                 |
+| `.c-tabs__count` | Optional count chip inside a tab.                              |
+| `.c-tabs__panel` | A panel (`[role="tabpanel"]`). Inactive ones carry `[hidden]`. |
 
 ## Tokens consumed
 

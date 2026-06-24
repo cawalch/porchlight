@@ -34,7 +34,7 @@
       --c-command-inline: min(36rem, calc(100vi - 2 * var(--pl-space-4)));
       --c-command-max-block: 28rem;
 
-      margin: 0;
+      margin: auto;
       padding: 0;
       inline-size: var(--c-command-inline);
       max-block-size: var(--c-command-max-block);

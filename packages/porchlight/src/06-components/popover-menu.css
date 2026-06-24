@@ -60,6 +60,7 @@
         position: absolute;
         position-anchor: var(--c-menu-anchor);
         position-area: block-end span-inline-end;
+        position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-2);
       }
     }
