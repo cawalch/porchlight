@@ -406,10 +406,6 @@ const eventFeed = [
     .siem-timeline {
       max-block-size: 26rem;
       overflow-y: auto;
-      /* The dot ring (border + box-shadow) extends ~4px beyond its grid cell.
-         overflow-y:auto forces overflow-x to compute as auto (per spec),
-         which would clip the ring. This padding gives it room. */
-      padding-inline: 4px;
     }
     .siem-timeline .c-timeline__item { padding-block-end: var(--pl-space-3); }
     .siem-event-time { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); }
