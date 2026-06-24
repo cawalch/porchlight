@@ -1,5 +1,5 @@
 /*
- * Porchlight — stepper component
+ * Porchlight  -  stepper component
  * ===========================================================================
  * A horizontal (default) or vertical (container-query collapse) multi-step
  * indicator. Each step has a visual marker (circle with number or check) and
@@ -59,7 +59,7 @@
         inset-inline: calc(50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2) calc(-50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2);
         block-size: 2px;
         background: var(--pl-color-border);
-        z-index: 0;
+        z-index: var(--pl-z-base);
       }
 
       /* No connector after the last step. */
@@ -85,7 +85,7 @@
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
       font-weight: 600;
-      z-index: 1;
+      z-index: var(--pl-z-raised);
       transition: all var(--pl-duration-2) var(--pl-ease-standard);
     }
 

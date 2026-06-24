@@ -1,20 +1,20 @@
 /*
- * Porchlight — popover menu component
+ * Porchlight  -  popover menu component
  * ===========================================================================
- * A dropdown menu anchored to its trigger — account menus, action menus,
+ * A dropdown menu anchored to its trigger  -  account menus, action menus,
  * context menus. Uses the native Popover API (top-layer, light-dismiss,
  * focus management) + CSS anchor positioning (tethered to the trigger) +
  * @starting-style for a native enter/exit animation.
  *
  * The popover element MUST have the `popover` attribute in HTML:
  *   <div popover class="c-menu__popover" id="...">...</div>
- * The trigger uses `popovertarget="id"` to open it declaratively — no JS.
+ * The trigger uses `popovertarget="id"` to open it declaratively  -  no JS.
  *
  * Anchor positioning is @supports-gated: browsers without it fall back to the
  * UA's default centering; Chrome 149+ positions the popover at the trigger's
  * block-end / inline-end corner via position-area.
  *
- * Multiple menus on one page need unique anchor names — set --c-menu-anchor
+ * Multiple menus on one page need unique anchor names  -  set --c-menu-anchor
  * per instance (defaults to --pl-menu-anchor; works for a single menu).
  */
 @layer porchlight.components {
@@ -51,7 +51,7 @@
         display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
     }
 
-    /* Anchor positioning — tether the popover to the trigger. @supports-gated
+    /* Anchor positioning  -  tether the popover to the trigger. @supports-gated
        so browsers without anchor support fall back gracefully. inset: auto
        resets the UA's default centering for popovers. */
     @supports (position-anchor: --x) {
@@ -85,7 +85,7 @@
     }
   }
 
-  /* Menu items — OUTSIDE @scope (live-state pseudos :hover/:focus-visible on
+  /* Menu items  -  OUTSIDE @scope (live-state pseudos :hover/:focus-visible on
      descendants don't reliably apply inside @scope; same lesson as .c-field).
      Each item is a full-width <a> or <button> for keyboard access. */
   :where(.c-menu__popover) > :is(a, button) {
@@ -114,7 +114,7 @@
     outline-offset: -2px;
   }
 
-  /* Destructive item — sign out, delete. */
+  /* Destructive item  -  sign out, delete. */
   :where(.c-menu__popover) > :is(a, button)[data-tone="danger"] {
     color: var(--pl-color-danger-text);
   }

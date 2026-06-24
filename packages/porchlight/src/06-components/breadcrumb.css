@@ -1,5 +1,5 @@
 /*
- * Porchlight — breadcrumb component
+ * Porchlight  -  breadcrumb component
  * ===========================================================================
  * A trail of navigation links showing the user's location in the site/app
  * hierarchy. The last item has aria-current="page" and is not a link.
@@ -93,6 +93,16 @@
     /* Hide the fallback ::after separator where gap decorations work. */
     :where(.c-breadcrumb__item:not(:last-child))::after {
       content: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-breadcrumb__link) {
+      color: LinkText;
+    }
+
+    :where(.c-breadcrumb__current) {
+      color: CanvasText;
     }
   }
 }

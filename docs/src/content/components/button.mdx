@@ -1,6 +1,6 @@
 ---
 title: Button
-description: The canonical action control — native button, token-driven, with primary/secondary/ghost variants.
+description: The canonical action control  -  native button, token-driven, with primary/secondary/ghost variants.
 status: stable
 since: 0.1.0
 ---
@@ -19,9 +19,9 @@ component.
 
 ## When to use what
 
-- **Primary** — one per view; the main forward action ("Save", "Create").
-- **Secondary** — co-equal or alternative actions ("Cancel", "Export").
-- **Ghost** — low-emphasis actions in dense toolbars, or on colored surfaces.
+- **Primary**  -  one per view; the main forward action ("Save", "Create").
+- **Secondary**  -  co-equal or alternative actions ("Cancel", "Export").
+- **Ghost**  -  low-emphasis actions in dense toolbars, or on colored surfaces.
 
 ## Semantic HTML
 
@@ -59,7 +59,7 @@ component.
 
 | State         | How                                   | Behavior                                   |
 | ------------- | ------------------------------------- | ------------------------------------------ |
-| default       | —                                     | variant fill                               |
+| default       |  -                                      | variant fill                               |
 | hover         | `:hover`, `[data-hover]`              | `color-mix()` shade (theme-aware), pointer |
 | active        | `:active`                             | `translateY(1px)` dip                      |
 | pressed       | `[aria-pressed="true"]`               | dip + (ghost/secondary) faint accent tint  |
@@ -75,14 +75,14 @@ component.
   you want to announce "disabled" but still show a tooltip).
 - **Icon-only:** provide an `aria-label`.
 - **Contrast:** primary uses `--pl-color-accent` + `--pl-color-accent-text`
-  (AA in both themes — see the contrast test).
+  (AA in both themes  -  see the contrast test).
 
 ## Theme, density, RTL, motion
 
 - **Light/dark:** tokens resolve via `light-dark()`. Hover shade is
   theme-aware by construction (`color-mix` with `--pl-color-text`).
 - **Density:** sizing comes from `--pl-control-block-size`; set
-  `[data-density]` on an ancestor — no per-component work.
+  `[data-density]` on an ancestor  -  no per-component work.
 - **RTL:** no physical properties; icon + label order follows the writing mode.
 - **Reduced motion:** the transform/box-shadow transitions are zeroed by the
   themes layer's motion guard (`--pl-motion-scale: 0`).

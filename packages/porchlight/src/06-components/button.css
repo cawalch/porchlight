@@ -1,5 +1,5 @@
 /*
- * Porchlight — button component
+ * Porchlight  -  button component
  * ===========================================================================
  * The canonical action control. Native <button> (or <a> when it is genuinely
  * navigation). Token-driven via component-local --c-button-* aliases that
@@ -56,7 +56,7 @@
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    /* Primary — the accent fill. Carries accent-text for WCAG-AA contrast. */
+    /* Primary  -  the accent fill. Carries accent-text for WCAG-AA contrast. */
     :scope[data-variant="primary"] {
       --c-button-bg: var(--pl-color-accent);
       --c-button-fg: var(--pl-color-accent-text);
@@ -64,19 +64,19 @@
       --c-button-highlight: oklch(100% 0 0deg / 12%);
     }
 
-    /* Secondary — a raised surface (surface-2) with a border. */
+    /* Secondary  -  a raised surface (surface-2) with a border. */
     :scope[data-variant="secondary"] {
       --c-button-bg: var(--pl-color-surface-2);
     }
 
-    /* Ghost — transparent; for low-emphasis actions in dense toolbars. */
+    /* Ghost  -  transparent; for low-emphasis actions in dense toolbars. */
     :scope[data-variant="ghost"] {
       --c-button-bg: transparent;
       --c-button-border: transparent;
     }
 
     /* Hover: mix a little of the text color into the current fill. Done via
-       the background-color LONGHAND, NOT by reassigning --c-button-bg —
+       the background-color LONGHAND, NOT by reassigning --c-button-bg  - 
        reassigning a custom property in terms of itself is a cycle, which CSS
        resolves to guaranteed-invalid and collapses the fill to transparent.
        Theme-aware by construction (darkens in light, lightens in dark). */
@@ -89,7 +89,7 @@
       cursor: pointer;
     }
 
-    /* Ghost has no fill to mix into (transparent) — mixing text into
+    /* Ghost has no fill to mix into (transparent)  -  mixing text into
        transparent yields a ~7%-alpha veil that reads as "barely there".
        Give it a real, visible accent wash instead. */
     :scope[data-variant="ghost"]:is(:hover, [data-hover]) {
@@ -106,7 +106,7 @@
     }
 
     /* A pressed ghost/secondary also gets an accent tint so the selected/
-       pressed state reads clearly (a ~12%-alpha veil is too faint — see the
+       pressed state reads clearly (a ~12%-alpha veil is too faint  -  see the
        affordance test). */
     :scope:is(
         [data-variant="ghost"],

@@ -1,5 +1,5 @@
 /*
- * Porchlight — progress bar component
+ * Porchlight  -  progress bar component
  * ===========================================================================
  * A linear progress indicator for task completion, uploads, or capacity.
  * Determinate ([data-value="65"]) shows a fill proportional to the value;
@@ -46,7 +46,7 @@
       --c-progress-tone: var(--pl-color-danger);
     }
 
-    /* Indeterminate — an animated sweep that loops. */
+    /* Indeterminate  -  an animated sweep that loops. */
     :scope[data-indeterminate] .c-progress__bar {
       position: absolute;
       inset-block: 0;

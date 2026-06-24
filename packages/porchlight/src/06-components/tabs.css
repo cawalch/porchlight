@@ -1,5 +1,5 @@
 /*
- * Porchlight — tabs component
+ * Porchlight  -  tabs component
  * ===========================================================================
  * A tabbed region: a [role="tablist"] of [role="tab"] controls that switch
  * between [role="tabpanel"]s. The canonical master-detail / settings /
@@ -81,7 +81,7 @@
       cursor: not-allowed;
     }
 
-    /* A trailing count (unread, total) inside a tab — a muted chip. */
+    /* A trailing count (unread, total) inside a tab  -  a muted chip. */
     .c-tabs__tab .c-tabs__count {
       padding-inline: var(--pl-space-2);
       border-radius: var(--pl-radius-pill);
@@ -111,7 +111,7 @@
     color: var(--pl-color-text);
   }
 
-  /* Hover should NOT fake the accent indicator on an unselected tab — only the
+  /* Hover should NOT fake the accent indicator on an unselected tab  -  only the
      selected tab carries the line. Restore muted text on hover so colour still
      flips for affordance without implying selection. */
   :where(.c-tabs__list) .c-tabs__tab:hover {

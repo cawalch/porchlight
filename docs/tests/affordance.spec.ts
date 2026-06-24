@@ -250,3 +250,56 @@ test("data table sort arrows differ between asc and desc", async ({ page }) => {
   expect(borders!.descBorderTop).not.toBe("0px");
   expect(borders!.descBorderBottom).toBe("0px");
 });
+
+/* ------------------------------------------------------------------
+ * Nav: active item must be visually distinct from inactive.
+ * ------------------------------------------------------------------ */
+test("nav active item is visually distinct from inactive", async ({ page }) => {
+  await page.goto("./preview/nav");
+
+  const states = await page.evaluate(() => {
+    const items = document.querySelectorAll(".c-nav__item");
+    const active = items[0] as HTMLElement;
+    const inactive = items[1] as HTMLElement;
+    if (!active || !inactive) return null;
+    return {
+      activeBg: getComputedStyle(active).backgroundColor,
+      inactiveBg: getComputedStyle(inactive).backgroundColor,
+      activeColor: getComputedStyle(active).color,
+      inactiveColor: getComputedStyle(inactive).color,
+    };
+  });
+
+  console.log("[nav]", states);
+
+  expect(states).not.toBeNull();
+  expect(states!.activeBg).not.toBe(states!.inactiveBg);
+});
+
+/* ------------------------------------------------------------------
+ * Segmented: checked segment must differ from unchecked.
+ * ------------------------------------------------------------------ */
+test("segmented checked is visually distinct from unchecked", async ({
+  page,
+}) => {
+  await page.goto("./preview/segmented");
+
+  const states = await page.evaluate(() => {
+    const checked = document.querySelector(
+      ".c-segmented__item:has(input:checked) span",
+    ) as HTMLElement;
+    const unchecked = document.querySelector(
+      ".c-segmented__item:not(:has(input:checked)) span",
+    ) as HTMLElement;
+    if (!checked || !unchecked) return null;
+    return {
+      checkedBg: getComputedStyle(checked).backgroundColor,
+      uncheckedBg: getComputedStyle(unchecked).backgroundColor,
+    };
+  });
+
+  console.log("[segmented]", states);
+
+  expect(states).not.toBeNull();
+  expect(states!.checkedBg).not.toBe(states!.uncheckedBg);
+});

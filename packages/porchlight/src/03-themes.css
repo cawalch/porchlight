@@ -1,8 +1,8 @@
 /*
- * Porchlight — themes
+ * Porchlight  -  themes
  * ===========================================================================
  * Theme, density, and accessibility-media overrides. These do NOT redefine the
- * palette — they steer it:
+ * palette  -  they steer it:
  *
  *   - [data-theme]      sets color-scheme, which drives light-dark() in tokens.
  *   - [data-density]    resizes controls via the control tokens.
@@ -25,7 +25,7 @@
     color-scheme: dark;
   }
 
-  /* Density — control geometry only; spacing/type/radius are unchanged. */
+  /* Density  -  control geometry only; spacing/type/radius are unchanged. */
   :where([data-density="compact"]) {
     --pl-control-block-size: 2rem;
     --pl-control-padding-inline: var(--pl-space-3);

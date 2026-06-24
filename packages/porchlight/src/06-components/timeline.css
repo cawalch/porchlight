@@ -1,5 +1,5 @@
 /*
- * Porchlight — timeline component
+ * Porchlight  -  timeline component
  * ===========================================================================
  * A vertical activity feed with markers, connector lines, and per-item
  * content. Each item has a dot/marker on a vertical line, with the content
@@ -62,7 +62,7 @@
       border: 2px solid var(--pl-color-surface);
       box-shadow: 0 0 0 2px var(--pl-color-accent);
       margin-block-start: 0.1875rem;
-      z-index: 1;
+      z-index: var(--pl-z-raised);
     }
 
     /* Tone variants on the dot. */

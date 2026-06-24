@@ -1,8 +1,8 @@
 /*
- * Porchlight — segmented control component
+ * Porchlight  -  segmented control component
  * ===========================================================================
  * A compact inline switcher for binary/ternary toggles (list/grid/table view,
- * day/week/month). Built on native radio inputs — CSS-only, keyboard
+ * day/week/month). Built on native radio inputs  -  CSS-only, keyboard
  * accessible, no JavaScript.
  *
  * The active segment gets an accent background driven by :has(:checked).

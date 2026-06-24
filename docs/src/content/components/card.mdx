@@ -1,16 +1,16 @@
 ---
 title: Card
-description: A raised surface grouping related content — header, body, and optional footer, with a container-query header and an interactive variant.
+description: A raised surface grouping related content  -  header, body, and optional footer, with a container-query header and an interactive variant.
 status: stable
 since: 0.1.0
 ---
 
 # Card
 
-The `.c-card` is a raised surface for grouping related content — the workhorse
+The `.c-card` is a raised surface for grouping related content  -  the workhorse
 of SaaS dashboards (KPI tiles, list items, settings sections, detail panels).
 
-Elevation comes from a soft shadow, not a heavy bg contrast — `surface` is
+Elevation comes from a soft shadow, not a heavy bg contrast  -  `surface` is
 intentionally close to `bg`; the border + shadow define the card.
 
 ## Semantic HTML
@@ -28,7 +28,7 @@ intentionally close to `bg`; the border + shadow define the card.
 ## Interactive (clickable) cards
 
 Add `data-interactive` or use an `<a class="c-card">` for a hover lift +
-focus ring — for navigation tiles and selectable list items.
+focus ring  -  for navigation tiles and selectable list items.
 
 ```html
 <a class="c-card" href="/accounts/acme">
@@ -70,7 +70,7 @@ focus ring — for navigation tiles and selectable list items.
 ## Container query
 
 The card establishes `container: c-card / inline-size`. The header collapses
-from a row to a column when the **card** is narrower than 28rem — not the
+from a row to a column when the **card** is narrower than 28rem  -  not the
 viewport. A card in a narrow split pane stacks even on a wide screen.
 
 ## Accessibility
@@ -79,5 +79,5 @@ viewport. A card in a narrow split pane stacks even on a wide screen.
   content). The title should be a heading (`<h2>`–`<h6>` at the right level).
 - **Interactive cards:** when the card is an `<a>`, it's natively focusable
   and keyboard-activatable. When it's a `<div data-interactive>`, you must add
-  `tabindex="0"` and a `role`/keyboard handler — prefer the `<a>` form.
+  `tabindex="0"` and a `role`/keyboard handler  -  prefer the `<a>` form.
 - **Focus:** interactive cards draw a crisp focus ring + elevated shadow.

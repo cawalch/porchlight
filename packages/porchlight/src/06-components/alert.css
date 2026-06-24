@@ -1,7 +1,7 @@
 /*
- * Porchlight — alert component
+ * Porchlight  -  alert component
  * ===========================================================================
- * An inline notification — contextual feedback within the page flow (not an
+ * An inline notification  -  contextual feedback within the page flow (not an
  * overlay like toast). Four tones via [data-tone]: info (default), success,
  * warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.
  *

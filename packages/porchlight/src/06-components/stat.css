@@ -1,7 +1,7 @@
 /*
- * Porchlight — stat component
+ * Porchlight  -  stat component
  * ===========================================================================
- * A KPI / metric tile — the workhorse of SaaS dashboards. Displays a single
+ * A KPI / metric tile  -  the workhorse of SaaS dashboards. Displays a single
  * number with a label, an optional unit, a trend indicator (up/down/flat), and
  * an optional sparkline slot. Designed to sit inside .l-grid (auto-fitting
  * dashboard widgets) or inside .c-card bodies.
@@ -11,7 +11,7 @@
  * don't jitter when they update. The trend uses semantic colors + an arrow
  * glyph, not just color (colorblind-safe).
  *
- * This is a display component — no interactive states. It composes with .c-card
+ * This is a display component  -  no interactive states. It composes with .c-card
  * when you need elevation: place .c-stat inside a .c-card for a raised tile.
  */
 @layer porchlight.components {
@@ -59,7 +59,7 @@
       color: var(--pl-color-text-muted);
     }
 
-    /* Trend directions — semantic colors. The arrow glyph is always present
+    /* Trend directions  -  semantic colors. The arrow glyph is always present
        so color is not the sole signal (colorblind-safe). */
     .c-stat__trend[data-direction="up"] {
       color: var(--pl-color-success-text);
@@ -89,7 +89,7 @@
       transform: rotate(-90deg);
     }
 
-    /* Optional sparkline slot — an inline SVG or canvas. */
+    /* Optional sparkline slot  -  an inline SVG or canvas. */
     .c-stat__spark {
       margin-block-start: var(--pl-space-1);
     }
