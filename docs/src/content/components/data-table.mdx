@@ -1,6 +1,6 @@
 ---
 title: Data table
-description: An enterprise data table — sticky headers, horizontal scroll with stable gutter, container-query padding, row hover, numeric alignment.
+description: Enterprise data table with sortable headers, row selection, expandable rows, sticky column, density modes, and loading states.
 status: stable
 since: 0.1.0
 ---
@@ -9,9 +9,12 @@ since: 0.1.0
 
 The `.c-table-wrap` + `.c-table` pair is an enterprise data table: sticky
 headers, horizontal scroll with a stable scrollbar gutter, container-query
-padding, row hover, and numeric column alignment.
+padding, sortable columns, row selection, expandable detail rows, sticky
+first column, density modes, and loading states.
 
 ## Semantic HTML
+
+### Basic table
 
 ```html
 <div class="c-table-wrap">
@@ -32,57 +35,112 @@ padding, row hover, and numeric column alignment.
 </div>
 ```
 
+### Sortable headers
+
+```html
+<th data-sort="asc">Name <span class="c-table__sort-icon"></span></th>
+<th data-sort="desc">Created <span class="c-table__sort-icon"></span></th>
+<th>Tags</th>  <!-- no data-sort = unsortable -->
+```
+
+Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
+
+### Row selection (checkbox column)
+
+```html
+<thead>
+  <tr>
+    <th class="c-table__check"><input type="checkbox" aria-label="Select all" /></th>
+    <th>Account</th>
+  </tr>
+</thead>
+<tbody>
+  <tr aria-selected="true">
+    <td class="c-table__check"><input type="checkbox" checked aria-label="Select row" /></td>
+    <td>Acme Ops</td>
+  </tr>
+</tbody>
+```
+
+### Expandable detail rows
+
+```html
+<tr>
+  <td>...</td>
+  <td>
+    <button class="c-table__expand" aria-expanded="false">
+      <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+  </td>
+</tr>
+<tr class="c-table__detail" open>
+  <td colspan="99">
+    <div class="c-table__detail-inner">
+      <div class="c-table__detail-content">Detail content</div>
+    </div>
+  </td>
+</tr>
+```
+
+Toggle the `open` attribute on `.c-table__detail` and `aria-expanded` on the
+button via JS. CSS handles the animated expand/collapse.
+
+### Sticky first column
+
+```html
+<th class="c-table__sticky-col">Account</th>
+...
+<td class="c-table__sticky-col">Acme Corp</td>
+```
+
+### Density modes
+
+```html
+<div class="c-table-wrap" data-density="compact">
+  <!-- tighter row padding for high information density -->
+</div>
+```
+
+### Loading state
+
+```html
+<tbody data-loading>
+  <tr>
+    <td><span class="c-skeleton" data-shape="text"></span></td>
+    <td><span class="c-skeleton" data-shape="text"></span></td>
+  </tr>
+</tbody>
+```
+
+`[data-loading]` on `<tbody>` suppresses hover effects.
+
 ## Class contract
 
 | Selector                         | Role                                              |
 | -------------------------------- | ------------------------------------------------- |
-| `.c-table-wrap`                  | The scroll + query container (bordered, rounded). |
+| `.c-table-wrap`                  | Scroll + query container (bordered, rounded).    |
 | `.c-table`                       | The native `<table>`.                             |
 | `th`, `td`                       | Cells (styled via descendant selectors).          |
 | `[data-align="end"]`             | Right-align + `tabular-nums` for numeric columns. |
 | `[data-align="center"]`          | Center-align.                                     |
 | `tbody tr:hover`                 | Row hover wash (scanning aid).                    |
 | `tbody tr[aria-selected="true"]` | Selected row (accent wash).                       |
-
-## Tokens consumed
-
-`--pl-color-{surface,surface-2,text,text-muted,border,accent}`,
-`--pl-radius-lg`, `--pl-z-raised`, `--pl-text-sm`,
-`--pl-space-{3,4}`, `--pl-duration-1`, `--pl-ease-standard`.
+| `th[data-sort]`                  | Sortable header (cursor + hover).                |
+| `th[data-sort="asc"\|"desc"]`    | Shows up/down arrow via `.c-table__sort-icon`.   |
+| `.c-table__sort-icon`            | Pure-CSS triangle arrow inside sortable `<th>`.   |
+| `.c-table__check`                | Narrow centered cell for checkboxes.             |
+| `.c-table__detail`               | Expandable detail row (collapsed by default).    |
+| `.c-table__detail[open]`         | Expanded detail row.                              |
+| `.c-table__detail-inner`         | Animated wrapper (grid-rows technique).          |
+| `.c-table__detail-content`       | Inner content (padding + overflow).              |
+| `.c-table__expand`               | Expand/collapse toggle button (chevron).         |
+| `.c-table__sticky-col`           | Sticky first column (pinned during scroll).      |
+| `[data-density="compact"]`       | Tighter row padding on `.c-table-wrap`.          |
+| `tbody[data-loading]`            | Suppresses hover during loading state.           |
 
 ## Tokens exposed
 
-| Token           | Default | Purpose                                     |
-| --------------- | ------- | ------------------------------------------- |
-| `--c-table-min` | `48rem` | Min table width (drives horizontal scroll). |
-
-## Sticky headers
-
-`th { position: sticky; inset-block-start: 0; z-index: var(--pl-z-raised) }`
-pins headers to the top of the scroll container. The header's `background`
-covers scrolling rows beneath it.
-
-## Horizontal scroll
-
-`.c-table-wrap` has `overflow: auto` and `scrollbar-gutter: stable` — the
-gutter reserves space so content doesn't shift when the scrollbar appears (a
-common SaaS jitter bug). The table's `min-inline-size: var(--c-table-min)`
-ensures columns stay readable rather than squished.
-
-## Accessibility
-
-- **Semantics:** native `<table>` / `<thead>` / `<tbody>` / `<th scope="col">`
-  — full screen-reader support. Add `scope="col"` to headers for explicit
-  association (the framework styles any `th`).
-- **Row selection:** use `aria-selected="true"` on `<tr>` for selected rows;
-  pair with a checkbox or keyboard handler for full widget semantics (a future
-  data-grid component will own the full ARIA grid pattern).
-- **Numeric alignment:** `data-align="end"` right-aligns numbers and applies
-  `tabular-nums` so digits line up vertically — essential for scanning
-  currency/counts.
-
-## Theme & RTL
-
-Light/dark via tokens; RTL via logical properties (`inline-size`,
-`inset-block-start`, `padding-inline`, `border-block-end`, `text-align: end`).
-Forced-colors falls back to `CanvasText` borders.
+| Token                 | Default                                  | Purpose                                     |
+| --------------------- | ---------------------------------------- | ------------------------------------------- |
+| `--c-table-min`       | `48rem`                                  | Min table width (drives horizontal scroll). |
+| `--c-table-cell-pad`  | `var(--pl-space-3) var(--pl-space-4)`    | Cell padding (overridden by density).       |
