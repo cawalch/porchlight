@@ -91,7 +91,11 @@
       font-size: var(--pl-text-sm);
       font-weight: 600;
       z-index: var(--pl-z-raised);
-      transition: all var(--pl-duration-2) var(--pl-ease-standard);
+      transition:
+        background-color var(--pl-duration-2) var(--pl-ease-standard),
+        border-color var(--pl-duration-2) var(--pl-ease-standard),
+        color var(--pl-duration-2) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-2) var(--pl-ease-standard);
     }
 
     /* Completed: accent fill + white text. */

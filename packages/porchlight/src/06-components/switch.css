@@ -63,7 +63,9 @@
       block-size: var(--c-switch-track-h);
       border-radius: var(--pl-radius-pill);
       background: var(--c-switch-off);
-      border: 1px solid var(--pl-color-border);
+
+      /* No border: surface-2 track provides contrast against page bg.
+         forced-colors block below adds ButtonText border for high-contrast mode. */
       transition: background-color var(--pl-duration-2) var(--pl-ease-standard);
     }
 

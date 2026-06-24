@@ -51,6 +51,17 @@
     line-height: var(--pl-leading-tight);
     text-wrap: balance;
     margin-block: 0;
+    letter-spacing: -0.02em;
+  }
+
+  :where(h1) {
+    font-weight: var(--pl-font-weight-black, 900);
+    letter-spacing: -0.03em;
+  }
+
+  :where(h2) {
+    font-weight: var(--pl-font-weight-bold, 700);
+    letter-spacing: -0.025em;
   }
 
   :where(p, ul, ol, dl, figure, blockquote) {
@@ -62,6 +73,6 @@
   }
 
   :where(::selection) {
-    background: color-mix(in oklab, var(--pl-color-accent), transparent 72%);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 60%);
   }
 }

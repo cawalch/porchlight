@@ -114,6 +114,19 @@
     z-index: var(--pl-z-sticky);
   }
 
+  /* Glass topbar  -  opt in via [data-glass]. Frosted backdrop replaces an
+     opaque fill; a hairline border-bottom anchors the bar visually. */
+  :where(.l-app-shell__topbar[data-glass]) {
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 18%);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-block-end: 1px solid color-mix(
+      in oklab,
+      var(--pl-color-border),
+      transparent 50%
+    );
+  }
+
   :where(.l-app-shell__sidebar) {
     grid-area: sidebar;
 

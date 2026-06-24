@@ -28,7 +28,7 @@
       --c-tooltip-bg: var(--pl-color-text);
       --c-tooltip-text: var(--pl-color-bg);
       --c-tooltip-pad: var(--pl-space-2) var(--pl-space-3);
-      --c-tooltip-radius: var(--pl-radius-md);
+      --c-tooltip-radius: var(--pl-radius-lg);
       --c-tooltip-font-size: var(--pl-text-sm);
       --c-tooltip-max-inline: 20rem;
 

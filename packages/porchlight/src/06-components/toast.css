@@ -43,7 +43,7 @@
     :scope {
       --c-toast-tone: var(--pl-color-accent);
       --c-toast-pad: var(--pl-space-3) var(--pl-space-4);
-      --c-toast-radius: var(--pl-radius-lg);
+      --c-toast-radius: var(--pl-radius-xl);
       --c-toast-gap: var(--pl-space-3);
 
       display: grid;
@@ -51,19 +51,31 @@
       gap: var(--c-toast-gap);
       align-items: start;
       padding: var(--c-toast-pad);
-      border: 1px solid var(--pl-color-border);
+
+      /* Floating surface: softened border + Liquid Glass. */
+      border: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 25%
+      );
       border-inline-start: 4px solid var(--c-toast-tone);
       border-radius: var(--c-toast-radius);
-      background: var(--pl-color-surface);
+      background: light-dark(
+        oklch(100% 0 0deg / 96%),
+        oklch(17% 0.04 250deg / 94%)
+      );
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
       box-shadow: var(--pl-shadow-3);
       pointer-events: auto;
 
-      /* Enter animation: slide in from the right + fade. */
+      /* Enter animation: slide in from the right + fade.
+         Asymmetric: enters deliberately, exits by JS removing [data-visible]. */
       opacity: 0;
       transform: translateX(100%);
       transition:
-        opacity var(--pl-duration-3) var(--pl-ease-standard),
-        transform var(--pl-duration-3) var(--pl-ease-standard);
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate);
 
       /* Use @starting-style so the initial render animates from hidden. */
       interpolate-size: allow-keywords;

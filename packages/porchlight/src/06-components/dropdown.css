@@ -78,17 +78,30 @@
       min-inline-size: var(--c-dropdown-min-inline);
       max-block-size: var(--c-dropdown-max-block);
       overflow-y: auto;
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-lg);
-      background: var(--pl-color-surface);
+
+      /* Floating surface: softened border + Liquid Glass. */
+      border: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 30%
+      );
+      border-radius: var(--pl-radius-xl);
+      background: light-dark(
+        oklch(100% 0 0deg / 96%),
+        oklch(17% 0.04 250deg / 94%)
+      );
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
       box-shadow: var(--pl-shadow-3);
+
+      /* Asymmetric motion. */
       opacity: 0;
       transform: translateY(-4px);
       transition:
-        opacity var(--pl-duration-2) var(--pl-ease-standard),
-        transform var(--pl-duration-2) var(--pl-ease-standard),
-        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
-        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
     @supports (position-anchor: --x) {
@@ -144,9 +157,11 @@
     outline-offset: -2px;
   }
 
+  /* Selected option: accent color + subtle tint background for clarity. */
   :where(.c-dropdown__menu) > [aria-selected="true"] {
     color: var(--pl-color-accent);
     font-weight: 600;
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
   }
 
   @media (forced-colors: active) {

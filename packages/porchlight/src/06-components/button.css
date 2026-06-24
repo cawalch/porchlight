@@ -52,7 +52,7 @@
         background-color var(--pl-duration-1) var(--pl-ease-standard),
         border-color var(--pl-duration-1) var(--pl-ease-standard),
         color var(--pl-duration-1) var(--pl-ease-standard),
-        transform var(--pl-duration-1) var(--pl-ease-standard),
+        transform var(--pl-duration-1) var(--pl-ease-spring),
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
@@ -61,7 +61,7 @@
       --c-button-bg: var(--pl-color-accent);
       --c-button-fg: var(--pl-color-accent-text);
       --c-button-border: var(--pl-color-accent);
-      --c-button-highlight: oklch(100% 0 0deg / 12%);
+      --c-button-highlight: oklch(100% 0 0deg / 14%);
     }
 
     /* Secondary  -  a raised surface (surface-2) with a border. */
@@ -73,6 +73,16 @@
     :scope[data-variant="ghost"] {
       --c-button-bg: transparent;
       --c-button-border: transparent;
+    }
+
+    /* Default (outlined) variant  -  lighter border so it doesn't read as
+       heavy as a card edge at the same visual layer. */
+    :scope:not([data-variant]) {
+      --c-button-border: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 20%
+      );
     }
 
     /* Hover: mix a little of the text color into the current fill. Done via
@@ -103,12 +113,22 @@
       );
     }
 
-    /* Active + pressed: a small tactile dip. */
+    /* Active + pressed: scale dip gives tactile feedback without the
+       skeuomorphic down-push of translateY. Spring easing makes the
+       snap-back feel lively. */
     :scope:is(:active, [aria-pressed="true"]):not(
         :disabled,
         [aria-disabled="true"]
       ) {
-      transform: translateY(1px);
+      transform: scale(0.97);
+    }
+
+    /* Primary focus: accent glow instead of the generic outline. */
+    :scope[data-variant="primary"]:focus-visible {
+      outline: none;
+      box-shadow:
+        var(--pl-shadow-glow),
+        inset 0 1px 0 var(--c-button-highlight);
     }
 
     /* A pressed ghost/secondary also gets an accent tint so the selected/

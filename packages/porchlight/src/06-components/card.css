@@ -24,7 +24,7 @@
       --c-card-bg: var(--pl-color-surface);
       --c-card-border: var(--pl-color-border);
       --c-card-shadow: var(--pl-shadow-1);
-      --c-card-radius: var(--pl-radius-xl);
+      --c-card-radius: var(--pl-radius-2xl);
 
       container: c-card / inline-size;
       display: grid;
@@ -42,14 +42,66 @@
       box-shadow: var(--c-card-shadow);
     }
 
+    /* Elevated variant  -  no border; shadow-2 + top-highlight do the lifting.
+       Use when the card floats over a busy background or in a hero context. */
+    :scope[data-elevated] {
+      --c-card-border: transparent;
+      --c-card-shadow: var(--pl-shadow-2);
+    }
+
+    /* Accent variant  -  left-edge brand bar + barely-there tinted surface.
+       Use for featured KPI tiles, selected states, upgrade CTAs. */
+    :scope[data-variant="accent"] {
+      --c-card-border: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 70%
+      );
+
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-surface) 94%
+      );
+      box-shadow:
+        inset 4px 0 0 var(--pl-color-accent),
+        var(--pl-shadow-1);
+    }
+
+    /* :has() semantic rings  -  automatic state rings driven by child content.
+       A card containing a danger badge or [data-status="error"] element gets a
+       danger-hued ring; no extra wrapper attribute needed. */
+    :scope:has(.c-badge[data-variant="danger"]),
+    :scope:has([data-status="error"]) {
+      --c-card-border: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 55%
+      );
+
+      box-shadow:
+        0 0 0 1px color-mix(in oklab, var(--pl-color-danger), transparent 72%),
+        var(--pl-shadow-1);
+    }
+
+    :scope:has(.c-badge[data-variant="success"]),
+    :scope:has([data-status="success"]) {
+      --c-card-border: color-mix(
+        in oklab,
+        var(--pl-color-success),
+        transparent 55%
+      );
+
+      box-shadow:
+        0 0 0 1px color-mix(in oklab, var(--pl-color-success), transparent 72%),
+        var(--pl-shadow-1);
+    }
+
     .c-card__header {
       display: flex;
       align-items: start;
       justify-content: space-between;
       gap: var(--pl-space-3);
-
-      /* Keep headers the same height whether or not they contain a button. */
-      min-block-size: calc(var(--pl-text-lg) * var(--pl-leading-tight));
     }
 
     .c-card__title {
@@ -69,8 +121,15 @@
       align-items: center;
       justify-content: flex-end;
       gap: var(--pl-space-2);
-      padding-block-start: var(--pl-space-2);
-      border-block-start: 1px solid var(--c-card-border);
+      padding-block-start: var(--pl-space-3);
+
+      /* Hairline divider  -  whitespace does most of the work; the border is
+         a hint, not a structural element. */
+      border-block-start: 1px solid color-mix(
+        in oklab,
+        var(--c-card-border),
+        transparent 45%
+      );
     }
 
     /* Header collapses to a stack when the CARD is narrow (container query). */
@@ -81,23 +140,33 @@
       }
     }
 
-    /* Interactive cards  -  hover lift + focus ring. Inside @scope (same as
-       the button pattern); [data-hover] is an attribute, not a live pseudo, so
-       it applies reliably within @scope. */
+    /* Interactive cards  -  asymmetric hover: the default (resting/exit) state
+       uses the fast accelerate curve so moving away feels snappy; the :hover
+       state overrides the transition with the slower decelerate curve so
+       entering feels deliberate. This is the correct split-transition trick
+       for asymmetric CSS hover without JS. */
     :scope[data-interactive],
     :scope[href] {
       cursor: pointer;
       text-decoration: none;
       color: inherit;
+
+      /* Exit transition: fast and clean. */
       transition:
-        transform var(--pl-duration-2) var(--pl-ease-standard),
-        box-shadow var(--pl-duration-2) var(--pl-ease-standard);
+        transform var(--pl-duration-exit) var(--pl-ease-accelerate),
+        box-shadow var(--pl-duration-exit) var(--pl-ease-accelerate);
     }
 
     :scope[data-interactive]:is(:hover, [data-hover]),
     :scope[href]:is(:hover, [data-hover]) {
-      transform: translateY(-2px);
-      box-shadow: var(--pl-shadow-2);
+      /* Enter transition: overrides the exit on hover. */
+      transition:
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+        box-shadow var(--pl-duration-enter) var(--pl-ease-decelerate);
+      transform: translateY(-3px);
+      box-shadow:
+        var(--pl-shadow-2),
+        0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 88%);
     }
 
     :scope[data-interactive]:focus-visible,

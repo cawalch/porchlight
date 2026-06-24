@@ -56,9 +56,15 @@
         background: color-mix(
           in oklab,
           var(--pl-color-surface),
-          transparent 12%
+          transparent 18%
         );
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-block-end: 1px solid color-mix(
+          in oklab,
+          var(--pl-color-border),
+          transparent 55%
+        );
       }
     }
   }
@@ -89,6 +95,35 @@
   @supports (background: attr(data-color type(<color>))) {
     .c-swatch {
       background: attr(data-color type(<color>), var(--pl-color-border));
+    }
+  }
+
+  /* 6. View Transitions: opt-in cross-document page animations (Baseline 2026).
+     Apps set <meta name="view-transition" content="same-origin"> or use the
+     Navigation API. This block styles the default entry/exit fade with the
+     framework's asymmetric enter/exit duration tokens so navigations feel
+     consistent with the rest of the motion language. */
+  @supports (view-transition-name: root) {
+    @view-transition {
+      navigation: auto;
+    }
+
+    ::view-transition-old(root) {
+      animation:
+        var(--pl-duration-exit) var(--pl-ease-accelerate) both pl-fade-out;
+    }
+
+    ::view-transition-new(root) {
+      animation:
+        var(--pl-duration-enter) var(--pl-ease-decelerate) both pl-fade-in;
+    }
+
+    @keyframes pl-fade-out {
+      to { opacity: 0; }
+    }
+
+    @keyframes pl-fade-in {
+      from { opacity: 0; }
     }
   }
 }

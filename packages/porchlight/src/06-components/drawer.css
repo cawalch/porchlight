@@ -24,7 +24,6 @@
     :scope {
       --c-drawer-inline: min(24rem, 100vi);
       --c-drawer-block: 100vb;
-      --c-drawer-bg: var(--pl-color-surface);
       --c-drawer-pad: var(--pl-space-4);
       --c-drawer-gap: var(--pl-space-3);
 
@@ -34,27 +33,33 @@
       margin: 0;
       padding: 0;
       border: 0;
-      border-inline-start: 1px solid var(--pl-color-border);
+
+      /* No hard side border  -  shadow-3 defines the edge cleanly. */
       inline-size: var(--c-drawer-inline);
       block-size: var(--c-drawer-block);
-      background: var(--c-drawer-bg);
+
+      /* Liquid Glass: translucent surface with blur. */
+      background: light-dark(
+        oklch(100% 0 0deg / 96%),
+        oklch(17% 0.04 250deg / 94%)
+      );
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
       box-shadow: var(--pl-shadow-3);
 
-      /* Animation: slide + fade. */
+      /* Animation: slide + fade. Asymmetric: enters deliberately, exits snappily. */
       opacity: 0;
       transform: translateX(100%);
       transition:
-        opacity var(--pl-duration-3) var(--pl-ease-standard),
-        transform var(--pl-duration-3) var(--pl-ease-standard),
-        overlay var(--pl-duration-3) var(--pl-ease-standard) allow-discrete,
-        display var(--pl-duration-3) var(--pl-ease-standard) allow-discrete;
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
     /* Start side: slide from inline-start. */
     :scope[data-side="start"] {
       inset-inline: 0 auto;
-      border-inline-start: 0;
-      border-inline-end: 1px solid var(--pl-color-border);
       transform: translateX(-100%);
     }
 
@@ -76,9 +81,11 @@
       }
     }
 
-    /* Backdrop scrim (native ::backdrop on popovers). */
+    /* Backdrop scrim (native ::backdrop on popovers). Stronger tint + blur
+       contrasts against the translucent drawer surface. */
     :scope::backdrop {
-      background: oklch(0% 0 0deg / 40%);
+      background: oklch(0% 0 0deg / 55%);
+      backdrop-filter: blur(4px) saturate(80%);
     }
 
     /* Layout inside the drawer. */
@@ -88,7 +95,13 @@
       justify-content: space-between;
       gap: var(--c-drawer-gap);
       padding: var(--c-drawer-pad);
-      border-block-end: 1px solid var(--pl-color-border);
+
+      /* Softer divider  -  the Liquid Glass surface is already visually separated. */
+      border-block-end: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 40%
+      );
     }
 
     .c-drawer__title {
@@ -105,7 +118,13 @@
       display: flex;
       gap: var(--c-drawer-gap);
       padding: var(--c-drawer-pad);
-      border-block-start: 1px solid var(--pl-color-border);
+
+      /* Softer divider. */
+      border-block-start: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 40%
+      );
     }
   }
 

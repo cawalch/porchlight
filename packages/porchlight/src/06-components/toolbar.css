@@ -27,7 +27,11 @@
       justify-content: space-between;
       gap: var(--c-toolbar-gap);
       padding: var(--c-toolbar-pad);
-      border-block-end: 1px solid var(--pl-color-border);
+      border-block-end: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 20%
+      );
       background: var(--pl-color-surface);
     }
 
@@ -55,7 +59,11 @@
       inline-size: 1px;
       block-size: 1.5rem;
       align-self: center;
-      background: var(--pl-color-border);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 20%
+      );
     }
 
     /* Tighten padding when the toolbar is narrow (container query). */

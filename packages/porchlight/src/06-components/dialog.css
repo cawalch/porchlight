@@ -26,21 +26,27 @@
       padding: 0;
       margin: auto;
       overflow: auto;
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-xl);
-      background: var(--pl-color-surface);
+
+      /* Liquid Glass: no border; shadow + backdrop do the structural work. */
+      border: none;
+      border-radius: var(--pl-radius-2xl);
+      background: light-dark(
+        oklch(100% 0 0deg / 94%),
+        oklch(17% 0.04 250deg / 92%)
+      );
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
-      /* Entry/exit: opacity + slight scale. allow-discrete keeps the element
-         visible during the EXIT transition. */
+      /* Entry/exit: asymmetric timing — enter deliberate, exit snappy. */
       opacity: 0;
-      transform: scale(0.98) translateY(8px);
+      transform: scale(0.97) translateY(10px);
       transition:
-        opacity var(--pl-duration-2) var(--pl-ease-standard),
-        transform var(--pl-duration-2) var(--pl-ease-standard),
-        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
-        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
     /* Open: settled state. :modal covers showModal(); [open] covers show(). */
@@ -55,14 +61,16 @@
       :scope:modal,
       :scope[open] {
         opacity: 0;
-        transform: scale(0.98) translateY(8px);
+        transform: scale(0.97) translateY(10px);
       }
     }
 
-    /* Scrim  -  dim the page behind the dialog. */
+    /* Scrim  -  dim the page behind the dialog. Stronger blur + deeper tint
+       for the Liquid Glass treatment (the frosted dialog needs more contrast
+       against a busy background). */
     :scope::backdrop {
-      background: oklch(0% 0 0deg / 45%);
-      backdrop-filter: blur(2px);
+      background: oklch(0% 0 0deg / 55%);
+      backdrop-filter: blur(4px) saturate(80%);
     }
 
     .c-dialog__header {
@@ -72,7 +80,13 @@
       gap: var(--pl-space-3);
       min-block-size: var(--pl-control-block-size);
       padding: var(--pl-space-5);
-      border-block-end: 1px solid var(--pl-color-border);
+
+      /* Softer divider — the Liquid Glass surface is already visually separated */
+      border-block-end: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 40%
+      );
     }
 
     .c-dialog__title {
@@ -118,7 +132,11 @@
       justify-content: flex-end;
       gap: var(--pl-space-3);
       padding: var(--pl-space-5);
-      border-block-start: 1px solid var(--pl-color-border);
+      border-block-start: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 40%
+      );
     }
 
     @media (forced-colors: active) {

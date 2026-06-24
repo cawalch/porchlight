@@ -27,7 +27,7 @@
     :scope {
       --c-accordion-border: var(--pl-color-border);
       --c-accordion-bg: var(--pl-color-surface);
-      --c-accordion-radius: var(--pl-radius-lg);
+      --c-accordion-radius: var(--pl-radius-xl);
       --c-accordion-header-pad: var(--pl-space-4);
       --c-accordion-content-pad: 0 var(--pl-space-4) var(--pl-space-4);
       --c-accordion-gap: var(--pl-space-2);

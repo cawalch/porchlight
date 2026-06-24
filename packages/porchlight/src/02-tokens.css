@@ -44,15 +44,26 @@
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       monospace;
 
+    /* Variable font weight axis hooks  -  app opts in by loading a variable font
+       (e.g. "Inter Variable"). Hard-coded fallbacks are browser defaults. */
+    --pl-font-weight-normal: 400;
+    --pl-font-weight-medium: 500;
+    --pl-font-weight-semibold: 600;
+    --pl-font-weight-bold: 700;
+    --pl-font-weight-black: 900;
+
     /* Type */
     --pl-text-xs: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
     --pl-text-sm: clamp(0.875rem, 0.84rem + 0.1vi, 0.9375rem);
     --pl-text-md: 1rem;
     --pl-text-lg: clamp(1.125rem, 1.05rem + 0.25vi, 1.25rem);
     --pl-text-xl: clamp(1.25rem, 1.1rem + 0.55vi, 1.625rem);
+    --pl-text-2xl: clamp(1.5rem, 1.2rem + 1vi, 2rem);
+    --pl-text-3xl: clamp(1.875rem, 1.4rem + 1.6vi, 2.75rem);
+    --pl-text-display: clamp(2.5rem, 1.8rem + 3vi, 4.5rem);
 
     /* Leading */
-    --pl-leading-tight: 1.2;
+    --pl-leading-tight: 1.15;
     --pl-leading-normal: 1.5;
     --pl-leading-loose: 1.7;
 
@@ -74,14 +85,23 @@
     --pl-radius-md: 0.5rem;
     --pl-radius-lg: 0.75rem;
     --pl-radius-xl: 1rem;
+    --pl-radius-2xl: 1.5rem;
+    --pl-radius-3xl: 2rem;
     --pl-radius-pill: 999rem;
 
     /* Motion */
     --pl-duration-1: calc(120ms * var(--pl-motion-scale));
     --pl-duration-2: calc(180ms * var(--pl-motion-scale));
     --pl-duration-3: calc(260ms * var(--pl-motion-scale));
+
+    /* Asymmetric enter/exit: entries feel considered; exits feel snappy. */
+    --pl-duration-enter: calc(220ms * var(--pl-motion-scale));
+    --pl-duration-exit: calc(160ms * var(--pl-motion-scale));
     --pl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
     --pl-ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+    --pl-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);   /* subtle overshoot */
+    --pl-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);       /* enter: fast → slow */
+    --pl-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);       /* exit: slow → fast */
 
     /* Z-index */
     --pl-z-base: 0;
@@ -90,68 +110,78 @@
     --pl-z-overlay: 1000;
     --pl-z-toast: 1100;
 
-    /* Brand  -  raw OKLCH ramp at hue 260 (blue); scale 1 (lightest) → 9 (darkest). */
-    --pl-brand-1: oklch(96% 0.02 260deg);
-    --pl-brand-2: oklch(88% 0.06 260deg);
-    --pl-brand-3: oklch(78% 0.12 260deg);
-    --pl-brand-4: oklch(68% 0.16 260deg);
-    --pl-brand-5: oklch(63% 0.17 260deg);
-    --pl-brand-6: oklch(58% 0.18 260deg);
-    --pl-brand-7: oklch(50% 0.18 260deg);
-    --pl-brand-8: oklch(42% 0.16 260deg);
-    --pl-brand-9: oklch(32% 0.12 260deg);
+    /* Brand  -  raw OKLCH ramp at hue 250 (electric indigo); scale 1 (lightest) → 9 (darkest).
+       Chroma lifted to 0.24 at the midpoint for vivid, differentiated brand presence on both
+       sRGB and wide-gamut P3 displays. */
+    --pl-brand-1: oklch(96% 0.03 250deg);
+    --pl-brand-2: oklch(88% 0.08 250deg);
+    --pl-brand-3: oklch(78% 0.14 250deg);
+    --pl-brand-4: oklch(68% 0.20 250deg);
+    --pl-brand-5: oklch(62% 0.24 250deg);
+    --pl-brand-6: oklch(56% 0.26 250deg);
+    --pl-brand-7: oklch(48% 0.24 250deg);
+    --pl-brand-8: oklch(40% 0.20 250deg);
+    --pl-brand-9: oklch(30% 0.14 250deg);
 
     /* Semantic colors  -  light/dark via light-dark(), driven by color-scheme.
        Forced-colors overrides live in 03-themes. Foreground/background are
-       defined as pairs so contrast is intentional, not accidental. */
-    --pl-color-bg: light-dark(oklch(98% 0.01 260deg), oklch(15% 0.02 260deg));
-    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(19% 0.02 260deg));
+       defined as pairs so contrast is intentional, not accidental.
+
+       Dark mode surfaces carry deliberate brand-hue chroma (0.04–0.05) so the
+       dark theme reads as intentional "midnight indigo", not generic gray. */
+    --pl-color-bg: light-dark(oklch(98% 0.01 250deg), oklch(13% 0.04 250deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0.04 250deg));
     --pl-color-surface-2: light-dark(
-      oklch(94% 0.01 260deg),
-      oklch(23% 0.025 260deg)
+      oklch(94% 0.02 250deg),
+      oklch(21% 0.05 250deg)
     );
-    --pl-color-text: light-dark(oklch(20% 0.02 260deg), oklch(96% 0.01 260deg));
+    --pl-color-text: light-dark(oklch(18% 0.02 250deg), oklch(96% 0.01 250deg));
     --pl-color-text-muted: light-dark(
-      oklch(46% 0.03 260deg),
-      oklch(75% 0.02 260deg)
+      oklch(45% 0.04 250deg),
+      oklch(72% 0.03 250deg)
     );
+
+    /* Border: reduced opacity so it reads as a hint, not a cage.
+       Overlay contexts (dialogs, drawers) use --pl-color-border-overlay
+       which resolves to transparent — shadow + backdrop do the job there. */
     --pl-color-border: light-dark(
-      oklch(87% 0.02 260deg),
-      oklch(33% 0.03 260deg)
+      oklch(80% 0.02 250deg / 75%),
+      oklch(45% 0.05 250deg / 28%)
     );
+    --pl-color-border-overlay: transparent;
     --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
-    --pl-color-accent-text: light-dark(white, oklch(15% 0.02 260deg));
+    --pl-color-accent-text: light-dark(white, oklch(13% 0.04 250deg));
     --pl-color-accent-hover: color-mix(
       in oklab,
       var(--pl-color-accent),
-      black 8%
+      black 10%
     );
-    --pl-color-danger: oklch(58% 0.2 25deg);
+    --pl-color-danger: oklch(60% 0.22 25deg);
     --pl-color-danger-bg: light-dark(
-      oklch(96% 0.03 25deg),
-      oklch(24% 0.06 25deg)
+      oklch(96% 0.04 25deg),
+      oklch(22% 0.08 25deg)
     );
     --pl-color-danger-text: light-dark(
-      oklch(38% 0.15 25deg),
-      oklch(90% 0.05 25deg)
+      oklch(36% 0.18 25deg),
+      oklch(90% 0.06 25deg)
     );
-    --pl-color-success: oklch(56% 0.16 150deg);
+    --pl-color-success: oklch(58% 0.18 150deg);
     --pl-color-success-bg: light-dark(
-      oklch(96% 0.03 150deg),
-      oklch(24% 0.06 150deg)
+      oklch(96% 0.04 150deg),
+      oklch(22% 0.08 150deg)
     );
     --pl-color-success-text: light-dark(
-      oklch(36% 0.13 150deg),
-      oklch(80% 0.13 150deg)
+      oklch(34% 0.15 150deg),
+      oklch(82% 0.15 150deg)
     );
-    --pl-color-warning: oklch(58% 0.17 80deg);
+    --pl-color-warning: oklch(62% 0.19 75deg);
     --pl-color-warning-bg: light-dark(
-      oklch(96% 0.05 80deg),
-      oklch(26% 0.07 80deg)
+      oklch(96% 0.06 75deg),
+      oklch(24% 0.09 75deg)
     );
     --pl-color-warning-text: light-dark(
-      oklch(42% 0.15 80deg),
-      oklch(82% 0.13 80deg)
+      oklch(40% 0.17 75deg),
+      oklch(84% 0.15 75deg)
     );
 
     /* Controls */
@@ -169,9 +199,23 @@
     --pl-focus-offset: 2px;
     --pl-focus-size: 2px;
 
-    /* Shadows */
-    --pl-shadow-1: 0 1px 2px oklch(0% 0 0deg / 12%);
-    --pl-shadow-2: 0 6px 18px oklch(0% 0 0deg / 16%);
-    --pl-shadow-3: 0 16px 48px oklch(0% 0 0deg / 20%);
+    /* Shadows  -  multi-layer with a faint brand-hue cast for spatial depth.
+       The inset top-highlight on shadow-2/3 gives elevated surfaces the
+       "lifted from the page" quality common in Linear, Vercel, Notion. */
+    --pl-shadow-1:
+      0 1px 2px oklch(0% 0 0deg / 8%),
+      0 1px 4px oklch(25% 0.06 250deg / 6%);
+    --pl-shadow-2:
+      0 4px 8px oklch(0% 0 0deg / 8%),
+      0 8px 24px oklch(20% 0.08 250deg / 12%),
+      inset 0 1px 0 oklch(100% 0 0deg / 6%);
+    --pl-shadow-3:
+      0 8px 16px oklch(0% 0 0deg / 10%),
+      0 24px 64px oklch(15% 0.10 250deg / 18%),
+      inset 0 1px 0 oklch(100% 0 0deg / 8%);
+
+    /* Glow: accent-hued ring for focused/active primary controls. */
+    --pl-shadow-glow:
+      0 0 0 4px color-mix(in oklab, var(--pl-color-accent), transparent 72%);
   }
 }

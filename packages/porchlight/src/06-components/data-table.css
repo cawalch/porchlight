@@ -21,17 +21,35 @@
       --c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
       --c-table-min: 48rem;
 
+      /* Consistent row height (touch-safe 48px default). Density modes
+         shrink this via the compact density override below. */
+      --c-table-row-min-block-size: 3rem;
+
+      /* Expose the wrap radius as a token so corner cells can inherit it
+         exactly (minus 1px for the border). */
+      --c-table-radius: var(--pl-radius-xl);
+
       container: c-table-wrap / inline-size;
       overflow: auto;
-      scrollbar-gutter: stable;
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-lg);
+
+      /* scrollbar-gutter: stable is intentionally omitted here.
+         "stable" unconditionally reserves inline-end space for the scrollbar
+         even when no scrollbar is present, which shows as a visible gap
+         between the last column and the right border. overflow: auto handles
+         layout-shift prevention on its own when the scrollbar actually appears. */
+      border: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 20%
+      );
+      border-radius: var(--c-table-radius);
       background: var(--pl-color-surface);
     }
 
     /* Density modes. */
     :scope[data-density="compact"] {
       --c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
+      --c-table-row-min-block-size: 2.25rem;
     }
 
     .c-table {
@@ -41,12 +59,38 @@
       border-spacing: 0;
     }
 
+    /* Corner radius: sticky <th> elements paint above the overflow container's
+       border-radius clip in WebKit/Blink, so their background bleeds into the
+       rounded corner making it appear square. Each corner cell gets an explicit
+       border-radius that matches the wrap (minus 1px for the wrap border).
+       This is the canonical fix for the "one side rounded, one side square"
+       artifact on bordered tables with sticky headers. */
+    .c-table thead tr:first-child th:first-child {
+      border-start-start-radius: calc(var(--c-table-radius) - 1px);
+    }
+
+    .c-table thead tr:first-child th:last-child {
+      border-start-end-radius: calc(var(--c-table-radius) - 1px);
+    }
+
+    .c-table tbody tr:last-child td:first-child {
+      border-end-start-radius: calc(var(--c-table-radius) - 1px);
+    }
+
+    .c-table tbody tr:last-child td:last-child {
+      border-end-end-radius: calc(var(--c-table-radius) - 1px);
+    }
+
     .c-table :where(th, td) {
       padding: var(--c-table-cell-pad);
       border-block-end: 1px solid var(--pl-color-border);
       text-align: start;
       vertical-align: middle;
       white-space: nowrap;
+
+      /* Enforce consistent row height. min-block-size lets content expand
+         beyond this (e.g. multi-line cells) without truncation. */
+      min-block-size: var(--c-table-row-min-block-size);
     }
 
     .c-table :where(td) {
@@ -57,11 +101,17 @@
       position: sticky;
       inset-block-start: 0;
       z-index: var(--pl-z-raised);
-      background: var(--pl-color-surface);
+
+      /* surface-2 bg distinguishes the header row from data rows without
+         the heavy "band" look of older table designs. */
+      background: var(--pl-color-surface-2);
       font-size: var(--pl-text-sm);
       font-weight: 600;
       color: var(--pl-color-text-muted);
-      border-block-end: 2px solid var(--pl-color-border);
+
+      /* 1px (not 2px)  -  the surface-2/surface step does the visual separation;
+         the border is a hairline accent, not structural weight. */
+      border-block-end: 1px solid var(--pl-color-border);
     }
 
     /* Tighten padding when the wrap is narrow. */
@@ -97,29 +147,52 @@
       }
     }
 
+    /* Sort indicator: replaced the CSS border-triangle technique with a
+       pseudo-element approach. The neutral state (sortable but unsorted)
+       shows ⇅ so users can discover sortability without having to hover.
+       Active states use accent color for clear directionality. */
     .c-table__sort-icon {
-      display: inline-block;
-      inline-size: 0;
-      block-size: 0;
+      display: inline-flex;
+      align-items: center;
       margin-inline-start: var(--pl-space-1);
-      border-inline-start: 0.25rem solid transparent;
-      border-inline-end: 0.25rem solid transparent;
+      font-size: 0.7em;
+      color: var(--pl-color-text-muted);
       opacity: 0.4;
-      transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
+      transition:
+        opacity var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    /* Ascending: pointing up. */
+    /* Neutral (sortable, no active direction): hint the user this is sortable. */
+    .c-table__sort-icon::before {
+      content: "\21C5"; /* ⇅ updown arrows */
+    }
+
+    /* Ascending: up arrow, full opacity, accent color. */
     .c-table th[data-sort="asc"] .c-table__sort-icon {
-      border-block-end: 0.3rem solid currentColor;
-      border-block-start: 0;
       opacity: 1;
+      color: var(--pl-color-accent);
     }
 
-    /* Descending: pointing down. */
+    .c-table th[data-sort="asc"] .c-table__sort-icon::before {
+      content: "\2191"; /* ↑ */
+    }
+
+    /* Descending: down arrow, full opacity, accent color. */
     .c-table th[data-sort="desc"] .c-table__sort-icon {
-      border-block-start: 0.3rem solid currentColor;
-      border-block-end: 0;
       opacity: 1;
+      color: var(--pl-color-accent);
+    }
+
+    .c-table th[data-sort="desc"] .c-table__sort-icon::before {
+      content: "\2193"; /* ↓ */
+    }
+
+    /* Active sort column header: full-contrast text so the sorted column
+       reads as primary. Unsorted columns stay muted. */
+    .c-table th[data-sort="asc"],
+    .c-table th[data-sort="desc"] {
+      color: var(--pl-color-text);
     }
 
     /* ---------------------------------------------------------------
@@ -151,7 +224,19 @@
     .c-table .c-table__detail td {
       padding: 0;
       border-block-end: 1px solid var(--pl-color-border);
-      background: var(--pl-color-surface-2);
+
+      /* Slightly deeper tint than hover so the detail row reads as
+         subordinate content; left accent bar ties it to its parent row. */
+      background: color-mix(
+        in oklab,
+        var(--pl-color-surface-2),
+        var(--pl-color-text) 2%
+      );
+      box-shadow: inset 4px 0 0 color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 70%
+      );
     }
 
     .c-table__detail-inner {
@@ -207,12 +292,9 @@
       rotate: 180deg;
     }
 
-    /* ---------------------------------------------------------------
-     * Sticky first column
-     * ---------------------------------------------------------------
-     * Add .c-table__sticky-col to <th>/<td> elements in the first
-     * column to keep them visible during horizontal scroll.
-     */
+    /* Sticky first column  -  outward drop-shadow communicates "content scrolls
+       behind this column" (vs. the old inset-border which pointed inward and
+       read as a cell divider, not a depth separator). */
     .c-table .c-table__sticky-col {
       position: sticky;
       inset-inline-start: 0;
@@ -223,11 +305,16 @@
     /* Sticky header + sticky column intersection needs higher z-index. */
     .c-table th.c-table__sticky-col {
       z-index: calc(var(--pl-z-raised) + 2);
+
+      /* Sticky col header: inherit the surface-2 header background so the
+         intersection cell matches the header row, not the body. */
+      background: var(--pl-color-surface-2);
     }
 
-    /* Shadow on the trailing edge of the sticky column for depth. */
+    /* Outward drop-shadow on the trailing edge: fades rightward to show
+       that body content scrolls underneath. */
     .c-table .c-table__sticky-col:not(:last-child) {
-      box-shadow: inset -1px 0 var(--pl-color-border);
+      box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
     /* Inherit hover/selection background through the sticky column. */
@@ -242,13 +329,38 @@
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
   }
 
+  /* Stronger tint than plain surface-2 so the hover is clearly visible even
+     on high-brightness/low-contrast displays (surface-2 alone is ~3% step). */
   :where(.c-table) tbody tr:hover {
-    background: var(--pl-color-surface-2);
+    background: color-mix(
+      in oklab,
+      var(--pl-color-surface-2),
+      var(--pl-color-text) 3.5%
+    );
   }
 
-  /* Selection. */
+  /* Selection: left-bar accent (matching the nav active state language) +
+     stronger tint so the selected state is unmistakable at a glance. */
   :where(.c-table) tbody tr[aria-selected="true"] {
-    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 84%);
+    box-shadow: inset 3px 0 0 var(--pl-color-accent);
+  }
+
+  /* Last data row: remove border-block-end so it doesn't double-up with the
+     table-wrap's own border on the bottom edge. */
+  :where(.c-table) tbody tr:last-child td {
+    border-block-end: none;
+  }
+
+  /* Opt-in zebra striping for extreme information density (financial data,
+     log tables). Very subtle at 50% transparent surface-2 so it doesn't
+     clash with hover/selection states. */
+  :where(.c-table-wrap[data-zebra]) .c-table tbody tr:nth-child(even) {
+    background: color-mix(
+      in oklab,
+      var(--pl-color-surface-2),
+      transparent 50%
+    );
   }
 
   /* Loading state: suppress hover effects on skeleton rows. */
