@@ -1,0 +1,35 @@
+---
+title: Segmented Control
+description: Compact inline switcher for binary/ternary toggles. CSS-only, native radio inputs.
+status: stable
+since: 1.0.0
+---
+
+# Segmented Control
+
+The `.c-segmented` is a pill-shaped inline switcher. Active segment gets
+accent styling via `:has(:checked)`. Built on native radio inputs — keyboard
+accessible, no JavaScript.
+
+## Semantic HTML
+
+```html
+<div class="c-segmented" role="radiogroup" aria-label="View mode">
+  <label class="c-segmented__item">
+    <input type="radio" name="view" checked />
+    <span>List</span>
+  </label>
+  <label class="c-segmented__item">
+    <input type="radio" name="view" />
+    <span>Grid</span>
+  </label>
+</div>
+```
+
+## Class contract
+
+| Selector              | Role                              |
+| --------------------- | --------------------------------- |
+| `.c-segmented`        | Container (pill, inline-flex).   |
+| `.c-segmented__item`  | A label wrapping a radio input.  |
+| `:has(input:checked)` | Active segment (accent fill).     |

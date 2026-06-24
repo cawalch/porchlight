@@ -1,0 +1,53 @@
+---
+title: Command Palette
+description: Cmd+K quick-action search overlay using Popover API. Search, grouped actions, keyboard navigation.
+status: stable
+since: 1.0.0
+---
+
+# Command Palette
+
+The `.c-command` is a Cmd+K quick-action search overlay. Uses the Popover
+API for top-layer rendering and `@starting-style` for smooth enter/exit.
+The framework provides the visual structure; the app provides keyboard
+navigation (arrow keys, enter, escape).
+
+## Semantic HTML
+
+```html
+<button popovertarget="cmdk">Open</button>
+
+<div popover class="c-command" id="cmdk">
+  <input class="c-command__search" placeholder="Type a command..." />
+  <div class="c-command__body">
+    <div class="c-command__group">
+      <h3 class="c-command__heading">Actions</h3>
+      <button class="c-command__item" data-selected>
+        <svg class="c-command__icon">...</svg>
+        <span>Create project</span>
+        <span class="c-command__shortcut">C</span>
+      </button>
+    </div>
+  </div>
+  <footer class="c-command__footer">
+    <span>↑↓ navigate</span>
+    <span>↵ select</span>
+    <span>esc close</span>
+  </footer>
+</div>
+```
+
+## Class contract
+
+| Selector                  | Role                                      |
+| ------------------------- | ----------------------------------------- |
+| `.c-command`              | The popover palette.                     |
+| `.c-command__search`      | Top search input.                        |
+| `.c-command__body`        | Scrollable action list.                  |
+| `.c-command__group`       | Named group of actions.                  |
+| `.c-command__heading`     | Group label (uppercase, muted).          |
+| `.c-command__item`        | An action button.                        |
+| `.c-command__icon`        | Leading icon.                            |
+| `.c-command__shortcut`    | Keyboard shortcut badge.                 |
+| `.c-command__footer`      | Footer with keyboard hints.              |
+| `[data-selected]`         | Highlighted (keyboard-focused) item.     |

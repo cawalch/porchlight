@@ -1,0 +1,28 @@
+---
+title: Tag Input
+description: Multi-value input that converts typed values into removable chips.
+status: stable
+since: 1.0.0
+---
+
+# Tag Input
+
+The `.c-tag-input` wraps chips and an inline text input. JS handles
+tokenization (Enter/comma to add, backspace to remove); CSS handles the
+layout. Auto-grows via `field-sizing: content` where supported.
+
+## Semantic HTML
+
+```html
+<div class="c-tag-input">
+  <span class="c-chip">React <button class="c-chip__remove">x</button></span>
+  <input class="c-tag-input__field" placeholder="Add tag..." />
+</div>
+```
+
+## Class contract
+
+| Selector               | Role                              |
+| ---------------------- | --------------------------------- |
+| `.c-tag-input`         | Container (flex-wrap, bordered). |
+| `.c-tag-input__field`  | The inline text input.            |

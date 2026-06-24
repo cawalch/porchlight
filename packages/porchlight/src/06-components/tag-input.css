@@ -1,0 +1,73 @@
+/*
+ * Porchlight — tag input component
+ * ===========================================================================
+ * A text input that accepts multiple values as removable chips. The CSS
+ * handles the layout (wrapping chips + inline input); JS handles
+ * tokenization (enter/comma to add, backspace to remove).
+ *
+ * Uses field-sizing: content where supported so the input auto-grows.
+ * Falls back to a fixed-width input.
+ *
+ * Structure:
+ *   <div class="c-tag-input">
+ *     <span class="c-chip">React <button class="c-chip__remove">x</button></span>
+ *     <input class="c-tag-input__field" placeholder="Add tag..." />
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.c-tag-input) {
+    :scope {
+      --c-tag-input-pad: var(--pl-space-2);
+      --c-tag-input-gap: var(--pl-space-2);
+      --c-tag-input-min-h: calc(var(--pl-control-block-size) - 2px);
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--c-tag-input-gap);
+      min-block-size: var(--c-tag-input-min-h);
+      padding: var(--c-tag-input-pad);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-surface);
+      cursor: text;
+    }
+
+    :scope:focus-within {
+      border-color: var(--pl-color-accent);
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-tag-input__field {
+      flex: 1;
+      min-inline-size: 6rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      outline: none;
+    }
+
+    .c-tag-input__field::placeholder {
+      color: var(--pl-color-text-muted);
+    }
+
+    /* Auto-grow where supported. */
+    @supports (field-sizing: content) {
+      .c-tag-input__field {
+        field-sizing: content;
+        min-inline-size: 4rem;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-tag-input) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+  }
+}

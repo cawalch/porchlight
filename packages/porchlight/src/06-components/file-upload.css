@@ -1,0 +1,104 @@
+/*
+ * Porchlight — file upload component
+ * ===========================================================================
+ * A drag-and-drop file upload zone. The native <input type="file"> is
+ * visually hidden; the zone is the click target. Uses :has() for the
+ * drag-over state (set [data-dragging] via JS) and disabled state.
+ *
+ * Structure:
+ *   <label class="c-file-upload">
+ *     <input type="file" class="c-file-upload__input" multiple />
+ *     <span class="c-file-upload__zone">
+ *       <svg class="c-file-upload__icon">...</svg>
+ *       <span class="c-file-upload__text">
+ *         <strong>Drag files here</strong> or click to browse
+ *       </span>
+ *     </span>
+ *   </label>
+ */
+@layer porchlight.components {
+  @scope (.c-file-upload) {
+    :scope {
+      --c-upload-pad: var(--pl-space-6);
+      --c-upload-gap: var(--pl-space-3);
+      --c-upload-border: 2px dashed var(--pl-color-border);
+      --c-upload-radius: var(--pl-radius-lg);
+
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Visually hide the native input. */
+    .c-file-upload__input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .c-file-upload__zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--c-upload-gap);
+      padding: var(--c-upload-pad);
+      border: var(--c-upload-border);
+      border-radius: var(--c-upload-radius);
+      background: var(--pl-color-surface-2);
+      text-align: center;
+      transition:
+        border-color var(--pl-duration-2) var(--pl-ease-standard),
+        background-color var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    /* Hover/drag-over: accent border + subtle tint. */
+    :scope:hover .c-file-upload__zone,
+    :scope[data-dragging] .c-file-upload__zone {
+      border-color: var(--pl-color-accent);
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+    }
+
+    /* Focus ring (when the hidden input is focused). */
+    :scope:has(input:focus-visible) .c-file-upload__zone {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: 2px;
+    }
+
+    /* Disabled. */
+    :scope:has(input:disabled) {
+      cursor: not-allowed;
+
+      & .c-file-upload__zone {
+        opacity: 0.5;
+      }
+    }
+
+    .c-file-upload__icon {
+      inline-size: 2rem;
+      block-size: 2rem;
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-file-upload__text {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-file-upload__text strong {
+      color: var(--pl-color-text);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-file-upload__zone) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+  }
+}

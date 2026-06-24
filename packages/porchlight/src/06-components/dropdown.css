@@ -1,0 +1,162 @@
+/*
+ * Porchlight — dropdown component
+ * ===========================================================================
+ * A custom select replacement using the Popover API + anchor positioning.
+ * Unlike native <select>, this supports icons, descriptions, multi-select,
+ * and fully custom option rendering.
+ *
+ * The trigger uses popovertarget to open declaratively. The menu is anchored
+ * to the trigger. Options are <button> or <a> elements for keyboard access.
+ *
+ * Structure:
+ *   <div class="c-dropdown">
+ *     <button class="c-dropdown__trigger" popovertarget="dd-1">
+ *       Choose... <svg class="c-dropdown__chevron">...</svg>
+ *     </button>
+ *     <div popover class="c-dropdown__menu" id="dd-1">
+ *       <button class="c-dropdown__option" aria-selected="true">Option A</button>
+ *       <button class="c-dropdown__option">Option B</button>
+ *     </div>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.c-dropdown) {
+    :scope {
+      --c-dropdown-anchor: --pl-dropdown-anchor;
+      --c-dropdown-min-inline: 12rem;
+      --c-dropdown-max-block: 20rem;
+
+      display: inline-block;
+      position: relative;
+    }
+
+    .c-dropdown__trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      padding-inline: var(--pl-control-padding-inline);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      text-align: start;
+      cursor: pointer;
+      anchor-name: var(--c-dropdown-anchor);
+      transition: border-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-dropdown__trigger:hover {
+      border-color: var(--pl-color-accent);
+    }
+
+    .c-dropdown__trigger:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-dropdown__chevron {
+      inline-size: 1rem;
+      block-size: 1rem;
+      margin-inline-start: auto;
+      color: var(--pl-color-text-muted);
+      flex-shrink: 0;
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    .c-dropdown__trigger:has(+ .c-dropdown__menu:popover-open) .c-dropdown__chevron {
+      rotate: 180deg;
+    }
+
+    .c-dropdown__menu {
+      margin: 0;
+      padding: var(--pl-space-2);
+      min-inline-size: var(--c-dropdown-min-inline);
+      max-block-size: var(--c-dropdown-max-block);
+      overflow-y: auto;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-3);
+      opacity: 0;
+      transform: translateY(-4px);
+      transition:
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        transform var(--pl-duration-2) var(--pl-ease-standard),
+        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
+        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    @supports (position-anchor: --x) {
+      .c-dropdown__menu {
+        inset: auto;
+        position: absolute;
+        position-anchor: var(--c-dropdown-anchor);
+        position-area: block-end span-inline-end;
+        margin-block-start: var(--pl-space-1);
+      }
+    }
+
+    .c-dropdown__menu:popover-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @starting-style {
+      .c-dropdown__menu:popover-open {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+    }
+  }
+
+  /* Dropdown options — OUTSIDE @scope (live-state pseudos). */
+  :where(.c-dropdown__menu) > :is(a, button, [role="option"]) {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    inline-size: 100%;
+    min-block-size: 2.25rem;
+    padding-inline: var(--pl-space-3);
+    border: 0;
+    border-radius: var(--pl-radius-sm);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: var(--pl-text-sm);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  :where(.c-dropdown__menu) > :is(a, button, [role="option"]):is(:hover, :focus-visible) {
+    background: var(--pl-color-surface-2);
+  }
+
+  :where(.c-dropdown__menu) > :is(a, button, [role="option"]):focus-visible {
+    outline: var(--pl-focus-size) solid var(--pl-focus-color);
+    outline-offset: -2px;
+  }
+
+  :where(.c-dropdown__menu) > [aria-selected="true"] {
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-dropdown__trigger) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-dropdown__menu) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-dropdown__menu) > :is(a, button):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

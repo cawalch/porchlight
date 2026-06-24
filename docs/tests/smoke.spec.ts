@@ -607,4 +607,74 @@ test.describe("docs scaffold", () => {
     // Disabled variant exists.
     await expect(page.locator(".c-textarea-auto[disabled]")).toBeVisible();
   });
+
+  test("segmented control renders radio groups with checked state", async ({
+    page,
+  }) => {
+    await page.goto("./preview/segmented");
+    await expect(
+      page.getByRole("heading", { name: "Segmented control", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-segmented").first()).toBeVisible();
+    // Multiple radiogroups.
+    const groups = page.locator("[role='radiogroup']");
+    expect(await groups.count()).toBeGreaterThanOrEqual(3);
+    // Checked items exist.
+    await expect(page.locator(".c-segmented__item input:checked").first()).toBeAttached();
+    // Disabled item exists.
+    await expect(page.locator(".c-segmented__item input:disabled")).toBeAttached();
+  });
+
+  test("tag input renders chips and inline field", async ({ page }) => {
+    await page.goto("./preview/tag-input");
+    await expect(
+      page.getByRole("heading", { name: "Tag input", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-tag-input").first()).toBeVisible();
+    await expect(page.locator(".c-tag-input__field").first()).toBeVisible();
+    await expect(page.locator(".c-tag-input .c-chip").first()).toBeVisible();
+    await expect(page.locator(".c-chip__remove").first()).toBeVisible();
+  });
+
+  test("dropdown renders trigger and menu options", async ({ page }) => {
+    await page.goto("./preview/dropdown");
+    await expect(
+      page.getByRole("heading", { name: "Dropdown", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-dropdown__trigger").first()).toBeVisible();
+    await expect(page.locator(".c-dropdown__chevron").first()).toBeVisible();
+    // Menus exist with popover attr.
+    await expect(page.locator(".c-dropdown__menu[popover]").first()).toBeAttached();
+    // Options exist.
+    await expect(page.locator(".c-dropdown__option").first()).toBeAttached();
+  });
+
+  test("file upload renders zone with hidden input", async ({ page }) => {
+    await page.goto("./preview/file-upload");
+    await expect(
+      page.getByRole("heading", { name: "File upload", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-file-upload__zone").first()).toBeVisible();
+    await expect(page.locator(".c-file-upload__input").first()).toHaveAttribute(
+      "type",
+      "file",
+    );
+    // Disabled variant exists.
+    await expect(page.locator(".c-file-upload__input[disabled]")).toBeAttached();
+  });
+
+  test("command palette renders popover with search and items", async ({
+    page,
+  }) => {
+    await page.goto("./preview/command-palette");
+    await expect(
+      page.getByRole("heading", { name: "Command palette", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-command[popover]")).toBeAttached();
+    await expect(page.locator(".c-command__search")).toBeAttached();
+    await expect(page.locator(".c-command__item").first()).toBeAttached();
+    await expect(page.locator(".c-command__heading").first()).toBeAttached();
+    // Footer exists (may be hidden since popover is closed).
+    await expect(page.locator(".c-command__footer")).toBeAttached();
+  });
 });
