@@ -28,6 +28,7 @@
 @import "src/06-components/data-table.css";
 @import "src/06-components/tabs.css";
 @import "src/06-components/toolbar.css";
+@import "src/06-components/page-header.css";
 @import "src/06-components/pagination.css";
 @import "src/06-components/skeleton.css";
 @import "src/06-components/empty-state.css";

@@ -33,6 +33,31 @@ The `[data-visible]` attribute triggers the enter transition. Removing it
 triggers the exit. JavaScript should set this attribute when adding a toast,
 and remove it (then delete the element after the transition) on dismiss.
 
+### Timing requirement
+
+`@starting-style` only fires when a property **changes for the first time** on
+an element already in the DOM. If you insert the toast element and add
+`data-visible` in the same task/microtask (e.g. inside an Alpine `x-init`, a
+React `useEffect`, or a plain `innerHTML` assignment followed immediately by
+`setAttribute`), the browser batches both operations and `@starting-style`
+never sees the "before" state — the toast appears instantly with no animation.
+
+**Fix:** defer setting `data-visible` to the next animation frame or microtask
+after the element is in the DOM:
+
+```js
+// Vanilla JS
+stack.appendChild(toastEl);
+requestAnimationFrame(() => toastEl.setAttribute("data-visible", ""));
+
+// Alpine.js
+// x-init="$nextTick(() => $el.setAttribute('data-visible', ''))"
+```
+
+This is not a Porchlight bug — it is how `@starting-style` works per spec.
+The deferral ensures the browser registers the initial state (opacity: 0,
+translated right) before the transition to the visible state.
+
 ## Class contract
 
 | Selector            | Role                                               |

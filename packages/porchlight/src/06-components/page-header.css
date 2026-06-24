@@ -1,0 +1,60 @@
+/*
+ * Porchlight  -  page header component
+ * ===========================================================================
+ * A title + actions row for the top of a page or panel section inside a
+ * container. Unlike .c-toolbar (which is a shell-level bar designed to sit
+ * flush against an edge with padding, border, and a surface background),
+ * .c-page-header is intentionally bare: no background, no border, no padding.
+ *
+ * It is designed for use inside .l-container (which provides its own padding),
+ * where .c-toolbar would create ~65px of dead space above the content.
+ *
+ * Structure:
+ *   <div class="c-page-header">
+ *     <h1 class="c-page-header__title">Queue</h1>
+ *     <div class="c-page-header__actions">
+ *       <button class="c-button">…</button>
+ *     </div>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.c-page-header) {
+    :scope {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--pl-space-3);
+      margin-block-end: var(--pl-space-5);
+    }
+
+    .c-page-header__title {
+      margin: 0;
+      font-size: var(--pl-text-2xl);
+      font-weight: var(--pl-font-weight-bold);
+      line-height: var(--pl-leading-tight);
+    }
+
+    .c-page-header__subtitle {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+      margin-block-start: var(--pl-space-1);
+    }
+
+    /* Wrap the title + optional subtitle so they stack and the actions
+       cluster stays on the opposite side. */
+    .c-page-header__heading {
+      display: flex;
+      flex-direction: column;
+      min-inline-size: 0;
+    }
+
+    .c-page-header__actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2);
+      flex-shrink: 0;
+    }
+  }
+}

@@ -21,9 +21,11 @@
       --c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
       --c-table-min: 48rem;
 
-      /* Consistent row height (touch-safe 48px default). Density modes
-         shrink this via the compact density override below. */
-      --c-table-row-min-block-size: 3rem;
+      /* Row height derives from the global control-block-size token so that
+         body-level density (e.g. <body data-density="compact">) cascades to
+         table rows automatically  -  previously these were disconnected and
+         body-level compact left rows at their default height. */
+      --c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.5rem);
 
       /* Expose the wrap radius as a token so corner cells can inherit it
          exactly (minus 1px for the border). */
@@ -49,7 +51,12 @@
     /* Density modes. */
     :scope[data-density="compact"] {
       --c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
-      --c-table-row-min-block-size: 2.25rem;
+
+      /* Tighter offset for table-level compact: the +0.5rem default is
+         reduced to +0.25rem so rows are noticeably denser than comfortable,
+         while still deriving from --pl-control-block-size so body-level
+         density cascades through this override too. */
+      --c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.25rem);
     }
 
     .c-table {

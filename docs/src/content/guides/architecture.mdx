@@ -61,3 +61,36 @@ for accessibility-critical utilities only (visually-hidden, `[hidden]`).
 Some frameworks ship a trailing `overrides` layer for consumers. With the
 `porchlight` wrap that's redundant: overrides live in your own layers
 outside `porchlight` (or unlayered). One wrap, one mental model.
+
+## Overriding component tokens
+
+Each component defines `--c-*` tokens inside a `@scope` block (e.g.
+`@scope (.c-card) { … }`). These scoped rules look higher-specificity than a
+flat `.c-card { … }` rule in your app layer, but **layer order takes
+precedence over `@scope` proximity** in the cascade.
+
+This means you can override component tokens from plain selectors in
+`@layer app` — no specificity hacks needed:
+
+```css
+@layer app {
+  /* This wins over @scope (.c-card) because layer order beats scope. */
+  .c-card {
+    --c-card-pad: var(--pl-space-6);
+  }
+}
+```
+
+### How it works
+
+1. All Porchlight rules are in `@layer porchlight.*`.
+2. Your rules are in `@layer app` (declared after `porchlight`).
+3. The cascade resolves layers in declared order. Since `app` comes after
+   `porchlight`, any rule in `app` beats any rule in `porchlight` —
+   regardless of selector specificity or `@scope` proximity.
+4. You only need higher specificity if you're overriding **within the same
+   layer** (e.g., overriding one Porchlight component from another Porchlight
+   component). That's not a consumer concern.
+
+**Bottom line:** if your override isn't working, check that it's inside
+`@layer app` (or unlayered). Do not reach for `!important`.
