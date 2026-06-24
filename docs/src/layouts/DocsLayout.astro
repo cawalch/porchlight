@@ -40,7 +40,7 @@ const isActive = (href: string) => {
         <div class="docs-nav__section">
           <h2 class="docs-nav__heading">Getting Started</h2>
           <ul>
-            {guides.filter((g) => g.id !== 'architecture' && g.id !== 'utilities' && g.id !== 'enhancements').map((guide) => (
+            {guides.filter((g) => g.id !== 'architecture' && g.id !== 'layout' && g.id !== 'utilities' && g.id !== 'enhancements').map((guide) => (
               <li>
                 <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
                   {guide.data.title}
@@ -53,7 +53,7 @@ const isActive = (href: string) => {
         <div class="docs-nav__section">
           <h2 class="docs-nav__heading">Foundations</h2>
           <ul>
-            {guides.filter((g) => ['architecture', 'utilities', 'enhancements'].includes(g.id)).map((guide) => (
+            {guides.filter((g) => ['architecture', 'layout', 'utilities', 'enhancements'].includes(g.id)).map((guide) => (
               <li>
                 <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
                   {guide.data.title}
@@ -84,6 +84,10 @@ const isActive = (href: string) => {
           <ul>
             <li><a href={`${b}preview/dashboard`}>Dashboard</a></li>
             <li><a href={`${b}preview/settings`}>Settings</a></li>
+            <li><a href={`${b}preview/app-dashboard`}>SaaS Portal</a></li>
+            <li><a href={`${b}preview/app-inbox`}>Inbox</a></li>
+            <li><a href={`${b}preview/app-marketing`}>Marketing Page</a></li>
+            <li><a href={`${b}preview/app-shell`}>App Shell</a></li>
           </ul>
         </div>
       </nav>
