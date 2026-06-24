@@ -103,6 +103,24 @@ main {
   padding-block: clamp(2rem, 1rem + 4vi, 4rem);
 }
 
+/* App-shell pages use a full-bleed grid that owns its own layout — the
+   content-width constraint and padding above must NOT apply. */
+main:has(.l-app-shell, .inbox-shell, .hero-bleed) {
+  inline-size: 100%;
+  max-inline-size: none;
+  margin-inline: 0;
+  padding-block: 0;
+}
+
+/* Nested main inside an app shell (e.g. <main class="l-app-shell__main">)
+   also needs to be freed — global.css's main rule matches by tag name. */
+.l-app-shell__main {
+  inline-size: auto;
+  max-inline-size: none;
+  margin-inline: 0;
+  padding-block: 0;
+}
+
 .site-footer {
   padding: 2rem var(--doc-pad);
   border-block-start: 1px solid var(--pl-color-border);
