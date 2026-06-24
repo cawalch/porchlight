@@ -2,7 +2,11 @@ name: Deploy docs
 
 # Builds the docs site and deploys it to the ROOT of the gh-pages branch.
 # GitHub Pages serves the gh-pages branch (configured once in repo Settings).
-# keep_files: true preserves the per-PR previews under /pr/.
+#
+# Uses force_orphan to create a clean orphan commit each deploy. This avoids
+# non-fast-forward push failures when the PR-preview action has also pushed
+# to gh-pages between deploys. PR previews under /pr-preview/ are preserved
+# by fetching them from the remote before the clean deploy.
 on:
   push:
     branches: [main]
@@ -37,12 +41,26 @@ jobs:
         env:
           ASTRO_BASE: /porchlight/
 
-      - name: Deploy to gh-pages (root)
+      # Preserve PR previews from the existing gh-pages branch so they
+      # survive the force_orphan clean deploy.
+      - name: Preserve PR previews
+        run: |
+          git fetch origin gh-pages:gh-pages-temp 2>/dev/null || true
+          if git show-ref --verify --quiet refs/tags/gh-pages-temp 2>/dev/null \
+             || git show-ref --verify --quiet refs/remotes/origin/gh-pages 2>/dev/null; then
+            mkdir -p docs/dist/pr-preview
+            git archive gh-pages-temp pr-preview/ 2>/dev/null | tar -x -C docs/dist || true
+            echo "Preserved pr-preview/ from gh-pages"
+          else
+            echo "No existing gh-pages branch — skipping preview preservation"
+          fi
+
+      - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/dist
-          keep_files: true # preserve /pr/<n>/ previews
+          force_orphan: true
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
           commit_message: "docs: deploy site"
