@@ -152,65 +152,73 @@ main {
  * spacing). Docs pages get spacing back via .prose. But preview pages use raw
  * HTML elements directly in <main>, so they need these rules.
  *
+ * IMPORTANT: These rules are wrapped in @layer porchlight.base so that
+ * component styles in @layer porchlight.components properly override them.
+ * If these were unlayered, they would beat component styles regardless of
+ * specificity (unlayered > layered in the cascade), causing bugs like card
+ * titles getting 32px top margins.
+ *
  * Scoped via :has() so this ONLY applies when main does NOT contain a
  * .docs-shell or .prose article (those have their own spacing).
  * ------------------------------------------------------------------------- */
-main:not(:has(.docs-shell, .prose)) :where(h1) {
-  margin-block: 0 var(--pl-space-5);
-  font-size: var(--pl-text-xl);
-  font-weight: 700;
-}
+@layer porchlight.base {
+  main:not(:has(.docs-shell, .prose)) :where(h1) {
+    margin-block: 0 var(--pl-space-5);
+    font-size: var(--pl-text-xl);
+    font-weight: 700;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(h2) {
-  margin-block: var(--pl-space-8) var(--pl-space-3);
-  font-size: var(--pl-text-lg);
-  font-weight: 600;
-}
+  main:not(:has(.docs-shell, .prose)) :where(h2) {
+    margin-block: var(--pl-space-8) var(--pl-space-3);
+    font-size: var(--pl-text-lg);
+    font-weight: 600;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(h3) {
-  margin-block: var(--pl-space-6) var(--pl-space-2);
-  font-size: var(--pl-text-md);
-  font-weight: 600;
-}
+  main:not(:has(.docs-shell, .prose)) :where(h3) {
+    margin-block: var(--pl-space-6) var(--pl-space-2);
+    font-size: var(--pl-text-md);
+    font-weight: 600;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(p) {
-  margin-block: 0 var(--pl-space-4);
-  line-height: 1.6;
-}
+  main:not(:has(.docs-shell, .prose)) :where(p) {
+    margin-block: 0 var(--pl-space-4);
+    line-height: 1.6;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(ul, ol) {
-  margin-block: 0 var(--pl-space-4);
-  padding-inline-start: var(--pl-space-6);
-  line-height: 1.6;
-}
+  main:not(:has(.docs-shell, .prose)) :where(ul, ol) {
+    margin-block: 0 var(--pl-space-4);
+    padding-inline-start: var(--pl-space-6);
+    line-height: 1.6;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(li) {
-  margin-block: 0 var(--pl-space-1);
-}
+  main:not(:has(.docs-shell, .prose)) :where(li) {
+    margin-block: 0 var(--pl-space-1);
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(code) {
-  padding: 0.15rem 0.4rem;
-  border-radius: var(--pl-radius-sm);
-  background: var(--pl-color-surface-2);
-  font-size: 0.85em;
-  font-family: var(--pl-font-mono);
-}
+  main:not(:has(.docs-shell, .prose)) :where(code) {
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface-2);
+    font-size: 0.85em;
+    font-family: var(--pl-font-mono);
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(pre) {
-  margin-block: var(--pl-space-4);
-  padding: var(--pl-space-4);
-  border: 1px solid var(--pl-color-border);
-  border-radius: var(--pl-radius-lg);
-  background: var(--pl-color-surface-2);
-  overflow-x: auto;
-  font-size: var(--pl-text-sm);
-  line-height: 1.6;
-}
+  main:not(:has(.docs-shell, .prose)) :where(pre) {
+    margin-block: var(--pl-space-4);
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface-2);
+    overflow-x: auto;
+    font-size: var(--pl-text-sm);
+    line-height: 1.6;
+  }
 
-main:not(:has(.docs-shell, .prose)) :where(pre) :where(code) {
-  padding: 0;
-  background: none;
-  border: 0;
+  main:not(:has(.docs-shell, .prose)) :where(pre) :where(code) {
+    padding: 0;
+    background: none;
+    border: 0;
+  }
 }
 
 /* Preview gallery. */
