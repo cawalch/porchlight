@@ -1,100 +1,174 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// A realistic SaaS table — accounts with plans, status, MRR, seats.
-const accounts = [
-  ['Acme Ops', 'Enterprise', 'Active', '$2,400', 48],
-  ['Northwind', 'Pro', 'Trialing', '$980', 12],
-  ['Globex', 'Pro', 'Past due', '$980', 8],
-  ['Initech', 'Team', 'Active', '$420', 5],
-  ['Umbrella', 'Enterprise', 'Active', '$2,400', 60],
-  ['Stark Industries', 'Pro', 'Active', '$980', 14],
-  ['Wayne Enterprises', 'Enterprise', 'Trialing', '$2,400', 32],
-  ['Hooli', 'Team', 'Past due', '$420', 4],
-] as const;
+const rows = [
+  { name: 'Acme Ops', plan: 'Enterprise', status: 'Active', mrr: '$2,400', seats: 48, created: '2024-03-15' },
+  { name: 'Northwind', plan: 'Pro', status: 'Trialing', mrr: '$980', seats: 12, created: '2024-08-02' },
+  { name: 'Globex', plan: 'Pro', status: 'Active', mrr: '$980', seats: 8, created: '2024-01-22' },
+  { name: 'Initech', plan: 'Team', status: 'Past due', mrr: '$420', seats: 5, created: '2024-11-10' },
+  { name: 'Umbrella', plan: 'Enterprise', status: 'Active', mrr: '$2,400', seats: 60, created: '2023-06-01' },
+];
+
+const toneFor = (s: string) =>
+  ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[s] ?? 'accent');
 ---
 <BaseLayout title="Data table · Porchlight">
   <h1>Data table</h1>
   <p>
-    An enterprise data table — sticky headers, horizontal scroll with a stable
-    scrollbar gutter, container-query padding, row hover, and numeric column
-    alignment. Wrap a native <code>&lt;table class="c-table"&gt;</code> in a
-    <code>.c-table-wrap</code> for the scroll behavior. This is the most
-    data-heavy component — SaaS apps live in tables.
+    Enterprise data table with sortable headers, row selection checkboxes,
+    expandable detail rows, sticky first column, density modes, and loading
+    state. All features are additive CSS on the existing component.
   </p>
 
-  <h2>Account list</h2>
-  <div class="c-table-wrap">
+  <h2>Full-featured table</h2>
+  <div class="c-table-wrap" data-density="comfortable">
     <table class="c-table">
       <thead>
         <tr>
-          <th>Account</th>
+          <th class="c-table__check">
+            <input type="checkbox" aria-label="Select all" />
+          </th>
+          <th class="c-table__sticky-col" data-sort="asc">
+            Account <span class="c-table__sort-icon"></span>
+          </th>
+          <th data-sort="desc">
+            Created <span class="c-table__sort-icon"></span>
+          </th>
           <th>Plan</th>
           <th>Status</th>
-          <th data-align="end">MRR</th>
-          <th data-align="end">Seats</th>
+          <th data-align="end" data-sort>
+            Seats <span class="c-table__sort-icon"></span>
+          </th>
+          <th data-align="end" data-sort>
+            MRR <span class="c-table__sort-icon"></span>
+          </th>
+          <th data-align="center"></th>
         </tr>
       </thead>
       <tbody>
-        {accounts.map(([name, plan, status, mrr, seats], i) => (
-          <tr aria-selected={i === 0 ? 'true' : undefined}>
-            <td>{name}</td>
-            <td>{plan}</td>
-            <td><span class="c-badge" data-tone={status.toLowerCase().replace(' ', '-')}>{status}</span></td>
-            <td data-align="end">{mrr}</td>
-            <td data-align="end">{seats}</td>
-          </tr>
+        {rows.map((r, i) => (
+          <>
+            <tr aria-selected={i === 0 ? 'true' : undefined}>
+              <td class="c-table__check">
+                <input type="checkbox" checked={i === 0} aria-label={`Select ${r.name}`} />
+              </td>
+              <td class="c-table__sticky-col">{r.name}</td>
+              <td>{r.created}</td>
+              <td>{r.plan}</td>
+              <td>
+                <span class="c-badge" data-tone={toneFor(r.status)}>{r.status}</span>
+              </td>
+              <td data-align="end">{r.seats}</td>
+              <td data-align="end">{r.mrr}</td>
+              <td data-align="center">
+                <button
+                  class="c-table__expand"
+                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  aria-label={`Expand ${r.name}`}
+                  data-expand={i}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            <tr class="c-table__detail" open={i === 0} data-detail={i}>
+              <td colspan="99">
+                <div class="c-table__detail-inner">
+                  <div class="c-table__detail-content">
+                    <div class="l-grid" style="--l-grid-min: 12rem;">
+                      <div>
+                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Account ID</p>
+                        <p>acct_{1000 + i}</p>
+                      </div>
+                      <div>
+                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Owner</p>
+                        <p>{r.name.split(' ').map(w => w[0]).join('')} Admin</p>
+                      </div>
+                      <div>
+                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Region</p>
+                        <p>us-east-1</p>
+                      </div>
+                      <div>
+                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">API calls (30d)</p>
+                        <p>{(r.seats * 1247).toLocaleString()}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </>
         ))}
       </tbody>
     </table>
   </div>
 
-  <h2>Horizontal scroll</h2>
-  <p>The table below has more columns than the panel can show — scroll horizontally. The stable gutter prevents layout shift.</p>
-  <div class="c-table-wrap narrow" style="--c-table-min: 60rem;">
-    <table class="c-table">
+  <h2>Compact density</h2>
+  <p>Same data with <code>data-density="compact"</code> for tighter rows.</p>
+  <div class="c-table-wrap" data-density="compact">
+    <table class="c-table" style="--c-table-min: 36rem;">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
+          <th class="c-table__sticky-col" data-sort="asc">
+            Name <span class="c-table__sort-icon"></span>
+          </th>
           <th>Plan</th>
-          <th>Status</th>
-          <th data-align="end">MRR</th>
-          <th data-align="end">Seats</th>
-          <th data-align="end">Created</th>
+          <th data-align="end" data-sort="desc">
+            Seats <span class="c-table__sort-icon"></span>
+          </th>
         </tr>
       </thead>
       <tbody>
-        {accounts.slice(0, 4).map(([name, plan, status, mrr, seats], i) => (
+        {rows.map((r) => (
           <tr>
-            <td>ACC-{1001 + i}</td>
-            <td>{name}</td>
-            <td>billing@{name.toLowerCase().replace(/[^a-z]/g, '')}.com</td>
-            <td>{plan}</td>
-            <td>{status}</td>
-            <td data-align="end">{mrr}</td>
-            <td data-align="end">{seats}</td>
-            <td data-align="end">2024-0{1 + i}-15</td>
+            <td class="c-table__sticky-col">{r.name}</td>
+            <td>{r.plan}</td>
+            <td data-align="end">{r.seats}</td>
           </tr>
         ))}
       </tbody>
     </table>
   </div>
 
-  <h2>Features</h2>
-  <ul>
-    <li><strong>Sticky headers</strong> — stay pinned while the body scrolls.</li>
-    <li><strong>Row hover</strong> — a subtle <code>surface-2</code> wash aids scanning.</li>
-    <li><strong>Numeric columns</strong> — <code>data-align="end"</code> right-aligns + uses <code>tabular-nums</code>.</li>
-    <li><strong>Selection</strong> — <code>aria-selected="true"</code> gets an accent wash (first row above).</li>
-    <li><strong>Container-query padding</strong> — tightens when the wrap is narrow.</li>
-  </ul>
+  <h2>Loading state</h2>
+  <p>Skeleton rows while data is fetching.</p>
+  <div class="c-table-wrap">
+    <table class="c-table" style="--c-table-min: 36rem;">
+      <thead>
+        <tr>
+          <th class="c-table__sticky-col">Account</th>
+          <th>Plan</th>
+          <th data-align="end">MRR</th>
+        </tr>
+      </thead>
+      <tbody data-loading>
+        {[1, 2, 3].map(() => (
+          <tr>
+            <td class="c-table__sticky-col"><span class="c-skeleton" data-shape="text" style="inline-size: 8rem;"></span></td>
+            <td><span class="c-skeleton" data-shape="text" style="inline-size: 5rem;"></span></td>
+            <td data-align="end"><span class="c-skeleton" data-shape="text" style="inline-size: 4rem;"></span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 </BaseLayout>
 
-<style>
-  /* A narrow wrap to force horizontal scroll at desktop width. */
-  .narrow {
-    max-inline-size: 100%;
-  }
-</style>
+<script>
+  // Docs-only: expand/collapse detail rows.
+  document.querySelectorAll('[data-expand]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = btn.getAttribute('data-expand');
+      const detail = document.querySelector(`[data-detail="${idx}"]`);
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (expanded) {
+        detail?.removeAttribute('open');
+      } else {
+        detail?.setAttribute('open', '');
+      }
+    });
+  });
+</script>

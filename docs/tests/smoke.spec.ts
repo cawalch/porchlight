@@ -205,7 +205,7 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // Headers are real <th> with scope.
     await expect(
-      page.getByRole("columnheader", { name: "Account" }),
+      page.getByRole("columnheader", { name: "Account" }).first(),
     ).toBeVisible();
     // Body rows render (first account).
     await expect(page.getByText("Acme Ops").first()).toBeVisible();
@@ -214,6 +214,31 @@ test.describe("docs scaffold", () => {
       "aria-selected",
       "true",
     );
+  });
+
+  test("data table has sortable headers, checkboxes, and expandable rows", async ({
+    page,
+  }) => {
+    await page.goto("./preview/data-table");
+    // Sortable headers exist with arrows.
+    await expect(page.locator("th[data-sort='asc']").first()).toBeVisible();
+    await expect(page.locator("th[data-sort='desc']").first()).toBeVisible();
+    await expect(page.locator(".c-table__sort-icon").first()).toBeAttached();
+    // Checkbox column cells exist.
+    await expect(page.locator(".c-table__check input[type='checkbox']").first()).toBeVisible();
+    // Expand buttons exist.
+    await expect(page.locator(".c-table__expand").first()).toBeVisible();
+    // Detail rows exist, first one open by default.
+    const details = page.locator(".c-table__detail");
+    expect(await details.count()).toBeGreaterThanOrEqual(3);
+    await expect(details.first()).toHaveAttribute("open");
+    // Sticky column exists.
+    await expect(page.locator(".c-table__sticky-col").first()).toBeVisible();
+    // Compact density table exists.
+    await expect(page.locator(".c-table-wrap[data-density='compact']")).toBeVisible();
+    // Loading state exists.
+    await expect(page.locator("tbody[data-loading]")).toBeVisible();
+    await expect(page.locator("tbody[data-loading] .c-skeleton").first()).toBeVisible();
   });
 
   test("utilities page renders every utility", async ({ page }) => {

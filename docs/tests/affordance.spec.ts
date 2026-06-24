@@ -215,3 +215,38 @@ test("chip tones are visually distinct", async ({ page }) => {
     ).toBeGreaterThanOrEqual(0.02);
   }
 });
+
+/* ------------------------------------------------------------------
+ * Data table: sortable header arrows must differ by direction.
+ * ------------------------------------------------------------------ */
+test("data table sort arrows differ between asc and desc", async ({ page }) => {
+  await page.goto("./preview/data-table");
+
+  const borders = await page.evaluate(() => {
+    const ascIcon = document.querySelector(
+      "th[data-sort='asc'] .c-table__sort-icon",
+    ) as HTMLElement;
+    const descIcon = document.querySelector(
+      "th[data-sort='desc'] .c-table__sort-icon",
+    ) as HTMLElement;
+    if (!ascIcon || !descIcon) return null;
+    const ascStyle = getComputedStyle(ascIcon);
+    const descStyle = getComputedStyle(descIcon);
+    return {
+      ascBorderBottom: ascStyle.borderBottomWidth,
+      ascBorderTop: ascStyle.borderTopWidth,
+      descBorderBottom: descStyle.borderBottomWidth,
+      descBorderTop: descStyle.borderTopWidth,
+    };
+  });
+
+  console.log("[table-sort]", borders);
+
+  expect(borders).not.toBeNull();
+  // Ascending arrow has a bottom border (triangle pointing up), no top.
+  expect(borders!.ascBorderBottom).not.toBe("0px");
+  expect(borders!.ascBorderTop).toBe("0px");
+  // Descending arrow has a top border (triangle pointing down), no bottom.
+  expect(borders!.descBorderTop).not.toBe("0px");
+  expect(borders!.descBorderBottom).toBe("0px");
+});

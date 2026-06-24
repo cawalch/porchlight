@@ -2,22 +2,25 @@
  * Porchlight — data table component
  * ===========================================================================
  * An enterprise data table: sticky headers, horizontal scroll with a stable
- * scrollbar gutter, container-query padding, and a hover affordance on rows.
- * This is the final Phase 3 component and the most data-heavy — SaaS apps
- * live in tables.
+ * scrollbar gutter, container-query padding, hover/selection affordances,
+ * sortable columns, row selection (checkbox column), expandable detail rows,
+ * sticky first column, and density modes.
  *
  * Structure: .c-table-wrap (the scroll container + query container) wraps a
  * native <table class="c-table">. The wrap handles overflow + the gutter; the
  * table sets column min-widths and cell geometry. Sticky headers stay pinned
  * while the body scrolls.
  *
- * Horizontal scroll is the SaaS reality (wide data); scrollbar-gutter: stable
- * prevents layout shift when the bar appears. Row hover (via :hover on tbody
- * tr) aids scanning dense rows.
+ * Density via [data-density] on .c-table-wrap:
+ *   compact: tighter rows for high information density
+ *   comfortable (default): standard spacing
  */
 @layer porchlight.components {
   @scope (.c-table-wrap) {
     :scope {
+      --c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
+      --c-table-min: 48rem;
+
       container: c-table-wrap / inline-size;
       overflow: auto;
       scrollbar-gutter: stable;
@@ -26,24 +29,23 @@
       background: var(--pl-color-surface);
     }
 
+    /* Density modes. */
+    :scope[data-density="compact"] {
+      --c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
+    }
+
     .c-table {
       inline-size: 100%;
-
-      /* The table can be wider than the wrap (horizontal scroll). Min keeps
-         columns readable rather than squished. */
-      min-inline-size: var(--c-table-min, 48rem);
+      min-inline-size: var(--c-table-min);
       border-collapse: separate;
       border-spacing: 0;
     }
 
     .c-table :where(th, td) {
-      padding: var(--pl-space-3) var(--pl-space-4);
+      padding: var(--c-table-cell-pad);
       border-block-end: 1px solid var(--pl-color-border);
       text-align: start;
       vertical-align: middle;
-
-      /* nowrap for data cells keeps tabular columns aligned; long text wraps
-         only where you add a modifier (future). */
       white-space: nowrap;
     }
 
@@ -59,19 +61,17 @@
       font-size: var(--pl-text-sm);
       font-weight: 600;
       color: var(--pl-color-text-muted);
-
-      /* Keep the header border visible above the first scrolling row. */
-      border-block-end: 1px solid var(--pl-color-border);
+      border-block-end: 2px solid var(--pl-color-border);
     }
 
-    /* Tighten cell padding when the wrap is narrow (container query). */
+    /* Tighten padding when the wrap is narrow. */
     @container c-table-wrap (inline-size < 40rem) {
       .c-table :where(th, td) {
-        padding-inline: var(--pl-space-3);
+        padding-inline: var(--pl-space-2);
       }
     }
 
-    /* Numeric columns — right-align for tabular scanning (counts, currency). */
+    /* Numeric columns. */
     .c-table :where([data-align="end"]) {
       text-align: end;
       font-variant-numeric: tabular-nums;
@@ -80,11 +80,163 @@
     .c-table :where([data-align="center"]) {
       text-align: center;
     }
+
+    /* ---------------------------------------------------------------
+     * Sortable headers
+     * ---------------------------------------------------------------
+     * Add [data-sort="asc"|"desc"] to a <th> to show a direction arrow.
+     * Unsortable <th> (no data-sort) shows nothing. The arrow is a
+     * pure-CSS triangle via border.
+     */
+    .c-table th[data-sort] {
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        color: var(--pl-color-text);
+      }
+    }
+
+    .c-table__sort-icon {
+      display: inline-block;
+      inline-size: 0;
+      block-size: 0;
+      margin-inline-start: var(--pl-space-1);
+      border-inline-start: 0.25rem solid transparent;
+      border-inline-end: 0.25rem solid transparent;
+      opacity: 0.4;
+      transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    /* Ascending: pointing up. */
+    .c-table th[data-sort="asc"] .c-table__sort-icon {
+      border-block-end: 0.3rem solid currentColor;
+      border-block-start: 0;
+      opacity: 1;
+    }
+
+    /* Descending: pointing down. */
+    .c-table th[data-sort="desc"] .c-table__sort-icon {
+      border-block-start: 0.3rem solid currentColor;
+      border-block-end: 0;
+      opacity: 1;
+    }
+
+    /* ---------------------------------------------------------------
+     * Checkbox column (row selection)
+     * ---------------------------------------------------------------
+     * Add .c-table__check to a <th> or <td> for a narrow centered cell
+     * containing a native checkbox. The header checkbox is select-all.
+     */
+    .c-table .c-table__check {
+      inline-size: 2.5rem;
+      min-inline-size: 2.5rem;
+      text-align: center;
+    }
+
+    .c-table .c-table__check input[type="checkbox"] {
+      inline-size: 1rem;
+      block-size: 1rem;
+      accent-color: var(--pl-color-accent);
+      cursor: pointer;
+    }
+
+    /* ---------------------------------------------------------------
+     * Expandable detail rows
+     * ---------------------------------------------------------------
+     * A row with .c-table__detail is collapsed by default. Add [open]
+     * (or data-open) to expand. Uses the grid-template-rows technique
+     * for smooth animation without interpolate-size.
+     */
+    .c-table .c-table__detail td {
+      padding: 0;
+      border-block-end: 1px solid var(--pl-color-border);
+      background: var(--pl-color-surface-2);
+    }
+
+    .c-table__detail-inner {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows var(--pl-duration-3) var(--pl-ease-standard);
+    }
+
+    .c-table .c-table__detail[open] .c-table__detail-inner {
+      grid-template-rows: 1fr;
+    }
+
+    .c-table__detail-content {
+      overflow: hidden;
+      padding: var(--pl-space-4);
+    }
+
+    /* The expand/collapse toggle button in a row. */
+    .c-table__expand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      cursor: pointer;
+      transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-table__expand:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-table__expand:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-table__expand svg {
+      inline-size: 0.875rem;
+      block-size: 0.875rem;
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    .c-table__expand[aria-expanded="true"] svg {
+      rotate: 180deg;
+    }
+
+    /* ---------------------------------------------------------------
+     * Sticky first column
+     * ---------------------------------------------------------------
+     * Add .c-table__sticky-col to <th>/<td> elements in the first
+     * column to keep them visible during horizontal scroll.
+     */
+    .c-table .c-table__sticky-col {
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: calc(var(--pl-z-raised) + 1);
+      background: var(--pl-color-surface);
+    }
+
+    /* Sticky header + sticky column intersection needs higher z-index. */
+    .c-table th.c-table__sticky-col {
+      z-index: calc(var(--pl-z-raised) + 2);
+    }
+
+    /* Shadow on the trailing edge of the sticky column for depth. */
+    .c-table .c-table__sticky-col:not(:last-child) {
+      box-shadow: inset -1px 0 var(--pl-color-border);
+    }
+
+    /* Inherit hover/selection background through the sticky column. */
+    :where(.c-table) tbody tr:hover .c-table__sticky-col,
+    :where(.c-table) tbody tr[aria-selected="true"] .c-table__sticky-col {
+      background: inherit;
+    }
   }
 
-  /* Row hover — OUTSIDE @scope (live-state pseudo on tbody tr doesn't reliably
-     apply inside @scope; same lesson as .c-field item hovers). A subtle
-     surface-2 wash aids scanning without screaming. */
+  /* Row hover — OUTSIDE @scope (live-state pseudo on tbody tr). */
   :where(.c-table) tbody tr {
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
   }
@@ -93,14 +245,23 @@
     background: var(--pl-color-surface-2);
   }
 
-  /* Selection — a row carrying [aria-selected="true"] gets an accent wash. */
+  /* Selection. */
   :where(.c-table) tbody tr[aria-selected="true"] {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+  }
+
+  /* Loading state: suppress hover effects on skeleton rows. */
+  :where(.c-table) tbody[data-loading] tr {
+    pointer-events: none;
   }
 
   @media (forced-colors: active) {
     :where(.c-table) :where(th, td) {
       border-block-end-color: CanvasText;
+    }
+
+    :where(.c-table__sticky-col) {
+      border-inline-end: 1px solid CanvasText;
     }
   }
 }
