@@ -86,6 +86,7 @@
      stays as the neutral field edge. (The previous `0 0 0 4px` had no blur,
      so it was a hard translucent ring, not the intended glow.) */
   :where(.c-field) .c-field__control:focus-visible {
+    outline: none;
     border-color: var(--pl-focus-color);
     box-shadow: 0 0 0 4px
       color-mix(in oklab, var(--pl-focus-color), transparent 85%);
