@@ -1,6 +1,6 @@
 {
   "name": "@cawalch/porchlight",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A no-dependency, native-CSS framework for building accessible, themeable web applications.",
   "license": "MIT",
   "type": "module",
@@ -33,7 +33,10 @@
     "*.css"
   ],
   "exports": {
-    ".": "./porchlight.css",
+    ".": "./dist/porchlight.css",
+    "./css": "./dist/porchlight.css",
+    "./min": "./dist/porchlight.min.css",
+    "./source": "./porchlight.css",
     "./porchlight.css": "./porchlight.css",
     "./dist": "./dist/porchlight.css",
     "./dist/porchlight.css": "./dist/porchlight.css",
