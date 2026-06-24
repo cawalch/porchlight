@@ -31,7 +31,7 @@
       gap: var(--c-segmented-gap);
       padding: var(--c-segmented-pad);
       border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-segmented-radius, var(--pl-radius-pill));
+      border-radius: var(--c-segmented-radius);
       background: var(--pl-color-surface-2);
     }
 

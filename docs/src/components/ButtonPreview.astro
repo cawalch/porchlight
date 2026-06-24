@@ -1,11 +1,11 @@
 ---
 // Live, interactive button demo embedded in the component doc page.
-const variants = ['primary', 'secondary', 'ghost'] as const;
 ---
 <div class="l-cluster demo">
-  {variants.map((v) => (
-    <button type="button" class="c-button" data-variant={v}>{v}</button>
-  ))}
+  <button type="button" class="c-button">default</button>
+  <button type="button" class="c-button" data-variant="primary">primary</button>
+  <button type="button" class="c-button" data-variant="secondary">secondary</button>
+  <button type="button" class="c-button" data-variant="ghost">ghost</button>
   <button type="button" class="c-button" data-variant="primary" aria-pressed="true">pressed</button>
   <button type="button" class="c-button" data-variant="primary" disabled>disabled</button>
 </div>

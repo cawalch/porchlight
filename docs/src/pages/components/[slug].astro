@@ -17,7 +17,7 @@ const title = `${entry.data.title} · Porchlight`;
 ---
 <DocsLayout title={title} description={entry.data.description}>
   <article class="prose">
-    <p><a href={`${import.meta.env.BASE_URL}preview/${entry.id}`}>View live preview</a></p>
+    <a href={`${import.meta.env.BASE_URL}preview/${entry.id}`} class="c-button" data-variant="secondary" style="float: right; margin-block-start: 0.25rem;">View live preview</a>
     <Content />
   </article>
 </DocsLayout>

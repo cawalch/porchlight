@@ -6,8 +6,8 @@
  * default to framework semantic tokens, so an app can theme one button or all
  * of them without leaving the component.
  *
- * Variants: [data-variant="primary" | "secondary" | "ghost"] (default =
- * secondary). States: hover, active, aria-pressed, disabled / aria-disabled,
+ * Variants: [data-variant="primary" | "secondary" | "ghost"] (default = none,
+ * white surface with border). States: hover, active, aria-pressed, disabled / aria-disabled,
  * focus-visible (inherited outline from base, never removed). Density comes
  * for free from --pl-control-* (set [data-density] on an ancestor).
  *
