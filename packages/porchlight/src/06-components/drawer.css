@@ -43,8 +43,8 @@
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
 
       /* Animation: slide + fade. Asymmetric: enters deliberately, exits snappily. */
@@ -84,8 +84,8 @@
     /* Backdrop scrim (native ::backdrop on popovers). Stronger tint + blur
        contrasts against the translucent drawer surface. */
     :scope::backdrop {
-      background: oklch(0% 0 0deg / 55%);
-      backdrop-filter: blur(4px) saturate(80%);
+      background: var(--pl-color-scrim);
+      backdrop-filter: blur(var(--pl-backdrop-blur-scrim)) saturate(var(--pl-backdrop-saturate-scrim));
     }
 
     /* Layout inside the drawer. */
@@ -106,7 +106,7 @@
 
     .c-drawer__title {
       font-size: var(--pl-text-lg);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
     }
 
     .c-drawer__body {

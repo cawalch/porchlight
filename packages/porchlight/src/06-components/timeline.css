@@ -95,7 +95,7 @@
 
     .c-timeline__title {
       font-size: var(--pl-text-sm);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
     }
 
     .c-timeline__time {

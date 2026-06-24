@@ -46,7 +46,7 @@
       border-radius: var(--pl-radius-md);
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
-      font-weight: 500;
+      font-weight: var(--pl-font-weight-medium);
       text-decoration: none;
       cursor: pointer;
       transition:
@@ -72,9 +72,9 @@
     .c-nav__item[aria-current="true"] {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       border-radius: 0 var(--pl-radius-md) var(--pl-radius-md) 0;
-      box-shadow: inset 3px 0 0 var(--pl-color-accent);
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
     /* Nested item (inside a section). */
@@ -120,7 +120,7 @@
       border-radius: var(--pl-radius-md);
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
-      font-weight: 500;
+      font-weight: var(--pl-font-weight-medium);
       cursor: pointer;
       user-select: none;
       list-style: none;

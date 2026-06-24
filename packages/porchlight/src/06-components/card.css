@@ -64,7 +64,7 @@
         var(--pl-color-surface) 94%
       );
       box-shadow:
-        inset 4px 0 0 var(--pl-color-accent),
+        inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent),
         var(--pl-shadow-1);
     }
 
@@ -107,7 +107,7 @@
     .c-card__title {
       margin: 0;
       font-size: var(--pl-text-lg);
-      font-weight: 700;
+      font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
       text-wrap: balance;
     }
@@ -173,7 +173,7 @@
     :scope[href]:focus-visible {
       outline: none;
       box-shadow:
-        0 0 0 2px var(--pl-focus-color),
+        0 0 0 var(--pl-focus-size) var(--pl-focus-color),
         var(--pl-shadow-2);
     }
   }

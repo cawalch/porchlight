@@ -37,7 +37,7 @@
       background: var(--c-button-bg);
       color: var(--c-button-fg);
       font-family: inherit;
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       line-height: 1;
       text-align: center;
       text-decoration: none;
@@ -151,7 +151,7 @@
     }
 
     :scope:is(:disabled, [aria-disabled="true"]) {
-      opacity: 0.55;
+      opacity: var(--pl-opacity-disabled);
       cursor: not-allowed;
       box-shadow: none;
     }

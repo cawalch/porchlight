@@ -46,7 +46,7 @@
     .c-empty__title {
       margin: 0;
       font-size: var(--pl-text-lg);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       color: var(--pl-color-text);
       text-wrap: balance;
     }

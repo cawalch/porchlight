@@ -90,8 +90,8 @@
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
 
       /* Asymmetric motion. */
@@ -154,13 +154,13 @@
 
   :where(.c-dropdown__menu) > :is(a, button, [role="option"]):focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
-    outline-offset: -2px;
+    outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   /* Selected option: accent color + subtle tint background for clarity. */
   :where(.c-dropdown__menu) > [aria-selected="true"] {
     color: var(--pl-color-accent);
-    font-weight: 600;
+    font-weight: var(--pl-font-weight-semibold);
     background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
   }
 

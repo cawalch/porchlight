@@ -27,7 +27,7 @@
       background: var(--pl-color-accent);
       color: var(--pl-color-accent-text);
       font-size: calc(var(--c-avatar-size) * 0.4);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       line-height: 1;
       overflow: hidden;
       user-select: none;
@@ -91,7 +91,7 @@
     background: var(--pl-color-surface-2);
     color: var(--pl-color-text-muted);
     font-size: calc(var(--c-avatar-group-size, 2.5rem) * 0.4);
-    font-weight: 600;
+    font-weight: var(--pl-font-weight-semibold);
     margin-inline-start: calc(var(--c-avatar-group-size, 2.5rem) * -0.35);
   }
 

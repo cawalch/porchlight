@@ -75,7 +75,7 @@
       cursor: not-allowed;
 
       & .c-file-upload__zone {
-        opacity: 0.5;
+        opacity: var(--pl-opacity-disabled);
       }
     }
 

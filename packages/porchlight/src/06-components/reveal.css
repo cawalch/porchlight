@@ -49,6 +49,16 @@
     }
   }
 
+  /* Under forced colors, ensure content is always visible (no scroll-gated
+     animations that could leave content invisible in high-contrast mode). */
+  @media (forced-colors: active) {
+    :where(.c-reveal) {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   @keyframes c-reveal-enter {
     from {
       opacity: 0;

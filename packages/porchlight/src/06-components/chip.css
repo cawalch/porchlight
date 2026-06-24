@@ -37,8 +37,8 @@
       background: var(--c-chip-bg);
       color: var(--c-chip-text);
       font-size: var(--pl-text-xs);
-      font-weight: 500;
-      line-height: 1.3;
+      font-weight: var(--pl-font-weight-medium);
+      line-height: var(--pl-leading-snug);
       white-space: nowrap;
     }
 
@@ -126,7 +126,7 @@
 
     .c-chip__remove:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
-      outline-offset: 1px;
+      outline-offset: calc(var(--pl-focus-offset) / 2);
     }
   }
 

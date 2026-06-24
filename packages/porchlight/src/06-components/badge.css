@@ -16,14 +16,14 @@
       display: inline-flex;
       align-items: center;
       gap: var(--pl-space-1);
-      min-block-size: 1.5rem;
+      min-block-size: var(--pl-space-6);
       padding-inline: var(--pl-space-2);
       border-radius: var(--pl-radius-pill);
 
       /* Pill radius with a dot often looks better than 999rem for small
          labels; pill is the framework's "fully rounded" token. */
       font-size: var(--pl-text-xs);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       line-height: 1;
 
       /* Optical alignment so the label sits centered without inline overshoot. */
