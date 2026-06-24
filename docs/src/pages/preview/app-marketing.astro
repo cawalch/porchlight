@@ -151,15 +151,10 @@ const testimonials = [
       font-weight: 600;
       margin-block-end: var(--pl-space-2);
     }
-    /* Break out of main constraint */
-    :global(main:has(.hero-bleed)) {
-      inline-size: 100%;
-      max-inline-size: none;
-      margin-inline: 0;
-      padding-block: 0;
-    }
-    /* Restore spacing for elements inside the broken-out main */
-    :global(main:has(.hero-bleed)) pre {
+    /* Full-bleed layout handled centrally in global.css. */
+
+    /* Code block styling. */
+    .hero-bleed pre {
       margin-block: var(--pl-space-3);
       padding: var(--pl-space-4);
       border: 1px solid var(--pl-color-border);
@@ -168,6 +163,5 @@ const testimonials = [
       overflow-x: auto;
       font-size: var(--pl-text-sm);
       font-family: var(--pl-font-mono);
-    }
   </style>
 </BaseLayout>

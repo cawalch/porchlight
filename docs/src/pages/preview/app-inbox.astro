@@ -223,10 +223,6 @@ const messages = [
       margin-block-end: var(--pl-space-3);
       line-height: 1.6;
     }
-    /* Break out of main constraint to a wider layout */
-    :global(main:has(.inbox-shell)) {
-      inline-size: min(100% - 2 * var(--doc-pad), 80rem);
-      margin-inline: auto;
-    }
+    /* Docs content constraint handled by global.css. */
   </style>
 </BaseLayout>

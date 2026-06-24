@@ -250,12 +250,7 @@ const toneFor = (s: string) =>
       gap: var(--pl-space-4);
       flex-wrap: wrap;
     }
-    /* The app shell needs to break out of main's width constraint */
-    :global(main:has(.l-app-shell)) {
-      inline-size: 100%;
-      max-inline-size: none;
-      margin-inline: 0;
-      padding-block: 0;
-    }
+    /* Break out of main constraint to a wider layout
+       (handled centrally in global.css via main:has(> .l-app-shell)). */
   </style>
 </BaseLayout>
