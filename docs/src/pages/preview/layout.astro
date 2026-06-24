@@ -179,8 +179,19 @@ const rows = [
 </script>
 
 <style>
-  /* Docs chrome to make the *layout* visible — these stand in for real
-     components (Phase 3) and are intentionally plain. */
+  /* Consistent vertical rhythm between all demo sections. */
+  .widget-grid,
+  .action-bar,
+  .demo-panel,
+  .data-pane,
+  .container-demo,
+  .columns-demo,
+  .bleed-demo,
+  .layout-table {
+    margin-block-end: var(--pl-space-8);
+  }
+
+  /* Docs chrome to make the layout visible. */
   .widget-grid {
     --l-grid-min: 13rem;
   }

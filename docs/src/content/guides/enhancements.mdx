@@ -1,69 +1,87 @@
 ---
 title: Enhancements
-description: Tier B modern CSS, all @supports-gated. The framework is fully usable without them; they layer on where the browser supports them.
-order: 3
+description: Progressive enhancement features gated behind @supports. The framework works without them; they add polish where the browser supports them.
+order: 4
 ---
 
 # Enhancements
 
-The enhancements layer is **Tier B** modern CSS, all gated behind
-`@supports`. The framework is fully usable without any of these; they layer
-on where the browser supports them, with zero behavior change where it
-doesn't. Nothing here is in the critical path.
-
-Each block stands alone and degrades cleanly. Open the
-[`/preview/enhancements`](../../preview/enhancements) page in Chrome 149+ to
-see them; older browsers see the plain versions.
+Porchlight includes a set of progressive enhancement features that activate
+only where the browser supports them. Every enhancement is gated behind
+`@supports`, so unsupported browsers simply render the base styles with no
+visual breakage. These features are never required for a component to
+function.
 
 ## `interpolate-size: allow-keywords`
 
-Set on `:root` where supported. Allows height/width to animate to/from `auto`
-and content-keyword sizes. The foundation for native disclosure/collapsible
-animations and `@starting-style` on auto-sized elements.
+Allows `height` and `width` to animate to and from `auto` and `content`
+keywords. This enables smooth expand/collapse animations on accordion panels,
+detail rows, and other auto-sized elements without JavaScript measurement.
 
-## Scroll-state sticky-shell shadow
+Set globally on `:root` where supported. The accordion and expandable table
+rows use this for smoother animations, with a `grid-template-rows` fallback
+when unavailable.
 
-A sticky bar that gains an elevation shadow when it scrolls to the top of its
-container. The entire "app-bar shadow on scroll" pattern in pure CSS: no JS
-scroll listener, no IntersectionObserver.
+## Sticky shell shadow
+
+A scroll container wrapper that adds an elevation shadow to its sticky child
+when the child is stuck to the top. Replaces the JavaScript scroll-listener
+pattern entirely.
 
 ```html
 <div class="c-sticky-shell">
   <header class="c-sticky-shell__bar">Sticky bar</header>
-  <!-- content -->
+  <!-- scrolling content -->
 </div>
 ```
 
-Wrap any scroll region in `.c-sticky-shell` and put the sticky element in
-`.c-sticky-shell__bar`. The bar gets `box-shadow-2` + a translucent
-`backdrop-filter: blur` background when stuck.
+Wrap any scroll region in `.c-sticky-shell` and place the sticky element in
+`.c-sticky-shell__bar`. When the bar becomes stuck, it gains `box-shadow-2`
+plus a translucent `backdrop-filter: blur` background.
 
 ## `text-box` optical alignment
 
 Buttons, badges, and the dialog close button trim the cap-height half-leading
-(`text-box: trim-both cap alphabetic`) so single-line labels sit visually
-centered without the inline-box overshoot that makes controls look ~1px off.
-Subtle but real.
+via `text-box: trim-both cap alphabetic`. This removes the ~1px inline-box
+overshoot that makes single-line labels appear slightly off-center. The
+effect is subtle but improves the precision of control alignment.
+
+No action needed from you; this applies automatically to the listed
+components where supported.
 
 ## Grid dividers
 
-Vertical dividers between grid items, drawn purely in the gap (the gap stays).
-Opt in with `data-dividers="true"` on `.l-grid`:
+Draw vertical dividers between grid items, rendered purely within the gap
+(the gap width is preserved). Enable with `data-dividers="true"` on any
+`.l-grid`:
 
 ```html
 <div class="l-grid" data-dividers="true">
-  <div>Item</div>
-  <div>Item</div>
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
 </div>
 ```
 
-Uses the CSS Gap Decorations `rule` / `rule-visibility-items` properties.
+Uses the CSS Gap Decorations properties (`rule` and `rule-visibility-items`).
+Unsupported browsers render a normal grid gap with no divider line.
 
 ## Typed `attr()` swatch
 
-A color chip that reads its color from a `data-color` attribute, type-checked
-as `<color>`. No inline `style=""` needed for static color chips:
+A color chip that reads its color value directly from a `data-color`
+attribute, type-checked as `<color>`. Eliminates the need for inline
+`style="background: ..."` on static color chips:
 
 ```html
 <span class="c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
 ```
+
+Falls back to the border color token when `data-color` is absent or the
+feature is unsupported.
+
+## Checking browser support
+
+Each feature degrades independently. To see which enhancements are active
+in your browser, open the [enhancements preview page](../../preview/enhancements).
+For a full breakdown of which features are required vs progressive vs
+experimental, see the [Browser Support guide](../browser-support).
