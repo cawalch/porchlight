@@ -727,4 +727,75 @@ test.describe("docs scaffold", () => {
     // Child items exist.
     await expect(page.locator(".c-nav__item--child").first()).toBeVisible();
   });
+
+  test("app-dashboard renders app shell with nav, stats, and table", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-dashboard");
+    await expect(
+      page.getByRole("heading", { name: "Dashboard" }).first(),
+    ).toBeVisible();
+    // App shell layout.
+    await expect(page.locator(".l-app-shell")).toBeVisible();
+    await expect(page.locator(".l-app-shell__topbar")).toBeVisible();
+    await expect(page.locator(".l-app-shell__sidebar")).toBeVisible();
+    // Nav items exist.
+    await expect(page.locator(".c-nav__item").first()).toBeVisible();
+    // KPI stat cards.
+    const stats = page.locator(".c-stat");
+    expect(await stats.count()).toBeGreaterThanOrEqual(4);
+    // Data table with toolbar.
+    await expect(page.locator(".c-table-wrap")).toBeVisible();
+    await expect(page.locator(".c-toolbar").first()).toBeVisible();
+    // Segmented view toggle.
+    await expect(page.locator(".c-segmented").first()).toBeVisible();
+    // Pagination.
+    await expect(page.locator(".c-pagination")).toBeVisible();
+    // Timeline.
+    await expect(page.locator(".c-timeline").first()).toBeVisible();
+  });
+
+  test("app-inbox renders master-detail with sidebar collapse", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-inbox");
+    await expect(
+      page.getByRole("heading", { name: "Responsive inbox", exact: true }),
+    ).toBeVisible();
+    // Folder nav exists.
+    await expect(page.locator(".c-nav").first()).toBeVisible();
+    // Master-detail sidebar layout.
+    await expect(page.locator(".l-sidebar")).toBeVisible();
+    // Message list items.
+    const msgs = page.locator(".msg-item");
+    expect(await msgs.count()).toBeGreaterThanOrEqual(5);
+    // Message detail exists.
+    await expect(page.locator(".msg-detail")).toBeVisible();
+    // Search field exists.
+    await expect(page.locator("input[type='search']")).toBeVisible();
+  });
+
+  test("app-marketing renders hero, masonry, and scroll animations", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-marketing");
+    await expect(
+      page.getByRole("heading", { name: "Build beautiful, accessible UI", exact: false }),
+    ).toBeVisible();
+    // Scroll progress bar.
+    await expect(page.locator(".c-scroll-progress")).toBeAttached();
+    // Feature cards in multi-column layout.
+    await expect(page.locator(".l-columns").first()).toBeVisible();
+    const cards = page.locator(".l-columns .c-card");
+    expect(await cards.count()).toBeGreaterThanOrEqual(5);
+    // Reveal elements exist.
+    const reveals = page.locator(".c-reveal");
+    expect(await reveals.count()).toBeGreaterThanOrEqual(5);
+    // Stat blocks.
+    await expect(page.locator(".stat-block").first()).toBeVisible();
+    // Container layout.
+    await expect(page.locator(".l-container").first()).toBeVisible();
+    // Inset content inside full-bleed hero.
+    await expect(page.locator(".l-inset").first()).toBeVisible();
+  });
 });

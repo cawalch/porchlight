@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const folders = [
+  { label: 'Inbox', icon: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>', active: true, badge: '4' },
+  { label: 'Starred', icon: '<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', badge: '2' },
+  { label: 'Sent', icon: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>' },
+  { label: 'Drafts', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>' },
+  { label: 'Archive', icon: '<rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/>' },
+];
+
+const messages = [
+  { sender: 'Sarah Chen', subject: 'Re: Q3 Roadway Review', preview: 'I reviewed the proposal and I think we should prioritize the...', time: '9:42 AM', unread: true, starred: true },
+  { sender: 'Marcus Webb', subject: 'Deployment succeeded - v2.4.1', preview: 'All services are running. The migration completed without...', time: '8:15 AM', unread: true },
+  { sender: 'Lisa Park', subject: 'New integration request', preview: 'Hi team, we have a client asking about Salesforce...', time: 'Yesterday', unread: true, starred: false },
+  { sender: 'Tom Anderson', subject: 'Weekly status report', preview: 'Here is the summary for this week. Key wins include...', time: 'Yesterday', unread: false },
+  { sender: 'GitHub', subject: '[porchlight] PR #33 merged', preview: 'The PR "feat: layout extensions" has been merged into main.', time: '2 days ago', unread: true },
+  { sender: 'Anna Lee', subject: 'Design review feedback', preview: 'The new component library looks great. A few notes on...', time: '3 days ago', unread: false },
+];
+---
+<BaseLayout title="Responsive inbox · Porchlight">
+  <h1>Responsive inbox</h1>
+  <p>
+    A master-detail inbox layout. The <code>.l-sidebar</code> collapses to
+    a single column when the container is narrow (container query, not
+    viewport). The list + detail pattern works on mobile (stacked) and
+    desktop (side-by-side).
+  </p>
+
+  <!-- The .l-app-shell__main becomes the container .l-sidebar collapses against -->
+  <div class="inbox-shell">
+    <!-- Folder nav -->
+    <nav class="c-nav" aria-label="Mail folders">
+      {folders.map((f) => (
+        <a href="#" class="c-nav__item" aria-current={f.active ? 'page' : undefined}>
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={f.icon} stroke-linecap="round" stroke-linejoin="round"/>
+          <span class="c-nav__label">{f.label}</span>
+          {f.badge && <span class="c-badge c-nav__badge" data-tone={f.active ? 'accent' : undefined}>{f.badge}</span>}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Master-detail via .l-sidebar (collapses inside narrow containers) -->
+    <div class="l-sidebar" style="--l-sidebar-size: 20rem; --l-sidebar-gap: 0;">
+      <!-- Message list -->
+      <div class="msg-list">
+        <div class="msg-list__toolbar">
+          <label class="c-field c-field--inline" style="flex: 1;">
+            <span class="u-visually-hidden">Search messages</span>
+            <input class="c-field__control" type="search" placeholder="Search inbox..."/>
+          </label>
+        </div>
+        <div class="msg-list__items">
+          {messages.map((m, i) => (
+            <button class={`msg-item${i === 0 ? ' msg-item--active' : ''}${m.unread ? ' msg-item--unread' : ''}`} data-msg={i}>
+              <div class="msg-item__top">
+                <span class="msg-item__sender">{m.sender}</span>
+                <span class="msg-item__time">{m.time}</span>
+              </div>
+              <div class="msg-item__subject">
+                {m.starred && <svg viewBox="0 0 24 24" fill="currentColor" style="inline-size: 0.875rem; block-size: 0.875rem; color: var(--pl-color-warning); flex-shrink: 0;"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>}
+                {m.subject}
+              </div>
+              <p class="msg-item__preview">{m.preview}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Message detail -->
+      <div class="msg-detail">
+        <div class="msg-detail__header">
+          <div>
+            <h2>Re: Q3 Roadmap Review</h2>
+            <div class="msg-detail__meta">
+              <div class="c-avatar" data-size="sm" style="background: var(--pl-color-accent);">SC</div>
+              <div>
+                <strong>Sarah Chen</strong>
+                <span class="u-muted">sarah@example.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="l-cluster">
+            <button class="c-button" data-variant="ghost" data-size="sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Star
+            </button>
+            <button class="c-button" data-variant="ghost" data-size="sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="m4 4 8 8 8-8"/></svg>
+              Archive
+            </button>
+          </div>
+        </div>
+        <div class="msg-detail__body">
+          <p>Hi team,</p>
+          <p>
+            I reviewed the Q3 proposal and I think we should prioritize the data
+            table extensions first. The sortable headers and row selection are
+            critical for the enterprise customers we're onboarding.
+          </p>
+          <p>
+            The command palette can follow in a quick second pass. Let me know
+            if you have concerns about the scope.
+          </p>
+          <p>Best,<br/>Sarah</p>
+        </div>
+        <div class="msg-detail__reply">
+          <label class="c-field">
+            <span class="u-visually-hidden">Reply</span>
+            <textarea class="c-textarea-auto" rows="2" placeholder="Reply to Sarah..."></textarea>
+          </label>
+          <div class="l-cluster" style="margin-block-start: var(--pl-space-2);">
+            <button class="c-button" data-variant="primary" data-size="sm">Send reply</button>
+            <button class="c-button" data-variant="ghost" data-size="sm">Forward</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .inbox-shell {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-4);
+    }
+    .msg-list {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      overflow: hidden;
+    }
+    .msg-list__toolbar {
+      padding: var(--pl-space-2);
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+    .msg-list__items {
+      overflow-y: auto;
+      max-block-size: 30rem;
+    }
+    .msg-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+      inline-size: 100%;
+      padding: var(--pl-space-3);
+      border: 0;
+      border-block-end: 1px solid var(--pl-color-border);
+      background: transparent;
+      text-align: start;
+      cursor: pointer;
+      transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+    .msg-item:last-child { border-block-end: 0; }
+    .msg-item:hover { background: var(--pl-color-surface-2); }
+    .msg-item--active {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      box-shadow: inset 3px 0 0 var(--pl-color-accent);
+    }
+    .msg-item--unread .msg-item__sender { font-weight: 700; }
+    .msg-item--unread .msg-item__subject { font-weight: 600; }
+    .msg-item__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+    }
+    .msg-item__sender { font-size: var(--pl-text-sm); }
+    .msg-item__time { font-size: var(--pl-text-xs); color: var(--pl-color-text-muted); white-space: nowrap; }
+    .msg-item__subject {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      font-size: var(--pl-text-sm);
+    }
+    .msg-item__preview {
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .msg-detail {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-4);
+      padding: var(--pl-space-5);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+    }
+    .msg-detail__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      flex-wrap: wrap;
+    }
+    .msg-detail__header h2 { font-size: var(--pl-text-lg); }
+    .msg-detail__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      margin-block-start: var(--pl-space-2);
+      font-size: var(--pl-text-sm);
+    }
+    .msg-detail__meta strong { display: block; }
+    .msg-detail__body p {
+      margin-block-end: var(--pl-space-3);
+      line-height: 1.6;
+    }
+    /* Break out of main constraint */
+    :global(main:has(.inbox-shell)) {
+      inline-size: 100%;
+      max-inline-size: none;
+      margin-inline: 0;
+    }
+  </style>
+</BaseLayout>
