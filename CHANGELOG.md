@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **View Transitions default to `navigation: none`.** MPA View Transitions
+  (`@view-transition { navigation: auto }`) broke silently in JS-heavy apps:
+  the browser's page-capture snapshot phase conflicts with component
+  initialisation (Alpine `x-init`, React hydration, Stimulus), causing
+  `AbortError: Transition was skipped` on every navigation with no visible
+  error. The default is now `navigation: none`; apps that have tested their
+  JS compatibility can opt in via `@layer app`. (#51 §1.1)
+- **`l-app-shell` definite height.** Changed `min-block-size: 100dvb` to
+  `block-size: 100dvb`. `1fr` grid rows require a definite container height;
+  `min-block-size` is not definite, so Firefox and Safari treated the main
+  row as `auto`, making `.l-app-shell__main { overflow: auto }` behaviour
+  inconsistent across browsers. (#51 §1.2)
+- **`c-stat__value` now responds to `data-tone`.** Added `success`, `warning`,
+  and `danger` tone variants on `.c-stat__value`, consistent with `c-badge`,
+  `c-alert`, and `c-toast`. Previously tone colouring required app-layer CSS.
+  (#51 §2.2)
+- **Table row height derives from `--pl-control-block-size`.** Changed
+  `--c-table-row-min-block-size` from a hardcoded `3rem` to
+  `calc(var(--pl-control-block-size) + 0.5rem)`, so setting
+  `data-density="compact"` on `<body>` now cascades to table rows automatically.
+  (#51 §2.3)
+
+### Added
+
+- **`c-page-header` component.** A bare title + actions row for use inside
+  `.l-container` and other padded regions. Unlike `.c-toolbar` (which has
+  padding, border, and a surface background for shell-level bars),
+  `.c-page-header` has no chrome. Includes optional `.c-page-header__subtitle`
+  and `.c-page-header__actions` slots. (#51 §3.1)
+
+### Changed
+
+- **Docs: toast `@starting-style` timing requirement.** Documented that
+  `data-visible` must be set on the next animation frame/microtask after the
+  toast element is inserted into the DOM, or the browser batches the
+  insertion and the attribute change, skipping the enter animation entirely.
+  Includes vanilla JS and Alpine.js examples. (#51 §1.3)
+- **Docs: data-table density cascade, row selection, responsive columns.**
+  Added sections on how body-level density now cascades to table rows, the
+  `aria-selected="true"` row selection pattern, responsive column hiding via
+  container queries, and cell truncation via `.u-truncate`. (#51 §2.4, §2.3)
+- **Docs: advanced brand theming recipe.** Added a full brand ramp recipe to
+  the Theming guide, covering the 9-step `--pl-brand-*` ramp, the
+  `--pl-focus-color` token (separate from the brand ramp), the danger hue
+  collision issue (when the brand is red/orange), and `--pl-radius-xl` /
+  `--pl-radius-2xl` for corporate vs. consumer feel. (#51 §2.5)
+- **Docs: `@scope` + `@layer` override model.** Added a section to the
+  Architecture guide explaining that layer order takes precedence over
+  `@scope` proximity, so component token overrides work from plain selectors
+  in `@layer app` without specificity hacks. (#51 §4.3)
+
+### Already addressed (no changes needed)
+
+- **`c-timeline`** and **`c-skeleton`** components already exist in the
+  framework. (#51 §3.2, §3.4)
+- **Dark-mode test utility** (`<html data-theme="dark">`) already exists in
+  `03-themes.css`. (#51 §4.4)
+
+## [Unreleased]
+
 ### Added
 
 - **Enhancements** (Tier B, `@supports`-gated). All in

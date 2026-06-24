@@ -1,0 +1,71 @@
+---
+title: Page header
+description: A title + actions row for the top of a page or panel section inside a container.
+status: stable
+since: 0.2.0
+---
+
+# Page header
+
+The `.c-page-header` is a bare title + actions row for use **inside** a
+container (`.l-container`, `.l-page`, `.c-card__body`). Unlike `.c-toolbar`,
+which is a shell-level bar with padding, border, and a surface background,
+`.c-page-header` has no chrome: no background, no border, no padding. It is
+just a flex layout with a heading on one side and actions on the other.
+
+## When to use
+
+- **`.c-page-header`** — inside `.l-container` or any padded region. No
+  background, no border. The title + actions are flush with the container's
+  content.
+- **`.c-toolbar`** — flush against an edge (topbar row in `.l-app-shell`,
+  sticky filter bar). Has padding, a surface background, and a bottom border.
+
+Using `.c-toolbar` inside `.l-container` produces ~65px of dead space because
+both the container and the toolbar add padding. `.c-page-header` avoids this.
+
+## Semantic HTML
+
+### Basic
+
+```html
+<div class="c-page-header">
+  <div class="c-page-header__heading">
+    <h1 class="c-page-header__title">Queue</h1>
+  </div>
+  <div class="c-page-header__actions">
+    <button class="c-button">Export</button>
+    <button class="c-button" data-variant="primary">New item</button>
+  </div>
+</div>
+```
+
+### With subtitle
+
+```html
+<div class="c-page-header">
+  <div class="c-page-header__heading">
+    <h1 class="c-page-header__title">Operator queue</h1>
+    <span class="c-page-header__subtitle">12 pending, 3 in progress</span>
+  </div>
+  <div class="c-page-header__actions">
+    <button class="c-button">Filter</button>
+    <button class="c-button" data-variant="primary">Assign</button>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector                  | Role                                                    |
+| ------------------------- | ------------------------------------------------------- |
+| `.c-page-header`          | Flex container (space-between, wraps on narrow widths). |
+| `.c-page-header__heading` | Wrapper for title + subtitle (flex column).             |
+| `.c-page-header__title`   | The `<h1>`/`<h2>` heading.                              |
+| `.c-page-header__subtitle`| Optional muted subtitle below the title.                |
+| `.c-page-header__actions` | Action button cluster (wraps independently).            |
+
+## Tokens consumed
+
+`--pl-space-{2,3,5}`, `--pl-text-{sm,2xl}`, `--pl-font-weight-bold`,
+`--pl-leading-tight`, `--pl-color-text-muted`.

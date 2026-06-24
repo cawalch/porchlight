@@ -97,9 +97,14 @@
 
      .l-app-shell__main is a query container so any .l-sidebar nested inside
      it collapses correctly at narrow app widths WITHOUT a manual wrapper
-     (closes the container-ancestor story from the audit fix). */
+     (closes the container-ancestor story from the audit fix).
+
+     block-size (not min-block-size): the grid's 1fr row needs a DEFINITE
+     container height to resolve. min-block-size is not definite, so Firefox
+     and Safari treat the 1fr row as auto, making .l-app-shell__main overflow
+     unpredictable. block-size: 100dvb gives every browser a definite height. */
   :where(.l-app-shell) {
-    min-block-size: 100dvb;
+    block-size: 100dvb;
     display: grid;
     grid-template:
       "topbar topbar" auto

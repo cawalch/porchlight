@@ -43,6 +43,21 @@
       letter-spacing: -0.02em;
     }
 
+    /* Tone variants on the value  -  consistent with c-badge, c-alert,
+       c-toast. Apply data-tone directly on .c-stat__value to colour just the
+       number (e.g. danger for overdue counts). */
+    .c-stat__value[data-tone="success"] {
+      color: var(--pl-color-success-text);
+    }
+
+    .c-stat__value[data-tone="warning"] {
+      color: var(--pl-color-warning-text);
+    }
+
+    .c-stat__value[data-tone="danger"] {
+      color: var(--pl-color-danger-text);
+    }
+
     .c-stat__unit {
       font-size: var(--pl-text-md);
       font-weight: var(--pl-font-weight-medium);

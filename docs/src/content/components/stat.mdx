@@ -21,16 +21,29 @@ glyph - colorblind-safe), and an optional sparkline slot.
 </div>
 ```
 
+### Tone variants on the value
+
+Apply `data-tone` on `.c-stat__value` to colour the number itself — consistent
+with `c-badge`, `c-alert`, and `c-toast`. Useful for dashboards that need to
+highlight thresholds (e.g. overdue counts in danger):
+
+```html
+<div class="c-stat__value" data-tone="danger">12<span class="c-stat__unit">overdue</span></div>
+```
+
+Valid tones: `success`, `warning`, `danger`. Omit for default text colour.
+
 ## Class contract
 
-| Selector         | Role                                                      |
-| ---------------- | --------------------------------------------------------- |
-| `.c-stat`        | The container (flex column).                              |
-| `.c-stat__label` | Muted label.                                              |
-| `.c-stat__value` | Large number (`tabular-nums`, `letter-spacing: -0.02em`). |
-| `.c-stat__unit`  | Inline unit suffix (smaller, muted).                      |
-| `.c-stat__trend` | Trend with arrow (`data-direction="up\|down\|flat"`).     |
-| `.c-stat__spark` | Optional inline SVG sparkline slot.                       |
+| Selector                          | Role                                                      |
+| --------------------------------- | --------------------------------------------------------- |
+| `.c-stat`                         | The container (flex column).                              |
+| `.c-stat__label`                  | Muted label.                                              |
+| `.c-stat__value`                  | Large number (`tabular-nums`, `letter-spacing: -0.02em`). |
+| `.c-stat__value[data-tone]`       | Tone the number: `success`, `warning`, `danger`.          |
+| `.c-stat__unit`                   | Inline unit suffix (smaller, muted).                      |
+| `.c-stat__trend`                  | Trend with arrow (`data-direction="up\|down\|flat"`).     |
+| `.c-stat__spark`                  | Optional inline SVG sparkline slot.                       |
 
 ## Accessibility
 
