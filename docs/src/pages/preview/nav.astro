@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const navItems = [
+  { label: 'Dashboard', icon: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>', active: true },
+  { label: 'Accounts', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>', badge: '3' },
+  { label: 'Billing', icon: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>' },
+  { label: 'Analytics', icon: '<path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/>' },
+];
+---
+<BaseLayout title="Nav · Porchlight">
+  <h1>Nav</h1>
+  <p>
+    A vertical sidebar navigation list. Icon + label items with active state
+    via <code>aria-current</code>. Collapsible sections via native
+    <code>&lt;details&gt;</code>. Icons-only variant for collapsed sidebars.
+  </p>
+
+  <div class="nav-demo">
+    <!-- Full nav in a sidebar-like container -->
+    <div class="nav-sidebar">
+      <nav class="c-nav" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined}>
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+            <span class="c-nav__label">{item.label}</span>
+            {item.badge && <span class="c-badge c-nav__badge" data-tone="accent">{item.badge}</span>}
+          </a>
+        ))}
+
+        <details class="c-nav__section" open>
+          <summary class="c-nav__section-trigger">
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Projects</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <a href="#" class="c-nav__item c-nav__item--child">
+            <span class="c-nav__label">Active</span>
+          </a>
+          <a href="#" class="c-nav__item c-nav__item--child">
+            <span class="c-nav__label">Archived</span>
+            <span class="c-badge c-nav__badge">12</span>
+          </a>
+        </details>
+
+        <details class="c-nav__section">
+          <summary class="c-nav__section-trigger">
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+        </details>
+      </nav>
+    </div>
+
+    <!-- Icons-only variant -->
+    <div class="nav-sidebar nav-sidebar--collapsed">
+      <nav class="c-nav" aria-label="Quick nav" data-variant="icons">
+        {navItems.map((item) => (
+          <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined} aria-label={item.label}>
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .nav-demo {
+    display: flex;
+    gap: var(--pl-space-5);
+    flex-wrap: wrap;
+    margin-block-start: var(--pl-space-5);
+  }
+  .nav-sidebar {
+    inline-size: 14rem;
+    padding-block: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+  .nav-sidebar--collapsed {
+    inline-size: 3.5rem;
+  }
+</style>

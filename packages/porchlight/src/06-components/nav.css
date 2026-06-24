@@ -1,0 +1,176 @@
+/*
+ * Porchlight — nav (sidebar navigation) component
+ * ===========================================================================
+ * A vertical navigation list for sidebars. Icon + label items with active
+ * state via aria-current="page". Collapsible sub-sections via native
+ * <details> for zero-JS expand/collapse. Designed to compose with
+ * .l-app-shell__sidebar.
+ *
+ * Structure:
+ *   <nav class="c-nav" aria-label="Main">
+ *     <a class="c-nav__item" aria-current="page">
+ *       <svg class="c-nav__icon">...</svg>
+ *       <span class="c-nav__label">Dashboard</span>
+ *     </a>
+ *     <details class="c-nav__section">
+ *       <summary class="c-nav__section-trigger">
+ *         <svg class="c-nav__icon">...</svg>
+ *         <span>Projects</span>
+ *         <svg class="c-nav__chevron">...</svg>
+ *       </summary>
+ *       <a class="c-nav__item c-nav__item--child">Active</a>
+ *       <a class="c-nav__item c-nav__item--child">Archived</a>
+ *     </details>
+ *   </nav>
+ *
+ * The icon rail variant: when the sidebar is collapsed (icon-only mode),
+ * [data-variant="icons"] hides labels and centers icons.
+ */
+@layer porchlight.components {
+  @scope (.c-nav) {
+    :scope {
+      --c-nav-gap: var(--pl-space-1);
+      --c-nav-pad: var(--pl-space-2);
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--c-nav-gap);
+      padding: var(--c-nav-pad);
+    }
+
+    .c-nav__item {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-2) var(--pl-space-3);
+      border-radius: var(--pl-radius-md);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-nav__item:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__item:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    /* Active item. */
+    .c-nav__item[aria-current="page"],
+    .c-nav__item[aria-current="true"] {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+      color: var(--pl-color-accent);
+      font-weight: 600;
+    }
+
+    /* Nested item (inside a section). */
+    .c-nav__item--child {
+      padding-inline-start: calc(var(--pl-space-3) + 1.25rem + var(--pl-space-3));
+      font-size: var(--pl-text-sm);
+    }
+
+    .c-nav__icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      flex-shrink: 0;
+      color: inherit;
+    }
+
+    .c-nav__label {
+      flex: 1;
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Badge in a nav item (e.g. unread count). */
+    .c-nav__badge {
+      margin-inline-start: auto;
+    }
+
+    /* Collapsible section. */
+    .c-nav__section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+    }
+
+    .c-nav__section-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-2) var(--pl-space-3);
+      border-radius: var(--pl-radius-md);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      transition: all var(--pl-duration-1) var(--pl-ease-standard);
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::marker {
+        content: "";
+      }
+    }
+
+    .c-nav__section-trigger:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__section-trigger:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-nav__chevron {
+      margin-inline-start: auto;
+      inline-size: 1rem;
+      block-size: 1rem;
+      flex-shrink: 0;
+      color: var(--pl-color-text-muted);
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    .c-nav__section[open] .c-nav__chevron {
+      rotate: 90deg;
+    }
+
+    /* Icons-only variant (collapsed sidebar). */
+    :scope[data-variant="icons"] .c-nav__label,
+    :scope[data-variant="icons"] .c-nav__chevron,
+    :scope[data-variant="icons"] .c-nav__badge {
+      display: none;
+    }
+
+    :scope[data-variant="icons"] .c-nav__item,
+    :scope[data-variant="icons"] .c-nav__section-trigger {
+      justify-content: center;
+      padding: var(--pl-space-2);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-nav__item[aria-current="page"]) {
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    :where(.c-nav__item:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}
