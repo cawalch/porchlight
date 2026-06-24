@@ -1,7 +1,7 @@
 /*
- * Porchlight — avatar component
+ * Porchlight  -  avatar component
  * ===========================================================================
- * A user identity chip — initials in a colored circle, or an image. Used in
+ * A user identity chip  -  initials in a colored circle, or an image. Used in
  * headers, lists, comments, and mentions. Three sizes via [data-size]:
  * "sm" (1.5rem), default (2.5rem), "lg" (3rem).
  *
@@ -52,7 +52,7 @@
     }
   }
 
-  /* Avatar group — overlapping stack. */
+  /* Avatar group  -  overlapping stack. */
   :where(.c-avatar-group) {
     display: inline-flex;
     align-items: center;

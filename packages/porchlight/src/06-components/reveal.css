@@ -1,8 +1,8 @@
 /*
- * Porchlight — scroll reveal component
+ * Porchlight  -  scroll reveal component
  * ===========================================================================
  * Elements that fade/slide in as they enter the viewport. Uses scroll-driven
- * animations (animation-timeline: view()) — zero JavaScript, no
+ * animations (animation-timeline: view())  -  zero JavaScript, no
  * IntersectionObserver.
  *
  * @supports-gated: where scroll-driven animations are not supported, elements

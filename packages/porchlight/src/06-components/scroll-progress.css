@@ -1,8 +1,8 @@
 /*
- * Porchlight — scroll progress bar component
+ * Porchlight  -  scroll progress bar component
  * ===========================================================================
  * A fixed bar at the viewport top that fills as the user scrolls the page.
- * Uses scroll-driven animations (animation-timeline: scroll()) — zero
+ * Uses scroll-driven animations (animation-timeline: scroll())  -  zero
  * JavaScript for the progress tracking.
  *
  * @supports-gated: where scroll-driven animations are not supported, the bar

@@ -1,5 +1,5 @@
 /*
- * Porchlight — primitive tokens
+ * Porchlight  -  primitive tokens
  * ===========================================================================
  * Raw design scales only: fonts, type, leading, spacing, radius, motion,
  * z-index, brand palette, control sizing, focus geometry, and shadows.
@@ -90,7 +90,7 @@
     --pl-z-overlay: 1000;
     --pl-z-toast: 1100;
 
-    /* Brand — raw OKLCH ramp at hue 260 (blue); scale 1 (lightest) → 9 (darkest). */
+    /* Brand  -  raw OKLCH ramp at hue 260 (blue); scale 1 (lightest) → 9 (darkest). */
     --pl-brand-1: oklch(96% 0.02 260deg);
     --pl-brand-2: oklch(88% 0.06 260deg);
     --pl-brand-3: oklch(78% 0.12 260deg);
@@ -101,7 +101,7 @@
     --pl-brand-8: oklch(42% 0.16 260deg);
     --pl-brand-9: oklch(32% 0.12 260deg);
 
-    /* Semantic colors — light/dark via light-dark(), driven by color-scheme.
+    /* Semantic colors  -  light/dark via light-dark(), driven by color-scheme.
        Forced-colors overrides live in 03-themes. Foreground/background are
        defined as pairs so contrast is intentional, not accidental. */
     --pl-color-bg: light-dark(oklch(98% 0.01 260deg), oklch(15% 0.02 260deg));

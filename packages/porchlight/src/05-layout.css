@@ -1,7 +1,7 @@
 /*
- * Porchlight — layout primitives
+ * Porchlight  -  layout primitives
  * ===========================================================================
- * Small, composable layout helpers for the regions AROUND components — not
+ * Small, composable layout helpers for the regions AROUND components  -  not
  * opinionated page designs. They are deliberately quiet: low specificity
  * (:where), token-driven gaps, and local --l-* config tokens every primitive
  * exposes for instance tuning (e.g. --l-stack-gap), each with a sensible
@@ -16,14 +16,14 @@
  * the layout layer.
  */
 @layer porchlight.layout {
-  /* Vertical flow — forms, settings sections, stacked panels. */
+  /* Vertical flow  -  forms, settings sections, stacked panels. */
   :where(.l-stack) {
     display: flex;
     flex-direction: column;
     gap: var(--l-stack-gap, var(--pl-space-4));
   }
 
-  /* Horizontal wrapping group — action bars, button rows, toolbar items. */
+  /* Horizontal wrapping group  -  action bars, button rows, toolbar items. */
   :where(.l-cluster) {
     display: flex;
     flex-wrap: wrap;
@@ -32,7 +32,7 @@
     gap: var(--l-cluster-gap, var(--pl-space-3));
   }
 
-  /* Auto-fitting grid — dashboard widgets, KPI cards, result tiles. Each
+  /* Auto-fitting grid  -  dashboard widgets, KPI cards, result tiles. Each
      track is at least --l-grid-min wide (clamped to 100% so a single item
      never overflows) and grows to fill. */
   :where(.l-grid) {
@@ -44,11 +44,11 @@
     );
   }
 
-  /* Sidebar + main — settings/filter panels, master-detail regions. The
+  /* Sidebar + main  -  settings/filter panels, master-detail regions. The
      default is the desktop two-column layout. It collapses to a single
      column when its nearest ANCESTOR query container is narrower than 48rem
      (an element cannot query its own size). Note: .l-sidebar does NOT declare
-     container-type itself — that would be misleading (self-querying is
+     container-type itself  -  that would be misleading (self-querying is
      impossible) and adds containment side-effects. Wrap it in a
      container-type: inline-size element, or nest it inside
      .l-app-shell__main (which is a container) to get the collapse. */
@@ -73,7 +73,7 @@
     margin-inline: auto;
   }
 
-  /* Independent scroll region — data panes, log viewers, long lists. Stable
+  /* Independent scroll region  -  data panes, log viewers, long lists. Stable
      gutter prevents layout shift when scrollbars appear/disappear; contain
      stops scroll chaining to the page. */
   :where(.l-scroll-area) {
@@ -84,7 +84,7 @@
 
   /* --------------------------------------------------------------------- */
 
-  /* App shell — the one place viewport logic belongs. A desktop SaaS app
+  /* App shell  -  the one place viewport logic belongs. A desktop SaaS app
      is typically: a sticky topbar, a persistent sidebar, and a scrolling
      main work area. Below 60rem (a phone or a narrow split pane) the sidebar
      drops out so the work surface stays usable.
@@ -137,7 +137,7 @@
 
   /* Viewport fallback: on a genuinely narrow viewport the sidebar is hidden
      (the work surface takes priority). This is the ONLY viewport media query
-     in the layout layer — components adapt via container queries. */
+     in the layout layer  -  components adapt via container queries. */
   @media (width < 60rem) {
     :where(.l-app-shell) {
       grid-template:
@@ -153,7 +153,7 @@
 
   /* --------------------------------------------------------------------- */
 
-  /* Multi-column masonry — card walls, search results, image grids. Uses
+  /* Multi-column masonry  -  card walls, search results, image grids. Uses
      CSS multi-column layout (simpler than grid masonry and works in all
      browsers). Items break-inside avoid so cards don't split across
      columns. Tune column count via --l-columns-count or let it auto. */
@@ -167,7 +167,7 @@
     margin-block-end: var(--l-columns-gap, var(--pl-space-4));
   }
 
-  /* Centered max-width container — general-purpose wrapper for app
+  /* Centered max-width container  -  general-purpose wrapper for app
      surfaces. Distinct from .l-page (which targets prose at 88rem).
      Use for dashboards, settings, lists. */
   :where(.l-container) {
@@ -178,7 +178,7 @@
     margin-inline: auto;
   }
 
-  /* Inset — constrained content inside a full-bleed parent. For captions,
+  /* Inset  -  constrained content inside a full-bleed parent. For captions,
      forms, or text within a full-width hero/banner. Centers and constrains
      without adding its own vertical rhythm. */
   :where(.l-inset) {

@@ -1,5 +1,5 @@
 /*
- * Porchlight — data table component
+ * Porchlight  -  data table component
  * ===========================================================================
  * An enterprise data table: sticky headers, horizontal scroll with a stable
  * scrollbar gutter, container-query padding, hover/selection affordances,
@@ -236,7 +236,7 @@
     }
   }
 
-  /* Row hover — OUTSIDE @scope (live-state pseudo on tbody tr). */
+  /* Row hover  -  OUTSIDE @scope (live-state pseudo on tbody tr). */
   :where(.c-table) tbody tr {
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
   }

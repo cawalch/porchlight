@@ -1,12 +1,12 @@
 /*
- * Porchlight — base layer
+ * Porchlight  -  base layer
  * ===========================================================================
  * Element defaults. These give bare HTML a sensible, on-token appearance so
  * pages are usable before any component class is applied.
  *
  * Everything is `:where()` (zero specificity) so every rule is trivially
  * overridable by a component or an application. Logical properties throughout.
- * No `!important` here — the reset already handles the only a11y-critical case
+ * No `!important` here  -  the reset already handles the only a11y-critical case
  * (`[hidden]`).
  *
  * Color and type come from the token layers; theme/density/forced-colors are

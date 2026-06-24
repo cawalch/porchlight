@@ -1,7 +1,7 @@
 /*
- * Porchlight — reset
+ * Porchlight  -  reset
  * ---------------------------------------------------------------------------
- * Minimal browser normalization. No normalize.css, no opinionated defaults —
+ * Minimal browser normalization. No normalize.css, no opinionated defaults  - 
  * those belong in the `base` layer. `:where()` keeps specificity at zero so
  * every rule here is trivially overridable.
  *

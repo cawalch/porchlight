@@ -1,5 +1,5 @@
 /*
- * Porchlight — skeleton component
+ * Porchlight  -  skeleton component
  * ===========================================================================
  * Loading placeholders that mimic the shape of real content. A pulsing shimmer
  * communicates "something is loading" without a spinner (which implies an
@@ -14,7 +14,7 @@
  * static grey block (still legible as a placeholder).
  *
  * A [data-lines] attribute on a container with .c-skeleton children generates
- * staggered widths for prose-like placeholder stacks — see the preview page.
+ * staggered widths for prose-like placeholder stacks  -  see the preview page.
  */
 @layer porchlight.components {
   @scope (.c-skeleton) {
@@ -46,7 +46,7 @@
     }
   }
 
-  /* A skeleton group — staggered text lines for prose-like placeholders. */
+  /* A skeleton group  -  staggered text lines for prose-like placeholders. */
   :where(.c-skeleton-group) {
     display: flex;
     flex-direction: column;

@@ -1,5 +1,5 @@
 /*
- * Porchlight — dropdown component
+ * Porchlight  -  dropdown component
  * ===========================================================================
  * A custom select replacement using the Popover API + anchor positioning.
  * Unlike native <select>, this supports icons, descriptions, multi-select,
@@ -113,7 +113,7 @@
     }
   }
 
-  /* Dropdown options — OUTSIDE @scope (live-state pseudos). */
+  /* Dropdown options  -  OUTSIDE @scope (live-state pseudos). */
   :where(.c-dropdown__menu) > :is(a, button, [role="option"]) {
     display: flex;
     align-items: center;

@@ -1,7 +1,7 @@
 /*
- * Porchlight — empty state component
+ * Porchlight  -  empty state component
  * ===========================================================================
- * The "no data yet" placeholder — what users see in a table, list, or chart
+ * The "no data yet" placeholder  -  what users see in a table, list, or chart
  * before there is anything to show. A centered illustration or icon, a title,
  * a description, and an optional call-to-action. The psychological anchor that
  * turns a blank screen into an invitation.
@@ -67,7 +67,7 @@
       margin-block-start: var(--pl-space-2);
     }
 
-    /* Tone variants — recolor the media. */
+    /* Tone variants  -  recolor the media. */
     :scope[data-tone="danger"] {
       --c-empty-tone: var(--pl-color-danger);
     }

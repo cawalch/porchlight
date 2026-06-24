@@ -1,5 +1,5 @@
 /*
- * Porchlight — layer order
+ * Porchlight  -  layer order
  * ---------------------------------------------------------------------------
  * All framework CSS lives inside one top-level layer, `porchlight`. A host
  * application positions the whole framework in the cascade with a single line:
@@ -13,7 +13,7 @@
  *
  * PLAN.md's flat `overrides` layer is intentionally dropped: with the
  * top-level wrap, host overrides live in their own layers outside `porchlight`
- * (or unlayered, which always wins over layered styles) — an internal
+ * (or unlayered, which always wins over layered styles)  -  an internal
  * overrides layer would be redundant.
  */
 @layer porchlight {

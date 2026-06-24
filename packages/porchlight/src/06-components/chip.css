@@ -1,5 +1,5 @@
 /*
- * Porchlight — chip component
+ * Porchlight  -  chip component
  * ===========================================================================
  * A compact tag/pill with an optional remove button. Uses relative color
  * syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.

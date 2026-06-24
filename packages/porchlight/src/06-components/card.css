@@ -1,18 +1,18 @@
 /*
- * Porchlight — card component
+ * Porchlight  -  card component
  * ===========================================================================
- * A raised surface grouping related content — the workhorse of SaaS dashboards
+ * A raised surface grouping related content  -  the workhorse of SaaS dashboards
  * (KPI tiles, list items, settings sections, detail panels). Header + body
  * slots; the header adapts to the card's OWN width via a container query (not
  * the viewport), so a card in a narrow split pane stacks its header even on a
  * wide screen.
  *
- * Elevation comes from shadow, not bg contrast — surface is intentionally close
+ * Elevation comes from shadow, not bg contrast  -  surface is intentionally close
  * to bg (a ~2% step); the border + a soft shadow define the card. This is the
  * modern approach (subtle depth over heavy fill differences).
  *
  * Interactive variant: add [data-interactive] (or use an <a.c-card>) to get a
- * hover lift + focus ring — for clickable cards (recent items, navigation
+ * hover lift + focus ring  -  for clickable cards (recent items, navigation
  * tiles). Motion respects --pl-motion-scale.
  *
  * Token-driven via --c-card-* aliases. Density comes from --pl-space-*.
@@ -32,7 +32,7 @@
 
       /* When cards sit in an .l-grid (equal-height rows via align-items:
          stretch), a shorter card gets stretched to match its tallest sibling.
-         Without this, the card's grid rows absorb the extra height —
+         Without this, the card's grid rows absorb the extra height  - 
          inflating the header row and pushing the title down inconsistently. */
       align-content: start;
       padding: var(--c-card-padding);
@@ -83,7 +83,7 @@
       }
     }
 
-    /* Interactive cards — hover lift + focus ring. Inside @scope (same as
+    /* Interactive cards  -  hover lift + focus ring. Inside @scope (same as
        the button pattern); [data-hover] is an attribute, not a live pseudo, so
        it applies reliably within @scope. */
     :scope[data-interactive],

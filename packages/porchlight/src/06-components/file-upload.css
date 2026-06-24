@@ -1,5 +1,5 @@
 /*
- * Porchlight — file upload component
+ * Porchlight  -  file upload component
  * ===========================================================================
  * A drag-and-drop file upload zone. The native <input type="file"> is
  * visually hidden; the zone is the click target. Uses :has() for the

@@ -1,5 +1,5 @@
 /*
- * Porchlight — dialog component
+ * Porchlight  -  dialog component
  * ===========================================================================
  * A modal dialog for confirmations, forms, and detail views. Uses the native
  * <dialog> element with showModal() (top-layer, modal focus trap, Esc to
@@ -7,7 +7,7 @@
  *
  * Open state is styled via [open] (or :modal for showModal). Entry/exit
  * animation uses @starting-style + transition-behavior: allow-discrete on
- * overlay/display — the same pattern as .c-menu, so the EXIT transition runs
+ * overlay/display  -  the same pattern as .c-menu, so the EXIT transition runs
  * (display: none normally kills transitions instantly).
  *
  * Header + body + footer slots (like .c-card). The close button in the header
@@ -59,7 +59,7 @@
       }
     }
 
-    /* Scrim — dim the page behind the dialog. */
+    /* Scrim  -  dim the page behind the dialog. */
     :scope::backdrop {
       background: oklch(0% 0 0deg / 45%);
       backdrop-filter: blur(2px);
@@ -83,7 +83,7 @@
       text-wrap: balance;
     }
 
-    /* Close button — a ghost-icon button top-right. */
+    /* Close button  -  a ghost-icon button top-right. */
     .c-dialog__close {
       display: inline-flex;
       align-items: center;

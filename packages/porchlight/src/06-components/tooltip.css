@@ -1,5 +1,5 @@
 /*
- * Porchlight — tooltip component
+ * Porchlight  -  tooltip component
  * ===========================================================================
  * A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning.
  * Zero JavaScript for positioning. Auto-flips when near viewport edges via
@@ -19,7 +19,7 @@
  *     <span class="c-tooltip__body" role="tooltip" id="tip-1">Tooltip text</span>
  *   </span>
  *
- * Each instance needs a unique anchor name — set --c-tooltip-anchor.
+ * Each instance needs a unique anchor name  -  set --c-tooltip-anchor.
  */
 @layer porchlight.components {
   @scope (.c-tooltip) {

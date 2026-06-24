@@ -1,11 +1,11 @@
 /*
- * Porchlight — badge component
+ * Porchlight  -  badge component
  * ===========================================================================
  * A compact label for statuses, counts, and tags. Inline-flex pill; tones via
  * [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/
  * danger) that were already made WCAG-AA, plus an accent and a neutral default.
  *
- * Density is fixed (badges shouldn't scale with [data-density] — they label,
+ * Density is fixed (badges shouldn't scale with [data-density]  -  they label,
  * not actuate). Contrast is guaranteed by the token pairs, so the affordance
  * check is covered by contrast.spec.ts; this adds a badge-specific check that
  * each tone's label clears AA against its own bg.
@@ -32,13 +32,13 @@
       color: var(--pl-color-text);
     }
 
-    /* Accent — for primary/brand counts (unread, new). */
+    /* Accent  -  for primary/brand counts (unread, new). */
     :scope[data-tone="accent"] {
       background: var(--pl-color-accent);
       color: var(--pl-color-accent-text);
     }
 
-    /* Status tones — consume the WCAG-AA -bg/-text pairs. */
+    /* Status tones  -  consume the WCAG-AA -bg/-text pairs. */
     :scope[data-tone="success"] {
       background: var(--pl-color-success-bg);
       color: var(--pl-color-success-text);
@@ -54,7 +54,7 @@
       color: var(--pl-color-danger-text);
     }
 
-    /* Optional leading dot — a status indicator pip. */
+    /* Optional leading dot  -  a status indicator pip. */
     .c-badge__dot {
       inline-size: 0.375rem;
       block-size: 0.375rem;

@@ -1,7 +1,7 @@
 /*
- * Porchlight — pagination component
+ * Porchlight  -  pagination component
  * ===========================================================================
- * Navigation control for paginated data — the bar below a table or list.
+ * Navigation control for paginated data  -  the bar below a table or list.
  * Previous / Next buttons flank a row of page number buttons. A compact
  * [data-size="sm"] variant shrinks the controls for embedded use (inside a
  * toolbar or table footer).
@@ -13,7 +13,7 @@
  * The page buttons reuse .c-button[data-variant="ghost"] styling conventions
  * (accent wash for the active state) but are self-contained so pagination works
  * without also loading .c-button. If .c-button IS present, a .c-button inside
- * the toolbar inherits its own styling — the two coexist without conflict.
+ * the toolbar inherits its own styling  -  the two coexist without conflict.
  */
 @layer porchlight.components {
   @scope (.c-pagination) {
@@ -25,7 +25,7 @@
       gap: var(--pl-space-1);
     }
 
-    /* A page button — square-ish, ghost-like. */
+    /* A page button  -  square-ish, ghost-like. */
     .c-pagination__page,
     .c-pagination__nav {
       appearance: none;
@@ -48,14 +48,14 @@
         color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    /* Active page — aria-current="page" marks "you are here". */
+    /* Active page  -  aria-current="page" marks "you are here". */
     .c-pagination__page[aria-current="page"] {
       background: var(--pl-color-accent);
       color: var(--pl-color-accent-text);
       font-weight: 600;
     }
 
-    /* Compact variant — smaller targets for embedded use (table footers). */
+    /* Compact variant  -  smaller targets for embedded use (table footers). */
     :scope[data-size="sm"] {
       --c-pagination-min: 2rem;
     }
@@ -66,7 +66,7 @@
       cursor: not-allowed;
     }
 
-    /* Ellipsis — a non-interactive spacer for skipped pages. */
+    /* Ellipsis  -  a non-interactive spacer for skipped pages. */
     .c-pagination__ellipsis {
       display: inline-flex;
       align-items: center;
