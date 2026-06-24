@@ -44,9 +44,12 @@
 
     .c-card__header {
       display: flex;
-      align-items: center;
+      align-items: start;
       justify-content: space-between;
       gap: var(--pl-space-3);
+
+      /* Keep headers the same height whether or not they contain a button. */
+      min-block-size: calc(var(--pl-text-lg) * var(--pl-leading-tight));
     }
 
     .c-card__title {
