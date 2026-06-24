@@ -1,7 +1,7 @@
 {
   "name": "@cawalch/porchlight",
-  "version": "0.0.0",
-  "description": "A no-dependency, native-CSS framework.",
+  "version": "0.1.0",
+  "description": "A no-dependency, native-CSS framework for building accessible, themeable web applications.",
   "license": "MIT",
   "type": "module",
   "homepage": "https://cawalch.github.io/porchlight",
@@ -14,7 +14,24 @@
     "url": "https://github.com/cawalch/porchlight/issues"
   },
   "author": "cawalch",
+  "keywords": [
+    "css",
+    "css-framework",
+    "design-system",
+    "component-library",
+    "oklch",
+    "light-dark",
+    "css-layer",
+    "accessible",
+    "wcag",
+    "dark-mode",
+    "no-dependencies",
+    "native-css"
+  ],
   "style": "dist/porchlight.css",
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": "./porchlight.css",
     "./porchlight.css": "./porchlight.css",
@@ -34,8 +51,7 @@
     "prepublishOnly": "pnpm build"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "devDependencies": {
     "lightningcss": "^1.32.0"
