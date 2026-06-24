@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-25
+
 ### Fixed
 
 - **View Transitions default to `navigation: none`.** MPA View Transitions
@@ -67,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dark-mode test utility** (`<html data-theme="dark">`) already exists in
   `03-themes.css`. (#51 §4.4)
 
-## [Unreleased]
+## [0.1.0] - 2026-06-23
 
 ### Added
 
