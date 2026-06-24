@@ -1,0 +1,38 @@
+---
+title: Dropdown
+description: Custom select replacement using Popover API + anchor positioning. Supports icons, descriptions, custom rendering.
+status: stable
+since: 1.0.0
+---
+
+# Dropdown
+
+The `.c-dropdown` is a custom select replacement using the Popover API +
+CSS Anchor Positioning. Supports icons, multi-select, and fully custom
+option rendering — things native `<select>` can't do.
+
+## Semantic HTML
+
+```html
+<div class="c-dropdown">
+  <button class="c-dropdown__trigger" popovertarget="dd-1">
+    Choose...
+    <svg class="c-dropdown__chevron">...</svg>
+  </button>
+  <div popover class="c-dropdown__menu" id="dd-1">
+    <button class="c-dropdown__option" aria-selected="true">Option A</button>
+    <button class="c-dropdown__option">Option B</button>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector                | Role                                      |
+| ----------------------- | ----------------------------------------- |
+| `.c-dropdown`           | Container (inline-block).                |
+| `.c-dropdown__trigger`  | The button that opens the menu.          |
+| `.c-dropdown__chevron`  | Arrow icon (rotates when open).          |
+| `.c-dropdown__menu`     | The popover menu (anchored).             |
+| `.c-dropdown__option`   | A menu item (button or link).            |
+| `[aria-selected]`       | Highlighted option.                       |

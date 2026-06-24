@@ -1,0 +1,112 @@
+/*
+ * Porchlight — segmented control component
+ * ===========================================================================
+ * A compact inline switcher for binary/ternary toggles (list/grid/table view,
+ * day/week/month). Built on native radio inputs — CSS-only, keyboard
+ * accessible, no JavaScript.
+ *
+ * The active segment gets an accent background driven by :has(:checked).
+ * The control is a pill-shaped container with segments as flex children.
+ *
+ * Structure:
+ *   <div class="c-segmented" role="radiogroup" aria-label="View mode">
+ *     <label class="c-segmented__item">
+ *       <input type="radio" name="view" checked />
+ *       <span>List</span>
+ *     </label>
+ *     <label class="c-segmented__item">
+ *       <input type="radio" name="view" />
+ *       <span>Grid</span>
+ *     </label>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.c-segmented) {
+    :scope {
+      --c-segmented-pad: 0.125rem;
+      --c-segmented-gap: var(--pl-space-1);
+      --c-segmented-radius: var(--pl-radius-md);
+
+      display: inline-flex;
+      gap: var(--c-segmented-gap);
+      padding: var(--c-segmented-pad);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-segmented-radius, var(--pl-radius-pill));
+      background: var(--pl-color-surface-2);
+    }
+
+    .c-segmented__item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Visually hide the native radio. */
+    .c-segmented__item input {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* The visible label/pill. */
+    .c-segmented__item span {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      padding: var(--pl-space-1) var(--pl-space-3);
+      border-radius: var(--c-segmented-radius);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    /* Active segment: accent fill. */
+    .c-segmented__item:has(input:checked) span {
+      background: var(--pl-color-surface);
+      color: var(--pl-color-accent);
+      font-weight: 600;
+      box-shadow: var(--pl-shadow-1);
+    }
+
+    /* Hover on non-checked. */
+    .c-segmented__item:not(:has(input:checked)) span:hover {
+      color: var(--pl-color-text);
+    }
+
+    /* Focus ring. */
+    .c-segmented__item:has(input:focus-visible) span {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: 2px;
+    }
+
+    /* Disabled. */
+    .c-segmented__item:has(input:disabled) span {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-segmented) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-segmented__item:has(input:checked) span) {
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
+}

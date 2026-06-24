@@ -1,0 +1,179 @@
+/*
+ * Porchlight — command palette component
+ * ===========================================================================
+ * A Cmd+K quick-action search overlay. Search input at top, grouped action
+ * list below, keyboard navigation (JS responsibility). Uses the Popover API
+ * for top-layer rendering + @starting-style for enter animation.
+ *
+ * The palette is centered in the viewport (not anchored to a trigger).
+ *
+ * Structure:
+ *   <div popover class="c-command" id="cmdk">
+ *     <input class="c-command__search" placeholder="Type a command..." />
+ *     <div class="c-command__body">
+ *       <div class="c-command__group">
+ *         <h3 class="c-command__heading">Actions</h3>
+ *         <button class="c-command__item" data-selected>
+ *           <svg class="c-command__icon">...</svg>
+ *           <span>Create new project</span>
+ *         </button>
+ *       </div>
+ *     </div>
+ *     <footer class="c-command__footer">
+ *       <span>↑↓ to navigate</span>
+ *       <span>↵ to select</span>
+ *       <span>esc to close</span>
+ *     </footer>
+ *   </div>
+ *
+ * Open via: <button popovertarget="cmdk">Cmd+K</button>
+ */
+@layer porchlight.components {
+  @scope (.c-command) {
+    :scope {
+      --c-command-inline: min(36rem, calc(100vi - 2 * var(--pl-space-4)));
+      --c-command-max-block: 28rem;
+
+      margin: 0;
+      padding: 0;
+      inline-size: var(--c-command-inline);
+      max-block-size: var(--c-command-max-block);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-3);
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.96) translateY(-8px);
+      transition:
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        transform var(--pl-duration-2) var(--pl-ease-standard),
+        overlay var(--pl-duration-2) var(--pl-ease-standard) allow-discrete,
+        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    /* Center in viewport (override popover's default). */
+    :scope:popover-open {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    @starting-style {
+      :scope:popover-open {
+        opacity: 0;
+        transform: scale(0.96) translateY(-8px);
+      }
+    }
+
+    .c-command__search {
+      inline-size: 100%;
+      padding: var(--pl-space-4);
+      border: 0;
+      border-block-end: 1px solid var(--pl-color-border);
+      background: transparent;
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-md);
+      outline: none;
+    }
+
+    .c-command__search::placeholder {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-command__body {
+      max-block-size: calc(var(--c-command-max-block) - 4rem);
+      overflow-y: auto;
+      padding: var(--pl-space-2);
+    }
+
+    .c-command__group + .c-command__group {
+      margin-block-start: var(--pl-space-2);
+    }
+
+    .c-command__heading {
+      margin-block: var(--pl-space-2) var(--pl-space-1);
+      padding-inline: var(--pl-space-3);
+      font-size: var(--pl-text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-command__item {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      inline-size: 100%;
+      padding: var(--pl-space-2) var(--pl-space-3);
+      border: 0;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      text-align: start;
+      cursor: pointer;
+    }
+
+    .c-command__item:hover,
+    .c-command__item[data-selected] {
+      background: var(--pl-color-surface-2);
+    }
+
+    .c-command__item[data-selected] {
+      box-shadow: inset 2px 0 0 var(--pl-color-accent);
+      color: var(--pl-color-accent);
+    }
+
+    .c-command__item:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: -2px;
+    }
+
+    .c-command__icon {
+      inline-size: 1rem;
+      block-size: 1rem;
+      color: var(--pl-color-text-muted);
+      flex-shrink: 0;
+    }
+
+    .c-command__shortcut {
+      margin-inline-start: auto;
+      padding: 0.125rem var(--pl-space-1);
+      border-radius: var(--pl-radius-sm);
+      background: var(--pl-color-surface);
+      border: 1px solid var(--pl-color-border);
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      font-family: var(--pl-font-mono);
+    }
+
+    .c-command__footer {
+      display: flex;
+      gap: var(--pl-space-4);
+      padding: var(--pl-space-2) var(--pl-space-4);
+      border-block-start: 1px solid var(--pl-color-border);
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+    }
+  }
+
+  /* Backdrop scrim. */
+  :where(.c-command)::backdrop {
+    background: oklch(0% 0 0deg / 40%);
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-command) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+
+    :where(.c-command__item[data-selected]) {
+      box-shadow: inset 2px 0 0 Highlight;
+      color: Highlight;
+    }
+  }
+}

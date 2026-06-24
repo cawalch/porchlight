@@ -62,6 +62,11 @@ const PAGES = [
   "/preview/stepper",
   "/preview/timeline",
   "/preview/textarea-auto",
+  "/preview/segmented",
+  "/preview/tag-input",
+  "/preview/dropdown",
+  "/preview/file-upload",
+  "/preview/command-palette",
   "/preview/utilities",
   "/preview/enhancements",
 ];
