@@ -86,19 +86,18 @@
      stays as the neutral field edge. (The previous `0 0 0 4px` had no blur,
      so it was a hard translucent ring, not the intended glow.) */
   :where(.c-field) .c-field__control:focus-visible {
-    box-shadow:
-      0 0 0 2px var(--pl-focus-color),
-      0 4px 12px -2px
-        color-mix(in oklab, var(--pl-focus-color), transparent 55%);
+    outline: none;
+    border-color: var(--pl-focus-color);
+    box-shadow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-focus-color), transparent 85%);
   }
 
   /* Invalid: same single-ring + glow treatment, in danger. The hint still
      flips to danger-text via :has() on the wrapper (below). */
   :where(.c-field) .c-field__control:user-invalid {
-    box-shadow:
-      0 0 0 2px var(--pl-color-danger),
-      0 4px 12px -2px
-        color-mix(in oklab, var(--pl-color-danger), transparent 55%);
+    border-color: var(--pl-color-danger);
+    box-shadow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-color-danger), transparent 85%);
   }
 
   :where(.c-field):has(.c-field__control:user-invalid) .c-field__hint {
