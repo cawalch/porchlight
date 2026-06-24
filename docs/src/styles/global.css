@@ -152,6 +152,12 @@ main {
  * spacing). Docs pages get spacing back via .prose. But preview pages use raw
  * HTML elements directly in <main>, so they need these rules.
  *
+ * IMPORTANT: These rules are wrapped in @layer porchlight.base so that
+ * component styles in @layer porchlight.components properly override them.
+ * If these were unlayered, they would beat component styles regardless of
+ * specificity (unlayered > layered in the cascade), causing bugs like card
+ * titles getting 32px top margins.
+ *
  * Scoped via :has() so this ONLY applies when main does NOT contain a
  * .docs-shell or .prose article (those have their own spacing).
  * ------------------------------------------------------------------------- */
