@@ -106,6 +106,62 @@ const rows = [
   <div class="l-page prose">
     <p>Long-form guidance, release notes, or policy text — kept readable even when the surrounding app runs edge-to-edge.</p>
   </div>
+
+  <h2><code>.l-container</code> — centered app wrapper</h2>
+  <p>
+    General-purpose max-width container for dashboards, settings, and lists.
+    Distinct from <code>.l-page</code> (prose-focused, 88rem). Default 80rem;
+    tune via <code>--l-container-max</code>.
+  </p>
+  <div class="l-container container-demo">
+    <p>This content is centered and capped at 80rem.</p>
+  </div>
+
+  <h2><code>.l-columns</code> — multi-column masonry</h2>
+  <p>
+    CSS multi-column layout for card walls, search results, and image grids.
+    Set column count via <code>--l-columns-count</code> or let it auto-fit.
+    Items use <code>break-inside: avoid</code> so cards don't split.
+  </p>
+  <div class="l-columns columns-demo" style="--l-columns-count: 3;">
+    {[1, 2, 3, 4, 5, 6].map((n) => (
+      <div class="column-card">
+        <strong>Card {n}</strong>
+        <p class="u-muted">Each card flows into the next column without splitting. Resize to see reflow.</p>
+      </div>
+    ))}
+  </div>
+
+  <h2><code>.l-inset</code> — constrained content in full-bleed</h2>
+  <p>
+    Centers and constrains content inside a full-width parent (hero, banner).
+    Default 48rem; tune via <code>--l-inset-max</code>.
+  </p>
+  <div class="bleed-demo">
+    <div class="l-inset inset-demo">
+      <strong>This inset is centered inside a full-bleed surface.</strong>
+      <p class="u-muted">Use for captions, CTAs, or forms within a wide hero section.</p>
+    </div>
+  </div>
+
+  <h2>Full layout index</h2>
+  <table class="layout-table">
+    <thead>
+      <tr><th>Primitive</th><th>Purpose</th><th>Tunable token</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>.l-stack</code></td><td>Vertical flow (forms, sections)</td><td><code>--l-stack-gap</code></td></tr>
+      <tr><td><code>.l-cluster</code></td><td>Horizontal wrapping group (buttons, filters)</td><td><code>--l-cluster-gap</code></td></tr>
+      <tr><td><code>.l-grid</code></td><td>Auto-fitting card grid</td><td><code>--l-grid-min</code></td></tr>
+      <tr><td><code>.l-sidebar</code></td><td>Two-column with container-query collapse</td><td><code>--l-sidebar-size</code></td></tr>
+      <tr><td><code>.l-page</code></td><td>Centered prose column (88rem)</td><td><code>--l-page-max</code></td></tr>
+      <tr><td><code>.l-scroll-area</code></td><td>Independent scroll region</td><td>—</td></tr>
+      <tr><td><code>.l-app-shell</code></td><td>Full SaaS shell (topbar + sidebar + main)</td><td><code>--app-sidebar-size</code></td></tr>
+      <tr><td><code>.l-container</code></td><td>Centered app wrapper (80rem)</td><td><code>--l-container-max</code></td></tr>
+      <tr><td><code>.l-columns</code></td><td>Multi-column masonry</td><td><code>--l-columns-count</code></td></tr>
+      <tr><td><code>.l-inset</code></td><td>Constrained content in full-bleed</td><td><code>--l-inset-max</code></td></tr>
+    </tbody>
+  </table>
 </BaseLayout>
 
 <script>
@@ -251,5 +307,66 @@ const rows = [
     background: var(--pl-color-surface);
     border: 1px dashed var(--pl-color-border);
     border-radius: var(--pl-radius-lg);
+  }
+
+  .container-demo {
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    text-align: center;
+  }
+
+  .columns-demo {
+    margin-block: var(--pl-space-4);
+  }
+
+  .column-card {
+    padding: var(--pl-space-4);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+
+  .column-card p {
+    margin-block-start: var(--pl-space-2);
+    font-size: var(--pl-text-sm);
+  }
+
+  .bleed-demo {
+    background: var(--pl-color-surface-2);
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    padding-block: var(--pl-space-6);
+    margin-block: var(--pl-space-4);
+  }
+
+  .inset-demo {
+    text-align: center;
+    padding: var(--pl-space-4);
+  }
+
+  .inset-demo p {
+    margin-block-start: var(--pl-space-2);
+    font-size: var(--pl-text-sm);
+  }
+
+  .layout-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    margin-block: var(--pl-space-4);
+  }
+
+  .layout-table th,
+  .layout-table td {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    text-align: start;
+  }
+
+  .layout-table th {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    font-weight: 600;
   }
 </style>
