@@ -27,7 +27,11 @@
       border: 1px solid var(--pl-color-border);
       border-inline-start: 4px solid var(--c-alert-tone);
       border-radius: var(--pl-radius-lg);
-      background: color-mix(in oklab, var(--c-alert-tone-bg), var(--pl-color-surface) 92%);
+      background: color-mix(
+        in oklab,
+        var(--c-alert-tone-bg),
+        var(--pl-color-surface) 92%
+      );
       color: var(--pl-color-text);
     }
 

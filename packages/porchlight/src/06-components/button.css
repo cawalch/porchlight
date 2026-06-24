@@ -80,7 +80,7 @@
        reassigning a custom property in terms of itself is a cycle, which CSS
        resolves to guaranteed-invalid and collapses the fill to transparent.
        Theme-aware by construction (darkens in light, lightens in dark). */
-    :scope:is(:hover, [data-hover]) {
+    :scope:is(:hover, [data-hover]):not(:disabled, [aria-disabled="true"]) {
       background-color: color-mix(
         in oklab,
         var(--c-button-bg),
@@ -92,7 +92,10 @@
     /* Ghost has no fill to mix into (transparent)  -  mixing text into
        transparent yields a ~7%-alpha veil that reads as "barely there".
        Give it a real, visible accent wash instead. */
-    :scope[data-variant="ghost"]:is(:hover, [data-hover]) {
+    :scope[data-variant="ghost"]:is(:hover, [data-hover]):not(
+        :disabled,
+        [aria-disabled="true"]
+      ) {
       background-color: color-mix(
         in oklab,
         var(--pl-color-accent),
@@ -101,7 +104,10 @@
     }
 
     /* Active + pressed: a small tactile dip. */
-    :scope:is(:active, [aria-pressed="true"]) {
+    :scope:is(:active, [aria-pressed="true"]):not(
+        :disabled,
+        [aria-disabled="true"]
+      ) {
       transform: translateY(1px);
     }
 

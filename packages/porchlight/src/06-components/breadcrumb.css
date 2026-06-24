@@ -75,11 +75,14 @@
     }
 
     /* Long trail truncation: collapse middle items with ellipsis. */
-    .c-breadcrumb__item[data-truncate] {
+    .c-breadcrumb__item[data-truncate]
+      :is(.c-breadcrumb__link, .c-breadcrumb__current) {
+      display: inline-block;
       max-inline-size: 8rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      vertical-align: bottom;
     }
   }
 

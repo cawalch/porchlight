@@ -67,7 +67,8 @@
       transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
     }
 
-    .c-dropdown__trigger:has(+ .c-dropdown__menu:popover-open) .c-dropdown__chevron {
+    .c-dropdown__trigger:has(+ .c-dropdown__menu:popover-open)
+      .c-dropdown__chevron {
       rotate: 180deg;
     }
 
@@ -96,6 +97,7 @@
         position: absolute;
         position-anchor: var(--c-dropdown-anchor);
         position-area: block-end span-inline-end;
+        position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-1);
       }
     }
@@ -132,7 +134,8 @@
     cursor: pointer;
   }
 
-  :where(.c-dropdown__menu) > :is(a, button, [role="option"]):is(:hover, :focus-visible) {
+  :where(.c-dropdown__menu)
+    > :is(a, button, [role="option"]):is(:hover, :focus-visible) {
     background: var(--pl-color-surface-2);
   }
 

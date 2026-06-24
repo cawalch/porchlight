@@ -158,7 +158,8 @@
       display: grid;
       grid-template-rows: 0fr;
       overflow: hidden;
-      transition: grid-template-rows var(--pl-duration-3) var(--pl-ease-standard);
+      transition: grid-template-rows var(--pl-duration-3)
+        var(--pl-ease-standard);
     }
 
     .c-table .c-table__detail[open] .c-table__detail-inner {

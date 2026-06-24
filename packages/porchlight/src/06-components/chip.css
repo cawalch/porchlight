@@ -45,7 +45,11 @@
     /* Fallback bg when relative color syntax is not supported. */
     @supports not (background: oklch(from red l c h)) {
       :scope {
-        --c-chip-bg: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+        --c-chip-bg: color-mix(
+          in oklab,
+          var(--pl-color-accent),
+          transparent 88%
+        );
       }
     }
 
@@ -55,7 +59,11 @@
       --c-chip-text: var(--pl-color-success-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(in oklab, var(--pl-color-success), transparent 86%);
+        --c-chip-bg: color-mix(
+          in oklab,
+          var(--pl-color-success),
+          transparent 86%
+        );
       }
     }
 
@@ -64,7 +72,11 @@
       --c-chip-text: var(--pl-color-warning-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(in oklab, var(--pl-color-warning), transparent 84%);
+        --c-chip-bg: color-mix(
+          in oklab,
+          var(--pl-color-warning),
+          transparent 84%
+        );
       }
     }
 
@@ -73,7 +85,11 @@
       --c-chip-text: var(--pl-color-danger-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(in oklab, var(--pl-color-danger), transparent 86%);
+        --c-chip-bg: color-mix(
+          in oklab,
+          var(--pl-color-danger),
+          transparent 86%
+        );
       }
     }
 

@@ -56,7 +56,12 @@
         content: "";
         position: absolute;
         inset-block-start: calc(var(--c-stepper-marker-size) / 2);
-        inset-inline: calc(50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2) calc(-50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2);
+        inset-inline: calc(
+            50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2
+          )
+          calc(
+            -50% + var(--c-stepper-marker-size) / 2 + var(--c-stepper-gap) / 2
+          );
         block-size: 2px;
         background: var(--pl-color-border);
         z-index: var(--pl-z-base);
@@ -100,7 +105,8 @@
     .c-stepper__step[data-state="current"] .c-stepper__marker {
       border-color: var(--pl-color-accent);
       color: var(--pl-color-accent);
-      box-shadow: 0 0 0 4px color-mix(in oklab, var(--pl-color-accent), transparent 80%);
+      box-shadow: 0 0 0 4px
+        color-mix(in oklab, var(--pl-color-accent), transparent 80%);
     }
 
     .c-stepper__label {
@@ -129,10 +135,9 @@
         padding-block-end: var(--pl-space-4);
 
         &::before {
-          inset-block-start: var(--c-stepper-marker-size);
+          inset-block: var(--c-stepper-marker-size) 0;
           inset-inline: calc(var(--c-stepper-marker-size) / 2) auto;
           inline-size: 2px;
-          block-size: var(--pl-space-4);
         }
       }
     }

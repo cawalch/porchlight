@@ -14,7 +14,7 @@ The `.c-field` is a labeled form control. It wraps a **native** `<input>`,
 behavior: constraint validation, autofill, IME, spellcheck, the works.
 
 State is driven entirely by native pseudos and reflected onto the border and
-hint  -  no class toggles, no JavaScript. (The hint's invalid color still uses
+hint - no class toggles, no JavaScript. (The hint's invalid color still uses
 `:has()` on the wrapper; the focus/invalid borders target the control
 directly, outside `@scope`, because live-state pseudos inside `@scope` did not
 reliably apply to the focused control.)
@@ -69,13 +69,13 @@ reliably apply to the focused control.)
 - **Label association:** the wrapper is a `<label>`, so clicking the label
   focuses the control (the logical equivalent of `for`/`id` with no extra DOM).
 - **Focus:** the control draws a **crisp 2px accent ring with a soft blurred
-  glow** (a layered `box-shadow`). The border is intentionally NOT recolored  - 
+  glow** (a layered `box-shadow`). The border is intentionally NOT recolored -
   recoloring it alongside a ring produced a “double blue stroke” (solid border
   - translucent ring). The ring is the single focus indicator; the border
     stays as the neutral field edge. This reads as a modern SaaS input rather
     than a browser default outline.
 - **Invalidity:** uses `:user-invalid` (Baseline 2024), which respects
-  `placeholder-shown` and only fires after interaction/blur  -  so an empty
+  `placeholder-shown` and only fires after interaction/blur - so an empty
   required field doesn't error on load. Never rely on color alone: the hint
   text color also changes to `danger-text`.
 - **Error text association:** for screen-reader users, add `aria-describedby`

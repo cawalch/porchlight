@@ -40,7 +40,8 @@ first column, density modes, and loading states.
 ```html
 <th data-sort="asc">Name <span class="c-table__sort-icon"></span></th>
 <th data-sort="desc">Created <span class="c-table__sort-icon"></span></th>
-<th>Tags</th>  <!-- no data-sort = unsortable -->
+<th>Tags</th>
+<!-- no data-sort = unsortable -->
 ```
 
 Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
@@ -50,13 +51,17 @@ Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
 ```html
 <thead>
   <tr>
-    <th class="c-table__check"><input type="checkbox" aria-label="Select all" /></th>
+    <th class="c-table__check">
+      <input type="checkbox" aria-label="Select all" />
+    </th>
     <th>Account</th>
   </tr>
 </thead>
 <tbody>
   <tr aria-selected="true">
-    <td class="c-table__check"><input type="checkbox" checked aria-label="Select row" /></td>
+    <td class="c-table__check">
+      <input type="checkbox" checked aria-label="Select row" />
+    </td>
     <td>Acme Ops</td>
   </tr>
 </tbody>
@@ -118,29 +123,29 @@ button via JS. CSS handles the animated expand/collapse.
 
 | Selector                         | Role                                              |
 | -------------------------------- | ------------------------------------------------- |
-| `.c-table-wrap`                  | Scroll + query container (bordered, rounded).    |
+| `.c-table-wrap`                  | Scroll + query container (bordered, rounded).     |
 | `.c-table`                       | The native `<table>`.                             |
 | `th`, `td`                       | Cells (styled via descendant selectors).          |
 | `[data-align="end"]`             | Right-align + `tabular-nums` for numeric columns. |
 | `[data-align="center"]`          | Center-align.                                     |
 | `tbody tr:hover`                 | Row hover wash (scanning aid).                    |
 | `tbody tr[aria-selected="true"]` | Selected row (accent wash).                       |
-| `th[data-sort]`                  | Sortable header (cursor + hover).                |
-| `th[data-sort="asc"\|"desc"]`    | Shows up/down arrow via `.c-table__sort-icon`.   |
+| `th[data-sort]`                  | Sortable header (cursor + hover).                 |
+| `th[data-sort="asc"\|"desc"]`    | Shows up/down arrow via `.c-table__sort-icon`.    |
 | `.c-table__sort-icon`            | Pure-CSS triangle arrow inside sortable `<th>`.   |
-| `.c-table__check`                | Narrow centered cell for checkboxes.             |
-| `.c-table__detail`               | Expandable detail row (collapsed by default).    |
+| `.c-table__check`                | Narrow centered cell for checkboxes.              |
+| `.c-table__detail`               | Expandable detail row (collapsed by default).     |
 | `.c-table__detail[open]`         | Expanded detail row.                              |
-| `.c-table__detail-inner`         | Animated wrapper (grid-rows technique).          |
-| `.c-table__detail-content`       | Inner content (padding + overflow).              |
-| `.c-table__expand`               | Expand/collapse toggle button (chevron).         |
-| `.c-table__sticky-col`           | Sticky first column (pinned during scroll).      |
-| `[data-density="compact"]`       | Tighter row padding on `.c-table-wrap`.          |
-| `tbody[data-loading]`            | Suppresses hover during loading state.           |
+| `.c-table__detail-inner`         | Animated wrapper (grid-rows technique).           |
+| `.c-table__detail-content`       | Inner content (padding + overflow).               |
+| `.c-table__expand`               | Expand/collapse toggle button (chevron).          |
+| `.c-table__sticky-col`           | Sticky first column (pinned during scroll).       |
+| `[data-density="compact"]`       | Tighter row padding on `.c-table-wrap`.           |
+| `tbody[data-loading]`            | Suppresses hover during loading state.            |
 
 ## Tokens exposed
 
-| Token                 | Default                                  | Purpose                                     |
-| --------------------- | ---------------------------------------- | ------------------------------------------- |
-| `--c-table-min`       | `48rem`                                  | Min table width (drives horizontal scroll). |
-| `--c-table-cell-pad`  | `var(--pl-space-3) var(--pl-space-4)`    | Cell padding (overridden by density).       |
+| Token                | Default                               | Purpose                                     |
+| -------------------- | ------------------------------------- | ------------------------------------------- |
+| `--c-table-min`      | `48rem`                               | Min table width (drives horizontal scroll). |
+| `--c-table-cell-pad` | `var(--pl-space-3) var(--pl-space-4)` | Cell padding (overridden by density).       |

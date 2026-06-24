@@ -15,11 +15,11 @@ the light/dark system works.
 
 Tokens are split into two layers:
 
-| Layer | Prefix | Purpose |
-|-------|--------|---------|
-| **Primitive** (`02-tokens.css`) | `--pl-*` | Raw design scales: font sizes, spacing steps, OKLCH color ramp, radii, motion, shadows |
-| **Semantic** (`02-tokens.css`) | `--pl-color-*` | Foreground/background pairs: `bg`, `surface`, `text`, `border`, `accent`, `danger-*`, `success-*`, `warning-*` |
-| **Component-local** | `--c-*` | Per-component tokens defined inside `@scope` (e.g., `--c-alert-tone`) |
+| Layer                           | Prefix         | Purpose                                                                                                        |
+| ------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Primitive** (`02-tokens.css`) | `--pl-*`       | Raw design scales: font sizes, spacing steps, OKLCH color ramp, radii, motion, shadows                         |
+| **Semantic** (`02-tokens.css`)  | `--pl-color-*` | Foreground/background pairs: `bg`, `surface`, `text`, `border`, `accent`, `danger-*`, `success-*`, `warning-*` |
+| **Component-local**             | `--c-*`        | Per-component tokens defined inside `@scope` (e.g., `--c-alert-tone`)                                          |
 
 Semantic tokens use `light-dark()` so they automatically adapt to the
 user's color scheme. Override primitives to retheme the entire system;

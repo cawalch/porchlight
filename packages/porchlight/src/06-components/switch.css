@@ -76,7 +76,8 @@
       background: var(--pl-color-surface);
       box-shadow: var(--pl-shadow-1);
       inset-inline-start: 0.125rem;
-      transition: inset-inline-start var(--pl-duration-2) var(--pl-ease-standard);
+      transition: inset-inline-start var(--pl-duration-2)
+        var(--pl-ease-standard);
     }
 
     /* Checked state: track turns accent, thumb slides to the end. */
@@ -86,7 +87,9 @@
     }
 
     :scope:has(.c-switch__input:checked) .c-switch__thumb {
-      inset-inline-start: calc(var(--c-switch-track-w) - var(--c-switch-thumb) - 0.125rem);
+      inset-inline-start: calc(
+        var(--c-switch-track-w) - var(--c-switch-thumb) - 0.125rem
+      );
     }
 
     /* Focus ring on the track. */

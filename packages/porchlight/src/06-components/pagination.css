@@ -78,7 +78,10 @@
   }
 
   /* Live-state hover OUTSIDE @scope. */
-  :where(.c-pagination__page:not([aria-current="page"])):is(:hover, :focus-visible) {
+  :where(.c-pagination__page:not([aria-current="page"])):is(
+    :hover,
+    :focus-visible
+  ) {
     background: var(--pl-color-surface-2);
     color: var(--pl-color-text);
   }
