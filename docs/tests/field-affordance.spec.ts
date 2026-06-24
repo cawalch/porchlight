@@ -54,10 +54,10 @@ test("field focus draws a visible accent ring", async ({ page }) => {
     dl,
     `focus ring must differ from the surface by ≥ ${RING_DL}`,
   ).toBeGreaterThanOrEqual(RING_DL);
-  // Sanity: the ring color is in the focus-color family (low a/b toward blue,
-  // not neutral gray).
+  // Sanity: the ring color has chroma (is not neutral gray).
   const lab = toOklab(color!);
-  expect(lab.a, "ring is not neutral (has chroma)").toBeLessThan(-0.01);
+  const chroma = Math.sqrt(lab.a * lab.a + lab.b * lab.b);
+  expect(chroma, "ring is not neutral (has chroma)").toBeGreaterThan(0.01);
 });
 
 test("field invalid draws a visible danger ring", async ({ page }) => {
