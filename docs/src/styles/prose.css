@@ -57,7 +57,7 @@
 }
 
 .prose :where(code) {
-  padding: 0.15rem 0.4rem;
+  padding: 0.1em 0.25em;
   border-radius: var(--pl-radius-sm);
   background: var(--pl-color-surface-2);
   font-size: 0.85em;
