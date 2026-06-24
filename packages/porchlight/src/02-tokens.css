@@ -111,51 +111,54 @@
     --pl-z-overlay: 1000;
     --pl-z-toast: 1100;
 
-    /* Brand  -  raw OKLCH ramp at hue 250 (electric indigo); scale 1 (lightest) → 9 (darkest).
-       Chroma lifted to 0.24 at the midpoint for vivid, differentiated brand presence on both
-       sRGB and wide-gamut P3 displays. */
-    --pl-brand-1: oklch(96% 0.03 250deg);
-    --pl-brand-2: oklch(88% 0.08 250deg);
-    --pl-brand-3: oklch(78% 0.14 250deg);
-    --pl-brand-4: oklch(68% 0.20 250deg);
-    --pl-brand-5: oklch(62% 0.24 250deg);
-    --pl-brand-6: oklch(56% 0.26 250deg);
-    --pl-brand-7: oklch(48% 0.24 250deg);
-    --pl-brand-8: oklch(40% 0.20 250deg);
-    --pl-brand-9: oklch(30% 0.14 250deg);
+    /* Brand  -  raw OKLCH ramp at hue 82 (porchlight amber-gold); scale 1
+       (lightest) → 9 (darkest). Chroma peaks at 0.15 in the mid-steps
+       (brand-5/6) where amber is most vivid on P3 displays; tapers at the
+       extremes to avoid neon yellow at the top and muddy brown at the bottom.
+       The warm hue embodies the name: a porchlight glowing at dusk. */
+    --pl-brand-1: oklch(97% 0.02 82deg);
+    --pl-brand-2: oklch(89% 0.05 82deg);
+    --pl-brand-3: oklch(80% 0.09 82deg);
+    --pl-brand-4: oklch(70% 0.13 82deg);
+    --pl-brand-5: oklch(63% 0.15 82deg);
+    --pl-brand-6: oklch(56% 0.14 82deg);
+    --pl-brand-7: oklch(48% 0.11 82deg);
+    --pl-brand-8: oklch(39% 0.07 82deg);
+    --pl-brand-9: oklch(29% 0.04 82deg);
 
     /* Semantic colors  -  light/dark via light-dark(), driven by color-scheme.
        Forced-colors overrides live in 03-themes. Foreground/background are
        defined as pairs so contrast is intentional, not accidental.
 
-       Dark mode surfaces carry deliberate brand-hue chroma (0.04–0.05) so the
-       dark theme reads as intentional "midnight indigo", not generic gray. */
-    --pl-color-bg: light-dark(oklch(98% 0.01 250deg), oklch(13% 0.04 250deg));
-    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0.04 250deg));
+       Dark mode surfaces carry a faint warm chroma (0.008–0.012 at hue 55°)
+       so the dark theme reads as warm charcoal — like a room lit by a
+       porchlight — not cold blue-gray. */
+    --pl-color-bg: light-dark(oklch(98% 0.005 60deg), oklch(14% 0.008 55deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(18% 0.008 55deg));
     --pl-color-surface-2: light-dark(
-      oklch(94% 0.02 250deg),
-      oklch(21% 0.05 250deg)
+      oklch(95% 0.008 60deg),
+      oklch(22% 0.012 55deg)
     );
-    --pl-color-text: light-dark(oklch(18% 0.02 250deg), oklch(96% 0.01 250deg));
+    --pl-color-text: light-dark(oklch(20% 0.012 55deg), oklch(96% 0.008 60deg));
     --pl-color-text-muted: light-dark(
-      oklch(45% 0.04 250deg),
-      oklch(72% 0.03 250deg)
+      oklch(46% 0.015 55deg),
+      oklch(72% 0.012 55deg)
     );
 
     /* Border: reduced opacity so it reads as a hint, not a cage.
        Overlay contexts (dialogs, drawers) use --pl-color-border-overlay
        which resolves to transparent — shadow + backdrop do the job there. */
     --pl-color-border: light-dark(
-      oklch(80% 0.02 250deg / 75%),
-      oklch(45% 0.05 250deg / 28%)
+      oklch(80% 0.015 55deg / 75%),
+      oklch(45% 0.012 55deg / 30%)
     );
     --pl-color-border-overlay: transparent;
     --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
-    --pl-color-accent-text: light-dark(white, oklch(13% 0.04 250deg));
+    --pl-color-accent-text: light-dark(white, oklch(16% 0.01 55deg));
     --pl-color-accent-hover: color-mix(
       in oklab,
       var(--pl-color-accent),
-      black 10%
+      oklch(16% 0.01 55deg) 10%
     );
     --pl-color-danger: oklch(60% 0.22 25deg);
     --pl-color-danger-bg: light-dark(
@@ -201,10 +204,10 @@
     --pl-control-border-width: 1px;
     --pl-control-radius: var(--pl-radius-control);
 
-    /* Focus */
+    /* Focus — aligned with the warm brand hue for a cohesive ring. */
     --pl-focus-color: light-dark(
-      oklch(56% 0.22 260deg),
-      oklch(78% 0.16 260deg)
+      oklch(52% 0.14 82deg),
+      oklch(72% 0.13 82deg)
     );
     --pl-focus-offset: 2px;
     --pl-focus-size: 2px;
@@ -228,19 +231,20 @@
     --pl-backdrop-blur-scrim: 4px;
     --pl-backdrop-saturate-scrim: 80%;
 
-    /* Shadows  -  multi-layer with a faint brand-hue cast for spatial depth.
+    /* Shadows  -  multi-layer with a faint warm-hue cast for spatial depth.
        The inset top-highlight on shadow-2/3 gives elevated surfaces the
-       "lifted from the page" quality common in Linear, Vercel, Notion. */
+       "lifted from the page" quality common in Linear, Vercel, Notion.
+       Hue 40° in the shadow tint reads as warm ambient light. */
     --pl-shadow-1:
       0 1px 2px oklch(0% 0 0deg / 8%),
-      0 1px 4px oklch(25% 0.06 250deg / 6%);
+      0 1px 4px oklch(30% 0.04 40deg / 6%);
     --pl-shadow-2:
       0 4px 8px oklch(0% 0 0deg / 8%),
-      0 8px 24px oklch(20% 0.08 250deg / 12%),
+      0 8px 24px oklch(25% 0.06 40deg / 12%),
       inset 0 1px 0 oklch(100% 0 0deg / 6%);
     --pl-shadow-3:
       0 8px 16px oklch(0% 0 0deg / 10%),
-      0 24px 64px oklch(15% 0.10 250deg / 18%),
+      0 24px 64px oklch(20% 0.08 40deg / 18%),
       inset 0 1px 0 oklch(100% 0 0deg / 8%);
 
     /* Glow: accent-hued ring for focused/active primary controls. */
