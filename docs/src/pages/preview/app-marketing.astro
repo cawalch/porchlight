@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const features = [
+  { title: 'Zero JavaScript', body: 'Every component is pure CSS. No runtime, no bundle, no hydration.', icon: '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>' },
+  { title: 'WCAG-AA verified', body: 'Contrast-tested in both themes. RTL, forced-colors, reduced-motion.', icon: '<path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>' },
+  { title: 'Modern CSS first', body: '@scope, @layer, anchor positioning, OKLCH, scroll-driven animations.', icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
+  { title: 'Token-driven', body: 'Override one custom property to retheme the entire system.', icon: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>' },
+  { title: '34 components', body: 'Button, card, data table, dialog, tabs, tree, timeline, and more.', icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>' },
+  { title: 'Responsive by default', body: 'Container queries, auto-fit grids, fluid type, logical properties.', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+];
+
+const testimonials = [
+  { quote: 'Porchlight replaced 40kb of CSS and 3 dependencies.', author: 'Tech Lead, SaaS startup' },
+  { quote: 'The container-query-first approach is genuinely ahead of its time.', author: 'Frontend Architect' },
+  { quote: 'Best-in-class dark mode. It just works.', author: 'Product Designer' },
+  { quote: 'We shipped our dashboard in 2 days, not 2 weeks.', author: 'Indie hacker' },
+];
+---
+<BaseLayout title="Marketing page · Porchlight">
+  <!-- Scroll progress bar -->
+  <div class="c-scroll-progress"></div>
+
+  <!-- Full-bleed hero with inset content -->
+  <section class="hero-bleed">
+    <div class="l-inset">
+      <span class="c-badge" data-tone="accent">v1.0 coming soon</span>
+      <h1 class="hero-title">Build beautiful, accessible UI with pure CSS.</h1>
+      <p class="hero-sub">A no-dependency design system with 34 components, zero JavaScript, and modern CSS throughout.</p>
+      <div class="l-cluster">
+        <button class="c-button" data-variant="primary">Get started</button>
+        <button class="c-button" data-variant="secondary">View components</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats bar -->
+  <section class="l-container" style="padding-block: var(--pl-space-8);">
+    <div class="l-grid" style="--l-grid-min: 10rem;">
+      <div class="stat-block"><span class="stat-block__value">34</span><span class="stat-block__label">Components</span></div>
+      <div class="stat-block"><span class="stat-block__value">0</span><span class="stat-block__label">Dependencies</span></div>
+      <div class="stat-block"><span class="stat-block__value">143</span><span class="stat-block__label">Tests</span></div>
+      <div class="stat-block"><span class="stat-block__value">~27kb</span><span class="stat-block__label">Bundle</span></div>
+    </div>
+  </section>
+
+  <!-- Feature cards in multi-column masonry -->
+  <section class="l-container" style="padding-block: var(--pl-space-6);">
+    <h2 class="section-heading c-reveal">Why Porchlight?</h2>
+    <div class="l-columns" style="--l-columns-count: 3;">
+      {features.map((f, i) => (
+        <div class={`c-card c-reveal${i > 0 ? ` data-delay="${Math.min(i, 3)}"` : ''}`}>
+          <div class="c-card__body">
+            <span class="feature-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;" set:html={f.icon} stroke-linecap="round" stroke-linejoin="round"/>
+            </span>
+            <h3 class="feature-card-title">{f.title}</h3>
+            <p class="u-muted" style="font-size: var(--pl-text-sm);">{f.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Code example -->
+  <section class="l-container" style="padding-block: var(--pl-space-8);">
+    <h2 class="section-heading c-reveal">Get started in seconds</h2>
+    <div class="c-reveal" data-delay="1">
+      <pre><code>pnpm add @cawalch/porchlight</code></pre>
+      <pre><code>{`/* app.css */
+@layer porchlight, app;
+@import "@cawalch/porchlight/porchlight.css";`}</code></pre>
+    </div>
+  </section>
+
+  <!-- Testimonials in columns -->
+  <section class="l-container" style="padding-block: var(--pl-space-6);">
+    <h2 class="section-heading c-reveal">Loved by developers</h2>
+    <div class="l-columns" style="--l-columns-count: 2;">
+      {testimonials.map((t) => (
+        <div class="c-card c-reveal">
+          <div class="c-card__body">
+            <p style="font-size: var(--pl-text-md); line-height: 1.6; margin-block-end: var(--pl-space-3);">"{t.quote}"</p>
+            <p class="u-muted" style="font-size: var(--pl-text-sm);">{t.author}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA with full-bleed -->
+  <section class="hero-bleed" style="padding-block: var(--pl-space-10);">
+    <div class="l-inset">
+      <h2 class="hero-title">Ready to build?</h2>
+      <p class="hero-sub">Join developers building modern web apps with Porchlight.</p>
+      <button class="c-button" data-variant="primary">Install now</button>
+    </div>
+  </section>
+
+  <style>
+    .hero-bleed {
+      background: var(--pl-color-surface-2);
+      padding-block: clamp(3rem, 2rem + 5vi, 6rem);
+      text-align: center;
+    }
+    .hero-title {
+      font-size: clamp(1.75rem, 1.25rem + 3vi, 3rem);
+      line-height: 1.1;
+      margin-block: var(--pl-space-3);
+      text-wrap: balance;
+    }
+    .hero-sub {
+      max-inline-size: 45ch;
+      margin-inline: auto;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-lg);
+      margin-block-end: var(--pl-space-5);
+    }
+    .section-heading {
+      font-size: var(--pl-text-xl);
+      margin-block-end: var(--pl-space-5);
+    }
+    .stat-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+    }
+    .stat-block__value {
+      font-size: var(--pl-text-xl);
+      font-weight: 700;
+      color: var(--pl-color-accent);
+    }
+    .stat-block__label {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+    }
+    .feature-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+      margin-block-end: var(--pl-space-3);
+      border-radius: var(--pl-radius-md);
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+      color: var(--pl-color-accent);
+    }
+    .feature-card-title {
+      font-size: var(--pl-text-md);
+      font-weight: 600;
+      margin-block-end: var(--pl-space-2);
+    }
+    /* Break out of main constraint */
+    :global(main:has(.hero-bleed)) {
+      inline-size: 100%;
+      max-inline-size: none;
+      margin-inline: 0;
+      padding-block: 0;
+    }
+    /* Restore spacing for elements inside the broken-out main */
+    :global(main:has(.hero-bleed)) pre {
+      margin-block: var(--pl-space-3);
+      padding: var(--pl-space-4);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface-2);
+      overflow-x: auto;
+      font-size: var(--pl-text-sm);
+      font-family: var(--pl-font-mono);
+    }
+  </style>
+</BaseLayout>

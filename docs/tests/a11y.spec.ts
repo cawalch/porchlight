@@ -68,6 +68,9 @@ const PAGES = [
   "/preview/file-upload",
   "/preview/command-palette",
   "/preview/nav",
+  "/preview/app-dashboard",
+  "/preview/app-inbox",
+  "/preview/app-marketing",
   "/preview/utilities",
   "/preview/enhancements",
 ];
