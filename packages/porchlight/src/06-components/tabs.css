@@ -113,7 +113,11 @@
   /* Live-state rules OUTSIDE @scope (:hover/:focus-visible on the tab don't
      reliably apply inside @scope). A subtle surface-2 wash on hover aids
      discoverability without competing with the selected indicator. */
-  :where(.c-tabs__list) .c-tabs__tab:is(:hover, :focus-visible) {
+  :where(.c-tabs__list)
+    .c-tabs__tab:is(:hover, :focus-visible):not(
+      :disabled,
+      [aria-disabled="true"]
+    ) {
     background: var(--pl-color-surface-2);
     color: var(--pl-color-text);
   }
@@ -121,7 +125,8 @@
   /* Hover should NOT fake the accent indicator on an unselected tab  -  only the
      selected tab carries the line. Restore muted text on hover so colour still
      flips for affordance without implying selection. */
-  :where(.c-tabs__list) .c-tabs__tab:hover {
+  :where(.c-tabs__list)
+    .c-tabs__tab:hover:not(:disabled, [aria-disabled="true"]) {
     color: var(--pl-color-text);
   }
 

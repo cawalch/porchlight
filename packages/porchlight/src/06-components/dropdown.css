@@ -67,7 +67,7 @@
       transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
     }
 
-    .c-dropdown__trigger:has(+ .c-dropdown__menu:popover-open)
+    .c-dropdown__trigger:has(~ .c-dropdown__menu:popover-open)
       .c-dropdown__chevron {
       rotate: 180deg;
     }

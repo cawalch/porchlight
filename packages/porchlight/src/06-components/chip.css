@@ -119,7 +119,7 @@
       transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-chip__remove:hover {
+    .c-chip__remove:hover:not(:disabled) {
       opacity: 1;
       background: oklch(from currentColor l c h / 12%);
     }

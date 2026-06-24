@@ -95,6 +95,14 @@
     margin-inline-start: calc(var(--c-avatar-group-size, 2.5rem) * -0.35);
   }
 
+  :where(.c-avatar-group[data-size="sm"]) .c-avatar-group__more {
+    font-size: var(--pl-text-xs);
+  }
+
+  :where(.c-avatar-group[data-size="lg"]) .c-avatar-group__more {
+    font-size: var(--pl-text-lg);
+  }
+
   @media (forced-colors: active) {
     :where(.c-avatar) {
       background: Highlight;
