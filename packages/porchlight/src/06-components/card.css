@@ -47,11 +47,6 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--pl-space-3);
-
-      /* Match the control height so the title centers at the same Y whether or
-         not the header has a button. (align-content: start on the card above
-         prevents this row from absorbing stretch-height from .l-grid.) */
-      min-block-size: var(--pl-control-block-size);
     }
 
     .c-card__title {

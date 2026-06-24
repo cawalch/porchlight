@@ -25,7 +25,7 @@
     :scope {
       --c-segmented-pad: 0.125rem;
       --c-segmented-gap: var(--pl-space-1);
-      --c-segmented-radius: var(--pl-radius-md);
+      --c-segmented-radius: var(--pl-radius-pill);
 
       display: inline-flex;
       gap: var(--c-segmented-gap);
