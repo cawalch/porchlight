@@ -150,4 +150,42 @@
       display: none;
     }
   }
+
+  /* --------------------------------------------------------------------- */
+
+  /* Multi-column masonry — card walls, search results, image grids. Uses
+     CSS multi-column layout (simpler than grid masonry and works in all
+     browsers). Items break-inside avoid so cards don't split across
+     columns. Tune column count via --l-columns-count or let it auto. */
+  :where(.l-columns) {
+    columns: var(--l-columns-count, auto);
+    column-gap: var(--l-columns-gap, var(--pl-space-4));
+  }
+
+  :where(.l-columns > *) {
+    break-inside: avoid;
+    margin-block-end: var(--l-columns-gap, var(--pl-space-4));
+  }
+
+  /* Centered max-width container — general-purpose wrapper for app
+     surfaces. Distinct from .l-page (which targets prose at 88rem).
+     Use for dashboards, settings, lists. */
+  :where(.l-container) {
+    inline-size: min(
+      100% - 2 * var(--l-container-pad, var(--pl-space-4)),
+      var(--l-container-max, 80rem)
+    );
+    margin-inline: auto;
+  }
+
+  /* Inset — constrained content inside a full-bleed parent. For captions,
+     forms, or text within a full-width hero/banner. Centers and constrains
+     without adding its own vertical rhythm. */
+  :where(.l-inset) {
+    inline-size: min(
+      100%,
+      var(--l-inset-max, 48rem)
+    );
+    margin-inline: auto;
+  }
 }

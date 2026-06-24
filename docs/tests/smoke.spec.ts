@@ -702,4 +702,29 @@ test.describe("docs scaffold", () => {
     // Footer exists (may be hidden since popover is closed).
     await expect(page.locator(".c-command__footer")).toBeAttached();
   });
+
+  test("nav renders items, active state, and collapsible sections", async ({
+    page,
+  }) => {
+    await page.goto("./preview/nav");
+    await expect(
+      page.getByRole("heading", { name: "Nav", exact: true }),
+    ).toBeVisible();
+    // Nav items exist.
+    await expect(page.locator(".c-nav__item").first()).toBeVisible();
+    await expect(page.locator(".c-nav__label").first()).toBeVisible();
+    // Active item exists.
+    await expect(page.locator(".c-nav__item[aria-current='page']").first()).toBeVisible();
+    // Icons exist.
+    await expect(page.locator(".c-nav__icon").first()).toBeVisible();
+    // Collapsible section exists and one is open.
+    await expect(page.locator(".c-nav__section").first()).toBeVisible();
+    await expect(page.locator(".c-nav__section[open]")).toBeVisible();
+    // Chevron exists.
+    await expect(page.locator(".c-nav__chevron").first()).toBeVisible();
+    // Icons-only variant exists.
+    await expect(page.locator(".c-nav[data-variant='icons']")).toBeVisible();
+    // Child items exist.
+    await expect(page.locator(".c-nav__item--child").first()).toBeVisible();
+  });
 });

@@ -1,0 +1,59 @@
+---
+title: Nav
+description: Vertical sidebar navigation with icon+label items, active states, collapsible sections, and icons-only variant.
+status: stable
+since: 1.0.0
+---
+
+# Nav
+
+The `.c-nav` renders a vertical navigation list for sidebars. Icon + label
+items with active state via `aria-current="page"`. Collapsible sub-sections
+via native `<details>`. Icons-only variant for collapsed sidebars.
+
+## Semantic HTML
+
+```html
+<nav class="c-nav" aria-label="Main">
+  <a class="c-nav__item" aria-current="page">
+    <svg class="c-nav__icon">...</svg>
+    <span class="c-nav__label">Dashboard</span>
+  </a>
+  <details class="c-nav__section" open>
+    <summary class="c-nav__section-trigger">
+      <svg class="c-nav__icon">...</svg>
+      <span>Projects</span>
+      <svg class="c-nav__chevron">...</svg>
+    </summary>
+    <a class="c-nav__item c-nav__item--child">
+      <span class="c-nav__label">Active</span>
+    </a>
+  </details>
+</nav>
+```
+
+## Icons-only (collapsed sidebar)
+
+```html
+<nav class="c-nav" data-variant="icons" aria-label="Quick nav">
+  <a class="c-nav__item" aria-current="page" aria-label="Dashboard">
+    <svg class="c-nav__icon">...</svg>
+  </a>
+</nav>
+```
+
+## Class contract
+
+| Selector                    | Role                                      |
+| --------------------------- | ----------------------------------------- |
+| `.c-nav`                    | Container (flex column).                 |
+| `.c-nav__item`              | A navigation link.                       |
+| `.c-nav__item--child`       | Nested item inside a section.            |
+| `.c-nav__icon`              | Leading icon.                             |
+| `.c-nav__label`             | Text label.                              |
+| `.c-nav__badge`             | Trailing badge (count).                  |
+| `.c-nav__section`           | Collapsible `<details>` group.           |
+| `.c-nav__section-trigger`   | The `<summary>` (click target).          |
+| `.c-nav__chevron`           | Expand/collapse arrow.                   |
+| `[aria-current="page"]`     | Active item (accent background).         |
+| `[data-variant="icons"]`    | Icons-only mode (hides labels).          |
