@@ -20,14 +20,19 @@ pnpm add @cawalch/porchlight
 
 ## Import
 
-Import the framework at the top of your CSS entry point:
+The package main export is the **prebuilt** stylesheet — a single file with
+no `@import` statements to resolve:
 
 ```css
-@import "@cawalch/porchlight/porchlight.css";
+@import "@cawalch/porchlight";
 ```
 
 That's it. The framework self-registers all cascade layers, tokens, and
 components. No configuration, no build step, no JavaScript.
+
+> **Bundler users:** see [Bundler notes](#bundler-notes) below if you use
+> esbuild or Bun, which cannot parse some modern CSS features in the
+> framework. Vite works out of the box.
 
 ## The layer model
 
@@ -53,7 +58,7 @@ To override Porchlight from your application CSS, place your own layer
 ```css
 /* app.css */
 @layer porchlight, app; /* app wins */
-@import "@cawalch/porchlight/porchlight.css";
+@import "@cawalch/porchlight";
 
 @layer app {
   /* your product styles here */
@@ -62,6 +67,19 @@ To override Porchlight from your application CSS, place your own layer
   }
 }
 ```
+
+> **Bundler caveat:** some bundlers (esbuild, Bun) hoist `@import` above
+> the `@layer` declaration, reversing the intended order. If this happens,
+> import Porchlight from your JS entry instead:
+>
+> ```ts
+> // app.ts
+> import "@cawalch/porchlight";
+> import "./app.css";
+> ```
+>
+> Then put only the `@layer` declaration in `app.css` (no `@import` to hoist).
+> See [Bundler notes](#bundler-notes) below.
 
 Unlayered styles always beat layered styles too, so plain CSS outside any
 `@layer` also wins. You never fight `!important`: Porchlight reserves it
@@ -121,6 +139,54 @@ browsers. Advanced features (anchor positioning, scroll-driven animations,
 
 See the [Browser Support guide](../browser-support) for the full feature
 matrix.
+
+## Bundler notes
+
+Porchlight uses modern CSS features (`@property`, `@scope`,
+`@container scroll-state()`) that are Baseline 2025+ but **not yet understood
+by all CSS parsers**. Here's how to handle common bundlers:
+
+### Vite
+
+Works out of the box — Vite uses Lightning CSS which handles all features
+natively.
+
+### esbuild / Bun
+
+esbuild and Bun's built-in CSS parsers throw a hard error on `@property`,
+`@scope`, and `@container scroll-state()`. Two workarounds:
+
+**Option A — copy the prebuilt file to your static assets:**
+
+```sh
+cp node_modules/@cawalch/porchlight/dist/porchlight.css ./static/porchlight.css
+```
+
+```html
+<link rel="stylesheet" href="/porchlight.css" />
+```
+
+**Option B — import from JS and exclude from the bundler's CSS pipeline:**
+
+```ts
+// Exclude porchlight from CSS processing
+import "@cawalch/porchlight/dist/porchlight.css?inline";
+```
+
+Either way, declare your layer order separately in your app CSS:
+
+```css
+@layer porchlight, app;
+```
+
+### Exports reference
+
+| Import path | What you get |
+|-------------|-------------|
+| `@cawalch/porchlight` | Prebuilt single-file CSS (recommended) |
+| `@cawalch/porchlight/min` | Minified prebuilt CSS |
+| `@cawalch/porchlight/source` | Raw source with `@import` (needs Vite/Lightning CSS) |
+| `@cawalch/porchlight/src/*` | Individual source layer files |
 
 ## Next steps
 

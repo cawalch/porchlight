@@ -438,7 +438,7 @@ test.describe("docs scaffold", () => {
     // Should mention npm/pnpm install.
     await expect(content.getByText("npm install")).toBeVisible();
     // Should mention the layer pattern.
-    await expect(content.getByText("@layer porchlight, app")).toBeVisible();
+    await expect(content.getByText(/@layer porchlight.*app/).first()).toBeVisible();
   });
 
   test("theming guide covers tokens and density", async ({ page }) => {
