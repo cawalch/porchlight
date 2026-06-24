@@ -38,10 +38,9 @@
 
     :scope:focus-within {
       outline: none;
-      box-shadow:
-        0 0 0 2px var(--pl-focus-color),
-        0 4px 12px -2px
-          color-mix(in oklab, var(--pl-focus-color), transparent 55%);
+      border-color: var(--pl-focus-color);
+      box-shadow: 0 0 0 4px
+        color-mix(in oklab, var(--pl-focus-color), transparent 85%);
     }
 
     .c-tag-input__field {
