@@ -113,12 +113,17 @@ main:has(.l-app-shell, .inbox-shell, .hero-bleed) {
 }
 
 /* Nested main inside an app shell (e.g. <main class="l-app-shell__main">)
-   also needs to be freed — global.css's main rule matches by tag name. */
+   also needs to be freed — global.css's main rule matches by tag name.
+   overflow is overridden to visible because the docs chrome wraps the shell,
+   so page-level scrolling (on <html>) is the right behavior. The framework's
+   overflow:auto is correct for real apps where the shell IS the viewport. */
 .l-app-shell__main {
   inline-size: auto;
   max-inline-size: none;
   margin-inline: 0;
   padding-block: 0;
+  overflow: visible;
+  overscroll-behavior: auto;
 }
 
 .site-footer {
