@@ -1,0 +1,389 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// --- Mock data: Security SIEM console -------------------------------------
+
+const kpis = [
+  { label: 'Critical Alerts', value: '7', trend: '+3', direction: 'up', tone: 'danger',
+    spark: 'M0 30 L10 28 L20 26 L30 20 L40 22 L50 12 L60 8 L70 4' },
+  { label: 'Mean Time to Detect', value: '2.4', unit: 'm', trend: '-18s', direction: 'down', tone: 'success',
+    spark: 'M0 6 L10 10 L20 8 L30 14 L40 16 L50 22 L60 24 L70 28' },
+  { label: 'Events / sec', value: '14.2k', trend: 'stable', direction: 'flat', tone: 'accent',
+    spark: 'M0 18 L10 16 L20 20 L30 18 L40 16 L50 18 L60 20 L70 18' },
+  { label: 'Active Sources', value: '47', trend: '+2', direction: 'up', tone: 'accent',
+    spark: 'M0 28 L10 26 L20 24 L30 22 L40 20 L50 18 L60 16 L70 14' },
+];
+
+type Severity = 'critical' | 'high' | 'medium' | 'low';
+type AlertStatus = 'Open' | 'Investigating' | 'Contained' | 'Resolved';
+
+interface Alert {
+  id: string;
+  severity: Severity;
+  rule: string;
+  sourceIp: string;
+  dest: string;
+  protocol: string;
+  status: AlertStatus;
+  time: string;
+  detail: string;
+}
+
+const alerts: Alert[] = [
+  { id: 'ALT-4821', severity: 'critical', rule: 'Brute Force SSH', sourceIp: '203.0.113.42', dest: 'prod-web-01', protocol: 'SSH', status: 'Open', time: '2m ago', detail: '47 failed auth attempts from 203.0.113.42 targeting root account on prod-web-01. Rate: 1 attempt/sec.' },
+  { id: 'ALT-4820', severity: 'critical', rule: 'Data Exfiltration', sourceIp: '10.0.4.18', dest: 'ext-cdn.unknown', protocol: 'HTTPS', status: 'Investigating', time: '8m ago', detail: 'Unusual outbound transfer of 2.3GB from internal host 10.0.4.18 to external endpoint. Pattern matches known C2 beaconing.' },
+  { id: 'ALT-4819', severity: 'high', rule: 'Privilege Escalation', sourceIp: '10.0.2.5', dest: 'db-cluster-03', protocol: 'SQL', status: 'Contained', time: '15m ago', detail: 'User svc_backup attempted GRANT ALL on production database. Account has been quarantined.' },
+  { id: 'ALT-4818', severity: 'high', rule: 'Malware Detected', sourceIp: '192.168.1.104', dest: 'endpoint-fleet', protocol: 'SMB', status: 'Open', time: '23m ago', detail: 'EDR detected trojan.win32.emotet on workstation WS-014. File quarantined but lateral movement suspected.' },
+  { id: 'ALT-4817', severity: 'medium', rule: 'Anomalous Login', sourceIp: '198.51.100.7', dest: 'vpn-gateway', protocol: 'TLS', status: 'Investigating', time: '31m ago', detail: 'User j.martinez logged in from unrecognized geo (Singapore). Previous logins only from US/EU.' },
+  { id: 'ALT-4816', severity: 'medium', rule: 'Port Scan Detected', sourceIp: '203.0.113.99', dest: '10.0.0.0/24', protocol: 'TCP', status: 'Resolved', time: '45m ago', detail: 'Sequential SYN scans across ports 1-1024 on internal subnet. Source IP blocked at perimeter firewall.' },
+  { id: 'ALT-4815', severity: 'low', rule: 'Policy Violation', sourceIp: '10.0.3.22', dest: 'ext-storage', protocol: 'HTTPS', status: 'Resolved', time: '1h ago', detail: 'User uploaded file to unsanctioned cloud storage. Logged for compliance review.' },
+  { id: 'ALT-4814', severity: 'low', rule: 'Certificate Expiry', sourceIp: 'internal', dest: 'api.internal', protocol: 'TLS', status: 'Open', time: '2h ago', detail: 'TLS certificate for api.internal.corp expires in 48 hours. Auto-renewal pending.' },
+  { id: 'ALT-4813', severity: 'medium', rule: 'DDoS Attempt', sourceIp: 'multiple', dest: 'edge-lb-01', protocol: 'HTTP', status: 'Contained', time: '2h ago', detail: 'Synthetic traffic spike of 8.4k req/s from distributed sources. Rate limiting engaged, traffic normalized.' },
+  { id: 'ALT-4812', severity: 'high', rule: 'Unauthorized API Key', sourceIp: '203.0.113.50', dest: 'api-gateway', protocol: 'HTTPS', status: 'Investigating', time: '3h ago', detail: 'API key ak_7f3a***2b9 used from new IP. Key belongs to archived service account.' },
+  { id: 'ALT-4811', severity: 'critical', rule: 'Ransomware Signature', sourceIp: '10.0.5.12', dest: 'file-server-02', protocol: 'SMB', status: 'Contained', time: '3h ago', detail: 'Mass file encryption activity detected on file-server-02 matching LockBit 3.0 IOC. Host isolated.' },
+  { id: 'ALT-4810', severity: 'low', rule: 'DNS Tunneling', sourceIp: '10.0.1.8', dest: 'ext-dns.suspect', protocol: 'DNS', status: 'Resolved', time: '4h ago', detail: 'Abnormally long DNS queries to suspicious domain. Resolved via blocklist update.' },
+];
+
+const severityTone = (s: Severity) =>
+  ({ critical: 'danger', high: 'warning', medium: 'accent', low: 'default' }[s] ?? 'default');
+
+const severityCount = (s: Severity) => alerts.filter(a => a.severity === s).length;
+
+const eventFeed = [
+  { tone: 'danger', title: 'SSH brute force blocked', time: '14:32:07', body: '47 attempts from 203.0.113.42 → prod-web-01' },
+  { tone: 'warning', title: 'New lateral movement', time: '14:30:22', body: 'SMB connection WS-014 → FS-02 flagged' },
+  { tone: 'accent', title: 'VPN session opened', time: '14:28:51', body: 'j.martinez connected from 198.51.100.7' },
+  { tone: 'success', title: 'Auto-remediation complete', time: '14:25:03', body: 'Host 10.0.5.12 isolated successfully' },
+  { tone: 'warning', title: 'API rate limit triggered', time: '14:22:18', body: 'key ak_7f3a***2b9 throttled' },
+  { tone: 'accent', title: 'Firewall rule updated', time: '14:20:44', body: 'Blocked 203.0.113.99 at perimeter' },
+  { tone: 'danger', title: 'Ransomware IOC match', time: '14:18:02', body: 'LockBit 3.0 signature on file-server-02' },
+  { tone: 'success', title: 'Certificate renewed', time: '14:15:30', body: 'auth.internal.corp TLS auto-renewed' },
+];
+---
+
+<BaseLayout title="SIEM Console · Porchlight">
+  <div class="l-app-shell">
+    <!-- Topbar -->
+    <header class="l-app-shell__topbar siem-topbar">
+      <div class="siem-topbar__left">
+        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        </button>
+        <span class="siem-logo">🛡</span>
+        <strong>SentinelOps</strong>
+        <span class="c-badge" data-tone="danger">{severityCount('critical')} critical</span>
+      </div>
+      <div class="siem-topbar__center">
+        <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="u-muted" style="font-size:var(--pl-text-xs);">Search alerts…</span>
+          <kbd class="siem-kbd">⌘K</kbd>
+        </button>
+      </div>
+      <div class="siem-topbar__right">
+        <span class="u-muted" style="font-size:var(--pl-text-xs);">SOC Tier 2</span>
+        <div class="c-avatar" data-size="sm" style="background:var(--pl-color-accent);color:var(--pl-color-accent-text);">AR</div>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="l-app-shell__sidebar" id="siem-sidebar">
+      <nav class="c-nav" aria-label="SIEM navigation">
+        <a href="#" class="c-nav__item" aria-current="page">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/></svg>
+          <span class="c-nav__label">Dashboard</span>
+        </a>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M12 7v6"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+          <span class="c-nav__label">Alerts</span>
+          <span class="c-badge c-nav__badge" data-tone="danger">{alerts.filter(a => a.status === 'Open').length}</span>
+        </a>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+          <span class="c-nav__label">Events</span>
+        </a>
+        <details class="c-nav__section" open>
+          <summary class="c-nav__section-trigger">
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Rules</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Detection</span></a>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Correlation</span></a>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Custom</span></a>
+        </details>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>
+          <span class="c-nav__label">Assets</span>
+        </a>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 16l4-4 4 4 8-8"/></svg>
+          <span class="c-nav__label">Reports</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="l-app-shell__main">
+      <div class="siem-main">
+        <!-- Heading -->
+        <div class="siem-header">
+          <div>
+            <h1>Security Operations</h1>
+            <p class="u-muted">Real-time threat monitoring · Last 24 hours</p>
+          </div>
+          <div class="l-cluster">
+            <div class="c-segmented" role="radiogroup" aria-label="Time window">
+              <label class="c-segmented__item"><input type="radio" name="window"/><span>1h</span></label>
+              <label class="c-segmented__item"><input type="radio" name="window"/><span>6h</span></label>
+              <label class="c-segmented__item"><input type="radio" name="window" checked/><span>24h</span></label>
+              <label class="c-segmented__item"><input type="radio" name="window"/><span>7d</span></label>
+            </div>
+            <button class="c-button" data-variant="primary" data-size="sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Export Report
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="l-grid" style="--l-grid-min:13rem;">
+          {kpis.map((k) => (
+            <div class="c-card">
+              <div class="c-card__body">
+                <div class="c-stat">
+                  <span class="c-stat__label">{k.label}</span>
+                  <div class="c-stat__value">{k.value}<span class="c-stat__unit">{k.unit}</span></div>
+                  <span class="c-stat__trend" data-direction={k.direction}>{k.trend}</span>
+                  <div class="c-stat__spark">
+                    <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
+                      <path d={k.spark} fill="none" stroke={k.tone === 'danger' ? 'var(--pl-color-danger)' : k.tone === 'success' ? 'var(--pl-color-success)' : k.tone === 'accent' ? 'var(--pl-color-accent)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Two-column: Alert queue + Event stream -->
+        <div class="siem-content-grid">
+          <!-- Alert Queue -->
+          <div class="siem-alert-panel">
+            <div class="c-card" style="border:0;">
+              <!-- Filter toolbar -->
+              <div class="c-toolbar">
+                <div class="c-toolbar__group">
+                  <span class="c-chip" data-tone="danger">{severityCount('critical')} critical</span>
+                  <span class="c-chip" data-tone="warning">{severityCount('high')} high</span>
+                  <span class="c-chip" data-tone="accent">{severityCount('medium')} medium</span>
+                  <span class="c-chip">{severityCount('low')} low</span>
+                </div>
+                <div class="c-toolbar__group">
+                  <div class="c-field" style="display:inline-flex;">
+                    <input type="search" class="c-field__control" placeholder="Filter by IP, rule…" style="inline-size:14rem;" aria-label="Filter alerts"/>
+                  </div>
+                  <button class="c-button" data-variant="secondary" data-size="sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+                    Filter
+                  </button>
+                </div>
+              </div>
+
+              <!-- Data table -->
+              <div class="c-table-wrap" style="border:0;border-radius:0;--c-table-min:48rem;">
+                <table class="c-table">
+                  <thead>
+                    <tr>
+                      <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
+                      <th class="c-table__sticky-col" data-sort="asc">ID <span class="c-table__sort-icon"></span></th>
+                      <th>Severity</th>
+                      <th data-sort>Rule <span class="c-table__sort-icon"></span></th>
+                      <th>Source IP</th>
+                      <th>Destination</th>
+                      <th>Status</th>
+                      <th data-align="end" data-sort>Time <span class="c-table__sort-icon"></span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {alerts.map((a, i) => (
+                      <tr aria-selected={i === 0 ? 'true' : undefined}>
+                        <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.id}`}/></td>
+                        <td class="c-table__sticky-col"><code style="font-size:var(--pl-text-xs);">{a.id}</code></td>
+                        <td>
+                          <span class="c-badge" data-tone={severityTone(a.severity)} style="text-transform:capitalize;">{a.severity}</span>
+                        </td>
+                        <td>{a.rule}</td>
+                        <td><code style="font-size:var(--pl-text-xs);">{a.sourceIp}</code></td>
+                        <td><span style="font-size:var(--pl-text-sm);">{a.dest}</span></td>
+                        <td>
+                          {a.status === 'Open' && <span class="c-badge" data-tone="danger">{a.status}</span>}
+                          {a.status === 'Investigating' && <span class="c-badge" data-tone="warning">{a.status}</span>}
+                          {a.status === 'Contained' && <span class="c-badge" data-tone="accent">{a.status}</span>}
+                          {a.status === 'Resolved' && <span class="c-badge" data-tone="success">{a.status}</span>}
+                        </td>
+                        <td data-align="end"><span class="u-muted" style="font-size:var(--pl-text-xs);">{a.time}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination toolbar -->
+              <div class="c-toolbar" style="border-block-end:0;border-block-start:1px solid var(--pl-color-border);">
+                <div class="c-toolbar__group">
+                  <span class="u-muted" style="font-size:var(--pl-text-sm);">{alerts.length} of {1247} alerts</span>
+                </div>
+                <div class="c-toolbar__group">
+                  <nav class="c-pagination" aria-label="Alert pagination">
+                    <button class="c-pagination__btn" disabled>Prev</button>
+                    <button class="c-pagination__btn" aria-current="page">1</button>
+                    <button class="c-pagination__btn">2</button>
+                    <button class="c-pagination__btn">3</button>
+                    <button class="c-pagination__btn">Next</button>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Event Stream -->
+          <div class="siem-event-panel">
+            <div class="c-card">
+              <div class="c-card__header">
+                <h2 class="c-card__title">Live Event Stream</h2>
+                <span class="c-badge" data-tone="success">
+                  <span class="siem-live-dot"></span> Live
+                </span>
+              </div>
+              <div class="c-card__body" style="padding:0;">
+                <ol class="c-timeline siem-timeline">
+                  {eventFeed.map((e) => (
+                    <li class="c-timeline__item" data-tone={e.tone}>
+                      <span class="c-timeline__dot"></span>
+                      <div class="c-timeline__content">
+                        <div class="c-timeline__header">
+                          <span class="c-timeline__title">{e.title}</span>
+                          <time class="c-timeline__time siem-event-time">{e.time}</time>
+                        </div>
+                        <p class="c-timeline__body" style="font-size:var(--pl-text-xs);">{e.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Command Palette -->
+  <div popover class="c-command" id="siem-cmdk">
+    <input class="c-command__search" placeholder="Search alerts, IPs, rules…" aria-label="Search"/>
+    <div class="c-command__body">
+      <div class="c-command__group">
+        <h3 class="c-command__heading">Quick Actions</h3>
+        <button class="c-command__item" data-selected><span>View Critical Alerts</span></button>
+        <button class="c-command__item"><span>Search by IP Address</span></button>
+        <button class="c-command__item"><span>Create Detection Rule</span></button>
+      </div>
+      <div class="c-command__group">
+        <h3 class="c-command__heading">Navigate</h3>
+        <button class="c-command__item"><span>Go to Events</span></button>
+        <button class="c-command__item"><span>Go to Assets</span></button>
+        <button class="c-command__item"><span>Go to Reports</span></button>
+      </div>
+    </div>
+    <footer class="c-command__footer"><span>esc to close</span></footer>
+  </div>
+
+  <script>
+    document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
+      const sidebar = document.getElementById('siem-sidebar');
+      const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
+      sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+    });
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('siem-cmdk')?.showPopover();
+      }
+    });
+  </script>
+
+  <style>
+    :global(main:has(.l-app-shell)) {
+      inline-size: 100%;
+      max-inline-size: none;
+      margin-inline: 0;
+      padding-block: 0;
+    }
+
+    .siem-topbar {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-2) var(--pl-space-4);
+      background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
+      backdrop-filter: blur(8px);
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+    .siem-topbar__left { display: flex; align-items: center; gap: var(--pl-space-2); }
+    .siem-topbar__center { flex: 1; display: flex; justify-content: center; }
+    .siem-topbar__right { display: flex; align-items: center; gap: var(--pl-space-2); }
+    .siem-logo { font-size: 1.25rem; }
+    .siem-kbd {
+      font-family: var(--pl-font-mono);
+      font-size: var(--pl-text-xs);
+      padding: 0.1rem 0.3rem;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-xs);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text-muted);
+    }
+
+    .siem-main {
+      padding: var(--pl-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-6);
+    }
+    .siem-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--pl-space-4);
+      flex-wrap: wrap;
+    }
+
+    .siem-content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 22rem;
+      gap: var(--pl-space-4);
+      align-items: start;
+    }
+    @media (width < 80rem) {
+      .siem-content-grid { grid-template-columns: 1fr; }
+    }
+    .siem-event-panel { position: sticky; inset-block-start: var(--pl-space-6); }
+
+    .siem-timeline { max-block-size: 28rem; overflow-y: auto; }
+    .siem-event-time { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); }
+
+    .siem-live-dot {
+      display: inline-block;
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      border-radius: 50%;
+      background: var(--pl-color-success);
+      animation: siem-pulse 2s var(--pl-ease-standard) infinite;
+      margin-inline-end: 0.25rem;
+    }
+    @keyframes siem-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</BaseLayout>

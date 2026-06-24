@@ -846,4 +846,73 @@ test.describe("docs scaffold", () => {
     // Inset content inside full-bleed hero.
     await expect(page.locator(".l-inset").first()).toBeVisible();
   });
+
+  // -----------------------------------------------------------------------
+  // SIEM Console (data-dense security operations example)
+  // -----------------------------------------------------------------------
+  test("app-siem renders alert queue, KPIs, and event stream", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-siem");
+    await expect(
+      page.getByRole("heading", { name: "Security Operations" }),
+    ).toBeVisible();
+    // KPI stat tiles.
+    const stats = page.locator(".c-stat");
+    expect(await stats.count()).toBeGreaterThanOrEqual(4);
+    // Alert data table with rows.
+    await expect(page.locator(".c-table")).toBeVisible();
+    const alertRows = page.locator(".c-table tbody tr");
+    expect(await alertRows.count()).toBeGreaterThanOrEqual(10);
+    // Severity badges.
+    expect(
+      await page.locator(".c-badge[data-tone='danger']").count(),
+    ).toBeGreaterThanOrEqual(3);
+    // Live event timeline.
+    await expect(page.locator(".c-timeline")).toBeVisible();
+    const events = page.locator(".c-timeline__item");
+    expect(await events.count()).toBeGreaterThanOrEqual(6);
+    // Sidebar nav.
+    await expect(page.locator(".c-nav")).toBeVisible();
+    // Command palette exists.
+    await expect(page.locator("#siem-cmdk")).toBeAttached();
+    // Pagination.
+    await expect(page.locator(".c-pagination")).toBeVisible();
+  });
+
+  // -----------------------------------------------------------------------
+  // Case/Ticket Review (data-dense case management example)
+  // -----------------------------------------------------------------------
+  test("app-cases renders ticket list, filters, and detail drawer", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-cases");
+    await expect(
+      page.getByRole("heading", { name: "Cases", exact: true }),
+    ).toBeVisible();
+    // Filter chips.
+    expect(
+      await page.locator(".cases-filters .c-chip").count(),
+    ).toBeGreaterThanOrEqual(2);
+    // Case data table.
+    await expect(page.locator(".c-table")).toBeVisible();
+    const caseRows = page.locator(".c-table tbody tr");
+    expect(await caseRows.count()).toBeGreaterThanOrEqual(10);
+    // Priority badges.
+    expect(
+      await page.locator(".c-badge[data-tone='danger']").count(),
+    ).toBeGreaterThanOrEqual(1);
+    // Tag chips in table.
+    expect(
+      await page.locator(".c-table .c-chip").count(),
+    ).toBeGreaterThanOrEqual(5);
+    // Avatar group in filter bar.
+    await expect(page.locator(".c-avatar-group")).toBeVisible();
+    // Team workload sidebar.
+    await expect(page.locator(".cases-workload")).toBeVisible();
+    // Detail drawer exists (popover).
+    await expect(page.locator("#case-detail")).toBeAttached();
+    // Pagination.
+    await expect(page.locator(".c-pagination")).toBeVisible();
+  });
 });

@@ -1,0 +1,425 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// --- Mock data: Case/Ticket Review ----------------------------------------
+
+type Priority = 'urgent' | 'high' | 'medium' | 'low';
+type CaseStatus = 'triage' | 'in-progress' | 'review' | 'done' | 'blocked';
+
+interface Case {
+  id: string;
+  title: string;
+  assignee: string;
+  initials: string;
+  priority: Priority;
+  status: CaseStatus;
+  tags: string[];
+  updated: string;
+  comments: number;
+}
+
+const cases: Case[] = [
+  { id: 'CASE-3042', title: 'Production DB connection pool exhaustion', assignee: 'A. Rivera', initials: 'AR', priority: 'urgent', status: 'in-progress', tags: ['database', 'incident'], updated: '5m ago', comments: 12 },
+  { id: 'CASE-3041', title: 'OAuth token refresh failing intermittently', assignee: 'J. Park', initials: 'JP', priority: 'high', status: 'triage', tags: ['auth', 'api'], updated: '18m ago', comments: 4 },
+  { id: 'CASE-3040', title: 'Webhook delivery backlog growing on EU cluster', assignee: 'M. Chen', initials: 'MC', priority: 'high', status: 'in-progress', tags: ['webhooks', 'infra'], updated: '32m ago', comments: 7 },
+  { id: 'CASE-3039', title: 'Rate limiter allowing 2x threshold on /v2/search', assignee: 'A. Rivera', initials: 'AR', priority: 'medium', status: 'review', tags: ['api', 'rate-limit'], updated: '1h ago', comments: 3 },
+  { id: 'CASE-3038', title: 'CSS regression: drawer overlaps footer on Safari 17', assignee: 'S. Okafor', initials: 'SO', priority: 'medium', status: 'in-progress', tags: ['css', 'safari'], updated: '2h ago', comments: 5 },
+  { id: 'CASE-3037', title: 'Audit log retention policy enforcement gap', assignee: 'J. Park', initials: 'JP', priority: 'high', status: 'blocked', tags: ['compliance', 'logging'], updated: '3h ago', comments: 9 },
+  { id: 'CASE-3036', title: 'Upgrade Redis to 7.2 across cache tier', assignee: 'M. Chen', initials: 'MC', priority: 'low', status: 'review', tags: ['infra', 'redis'], updated: '4h ago', comments: 2 },
+  { id: 'CASE-3035', title: 'Customer export CSV truncates at 10k rows', assignee: 'S. Okafor', initials: 'SO', priority: 'medium', status: 'in-progress', tags: ['export', 'bug'], updated: '5h ago', comments: 6 },
+  { id: 'CASE-3034', title: 'On-call rotation calendar not syncing holidays', assignee: 'A. Rivera', initials: 'AR', priority: 'low', status: 'done', tags: ['ops', 'tooling'], updated: '6h ago', comments: 1 },
+  { id: 'CASE-3033', title: 'Migration script fails on nullable FK columns', assignee: 'J. Park', initials: 'JP', priority: 'high', status: 'blocked', tags: ['migration', 'database'], updated: '8h ago', comments: 11 },
+  { id: 'CASE-3032', title: 'Add SAML SSO provider configuration UI', assignee: 'S. Okafor', initials: 'SO', priority: 'medium', status: 'review', tags: ['feature', 'auth'], updated: '12h ago', comments: 4 },
+  { id: 'CASE-3031', title: 'Memory leak in event stream processor', assignee: 'M. Chen', initials: 'MC', priority: 'urgent', status: 'in-progress', tags: ['performance', 'backend'], updated: '14h ago', comments: 8 },
+];
+
+const priorityTone = (p: Priority) =>
+  ({ urgent: 'danger', high: 'warning', medium: 'accent', low: 'default' }[p] ?? 'default');
+
+const statusLabel = (s: CaseStatus) =>
+  ({ 'triage': 'Triage', 'in-progress': 'In Progress', 'review': 'In Review', 'done': 'Done', 'blocked': 'Blocked' }[s] ?? s);
+
+const statusTone = (s: CaseStatus) =>
+  ({ 'triage': 'danger', 'in-progress': 'accent', 'review': 'warning', 'done': 'success', 'blocked': 'default' }[s] ?? 'default');
+
+const assignees = [
+  { name: 'A. Rivera', initials: 'AR', open: cases.filter(c => c.assignee === 'A. Rivera').length },
+  { name: 'J. Park', initials: 'JP', open: cases.filter(c => c.assignee === 'J. Park').length },
+  { name: 'M. Chen', initials: 'MC', open: cases.filter(c => c.assignee === 'M. Chen').length },
+  { name: 'S. Okafor', initials: 'SO', open: cases.filter(c => c.assignee === 'S. Okafor').length },
+];
+
+const detailCase = cases[0];
+
+const activity = [
+  { tone: 'accent', title: 'Status changed to In Progress', time: '5m ago', body: 'A. Rivera updated the status.' },
+  { tone: 'accent', title: 'Assigned to A. Rivera', time: '20m ago', body: 'Escalated from Tier 1 triage.' },
+  { tone: 'warning', title: 'Priority raised to Urgent', time: '35m ago', body: 'Customer impact: all write operations blocked.' },
+  { tone: '', title: 'Comment by M. Chen', time: '45m ago', body: 'Pool exhaustion confirmed. Connection count spiked to 200 (limit 100). Reviewing pg_bouncer config.' },
+  { tone: 'danger', title: 'Case created', time: '1h ago', body: 'Auto-created from PagerDuty incident #PD-8932.' },
+];
+---
+
+<BaseLayout title="Case Review · Porchlight">
+  <div class="l-app-shell">
+    <!-- Topbar -->
+    <header class="l-app-shell__topbar cases-topbar">
+      <div class="cases-topbar__left">
+        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        </button>
+        <strong>Helix</strong>
+        <span class="u-muted" style="font-size:var(--pl-text-sm);">/ Platform Team</span>
+      </div>
+      <div class="cases-topbar__right">
+        <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="cases-cmdk" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <kbd style="font-family:var(--pl-font-mono);font-size:var(--pl-text-xs);padding:0.1rem 0.3rem;border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-xs);background:var(--pl-color-surface-2);color:var(--pl-color-text-muted);">⌘K</kbd>
+        </button>
+        <span class="c-badge" data-tone="accent">{cases.filter(c => c.status !== 'done').length} open</span>
+        <div class="c-avatar" data-size="sm" style="background:var(--pl-color-accent);color:var(--pl-color-accent-text);">AR</div>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="l-app-shell__sidebar" id="cases-sidebar">
+      <nav class="c-nav" aria-label="Case navigation">
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          <span class="c-nav__label">Inbox</span>
+          <span class="c-badge c-nav__badge" data-tone="accent">3</span>
+        </a>
+        <a href="#" class="c-nav__item" aria-current="page">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span class="c-nav__label">My Cases</span>
+          <span class="c-badge c-nav__badge">{cases.filter(c => c.assignee === 'A. Rivera' && c.status !== 'done').length}</span>
+        </a>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span class="c-nav__label">All Cases</span>
+        </a>
+        <details class="c-nav__section" open>
+          <summary class="c-nav__section-trigger">
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Teams</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Platform</span></a>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Frontend</span></a>
+          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Security</span></a>
+        </details>
+        <a href="#" class="c-nav__item">
+          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg>
+          <span class="c-nav__label">Reports</span>
+        </a>
+
+        <!-- Assignee workload -->
+        <div class="cases-workload">
+          <h3 class="cases-workload__title">Team Workload</h3>
+          {assignees.map((a) => (
+            <div class="cases-workload__item">
+              <div class="c-avatar" data-size="sm" style="inline-size:1.75rem;block-size:1.75rem;font-size:var(--pl-text-xs);">{a.initials}</div>
+              <span class="cases-workload__name">{a.name}</span>
+              <span class="c-badge" data-tone={a.open > 3 ? 'warning' : 'default'}>{a.open}</span>
+            </div>
+          ))}
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="l-app-shell__main">
+      <div class="cases-main">
+        <!-- Header + view toggle -->
+        <div class="cases-header">
+          <div>
+            <h1>Cases</h1>
+            <p class="u-muted">{cases.length} cases · {cases.filter(c => c.status === 'urgent').length} urgent</p>
+          </div>
+          <div class="l-cluster">
+            <div class="c-segmented" role="radiogroup" aria-label="View mode">
+              <label class="c-segmented__item"><input type="radio" name="view" checked/><span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:0.875rem;block-size:0.875rem;vertical-align:middle;"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                List
+              </span></label>
+              <label class="c-segmented__item"><input type="radio" name="view"/><span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:0.875rem;block-size:0.875rem;vertical-align:middle;"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                Board
+              </span></label>
+            </div>
+            <button class="c-button" data-variant="primary" data-size="sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              New Case
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="c-card cases-filters">
+          <div class="c-toolbar" style="border:0;background:transparent;">
+            <div class="c-toolbar__group">
+              <span class="c-chip" data-tone="accent">Platform</span>
+              <span class="c-chip">P0-P2</span>
+              <button class="c-chip" data-tone="ghost" style="cursor:pointer;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:0.875rem;block-size:0.875rem;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+                Add filter
+              </button>
+            </div>
+            <div class="c-toolbar__group">
+              <!-- Avatar group -->
+              <div class="c-avatar-group" style="--c-avatar-group-size:1.75rem;">
+                {assignees.map((a) => (
+                  <div class="c-avatar" style="font-size:var(--pl-text-xs);">{a.initials}</div>
+                ))}
+              </div>
+              <div class="c-field" style="display:inline-flex;">
+                <input type="search" class="c-field__control" placeholder="Search cases…" style="inline-size:14rem;" aria-label="Search cases"/>
+              </div>
+              <button class="c-button" data-variant="secondary" data-size="sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Export
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case list (data table) -->
+        <div class="c-card" style="padding:0;overflow:hidden;">
+          <div class="c-table-wrap" style="border:0;border-radius:0;--c-table-min:52rem;">
+            <table class="c-table">
+              <thead>
+                <tr>
+                  <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
+                  <th class="c-table__sticky-col" data-sort="asc">ID <span class="c-table__sort-icon"></span></th>
+                  <th>Title</th>
+                  <th>Assignee</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Tags</th>
+                  <th data-align="end" data-sort>Updated <span class="c-table__sort-icon"></span></th>
+                  <th data-align="center" data-sort>💬 <span class="c-table__sort-icon"></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {cases.map((c, i) => (
+                  <tr aria-selected={i === 0 ? 'true' : undefined} popovertarget="case-detail" style="cursor:pointer;">
+                    <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`} onclick="event.stopPropagation()"/></td>
+                    <td class="c-table__sticky-col"><code style="font-size:var(--pl-text-xs);">{c.id}</code></td>
+                    <td><strong style="font-weight:var(--pl-font-weight-medium);">{c.title}</strong></td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:0.375rem;">
+                        <div class="c-avatar" data-size="sm" style="inline-size:1.5rem;block-size:1.5rem;font-size:var(--pl-text-xs);">{c.initials}</div>
+                        <span style="font-size:var(--pl-text-sm);">{c.assignee}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="c-badge" data-tone={priorityTone(c.priority)} style="text-transform:capitalize;">{c.priority}</span>
+                    </td>
+                    <td>
+                      <span class="c-badge" data-tone={statusTone(c.status)}>{statusLabel(c.status)}</span>
+                    </td>
+                    <td>
+                      <div style="display:flex;gap:0.25rem;flex-wrap:wrap;">
+                        {c.tags.map((t) => <span class="c-chip" style="font-size:var(--pl-text-xs);padding-inline:0.4rem;min-block-size:1.25rem;">{t}</span>)}
+                      </div>
+                    </td>
+                    <td data-align="end"><span class="u-muted" style="font-size:var(--pl-text-xs);">{c.updated}</span></td>
+                    <td data-align="center"><span class="u-muted" style="font-size:var(--pl-text-sm);">{c.comments}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div class="c-toolbar" style="border-block-end:0;border-block-start:1px solid var(--pl-color-border);">
+            <div class="c-toolbar__group">
+              <span class="u-muted" style="font-size:var(--pl-text-sm);">{cases.length} cases</span>
+            </div>
+            <div class="c-toolbar__group">
+              <nav class="c-pagination" aria-label="Case pagination">
+                <button class="c-pagination__btn" disabled>Prev</button>
+                <button class="c-pagination__btn" aria-current="page">1</button>
+                <button class="c-pagination__btn">2</button>
+                <button class="c-pagination__btn">3</button>
+                <button class="c-pagination__btn">Next</button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Case detail drawer -->
+  <div popover="manual" class="c-drawer c-drawer--end" id="case-detail">
+    <div class="c-drawer__header">
+      <div>
+        <p style="font-size:var(--pl-text-xs);color:var(--pl-color-text-muted);font-family:var(--pl-font-mono);">{detailCase.id}</p>
+        <h2 style="font-size:var(--pl-text-lg);font-weight:var(--pl-font-weight-semibold);">{detailCase.title}</h2>
+      </div>
+      <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="case-detail" popovertargetaction="hide" aria-label="Close drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="c-drawer__body">
+      <!-- Metadata grid -->
+      <div class="l-grid cases-detail-meta" style="--l-grid-min:8rem;gap:var(--pl-space-3);">
+        <div>
+          <span class="u-muted" style="font-size:var(--pl-text-xs);">Priority</span>
+          <div style="margin-block-start:0.25rem;"><span class="c-badge" data-tone={priorityTone(detailCase.priority)} style="text-transform:capitalize;">{detailCase.priority}</span></div>
+        </div>
+        <div>
+          <span class="u-muted" style="font-size:var(--pl-text-xs);">Status</span>
+          <div style="margin-block-start:0.25rem;"><span class="c-badge" data-tone={statusTone(detailCase.status)}>{statusLabel(detailCase.status)}</span></div>
+        </div>
+        <div>
+          <span class="u-muted" style="font-size:var(--pl-text-xs);">Assignee</span>
+          <div style="display:flex;align-items:center;gap:0.375rem;margin-block-start:0.25rem;">
+            <div class="c-avatar" data-size="sm" style="inline-size:1.5rem;block-size:1.5rem;font-size:var(--pl-text-xs);background:var(--pl-color-accent);color:var(--pl-color-accent-text);">{detailCase.initials}</div>
+            <span style="font-size:var(--pl-text-sm);">{detailCase.assignee}</span>
+          </div>
+        </div>
+        <div>
+          <span class="u-muted" style="font-size:var(--pl-text-xs);">Updated</span>
+          <div style="margin-block-start:0.25rem;font-size:var(--pl-text-sm);">{detailCase.updated}</div>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-block-start:var(--pl-space-4);">
+        {detailCase.tags.map((t) => <span class="c-chip">{t}</span>)}
+      </div>
+
+      <!-- Description -->
+      <div style="margin-block-start:var(--pl-space-6);">
+        <h3 style="font-size:var(--pl-text-sm);font-weight:var(--pl-font-weight-semibold);margin-block-end:var(--pl-space-2);">Description</h3>
+        <p style="font-size:var(--pl-text-sm);line-height:var(--pl-leading-normal);">
+          The production database connection pool is exhausting all available connections (limit: 100) within minutes of a deploy. Write operations are queued indefinitely, causing cascading timeouts across the API layer. Initial investigation points to a missing pool-size override in the deploy config.
+        </p>
+      </div>
+
+      <!-- Activity timeline -->
+      <div style="margin-block-start:var(--pl-space-6);">
+        <h3 style="font-size:var(--pl-text-sm);font-weight:var(--pl-font-weight-semibold);margin-block-end:var(--pl-space-3);">Activity</h3>
+        <ol class="c-timeline">
+          {activity.map((e) => (
+            <li class="c-timeline__item" data-tone={e.tone || undefined}>
+              <span class="c-timeline__dot"></span>
+              <div class="c-timeline__content">
+                <div class="c-timeline__header">
+                  <span class="c-timeline__title" style="font-size:var(--pl-text-sm);">{e.title}</span>
+                  <time class="c-timeline__time" style="font-size:var(--pl-text-xs);">{e.time}</time>
+                </div>
+                <p class="c-timeline__body" style="font-size:var(--pl-text-xs);">{e.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+    <div class="c-drawer__footer">
+      <div class="l-cluster" style="justify-content:flex-end;">
+        <button class="c-button" data-variant="secondary" data-size="sm">Reassign</button>
+        <button class="c-button" data-variant="secondary" data-size="sm">Escalate</button>
+        <button class="c-button" data-variant="primary" data-size="sm">Mark Resolved</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette -->
+  <div popover class="c-command" id="cases-cmdk">
+    <input class="c-command__search" placeholder="Search cases, people, tags…" aria-label="Search"/>
+    <div class="c-command__body">
+      <div class="c-command__group">
+        <h3 class="c-command__heading">Quick Actions</h3>
+        <button class="c-command__item" data-selected><span>Create New Case</span></button>
+        <button class="c-command__item"><span>View My Cases</span></button>
+        <button class="c-command__item"><span>Switch to Board View</span></button>
+      </div>
+    </div>
+    <footer class="c-command__footer"><span>esc to close</span></footer>
+  </div>
+
+  <script>
+    document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
+      const sidebar = document.getElementById('cases-sidebar');
+      const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
+      sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+    });
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('cases-cmdk')?.showPopover();
+      }
+    });
+  </script>
+
+  <style>
+    :global(main:has(.l-app-shell)) {
+      inline-size: 100%;
+      max-inline-size: none;
+      margin-inline: 0;
+      padding-block: 0;
+    }
+
+    .cases-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-2) var(--pl-space-4);
+      background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
+      backdrop-filter: blur(8px);
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+    .cases-topbar__left { display: flex; align-items: center; gap: var(--pl-space-2); }
+    .cases-topbar__right { display: flex; align-items: center; gap: var(--pl-space-2); }
+
+    .cases-main {
+      padding: var(--pl-space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-4);
+    }
+    .cases-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--pl-space-4);
+      flex-wrap: wrap;
+    }
+    .cases-filters { padding: 0; overflow: hidden; }
+
+    .cases-workload {
+      margin-block-start: var(--pl-space-6);
+      padding-block-start: var(--pl-space-4);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+    .cases-workload__title {
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pl-color-text-muted);
+      margin-block-end: var(--pl-space-3);
+    }
+    .cases-workload__item {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      padding-block: var(--pl-space-1);
+    }
+    .cases-workload__name {
+      flex: 1;
+      font-size: var(--pl-text-sm);
+    }
+
+    .cases-detail-meta {
+      margin-block-end: var(--pl-space-2);
+    }
+
+    .c-drawer--end {
+      inset-inline-end: 0;
+      inline-size: min(32rem, 90vi);
+    }
+  </style>
+</BaseLayout>

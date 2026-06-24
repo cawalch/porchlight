@@ -136,7 +136,7 @@
     --pl-color-bg: light-dark(oklch(98% 0.005 60deg), oklch(14% 0.008 55deg));
     --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(18% 0.008 55deg));
     --pl-color-surface-2: light-dark(
-      oklch(95% 0.008 60deg),
+      oklch(94% 0.008 60deg),
       oklch(22% 0.012 55deg)
     );
     --pl-color-text: light-dark(oklch(20% 0.012 55deg), oklch(96% 0.008 60deg));
