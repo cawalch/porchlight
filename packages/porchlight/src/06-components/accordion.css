@@ -52,7 +52,7 @@
       justify-content: space-between;
       gap: var(--pl-space-3);
       padding: var(--c-accordion-header-pad, var(--pl-space-4));
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       cursor: pointer;
       list-style: none;
       user-select: none;

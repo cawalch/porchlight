@@ -58,14 +58,14 @@
         var(--pl-color-border),
         transparent 25%
       );
-      border-inline-start: 4px solid var(--c-toast-tone);
+      border-inline-start: var(--pl-accent-bar-width) solid var(--c-toast-tone);
       border-radius: var(--c-toast-radius);
       background: light-dark(
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
       pointer-events: auto;
 
@@ -127,7 +127,7 @@
     }
 
     .c-toast__title {
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       font-size: var(--pl-text-sm);
     }
 

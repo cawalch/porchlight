@@ -25,7 +25,7 @@
       gap: var(--c-alert-gap);
       padding: var(--c-alert-pad);
       border: 1px solid var(--pl-color-border);
-      border-inline-start: 4px solid var(--c-alert-tone);
+      border-inline-start: var(--pl-accent-bar-width) solid var(--c-alert-tone);
       border-radius: var(--pl-radius-xl);
       background: color-mix(
         in oklab,
@@ -55,7 +55,7 @@
     }
 
     .c-alert__title {
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text);
     }

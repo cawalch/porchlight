@@ -45,8 +45,8 @@
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
@@ -120,8 +120,8 @@
   }
 
   :where(.c-menu__popover) > :is(a, button):focus-visible {
-    outline: 2px solid var(--pl-focus-color);
-    outline-offset: -2px;
+    outline: var(--pl-focus-size) solid var(--pl-focus-color);
+    outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   /* Destructive item  -  sign out, delete. */

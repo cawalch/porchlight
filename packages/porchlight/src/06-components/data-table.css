@@ -106,7 +106,7 @@
          the heavy "band" look of older table designs. */
       background: var(--pl-color-surface-2);
       font-size: var(--pl-text-sm);
-      font-weight: 600;
+      font-weight: var(--pl-font-weight-semibold);
       color: var(--pl-color-text-muted);
 
       /* 1px (not 2px)  -  the surface-2/surface step does the visual separation;
@@ -232,7 +232,7 @@
         var(--pl-color-surface-2),
         var(--pl-color-text) 2%
       );
-      box-shadow: inset 4px 0 0 color-mix(
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 color-mix(
         in oklab,
         var(--pl-color-accent),
         transparent 70%
@@ -343,7 +343,7 @@
      stronger tint so the selected state is unmistakable at a glance. */
   :where(.c-table) tbody tr[aria-selected="true"] {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 84%);
-    box-shadow: inset 3px 0 0 var(--pl-color-accent);
+    box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
   }
 
   /* Last data row: remove border-block-end so it doesn't double-up with the

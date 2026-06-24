@@ -222,33 +222,38 @@ test("chip tones are visually distinct", async ({ page }) => {
 test("data table sort arrows differ between asc and desc", async ({ page }) => {
   await page.goto("./preview/data-table");
 
-  const borders = await page.evaluate(() => {
-    const ascIcon = document.querySelector(
-      "th[data-sort='asc'] .c-table__sort-icon",
-    ) as HTMLElement;
-    const descIcon = document.querySelector(
-      "th[data-sort='desc'] .c-table__sort-icon",
-    ) as HTMLElement;
-    if (!ascIcon || !descIcon) return null;
-    const ascStyle = getComputedStyle(ascIcon);
-    const descStyle = getComputedStyle(descIcon);
+  const icons = await page.evaluate(() => {
+    const getIconInfo = (selector: string) => {
+      const el = document.querySelector(selector) as HTMLElement | null;
+      if (!el) return null;
+      const cs = getComputedStyle(el);
+      const before = getComputedStyle(el, "::before");
+      return {
+        // The sort indicator uses a Unicode glyph via ::before content
+        // (↑ U+2191 for asc, ↓ U+2193 for desc, ⇅ U+21C5 for neutral).
+        content: before.content,
+        color: cs.color,
+        opacity: parseFloat(cs.opacity),
+      };
+    };
     return {
-      ascBorderBottom: ascStyle.borderBottomWidth,
-      ascBorderTop: ascStyle.borderTopWidth,
-      descBorderBottom: descStyle.borderBottomWidth,
-      descBorderTop: descStyle.borderTopWidth,
+      asc: getIconInfo("th[data-sort='asc'] .c-table__sort-icon"),
+      desc: getIconInfo("th[data-sort='desc'] .c-table__sort-icon"),
     };
   });
 
-  console.log("[table-sort]", borders);
+  console.log("[table-sort]", icons);
 
-  expect(borders).not.toBeNull();
-  // Ascending arrow has a bottom border (triangle pointing up), no top.
-  expect(borders!.ascBorderBottom).not.toBe("0px");
-  expect(borders!.ascBorderTop).toBe("0px");
-  // Descending arrow has a top border (triangle pointing down), no bottom.
-  expect(borders!.descBorderTop).not.toBe("0px");
-  expect(borders!.descBorderBottom).toBe("0px");
+  expect(icons.asc).not.toBeNull();
+  expect(icons.desc).not.toBeNull();
+  // Ascending shows ↑ (U+2191) and is fully opaque + accent-colored.
+  expect(icons.asc!.content).toContain("\u2191");
+  expect(icons.asc!.opacity).toBe(1);
+  // Descending shows ↓ (U+2193) and is fully opaque + accent-colored.
+  expect(icons.desc!.content).toContain("\u2193");
+  expect(icons.desc!.opacity).toBe(1);
+  // The two directions must be visually distinct (different glyphs).
+  expect(icons.asc!.content).not.toBe(icons.desc!.content);
 });
 
 /* ------------------------------------------------------------------

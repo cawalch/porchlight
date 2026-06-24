@@ -54,6 +54,13 @@
     }
   }
 
+  /* Under forced colors, use the system highlight color for the bar. */
+  @media (forced-colors: active) {
+    :where(.c-scroll-progress) {
+      background: Highlight;
+    }
+  }
+
   @keyframes c-scroll-progress-grow {
     from {
       transform: scaleX(0);
