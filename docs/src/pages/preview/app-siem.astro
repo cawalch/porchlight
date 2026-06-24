@@ -70,18 +70,16 @@ const eventFeed = [
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <span class="siem-logo">🛡</span>
-        <strong>SentinelOps</strong>
+        <strong>Lumigate</strong>
         <span class="c-badge" data-tone="danger">{severityCount('critical')} critical</span>
       </div>
-      <div class="siem-topbar__center">
+      <div class="siem-topbar__right">
         <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk" aria-label="Search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span class="u-muted" style="font-size:var(--pl-text-xs);">Search alerts…</span>
           <kbd class="siem-kbd">⌘K</kbd>
         </button>
-      </div>
-      <div class="siem-topbar__right">
-        <span class="u-muted" style="font-size:var(--pl-text-xs);">SOC Tier 2</span>
+        <span class="u-muted" style="font-size:var(--pl-text-xs);">SOC Analyst</span>
         <div class="c-avatar" data-size="sm" style="background:var(--pl-color-accent);color:var(--pl-color-accent-text);">AR</div>
       </div>
     </header>
@@ -146,21 +144,19 @@ const eventFeed = [
           </div>
         </div>
 
-        <!-- KPI Grid -->
-        <div class="l-grid" style="--l-grid-min:13rem;">
+        <!-- Compact KPI strip -->
+        <div class="siem-kpis">
           {kpis.map((k) => (
-            <div class="c-card">
-              <div class="c-card__body">
-                <div class="c-stat">
-                  <span class="c-stat__label">{k.label}</span>
-                  <div class="c-stat__value">{k.value}<span class="c-stat__unit">{k.unit}</span></div>
-                  <span class="c-stat__trend" data-direction={k.direction}>{k.trend}</span>
-                  <div class="c-stat__spark">
-                    <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
-                      <path d={k.spark} fill="none" stroke={k.tone === 'danger' ? 'var(--pl-color-danger)' : k.tone === 'success' ? 'var(--pl-color-success)' : k.tone === 'accent' ? 'var(--pl-color-accent)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-                    </svg>
-                  </div>
-                </div>
+            <div class="siem-kpi">
+              <div class="siem-kpi__info">
+                <span class="siem-kpi__label">{k.label}</span>
+                <span class="siem-kpi__value">{k.value}<span style="font-size:var(--pl-text-sm);color:var(--pl-color-text-muted);">{k.unit}</span></span>
+                <span class="siem-kpi__trend" style={k.direction === 'up' ? 'color:var(--pl-color-danger)' : k.direction === 'down' ? 'color:var(--pl-color-success)' : 'color:var(--pl-color-text-muted)'}>{k.trend}</span>
+              </div>
+              <div class="siem-kpi__spark">
+                <svg viewBox="0 0 70 36" width="48" height="32" preserveAspectRatio="none" aria-hidden="true">
+                  <path d={k.spark} fill="none" stroke={k.tone === 'danger' ? 'var(--pl-color-danger)' : k.tone === 'success' ? 'var(--pl-color-success)' : k.tone === 'accent' ? 'var(--pl-color-accent)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
               </div>
             </div>
           ))}
@@ -256,7 +252,7 @@ const eventFeed = [
                   <span class="siem-live-dot"></span> Live
                 </span>
               </div>
-              <div class="c-card__body" style="padding:0;">
+              <div class="c-card__body siem-event-body">
                 <ol class="c-timeline siem-timeline">
                   {eventFeed.map((e) => (
                     <li class="c-timeline__item" data-tone={e.tone}>
@@ -319,6 +315,7 @@ const eventFeed = [
     .siem-topbar {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: var(--pl-space-3);
       padding: var(--pl-space-2) var(--pl-space-4);
       background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
@@ -326,7 +323,6 @@ const eventFeed = [
       border-block-end: 1px solid var(--pl-color-border);
     }
     .siem-topbar__left { display: flex; align-items: center; gap: var(--pl-space-2); }
-    .siem-topbar__center { flex: 1; display: flex; justify-content: center; }
     .siem-topbar__right { display: flex; align-items: center; gap: var(--pl-space-2); }
     .siem-logo { font-size: 1.25rem; }
     .siem-kbd {
@@ -340,31 +336,75 @@ const eventFeed = [
     }
 
     .siem-main {
-      padding: var(--pl-space-6);
+      padding: var(--pl-space-4);
       display: flex;
       flex-direction: column;
-      gap: var(--pl-space-6);
+      gap: var(--pl-space-4);
     }
     .siem-header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: var(--pl-space-4);
+      gap: var(--pl-space-3);
       flex-wrap: wrap;
+    }
+    .siem-header h1 { font-size: var(--pl-text-xl); margin: 0; }
+    .siem-header p { margin: 0; }
+
+    /* Compact KPI strip: horizontal row, not tall cards. */
+    .siem-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--pl-space-3);
+    }
+    .siem-kpi {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-3);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+    }
+    .siem-kpi__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+    .siem-kpi__label {
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      white-space: nowrap;
+    }
+    .siem-kpi__value {
+      font-size: var(--pl-text-lg);
+      font-weight: var(--pl-font-weight-bold);
+      line-height: 1.2;
+    }
+    .siem-kpi__trend {
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-medium);
+    }
+    .siem-kpi__spark { flex-shrink: 0; }
+    @media (width < 60rem) {
+      .siem-kpis { grid-template-columns: repeat(2, 1fr); }
     }
 
     .siem-content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 22rem;
-      gap: var(--pl-space-4);
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      gap: var(--pl-space-3);
       align-items: start;
     }
     @media (width < 80rem) {
       .siem-content-grid { grid-template-columns: 1fr; }
     }
-    .siem-event-panel { position: sticky; inset-block-start: var(--pl-space-6); }
+    .siem-event-panel { position: sticky; inset-block-start: var(--pl-space-4); }
 
-    .siem-timeline { max-block-size: 28rem; overflow-y: auto; }
+    /* Timeline body: give dots inline-start padding so they aren't clipped. */
+    .siem-event-body { padding: var(--pl-space-3) var(--pl-space-4); }
+    .siem-timeline { max-block-size: 26rem; overflow-y: auto; }
+    .siem-timeline .c-timeline__item { padding-block-end: var(--pl-space-3); }
     .siem-event-time { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); }
 
     .siem-live-dot {

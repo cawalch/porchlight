@@ -857,8 +857,8 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Security Operations" }),
     ).toBeVisible();
-    // KPI stat tiles.
-    const stats = page.locator(".c-stat");
+    // KPI tiles.
+    const stats = page.locator(".siem-kpi");
     expect(await stats.count()).toBeGreaterThanOrEqual(4);
     // Alert data table with rows.
     await expect(page.locator(".c-table")).toBeVisible();
