@@ -347,11 +347,16 @@
       min-block-size: 0;
       padding-block: 0;
       padding-inline: var(--pl-space-4);
-      transition: padding-block var(--pl-duration-3) var(--pl-ease-standard);
+      visibility: hidden;
+      transition:
+        padding-block var(--pl-duration-3) var(--pl-ease-standard),
+        visibility 0s linear var(--pl-duration-3);
     }
 
     .c-table .c-table__detail:is([open], [data-open]) .c-table__detail-content {
       padding-block: var(--pl-space-4);
+      visibility: visible;
+      transition-delay: 0s;
     }
 
     /* The expand/collapse toggle button in a row. */

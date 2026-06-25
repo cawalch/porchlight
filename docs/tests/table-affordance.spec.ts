@@ -71,8 +71,12 @@ test("collapsed detail rows do not expose detail content", async ({ page }) => {
         const innerRect = inner.getBoundingClientRect();
         const contentRect = content.getBoundingClientRect();
         const contentStyle = getComputedStyle(content);
+        const child = content.firstElementChild as HTMLElement;
+        const childStyle = getComputedStyle(child);
         return {
+          childVisibility: childStyle.visibility,
           contentHeight: contentRect.height,
+          contentVisibility: contentStyle.visibility,
           innerHeight: innerRect.height,
           paddingBlockEnd: contentStyle.paddingBlockEnd,
           paddingBlockStart: contentStyle.paddingBlockStart,
@@ -88,6 +92,8 @@ test("collapsed detail rows do not expose detail content", async ({ page }) => {
   for (const metric of metrics) {
     expect(metric.innerHeight).toBe(0);
     expect(metric.contentHeight).toBe(0);
+    expect(metric.contentVisibility).toBe("hidden");
+    expect(metric.childVisibility).toBe("hidden");
     expect(metric.paddingBlockStart).toBe("0px");
     expect(metric.paddingBlockEnd).toBe("0px");
   }
