@@ -22,60 +22,63 @@ gating for experimental ones.
 
 ## Required features
 
-These are foundational CSS capabilities. Any browser from 2024+ supports
-all of them:
+These are foundational CSS capabilities that are in the
+[CSS Snapshot 2026](https://www.w3.org/TR/css-2026/) Official Definition.
+Any browser from 2024+ supports all of them:
 
-| Feature                                                 | Baseline | Used for                          |
-| ------------------------------------------------------- | -------- | --------------------------------- |
-| Cascade layers (`@layer`)                               | 2024     | The entire framework architecture |
-| Custom properties (`--var`)                             | 2023     | All tokens                        |
-| `:has()`, `:is()`, `:where()`                           | 2024     | Selectors throughout              |
-| `oklch()` color                                         | 2023     | All color tokens                  |
-| Logical properties (`inline-size`, `block-start`, etc.) | 2023     | RTL-aware layout                  |
-| CSS nesting                                             | 2024     | Source authoring                  |
+| Feature                                                 | Baseline | CSS-2026 | Used for                          |
+| ------------------------------------------------------- | -------- | -------- | --------------------------------- |
+| Cascade layers (`@layer`)                               | 2024     | ✅ `css-cascade-5` | The entire framework architecture |
+| Custom properties (`--var`)                             | 2023     | ✅ `css-variables-1` | All tokens                        |
+| `:has()`, `:is()`, `:where()`                           | 2024     | ✅ `selectors-4` | Selectors throughout              |
+| `oklch()` color                                         | 2023     | ✅ `css-color-4` | All color tokens                  |
+| Logical properties (`inline-size`, `block-start`, etc.) | 2023     | ✅ `css-logical-1` | RTL-aware layout                  |
+| CSS nesting                                             | 2024     | ✅ `css-nesting-1` | Source authoring                  |
 
 ## Baseline-modern features
 
 These are safe to use in production as of mid-2026. All major browsers
 (Chrome, Edge, Firefox, Safari) support them:
 
-| Feature                               | Baseline | Used for                                        |
-| ------------------------------------- | -------- | ----------------------------------------------- |
-| `@scope`                              | 2025     | All 16 components (scoped styles without BEM)   |
-| `light-dark()`                        | 2024     | Automatic light/dark color pairs                |
-| `color-mix()`                         | 2024     | Derived tints (alert backgrounds, hover states) |
-| Popover API (`popover` attribute)     | 2024     | `c-menu` (popover-menu) component               |
-| `@starting-style`                     | 2024     | Dialog and popover enter animations             |
-| `transition-behavior: allow-discrete` | 2024     | Exit animations on `display: none` elements     |
-| `:user-invalid` / `:user-valid`       | 2024     | `c-field` validation states                     |
-| `text-wrap: balance` / `pretty`       | 2024     | Heading and paragraph typography                |
-| Container queries (`@container`)      | 2023     | Card, data-table responsive behavior            |
+| Feature                               | Baseline | CSS-2026 | Used for                                        |
+| ------------------------------------- | -------- | -------- | ----------------------------------------------- |
+| `@scope`                              | 2025     | ⚠️ `css-cascade-6` (pre-snapshot) | All components (scoped styles without BEM) |
+| `light-dark()`                        | 2024     | ✅ `css-color-adjust-1` | Automatic light/dark color pairs                |
+| `color-mix()`                         | 2024     | ✅ `css-color-5` | Derived tints (alert backgrounds, hover states) |
+| Popover API (`popover` attribute)     | 2024     | HTML spec | `c-menu` (popover-menu) component               |
+| `@starting-style`                     | 2024     | ✅ `css-transitions-1` | Dialog and popover enter animations             |
+| `transition-behavior: allow-discrete` | 2024     | ✅ `css-transitions-1` | Exit animations on `display: none` elements     |
+| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4` | `c-field` validation states                     |
+| `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4` | Heading and paragraph typography                |
+| Container queries (`@container`)      | 2023     | ✅ `css-contain-2` | Card, data-table responsive behavior            |
+| `@property` (Houdini)                 | 2024     | ⚠️ pre-snapshot | Token type registration (`--pl-motion-scale`, etc.) |
 
 ## Progressive enhancement features
 
 These features are gated behind `@supports`. The framework works perfectly
 without them; they add polish where supported:
 
-| Feature                                               | Baseline | Enhancement                                 | Fallback                                  |
-| ----------------------------------------------------- | -------- | ------------------------------------------- | ----------------------------------------- |
-| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | `c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
-| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | Grid dividers via `data-dividers`           | Normal grid gap (no divider line)         |
-| `text-box: trim-both`                                 | 2025     | Optically-centered button/badge labels      | Standard half-leading (1px visual offset) |
-| Typed `attr()` (`attr(data-x type(<color>))`)         | 2026     | `c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
-| View Transitions                                      | 2025     | Smooth cross-page fades on docs site        | Hard page reload                          |
-| `contrast-color()`                                    | 2026     | Auto-contrast text on tinted backgrounds    | Explicit paired tokens (current approach) |
+| Feature                                               | Baseline | CSS-2026 | Enhancement                                 | Fallback                                  |
+| ----------------------------------------------------- | -------- | -------- | ------------------------------------------- | ----------------------------------------- |
+| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot | `c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
+| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot | Grid dividers via `data-dividers`           | Normal grid gap (no divider line)         |
+| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3` | Optically-centered button/badge labels      | Standard half-leading (1px visual offset) |
+| Typed `attr()` (`attr(data-x type(<color>))`         | 2026     | ⚠️ pre-snapshot | `c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
+| View Transitions                                      | 2025     | ✅ `css-view-transitions-1` | Smooth cross-page fades on docs site        | Hard page reload                          |
 
 ## Experimental features
 
-These are not yet Baseline. They are `@supports`-gated and degrade to a
-static but functional state:
+These are not yet Baseline across all browsers. They are `@supports`-gated
+and degrade to a static but functional state. Note that several are in the
+CSS-2026 Official Definition (their *specification* is stable) even though
+*implementation* is still rolling out:
 
-| Feature                                                   | Chrome | Enhancement                             | Fallback                                   |
-| --------------------------------------------------------- | ------ | --------------------------------------- | ------------------------------------------ |
-| `interpolate-size: allow-keywords`                        | 149    | Smooth `height: auto` animations        | `grid-template-rows: 0fr -> 1fr` technique |
-| Scroll-driven animations (`animation-timeline: scroll()`) | 149    | Scroll-progress bar fills as you scroll | Bar hidden (no false progress)             |
-| Scroll-driven animations (`animation-timeline: view()`)   | 149    | Elements fade in on scroll              | Elements always visible                    |
-| `field-sizing: content`                                   | 123    | Textarea grows to fit content           | Fixed height                               |
+| Feature                                                   | Chrome | CSS-2026 | Enhancement                             | Fallback                                   |
+| --------------------------------------------------------- | ------ | -------- | --------------------------------------- | ------------------------------------------ |
+| `interpolate-size: allow-keywords`                        | 149    | ✅ `css-sizing-4` | Smooth `height: auto` animations        | `grid-template-rows: 0fr -> 1fr` technique |
+| Scroll-driven animations (`animation-timeline: scroll()`) | 149    | ⚠️ pre-snapshot | Scroll-progress bar fills as you scroll | Bar hidden (no false progress)             |
+| Scroll-driven animations (`animation-timeline: view()`)   | 149    | ⚠️ pre-snapshot | Elements fade in on scroll              | Elements always visible                    |
+| `field-sizing: content`                                   | 123    | ✅ `css-ui-4` / `css-sizing-4` | Textarea grows to fit content           | Fixed height                               |
 
 > **Note on `@property`-registered `contrast-color()`:** While
 > `contrast-color()` became Baseline in April 2026, MDN warns that
@@ -83,6 +86,20 @@ static but functional state:
 > explicit paired tokens (`--pl-color-accent` / `--pl-color-accent-text`)
 > with WCAG-AA verified contrast, and validates them in the deterministic
 > contrast test suite.
+
+## CSS Snapshot 2026 status
+
+The [CSS Snapshot 2026](https://www.w3.org/TR/css-2026/) defines what the
+CSS Working Group considers the "Official Definition" of CSS. Features
+marked ✅ above are in the snapshot; those marked ⚠️ are beyond it
+(pre-snapshot or in an earlier stability tier). This does not mean the
+⚠️ features are unstable — `@scope` and `@property` have shipped in all
+major browsers — just that their specifications haven't reached the W3C
+Candidate Recommendation stage required for inclusion in the snapshot.
+
+Porchlight targets Chrome 149+ and is tested with Playwright, so it can
+use features that are stable in browsers even if their specs are still
+maturing through the W3C process.
 
 ## How degradation works
 
@@ -110,7 +127,7 @@ functionality.
 
 Porchlight's test suite includes:
 
-- **151 Playwright tests** across 14 spec files
+- **165 Playwright tests** across 14 spec files
 - **Contrast tests** that compute WCAG ratios from OKLCH values (not
   axe-core, which cannot parse OKLCH computed colors as of v4.12)
 - **Accessibility-mode tests** for RTL, forced-colors, reduced-motion,

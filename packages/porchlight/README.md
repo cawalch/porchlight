@@ -111,4 +111,6 @@ your `@layer` declaration is never reordered.
 
 Targets Chrome/Edge 149+, Safari 18+, Firefox 135+. Uses `@layer`, `@scope`,
 `@property`, OKLCH, `light-dark()`, `color-mix()`, `:has()`, container queries,
-Popover API, and anchor positioning — all Baseline 2025+ features.
+Popover API, and anchor positioning. See the
+[Browser Support guide](https://cawalch.github.io/porchlight/guides/browser-support)
+for the full feature matrix mapped to the [CSS Snapshot 2026](https://www.w3.org/TR/css-2026/).
