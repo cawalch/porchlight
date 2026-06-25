@@ -7,6 +7,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-25
+
+### Added
+
+- **Data-table cell overflow modes.** `[data-overflow="wrap"]` and
+  `[data-overflow="truncate"]` on `.c-table-wrap` (table-wide) or on
+  individual `<td>`/`<th>` (per-cell override), plus a `--c-table-col-min`
+  token for per-column minimum widths. (#62)
+- **Card and page-header truncation.** `[data-truncate]` on `.c-card` /
+  `.c-card__title` and `.c-page-header` / `.c-page-header__title` for
+  single-line ellipsis in fixed-width slots. (#62)
+- **Tab width cap.** New `--c-tabs-tab-max` token caps tab width so long
+  labels truncate instead of stretching the scrollable tab list. (#62)
+
+### Changed
+
+- **Container-query responsiveness for wide containers.** Data tables widen
+  cell padding past 56rem; cards bump padding to `space-6` past 40rem;
+  `.c-page-header` stacks cleanly at narrow widths; and `.c-stat__value`
+  font-size now scales by the tile's actual width (shrinks <16rem, enlarges
+  >32rem) instead of viewport units. (#62)
+- **Modern `text-wrap` across components.** `text-wrap: stable` on `<th>`
+  headers, `balance` on page-header titles, and `pretty` (orphan prevention)
+  on card body, description-list details, and dialog body. (#62)
+- **Control corner radius joins the radius scale.** The `--pl-radius-control`
+  `@property` initial-value changed from `0.5rem` to `8px`, and `:root` now
+  sets `--pl-radius-control: var(--pl-radius-md)` so density and theme
+  overrides cascade correctly. (#63)
+- **New card `[data-surface="app"]` variant** with tighter corners
+  (`--pl-radius-lg`) for dense desktop products where the default 24px radius
+  reads too soft. Keeps the default elevation and composes with status rings
+  or accent variants. (#63)
+- **Close/remove glyphs are now CSS-drawn.** `.c-chip__remove`,
+  `.c-dialog__close`, and `.c-toast__close` render their ✕ via
+  `::before`/`::after` pseudo-elements instead of relying on a literal "✕"
+  character supplied by markup, giving consistent geometry across fonts and
+  themes. (#64)
+- **(Internal) GitHub Actions bumped** off the deprecated Node 20 runtime:
+  `actions/checkout` v4→v7, `actions/setup-node` v4→v6, `actions/cache`
+  v4→v6, `pnpm/action-setup` v4→v6. Runtime-only; no `with:` input changes.
+  (#61)
+
+### Fixed
+
+- **Collapsed data-table detail row leaked a visible strip.** The detail
+  cell inherited `min-block-size` (~3rem) from the base cell rule, preventing
+  full collapse during the `0fr`→`1fr` grid animation and leaving a sliver of
+  the accent bar / surface background visible when collapsed. Added
+  `min-block-size: 0` to `.c-table__detail td`. (#62)
+- **Forced-colors coverage for overlay components.** Command-palette, dialog,
+  and drawer now declare a full `border: 1px solid ButtonBorder` (plus
+  `background: Canvas` where it was missing) on `:scope` inside their
+  `@scope`, instead of only overriding `border-color` on a loose `:where()`
+  selector outside the scope. (#64)
+
+## [0.3.0] - 2026-06-25
+
 ### Added
 
 - **`c-split-button` component.** A primary action button with a dropdown
