@@ -48,6 +48,22 @@ const accounts = [
     </section>
   </div>
 
+  <h2>App surface</h2>
+  <p>Use <code>data-surface="app"</code> when cards live in dense desktop app shells and need a tighter, more operational corner radius.</p>
+  <div class="l-grid" style="--l-grid-min: 16rem;">
+    {accounts.map(([name, plan, mrr, status]) => (
+      <section class="c-card" data-surface="app">
+        <header class="c-card__header">
+          <h2 class="c-card__title">{name}</h2>
+          <span class="status" data-status={status.toLowerCase().replace(' ', '-')}>{status}</span>
+        </header>
+        <div class="c-card__body">
+          {plan} plan · {mrr}/mo
+        </div>
+      </section>
+    ))}
+  </div>
+
   <h2>Interactive (clickable) cards</h2>
   <p>Add <code>data-interactive</code> (or use an <code>&lt;a class="c-card"&gt;</code>) for a hover lift + focus ring. Use these for navigation tiles and selectable list items.</p>
   <div class="l-grid" style="--l-grid-min: 16rem;">

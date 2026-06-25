@@ -49,6 +49,13 @@
       --c-card-shadow: var(--pl-shadow-2);
     }
 
+    /* App surface  -  tighter corners for dense desktop products where a 24px
+       radius reads too soft. Keeps the default elevation and can combine with
+       status-driven rings or accent cards. */
+    :scope[data-surface="app"] {
+      --c-card-radius: var(--pl-radius-lg);
+    }
+
     /* Accent variant  -  left-edge brand bar + barely-there tinted surface.
        Use for featured KPI tiles, selected states, upgrade CTAs. */
     :scope[data-variant="accent"] {
@@ -140,11 +147,8 @@
 
       /* Hairline divider  -  whitespace does most of the work; the border is
          a hint, not a structural element. */
-      border-block-start: 1px solid color-mix(
-        in oklab,
-        var(--c-card-border),
-        transparent 45%
-      );
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--c-card-border), transparent 45%);
     }
 
     /* Header collapses to a stack when the CARD is narrow (container query). */

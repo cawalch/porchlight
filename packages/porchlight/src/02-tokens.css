@@ -26,7 +26,7 @@
   @property --pl-radius-control {
     syntax: "<length>";
     inherits: true;
-    initial-value: 0.5rem;
+    initial-value: 8px;
   }
 
   @property --pl-focus-size {
@@ -91,6 +91,7 @@
     --pl-radius-2xl: 1.5rem;
     --pl-radius-3xl: 2rem;
     --pl-radius-pill: 999rem;
+    --pl-radius-control: var(--pl-radius-md);
 
     /* Motion */
     --pl-duration-1: calc(120ms * var(--pl-motion-scale));
@@ -102,9 +103,9 @@
     --pl-duration-exit: calc(160ms * var(--pl-motion-scale));
     --pl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
     --pl-ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
-    --pl-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);   /* subtle overshoot */
-    --pl-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);       /* enter: fast → slow */
-    --pl-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);       /* exit: slow → fast */
+    --pl-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* subtle overshoot */
+    --pl-ease-decelerate: cubic-bezier(0, 0, 0.2, 1); /* enter: fast → slow */
+    --pl-ease-accelerate: cubic-bezier(0.4, 0, 1, 1); /* exit: slow → fast */
 
     /* Z-index */
     --pl-z-base: 0;
@@ -207,10 +208,7 @@
     --pl-control-radius: var(--pl-radius-control);
 
     /* Focus — aligned with the warm brand hue for a cohesive ring. */
-    --pl-focus-color: light-dark(
-      oklch(52% 0.14 82deg),
-      oklch(72% 0.13 82deg)
-    );
+    --pl-focus-color: light-dark(oklch(52% 0.14 82deg), oklch(72% 0.13 82deg));
     --pl-focus-offset: 2px;
     --pl-focus-size: 2px;
 
@@ -238,11 +236,9 @@
        "lifted from the page" quality common in Linear, Vercel, Notion.
        Hue 40° in the shadow tint reads as warm ambient light. */
     --pl-shadow-1:
-      0 1px 2px oklch(0% 0 0deg / 8%),
-      0 1px 4px oklch(30% 0.04 40deg / 6%);
+      0 1px 2px oklch(0% 0 0deg / 8%), 0 1px 4px oklch(30% 0.04 40deg / 6%);
     --pl-shadow-2:
-      0 4px 8px oklch(0% 0 0deg / 8%),
-      0 8px 24px oklch(25% 0.06 40deg / 12%),
+      0 4px 8px oklch(0% 0 0deg / 8%), 0 8px 24px oklch(25% 0.06 40deg / 12%),
       inset 0 1px 0 oklch(100% 0 0deg / 6%);
     --pl-shadow-3:
       0 8px 16px oklch(0% 0 0deg / 10%),
@@ -250,7 +246,7 @@
       inset 0 1px 0 oklch(100% 0 0deg / 8%);
 
     /* Glow: accent-hued ring for focused/active primary controls. */
-    --pl-shadow-glow:
-      0 0 0 4px color-mix(in oklab, var(--pl-color-accent), transparent 72%);
+    --pl-shadow-glow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-color-accent), transparent 72%);
   }
 }
