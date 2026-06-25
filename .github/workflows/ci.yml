@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
 
 # A single CI job that lint/builds the docs site and runs the Playwright suite.
 # Stylelint + per-component visual/axe suites are the primary review signal.
@@ -65,3 +67,59 @@ jobs:
 
       - name: Run tests
         run: pnpm --filter ./docs test
+
+  # ── Publish @cawalch/porchlight to npm via OIDC trusted publishing ──────
+  # Tokenless: no NPM_TOKEN secret. npm exchanges a short-lived, signed OIDC
+  # token issued by GitHub Actions for each run. Requires npm CLI ≥ 11.5.1
+  # (Node ≥ 22.14.0) — handled by pinning this job to Node 24.
+  #
+  # Trigger: push a version tag  →  git tag v0.3.0 && git push --tags
+  # The tag need not match package.json's version, but npm rejects publishing
+  # a version that already exists (403), so bump the version first.
+  #
+  # One-time manual prerequisite (npmjs.com → @cawalch/porchlight → Settings
+  # → "Trusted Publisher" → GitHub Actions):
+  #   organization/user : cawalch
+  #   repository        : porchlight
+  #   workflow filename : ci.yml
+  #   environment name  : main            ← must match `environment:` below
+  #   allowed action    : npm publish
+  # Then create a GitHub environment named `main` (Settings → Environments).
+  release:
+    name: Publish to npm
+    needs: ci
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment: main
+    permissions:
+      id-token: write   # OIDC — required for trusted publishing
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'   # Node 24 ships npm 11.x (≥ 11.5.1) for OIDC
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Ensure npm CLI supports trusted publishing (≥ 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # `npm publish` (not pnpm) — only the npm CLI implements the OIDC
+      # trusted-publisher exchange. The package's `prepublishOnly` script
+      # runs `pnpm build` first, so the dist tarball is always fresh.
+      # Provenance is generated automatically — no --provenance flag needed.
+      - name: Publish
+        working-directory: packages/porchlight
+        run: npm publish
