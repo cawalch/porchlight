@@ -7,29 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-25
+
 ### Added
 
-- **Nav footer metadata and compact actions.** Adds generic
-  `.c-nav__meta*`, `.c-nav__actions`, and `.c-nav__action*` selectors for
-  sidebar footer metadata, compact link/button actions, icon slots, and
-  truncated labels.
-- **Default nav current and table row selection states.** Nav items now get a
-  built-in `[aria-current]` affordance, and selected data-table rows get a
-  first-class `aria-selected="true"` visual state, including sticky-column
-  coverage.
-- **Nav groups and menu flyouts.** Adds `.c-nav__group`,
-  `.c-nav__group-label`, `.c-nav__divider`, and `.c-nav__menu` for desktop
-  sidebar grouping and `.c-menu` flyouts inside nav rows.
-- **Richer menu rows and sidebar placement.** Adds `.c-menu__item*` row
-  anatomy, shared menu-row tokens, `--pl-overlay-popover-bg`, and
-  `data-placement="inline-end"` for sidebar/icon-rail menu flyouts.
+- **`c-form` component.** SaaS form layout helpers built on native
+  `<form>` / `<fieldset>` / `<legend>` — Porchlight handles layout and chrome
+  only, never the semantics. Sections (`.c-form__section`), header + body
+  slots, an auto-fitting `.c-form__grid` (tunable via `--c-form-grid-min`),
+  wrapping `.c-form__row`, and a right-aligned `.c-form__actions` bar. (#66)
+- **`c-choice-group` / `c-choice-list` / `c-choice`.** A fieldset+legend
+  pattern for checkbox and radio groups. Supports per-choice descriptions
+  (`.c-choice__description`) and a `[data-layout="inline"]` variant; disabled
+  choices are muted via `:has()`. (#66)
+- **`c-input-group`.** Prefix/suffix addons (`.c-input-group__addon`) and
+  trailing action buttons (`__action`) around a `.c-field__control`. Focus,
+  invalid, and disabled state are hoisted to the group with `:has()` so the
+  ring/border wraps the whole composite control. Includes a forced-colors
+  mapping. (#66)
+- **`c-field--inline` modifier.** A two-column label/control layout via grid
+  (`--c-field-inline-label-size`, default 10rem) that collapses to a stack
+  below 40rem, and drops to a single column when the label is
+  `.u-visually-hidden`. (#66)
+- **Nav footer metadata and compact actions.** Generic `.c-nav__meta*`,
+  `.c-nav__actions`, and `.c-nav__action*` selectors for a sidebar footer
+  (avatar/icon + truncated label + description, plus compact sign-out-style
+  action buttons). All hidden appropriately under the icon-rail variant.
+  (#67)
+- **Nav groups and menu flyouts.** `.c-nav__group`, `.c-nav__group-label`,
+  `.c-nav__divider` for desktop sidebar grouping, and `.c-nav__menu` for
+  nesting a `.c-menu` flyout inside a nav row. (#67, #68)
+- **Richer menu item anatomy and sidebar placement.** `.c-menu__item*`
+  (icon / body / label / description / shortcut), an `[aria-current]` /
+  `[aria-selected="true"]` / `[data-selected]` affordance on menu rows, and
+  `.c-menu[data-placement="inline-end"]` for flyouts opening from a
+  sidebar or icon rail (distinct `position-area` + try-fallbacks). (#68)
 
-### Compatibility
+### Changed
 
-- The nav footer metadata/action selectors are new after `0.4.0`; no `0.4.0`
-  public selector is removed or renamed by this change. The generic
-  `.c-nav__meta*` API replaces the account-specific names used only while this
-  unreleased branch was in review.
+- **`[aria-invalid="true"]` now matches `:user-invalid`.** `.c-field__control`
+  and `.c-input-group` treat an explicit `aria-invalid="true"` identically to
+  the native `:user-invalid` pseudo, so server-side / post-submit validation
+  state renders without waiting for UA validation. (#66)
+- **Shared menu-row and overlay tokens.** New `--pl-menu-row-*` (min-block-
+  size, padding-inline, radius, hover-bg, icon-size) and
+  `--pl-overlay-popover-bg`; `c-menu`, `c-dropdown`, and `c-split-button` now
+  consume them instead of duplicated literals, so the three popover surfaces
+  stay in lockstep. (#68)
+
+### Fixed
+
+- **Data-table sticky-column cells leaked row state.** Sticky cells used
+  `background: inherit`, so the translucent hover/selection wash let
+  horizontally-scrolled cells show through underneath. They now get opaque
+  `color-mix()` fills for both hover and `aria-selected`, and selected rows
+  map to `Highlight` / `HighlightText` under forced-colors. (#67)
+
+### Note
+
+- The nav footer metadata/action selectors are new since `0.4.0`; no `0.4.0`
+  public selector is removed or renamed. The generic `.c-nav__meta*` API
+  replaces account-specific names that existed only on the unreleased branch.
 
 ## [0.4.0] - 2026-06-25
 
