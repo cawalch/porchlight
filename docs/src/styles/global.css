@@ -114,6 +114,17 @@ main:has(> .l-app-shell, > .hero-bleed) {
   padding-block: 0;
 }
 
+/* The framework's .l-app-shell uses block-size: 100dvb so it fills the
+   viewport in a real app (the shell IS the viewport). In the docs, the shell
+   lives inside a flex-column <body> with a sticky header above and a footer
+   below. block-size: 100dvb makes the shell TALLER than its flex parent
+   (main), causing the footer to overlap the bottom of the shell content.
+   Override to auto so the shell flows naturally — the body's min-block-size:
+   100dvb + main's flex:1 still ensure the page fills the viewport. */
+main > .l-app-shell {
+  block-size: auto;
+}
+
 /* Nested main inside an app shell (e.g. <main class="l-app-shell__main">)
    also needs to be freed — global.css's main rule matches by tag name.
    overflow is overridden to visible because the docs chrome wraps the shell,
