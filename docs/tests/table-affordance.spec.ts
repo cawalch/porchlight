@@ -60,8 +60,11 @@ test("sticky header has an opaque background", async ({ page }) => {
 test("collapsed detail rows do not expose detail content", async ({ page }) => {
   await page.goto("./preview/data-table");
   const metrics = await page.evaluate(() =>
-    [...document.querySelectorAll(".c-table__detail:not([open])")].map(
-      (row) => {
+    [
+      ...document.querySelectorAll(
+        ".c-table__detail:not([open]):not([data-open])",
+      ),
+    ].map((row) => {
         const inner = row.querySelector(
           ".c-table__detail-inner",
         ) as HTMLElement;
@@ -81,8 +84,7 @@ test("collapsed detail rows do not expose detail content", async ({ page }) => {
           paddingBlockEnd: contentStyle.paddingBlockEnd,
           paddingBlockStart: contentStyle.paddingBlockStart,
         };
-      },
-    ),
+      }),
   );
 
   expect(

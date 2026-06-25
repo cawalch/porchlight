@@ -136,6 +136,19 @@ test.describe("docs scaffold", () => {
     // The control is a real required input.
     const input = page.locator(".c-field__control").first();
     await expect(input).toHaveAttribute("required", "");
+    await expect(page.locator(".c-field--inline").first()).toBeVisible();
+    await expect(page.locator(".c-input-group").first()).toBeVisible();
+  });
+
+  test("form page renders SaaS form patterns", async ({ page }) => {
+    await page.goto("./preview/form");
+    await expect(
+      page.getByRole("heading", { name: "Form", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".c-form").first()).toBeVisible();
+    await expect(page.locator(".c-form__grid").first()).toBeVisible();
+    await expect(page.locator(".c-choice-group").first()).toBeVisible();
+    await expect(page.locator(".c-input-group").first()).toBeVisible();
   });
 
   test("card page renders cards with headers and bodies", async ({ page }) => {
@@ -251,7 +264,7 @@ test.describe("docs scaffold", () => {
     // Detail rows exist, first one open by default.
     const details = page.locator(".c-table__detail");
     expect(await details.count()).toBeGreaterThanOrEqual(3);
-    await expect(details.first()).toHaveAttribute("open");
+    await expect(details.first()).toHaveAttribute("data-open");
     // Sticky column exists.
     await expect(page.locator(".c-table__sticky-col").first()).toBeVisible();
     // Compact density table exists.

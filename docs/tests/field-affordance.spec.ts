@@ -84,3 +84,28 @@ test("field invalid draws a visible danger ring", async ({ page }) => {
     `invalid ring must differ from the surface by ≥ ${RING_DL}`,
   ).toBeGreaterThanOrEqual(RING_DL);
 });
+
+test("aria-invalid draws the same visible danger treatment", async ({ page }) => {
+  await page.goto("./preview/field");
+  const surface = await page.evaluate(
+    () => getComputedStyle(document.body).backgroundColor,
+  );
+  const control = page.locator("[data-preview-aria-invalid] .c-field__control");
+  const hint = page.locator("[data-preview-aria-invalid] .c-field__hint");
+
+  const ring = await control.evaluate((el) => getComputedStyle(el).boxShadow);
+  const color = ringColor(ring);
+  expect(color, "aria-invalid must draw a ring").not.toBeNull();
+  const dl = deltaL(color!, surface);
+  expect(
+    dl,
+    `aria-invalid ring must differ from the surface by ≥ ${RING_DL}`,
+  ).toBeGreaterThanOrEqual(RING_DL);
+
+  const hintColor = await hint.evaluate((el) => getComputedStyle(el).color);
+  const mutedColor = await page
+    .locator(".c-field__hint")
+    .first()
+    .evaluate((el) => getComputedStyle(el).color);
+  expect(hintColor).not.toBe(mutedColor);
+});

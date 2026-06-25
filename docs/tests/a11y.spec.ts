@@ -35,6 +35,7 @@ const PAGES = [
   "/preview/app-shell",
   "/preview/button",
   "/preview/field",
+  "/preview/form",
   "/preview/card",
   "/preview/badge",
   "/preview/popover-menu",

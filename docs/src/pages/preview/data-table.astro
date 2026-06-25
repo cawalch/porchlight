@@ -73,7 +73,7 @@ const toneFor = (s: string) =>
                 </button>
               </td>
             </tr>
-            <tr class="c-table__detail" open={i === 0} data-detail={i}>
+            <tr class="c-table__detail" data-open={i === 0 ? '' : undefined} data-detail={i}>
               <td colspan="99">
                 <div class="c-table__detail-inner">
                   <div class="c-table__detail-content">
@@ -165,9 +165,9 @@ const toneFor = (s: string) =>
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!expanded));
       if (expanded) {
-        detail?.removeAttribute('open');
+        detail?.removeAttribute('data-open');
       } else {
-        detail?.setAttribute('open', '');
+        detail?.setAttribute('data-open', '');
       }
     });
   });

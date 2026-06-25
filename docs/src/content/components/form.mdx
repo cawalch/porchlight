@@ -1,0 +1,170 @@
+---
+title: Form
+description: Layout helpers for SaaS forms, grids, sections, actions, choice lists, and input groups.
+status: stable
+since: 0.4.1
+---
+
+# Form
+
+The `.c-form` kit composes native fields into real application forms: settings
+sections, billing forms, filter bars, modal create/edit flows, dense admin
+metadata, choice groups, and prefix/suffix input groups. It is CSS-only and
+keeps native form controls in the DOM.
+
+Porchlight is frontend agnostic. Plain HTML forms, server-rendered fragments,
+htmx swaps, Alpine state, and heavier client frameworks all use the same
+contract: native controls, HTML5 constraints, `aria-invalid`, and
+`aria-describedby`.
+
+## Form Layout
+
+```html
+<form class="c-form">
+  <section class="c-form__section">
+    <div class="c-form__header">
+      <h2>Workspace</h2>
+      <p>Names, URLs, and defaults used across the account.</p>
+    </div>
+    <div class="c-form__body">
+      <div class="c-form__grid">
+        <label class="c-field">
+          <span class="c-field__label">Workspace name</span>
+          <input class="c-field__control" value="Acme Ops" />
+        </label>
+        <label class="c-field">
+          <span class="c-field__label">Timezone</span>
+          <select class="c-field__control">
+            <option>America/Chicago</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+  <div class="c-form__actions">
+    <button class="c-button" type="button" data-variant="ghost">Cancel</button>
+    <button class="c-button" type="submit" data-variant="primary">Save</button>
+  </div>
+</form>
+```
+
+## Class Contract
+
+| Selector | Role |
+| --- | --- |
+| `.c-form` | Form root with vertical section rhythm. |
+| `.c-form__section` | A logical form section. |
+| `.c-form__header` | Section heading and summary copy. |
+| `.c-form__body` | Field stack inside a section. |
+| `.c-form__grid` | Responsive field grid. |
+| `.c-form__row` | Wrapping row for filters and short fields. |
+| `.c-form__actions` | Submit/cancel action row. |
+| `.c-choice-group` | Fieldset wrapper for checkbox/radio choices. |
+| `.c-choice-list` | Stacked or inline list of choices. |
+| `.c-choice` | Native checkbox/radio label row. |
+| `.c-choice__input` | Native checkbox/radio input. |
+| `.c-choice__label` | Primary choice text. |
+| `.c-choice__description` | Optional secondary choice text. |
+| `.c-input-group` | Prefix/suffix/action wrapper around a native field. |
+| `.c-input-group__addon` | Non-interactive prefix or suffix. |
+| `.c-input-group__action` | Button aligned inside the group. |
+
+## Choice Groups
+
+Use real `fieldset` and `legend` for groups of related checkboxes or radios.
+
+```html
+<fieldset class="c-choice-group">
+  <legend class="c-choice-group__legend">Notifications</legend>
+  <div class="c-choice-list">
+    <label class="c-choice">
+      <input class="c-choice__input" type="checkbox" checked />
+      <span>
+        <span class="c-choice__label">Weekly summary</span>
+        <span class="c-choice__description">Send every Monday morning.</span>
+      </span>
+    </label>
+  </div>
+</fieldset>
+```
+
+Set `data-layout="inline"` on `.c-choice-list` for compact radio groups such as
+billing cadence or plan type.
+
+## Input Groups
+
+Input groups keep a native `.c-field__control` while adding a prefix, suffix, or
+action. Use explicit labels when an action button sits beside the input.
+
+```html
+<div class="c-field">
+  <label class="c-field__label" for="seat-count">Seats</label>
+  <div class="c-input-group">
+    <input id="seat-count" class="c-field__control" type="number" value="24" />
+    <span class="c-input-group__addon">users</span>
+  </div>
+</div>
+```
+
+## htmx and Alpine
+
+Porchlight has no runtime dependency on htmx or Alpine. Use those tools to swap
+or toggle standard HTML attributes rather than Porchlight-specific state
+classes.
+
+```html
+<form class="c-form" hx-post="/settings" hx-target="this" hx-swap="outerHTML">
+  <div class="c-field">
+    <label class="c-field__label" for="team-slug">Team slug</label>
+    <input
+      id="team-slug"
+      class="c-field__control"
+      name="slug"
+      required
+      pattern="[a-z0-9-]+"
+      aria-invalid="true"
+      aria-describedby="team-slug-error"
+    />
+    <span class="c-field__hint" id="team-slug-error" role="alert">
+      Use lowercase letters, numbers, and hyphens.
+    </span>
+  </div>
+</form>
+```
+
+```html
+<div x-data="{ error: '' }" class="c-field">
+  <label class="c-field__label" for="budget-limit">Budget limit</label>
+  <input
+    id="budget-limit"
+    class="c-field__control"
+    type="number"
+    :aria-invalid="error ? 'true' : 'false'"
+    aria-describedby="budget-limit-error"
+  />
+  <span class="c-field__hint" id="budget-limit-error" x-text="error"></span>
+</div>
+```
+
+## Tokens
+
+| Token | Default | Purpose |
+| --- | --- | --- |
+| `--c-form-gap` | `--pl-space-5` | Space between form sections. |
+| `--c-form-section-gap` | `--pl-space-4` | Space inside each section. |
+| `--c-form-grid-min` | `16rem` | Minimum column size before wrapping. |
+| `--c-form-actions-gap` | `--pl-space-2` | Gap between action buttons. |
+| `--c-choice-gap` | `--pl-space-2` | Gap between choices. |
+| `--c-input-group-addon-size` | `--pl-control-block-size` | Minimum prefix/suffix width. |
+
+## Accessibility
+
+- Use real `form`, `fieldset`, `legend`, and `label` elements.
+- Keep labels visible unless the surrounding UI already names the control; if
+  hidden, use `.u-visually-hidden`.
+- Connect hints or error text with `aria-describedby` when the message is needed
+  by assistive technology.
+- Use `aria-invalid="true"` for server-side errors or framework-managed errors;
+  native HTML5 validation continues to use `:user-invalid`.
+- Do not put buttons inside wrapper labels. Use `for`/`id` for input groups with
+  actions.

@@ -7,11 +7,22 @@
     <input class="c-field__control" required placeholder="Acme Ops" />
     <span class="c-field__hint">Use a name your team recognizes.</span>
   </label>
-  <label class="c-field">
-    <span class="c-field__label">Workspace URL</span>
-    <input class="c-field__control" type="url" required placeholder="https://" />
-    <span class="c-field__hint">Must be a valid https:// URL.</span>
+  <label class="c-field c-field--inline">
+    <span class="c-field__label">Region</span>
+    <select class="c-field__control">
+      <option>US Central</option>
+      <option>EU West</option>
+    </select>
+    <span class="c-field__hint">Inline labels stack on narrow screens.</span>
   </label>
+  <div class="c-field">
+    <label class="c-field__label" for="preview-slug">Workspace URL</label>
+    <div class="c-input-group">
+      <input id="preview-slug" class="c-field__control" required placeholder="acme-ops" />
+      <span class="c-input-group__addon">.porchlight.app</span>
+    </div>
+    <span class="c-field__hint">Input groups preserve native input behavior.</span>
+  </div>
 </div>
 
 <style>
