@@ -28,6 +28,7 @@
 
       display: grid;
       gap: var(--pl-space-2);
+      min-inline-size: 0;
       color: var(--c-field-fg);
     }
 
@@ -62,6 +63,7 @@
          over our border-color/box-shadow and freeze the border at the UA gray. */
       appearance: none;
       inline-size: 100%;
+      min-inline-size: 0;
       min-block-size: var(--pl-control-block-size);
 
       /* Vertical padding is token-derived so the control height stays within

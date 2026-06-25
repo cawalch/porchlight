@@ -37,13 +37,32 @@ test("inline fields align on desktop and stack without overflow on mobile", asyn
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("./preview/field");
   const mobileField = page.locator("[data-preview-inline]");
-  const mobile = {
-    label: await mobileField.locator(".c-field__label").boundingBox(),
-    control: await mobileField.locator(".c-field__control").boundingBox(),
-    overflow: await page.evaluate(
-      () => document.documentElement.scrollWidth > window.innerWidth,
-    ),
-  };
+  const mobile = await mobileField.evaluate((field) => {
+    const label = field.querySelector(".c-field__label");
+    const control = field.querySelector(".c-field__control");
+    if (!(label instanceof HTMLElement) || !(control instanceof HTMLElement)) {
+      return null;
+    }
+
+    const fieldRect = field.getBoundingClientRect();
+    const labelRect = label.getBoundingClientRect();
+    const controlRect = control.getBoundingClientRect();
+    const tolerance = 1;
+
+    return {
+      label: { y: labelRect.y },
+      control: { y: controlRect.y },
+      overflow:
+        field.scrollWidth > field.clientWidth + tolerance ||
+        controlRect.left < fieldRect.left - tolerance ||
+        controlRect.right > fieldRect.right + tolerance ||
+        controlRect.right > window.innerWidth + tolerance,
+    };
+  });
+  if (mobile === null) {
+    throw new Error("Inline field preview markup was not found");
+  }
+
   expect(mobile.label).not.toBeNull();
   expect(mobile.control).not.toBeNull();
   expect(mobile.control!.y).toBeGreaterThan(mobile.label!.y);
