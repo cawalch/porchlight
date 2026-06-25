@@ -114,10 +114,7 @@
         transparent 30%
       );
       border-radius: var(--pl-radius-xl);
-      background: light-dark(
-        oklch(100% 0 0deg / 96%),
-        oklch(17% 0.04 250deg / 94%)
-      );
+      background: var(--pl-overlay-popover-bg);
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
       -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
@@ -172,10 +169,10 @@
     align-items: center;
     gap: var(--pl-space-2);
     inline-size: 100%;
-    min-block-size: 2.25rem;
-    padding-inline: var(--pl-space-3);
+    min-block-size: var(--pl-menu-row-min-block-size);
+    padding-inline: var(--pl-menu-row-padding-inline);
     border: 0;
-    border-radius: var(--pl-radius-sm);
+    border-radius: var(--pl-menu-row-radius);
     background: transparent;
     color: inherit;
     font: inherit;
@@ -187,7 +184,7 @@
 
   :where(.c-split__menu)
     > :is(a, button, [role="menuitem"]):is(:hover, :focus-visible) {
-    background: var(--pl-color-surface-2);
+    background: var(--pl-menu-row-hover-bg);
   }
 
   :where(.c-split__menu) > :is(a, button, [role="menuitem"]):focus-visible {

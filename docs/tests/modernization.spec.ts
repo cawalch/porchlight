@@ -76,6 +76,21 @@ async function reachPreview(
 }
 
 test.describe("modern desktop app polish", () => {
+  test("docs chrome avoids page-level horizontal overflow at 320px", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 320, height: 820 });
+    await page.goto("./preview/nav");
+    await reach(page, "Nav");
+
+    const overflow = await page.evaluate(() => {
+      const root = document.documentElement;
+      return root.scrollWidth - root.clientWidth;
+    });
+
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+
   for (const appPage of appSurfacePages) {
     test(`${appPage.path} uses app-surface card radii`, async ({ page }) => {
       await page.goto(appPage.path);

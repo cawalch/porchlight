@@ -96,6 +96,21 @@ body {
   font-weight: 600;
 }
 
+@media (width < 24rem) {
+  .site-header {
+    gap: 0.5rem;
+  }
+
+  .site-header__brand {
+    font-size: 1rem;
+  }
+
+  .site-nav a {
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
 main {
   flex: 1;
   inline-size: min(100% - 2 * var(--doc-pad), var(--doc-max-inline));

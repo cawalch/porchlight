@@ -15,6 +15,10 @@ It also includes compact sidebar footer patterns for SaaS apps: metadata such
 as account identity, workspace, tenant, environment, or session status, plus
 small full-width actions that can be rendered as either links or buttons.
 
+For nav-launched menus, compose `.c-menu` with `.c-nav__menu`. Use this for
+actions, flyouts, and destination lists. Use `.c-dropdown` only when the nav
+control is choosing a value rather than opening a navigation/action menu.
+
 ## Semantic HTML
 
 ```html
@@ -23,6 +27,9 @@ small full-width actions that can be rendered as either links or buttons.
     <svg class="c-nav__icon">...</svg>
     <span class="c-nav__label">Dashboard</span>
   </a>
+  <div class="c-nav__group">
+    <span class="c-nav__group-label">Workspace</span>
+  </div>
   <details class="c-nav__section" open>
     <summary class="c-nav__section-trigger">
       <svg class="c-nav__icon">...</svg>
@@ -35,6 +42,67 @@ small full-width actions that can be rendered as either links or buttons.
   </details>
 </nav>
 ```
+
+## Groups and Dividers
+
+Use `.c-nav__group-label` for quiet, non-interactive grouping. Use
+`.c-nav__divider` when a separator is enough and a label would add noise.
+
+```html
+<nav class="c-nav" aria-label="Main">
+  <div class="c-nav__group">
+    <span class="c-nav__group-label">Workspace</span>
+  </div>
+  <a class="c-nav__item" href="/dashboard">Dashboard</a>
+  <a class="c-nav__item" href="/accounts">Accounts</a>
+  <hr class="c-nav__divider" />
+  <a class="c-nav__item" href="/settings">Settings</a>
+</nav>
+```
+
+## Nav Menus
+
+Use `.c-nav__menu` on a `.c-menu` wrapper when a sidebar row opens a menu or
+flyout. The trigger uses `.c-menu__trigger`, but Porchlight gives that trigger
+the same density, icon alignment, current state, and icon-rail behavior as
+other nav rows.
+
+```html
+<nav class="c-nav" aria-label="Main">
+  <div
+    class="c-menu c-nav__menu"
+    data-placement="inline-end"
+    style="--c-menu-anchor: --nav-reports;"
+  >
+    <button
+      class="c-menu__trigger"
+      type="button"
+      popovertarget="nav-reports"
+      aria-haspopup="menu"
+    >
+      <svg class="c-nav__icon" aria-hidden="true">...</svg>
+      <span class="c-nav__label">Reports</span>
+      <svg class="c-nav__chevron" aria-hidden="true">...</svg>
+    </button>
+    <div class="c-menu__popover" id="nav-reports" popover>
+      <a class="c-menu__item" href="/reports" aria-current="page">
+        <span class="c-menu__item-body">
+          <span class="c-menu__item-label">Overview</span>
+          <span class="c-menu__item-description">Executive KPI rollup</span>
+        </span>
+        <kbd class="c-menu__item-shortcut">R</kbd>
+      </a>
+      <button class="c-menu__item" type="button">Export CSV</button>
+    </div>
+  </div>
+</nav>
+```
+
+`data-placement="inline-end"` places the menu beside the sidebar row, which is
+the usual desktop rail/flyout pattern. Keep `aria-haspopup="menu"` on triggers
+that open action menus. If your app adds roving focus, typeahead, or submenu
+keyboard behavior, own that JavaScript in the app layer; the CSS kit keeps
+native links and buttons reachable by Tab.
 
 ## Footer metadata and actions
 
@@ -84,8 +152,19 @@ not require the metadata to represent a user account.
   <a class="c-nav__item" aria-current="page" aria-label="Dashboard">
     <svg class="c-nav__icon">...</svg>
   </a>
+  <div class="c-menu c-nav__menu" data-placement="inline-end">
+    <button class="c-menu__trigger" aria-label="Reports" popovertarget="reports">
+      <svg class="c-nav__icon">...</svg>
+      <span class="c-nav__label">Reports</span>
+    </button>
+    <div class="c-menu__popover" id="reports" popover>...</div>
+  </div>
 </nav>
 ```
+
+In icon-only nav, every trigger or link needs a durable accessible name
+(`aria-label`, visible tooltip trigger text, or equivalent). Labels, badges,
+group labels, and chevrons are visually hidden by the variant.
 
 ## Class contract
 
@@ -97,6 +176,10 @@ not require the metadata to represent a user account.
 | `.c-nav__icon`            | Leading icon.                    |
 | `.c-nav__label`           | Text label.                      |
 | `.c-nav__badge`           | Trailing badge (count).          |
+| `.c-nav__group`           | Non-interactive item group.      |
+| `.c-nav__group-label`     | Quiet group label.               |
+| `.c-nav__divider`         | Separator between item groups.   |
+| `.c-nav__menu`            | `.c-menu` wrapper inside nav.    |
 | `.c-nav__footer`          | Bottom metadata/action region.   |
 | `.c-nav__meta`            | Compact metadata block.          |
 | `.c-nav__meta-icon`       | Metadata icon/avatar slot.       |

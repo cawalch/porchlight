@@ -20,6 +20,9 @@ const navItems = [
     <!-- Full nav in a sidebar-like container -->
     <div class="nav-sidebar">
       <nav class="c-nav" aria-label="Main navigation">
+        <div class="c-nav__group">
+          <span class="c-nav__group-label">Workspace</span>
+        </div>
         {navItems.map((item) => (
           <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined}>
             <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
@@ -27,6 +30,38 @@ const navItems = [
             {item.badge && <span class="c-badge c-nav__badge" data-tone="accent">{item.badge}</span>}
           </a>
         ))}
+
+        <div class="c-menu c-nav__menu" data-placement="inline-end" style="--c-menu-anchor: --nav-reports-menu;">
+          <button class="c-menu__trigger" type="button" popovertarget="nav-reports-menu" aria-haspopup="menu" data-preview-nav-menu-trigger>
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
+            <span class="c-nav__label">Reports</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="c-menu__popover" id="nav-reports-menu" popover data-preview-nav-menu>
+            <a class="c-menu__item" href="#" aria-current="page">
+              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+              <span class="c-menu__item-body">
+                <span class="c-menu__item-label">Overview</span>
+                <span class="c-menu__item-description">Executive KPI rollup</span>
+              </span>
+              <kbd class="c-menu__item-shortcut">R</kbd>
+            </a>
+            <a class="c-menu__item" href="#">
+              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M8 19V9"/><path d="M12 19V7"/><path d="M16 19v-4"/><path d="M20 19V11"/></svg>
+              <span class="c-menu__item-body">
+                <span class="c-menu__item-label">Pipeline</span>
+                <span class="c-menu__item-description">Forecast and trend detail</span>
+              </span>
+            </a>
+            <hr class="c-menu__divider" />
+            <button class="c-menu__item" type="button">
+              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              <span class="c-menu__item-label">Export CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="c-nav__divider" />
 
         <details class="c-nav__section" open>
           <summary class="c-nav__section-trigger">
@@ -81,11 +116,27 @@ const navItems = [
     <!-- Icons-only variant -->
     <div class="nav-sidebar nav-sidebar--collapsed">
       <nav class="c-nav" aria-label="Quick nav" data-variant="icons">
+        <div class="c-nav__group">
+          <span class="c-nav__group-label">Workspace</span>
+        </div>
         {navItems.map((item) => (
           <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined} aria-label={item.label}>
             <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
           </a>
         ))}
+        <div class="c-menu c-nav__menu" data-placement="inline-end" style="--c-menu-anchor: --nav-rail-reports-menu;">
+          <button class="c-menu__trigger" type="button" popovertarget="nav-rail-reports-menu" aria-haspopup="menu" aria-label="Reports">
+            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
+            <span class="c-nav__label">Reports</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="c-menu__popover" id="nav-rail-reports-menu" popover>
+            <a class="c-menu__item" href="#" aria-current="page">Overview</a>
+            <a class="c-menu__item" href="#">Pipeline</a>
+            <button class="c-menu__item" type="button">Export CSV</button>
+          </div>
+        </div>
+        <hr class="c-nav__divider" />
         <div class="c-nav__footer">
           <div class="c-nav__meta" title="avery.long.account.email@example-company.test">
             <span class="c-nav__meta-icon">
@@ -111,7 +162,8 @@ const navItems = [
 <style>
   .nav-demo {
     display: flex;
-    gap: var(--pl-space-5);
+    column-gap: clamp(var(--pl-space-5), 18vi, 14rem);
+    row-gap: var(--pl-space-5);
     flex-wrap: wrap;
     margin-block-start: var(--pl-space-5);
   }

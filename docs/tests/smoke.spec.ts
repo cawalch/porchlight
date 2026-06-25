@@ -917,6 +917,11 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-nav[data-variant='icons']")).toBeVisible();
     // Child items exist.
     await expect(page.locator(".c-nav__item--child").first()).toBeVisible();
+    // Group labels, dividers, and nav-hosted menus exist.
+    await expect(page.locator(".c-nav__group-label").first()).toBeVisible();
+    await expect(page.locator(".c-nav__divider").first()).toBeAttached();
+    await expect(page.locator(".c-nav__menu").first()).toBeVisible();
+    await expect(page.locator(".c-nav__menu .c-menu__trigger").first()).toBeVisible();
     // Generic footer metadata and compact nav actions exist.
     await expect(page.locator(".c-nav__meta").first()).toBeVisible();
     await expect(page.locator(".c-nav__action").first()).toBeVisible();

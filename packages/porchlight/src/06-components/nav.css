@@ -12,6 +12,17 @@
  *       <svg class="c-nav__icon">...</svg>
  *       <span class="c-nav__label">Dashboard</span>
  *     </a>
+ *     <div class="c-nav__group">
+ *       <span class="c-nav__group-label">Workspace</span>
+ *     </div>
+ *     <div class="c-menu c-nav__menu" data-placement="inline-end">
+ *       <button class="c-menu__trigger" popovertarget="nav-reports">
+ *         <svg class="c-nav__icon">...</svg>
+ *         <span class="c-nav__label">Reports</span>
+ *         <svg class="c-nav__chevron">...</svg>
+ *       </button>
+ *       <div popover class="c-menu__popover" id="nav-reports">...</div>
+ *     </div>
  *     <details class="c-nav__section">
  *       <summary class="c-nav__section-trigger">
  *         <svg class="c-nav__icon">...</svg>
@@ -121,6 +132,86 @@
     /* Badge in a nav item (e.g. unread count). */
     .c-nav__badge {
       margin-inline-start: auto;
+    }
+
+    .c-nav__group {
+      display: grid;
+      gap: var(--pl-space-1);
+      margin-block-start: var(--pl-space-2);
+    }
+
+    .c-nav__group-label {
+      padding: var(--pl-space-2) var(--pl-space-3) var(--pl-space-1);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      letter-spacing: 0.04em;
+      line-height: var(--pl-leading-tight);
+      text-transform: uppercase;
+    }
+
+    .c-nav__divider {
+      margin-block: var(--pl-space-2);
+      border: 0;
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+
+    .c-nav__menu {
+      display: block;
+      min-inline-size: 0;
+    }
+
+    .c-nav__menu .c-menu__trigger {
+      appearance: none;
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-3);
+      inline-size: 100%;
+      padding: var(--pl-space-2) var(--pl-space-3);
+      border: 0;
+      border-radius: var(--pl-radius-md);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+      text-align: start;
+      text-decoration: none;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-nav__menu .c-menu__trigger:is(:hover, :focus-visible),
+    .c-nav__menu .c-menu__trigger:has(~ .c-menu__popover:popover-open) {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__menu .c-menu__trigger:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-nav__menu .c-menu__trigger[aria-current]:not([aria-current="false"]) {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-semibold);
+      border-radius: 0 var(--pl-radius-md) var(--pl-radius-md) 0;
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .c-nav__menu .c-menu__trigger:has(~ .c-menu__popover:popover-open)
+      .c-nav__chevron {
+      rotate: 90deg;
+    }
+
+    .c-nav__menu .c-menu__popover {
+      inline-size: max-content;
+      min-inline-size: 14rem;
+      max-inline-size: min(22rem, calc(100vi - 2rem));
     }
 
     .c-nav__footer {
@@ -315,6 +406,7 @@
     :scope[data-variant="icons"] .c-nav__label,
     :scope[data-variant="icons"] .c-nav__action-label,
     :scope[data-variant="icons"] .c-nav__meta-body,
+    :scope[data-variant="icons"] .c-nav__group-label,
     :scope[data-variant="icons"] .c-nav__chevron,
     :scope[data-variant="icons"] .c-nav__badge {
       display: none;
@@ -322,6 +414,7 @@
 
     :scope[data-variant="icons"] .c-nav__item,
     :scope[data-variant="icons"] .c-nav__section-trigger,
+    :scope[data-variant="icons"] .c-nav__menu .c-menu__trigger,
     :scope[data-variant="icons"] .c-nav__action {
       justify-content: center;
       padding: var(--pl-space-2);
@@ -340,7 +433,12 @@
       color: HighlightText;
     }
 
-    :where(.c-nav__item:focus-visible, .c-nav__action:focus-visible) {
+    :where(
+      .c-nav__item:focus-visible,
+      .c-nav__section-trigger:focus-visible,
+      .c-nav__menu .c-menu__trigger:focus-visible,
+      .c-nav__action:focus-visible
+    ) {
       outline-color: Highlight;
     }
   }

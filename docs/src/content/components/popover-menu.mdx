@@ -31,16 +31,49 @@ native enter/exit animation. No JavaScript required.
 The trigger's `popovertarget="id"` opens the popover declaratively - no JS.
 The popover element MUST have the `popover` attribute.
 
+## Rich Menu Rows
+
+Plain direct-child links and buttons work. For denser enterprise menus, use the
+optional `.c-menu__item*` anatomy for icons, descriptions, shortcuts, and
+selected/current rows.
+
+```html
+<div class="c-menu__popover" id="reports-menu" popover>
+  <a class="c-menu__item" href="/reports" aria-current="page">
+    <svg class="c-menu__item-icon" aria-hidden="true">...</svg>
+    <span class="c-menu__item-body">
+      <span class="c-menu__item-label">Overview</span>
+      <span class="c-menu__item-description">Executive KPI rollup</span>
+    </span>
+    <kbd class="c-menu__item-shortcut">R</kbd>
+  </a>
+  <button class="c-menu__item" type="button" data-tone="danger">
+    Delete report
+  </button>
+</div>
+```
+
+Rows can be real `<a>` or `<button>` elements. `[aria-current]`,
+`[aria-selected="true"]`, and `[data-selected]` get the selected/current
+treatment; `[data-tone="danger"]` gets destructive color.
+
 ## Class contract
 
-| Selector                | Role                                                 |
-| ----------------------- | ---------------------------------------------------- |
-| `.c-menu`               | The wrapper (inline-block).                          |
-| `.c-menu__trigger`      | The opening button (gets `anchor-name`).             |
-| `.c-menu__popover`      | The `popover` element.                               |
-| `.c-menu__divider`      | A horizontal rule between item groups.               |
-| Items `<a>`, `<button>` | Direct children of `.c-menu__popover`.               |
-| `[data-tone="danger"]`  | Destructive item (danger-text / danger-bg on hover). |
+| Selector                     | Role                                                 |
+| ---------------------------- | ---------------------------------------------------- |
+| `.c-menu`                    | The wrapper (inline-block).                          |
+| `.c-menu__trigger`           | The opening button (gets `anchor-name`).             |
+| `.c-menu__popover`           | The `popover` element.                               |
+| `.c-menu__item`              | Optional row class for links/buttons.                |
+| `.c-menu__item-icon`         | Leading icon slot.                                   |
+| `.c-menu__item-body`         | Label + description stack.                           |
+| `.c-menu__item-label`        | Truncated primary row text.                          |
+| `.c-menu__item-description`  | Secondary row text.                                  |
+| `.c-menu__item-shortcut`     | Trailing keyboard shortcut or hint.                  |
+| `.c-menu__divider`           | A horizontal rule between item groups.               |
+| Items `<a>`, `<button>`      | Direct children of `.c-menu__popover`.               |
+| `[data-tone="danger"]`       | Destructive item (danger-text / danger-bg on hover). |
+| `[data-placement="inline-end"]` | Sidebar/flyout placement beside the trigger.      |
 
 ## Multiple menus
 
@@ -53,11 +86,27 @@ Each menu needs a **unique anchor name**. Set `--c-menu-anchor` per instance:
 
 The default `--pl-menu-anchor` works for a single menu on the page.
 
+## Sidebar Placement
+
+Use `data-placement="inline-end"` for desktop sidebar or icon-rail flyouts.
+This changes the anchor position from below the trigger to beside it.
+
+```html
+<div
+  class="c-menu"
+  data-placement="inline-end"
+  style="--c-menu-anchor: --sidebar-menu;"
+>
+  ...
+</div>
+```
+
 ## Tokens consumed
 
 `--pl-color-{surface,surface-2,border,text,danger-bg,danger-text}`,
 `--pl-focus-color`, `--pl-shadow-3`, `--pl-radius-{lg,sm}`,
-`--pl-space-{1,2,3}`, `--pl-duration-2`, `--pl-ease-standard`.
+`--pl-space-{1,2,3}`, `--pl-duration-2`, `--pl-ease-standard`,
+`--pl-overlay-popover-bg`, and `--pl-menu-row-*`.
 
 ## Anchor positioning
 
