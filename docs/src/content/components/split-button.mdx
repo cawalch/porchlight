@@ -1,0 +1,92 @@
+---
+title: Split button
+description: A primary action button paired with a dropdown toggle for alternative actions. Composes two .c-button segments with a Popover API menu.
+status: stable
+since: 0.3.0
+---
+
+# Split button
+
+The `.c-split` is a composite action control: a primary button (the default
+action) fused with a dropdown toggle that opens a menu of alternative actions.
+The canonical "Save ▼" pattern  -  click the label to perform the default
+action, click the chevron to pick a variant.
+
+Both segments are `.c-button`, so every variant, state, and density tier
+inherited from the button component works without extra effort. The split
+button only adds the layout, the seam divider, and the Popover API menu.
+
+## Semantic HTML
+
+```html
+<div class="c-split">
+  <button class="c-button c-split__primary" data-variant="primary">
+    Save
+  </button>
+  <button class="c-button c-split__toggle" data-variant="primary"
+          popovertarget="sb-1" aria-label="More save options">
+    <svg class="c-split__chevron" viewBox="0 0 24 24" ...>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+  <div popover class="c-split__menu" id="sb-1">
+    <button class="c-split__option">Save as PDF</button>
+    <button class="c-split__option">Save as draft</button>
+    <hr class="c-menu__divider" />
+    <button class="c-split__option" data-tone="danger">Discard changes</button>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector              | Role                                                            |
+| --------------------- | --------------------------------------------------------------- |
+| `.c-split`            | Flex container that fuses the two segments.                     |
+| `.c-split__primary`   | The primary `.c-button` (default action). Trailing radius set to 0. |
+| `.c-split__toggle`    | The dropdown `.c-button` (opens the menu). Leading radius set to 0. |
+| `.c-split__chevron`   | Arrow icon inside the toggle (rotates 180° when open).          |
+| `.c-split__menu`      | The popover menu (anchored to the toggle).                      |
+| `.c-split__option`    | A menu item (button or link).                                   |
+| `[data-tone="danger"]`| Destructive item (discard, delete).                             |
+
+Both buttons **must** carry the same `data-variant` so the fill, text, and
+border match across the seam.
+
+> **Multiple instances:** each `.c-split` must set a unique `--c-split-anchor`
+> (e.g. `style="--c-split-anchor: --sb-1;"`) so popovers don't all tether to
+> the last toggle on the page. The default `--pl-split-anchor` works only for
+> a single instance.
+
+## Tokens exposed (component-local)
+
+| Token                 | Default                  | Purpose                                              |
+| --------------------- | ------------------------ | ---------------------------------------------------- |
+| `--c-split-anchor`    | `--pl-split-anchor`      | CSS anchor name for the toggle (unique per instance).|
+| `--c-split-min-inline`| `10rem`                  | Minimum menu width.                                  |
+| `--c-split-max-block` | `20rem`                  | Maximum menu height (scrolls if exceeded).           |
+| `--c-split-divider`   | `--pl-color-border`      | Divider color between segments (per-variant override).|
+
+## Accessibility
+
+- **Keyboard:** both segments are native `<button>` elements  -  Enter/Space
+  activates them. The toggle uses `popovertarget` for zero-JS menu open. Menu
+  items are buttons/links, so Tab/Shift+Tab navigates within the popover.
+- **Toggle label:** the toggle must carry an `aria-label` describing what the
+  menu contains (e.g. `"More save options"`), since the icon alone is ambiguous.
+- **Focus-visible:** both segments inherit the base-layer focus outline; the
+  primary variant also gets an accent glow.
+- **Disabled:** set `disabled` on both segments to disable the entire control.
+- **Forced colors:** falls back to `ButtonBorder` / `Highlight`.
+
+## Theme, density, RTL, motion
+
+- **Light/dark:** segment fills resolve via `light-dark()`. The divider on
+  filled variants uses a semi-transparent white rule (`oklch(100% 0 0deg / 20%)`)
+  so it reads on both accent and dark fills.
+- **Density:** both segments inherit `--pl-control-block-size`; set
+  `[data-density]` on an ancestor  -  no per-component work.
+- **RTL:** the flex container follows the writing mode; the divider and radius
+  squaring flip automatically via logical properties (`border-inline-start`).
+- **Reduced motion:** the chevron rotation and menu transitions are zeroed by
+  the themes layer's motion guard (`--pl-motion-scale: 0`).

@@ -715,6 +715,82 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-dropdown__option").first()).toBeAttached();
   });
 
+  test("split button renders segments, menu, and unique anchors", async ({
+    page,
+  }) => {
+    await page.goto("./preview/split-button");
+    await expect(
+      page.getByRole("heading", { name: "Split button", exact: true }),
+    ).toBeVisible();
+
+    // Primary + toggle segments are present.
+    await expect(
+      page.locator(".c-split__primary").first(),
+    ).toBeVisible();
+    await expect(
+      page.locator(".c-split__toggle").first(),
+    ).toBeVisible();
+    await expect(
+      page.locator(".c-split__chevron").first(),
+    ).toBeVisible();
+
+    // Both segments of each instance share the same data-variant.
+    const firstSplit = page.locator(".c-split").first();
+    const primaryVariant = await firstSplit
+      .locator(".c-split__primary")
+      .getAttribute("data-variant");
+    const toggleVariant = await firstSplit
+      .locator(".c-split__toggle")
+      .getAttribute("data-variant");
+    expect(primaryVariant).toBe(toggleVariant);
+
+    // Menus exist with popover attr.
+    await expect(
+      page.locator(".c-split__menu[popover]").first(),
+    ).toBeAttached();
+    // Options exist, including a danger item.
+    await expect(
+      page.locator(".c-split__option").first(),
+    ).toBeAttached();
+    await expect(
+      page.locator(".c-split__option[data-tone='danger']").first(),
+    ).toBeAttached();
+
+    // Every instance has a unique --c-split-anchor inline style so popovers
+    // don't all tether to the last toggle on the page.
+    const splits = page.locator(".c-split[style]");
+    const count = await splits.count();
+    expect(count).toBeGreaterThanOrEqual(2);
+    const anchors = new Set<string>();
+    for (let i = 0; i < count; i++) {
+      const style = (await splits.nth(i).getAttribute("style")) || "";
+      const match = style.match(/--c-split-anchor:\s*(--[^;]+)/);
+      expect(match, `instance ${i} must set --c-split-anchor`).not.toBeNull();
+      anchors.add(match![1].trim());
+    }
+    // No two instances share an anchor name.
+    expect(anchors.size).toBe(count);
+  });
+
+  test("split button menu opens via toggle and closes via Esc", async ({
+    page,
+  }) => {
+    await page.goto("./preview/split-button");
+    // The first menu is closed initially.
+    const menu = page.locator("#sb-1");
+    await expect(menu).toBeHidden();
+    // Click the toggle to open.
+    await page.locator("[popovertarget='sb-1']").click();
+    await expect(menu).toBeVisible();
+    // Options are real buttons inside the open popover.
+    await expect(
+      menu.locator(".c-split__option").first(),
+    ).toBeVisible();
+    // Esc closes.
+    await page.keyboard.press("Escape");
+    await expect(menu).toBeHidden();
+  });
+
   test("file upload renders zone with hidden input", async ({ page }) => {
     await page.goto("./preview/file-upload");
     await expect(
