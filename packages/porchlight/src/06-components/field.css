@@ -40,7 +40,9 @@
       align-items: start;
     }
 
-    :scope.c-field--inline:has(.u-visually-hidden) {
+    :scope.c-field--inline:has(
+        :is(.u-sr-only, .u-focusable-sr-only, .u-visually-hidden)
+      ) {
       grid-template-columns: 1fr;
     }
 
@@ -52,9 +54,7 @@
     }
 
     :scope.c-field--inline .c-field__label {
-      padding-block-start: calc(
-        (var(--pl-control-block-size) - 1lh) / 2
-      );
+      padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
     }
 
     .c-field__control {
@@ -102,7 +102,10 @@
       grid-column: 2;
     }
 
-    :scope.c-field--inline:has(.u-visually-hidden) .c-field__hint {
+    :scope.c-field--inline:has(
+        :is(.u-sr-only, .u-focusable-sr-only, .u-visually-hidden)
+      )
+      .c-field__hint {
       grid-column: auto;
     }
 
@@ -137,7 +140,11 @@
     outline: none;
     border-color: var(--pl-focus-color);
     box-shadow: 0 0 0 4px
-      color-mix(in oklab, var(--pl-focus-color), transparent var(--pl-focus-glow-opacity));
+      color-mix(
+        in oklab,
+        var(--pl-focus-color),
+        transparent var(--pl-focus-glow-opacity)
+      );
   }
 
   /* Invalid: same single-ring + glow treatment, in danger. The hint still
@@ -145,10 +152,17 @@
   :where(.c-field) .c-field__control:is(:user-invalid, [aria-invalid="true"]) {
     border-color: var(--pl-color-danger);
     box-shadow: 0 0 0 4px
-      color-mix(in oklab, var(--pl-color-danger), transparent var(--pl-focus-glow-opacity));
+      color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent var(--pl-focus-glow-opacity)
+      );
   }
 
-  :where(.c-field):has(.c-field__control:is(:user-invalid, [aria-invalid="true"])) .c-field__hint {
+  :where(.c-field):has(
+      .c-field__control:is(:user-invalid, [aria-invalid="true"])
+    )
+    .c-field__hint {
     color: var(--pl-color-danger-text);
   }
 
@@ -165,5 +179,4 @@
       border-color: ButtonBorder;
     }
   }
-
 }

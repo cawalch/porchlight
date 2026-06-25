@@ -36,22 +36,28 @@ Use an explicit label when the field contains an input group:
 <div class="c-field">
   <label class="c-field__label" for="workspace-slug">Workspace URL</label>
   <div class="c-input-group">
-    <input id="workspace-slug" class="c-field__control" placeholder="acme-ops" />
+    <input
+      id="workspace-slug"
+      class="c-field__control"
+      placeholder="acme-ops"
+    />
     <span class="c-input-group__addon">.porchlight.app</span>
   </div>
-  <span class="c-field__hint">Use lowercase letters, numbers, and hyphens.</span>
+  <span class="c-field__hint"
+    >Use lowercase letters, numbers, and hyphens.</span
+  >
 </div>
 ```
 
 ## Class contract
 
-| Selector            | Role                                                               |
-| ------------------- | ------------------------------------------------------------------ |
+| Selector            | Role                                                                |
+| ------------------- | ------------------------------------------------------------------- |
 | `.c-field`          | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
 | `.c-field--inline`  | Two-column label/control layout that stacks on narrow viewports.    |
-| `.c-field__label`   | The visible label text.                                            |
-| `.c-field__control` | The native input/select/textarea.                                  |
-| `.c-field__hint`    | Helper or error text below the control.                            |
+| `.c-field__label`   | The visible label text.                                             |
+| `.c-field__control` | The native input/select/textarea.                                   |
+| `.c-field__hint`    | Helper or error text below the control.                             |
 
 ## Common Patterns
 
@@ -91,8 +97,12 @@ native `type="search"`.
 
 ```html
 <label class="c-field c-field--inline">
-  <span class="u-visually-hidden">Search accounts</span>
-  <input class="c-field__control" type="search" placeholder="Search accounts..." />
+  <span class="u-sr-only">Search accounts</span>
+  <input
+    class="c-field__control"
+    type="search"
+    placeholder="Search accounts..."
+  />
 </label>
 ```
 
@@ -143,21 +153,21 @@ with `aria-describedby`. Porchlight treats that state the same as
 
 ## Tokens exposed (component-local)
 
-| Token              | Default              | Purpose                                      |
-| ------------------ | -------------------- | -------------------------------------------- |
-| `--c-field-border` | `--pl-color-border`  | Control border; overridden on focus/invalid. |
-| `--c-field-bg`     | `--pl-color-surface` | Control fill.                                |
-| `--c-field-fg`     | `--pl-color-text`    | Control text.                                |
-| `--c-field-inline-label-size` | `10rem` | Label column size for `.c-field--inline`. |
+| Token                         | Default              | Purpose                                      |
+| ----------------------------- | -------------------- | -------------------------------------------- |
+| `--c-field-border`            | `--pl-color-border`  | Control border; overridden on focus/invalid. |
+| `--c-field-bg`                | `--pl-color-surface` | Control fill.                                |
+| `--c-field-fg`                | `--pl-color-text`    | Control text.                                |
+| `--c-field-inline-label-size` | `10rem`              | Label column size for `.c-field--inline`.    |
 
 ## States
 
-| State       | Selector                   | Behavior                                   |
-| ----------- | -------------------------- | ------------------------------------------ |
-| focus       | `:focus-visible` (control) | crisp accent ring + soft glow (box-shadow) |
-| invalid     | `:user-invalid`, `[aria-invalid="true"]` | danger ring + glow, hint → danger-text |
-| disabled    | `:disabled` (control)      | field muted (0.55 opacity), not-allowed    |
-| placeholder | `::placeholder`            | text-muted                                 |
+| State       | Selector                                 | Behavior                                   |
+| ----------- | ---------------------------------------- | ------------------------------------------ |
+| focus       | `:focus-visible` (control)               | crisp accent ring + soft glow (box-shadow) |
+| invalid     | `:user-invalid`, `[aria-invalid="true"]` | danger ring + glow, hint → danger-text     |
+| disabled    | `:disabled` (control)                    | field muted (0.55 opacity), not-allowed    |
+| placeholder | `::placeholder`                          | text-muted                                 |
 
 ## Accessibility
 

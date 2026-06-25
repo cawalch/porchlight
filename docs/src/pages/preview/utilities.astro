@@ -10,18 +10,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     need.
   </p>
 
-  <h2><code>.u-visually-hidden</code></h2>
+  <h2><code>.u-sr-only</code> and <code>.u-focusable-sr-only</code></h2>
   <p>
-    Hide content from sighted users while keeping it for assistive tech
-    (icon-only buttons, skip links, extra context). The only utility (and one
-    of the few places in the framework) that uses <code>!important</code>,
-    because it's an a11y guarantee that must win.
+    Hide content from sighted users while keeping it for assistive tech. Use
+    <code>.u-sr-only</code> when the element should stay hidden on focus, and
+    <code>.u-focusable-sr-only</code> for skip links that reveal themselves.
   </p>
   <div class="demo">
     <button class="c-button" data-variant="ghost" aria-label="Settings">
-      ⚙ <span class="u-visually-hidden">Settings</span>
+      ⚙ <span class="u-sr-only">Settings</span>
     </button>
-    <span aria-hidden="true">← the "Settings" text is visually hidden but read by AT</span>
+    <a class="u-focusable-sr-only" href="#utility-focus-target">Focusable skip target</a>
+    <span id="utility-focus-target" aria-hidden="true">← hidden text stays available to AT</span>
   </div>
 
   <h2><code>.u-truncate</code></h2>
@@ -32,6 +32,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 
+  <h2><code>.u-min-0</code> and <code>.u-wrap-anywhere</code></h2>
+  <p>Helpers for flex/grid truncation and very long generated tokens.</p>
+  <div class="demo utility-row">
+    <span>Fixed label</span>
+    <span class="u-min-0 u-truncate">a-flex-child-that-can-shrink-and-truncate-cleanly</span>
+  </div>
+  <div class="demo token-box">
+    <code class="u-wrap-anywhere">request_01JZ8Y7Q3Y1QYJH9D8A2WMV6YV_extremely_long_generated_identifier</code>
+  </div>
+
   <h2><code>.u-flow</code></h2>
   <p>Vertical rhythm for a prose block: space between children, not before/after.</p>
   <div class="demo">
@@ -40,6 +50,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p>Second paragraph: spaced from the first via the sibling selector.</p>
       <p>Third paragraph: consistent rhythm throughout.</p>
     </div>
+  </div>
+
+  <h2><code>.u-marginless</code></h2>
+  <p>Remove default block margins from a single text element inside dense app chrome.</p>
+  <div class="demo">
+    <p class="u-marginless">A marginless paragraph inside a compact row.</p>
   </div>
 
   <h2><code>.u-surface</code></h2>
@@ -54,6 +70,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <p>Secondary/caption text color.</p>
   <div class="demo">
     <p>Primary text. <span class="u-muted">Secondary, muted text.</span></p>
+    <p><span class="u-muted-sm">Small muted metadata text.</span></p>
+  </div>
+
+  <h2><code>.u-icon-title</code></h2>
+  <p>Leading icon + title pattern that keeps the icon attached to the title line.</p>
+  <div class="demo title-box">
+    <span class="u-icon-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h16M12 4v16" stroke-linecap="round" /></svg>
+      <span class="u-min-0 u-truncate">Extremely long workflow title that truncates beside its icon</span>
+    </span>
+  </div>
+
+  <h2>Badge/chip group</h2>
+  <p>Use <code>.l-cluster</code> with a smaller gap for wrapping groups of compact labels.</p>
+  <div class="demo l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+    <span class="c-badge">Queued</span>
+    <span class="c-badge" data-tone="success">Ready</span>
+    <span class="c-chip">Finance</span>
+    <span class="c-chip" data-tone="warning">Needs review</span>
   </div>
 
   <h2><code>.u-full-bleed</code></h2>
@@ -74,6 +109,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border: 1px dashed var(--pl-color-border);
     border-radius: var(--pl-radius-md);
     padding: var(--pl-space-2);
+  }
+  .utility-row {
+    display: flex;
+    gap: var(--pl-space-3);
+    max-inline-size: 22rem;
+    padding: var(--pl-space-2);
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+  }
+  .token-box,
+  .title-box {
+    max-inline-size: 20rem;
+    padding: var(--pl-space-2);
+    border: 1px dashed var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+  }
+  .u-icon-title svg {
+    inline-size: 1rem;
+    block-size: 1rem;
   }
   .narrow {
     max-inline-size: 24rem;

@@ -15,7 +15,12 @@ entrance/exit via `@starting-style`.
 ## Semantic HTML
 
 ```html
-<div class="c-toast-stack" role="region" aria-label="Notifications">
+<div
+  class="c-toast-stack"
+  data-placement="bottom-end"
+  role="region"
+  aria-label="Notifications"
+>
   <div class="c-toast" data-tone="success" data-visible role="status">
     <span class="c-toast__icon"><svg>...</svg></span>
     <div class="c-toast__content">
@@ -58,16 +63,40 @@ This is not a Porchlight bug — it is how `@starting-style` works per spec.
 The deferral ensures the browser registers the initial state (opacity: 0,
 translated right) before the transition to the visible state.
 
+## Stack placement
+
+`.c-toast-stack` is fixed by default at the block-end / inline-end corner. Use
+`data-placement` when an app shell needs another corner:
+
+```html
+<div
+  class="c-toast-stack"
+  data-placement="top-end"
+  role="region"
+  aria-label="Notifications"
+>
+  ...
+</div>
+```
+
+Supported values:
+
+- `bottom-end` (default)
+- `bottom-start`
+- `top-end`
+- `top-start`
+
 ## Class contract
 
-| Selector            | Role                                               |
-| ------------------- | -------------------------------------------------- |
-| `.c-toast-stack`    | Fixed container (bottom corner).                   |
-| `.c-toast`          | Individual toast notification.                     |
-| `.c-toast__icon`    | Leading icon (tone-colored).                       |
-| `.c-toast__content` | Title + body wrapper.                              |
-| `.c-toast__title`   | Bold heading.                                      |
-| `.c-toast__body`    | Supporting text (muted).                           |
-| `.c-toast__close`   | Dismiss button.                                    |
-| `[data-visible]`    | Triggers enter transition.                         |
-| `[data-tone]`       | `success`, `warning`, `danger` (default = accent). |
+| Selector            | Role                                                                |
+| ------------------- | ------------------------------------------------------------------- |
+| `.c-toast-stack`    | Fixed container (corner placement).                                 |
+| `.c-toast`          | Individual toast notification.                                      |
+| `.c-toast__icon`    | Leading icon (tone-colored).                                        |
+| `.c-toast__content` | Title + body wrapper.                                               |
+| `.c-toast__title`   | Bold heading.                                                       |
+| `.c-toast__body`    | Supporting text (muted).                                            |
+| `.c-toast__close`   | Dismiss button.                                                     |
+| `[data-visible]`    | Triggers enter transition.                                          |
+| `[data-tone]`       | `success`, `warning`, `danger` (default = accent).                  |
+| `[data-placement]`  | Stack corner: `bottom-end`, `bottom-start`, `top-end`, `top-start`. |

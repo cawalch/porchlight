@@ -50,7 +50,7 @@ Place the framework in the cascade **before** you import it:
 
 Unlayered styles always beat layered styles, so unlayered app CSS wins too.
 Either way, you never fight `!important` - Porchlight reserves `!important`
-for accessibility-critical utilities only (visually-hidden, `[hidden]`).
+for accessibility-critical utilities only (screen-reader helpers, `[hidden]`).
 
 > Do **not** pass `layer(...)` to the `@import`. Each Porchlight module
 > self-wraps in `@layer porchlight.<name>`; adding `layer(...)` would

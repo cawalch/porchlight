@@ -69,6 +69,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 
+  <h2>Placement</h2>
+  <p>Use <code>data-placement</code> on the fixed stack to choose a corner.</p>
+  <div class="placement-grid" aria-label="Toast placement options">
+    {['bottom-end', 'bottom-start', 'top-end', 'top-start'].map((placement) => (
+      <div class="u-surface placement-card">
+        <code>{placement}</code>
+        <div
+          class="c-toast-stack"
+          data-placement={placement}
+          style="position: static; inset: auto; inline-size: 100%; margin-block-start: var(--pl-space-2);"
+        >
+          <div class="c-toast" data-visible role="status">
+            <span class="c-toast__content">
+              <span class="c-toast__title">Preview</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
   <script>
     // Docs-only: toggle visibility to animate enter/exit.
     document.getElementById('toast-toggle')?.addEventListener('change', (e) => {
@@ -87,3 +108,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     });
   </script>
 </BaseLayout>
+
+<style>
+  .placement-grid {
+    display: grid;
+    gap: var(--pl-space-3);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    margin-block-end: var(--pl-space-5);
+  }
+
+  .placement-card {
+    padding: var(--pl-space-3);
+  }
+</style>

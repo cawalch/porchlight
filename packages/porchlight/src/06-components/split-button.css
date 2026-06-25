@@ -157,6 +157,22 @@
     }
   }
 
+  /* Defensive fallback outside @scope: consuming apps can put split buttons
+     inside their own scoped form/card rules. These higher-specificity segment
+     rules keep the composite fused even when scoped proximity would otherwise
+     let generic button styling win. */
+  .c-split > .c-button.c-split__primary {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .c-split > .c-button.c-split__toggle {
+    margin-inline-start: calc(var(--pl-control-border-width) * -1);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-inline-start-color: var(--c-split-divider);
+  }
+
   /* Menu options  -  OUTSIDE @scope (live-state pseudos :hover/:focus-visible
      on descendants don't reliably apply inside @scope). Each item is a <button>
      or <a> for keyboard access, same pattern as .c-dropdown and .c-menu. */

@@ -11,7 +11,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Tones</h2>
-  <div class="row">
+  <div class="c-badge-group row">
     <span class="c-badge">Default</span>
     <span class="c-badge" data-tone="accent">New</span>
     <span class="c-badge" data-tone="success">Active</span>
@@ -21,10 +21,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>With a leading dot</h2>
   <p>A status pip for at-a-glance scanning.</p>
-  <div class="row">
+  <div class="c-badge-group row">
     <span class="c-badge" data-tone="success"><span class="c-badge__dot"></span>Online</span>
     <span class="c-badge" data-tone="warning"><span class="c-badge__dot"></span>Degraded</span>
     <span class="c-badge" data-tone="danger"><span class="c-badge__dot"></span>Outage</span>
+  </div>
+
+  <h2>Groups</h2>
+  <p>Use <code>.c-badge-group</code> for wrapping sets of status badges.</p>
+  <div class="c-badge-group row">
+    <span class="c-badge">Inbound</span>
+    <span class="c-badge" data-tone="accent">New</span>
+    <span class="c-badge" data-tone="warning">SLA watch</span>
+    <span class="c-badge" data-tone="success">Routable</span>
   </div>
 
   <h2>In context</h2>
@@ -43,10 +52,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <style>
   .row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--pl-space-2);
     margin-block-end: var(--pl-space-5);
   }
   .context {

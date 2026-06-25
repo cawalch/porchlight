@@ -174,6 +174,62 @@ test("split button segments fuse into one control", async ({ page }) => {
   expect(metrics.toggleEndStart).toBe("0px");
 });
 
+test("split button stays fused inside common app containers", async ({
+  page,
+}) => {
+  await page.goto("./preview/split-button");
+
+  const metrics = await page.evaluate(() => {
+    const fixture = document.createElement("div");
+    fixture.className = "c-card";
+    fixture.innerHTML = `
+      <div class="c-card__body">
+        <form class="c-form">
+          <div class="c-split" style="--c-split-anchor: --app-split;">
+            <button type="button" class="c-button c-split__primary" data-variant="primary">Approve</button>
+            <button type="button" class="c-button c-split__toggle" data-variant="primary" popovertarget="app-split-menu" aria-label="More actions">
+              <span class="c-split__chevron">⌄</span>
+            </button>
+            <div popover class="c-split__menu" id="app-split-menu">
+              <button class="c-split__option">Approve and notify</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    `;
+    document.querySelector("main")!.append(fixture);
+
+    const split = fixture.querySelector(".c-split")!;
+    const primary = split.querySelector<HTMLElement>(".c-split__primary")!;
+    const toggle = split.querySelector<HTMLElement>(".c-split__toggle")!;
+    const pRect = primary.getBoundingClientRect();
+    const tRect = toggle.getBoundingClientRect();
+    const primaryStyle = getComputedStyle(primary);
+    const toggleStyle = getComputedStyle(toggle);
+
+    return {
+      seam: Math.round(tRect.left - pRect.right),
+      borderWidth: Number.parseFloat(toggleStyle.borderInlineStartWidth),
+      primaryStartEnd: primaryStyle.borderStartEndRadius,
+      primaryEndEnd: primaryStyle.borderEndEndRadius,
+      toggleStartStart: toggleStyle.borderStartStartRadius,
+      toggleEndStart: toggleStyle.borderEndStartRadius,
+    };
+  });
+
+  console.log(
+    `[align] nested split seam=${metrics.seam}px border=${metrics.borderWidth}px radii=` +
+      `${metrics.primaryStartEnd}/${metrics.primaryEndEnd}/${metrics.toggleStartStart}/${metrics.toggleEndStart}`,
+  );
+
+  expect(metrics.seam).toBeGreaterThanOrEqual(-metrics.borderWidth);
+  expect(metrics.seam).toBeLessThanOrEqual(0);
+  expect(metrics.primaryStartEnd).toBe("0px");
+  expect(metrics.primaryEndEnd).toBe("0px");
+  expect(metrics.toggleStartStart).toBe("0px");
+  expect(metrics.toggleEndStart).toBe("0px");
+});
+
 test("split button chevron rotates when menu opens", async ({ page }) => {
   await page.goto("./preview/split-button");
   const chevron = page.locator(".c-split__chevron").first();
