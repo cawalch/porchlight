@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Nav footer metadata and compact actions.** Adds generic
+  `.c-nav__meta*`, `.c-nav__actions`, and `.c-nav__action*` selectors for
+  sidebar footer metadata, compact link/button actions, icon slots, and
+  truncated labels.
+- **Default nav current and table row selection states.** Nav items now get a
+  built-in `[aria-current]` affordance, and selected data-table rows get a
+  first-class `aria-selected="true"` visual state, including sticky-column
+  coverage.
+
+### Compatibility
+
+- The nav footer metadata/action selectors are new after `0.4.0`; no `0.4.0`
+  public selector is removed or renamed by this change. The generic
+  `.c-nav__meta*` API replaces the account-specific names used only while this
+  unreleased branch was in review.
+
 ## [0.4.0] - 2026-06-25
 
 ### Added

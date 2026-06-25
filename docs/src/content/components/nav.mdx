@@ -11,8 +11,8 @@ The `.c-nav` renders a vertical navigation list for sidebars. Icon + label
 items with active state via `aria-current="page"`. Collapsible sub-sections
 via native `<details>`. Icons-only variant for collapsed sidebars.
 
-It also includes compact sidebar footer patterns for authenticated SaaS apps:
-account/session metadata, truncated identities, role or status badges, and
+It also includes compact sidebar footer patterns for SaaS apps: metadata such
+as account identity, workspace, tenant, environment, or session status, plus
 small full-width actions that can be rendered as either links or buttons.
 
 ## Semantic HTML
@@ -36,30 +36,30 @@ small full-width actions that can be rendered as either links or buttons.
 </nav>
 ```
 
-## Account footer and actions
+## Footer metadata and actions
 
-Use `.c-nav__footer` at the end of a sidebar nav for account/session state.
-The account block keeps long emails truncated, and `.c-nav__action` provides a
-compact full-width action surface for links or buttons without the weight of a
-regular `.c-button`.
+Use `.c-nav__footer` at the end of a sidebar nav for compact metadata. The
+metadata block keeps long labels truncated, and `.c-nav__action` provides a
+full-width action surface for links or buttons without the weight of a regular
+`.c-button`.
 
 ```html
 <nav class="c-nav" aria-label="Main">
   ...
   <div class="c-nav__footer">
-    <div class="c-nav__account">
-      <span class="c-nav__account-icon">
+    <div class="c-nav__meta">
+      <span class="c-nav__meta-icon">
         <svg aria-hidden="true">...</svg>
       </span>
-      <span class="c-nav__account-body">
-        <span class="c-nav__account-label">avery.long.email@example.com</span>
-        <span class="c-nav__account-meta">
+      <span class="c-nav__meta-body">
+        <span class="c-nav__meta-label">avery.long.email@example.com</span>
+        <span class="c-nav__meta-description">
           <span class="c-badge" data-tone="success">Admin</span>
           Online
         </span>
       </span>
     </div>
-    <div class="c-nav__account-actions">
+    <div class="c-nav__actions">
       <a class="c-nav__action" href="/switch-user">
         <svg class="c-nav__action-icon" aria-hidden="true">...</svg>
         <span class="c-nav__action-label">Switch user</span>
@@ -72,6 +72,10 @@ regular `.c-button`.
   </div>
 </nav>
 ```
+
+The footer metadata selectors are intentionally generic. Use them for account
+or session state when that is your product language, but the public API does
+not require the metadata to represent a user account.
 
 ## Icons-only (collapsed sidebar)
 
@@ -93,13 +97,13 @@ regular `.c-button`.
 | `.c-nav__icon`            | Leading icon.                    |
 | `.c-nav__label`           | Text label.                      |
 | `.c-nav__badge`           | Trailing badge (count).          |
-| `.c-nav__footer`          | Bottom account/session region.   |
-| `.c-nav__account`         | Compact account metadata block.  |
-| `.c-nav__account-icon`    | Account/avatar/icon slot.        |
-| `.c-nav__account-body`    | Account text stack.              |
-| `.c-nav__account-label`   | Truncated account identity.      |
-| `.c-nav__account-meta`    | Role/status row.                 |
-| `.c-nav__account-actions` | Compact action stack.            |
+| `.c-nav__footer`          | Bottom metadata/action region.   |
+| `.c-nav__meta`            | Compact metadata block.          |
+| `.c-nav__meta-icon`       | Metadata icon/avatar slot.       |
+| `.c-nav__meta-body`       | Metadata text stack.             |
+| `.c-nav__meta-label`      | Truncated metadata label.        |
+| `.c-nav__meta-description` | Secondary metadata row.          |
+| `.c-nav__actions`         | Compact action stack.            |
 | `.c-nav__action`          | Small full-width link/button.    |
 | `.c-nav__action-icon`     | Action icon slot.                |
 | `.c-nav__action-label`    | Truncated action label.          |

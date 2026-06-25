@@ -26,19 +26,21 @@
  * The icon rail variant: when the sidebar is collapsed (icon-only mode),
  * [data-variant="icons"] hides labels and centers icons.
  *
- * Sidebar footer/session adjuncts:
+ * Sidebar footer metadata and compact actions:
  *   <div class="c-nav__footer">
- *     <div class="c-nav__account">
- *       <svg class="c-nav__account-icon">...</svg>
- *       <span class="c-nav__account-body">
- *         <span class="c-nav__account-label">user@example.com</span>
- *         <span class="c-nav__account-meta">Admin</span>
+ *     <div class="c-nav__meta">
+ *       <svg class="c-nav__meta-icon">...</svg>
+ *       <span class="c-nav__meta-body">
+ *         <span class="c-nav__meta-label">user@example.com</span>
+ *         <span class="c-nav__meta-description">Admin</span>
  *       </span>
  *     </div>
- *     <button class="c-nav__action">
- *       <svg class="c-nav__action-icon">...</svg>
- *       <span class="c-nav__action-label">Sign out</span>
- *     </button>
+ *     <div class="c-nav__actions">
+ *       <button class="c-nav__action">
+ *         <svg class="c-nav__action-icon">...</svg>
+ *         <span class="c-nav__action-label">Sign out</span>
+ *       </button>
+ *     </div>
  *   </div>
  */
 @layer porchlight.components {
@@ -46,7 +48,7 @@
     :scope {
       --c-nav-gap: var(--pl-space-1);
       --c-nav-pad: var(--pl-space-2);
-      --c-nav-account-icon-size: 2rem;
+      --c-nav-meta-icon-size: 2rem;
       --c-nav-action-block-size: 2rem;
 
       display: flex;
@@ -130,7 +132,7 @@
       min-inline-size: 0;
     }
 
-    .c-nav__account {
+    .c-nav__meta {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
@@ -151,9 +153,9 @@
       color: var(--pl-color-text);
     }
 
-    .c-nav__account-icon {
-      inline-size: var(--c-nav-account-icon-size);
-      block-size: var(--c-nav-account-icon-size);
+    .c-nav__meta-icon {
+      inline-size: var(--c-nav-meta-icon-size);
+      block-size: var(--c-nav-meta-icon-size);
       display: inline-grid;
       place-items: center;
       flex-shrink: 0;
@@ -166,24 +168,24 @@
       color: var(--pl-color-accent);
     }
 
-    .c-nav__account-icon :where(svg),
-    svg.c-nav__account-icon {
-      inline-size: var(--c-nav-account-icon-size);
-      block-size: var(--c-nav-account-icon-size);
+    .c-nav__meta-icon :where(svg),
+    svg.c-nav__meta-icon {
+      inline-size: var(--c-nav-meta-icon-size);
+      block-size: var(--c-nav-meta-icon-size);
     }
 
-    .c-nav__account-icon :where(svg) {
+    .c-nav__meta-icon :where(svg) {
       inline-size: 1rem;
       block-size: 1rem;
     }
 
-    .c-nav__account-body {
+    .c-nav__meta-body {
       display: grid;
       gap: 0.125rem;
       min-inline-size: 0;
     }
 
-    .c-nav__account-label {
+    .c-nav__meta-label {
       min-inline-size: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -193,7 +195,7 @@
       color: var(--pl-color-text);
     }
 
-    .c-nav__account-meta {
+    .c-nav__meta-description {
       display: flex;
       align-items: center;
       gap: var(--pl-space-1);
@@ -202,7 +204,7 @@
       font-size: var(--pl-text-xs);
     }
 
-    .c-nav__account-actions {
+    .c-nav__actions {
       display: grid;
       gap: var(--pl-space-1);
     }
@@ -312,8 +314,7 @@
     /* Icons-only variant (collapsed sidebar). */
     :scope[data-variant="icons"] .c-nav__label,
     :scope[data-variant="icons"] .c-nav__action-label,
-    :scope[data-variant="icons"] .c-nav__account-body,
-    :scope[data-variant="icons"] .c-nav__account-actions,
+    :scope[data-variant="icons"] .c-nav__meta-body,
     :scope[data-variant="icons"] .c-nav__chevron,
     :scope[data-variant="icons"] .c-nav__badge {
       display: none;
@@ -326,7 +327,7 @@
       padding: var(--pl-space-2);
     }
 
-    :scope[data-variant="icons"] .c-nav__account {
+    :scope[data-variant="icons"] .c-nav__meta {
       grid-template-columns: 1fr;
       justify-items: center;
       padding: var(--pl-space-1);

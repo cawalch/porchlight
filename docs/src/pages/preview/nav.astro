@@ -52,19 +52,19 @@ const navItems = [
         </details>
 
         <div class="c-nav__footer">
-          <div class="c-nav__account" data-preview-nav-account>
-            <span class="c-nav__account-icon">
+          <div class="c-nav__meta" data-preview-nav-meta>
+            <span class="c-nav__meta-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
             </span>
-            <span class="c-nav__account-body">
-              <span class="c-nav__account-label">avery.long.account.email@example-company.test</span>
-              <span class="c-nav__account-meta">
+            <span class="c-nav__meta-body">
+              <span class="c-nav__meta-label">avery.long.account.email@example-company.test</span>
+              <span class="c-nav__meta-description">
                 <span class="c-badge" data-tone="success">Admin</span>
                 Online
               </span>
             </span>
           </div>
-          <div class="c-nav__account-actions">
+          <div class="c-nav__actions">
             <a class="c-nav__action" href="#" data-preview-nav-action>
               <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 3h5v5"/><path d="M21 3 10 14"/><path d="M15 21H5a2 2 0 0 1-2-2V9"/></svg>
               <span class="c-nav__action-label">Switch user</span>
@@ -87,19 +87,21 @@ const navItems = [
           </a>
         ))}
         <div class="c-nav__footer">
-          <div class="c-nav__account" title="avery.long.account.email@example-company.test">
-            <span class="c-nav__account-icon">
+          <div class="c-nav__meta" title="avery.long.account.email@example-company.test">
+            <span class="c-nav__meta-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
             </span>
-            <span class="c-nav__account-body">
-              <span class="c-nav__account-label">avery.long.account.email@example-company.test</span>
-              <span class="c-nav__account-meta">Admin</span>
+            <span class="c-nav__meta-body">
+              <span class="c-nav__meta-label">avery.long.account.email@example-company.test</span>
+              <span class="c-nav__meta-description">Admin</span>
             </span>
           </div>
-          <button class="c-nav__action" type="button" aria-label="Sign out">
-            <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-            <span class="c-nav__action-label">Sign out</span>
-          </button>
+          <div class="c-nav__actions">
+            <button class="c-nav__action" type="button" aria-label="Sign out">
+              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              <span class="c-nav__action-label">Sign out</span>
+            </button>
+          </div>
         </div>
       </nav>
     </div>

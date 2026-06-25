@@ -281,29 +281,39 @@ test("nav active item is visually distinct from inactive", async ({ page }) => {
   expect(states!.activeBg).not.toBe(states!.inactiveBg);
 });
 
-test("nav account footer actions stay compact and icon-aligned", async ({
+test("nav footer metadata actions stay compact and icon-aligned", async ({
   page,
 }) => {
   await page.goto("./preview/nav");
 
   const metrics = await page.evaluate(() => {
-    const account = document.querySelector(
-      "[data-preview-nav-account]",
+    const meta = document.querySelector(
+      "[data-preview-nav-meta]",
     ) as HTMLElement;
-    const accountLabel = account?.querySelector(
-      ".c-nav__account-label",
+    const metaLabel = meta?.querySelector(
+      ".c-nav__meta-label",
     ) as HTMLElement;
     const actions = [...document.querySelectorAll("[data-preview-nav-action]")];
+    const collapsedActions = document.querySelector(
+      '.c-nav[data-variant="icons"] .c-nav__actions',
+    ) as HTMLElement;
+    const collapsedAction = collapsedActions?.querySelector(
+      ".c-nav__action",
+    ) as HTMLElement;
     const icon = document.querySelector(".c-nav__action-icon") as HTMLElement;
-    if (!account || !accountLabel || actions.length < 2 || !icon) return null;
+    if (!meta || !metaLabel || actions.length < 2 || !collapsedAction || !icon) {
+      return null;
+    }
 
     return {
-      accountLabelClientWidth: accountLabel.clientWidth,
-      accountLabelScrollWidth: accountLabel.scrollWidth,
+      metaLabelClientWidth: metaLabel.clientWidth,
+      metaLabelScrollWidth: metaLabel.scrollWidth,
       actionTags: actions.map((action) => action.tagName.toLowerCase()),
       actionHeights: actions.map(
         (action) => (action as HTMLElement).getBoundingClientRect().height,
       ),
+      collapsedActionsDisplay: getComputedStyle(collapsedActions).display,
+      collapsedActionWidth: collapsedAction.getBoundingClientRect().width,
       iconHeight: icon.getBoundingClientRect().height,
       iconWidth: icon.getBoundingClientRect().width,
     };
@@ -313,13 +323,15 @@ test("nav account footer actions stay compact and icon-aligned", async ({
 
   expect(metrics).not.toBeNull();
   expect(metrics!.actionTags).toEqual(["a", "button"]);
+  expect(metrics!.collapsedActionsDisplay).toBe("grid");
+  expect(metrics!.collapsedActionWidth).toBeGreaterThanOrEqual(32);
   for (const height of metrics!.actionHeights) {
     expect(height).toBeLessThanOrEqual(34);
   }
   expect(metrics!.iconWidth).toBeLessThanOrEqual(18);
   expect(metrics!.iconHeight).toBeLessThanOrEqual(18);
-  expect(metrics!.accountLabelScrollWidth).toBeGreaterThan(
-    metrics!.accountLabelClientWidth,
+  expect(metrics!.metaLabelScrollWidth).toBeGreaterThan(
+    metrics!.metaLabelClientWidth,
   );
 });
 
