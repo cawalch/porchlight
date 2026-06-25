@@ -54,16 +54,17 @@
     }
 
     /* Primary segment  -  square the trailing edge so it meets the toggle. */
-    .c-split__primary {
+    :scope > .c-button.c-split__primary {
       border-start-end-radius: 0;
       border-end-end-radius: 0;
     }
 
     /* Toggle segment  -  square the leading edge and tighten the padding to
        an icon-only footprint. The leading border becomes the divider. */
-    .c-split__toggle {
+    :scope > .c-button.c-split__toggle {
       min-inline-size: var(--pl-control-block-size);
       padding-inline: var(--pl-space-2);
+      margin-inline-start: calc(var(--pl-control-border-width) * -1);
       border-start-start-radius: 0;
       border-end-start-radius: 0;
       border-inline-start-color: var(--c-split-divider);
@@ -75,13 +76,13 @@
     /* Filled variants (primary): a semi-transparent white rule reads as a
        divider on the accent fill  -  the default border (same accent hue)
        would be invisible. */
-    .c-split__toggle[data-variant="primary"] {
+    :scope > .c-button.c-split__toggle[data-variant="primary"] {
       --c-split-divider: oklch(100% 0 0deg / 20%);
     }
 
     /* Ghost variant: transparent fill means the normal border is the only
        visual structure; use the framework border token for a crisp seam. */
-    .c-split__toggle[data-variant="ghost"] {
+    :scope > .c-button.c-split__toggle[data-variant="ghost"] {
       --c-split-divider: var(--pl-color-border);
     }
 
@@ -108,11 +109,8 @@
       overflow-y: auto;
 
       /* Floating surface: softened border + Liquid Glass. */
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 30%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
       border-radius: var(--pl-radius-xl);
       background: var(--pl-overlay-popover-bg);
       backdrop-filter: blur(var(--pl-backdrop-blur))
@@ -127,10 +125,8 @@
       transition:
         opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
         transform var(--pl-duration-enter) var(--pl-ease-decelerate),
-        overlay var(--pl-duration-exit) var(--pl-ease-accelerate)
-          allow-discrete,
-        display var(--pl-duration-exit) var(--pl-ease-accelerate)
-          allow-discrete;
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
     /* Anchor positioning  -  tether to the toggle. @supports-gated; browsers
@@ -193,7 +189,8 @@
   }
 
   /* Destructive item  -  discard, delete. */
-  :where(.c-split__menu) > :is(a, button, [role="menuitem"])[data-tone="danger"] {
+  :where(.c-split__menu)
+    > :is(a, button, [role="menuitem"])[data-tone="danger"] {
     color: var(--pl-color-danger-text);
   }
 
