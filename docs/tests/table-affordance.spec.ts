@@ -80,6 +80,29 @@ test("table selected row is perceptibly distinct and carries an accent bar", asy
   expect(states!.accentBar).toContain("inset");
 });
 
+test("selected sticky column stays opaque while horizontally scrolled", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("./preview/data-table");
+  const state = await page.evaluate(() => {
+    const wrap = document.querySelector(".c-table-wrap") as HTMLElement;
+    wrap.scrollLeft = 260;
+    const sticky = document.querySelector(
+      ".c-table tbody tr[aria-selected='true'] .c-table__sticky-col",
+    ) as HTMLElement;
+    return {
+      background: getComputedStyle(sticky).backgroundColor,
+      scrollLeft: wrap.scrollLeft,
+    };
+  });
+
+  expect(state.scrollLeft).toBeGreaterThan(0);
+  expect(state.background).not.toContain("/");
+  expect(state.background).not.toMatch(/rgba?\([^)]*,\s*0?\.\d+\)/);
+  expect(state.background).not.toBe("transparent");
+});
+
 test("sticky header has an opaque background", async ({ page }) => {
   await page.goto("./preview/data-table");
   const bg = await page.evaluate(() => {

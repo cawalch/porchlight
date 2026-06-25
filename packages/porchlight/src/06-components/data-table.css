@@ -420,10 +420,22 @@
       box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
-    /* Inherit hover/selection background through the sticky column. */
-    :where(.c-table) tbody tr:hover .c-table__sticky-col,
+    /* Sticky cells need opaque hover/selection fills; translucent row
+       backgrounds let horizontally scrolled cells show through underneath. */
+    :where(.c-table) tbody tr:hover .c-table__sticky-col {
+      background: color-mix(
+        in oklab,
+        var(--pl-color-surface-2),
+        var(--pl-color-text) 3.5%
+      );
+    }
+
     :where(.c-table) tbody tr[aria-selected="true"] .c-table__sticky-col {
-      background: inherit;
+      background: color-mix(
+        in oklab,
+        var(--pl-color-surface),
+        var(--pl-color-accent) 16%
+      );
     }
   }
 
