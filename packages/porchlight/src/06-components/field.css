@@ -5,12 +5,12 @@
  * <input>/<select>/<textarea> so we inherit all their behavior (constraint
  * validation, autofill, IME, autofill). No JS, no custom widgets.
  *
- * State is driven entirely by native pseudos: :focus-visible, :user-invalid,
- * :disabled. Focus draws a token-colored border AND a 2px ring (box-shadow);
- * invalid flips the border to danger and the hint to danger-text. State rules
- * live OUTSIDE @scope  -  :focus-visible / :user-invalid inside @scope (.c-field)
- * did not reliably apply to the focused control. They stay in the same layer,
- * with :where() for low specificity.
+ * State is driven by native pseudos and ARIA: :focus-visible, :user-invalid,
+ * [aria-invalid="true"], :disabled. Focus draws a token-colored border AND a
+ * 2px ring (box-shadow); invalid flips the border to danger and the hint to
+ * danger-text. State rules live OUTSIDE @scope  -  :focus-visible /
+ * :user-invalid inside @scope (.c-field) did not reliably apply to the focused
+ * control. They stay in the same layer, with :where() for low specificity.
  *
  * Token-driven via --c-field-* aliases. Density comes from --pl-control-*
  * (set [data-density] on an ancestor).
@@ -24,10 +24,24 @@
       --c-field-border: var(--pl-color-border);
       --c-field-bg: var(--pl-color-surface);
       --c-field-fg: var(--pl-color-text);
+      --c-field-inline-label-size: 10rem;
 
       display: grid;
       gap: var(--pl-space-2);
+      min-inline-size: 0;
       color: var(--c-field-fg);
+    }
+
+    :scope.c-field--inline {
+      grid-template-columns:
+        minmax(7rem, var(--c-field-inline-label-size))
+        minmax(0, 1fr);
+      gap: var(--pl-space-1) var(--pl-space-3);
+      align-items: start;
+    }
+
+    :scope.c-field--inline:has(.u-visually-hidden) {
+      grid-template-columns: 1fr;
     }
 
     .c-field__label {
@@ -37,12 +51,19 @@
       /* Logical "for" association: clicking the label focuses the input it wraps. */
     }
 
+    :scope.c-field--inline .c-field__label {
+      padding-block-start: calc(
+        (var(--pl-control-block-size) - 1lh) / 2
+      );
+    }
+
     .c-field__control {
       /* appearance: none  -  we fully restyle the control; the UA's native
          input chrome (including its :focus border ring) would otherwise win
          over our border-color/box-shadow and freeze the border at the UA gray. */
       appearance: none;
       inline-size: 100%;
+      min-inline-size: 0;
       min-block-size: var(--pl-control-block-size);
 
       /* Vertical padding is token-derived so the control height stays within
@@ -76,6 +97,28 @@
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
     }
+
+    :scope.c-field--inline .c-field__hint {
+      grid-column: 2;
+    }
+
+    :scope.c-field--inline:has(.u-visually-hidden) .c-field__hint {
+      grid-column: auto;
+    }
+
+    @media (width < 40rem) {
+      :scope.c-field--inline {
+        grid-template-columns: 1fr;
+      }
+
+      :scope.c-field--inline .c-field__label {
+        padding-block-start: 0;
+      }
+
+      :scope.c-field--inline .c-field__hint {
+        grid-column: auto;
+      }
+    }
   }
 
   /* State rules OUTSIDE @scope. Live-state pseudos (:focus-visible,
@@ -99,13 +142,13 @@
 
   /* Invalid: same single-ring + glow treatment, in danger. The hint still
      flips to danger-text via :has() on the wrapper (below). */
-  :where(.c-field) .c-field__control:user-invalid {
+  :where(.c-field) .c-field__control:is(:user-invalid, [aria-invalid="true"]) {
     border-color: var(--pl-color-danger);
     box-shadow: 0 0 0 4px
       color-mix(in oklab, var(--pl-color-danger), transparent var(--pl-focus-glow-opacity));
   }
 
-  :where(.c-field):has(.c-field__control:user-invalid) .c-field__hint {
+  :where(.c-field):has(.c-field__control:is(:user-invalid, [aria-invalid="true"])) .c-field__hint {
     color: var(--pl-color-danger-text);
   }
 
@@ -122,4 +165,5 @@
       border-color: ButtonBorder;
     }
   }
+
 }

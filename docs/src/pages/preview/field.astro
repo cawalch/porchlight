@@ -1,94 +1,157 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
+
 <BaseLayout title="Field · Porchlight">
   <h1>Field</h1>
   <p>
-    A labeled form control — label, native input, and hint. Wraps real
-    <code>&lt;input&gt;</code>/<code>&lt;select&gt;</code>/<code>&lt;textarea&gt;</code>
-    so it inherits all native behavior (constraint validation, autofill, IME).
-    State is driven by native pseudos and reflected onto the border/hint via
-    <code>:has()</code> — no class toggles, no JS.
+    Native inputs with Porchlight field chrome: stacked and inline labels,
+    hints, validation, disabled/read-only states, selects, textareas, and
+    grouped prefixes or suffixes.
   </p>
 
-  <h2>Text input</h2>
-  <div class="demo">
+  <h2>Primitive controls</h2>
+  <div class="demo field-grid">
     <label class="c-field">
       <span class="c-field__label">Workspace name</span>
       <input class="c-field__control" required placeholder="Acme Ops" />
       <span class="c-field__hint">Use a name your team recognizes.</span>
     </label>
+
+    <label class="c-field">
+      <span class="c-field__label">Billing email</span>
+      <input class="c-field__control" type="email" placeholder="ops@example.com" />
+      <span class="c-field__hint">Invoices and receipts are sent here.</span>
+    </label>
+
+    <label class="c-field">
+      <span class="c-field__label">Plan</span>
+      <select class="c-field__control">
+        <option>Business</option>
+        <option>Enterprise</option>
+        <option>Sandbox</option>
+      </select>
+      <span class="c-field__hint">Native select, themed with the field control.</span>
+    </label>
+
+    <label class="c-field">
+      <span class="c-field__label">Internal notes</span>
+      <textarea class="c-field__control" rows="3" placeholder="Add context for support..."></textarea>
+      <span class="c-field__hint">Textarea uses the same field surface.</span>
+    </label>
   </div>
 
-  <h2>Focus state</h2>
-  <p>Focus the field below — the border shifts to the focus color and a soft accent glow appears (a border swap alone is below the perceptual threshold).</p>
+  <h2>Inline labels</h2>
   <div class="demo">
+    <label class="c-field c-field--inline" data-preview-inline>
+      <span class="c-field__label">Region</span>
+      <select class="c-field__control">
+        <option>US Central</option>
+        <option>EU West</option>
+        <option>AP Southeast</option>
+      </select>
+      <span class="c-field__hint">Inline labels make dense settings easier to scan.</span>
+    </label>
+
+    <label class="c-field c-field--inline">
+      <span class="c-field__label">Retention</span>
+      <input class="c-field__control" type="number" value="90" />
+      <span class="c-field__hint">Stacks automatically on narrow screens.</span>
+    </label>
+  </div>
+
+  <h2>Hidden label search</h2>
+  <div class="demo toolbar-demo">
+    <label class="c-field c-field--inline">
+      <span class="u-visually-hidden">Search accounts</span>
+      <input class="c-field__control" type="search" placeholder="Search accounts..." />
+    </label>
+    <button class="c-button" type="button" data-variant="ghost">Filter</button>
+    <button class="c-button" type="button" data-variant="primary">New account</button>
+  </div>
+
+  <h2>Input groups</h2>
+  <div class="demo field-grid">
+    <div class="c-field">
+      <label class="c-field__label" for="workspace-slug">Workspace URL</label>
+      <div class="c-input-group" data-preview-input-group>
+        <input id="workspace-slug" class="c-field__control" placeholder="acme-ops" />
+        <span class="c-input-group__addon">.porchlight.app</span>
+      </div>
+      <span class="c-field__hint">Suffix text is visual chrome; the input stays native.</span>
+    </div>
+
+    <div class="c-field">
+      <label class="c-field__label" for="budget">Monthly budget</label>
+      <div class="c-input-group">
+        <span class="c-input-group__addon">$</span>
+        <input id="budget" class="c-field__control" type="number" value="2400" />
+      </div>
+      <span class="c-field__hint">Prefix and number input share one focus ring.</span>
+    </div>
+
+    <div class="c-field">
+      <label class="c-field__label" for="invite">Invite teammate</label>
+      <div class="c-input-group">
+        <input id="invite" class="c-field__control" type="email" placeholder="teammate@example.com" />
+        <button class="c-input-group__action" type="button">Send</button>
+      </div>
+      <span class="c-field__hint">Action groups use explicit labels, not wrapper labels.</span>
+    </div>
+  </div>
+
+  <h2>States</h2>
+  <div class="demo field-grid">
     <label class="c-field">
       <span class="c-field__label">Email</span>
       <input class="c-field__control" type="email" placeholder="you@example.com" />
-      <span class="c-field__hint">Focus me to see the glow.</span>
+      <span class="c-field__hint">Focus me to see the accent ring.</span>
     </label>
-  </div>
 
-  <h2>Invalid state</h2>
-  <p>Type something invalid then tab away — <code>:user-invalid</code> fires on blur, so an empty required field doesn't scream on load.</p>
-  <div class="demo">
     <label class="c-field">
       <span class="c-field__label">Workspace URL</span>
       <input class="c-field__control" type="url" required placeholder="https://" />
-      <span class="c-field__hint">Must be a valid https:// URL.</span>
+      <span class="c-field__hint">Type invalid text and blur to trigger validation.</span>
     </label>
-  </div>
 
-  <h2>Disabled</h2>
-  <div class="demo">
+    <div class="c-field" data-preview-aria-invalid>
+      <label class="c-field__label" for="server-email">Server validation</label>
+      <input
+        id="server-email"
+        class="c-field__control"
+        type="email"
+        value="already-used@example.com"
+        aria-invalid="true"
+        aria-describedby="server-email-error"
+      />
+      <span class="c-field__hint" id="server-email-error" role="alert">That email is already invited.</span>
+    </div>
+
+    <div class="c-field">
+      <label class="c-field__label" for="server-slug">Grouped server validation</label>
+      <div class="c-input-group" data-preview-group-invalid>
+        <input
+          id="server-slug"
+          class="c-field__control"
+          value="acme ops"
+          aria-invalid="true"
+          aria-describedby="server-slug-error"
+        />
+        <span class="c-input-group__addon">.porchlight.app</span>
+      </div>
+      <span class="c-field__hint" id="server-slug-error" role="alert">Use lowercase letters, numbers, and hyphens.</span>
+    </div>
+
     <label class="c-field">
       <span class="c-field__label">Read-only key</span>
-      <input class="c-field__control" value="pk_live_••••" disabled />
-      <span class="c-field__hint">Copied automatically on focus.</span>
+      <input class="c-field__control" value="pk_live_••••" readonly />
+      <span class="c-field__hint">Read-only values can still be copied.</span>
     </label>
-  </div>
 
-  <h2>Checkboxes &amp; radios</h2>
-  <p>
-    Native checkbox/radio/range/color inputs inherit the brand accent
-    automatically (set in the base layer) — no custom widgets, no JS. Pair them
-    with a <code>.choice-group</code> for accessible, aligned lists.
-  </p>
-  <div class="demo choice-grid">
-    <fieldset class="choice-group">
-      <legend class="choice-group__legend">Notifications</legend>
-      <label class="choice">
-        <input type="checkbox" checked />
-        <span>Send receipts</span>
-      </label>
-      <label class="choice">
-        <input type="checkbox" checked />
-        <span>Weekly summary</span>
-      </label>
-      <label class="choice">
-        <input type="checkbox" />
-        <span>Product updates</span>
-      </label>
-    </fieldset>
-    <fieldset class="choice-group">
-      <legend class="choice-group__legend">Billing plan</legend>
-      <label class="choice">
-        <input type="radio" name="plan" checked />
-        <span>Monthly</span>
-      </label>
-      <label class="choice">
-        <input type="radio" name="plan" />
-        <span>Annual — save 20%</span>
-      </label>
-    </fieldset>
-  </div>
-
-  <h2>Density</h2>
-  <div class="demo" data-density="compact">
     <label class="c-field">
-      <span class="c-field__label">compact</span>
-      <input class="c-field__control" placeholder="compact density" />
+      <span class="c-field__label">Disabled key</span>
+      <input class="c-field__control" value="pk_live_••••" disabled />
+      <span class="c-field__hint">Disabled controls are muted and skipped.</span>
     </label>
   </div>
 </BaseLayout>
@@ -100,46 +163,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: var(--pl-color-surface);
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--pl-space-3);
+    display: grid;
+    gap: var(--pl-space-4);
   }
 
-  /* Choice groups (checkbox/radio lists) — a common SaaS settings pattern.
-     Native inputs carry accent-color from the base layer; this just aligns. */
-  .choice-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    gap: var(--pl-space-5);
+  .field-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
   }
-  .choice-group {
-    margin: 0;
-    padding: 0;
-    border: 0;
+
+  .toolbar-demo {
     display: flex;
-    flex-direction: column;
-    gap: var(--pl-space-2);
+    flex-wrap: wrap;
+    align-items: end;
   }
-  .choice-group__legend {
-    padding: 0;
-    margin-block-end: var(--pl-space-1);
-    font-size: var(--pl-text-sm);
-    font-weight: 600;
-    color: var(--pl-color-text-muted);
-  }
-  .choice {
-    display: flex;
-    align-items: center;
-    gap: var(--pl-space-2);
-    cursor: pointer;
-  }
-  .choice input {
-    inline-size: 1.0625rem;
-    block-size: 1.0625rem;
-    margin: 0;
-    /* accent-color comes from the base layer (:root). */
-  }
-  .choice:hover span {
-    color: var(--pl-color-accent);
+
+  .toolbar-demo .c-field {
+    flex: 1 1 18rem;
   }
 </style>

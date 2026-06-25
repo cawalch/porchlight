@@ -134,7 +134,7 @@ const activity = [
         <div class="cases-header">
           <div>
             <h1>Cases</h1>
-            <p class="u-muted">{cases.length} cases · {cases.filter(c => c.status === 'urgent').length} urgent</p>
+            <p class="u-muted">{cases.length} cases · {cases.filter(c => c.priority === 'urgent').length} urgent</p>
           </div>
           <div class="l-cluster">
             <div class="c-segmented" role="radiogroup" aria-label="View mode">
@@ -202,7 +202,7 @@ const activity = [
               </thead>
               <tbody>
                 {cases.map((c, i) => (
-                  <tr aria-selected={i === 0 ? 'true' : undefined} popovertarget="case-detail" style="cursor:pointer;">
+                  <tr aria-selected={i === 0 ? 'true' : undefined} data-popover-target="case-detail" style="cursor:pointer;">
                     <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`} onclick="event.stopPropagation()"/></td>
                     <td class="c-table__sticky-col"><code style="font-size:var(--pl-text-xs);">{c.id}</code></td>
                     <td><strong style="font-weight:var(--pl-font-weight-medium);">{c.title}</strong></td>

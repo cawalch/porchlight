@@ -1,0 +1,262 @@
+/*
+ * Porchlight  -  form component
+ * ===========================================================================
+ * SaaS form composition helpers built on native controls. These classes do not
+ * replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>,
+ * <input>, <select>, and <textarea>; Porchlight only handles layout and chrome.
+ */
+@layer porchlight.components {
+  @scope (.c-form) {
+    :scope {
+      --c-form-gap: var(--pl-space-5);
+      --c-form-section-gap: var(--pl-space-4);
+      --c-form-grid-min: 16rem;
+      --c-form-actions-gap: var(--pl-space-2);
+
+      display: grid;
+      gap: var(--c-form-gap);
+      inline-size: 100%;
+    }
+
+    .c-form__section {
+      display: grid;
+      gap: var(--c-form-section-gap);
+    }
+
+    .c-form__section + .c-form__section {
+      padding-block-start: var(--pl-space-5);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+
+    .c-form__header {
+      display: grid;
+      gap: var(--pl-space-1);
+      max-inline-size: 42rem;
+    }
+
+    .c-form__header > :where(h2, h3, p) {
+      margin: 0;
+    }
+
+    .c-form__header > :where(p) {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .c-form__body {
+      display: grid;
+      gap: var(--c-form-section-gap);
+    }
+
+    .c-form__grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, var(--c-form-grid-min)), 1fr)
+      );
+      gap: var(--pl-space-4);
+      align-items: start;
+    }
+
+    .c-form__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-3);
+      align-items: end;
+    }
+
+    .c-form__row > * {
+      flex: 1 1 var(--c-form-grid-min);
+    }
+
+    .c-form__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--c-form-actions-gap);
+      justify-content: flex-end;
+      align-items: center;
+      padding-block-start: var(--pl-space-4);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+  }
+
+  @scope (.c-choice-group) {
+    :scope {
+      --c-choice-gap: var(--pl-space-2);
+
+      min-inline-size: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .c-choice-group__legend {
+      padding: 0;
+      margin-block-end: var(--pl-space-2);
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-choice-list {
+      display: grid;
+      gap: var(--c-choice-gap);
+    }
+
+    .c-choice-list[data-layout="inline"] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-3);
+    }
+
+    .c-choice {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--pl-space-2);
+      align-items: start;
+      min-block-size: 1.5rem;
+      color: var(--pl-color-text);
+      cursor: pointer;
+    }
+
+    .c-choice__input {
+      inline-size: 1.125rem;
+      block-size: 1.125rem;
+      margin: 0.1875rem 0 0;
+      flex-shrink: 0;
+    }
+
+    .c-choice__label {
+      display: block;
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .c-choice__description {
+      display: block;
+      margin-block-start: var(--pl-space-1);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .c-choice:has(.c-choice__input:disabled) {
+      opacity: var(--pl-opacity-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  @scope (.c-input-group) {
+    :scope {
+      --c-input-group-border: var(--pl-color-border);
+      --c-input-group-bg: var(--pl-color-surface);
+      --c-input-group-addon-bg: var(--pl-color-surface-2);
+      --c-input-group-addon-size: var(--pl-control-block-size);
+
+      display: flex;
+      align-items: stretch;
+      inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      overflow: hidden;
+      border: var(--pl-control-border-width) solid var(--c-input-group-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--c-input-group-bg);
+      color: var(--pl-color-text);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-field__control {
+      min-inline-size: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .c-field__control:focus-visible {
+      box-shadow: none;
+    }
+
+    .c-input-group__addon,
+    .c-input-group__action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      min-inline-size: var(--c-input-group-addon-size);
+      padding-inline: var(--pl-space-3);
+      border: 0;
+      background: var(--c-input-group-addon-bg);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      white-space: nowrap;
+    }
+
+    .c-input-group__addon + .c-field__control,
+    .c-field__control + .c-input-group__addon,
+    .c-field__control + .c-input-group__action {
+      border-inline-start: 1px solid var(--pl-color-border);
+    }
+
+    .c-input-group__action {
+      cursor: pointer;
+      color: var(--pl-color-text);
+      font-weight: var(--pl-font-weight-medium);
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-input-group__action:hover {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      color: var(--pl-color-accent);
+    }
+
+    :scope:has(.c-field__control:focus-visible) {
+      border-color: var(--pl-focus-color);
+      box-shadow: 0 0 0 4px
+        color-mix(in oklab, var(--pl-focus-color), transparent var(--pl-focus-glow-opacity));
+    }
+
+    :scope:has(.c-field__control:is(:user-invalid, [aria-invalid="true"])) {
+      border-color: var(--pl-color-danger);
+      box-shadow: 0 0 0 4px
+        color-mix(in oklab, var(--pl-color-danger), transparent var(--pl-focus-glow-opacity));
+    }
+
+    :scope:has(.c-field__control:disabled) {
+      opacity: var(--pl-opacity-disabled);
+      cursor: not-allowed;
+    }
+
+    :scope:has(.c-field__control:disabled) :where(.c-field__control, .c-input-group__action) {
+      cursor: not-allowed;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-input-group) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-input-group__addon, .c-input-group__action) {
+      border-color: ButtonBorder;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+  }
+
+  @media (width < 40rem) {
+    :where(.c-form__actions) {
+      justify-content: stretch;
+    }
+
+    :where(.c-form__actions > *) {
+      flex: 1 1 auto;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 ---
 title: Field
-description: A labeled form control wrapping native inputs  -  label, control, and hint, with focus/invalid/disabled driven by native pseudos.
+description: A labeled native form control with stacked and inline layouts, hints, validation, and input-group composition.
 status: stable
 since: 0.1.0
 ---
@@ -9,15 +9,14 @@ import FieldPreview from "../../components/FieldPreview.astro";
 
 # Field
 
-The `.c-field` is a labeled form control. It wraps a **native** `<input>`,
-`<select>`, or `<textarea>` (never a custom widget), so you inherit all native
-behavior: constraint validation, autofill, IME, spellcheck, the works.
+The `.c-field` is a labeled form control. It pairs a visible label with a
+**native** `<input>`, `<select>`, or `<textarea>` so you inherit constraint
+validation, autofill, IME, spellcheck, and platform conventions.
 
-State is driven entirely by native pseudos and reflected onto the border and
-hint - no class toggles, no JavaScript. (The hint's invalid color still uses
-`:has()` on the wrapper; the focus/invalid borders target the control
-directly, outside `@scope`, because live-state pseudos inside `@scope` did not
-reliably apply to the focused control.)
+State is driven by native pseudos and ARIA, then reflected onto the control and
+hint - no class toggles, no JavaScript. Use the wrapper `<label>` form for
+simple fields; use `for`/`id` when the field contains grouped chrome or an
+action button.
 
 <FieldPreview />
 
@@ -31,14 +30,109 @@ reliably apply to the focused control.)
 </label>
 ```
 
+Use an explicit label when the field contains an input group:
+
+```html
+<div class="c-field">
+  <label class="c-field__label" for="workspace-slug">Workspace URL</label>
+  <div class="c-input-group">
+    <input id="workspace-slug" class="c-field__control" placeholder="acme-ops" />
+    <span class="c-input-group__addon">.porchlight.app</span>
+  </div>
+  <span class="c-field__hint">Use lowercase letters, numbers, and hyphens.</span>
+</div>
+```
+
 ## Class contract
 
-| Selector            | Role                                                              |
-| ------------------- | ----------------------------------------------------------------- |
-| `.c-field`          | The wrapper `<label>`. Establishes the label↔control association. |
-| `.c-field__label`   | The visible label text.                                           |
-| `.c-field__control` | The native input/select/textarea.                                 |
-| `.c-field__hint`    | Helper / error text below the control.                            |
+| Selector            | Role                                                               |
+| ------------------- | ------------------------------------------------------------------ |
+| `.c-field`          | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
+| `.c-field--inline`  | Two-column label/control layout that stacks on narrow viewports.    |
+| `.c-field__label`   | The visible label text.                                            |
+| `.c-field__control` | The native input/select/textarea.                                  |
+| `.c-field__hint`    | Helper or error text below the control.                            |
+
+## Common Patterns
+
+### Stacked field
+
+Use the default stacked layout for most create/edit forms, settings pages, and
+dialog forms.
+
+```html
+<label class="c-field">
+  <span class="c-field__label">Billing email</span>
+  <input class="c-field__control" type="email" placeholder="ops@example.com" />
+  <span class="c-field__hint">Invoices and receipts are sent here.</span>
+</label>
+```
+
+### Inline field
+
+Use `.c-field--inline` when labels should scan in a vertical gutter, such as
+admin metadata forms or dense settings panels.
+
+```html
+<label class="c-field c-field--inline">
+  <span class="c-field__label">Region</span>
+  <select class="c-field__control">
+    <option>US Central</option>
+    <option>EU West</option>
+  </select>
+  <span class="c-field__hint">Controls default data residency.</span>
+</label>
+```
+
+### Hidden label search
+
+Search boxes in toolbars still need a label. Keep it visually hidden and use the
+native `type="search"`.
+
+```html
+<label class="c-field c-field--inline">
+  <span class="u-visually-hidden">Search accounts</span>
+  <input class="c-field__control" type="search" placeholder="Search accounts..." />
+</label>
+```
+
+### HTML5 validation
+
+Use native constraints first: `required`, `type`, `minlength`, `pattern`,
+`min`, `max`, and friends. Porchlight styles `:user-invalid`, so fields do not
+show as invalid until the browser considers the user to have interacted.
+
+```html
+<label class="c-field">
+  <span class="c-field__label">Workspace URL</span>
+  <input class="c-field__control" type="url" required placeholder="https://" />
+  <span class="c-field__hint">Must be a valid URL.</span>
+</label>
+```
+
+### Server or framework validation
+
+For errors returned by a server, htmx swap, Alpine state, or any other frontend
+layer, set `aria-invalid="true"` on the native control and connect the message
+with `aria-describedby`. Porchlight treats that state the same as
+`:user-invalid`.
+
+```html
+<div class="c-field">
+  <label class="c-field__label" for="invite-email">Invite email</label>
+  <input
+    id="invite-email"
+    class="c-field__control"
+    type="email"
+    value="already-used@example.com"
+    aria-invalid="true"
+    aria-describedby="invite-email-error"
+  />
+  <span class="c-field__hint" id="invite-email-error" role="alert">
+    That email is already invited.
+  </span>
+</div>
+```
 
 ## Tokens consumed
 
@@ -54,33 +148,40 @@ reliably apply to the focused control.)
 | `--c-field-border` | `--pl-color-border`  | Control border; overridden on focus/invalid. |
 | `--c-field-bg`     | `--pl-color-surface` | Control fill.                                |
 | `--c-field-fg`     | `--pl-color-text`    | Control text.                                |
+| `--c-field-inline-label-size` | `10rem` | Label column size for `.c-field--inline`. |
 
 ## States
 
 | State       | Selector                   | Behavior                                   |
 | ----------- | -------------------------- | ------------------------------------------ |
 | focus       | `:focus-visible` (control) | crisp accent ring + soft glow (box-shadow) |
-| invalid     | `:user-invalid` (control)  | danger ring + glow, hint → danger-text     |
+| invalid     | `:user-invalid`, `[aria-invalid="true"]` | danger ring + glow, hint → danger-text |
 | disabled    | `:disabled` (control)      | field muted (0.55 opacity), not-allowed    |
 | placeholder | `::placeholder`            | text-muted                                 |
 
 ## Accessibility
 
 - **Label association:** the wrapper is a `<label>`, so clicking the label
-  focuses the control (the logical equivalent of `for`/`id` with no extra DOM).
+  focuses the control. When the field contains an action button or multiple
+  focusable elements, use `<label for>` and a matching control `id` instead.
 - **Focus:** the control draws a **crisp 2px accent ring with a soft blurred
   glow** (a layered `box-shadow`). The border is intentionally NOT recolored -
   recoloring it alongside a ring produced a “double blue stroke” (solid border
   - translucent ring). The ring is the single focus indicator; the border
     stays as the neutral field edge. This reads as a modern SaaS input rather
     than a browser default outline.
-- **Invalidity:** uses `:user-invalid` (Baseline 2024), which respects
-  `placeholder-shown` and only fires after interaction/blur - so an empty
-  required field doesn't error on load. Never rely on color alone: the hint
-  text color also changes to `danger-text`.
+- **Invalidity:** uses `:user-invalid` (Baseline 2024) for HTML5 constraints and
+  `[aria-invalid="true"]` for server/framework errors. Never rely on color
+  alone: the hint text also changes to `danger-text`.
 - **Error text association:** for screen-reader users, add `aria-describedby`
   on the control pointing at the hint's `id` (the wrapper-label association
   covers the label; the hint needs the explicit link).
+- **Framework agnostic:** htmx, Alpine, React, server-rendered HTML, and plain
+  forms all use the same DOM contract: native controls, constraints,
+  `aria-invalid`, and `aria-describedby`.
+- **Read-only vs disabled:** use `readonly` when the value can be selected or
+  copied, and `disabled` when the control is unavailable and should be skipped
+  by form submission.
 
 ## Theme, density, RTL, motion
 

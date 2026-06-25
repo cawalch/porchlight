@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Form · Porchlight">
+  <h1>Form</h1>
+  <p>
+    SaaS form composition patterns: settings sections, responsive grids,
+    filter rows, billing inputs, choice groups, dense admin metadata, and
+    action rows.
+  </p>
+
+  <h2>Account settings</h2>
+  <form class="c-form demo-form" data-preview-form-grid>
+    <section class="c-form__section">
+      <div class="c-form__header">
+        <h3>Workspace</h3>
+        <p>Identity, URL, and regional defaults for this account.</p>
+      </div>
+      <div class="c-form__body">
+        <div class="c-form__grid">
+          <label class="c-field">
+            <span class="c-field__label">Workspace name</span>
+            <input class="c-field__control" value="Acme Ops" />
+            <span class="c-field__hint">Visible to everyone in the workspace.</span>
+          </label>
+
+          <div class="c-field">
+            <label class="c-field__label" for="settings-slug">Workspace URL</label>
+            <div class="c-input-group">
+              <input id="settings-slug" class="c-field__control" value="acme-ops" />
+              <span class="c-input-group__addon">.porchlight.app</span>
+            </div>
+            <span class="c-field__hint">Used in invite links and bookmarks.</span>
+          </div>
+
+          <label class="c-field">
+            <span class="c-field__label">Default timezone</span>
+            <select class="c-field__control">
+              <option>America/Chicago</option>
+              <option>America/New_York</option>
+              <option>Europe/London</option>
+            </select>
+          </label>
+
+          <label class="c-field">
+            <span class="c-field__label">Support email</span>
+            <input class="c-field__control" type="email" value="support@acme.example" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="c-form__section">
+      <div class="c-form__header">
+        <h3>Notifications</h3>
+        <p>Native checkboxes with descriptions and disabled states.</p>
+      </div>
+      <div class="c-form__body">
+        <fieldset class="c-choice-group" data-preview-choice-group>
+          <legend class="c-choice-group__legend">Email updates</legend>
+          <div class="c-choice-list">
+            <label class="c-choice">
+              <input class="c-choice__input" type="checkbox" checked />
+              <span>
+                <span class="c-choice__label">Weekly summary</span>
+                <span class="c-choice__description">Usage, billing, and team activity every Monday.</span>
+              </span>
+            </label>
+            <label class="c-choice">
+              <input class="c-choice__input" type="checkbox" checked />
+              <span>
+                <span class="c-choice__label">Security alerts</span>
+                <span class="c-choice__description">Immediate notifications for risky account events.</span>
+              </span>
+            </label>
+            <label class="c-choice">
+              <input class="c-choice__input" type="checkbox" disabled />
+              <span>
+                <span class="c-choice__label">Enterprise digest</span>
+                <span class="c-choice__description">Available on Enterprise plans.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <div class="c-form__actions">
+      <button class="c-button" type="button" data-variant="ghost">Cancel</button>
+      <button class="c-button" type="submit" data-variant="primary">Save changes</button>
+    </div>
+  </form>
+
+  <h2>Billing setup</h2>
+  <form class="c-form demo-form">
+    <section class="c-form__section">
+      <div class="c-form__body">
+        <div class="c-form__grid">
+          <div class="c-field">
+            <label class="c-field__label" for="monthly-budget">Monthly budget</label>
+            <div class="c-input-group">
+              <span class="c-input-group__addon">$</span>
+              <input id="monthly-budget" class="c-field__control" type="number" value="2400" />
+              <span class="c-input-group__addon">USD</span>
+            </div>
+          </div>
+
+          <div class="c-field">
+            <label class="c-field__label" for="seats">Seats</label>
+            <div class="c-input-group">
+              <input id="seats" class="c-field__control" type="number" value="48" />
+              <span class="c-input-group__addon">users</span>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="c-choice-group">
+          <legend class="c-choice-group__legend">Billing cadence</legend>
+          <div class="c-choice-list" data-layout="inline">
+            <label class="c-choice">
+              <input class="c-choice__input" type="radio" name="cadence" />
+              <span class="c-choice__label">Monthly</span>
+            </label>
+            <label class="c-choice">
+              <input class="c-choice__input" type="radio" name="cadence" checked />
+              <span class="c-choice__label">Annual</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+  </form>
+
+  <h2>Filter row</h2>
+  <form class="c-form demo-form" data-density="compact">
+    <div class="c-form__row">
+      <label class="c-field">
+        <span class="u-visually-hidden">Search cases</span>
+        <input class="c-field__control" type="search" placeholder="Search cases..." />
+      </label>
+      <label class="c-field">
+        <span class="c-field__label">Status</span>
+        <select class="c-field__control">
+          <option>Open</option>
+          <option>Escalated</option>
+          <option>Closed</option>
+        </select>
+      </label>
+      <label class="c-field">
+        <span class="c-field__label">Owner</span>
+        <select class="c-field__control">
+          <option>Any owner</option>
+          <option>Mine</option>
+        </select>
+      </label>
+      <button class="c-button" type="button" data-variant="primary">Apply</button>
+    </div>
+  </form>
+
+  <h2>Dense admin metadata</h2>
+  <form class="c-form demo-form dense-form" data-density="compact">
+    <section class="c-form__section">
+      <div class="c-form__body">
+        <label class="c-field c-field--inline">
+          <span class="c-field__label">Customer ID</span>
+          <input class="c-field__control" value="cus_9N3K42" readonly />
+          <span class="c-field__hint">Read-only identifiers stay selectable.</span>
+        </label>
+        <label class="c-field c-field--inline">
+          <span class="c-field__label">Data region</span>
+          <select class="c-field__control">
+            <option>US Central</option>
+            <option>EU West</option>
+          </select>
+        </label>
+        <label class="c-field c-field--inline">
+          <span class="c-field__label">Risk threshold</span>
+          <input class="c-field__control" type="number" value="72" />
+          <span class="c-field__hint">Higher values reduce review volume.</span>
+        </label>
+      </div>
+    </section>
+  </form>
+</BaseLayout>
+
+<style>
+  .demo-form {
+    padding: var(--pl-space-5);
+    margin-block-end: var(--pl-space-5);
+    background: var(--pl-color-surface);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+
+  .dense-form {
+    max-inline-size: 46rem;
+  }
+</style>

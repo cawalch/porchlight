@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Icon from '../../components/Icon.astro';
 
 // Kitchen-sink for .c-tabs: every state, with counts, disabled, and density.
 const tabs = [
@@ -29,7 +28,7 @@ const tabs = [
           class="c-tabs__tab"
           role="tab"
           aria-selected={t.selected ? 'true' : 'false'}
-          disabled={t.disabled}
+          disabled={'disabled' in t ? t.disabled : undefined}
           id={`tab-${t.label.toLowerCase()}`}
           aria-controls={`panel-${t.label.toLowerCase()}`}
           tabindex={t.selected ? 0 : -1}

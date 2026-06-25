@@ -72,7 +72,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <script>
     // Docs-only: toggle visibility to animate enter/exit.
     document.getElementById('toast-toggle')?.addEventListener('change', (e) => {
-      const visible = e.target.checked;
+      const visible = e.target instanceof HTMLInputElement && e.target.checked;
       document.querySelectorAll('[data-toast="demo"]').forEach((t) => {
         if (visible) t.setAttribute('data-visible', '');
         else t.removeAttribute('data-visible');
