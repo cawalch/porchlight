@@ -11,6 +11,10 @@ The `.c-nav` renders a vertical navigation list for sidebars. Icon + label
 items with active state via `aria-current="page"`. Collapsible sub-sections
 via native `<details>`. Icons-only variant for collapsed sidebars.
 
+It also includes compact sidebar footer patterns for SaaS apps: metadata such
+as account identity, workspace, tenant, environment, or session status, plus
+small full-width actions that can be rendered as either links or buttons.
+
 ## Semantic HTML
 
 ```html
@@ -32,6 +36,47 @@ via native `<details>`. Icons-only variant for collapsed sidebars.
 </nav>
 ```
 
+## Footer metadata and actions
+
+Use `.c-nav__footer` at the end of a sidebar nav for compact metadata. The
+metadata block keeps long labels truncated, and `.c-nav__action` provides a
+full-width action surface for links or buttons without the weight of a regular
+`.c-button`.
+
+```html
+<nav class="c-nav" aria-label="Main">
+  ...
+  <div class="c-nav__footer">
+    <div class="c-nav__meta">
+      <span class="c-nav__meta-icon">
+        <svg aria-hidden="true">...</svg>
+      </span>
+      <span class="c-nav__meta-body">
+        <span class="c-nav__meta-label">avery.long.email@example.com</span>
+        <span class="c-nav__meta-description">
+          <span class="c-badge" data-tone="success">Admin</span>
+          Online
+        </span>
+      </span>
+    </div>
+    <div class="c-nav__actions">
+      <a class="c-nav__action" href="/switch-user">
+        <svg class="c-nav__action-icon" aria-hidden="true">...</svg>
+        <span class="c-nav__action-label">Switch user</span>
+      </a>
+      <button class="c-nav__action" type="button">
+        <svg class="c-nav__action-icon" aria-hidden="true">...</svg>
+        <span class="c-nav__action-label">Sign out</span>
+      </button>
+    </div>
+  </div>
+</nav>
+```
+
+The footer metadata selectors are intentionally generic. Use them for account
+or session state when that is your product language, but the public API does
+not require the metadata to represent a user account.
+
 ## Icons-only (collapsed sidebar)
 
 ```html
@@ -52,8 +97,18 @@ via native `<details>`. Icons-only variant for collapsed sidebars.
 | `.c-nav__icon`            | Leading icon.                    |
 | `.c-nav__label`           | Text label.                      |
 | `.c-nav__badge`           | Trailing badge (count).          |
+| `.c-nav__footer`          | Bottom metadata/action region.   |
+| `.c-nav__meta`            | Compact metadata block.          |
+| `.c-nav__meta-icon`       | Metadata icon/avatar slot.       |
+| `.c-nav__meta-body`       | Metadata text stack.             |
+| `.c-nav__meta-label`      | Truncated metadata label.        |
+| `.c-nav__meta-description` | Secondary metadata row.          |
+| `.c-nav__actions`         | Compact action stack.            |
+| `.c-nav__action`          | Small full-width link/button.    |
+| `.c-nav__action-icon`     | Action icon slot.                |
+| `.c-nav__action-label`    | Truncated action label.          |
 | `.c-nav__section`         | Collapsible `<details>` group.   |
 | `.c-nav__section-trigger` | The `<summary>` (click target).  |
 | `.c-nav__chevron`         | Expand/collapse arrow.           |
-| `[aria-current="page"]`   | Active item (accent background). |
+| `[aria-current]`          | Current item, except `"false"`.  |
 | `[data-variant="icons"]`  | Icons-only mode (hides labels).  |

@@ -25,12 +25,31 @@
  *
  * The icon rail variant: when the sidebar is collapsed (icon-only mode),
  * [data-variant="icons"] hides labels and centers icons.
+ *
+ * Sidebar footer metadata and compact actions:
+ *   <div class="c-nav__footer">
+ *     <div class="c-nav__meta">
+ *       <svg class="c-nav__meta-icon">...</svg>
+ *       <span class="c-nav__meta-body">
+ *         <span class="c-nav__meta-label">user@example.com</span>
+ *         <span class="c-nav__meta-description">Admin</span>
+ *       </span>
+ *     </div>
+ *     <div class="c-nav__actions">
+ *       <button class="c-nav__action">
+ *         <svg class="c-nav__action-icon">...</svg>
+ *         <span class="c-nav__action-label">Sign out</span>
+ *       </button>
+ *     </div>
+ *   </div>
  */
 @layer porchlight.components {
   @scope (.c-nav) {
     :scope {
       --c-nav-gap: var(--pl-space-1);
       --c-nav-pad: var(--pl-space-2);
+      --c-nav-meta-icon-size: 2rem;
+      --c-nav-action-block-size: 2rem;
 
       display: flex;
       flex-direction: column;
@@ -68,8 +87,7 @@
     /* Active item  -  left-bar accent pattern: a 3px inset shadow on the
        leading edge reads as a rail marker, strongly signalling "you are here".
        Asymmetric border-radius (0 on start side) anchors the bar to the edge. */
-    .c-nav__item[aria-current="page"],
-    .c-nav__item[aria-current="true"] {
+    .c-nav__item[aria-current]:not([aria-current="false"]) {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
@@ -103,6 +121,141 @@
     /* Badge in a nav item (e.g. unread count). */
     .c-nav__badge {
       margin-inline-start: auto;
+    }
+
+    .c-nav__footer {
+      display: grid;
+      gap: var(--pl-space-2);
+      margin-block-start: auto;
+      padding-block-start: var(--pl-space-2);
+      border-block-start: 1px solid var(--pl-color-border);
+      min-inline-size: 0;
+    }
+
+    .c-nav__meta {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding: var(--pl-space-2);
+      border: 1px solid color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 35%
+      );
+      border-radius: var(--pl-radius-md);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-surface-2),
+        transparent 35%
+      );
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__meta-icon {
+      inline-size: var(--c-nav-meta-icon-size);
+      block-size: var(--c-nav-meta-icon-size);
+      display: inline-grid;
+      place-items: center;
+      flex-shrink: 0;
+      border-radius: var(--pl-radius-md);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 88%
+      );
+      color: var(--pl-color-accent);
+    }
+
+    .c-nav__meta-icon :where(svg),
+    svg.c-nav__meta-icon {
+      inline-size: var(--c-nav-meta-icon-size);
+      block-size: var(--c-nav-meta-icon-size);
+    }
+
+    .c-nav__meta-icon :where(svg) {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+
+    .c-nav__meta-body {
+      display: grid;
+      gap: 0.125rem;
+      min-inline-size: 0;
+    }
+
+    .c-nav__meta-label {
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__meta-description {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      min-inline-size: 0;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+    }
+
+    .c-nav__actions {
+      display: grid;
+      gap: var(--pl-space-1);
+    }
+
+    .c-nav__action {
+      appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: var(--pl-space-2);
+      inline-size: 100%;
+      min-block-size: var(--c-nav-action-block-size);
+      padding: var(--pl-space-1) var(--pl-space-2);
+      border: 0;
+      border-radius: var(--pl-radius-md);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+      line-height: var(--pl-line-height-tight);
+      text-align: start;
+      text-decoration: none;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-nav__action:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-nav__action:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-nav__action-icon {
+      inline-size: 1rem;
+      block-size: 1rem;
+      flex-shrink: 0;
+      color: inherit;
+    }
+
+    .c-nav__action-label {
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     /* Collapsible section. */
@@ -160,25 +313,34 @@
 
     /* Icons-only variant (collapsed sidebar). */
     :scope[data-variant="icons"] .c-nav__label,
+    :scope[data-variant="icons"] .c-nav__action-label,
+    :scope[data-variant="icons"] .c-nav__meta-body,
     :scope[data-variant="icons"] .c-nav__chevron,
     :scope[data-variant="icons"] .c-nav__badge {
       display: none;
     }
 
     :scope[data-variant="icons"] .c-nav__item,
-    :scope[data-variant="icons"] .c-nav__section-trigger {
+    :scope[data-variant="icons"] .c-nav__section-trigger,
+    :scope[data-variant="icons"] .c-nav__action {
       justify-content: center;
       padding: var(--pl-space-2);
+    }
+
+    :scope[data-variant="icons"] .c-nav__meta {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding: var(--pl-space-1);
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-nav__item[aria-current="page"]) {
+    :where(.c-nav__item[aria-current]:not([aria-current="false"])) {
       background: Highlight;
       color: HighlightText;
     }
 
-    :where(.c-nav__item:focus-visible) {
+    :where(.c-nav__item:focus-visible, .c-nav__action:focus-visible) {
       outline-color: Highlight;
     }
   }

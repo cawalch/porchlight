@@ -12,6 +12,7 @@ import { compositeOver, deltaL } from "./lib/color";
  */
 
 const HOVER_DL = 0.02; // hover wash must shift ≥2% lightness (rows are subtle)
+const SELECTED_DL = 0.03; // selected rows should be more prominent than hover
 
 test("table row hover is perceptibly distinct", async ({ page }) => {
   await page.goto("./preview/data-table");
@@ -41,6 +42,65 @@ test("table row hover is perceptibly distinct", async ({ page }) => {
     dl,
     `row hover must differ from default by ≥ ${HOVER_DL}`,
   ).toBeGreaterThanOrEqual(HOVER_DL);
+});
+
+test("table selected row is perceptibly distinct and carries an accent bar", async ({
+  page,
+}) => {
+  await page.goto("./preview/data-table");
+  const states = await page.evaluate(() => {
+    const wrap = document.querySelector(".c-table-wrap") as HTMLElement;
+    const selected = document.querySelector(
+      ".c-table tbody tr[aria-selected='true']",
+    ) as HTMLElement;
+    const unselected = document.querySelector(
+      ".c-table tbody tr:not([aria-selected='true']):not(.c-table__detail)",
+    ) as HTMLElement;
+    if (!wrap || !selected || !unselected) return null;
+    const selectedStyle = getComputedStyle(selected);
+    return {
+      accentBar: selectedStyle.boxShadow,
+      selectedBg: selectedStyle.backgroundColor,
+      surface: getComputedStyle(wrap).backgroundColor,
+      unselectedBg: getComputedStyle(unselected).backgroundColor,
+    };
+  });
+
+  console.log("[table-selected]", states);
+
+  expect(states).not.toBeNull();
+  const dl = deltaL(
+    compositeOver(states!.selectedBg, states!.surface),
+    compositeOver(states!.unselectedBg, states!.surface),
+  );
+  expect(
+    dl,
+    `selected row must differ from unselected by ≥ ${SELECTED_DL}`,
+  ).toBeGreaterThanOrEqual(SELECTED_DL);
+  expect(states!.accentBar).toContain("inset");
+});
+
+test("selected sticky column stays opaque while horizontally scrolled", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("./preview/data-table");
+  const state = await page.evaluate(() => {
+    const wrap = document.querySelector(".c-table-wrap") as HTMLElement;
+    wrap.scrollLeft = 260;
+    const sticky = document.querySelector(
+      ".c-table tbody tr[aria-selected='true'] .c-table__sticky-col",
+    ) as HTMLElement;
+    return {
+      background: getComputedStyle(sticky).backgroundColor,
+      scrollLeft: wrap.scrollLeft,
+    };
+  });
+
+  expect(state.scrollLeft).toBeGreaterThan(0);
+  expect(state.background).not.toContain("/");
+  expect(state.background).not.toMatch(/rgba?\([^)]*,\s*0?\.\d+\)/);
+  expect(state.background).not.toBe("transparent");
 });
 
 test("sticky header has an opaque background", async ({ page }) => {

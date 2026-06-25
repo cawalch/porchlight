@@ -917,6 +917,11 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-nav[data-variant='icons']")).toBeVisible();
     // Child items exist.
     await expect(page.locator(".c-nav__item--child").first()).toBeVisible();
+    // Generic footer metadata and compact nav actions exist.
+    await expect(page.locator(".c-nav__meta").first()).toBeVisible();
+    await expect(page.locator(".c-nav__action").first()).toBeVisible();
+    await expect(page.locator("a.c-nav__action").first()).toBeVisible();
+    await expect(page.locator("button.c-nav__action").first()).toBeVisible();
   });
 
   test("app-dashboard renders app shell with nav, stats, and table", async ({

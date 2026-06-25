@@ -281,6 +281,60 @@ test("nav active item is visually distinct from inactive", async ({ page }) => {
   expect(states!.activeBg).not.toBe(states!.inactiveBg);
 });
 
+test("nav footer metadata actions stay compact and icon-aligned", async ({
+  page,
+}) => {
+  await page.goto("./preview/nav");
+
+  const metrics = await page.evaluate(() => {
+    const meta = document.querySelector(
+      "[data-preview-nav-meta]",
+    ) as HTMLElement;
+    const metaLabel = meta?.querySelector(
+      ".c-nav__meta-label",
+    ) as HTMLElement;
+    const actions = [...document.querySelectorAll("[data-preview-nav-action]")];
+    const collapsedActions = document.querySelector(
+      '.c-nav[data-variant="icons"] .c-nav__actions',
+    ) as HTMLElement;
+    const collapsedAction = collapsedActions?.querySelector(
+      ".c-nav__action",
+    ) as HTMLElement;
+    const icon = document.querySelector(".c-nav__action-icon") as HTMLElement;
+    if (!meta || !metaLabel || actions.length < 2 || !collapsedAction || !icon) {
+      return null;
+    }
+
+    return {
+      metaLabelClientWidth: metaLabel.clientWidth,
+      metaLabelScrollWidth: metaLabel.scrollWidth,
+      actionTags: actions.map((action) => action.tagName.toLowerCase()),
+      actionHeights: actions.map(
+        (action) => (action as HTMLElement).getBoundingClientRect().height,
+      ),
+      collapsedActionsDisplay: getComputedStyle(collapsedActions).display,
+      collapsedActionWidth: collapsedAction.getBoundingClientRect().width,
+      iconHeight: icon.getBoundingClientRect().height,
+      iconWidth: icon.getBoundingClientRect().width,
+    };
+  });
+
+  console.log("[nav-footer]", metrics);
+
+  expect(metrics).not.toBeNull();
+  expect(metrics!.actionTags).toEqual(["a", "button"]);
+  expect(metrics!.collapsedActionsDisplay).toBe("grid");
+  expect(metrics!.collapsedActionWidth).toBeGreaterThanOrEqual(32);
+  for (const height of metrics!.actionHeights) {
+    expect(height).toBeLessThanOrEqual(34);
+  }
+  expect(metrics!.iconWidth).toBeLessThanOrEqual(18);
+  expect(metrics!.iconHeight).toBeLessThanOrEqual(18);
+  expect(metrics!.metaLabelScrollWidth).toBeGreaterThan(
+    metrics!.metaLabelClientWidth,
+  );
+});
+
 /* ------------------------------------------------------------------
  * Segmented: checked segment must differ from unchecked.
  * ------------------------------------------------------------------ */
