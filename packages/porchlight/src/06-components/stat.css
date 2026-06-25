@@ -22,6 +22,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--pl-space-2);
+      container: c-stat / inline-size;
     }
 
     .c-stat__label {
@@ -41,6 +42,21 @@
       color: var(--pl-color-text);
       font-variant-numeric: tabular-nums;
       letter-spacing: -0.02em;
+    }
+
+    /* Scale the value by container width, not viewport width. A stat in a
+       dense 3-up grid needs a smaller number than the same stat in a full-
+       width hero tile, even at the same viewport size. */
+    @container c-stat (inline-size < 16rem) {
+      .c-stat__value {
+        font-size: 1.5rem;
+      }
+    }
+
+    @container c-stat (inline-size > 32rem) {
+      .c-stat__value {
+        font-size: clamp(2.25rem, 2rem + 1vi, 2.75rem);
+      }
     }
 
     /* Tone variants on the value  -  consistent with c-badge, c-alert,

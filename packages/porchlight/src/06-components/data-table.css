@@ -21,6 +21,12 @@
       --c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
       --c-table-min: 48rem;
 
+      /* Per-column minimum width hint. Set on individual <th> or <col>
+         elements (e.g. style="--c-table-col-min: 10rem") so the table
+         layout algorithm distributes space predictably without fighting
+         auto layout. */
+      --c-table-col-min: auto;
+
       /* Row height derives from the global control-block-size token so that
          body-level density (e.g. <body data-density="compact">) cascades to
          table rows automatically  -  previously these were disconnected and
@@ -95,10 +101,66 @@
       text-align: start;
       vertical-align: middle;
       white-space: nowrap;
-
-      /* Enforce consistent row height. min-block-size lets content expand
-         beyond this (e.g. multi-line cells) without truncation. */
       min-block-size: var(--c-table-row-min-block-size);
+    }
+
+    /* ---------------------------------------------------------------
+     * Cell content overflow modes
+     * ---------------------------------------------------------------
+     * Set [data-overflow] on .c-table-wrap for a table-wide default, or on
+     * an individual <td>/<th> for per-column control. Per-cell overrides
+     * the table-level setting.
+     *
+     *   (no attr)         nowrap — current behavior, fully backward-compatible
+     *   data-overflow="wrap"     — multi-line wrapping for description /
+     *                              comment / long-text columns
+     *   data-overflow="truncate" — single-line ellipsis for name / email /
+     *                              UUID columns with unpredictable lengths
+     *
+     * Cells with either mode get min-inline-size: 0 so they shrink within
+     * the table's grid instead of forcing it wider.
+     */
+    .c-table :where(th, td)[data-overflow="wrap"],
+    .c-table :where(th, td)[data-overflow="truncate"] {
+      min-inline-size: 0;
+    }
+
+    /* Table-wide wrap mode. */
+    :scope[data-overflow="wrap"] .c-table :where(td) {
+      white-space: normal;
+      text-wrap: pretty;
+      word-break: break-word;
+      min-inline-size: 0;
+    }
+
+    /* Table-wide truncate mode. */
+    :scope[data-overflow="truncate"] .c-table :where(td) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-inline-size: 20rem;
+      min-inline-size: 0;
+    }
+
+    /* Per-cell wrap (overrides table setting). */
+    .c-table :where(td)[data-overflow="wrap"] {
+      white-space: normal;
+      text-wrap: pretty;
+      word-break: break-word;
+    }
+
+    /* Per-cell truncate (overrides table setting). */
+    .c-table :where(td)[data-overflow="truncate"] {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-inline-size: 20rem;
+    }
+
+    /* Per-column min width: set --c-table-col-min on a <th>. */
+    .c-table th[style*="--c-table-col-min"],
+    .c-table :where(th, td)[style*="--c-table-col-min"] {
+      inline-size: var(--c-table-col-min);
+      min-inline-size: var(--c-table-col-min);
     }
 
     .c-table :where(td) {
@@ -120,12 +182,28 @@
       /* 1px (not 2px)  -  the surface-2/surface step does the visual separation;
          the border is a hairline accent, not structural weight. */
       border-block-end: 1px solid var(--pl-color-border);
+
+      /* Stable wrapping for multi-word headers: prevents a header label
+         from wrapping differently across breakpoints, which causes row
+         height jitter. Degrades gracefully in unsupported browsers. */
+      text-wrap: stable;
     }
 
     /* Tighten padding when the wrap is narrow. */
     @container c-table-wrap (inline-size < 40rem) {
       .c-table :where(th, td) {
         padding-inline: var(--pl-space-2);
+      }
+    }
+
+    /* Widen padding when the wrap is wide (desktop dashboards, full-width
+       tables in a spacious app shell). More breathing room between columns
+       reduces visual density at comfortable desktop widths. Skipped for
+       compact/dense modes so high-density tables stay tight regardless
+       of width. */
+    @container c-table-wrap (inline-size > 56rem) {
+      :scope:not([data-density="compact"], [data-density="dense"]) {
+        --c-table-cell-pad: var(--pl-space-3) var(--pl-space-5);
       }
     }
 

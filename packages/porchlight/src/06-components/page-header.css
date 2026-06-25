@@ -20,6 +20,7 @@
 @layer porchlight.components {
   @scope (.c-page-header) {
     :scope {
+      container: c-page-header / inline-size;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -33,6 +34,16 @@
       font-size: var(--pl-text-2xl);
       font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
+      text-wrap: balance;
+    }
+
+    /* Truncate title to a single line. Opt in via [data-truncate] on
+       .c-page-header or .c-page-header__title. */
+    :scope[data-truncate] .c-page-header__title,
+    .c-page-header__title[data-truncate] {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .c-page-header__subtitle {
@@ -55,6 +66,21 @@
       flex-wrap: wrap;
       gap: var(--pl-space-2);
       flex-shrink: 0;
+    }
+
+    /* Clean stacking when the header is narrow (e.g. inside a split pane or
+       sidebar). An element can't query its own container, so instead of
+       changing the parent's flex-direction we force each child to take a
+       full line — flex-basis: 100% wraps the actions onto a new row. */
+    @container c-page-header (inline-size <= 48rem) {
+      .c-page-header__heading,
+      .c-page-header__actions {
+        flex: 1 0 100%;
+      }
+
+      .c-page-header__actions {
+        justify-content: flex-start;
+      }
     }
   }
 }

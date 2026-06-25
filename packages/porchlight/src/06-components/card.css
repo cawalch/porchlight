@@ -112,8 +112,23 @@
       text-wrap: balance;
     }
 
+    /* Truncate title to a single line with ellipsis. Opt in via
+       [data-truncate] on .c-card or directly on .c-card__title. Without
+       it, the title wraps freely (with balance). */
+    :scope[data-truncate] .c-card__title,
+    .c-card__title[data-truncate] {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-inline-size: 0;
+    }
+
     .c-card__body {
       color: var(--pl-color-text-muted);
+
+      /* Prevent orphans in card descriptions / body text. Degrades
+         gracefully in browsers without text-wrap: pretty support. */
+      text-wrap: pretty;
     }
 
     .c-card__footer {
@@ -137,6 +152,14 @@
       .c-card__header {
         align-items: stretch;
         flex-direction: column;
+      }
+    }
+
+    /* Generous interior spacing on large tiles (wide dashboard cards,
+       hero panels). More padding at comfortable desktop widths. */
+    @container c-card (inline-size > 40rem) {
+      :scope {
+        --c-card-padding: var(--pl-space-6);
       }
     }
 
