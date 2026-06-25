@@ -208,7 +208,11 @@
     --pl-menu-row-min-block-size: 2.25rem;
     --pl-menu-row-padding-inline: var(--pl-space-3);
     --pl-menu-row-radius: var(--pl-radius-sm);
-    --pl-menu-row-hover-bg: var(--pl-color-surface-2);
+    --pl-menu-row-hover-bg: color-mix(
+      in oklab,
+      var(--pl-color-surface-2),
+      var(--pl-color-accent) 10%
+    );
     --pl-menu-row-icon-size: 1rem;
 
     /* Controls */

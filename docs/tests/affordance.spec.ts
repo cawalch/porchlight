@@ -15,6 +15,7 @@ import { alpha, compositeOver, deltaL } from "./lib/color";
 
 const STATE_DL = 0.03; // hover/pressed must shift ≥3% lightness from default
 const ALPHA_FLOOR = 0.12; // translucent state fills must be a clear wash
+const MENU_ROW_HOVER_DL = 0.02; // menu row hover must be visibly distinct
 
 const variants = ["primary", "secondary", "ghost"] as const;
 
@@ -213,6 +214,75 @@ test("chip tones are visually distinct", async ({ page }) => {
       deltaL(def, bg),
       `[${tone}] chip must differ from default by a visible step`,
     ).toBeGreaterThanOrEqual(0.02);
+  }
+});
+
+/* ------------------------------------------------------------------
+ * Menus: first/middle/last rows must all get a visible hover state.
+ * ------------------------------------------------------------------ */
+test("menu row hover applies to first, middle, and last options", async ({
+  page,
+}) => {
+  const cases = [
+    {
+      path: "./preview/split-button",
+      trigger: "[popovertarget='sb-2']",
+      menu: "#sb-2",
+      rows: "#sb-2 .c-split__option",
+    },
+    {
+      path: "./preview/dropdown",
+      trigger: "[popovertarget='dd-2']",
+      menu: "#dd-2",
+      rows: "#dd-2 .c-dropdown__option",
+    },
+    {
+      path: "./preview/popover-menu",
+      trigger: "[popovertarget='row-menu']",
+      menu: "#row-menu",
+      rows: "#row-menu .c-menu__item",
+    },
+  ] as const;
+
+  for (const fixture of cases) {
+    await page.goto(fixture.path);
+    await page.evaluate(() => {
+      document
+        .querySelectorAll('[aria-selected="true"]')
+        .forEach((el) => el.removeAttribute("aria-selected"));
+    });
+
+    await page.locator(fixture.trigger).click();
+    await expect(page.locator(fixture.menu)).toBeVisible();
+
+    const rows = page.locator(fixture.rows);
+    const count = await rows.count();
+    expect(count).toBeGreaterThanOrEqual(3);
+
+    const indexes = [0, 1, 2];
+    const defaultBgs = await rows.evaluateAll((items) =>
+      items.map((item) => getComputedStyle(item).backgroundColor),
+    );
+
+    for (const index of indexes) {
+      const row = rows.nth(index);
+      await row.hover();
+      const hover = await row.evaluate((el) => ({
+        active: el.matches(":hover"),
+        bg: getComputedStyle(el).backgroundColor,
+        text: el.textContent?.trim(),
+      }));
+      const dl = deltaL(defaultBgs[index], hover.bg);
+      console.log(
+        `[menu-hover] ${fixture.path} ${hover.text}: default=${defaultBgs[index]} hover=${hover.bg} ΔL=${dl.toFixed(4)}`,
+      );
+
+      expect(hover.active).toBe(true);
+      expect(
+        dl,
+        `${fixture.path} row ${index} hover must differ from rest state`,
+      ).toBeGreaterThanOrEqual(MENU_ROW_HOVER_DL);
+    }
   }
 });
 

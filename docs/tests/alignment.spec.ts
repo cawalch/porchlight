@@ -125,29 +125,53 @@ test("split button segments share one height", async ({ page }) => {
       toggle: Math.round(toggle.getBoundingClientRect().height),
     };
   });
-  console.log(`[align] split-button heights: primary=${heights.primary} toggle=${heights.toggle}`);
+  console.log(
+    `[align] split-button heights: primary=${heights.primary} toggle=${heights.toggle}`,
+  );
   expect(
     heights.primary,
     "primary and toggle segments must have identical height",
   ).toBe(heights.toggle);
 });
 
-test("split button segments have no gap between them", async ({ page }) => {
+test("split button segments fuse into one control", async ({ page }) => {
   await page.goto("./preview/split-button");
-  // The trailing edge of primary must touch the leading edge of toggle.
-  const gap = await page.evaluate(() => {
+  // The trailing edge of primary and leading edge of toggle must meet as one
+  // segmented control. A 1px overlap collapses the shared border into a seam.
+  const metrics = await page.evaluate(() => {
     const split = document.querySelector(".c-split")!;
-    const primary = split.querySelector(".c-split__primary")!;
-    const toggle = split.querySelector(".c-split__toggle")!;
+    const primary = split.querySelector<HTMLElement>(".c-split__primary")!;
+    const toggle = split.querySelector<HTMLElement>(".c-split__toggle")!;
     const pRect = primary.getBoundingClientRect();
     const tRect = toggle.getBoundingClientRect();
-    return Math.round(tRect.left - pRect.right);
+    const primaryStyle = getComputedStyle(primary);
+    const toggleStyle = getComputedStyle(toggle);
+
+    return {
+      seam: Math.round(tRect.left - pRect.right),
+      borderWidth: Number.parseFloat(toggleStyle.borderInlineStartWidth),
+      primaryStartEnd: primaryStyle.borderStartEndRadius,
+      primaryEndEnd: primaryStyle.borderEndEndRadius,
+      toggleStartStart: toggleStyle.borderStartStartRadius,
+      toggleEndStart: toggleStyle.borderEndStartRadius,
+    };
   });
-  console.log(`[align] split-button seam gap: ${gap}px`);
+  console.log(
+    `[align] split-button seam=${metrics.seam}px border=${metrics.borderWidth}px radii=` +
+      `${metrics.primaryStartEnd}/${metrics.primaryEndEnd}/${metrics.toggleStartStart}/${metrics.toggleEndStart}`,
+  );
   expect(
-    gap,
-    "segments must have zero gap (fused seam)",
-  ).toBe(0);
+    metrics.seam,
+    "segments must touch or overlap only enough to collapse the shared border",
+  ).toBeGreaterThanOrEqual(-metrics.borderWidth);
+  expect(
+    metrics.seam,
+    "segments must not have a visible gap",
+  ).toBeLessThanOrEqual(0);
+  expect(metrics.primaryStartEnd).toBe("0px");
+  expect(metrics.primaryEndEnd).toBe("0px");
+  expect(metrics.toggleStartStart).toBe("0px");
+  expect(metrics.toggleEndStart).toBe("0px");
 });
 
 test("split button chevron rotates when menu opens", async ({ page }) => {
