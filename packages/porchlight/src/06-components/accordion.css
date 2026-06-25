@@ -109,8 +109,15 @@
         --c-accordion-content-pad,
         0 var(--pl-space-4) var(--pl-space-4)
       );
+      visibility: hidden;
       color: var(--pl-color-text-muted);
       line-height: var(--pl-leading-normal);
+      transition: visibility 0s linear var(--pl-duration-3);
+    }
+
+    :scope[open] .c-accordion__content {
+      visibility: visible;
+      transition-delay: 0s;
     }
 
     /* Where interpolate-size is supported: animate height: auto directly.
