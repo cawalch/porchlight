@@ -700,6 +700,59 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-chip__remove").first()).toBeVisible();
   });
 
+  test("description list renders terms and details", async ({ page }) => {
+    await page.goto("./preview/description-list");
+    await expect(
+      page.getByRole("heading", { name: "Description list", exact: true }),
+    ).toBeVisible();
+    // The dl element exists.
+    await expect(page.locator(".c-description").first()).toBeVisible();
+    // Terms and details are present.
+    await expect(
+      page.locator(".c-description__term").first(),
+    ).toBeVisible();
+    await expect(
+      page.locator(".c-description__detail").first(),
+    ).toBeVisible();
+    // Multiple rows exist.
+    expect(
+      await page.locator(".c-description__row").count(),
+    ).toBeGreaterThanOrEqual(3);
+    // Dividers variant exists.
+    await expect(
+      page.locator(".c-description[data-dividers]").first(),
+    ).toBeAttached();
+    // Stacked layout variant exists.
+    await expect(
+      page.locator(".c-description[data-layout='stacked']").first(),
+    ).toBeAttached();
+  });
+
+  test("page header renders title, subtitle, and actions", async ({ page }) => {
+    await page.goto("./preview/page-header");
+    await expect(
+      page.getByRole("heading", { name: "Page header", exact: true }),
+    ).toBeVisible();
+    // The component exists.
+    await expect(page.locator(".c-page-header").first()).toBeVisible();
+    // Title is present.
+    await expect(
+      page.locator(".c-page-header__title").first(),
+    ).toBeVisible();
+    // Actions contain real buttons.
+    await expect(
+      page.locator(".c-page-header__actions .c-button").first(),
+    ).toBeVisible();
+    // Subtitle variant exists.
+    await expect(
+      page.locator(".c-page-header__subtitle").first(),
+    ).toBeVisible();
+    // Page header composes with a data table.
+    await expect(
+      page.locator(".c-page-header ~ .c-table-wrap .c-table"),
+    ).toBeVisible();
+  });
+
   test("dropdown renders trigger and menu options", async ({ page }) => {
     await page.goto("./preview/dropdown");
     await expect(

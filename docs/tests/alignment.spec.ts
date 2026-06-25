@@ -112,3 +112,67 @@ test("table numeric columns are right-aligned and use tabular-nums", async ({
   expect(["end", "right"]).toContain(data.align);
   expect(data.nums).toContain("tabular");
 });
+
+test("split button segments share one height", async ({ page }) => {
+  await page.goto("./preview/split-button");
+  // Measure primary vs toggle height in the first instance.
+  const heights = await page.evaluate(() => {
+    const split = document.querySelector(".c-split")!;
+    const primary = split.querySelector(".c-split__primary")!;
+    const toggle = split.querySelector(".c-split__toggle")!;
+    return {
+      primary: Math.round(primary.getBoundingClientRect().height),
+      toggle: Math.round(toggle.getBoundingClientRect().height),
+    };
+  });
+  console.log(`[align] split-button heights: primary=${heights.primary} toggle=${heights.toggle}`);
+  expect(
+    heights.primary,
+    "primary and toggle segments must have identical height",
+  ).toBe(heights.toggle);
+});
+
+test("split button segments have no gap between them", async ({ page }) => {
+  await page.goto("./preview/split-button");
+  // The trailing edge of primary must touch the leading edge of toggle.
+  const gap = await page.evaluate(() => {
+    const split = document.querySelector(".c-split")!;
+    const primary = split.querySelector(".c-split__primary")!;
+    const toggle = split.querySelector(".c-split__toggle")!;
+    const pRect = primary.getBoundingClientRect();
+    const tRect = toggle.getBoundingClientRect();
+    return Math.round(tRect.left - pRect.right);
+  });
+  console.log(`[align] split-button seam gap: ${gap}px`);
+  expect(
+    gap,
+    "segments must have zero gap (fused seam)",
+  ).toBe(0);
+});
+
+test("split button chevron rotates when menu opens", async ({ page }) => {
+  await page.goto("./preview/split-button");
+  const chevron = page.locator(".c-split__chevron").first();
+  const toggle = page.locator("[popovertarget='sb-1']");
+
+  // Closed: rotation is 0deg (or none).
+  const closedMatrix = await chevron.evaluate(
+    (el) => getComputedStyle(el).rotate,
+  );
+  console.log(`[align] chevron rotate (closed): ${closedMatrix}`);
+
+  // Open the menu.
+  await toggle.click();
+  await page.locator("#sb-1").waitFor({ state: "visible" });
+
+  // Wait for the rotate transition to settle before reading the final value.
+  await page.waitForTimeout(400);
+
+  // Open: rotation is 180deg.
+  const openMatrix = await chevron.evaluate(
+    (el) => getComputedStyle(el).rotate,
+  );
+  console.log(`[align] chevron rotate (open): ${openMatrix}`);
+
+  expect(openMatrix).toContain("180");
+});
