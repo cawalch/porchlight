@@ -1,0 +1,115 @@
+---
+title: Description list
+description: A key-value grid for detail panels, metadata displays, and summary cards.
+status: stable
+since: 0.3.0
+---
+
+# Description list
+
+The `.c-description` wraps a native `<dl>` as a two-column label + value grid.
+It is the workhorse of SaaS detail panels: account info, case metadata, user
+profiles, order summaries — anywhere you need to display structured key-value
+data read-only.
+
+Every app reimplements this pattern with ad-hoc grids and inline styles.
+This component replaces all of that with a single semantic element.
+
+## Semantic HTML
+
+### Basic grid
+
+```html
+<dl class="c-description">
+  <div class="c-description__row">
+    <dt class="c-description__term">Account</dt>
+    <dd class="c-description__detail">Acme Corporation</dd>
+  </div>
+  <div class="c-description__row">
+    <dt class="c-description__term">Status</dt>
+    <dd class="c-description__detail">Active</dd>
+  </div>
+  <div class="c-description__row">
+    <dt class="c-description__term">MRR</dt>
+    <dd class="c-description__detail">$2,400/mo</dd>
+  </div>
+</dl>
+```
+
+### Rich detail values
+
+The detail slot accepts any content — badges, avatars, links:
+
+```html
+<div class="c-description__row">
+  <dt class="c-description__term">Status</dt>
+  <dd class="c-description__detail">
+    <span class="c-badge" data-tone="success">Active</span>
+  </dd>
+</div>
+
+<div class="c-description__row">
+  <dt class="c-description__term">Owner</dt>
+  <dd class="c-description__detail">
+    <div class="c-avatar" data-size="sm">JS</div> Jane Smith
+  </dd>
+</div>
+```
+
+### With dividers
+
+```html
+<dl class="c-description" data-dividers>
+  <!-- each row gets a hairline border -->
+</dl>
+```
+
+### Stacked layout
+
+For narrow sidebars or long-form values, stack terms above details:
+
+```html
+<dl class="c-description" data-layout="stacked">
+  <!-- term above, detail below -->
+</dl>
+```
+
+## Layout modes
+
+| Mode | Class | When to use |
+|------|-------|-------------|
+| **Grid** (default) | `.c-description` | Detail panels, metadata grids. Two columns: label right-aligned, value on the right. Collapses to stacked below 32rem container width. |
+| **Stacked** | `.c-description[data-layout="stacked"]` | Narrow sidebars, long-form values, mobile-first layouts. Term above, detail below. |
+
+## Responsive behavior
+
+The grid mode uses a **container query** (not a viewport media query), so it
+adapts to its container's width. A description list inside a 25rem-wide drawer
+panel stacks even on a wide-screen desktop — no viewport hack needed.
+
+## Class contract
+
+| Selector                  | Role                                           |
+| ------------------------- | ---------------------------------------------- |
+| `.c-description`          | The `<dl>` container (grid + query container). |
+| `.c-description__row`     | A wrapper `<div>` around each `<dt>`/`<dd>` pair. |
+| `.c-description__term`    | The `<dt>` label (muted, semibold, right-aligned). |
+| `.c-description__detail`  | The `<dd>` value (accepts any content).        |
+| `[data-layout="stacked"]` | Single-column layout (term above detail).      |
+| `[data-dividers]`         | Hairline border between rows.                  |
+
+## Tokens exposed
+
+| Token                       | Default                  | Purpose                                    |
+| --------------------------- | ------------------------ | ------------------------------------------ |
+| `--c-description-term-w`    | `auto`                   | Term column width. Set to `12rem` for a uniform label gutter. |
+| `--c-description-row-gap`   | `var(--pl-space-3)`      | Vertical spacing between rows.             |
+| `--c-description-col-gap`   | `var(--pl-space-4)`      | Horizontal spacing between term and detail. |
+| `--c-description-term-color`| `var(--pl-color-text-muted)` | Label text color.                      |
+| `--c-description-term-size` | `var(--pl-text-sm)`      | Label font size.                           |
+
+## Accessibility
+
+Uses the native `<dl>`, `<dt>`, and `<dd>` elements, which are semantically
+correct for description lists and announced as such by screen readers. No ARIA
+attributes are needed.
