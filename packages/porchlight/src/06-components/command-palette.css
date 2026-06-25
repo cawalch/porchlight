@@ -46,8 +46,10 @@
         oklch(100% 0 0deg / 94%),
         oklch(17% 0.04 250deg / 92%)
       );
-      backdrop-filter: blur(var(--pl-backdrop-blur-strong)) saturate(var(--pl-backdrop-saturate-strong));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong)) saturate(var(--pl-backdrop-saturate-strong));
+      backdrop-filter: blur(var(--pl-backdrop-blur-strong))
+        saturate(var(--pl-backdrop-saturate-strong));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong))
+        saturate(var(--pl-backdrop-saturate-strong));
       box-shadow: var(--pl-shadow-3);
       overflow: hidden;
 
@@ -80,11 +82,8 @@
       border: 0;
 
       /* Softer divider on a Liquid Glass surface. */
-      border-block-end: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
       background: transparent;
       color: var(--pl-color-text);
       font: inherit;
@@ -171,28 +170,28 @@
       padding: var(--pl-space-2) var(--pl-space-4);
 
       /* Softer divider. */
-      border-block-start: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
       font-size: var(--pl-text-xs);
       color: var(--pl-color-text-muted);
+    }
+
+    @media (forced-colors: active) {
+      :scope {
+        border: 1px solid ButtonBorder;
+        background: Canvas;
+      }
     }
   }
 
   /* Backdrop scrim. Stronger tint + blur for contrast against Liquid Glass surface. */
   :where(.c-command)::backdrop {
     background: var(--pl-color-scrim);
-    backdrop-filter: blur(var(--pl-backdrop-blur-scrim)) saturate(var(--pl-backdrop-saturate-scrim));
+    backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
+      saturate(var(--pl-backdrop-saturate-scrim));
   }
 
   @media (forced-colors: active) {
-    :where(.c-command) {
-      border-color: ButtonBorder;
-      background: Canvas;
-    }
-
     :where(.c-command__item[data-selected]) {
       box-shadow: inset 2px 0 0 Highlight;
       color: Highlight;

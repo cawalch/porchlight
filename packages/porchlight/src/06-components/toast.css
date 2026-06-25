@@ -56,19 +56,18 @@
       padding: var(--c-toast-pad);
 
       /* Floating surface: softened border + Liquid Glass. */
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 25%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 25%);
       border-inline-start: var(--pl-accent-bar-width) solid var(--c-toast-tone);
       border-radius: var(--c-toast-radius);
       background: light-dark(
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
       pointer-events: auto;
 
@@ -140,6 +139,7 @@
     }
 
     .c-toast__close {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -150,9 +150,27 @@
       border-radius: var(--pl-radius-sm);
       background: transparent;
       color: var(--pl-color-text-muted);
+      font-size: 0;
       cursor: pointer;
       flex-shrink: 0;
       transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-toast__close::before,
+    .c-toast__close::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: 0.75rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .c-toast__close::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
 
     .c-toast__close:hover {

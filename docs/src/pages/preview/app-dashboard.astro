@@ -90,7 +90,7 @@ const toneFor = (s: string) =>
           <!-- KPI grid: auto-fits from 4 columns down to 1 -->
           <div class="l-grid" style="--l-grid-min: 14rem;">
             {stats.map((s) => (
-              <div class="c-card">
+              <div class="c-card" data-surface="app">
                 <div class="c-card__body">
                   <div class="c-stat">
                     <span class="c-stat__label">{s.label}</span>
@@ -108,7 +108,7 @@ const toneFor = (s: string) =>
           </div>
 
           <!-- Data table with toolbar -->
-          <div class="c-card">
+          <div class="c-card" data-surface="app">
             <div class="c-toolbar">
               <div class="c-toolbar__group">
                 <span class="u-muted" style="font-size: var(--pl-text-sm);">5 accounts</span>
@@ -164,7 +164,7 @@ const toneFor = (s: string) =>
           </div>
 
           <!-- Activity timeline -->
-          <div class="c-card">
+          <div class="c-card" data-surface="app">
             <div class="c-card__header"><h2 class="c-card__title">Recent activity</h2></div>
             <div class="c-card__body">
               <ol class="c-timeline">

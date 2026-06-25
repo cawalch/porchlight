@@ -43,8 +43,10 @@
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
       );
-      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
 
       /* Animation: slide + fade. Asymmetric: enters deliberately, exits snappily. */
@@ -85,7 +87,8 @@
        contrasts against the translucent drawer surface. */
     :scope::backdrop {
       background: var(--pl-color-scrim);
-      backdrop-filter: blur(var(--pl-backdrop-blur-scrim)) saturate(var(--pl-backdrop-saturate-scrim));
+      backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
+        saturate(var(--pl-backdrop-saturate-scrim));
     }
 
     /* Layout inside the drawer. */
@@ -97,11 +100,8 @@
       padding: var(--c-drawer-pad);
 
       /* Softer divider  -  the Liquid Glass surface is already visually separated. */
-      border-block-end: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
 
     .c-drawer__title {
@@ -120,18 +120,15 @@
       padding: var(--c-drawer-pad);
 
       /* Softer divider. */
-      border-block-start: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
-  }
 
-  @media (forced-colors: active) {
-    :where(.c-drawer) {
-      border-color: ButtonBorder;
-      background: Canvas;
+    @media (forced-colors: active) {
+      :scope {
+        border: 1px solid ButtonBorder;
+        background: Canvas;
+      }
     }
   }
 }
