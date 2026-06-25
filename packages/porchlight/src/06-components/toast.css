@@ -6,7 +6,8 @@
  * handles the visual entrance/exit).
  *
  * Uses @starting-style for the enter animation. The toast stack is a fixed-
- * position flex column at the bottom-corner of the screen.
+ * position flex column. Default placement is block-end inline-end, with
+ * [data-placement] options for other corners.
  *
  * Structure:
  *   <div class="c-toast-stack" role="region" aria-label="Notifications">
@@ -29,6 +30,7 @@
      content  -  cleaner than an opacity hack. */
   :where(.c-toast-stack) {
     position: fixed;
+    inset: auto;
     inset-block-end: var(--pl-space-4);
     inset-inline-end: var(--pl-space-4);
     z-index: var(--pl-z-toast);
@@ -40,6 +42,19 @@
 
     /* Prevent the stack from stealing pointer events in empty areas. */
     pointer-events: none;
+  }
+
+  :where(.c-toast-stack[data-placement="bottom-start"]) {
+    inset-inline: var(--pl-space-4) auto;
+  }
+
+  :where(.c-toast-stack[data-placement="top-end"]) {
+    inset-block: var(--pl-space-4) auto;
+  }
+
+  :where(.c-toast-stack[data-placement="top-start"]) {
+    inset-block: var(--pl-space-4) auto;
+    inset-inline: var(--pl-space-4) auto;
   }
 
   @scope (.c-toast) {

@@ -9,7 +9,7 @@ since: 0.3.0
 
 The `.c-split` is a composite action control: a primary button (the default
 action) fused with a dropdown toggle that opens a menu of alternative actions.
-The canonical "Save ▼" pattern  -  click the label to perform the default
+The canonical "Save ▼" pattern - click the label to perform the default
 action, click the chevron to pick a variant.
 
 Both segments are `.c-button`, so every variant, state, and density tier
@@ -20,11 +20,13 @@ button only adds the layout, the seam divider, and the Popover API menu.
 
 ```html
 <div class="c-split">
-  <button class="c-button c-split__primary" data-variant="primary">
-    Save
-  </button>
-  <button class="c-button c-split__toggle" data-variant="primary"
-          popovertarget="sb-1" aria-label="More save options">
+  <button class="c-button c-split__primary" data-variant="primary">Save</button>
+  <button
+    class="c-button c-split__toggle"
+    data-variant="primary"
+    popovertarget="sb-1"
+    aria-label="More save options"
+  >
     <svg class="c-split__chevron" viewBox="0 0 24 24" ...>
       <path d="m6 9 6 6 6-6" />
     </svg>
@@ -40,15 +42,15 @@ button only adds the layout, the seam divider, and the Popover API menu.
 
 ## Class contract
 
-| Selector              | Role                                                            |
-| --------------------- | --------------------------------------------------------------- |
-| `.c-split`            | Flex container that fuses the two segments.                     |
-| `.c-split__primary`   | The primary `.c-button` (default action). Trailing radius set to 0. |
-| `.c-split__toggle`    | The dropdown `.c-button` (opens the menu). Leading radius set to 0. |
-| `.c-split__chevron`   | Arrow icon inside the toggle (rotates 180° when open).          |
-| `.c-split__menu`      | The popover menu (anchored to the toggle).                      |
-| `.c-split__option`    | A menu item (button or link).                                   |
-| `[data-tone="danger"]`| Destructive item (discard, delete).                             |
+| Selector               | Role                                                                |
+| ---------------------- | ------------------------------------------------------------------- |
+| `.c-split`             | Flex container that fuses the two segments.                         |
+| `.c-split__primary`    | The primary `.c-button` (default action). Trailing radius set to 0. |
+| `.c-split__toggle`     | The dropdown `.c-button` (opens the menu). Leading radius set to 0. |
+| `.c-split__chevron`    | Arrow icon inside the toggle (rotates 180° when open).              |
+| `.c-split__menu`       | The popover menu (anchored to the toggle).                          |
+| `.c-split__option`     | A menu item (button or link).                                       |
+| `[data-tone="danger"]` | Destructive item (discard, delete).                                 |
 
 Both buttons **must** carry the same `data-variant` so the fill, text, and
 border match across the seam.
@@ -58,18 +60,58 @@ border match across the seam.
 > the last toggle on the page. The default `--pl-split-anchor` works only for
 > a single instance.
 
+### SSR/CSP-safe anchors
+
+CSS Anchor Positioning requires `anchor-name` and `position-anchor` to resolve
+to a CSS custom identifier. Today that identifier cannot be read from an HTML
+attribute, so each simultaneously rendered split button still needs a unique
+CSS value as well as a unique `id` / `popovertarget` pair.
+
+If inline styles are awkward for a server-rendered or CSP-heavy app, generate a
+class and put the custom property in an app stylesheet or nonce-protected
+`<style>` block:
+
+```html
+<div class="c-split request-actions-42">
+  <button class="c-button c-split__primary" data-variant="primary">
+    Approve
+  </button>
+  <button
+    class="c-button c-split__toggle"
+    data-variant="primary"
+    popovertarget="request-actions-42-menu"
+    aria-label="More request actions"
+  >
+    <svg class="c-split__chevron" viewBox="0 0 24 24">...</svg>
+  </button>
+  <div popover class="c-split__menu" id="request-actions-42-menu">...</div>
+</div>
+```
+
+```css
+@layer app {
+  .request-actions-42 {
+    --c-split-anchor: --request-actions-42;
+  }
+}
+```
+
+For HTMX/server-rendered lists, a stable row/request id is a good suffix. If a
+page renders only one split button, you can omit the custom property and use the
+default anchor name.
+
 ## Tokens exposed (component-local)
 
-| Token                 | Default                  | Purpose                                              |
-| --------------------- | ------------------------ | ---------------------------------------------------- |
-| `--c-split-anchor`    | `--pl-split-anchor`      | CSS anchor name for the toggle (unique per instance).|
-| `--c-split-min-inline`| `10rem`                  | Minimum menu width.                                  |
-| `--c-split-max-block` | `20rem`                  | Maximum menu height (scrolls if exceeded).           |
-| `--c-split-divider`   | `--pl-color-border`      | Divider color between segments (per-variant override).|
+| Token                  | Default             | Purpose                                                |
+| ---------------------- | ------------------- | ------------------------------------------------------ |
+| `--c-split-anchor`     | `--pl-split-anchor` | CSS anchor name for the toggle (unique per instance).  |
+| `--c-split-min-inline` | `10rem`             | Minimum menu width.                                    |
+| `--c-split-max-block`  | `20rem`             | Maximum menu height (scrolls if exceeded).             |
+| `--c-split-divider`    | `--pl-color-border` | Divider color between segments (per-variant override). |
 
 ## Accessibility
 
-- **Keyboard:** both segments are native `<button>` elements  -  Enter/Space
+- **Keyboard:** both segments are native `<button>` elements - Enter/Space
   activates them. The toggle uses `popovertarget` for zero-JS menu open. Menu
   items are buttons/links, so Tab/Shift+Tab navigates within the popover.
 - **Toggle label:** the toggle must carry an `aria-label` describing what the
@@ -85,7 +127,7 @@ border match across the seam.
   filled variants uses a semi-transparent white rule (`oklch(100% 0 0deg / 20%)`)
   so it reads on both accent and dark fills.
 - **Density:** both segments inherit `--pl-control-block-size`; set
-  `[data-density]` on an ancestor  -  no per-component work.
+  `[data-density]` on an ancestor - no per-component work.
 - **RTL:** the flex container follows the writing mode; the divider and radius
   squaring flip automatically via logical properties (`border-inline-start`).
 - **Reduced motion:** the chevron rotation and menu transitions are zeroed by

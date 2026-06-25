@@ -50,24 +50,24 @@ contract: native controls, HTML5 constraints, `aria-invalid`, and
 
 ## Class Contract
 
-| Selector | Role |
-| --- | --- |
-| `.c-form` | Form root with vertical section rhythm. |
-| `.c-form__section` | A logical form section. |
-| `.c-form__header` | Section heading and summary copy. |
-| `.c-form__body` | Field stack inside a section. |
-| `.c-form__grid` | Responsive field grid. |
-| `.c-form__row` | Wrapping row for filters and short fields. |
-| `.c-form__actions` | Submit/cancel action row. |
-| `.c-choice-group` | Fieldset wrapper for checkbox/radio choices. |
-| `.c-choice-list` | Stacked or inline list of choices. |
-| `.c-choice` | Native checkbox/radio label row. |
-| `.c-choice__input` | Native checkbox/radio input. |
-| `.c-choice__label` | Primary choice text. |
-| `.c-choice__description` | Optional secondary choice text. |
-| `.c-input-group` | Prefix/suffix/action wrapper around a native field. |
-| `.c-input-group__addon` | Non-interactive prefix or suffix. |
-| `.c-input-group__action` | Button aligned inside the group. |
+| Selector                 | Role                                                |
+| ------------------------ | --------------------------------------------------- |
+| `.c-form`                | Form root with vertical section rhythm.             |
+| `.c-form__section`       | A logical form section.                             |
+| `.c-form__header`        | Section heading and summary copy.                   |
+| `.c-form__body`          | Field stack inside a section.                       |
+| `.c-form__grid`          | Responsive field grid.                              |
+| `.c-form__row`           | Wrapping row for filters and short fields.          |
+| `.c-form__actions`       | Submit/cancel action row.                           |
+| `.c-choice-group`        | Fieldset wrapper for checkbox/radio choices.        |
+| `.c-choice-list`         | Stacked or inline list of choices.                  |
+| `.c-choice`              | Native checkbox/radio label row.                    |
+| `.c-choice__input`       | Native checkbox/radio input.                        |
+| `.c-choice__label`       | Primary choice text.                                |
+| `.c-choice__description` | Optional secondary choice text.                     |
+| `.c-input-group`         | Prefix/suffix/action wrapper around a native field. |
+| `.c-input-group__addon`  | Non-interactive prefix or suffix.                   |
+| `.c-input-group__action` | Button aligned inside the group.                    |
 
 ## Choice Groups
 
@@ -148,20 +148,20 @@ classes.
 
 ## Tokens
 
-| Token | Default | Purpose |
-| --- | --- | --- |
-| `--c-form-gap` | `--pl-space-5` | Space between form sections. |
-| `--c-form-section-gap` | `--pl-space-4` | Space inside each section. |
-| `--c-form-grid-min` | `16rem` | Minimum column size before wrapping. |
-| `--c-form-actions-gap` | `--pl-space-2` | Gap between action buttons. |
-| `--c-choice-gap` | `--pl-space-2` | Gap between choices. |
-| `--c-input-group-addon-size` | `--pl-control-block-size` | Minimum prefix/suffix width. |
+| Token                        | Default                   | Purpose                              |
+| ---------------------------- | ------------------------- | ------------------------------------ |
+| `--c-form-gap`               | `--pl-space-5`            | Space between form sections.         |
+| `--c-form-section-gap`       | `--pl-space-4`            | Space inside each section.           |
+| `--c-form-grid-min`          | `16rem`                   | Minimum column size before wrapping. |
+| `--c-form-actions-gap`       | `--pl-space-2`            | Gap between action buttons.          |
+| `--c-choice-gap`             | `--pl-space-2`            | Gap between choices.                 |
+| `--c-input-group-addon-size` | `--pl-control-block-size` | Minimum prefix/suffix width.         |
 
 ## Accessibility
 
 - Use real `form`, `fieldset`, `legend`, and `label` elements.
 - Keep labels visible unless the surrounding UI already names the control; if
-  hidden, use `.u-visually-hidden`.
+  hidden, use `.u-sr-only`.
 - Connect hints or error text with `aria-describedby` when the message is needed
   by assistive technology.
 - Use `aria-invalid="true"` for server-side errors or framework-managed errors;

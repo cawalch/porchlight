@@ -55,15 +55,28 @@ both the container and the toolbar add padding. `.c-page-header` avoids this.
 </div>
 ```
 
+### With a leading icon
+
+Use `.u-icon-title` when a page/card title has a leading icon. The icon stays
+attached to the first line while the text can wrap or truncate inside narrow
+flex/grid regions.
+
+```html
+<h1 class="c-page-header__title u-icon-title">
+  <svg aria-hidden="true" viewBox="0 0 24 24">...</svg>
+  <span class="u-min-0 u-truncate">Long workflow queue title</span>
+</h1>
+```
+
 ## Class contract
 
-| Selector                  | Role                                                    |
-| ------------------------- | ------------------------------------------------------- |
-| `.c-page-header`          | Flex container (space-between, wraps on narrow widths). |
-| `.c-page-header__heading` | Wrapper for title + subtitle (flex column).             |
-| `.c-page-header__title`   | The `<h1>`/`<h2>` heading.                              |
-| `.c-page-header__subtitle`| Optional muted subtitle below the title.                |
-| `.c-page-header__actions` | Action button cluster (wraps independently).            |
+| Selector                   | Role                                                    |
+| -------------------------- | ------------------------------------------------------- |
+| `.c-page-header`           | Flex container (space-between, wraps on narrow widths). |
+| `.c-page-header__heading`  | Wrapper for title + subtitle (flex column).             |
+| `.c-page-header__title`    | The `<h1>`/`<h2>` heading.                              |
+| `.c-page-header__subtitle` | Optional muted subtitle below the title.                |
+| `.c-page-header__actions`  | Action button cluster (wraps independently).            |
 
 ## Tokens consumed
 

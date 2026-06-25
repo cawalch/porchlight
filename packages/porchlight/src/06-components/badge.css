@@ -70,4 +70,12 @@
       }
     }
   }
+
+  /* Badge group: wrapping flex container for multiple compact labels. */
+  :where(.c-badge-group) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    align-items: center;
+  }
 }

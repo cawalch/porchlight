@@ -7,18 +7,18 @@
  * a recurring need a component shouldn't own.
  *
  * Allow-list for !important: utilities is the SECOND place it's permitted
- * (after reset [hidden] and themes reduced-motion). .u-visually-hidden uses it
- * because the rule MUST win over any component/context. Hiding text from
- * sighted users while keeping it for AT is an a11y guarantee that can't be
- * accidentally overridden.
+ * (after reset [hidden] and themes reduced-motion). The screen-reader helpers
+ * use it because the rule MUST win over any component/context. Hiding text
+ * from sighted users while keeping it for AT is an a11y guarantee that can't
+ * be accidentally overridden.
  *
  * Naming: .u-* (utility); --u-* are instance-config tokens (e.g. --u-flow-space).
  */
 @layer porchlight.utilities {
-  /* Visually hide content while keeping it available to assistive tech (the
-     canonical sr-only pattern). The element collapses to a 1px box, is clipped,
-     and is removed from the flow. Used for icon-only buttons, skip links, etc. */
-  :where(.u-visually-hidden) {
+  /* Screen-reader-only: always visually hidden while remaining available to
+     assistive tech. Use for native inputs/labels that should NOT reappear on
+     focus because a styled control receives the visible focus treatment. */
+  :where(.u-sr-only, .u-focusable-sr-only, .u-visually-hidden) {
     position: absolute !important;
     inline-size: 1px !important;
     block-size: 1px !important;
@@ -30,8 +30,15 @@
     border: 0 !important;
   }
 
-  /* Restore visibility (overrides .u-visually-hidden when focused/active). */
-  :where(.u-visually-hidden:focus, .u-visually-hidden:active) {
+  /* Focusable sr-only: use for skip links and other keyboard targets that must
+     become visible when focused. .u-visually-hidden is kept as a compatibility
+     alias for the original focus-reveal behavior. */
+  :where(
+    .u-focusable-sr-only:focus,
+    .u-focusable-sr-only:active,
+    .u-visually-hidden:focus,
+    .u-visually-hidden:active
+  ) {
     position: static !important;
     inline-size: auto !important;
     block-size: auto !important;
@@ -42,9 +49,23 @@
 
   /* One-line truncation: table cells, breadcrumb items, file names. */
   :where(.u-truncate) {
+    min-inline-size: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  /* Allow flex/grid children to shrink below their intrinsic content width.
+     Pair with .u-truncate when the truncating element is itself a flex/grid
+     child. */
+  :where(.u-min-0) {
+    min-inline-size: 0;
+  }
+
+  /* Break long tokens such as UUIDs, paths, URLs, or generated names before
+     they force a card/table/panel wider than its container. */
+  :where(.u-wrap-anywhere) {
+    overflow-wrap: anywhere;
   }
 
   /* Multi-line truncation: clamp to N lines with an ellipsis. Use
@@ -65,6 +86,12 @@
     margin-block-start: var(--u-flow-space, var(--pl-space-4));
   }
 
+  /* Remove default block margins from a single text element when placing prose
+     inside dense component chrome or app-specific flex/grid rows. */
+  :where(.u-marginless) {
+    margin-block: 0;
+  }
+
   /* A surface treatment for ad-hoc grouping (not a full .c-card): bg, text,
      border, radius. For when you need panel styling without a component. */
   :where(.u-surface) {
@@ -77,6 +104,31 @@
   /* Muted text: secondary/caption copy. */
   :where(.u-muted) {
     color: var(--pl-color-text-muted);
+  }
+
+  /* Small muted metadata/caption text. */
+  :where(.u-muted-sm) {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    line-height: var(--pl-leading-snug);
+  }
+
+  /* Leading icon + title pattern. Keeps the icon with the first line while
+     allowing the text node to wrap or truncate inside flex/grid parents. */
+  :where(.u-icon-title) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    max-inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  :where(.u-icon-title > svg, .u-icon-title > .c-badge__dot) {
+    flex: 0 0 auto;
+  }
+
+  :where(.u-icon-title > :not(svg, .c-badge__dot)) {
+    min-inline-size: 0;
   }
 
   /* Full-bleed: break an element out to the viewport edges inside a

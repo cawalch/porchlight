@@ -11,22 +11,33 @@ This is deliberately not a utility-first framework: there is no utility for
 every CSS property. Each utility earns its place by serving a recurring need
 that doesn't belong to a component.
 
-## `.u-visually-hidden`
+## `.u-sr-only`
 
 Hide content from sighted users while keeping it available to assistive tech.
-The canonical sr-only pattern. Use for icon-only buttons, skip links, and
-extra context for AT.
+Use this for native controls or labels that should remain visually hidden even
+when focused because another visible element carries the focus treatment.
 
 ```html
-<button aria-label="Settings">
-  ⚙ <span class="u-visually-hidden">Settings</span>
-</button>
+<input class="u-sr-only" type="radio" id="plan-pro" name="plan" />
+<label for="plan-pro">Pro</label>
 ```
 
 This is the one utility (and one of the few places in the framework) that uses
-`!important`. It's an a11y guarantee that must win over any context. It
-restores itself automatically on `:focus` / `:active` (e.g. a skip link
-becomes visible when tabbed to).
+`!important`. It's an a11y guarantee that must win over any context.
+
+## `.u-focusable-sr-only`
+
+The same screen-reader-only hiding pattern, but it becomes visible on `:focus`
+or `:active`. Use for skip links and other keyboard targets that need to reveal
+themselves when tabbed to.
+
+```html
+<a class="u-focusable-sr-only" href="#main">Skip to content</a>
+```
+
+`.u-visually-hidden` remains as a compatibility alias for this focus-reveal
+behavior. Prefer `.u-sr-only` for hidden native inputs and
+`.u-focusable-sr-only` for skip links.
 
 ## `.u-truncate`
 
@@ -34,6 +45,24 @@ One-line truncation with an ellipsis.
 
 ```html
 <span class="u-truncate">a-very-long-file-name.webp</span>
+```
+
+## `.u-min-0`
+
+Allow a flex/grid child to shrink below its intrinsic content width. Pair it
+with `.u-truncate` when the truncating element is itself a flex/grid child.
+
+```html
+<span class="u-min-0 u-truncate">very-long-account-name</span>
+```
+
+## `.u-wrap-anywhere`
+
+Let long tokens break anywhere before they force a card, table, or panel wider
+than its container.
+
+```html
+<code class="u-wrap-anywhere">request_01JZ...very-long-id</code>
 ```
 
 ## `.u-flow`
@@ -47,6 +76,15 @@ Tune the step via `--u-flow-space`.
   <p>...</p>
   <p>...</p>
 </div>
+```
+
+## `.u-marginless`
+
+Remove default block margins from a single text element when placing prose
+inside dense component chrome or app-specific flex/grid rows.
+
+```html
+<p class="u-marginless">Inline helper copy inside a toolbar.</p>
 ```
 
 ## `.u-surface`
@@ -64,6 +102,38 @@ Secondary/caption text color.
 
 ```html
 <span class="u-muted">Updated 2 hours ago</span>
+```
+
+## `.u-muted-sm`
+
+Small muted metadata/caption text.
+
+```html
+<span class="u-muted-sm">Updated 2 hours ago</span>
+```
+
+## `.u-icon-title`
+
+Leading icon + title pattern. Keeps the icon with the first line while letting
+the text wrap or truncate inside flex/grid parents.
+
+```html
+<span class="u-icon-title">
+  <svg aria-hidden="true" viewBox="0 0 24 24">...</svg>
+  <span class="u-min-0 u-truncate">Long workflow title</span>
+</span>
+```
+
+## Badge and chip groups
+
+Use the existing `.l-cluster` primitive for wrapping badge/chip groups. Tune
+the gap with `--l-cluster-gap`.
+
+```html
+<div class="l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+  <span class="c-badge">Queued</span>
+  <span class="c-chip">Finance</span>
+</div>
 ```
 
 ## `.u-full-bleed`

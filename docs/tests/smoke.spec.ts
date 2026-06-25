@@ -173,6 +173,7 @@ test.describe("docs scaffold", () => {
         page.locator(`.c-badge[data-tone='${tone}']`).first(),
       ).toBeVisible();
     }
+    await expect(page.locator(".c-badge-group").first()).toBeVisible();
   });
 
   test("popover menu opens and closes", async ({ page }) => {
@@ -283,12 +284,44 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Utilities", exact: true }),
     ).toBeVisible();
-    // The visually-hidden text exists in the DOM (even though it's not visible).
+    // The screen-reader-only text exists in the DOM (even though it's not visible).
     await expect(page.getByText("Settings", { exact: true })).toBeAttached();
     // The truncate utility is applied.
-    await expect(page.locator(".u-truncate")).toHaveCSS(
+    await expect(page.locator(".u-truncate").first()).toHaveCSS(
       "text-overflow",
       "ellipsis",
+    );
+    await expect(page.locator(".u-sr-only").first()).toHaveCSS(
+      "position",
+      "absolute",
+    );
+    const focusableHidden = page.locator(".u-focusable-sr-only").first();
+    await expect(focusableHidden).toHaveCSS("position", "absolute");
+    await focusableHidden.focus();
+    await expect(focusableHidden).toHaveCSS("position", "static");
+    await expect(page.locator(".u-min-0").first()).toHaveCSS(
+      "min-inline-size",
+      "0px",
+    );
+    await expect(page.locator(".u-wrap-anywhere").first()).toHaveCSS(
+      "overflow-wrap",
+      "anywhere",
+    );
+    await expect(page.locator(".u-marginless").first()).toHaveCSS(
+      "margin-top",
+      "0px",
+    );
+    const mutedColor = await page
+      .locator(".u-muted")
+      .first()
+      .evaluate((el) => getComputedStyle(el).color);
+    await expect(page.locator(".u-muted-sm").first()).toHaveCSS(
+      "color",
+      mutedColor,
+    );
+    await expect(page.locator(".u-icon-title").first()).toHaveCSS(
+      "display",
+      "inline-flex",
     );
   });
 
@@ -617,15 +650,52 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Toast", exact: true }),
     ).toBeVisible();
     // Toast stack exists.
-    await expect(page.locator(".c-toast-stack")).toBeVisible();
+    await expect(page.locator(".c-toast-stack").first()).toBeVisible();
     // All tones present.
     for (const tone of ["success", "warning", "danger"]) {
       await expect(page.locator(`.c-toast[data-tone='${tone}']`)).toBeVisible();
     }
     // Default (no tone) toast exists.
-    await expect(page.locator(".c-toast:not([data-tone])")).toBeVisible();
+    await expect(
+      page.locator(".c-toast:not([data-tone])").first(),
+    ).toBeVisible();
     // Close buttons exist.
     await expect(page.locator(".c-toast__close").first()).toBeVisible();
+    for (const placement of [
+      "bottom-end",
+      "bottom-start",
+      "top-end",
+      "top-start",
+    ]) {
+      await expect(
+        page.locator(`.c-toast-stack[data-placement='${placement}']`).first(),
+      ).toBeVisible();
+    }
+    const placements = await page.evaluate(() => {
+      const values = ["bottom-end", "bottom-start", "top-end", "top-start"];
+      const out: Record<string, Record<string, string>> = {};
+      for (const value of values) {
+        const stack = document.createElement("div");
+        stack.className = "c-toast-stack";
+        stack.dataset.placement = value;
+        document.body.append(stack);
+        const style = getComputedStyle(stack);
+        out[value] = {
+          blockStart: style.insetBlockStart,
+          blockEnd: style.insetBlockEnd,
+          inlineStart: style.insetInlineStart,
+          inlineEnd: style.insetInlineEnd,
+        };
+        stack.remove();
+      }
+      return out;
+    });
+    expect(placements["bottom-end"].blockEnd).not.toBe("auto");
+    expect(placements["bottom-end"].inlineEnd).not.toBe("auto");
+    expect(placements["bottom-start"].inlineStart).not.toBe("auto");
+    expect(placements["top-end"].blockStart).not.toBe("auto");
+    expect(placements["top-start"].blockStart).not.toBe("auto");
+    expect(placements["top-start"].inlineStart).not.toBe("auto");
   });
 
   test("scroll-progress bar and reveal sections exist", async ({ page }) => {

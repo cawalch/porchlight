@@ -29,13 +29,23 @@ With a leading status dot:
 </span>
 ```
 
+Grouping multiple badges:
+
+```html
+<div class="c-badge-group">
+  <span class="c-badge">Inbound</span>
+  <span class="c-badge" data-tone="warning">SLA watch</span>
+</div>
+```
+
 ## Class contract
 
-| Selector        | Role                                                                            |
-| --------------- | ------------------------------------------------------------------------------- |
-| `.c-badge`      | The badge (`<span>`).                                                           |
-| `[data-tone]`   | `accent` \| `success` \| `warning` \| `danger` (default = neutral `surface-2`). |
-| `.c-badge__dot` | Optional leading status pip (colored `currentColor`).                           |
+| Selector         | Role                                                                            |
+| ---------------- | ------------------------------------------------------------------------------- |
+| `.c-badge`       | The badge (`<span>`).                                                           |
+| `.c-badge-group` | Wrapping flex container for badge sets.                                         |
+| `[data-tone]`    | `accent` \| `success` \| `warning` \| `danger` (default = neutral `surface-2`). |
+| `.c-badge__dot`  | Optional leading status pip (colored `currentColor`).                           |
 
 ## Tokens consumed
 

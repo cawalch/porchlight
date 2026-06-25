@@ -83,8 +83,8 @@ To override Porchlight from your application CSS, place your own layer
 
 Unlayered styles always beat layered styles too, so plain CSS outside any
 `@layer` also wins. You never fight `!important`: Porchlight reserves it
-for accessibility-critical utilities only (`[hidden]`, visually-hidden,
-reduced-motion).
+for accessibility-critical utilities only (`[hidden]`, screen-reader-only
+helpers, reduced-motion).
 
 > Do **not** pass `layer(...)` to the `@import`. Each Porchlight module
 > self-wraps in `@layer porchlight.<name>`; adding `layer(...)` would
@@ -127,7 +127,8 @@ Utilities use the `.u-*` prefix. A small, finite set:
 ```html
 <span class="u-muted">Secondary text</span>
 <span class="u-truncate">very-long-filename.webp</span>
-<div class="u-visually-hidden">Screen reader only</div>
+<span class="u-sr-only">Screen reader only</span>
+<a class="u-focusable-sr-only" href="#main">Skip to content</a>
 ```
 
 ## Browser support
@@ -181,12 +182,12 @@ Either way, declare your layer order separately in your app CSS:
 
 ### Exports reference
 
-| Import path | What you get |
-|-------------|-------------|
-| `@cawalch/porchlight` | Prebuilt single-file CSS (recommended) |
-| `@cawalch/porchlight/min` | Minified prebuilt CSS |
+| Import path                  | What you get                                         |
+| ---------------------------- | ---------------------------------------------------- |
+| `@cawalch/porchlight`        | Prebuilt single-file CSS (recommended)               |
+| `@cawalch/porchlight/min`    | Minified prebuilt CSS                                |
 | `@cawalch/porchlight/source` | Raw source with `@import` (needs Vite/Lightning CSS) |
-| `@cawalch/porchlight/src/*` | Individual source layer files |
+| `@cawalch/porchlight/src/*`  | Individual source layer files                        |
 
 ## Next steps
 

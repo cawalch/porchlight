@@ -90,6 +90,48 @@ Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
 Toggle the `open` attribute on `.c-table__detail` and `aria-expanded` on the
 button via JS. CSS handles the animated expand/collapse.
 
+### Clickable rows + independent details
+
+For workflow/admin tables, keep row activation and detail disclosure as two
+separate controls:
+
+- Put a real link or button in the primary cell for the row's main action.
+- Use `.c-table__expand` only for the detail row. It should not navigate.
+- Keep `aria-expanded` on the expand button in sync with `[open]` or
+  `[data-open]` on the following `.c-table__detail` row.
+- If clicking the whole row is required, add app JavaScript that ignores clicks
+  originating from interactive descendants (`a`, `button`, `input`, `select`,
+  `textarea`, `[role="button"]`) so the disclosure button remains independent.
+
+```html
+<tr data-row-href="/requests/REQ-42">
+  <td>
+    <a href="/requests/REQ-42">REQ-42</a>
+  </td>
+  <td>Approval needed</td>
+  <td data-align="end">
+    <button
+      class="c-table__expand"
+      aria-expanded="false"
+      aria-controls="request-REQ-42-detail"
+    >
+      <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+  </td>
+</tr>
+<tr class="c-table__detail" id="request-REQ-42-detail">
+  <td colspan="99">
+    <div class="c-table__detail-inner">
+      <div class="c-table__detail-content">Detail content</div>
+    </div>
+  </td>
+</tr>
+```
+
+Keyboard behavior: Tab reaches the row link and the disclosure button as
+separate stops; Enter on the link navigates; Enter/Space on the disclosure
+button toggles `aria-expanded` and the detail row.
+
 ### Sticky first column
 
 ```html
@@ -183,7 +225,9 @@ For cell content that should truncate instead of wrapping, apply the
 built-in `.u-truncate` utility class:
 
 ```html
-<td class="u-truncate" style="max-inline-size: 12rem;">Very long email address…</td>
+<td class="u-truncate" style="max-inline-size: 12rem;">
+  Very long email address…
+</td>
 ```
 
 ## Class contract
@@ -212,9 +256,9 @@ built-in `.u-truncate` utility class:
 
 ## Tokens exposed
 
-| Token                       | Default                                              | Purpose                                                          |
-| --------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------- |
-| `--c-table-min`             | `48rem`                                              | Min table width (drives horizontal scroll).                      |
-| `--c-table-cell-pad`        | `var(--pl-space-3) var(--pl-space-4)`                | Cell padding (overridden by density).                            |
-| `--c-table-row-min-block-size` | `calc(var(--pl-control-block-size) + 0.5rem)`     | Row height (derived from global control token).                  |
-| `--c-table-radius`          | `var(--pl-radius-xl)`                                | Corner radius (exposed for cell corner inheritance).             |
+| Token                          | Default                                       | Purpose                                              |
+| ------------------------------ | --------------------------------------------- | ---------------------------------------------------- |
+| `--c-table-min`                | `48rem`                                       | Min table width (drives horizontal scroll).          |
+| `--c-table-cell-pad`           | `var(--pl-space-3) var(--pl-space-4)`         | Cell padding (overridden by density).                |
+| `--c-table-row-min-block-size` | `calc(var(--pl-control-block-size) + 0.5rem)` | Row height (derived from global control token).      |
+| `--c-table-radius`             | `var(--pl-radius-xl)`                         | Corner radius (exposed for cell corner inheritance). |
