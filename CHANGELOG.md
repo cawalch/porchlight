@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-25
+
+### Added
+
+- **Screen-reader utilities `.u-sr-only` and `.u-focusable-sr-only`.**
+  `.u-sr-only` is always hidden (for native inputs/labels whose focus is
+  handled by a styled control); `.u-focusable-sr-only` reappears on
+  focus/active for skip links and other keyboard targets. `.u-visually-hidden`
+  is retained as a backwards-compatible alias of `.u-focusable-sr-only`, and
+  `.c-field--inline` now collapses to one column when it contains any of the
+  three. (#71)
+- **`.c-badge-group`.** A wrapping flex container for laying out multiple
+  compact badges with consistent spacing. (#71)
+- **Layout utilities.** `.u-min-0` (let a flex/grid child shrink below its
+  content width — pair with `.u-truncate`), `.u-wrap-anywhere` (break long
+  tokens like UUIDs, paths, or URLs before they blow out a container),
+  `.u-marginless` (zero block margins for dense chrome), `.u-muted-sm` (small
+  muted caption text), and `.u-icon-title` (leading-icon + title that keeps
+  the icon on the first line while the text truncates or wraps). (#71)
+- **Toast-stack corner placement.** `.c-toast-stack[data-placement]` accepts
+  `bottom-start`, `top-end`, and `top-start`; the default remains `bottom-end`.
+  (#71)
+
+### Changed
+
+- **Menu-row hover is now accent-tinted.** `--pl-menu-row-hover-bg` mixes 10%
+  accent into `--pl-color-surface-2`, so `c-menu`, `c-dropdown`, and
+  `c-split-button` rows read as interactive rather than a plain surface swap.
+  (#69)
+- **Split-button segments are fused into a single composite.** Segment
+  selectors are now `:scope > .c-button.c-split__primary` / `__toggle`, and the
+  toggle gets a negative `margin-inline-start` equal to the border width so the
+  two segments share one crisp divider instead of a double border. A
+  higher-specificity duplicate of these rules lives outside `@scope` as a
+  defensive fallback for consuming apps whose own scoped form/card rules would
+  otherwise split the composite. (#69, #71)
+
+### Fixed
+
+- **`.u-truncate` overflowed inside flex/grid.** Added `min-inline-size: 0` so
+  truncation actually takes effect when the element is itself a flex or grid
+  child. (#71)
+
 ## [0.5.0] - 2026-06-25
 
 ### Added
