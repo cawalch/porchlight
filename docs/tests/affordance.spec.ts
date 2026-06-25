@@ -281,6 +281,48 @@ test("nav active item is visually distinct from inactive", async ({ page }) => {
   expect(states!.activeBg).not.toBe(states!.inactiveBg);
 });
 
+test("nav account footer actions stay compact and icon-aligned", async ({
+  page,
+}) => {
+  await page.goto("./preview/nav");
+
+  const metrics = await page.evaluate(() => {
+    const account = document.querySelector(
+      "[data-preview-nav-account]",
+    ) as HTMLElement;
+    const accountLabel = account?.querySelector(
+      ".c-nav__account-label",
+    ) as HTMLElement;
+    const actions = [...document.querySelectorAll("[data-preview-nav-action]")];
+    const icon = document.querySelector(".c-nav__action-icon") as HTMLElement;
+    if (!account || !accountLabel || actions.length < 2 || !icon) return null;
+
+    return {
+      accountLabelClientWidth: accountLabel.clientWidth,
+      accountLabelScrollWidth: accountLabel.scrollWidth,
+      actionTags: actions.map((action) => action.tagName.toLowerCase()),
+      actionHeights: actions.map(
+        (action) => (action as HTMLElement).getBoundingClientRect().height,
+      ),
+      iconHeight: icon.getBoundingClientRect().height,
+      iconWidth: icon.getBoundingClientRect().width,
+    };
+  });
+
+  console.log("[nav-footer]", metrics);
+
+  expect(metrics).not.toBeNull();
+  expect(metrics!.actionTags).toEqual(["a", "button"]);
+  for (const height of metrics!.actionHeights) {
+    expect(height).toBeLessThanOrEqual(34);
+  }
+  expect(metrics!.iconWidth).toBeLessThanOrEqual(18);
+  expect(metrics!.iconHeight).toBeLessThanOrEqual(18);
+  expect(metrics!.accountLabelScrollWidth).toBeGreaterThan(
+    metrics!.accountLabelClientWidth,
+  );
+});
+
 /* ------------------------------------------------------------------
  * Segmented: checked segment must differ from unchecked.
  * ------------------------------------------------------------------ */

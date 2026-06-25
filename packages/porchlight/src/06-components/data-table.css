@@ -484,5 +484,10 @@
     :where(.c-table__sticky-col) {
       border-inline-end: 1px solid CanvasText;
     }
+
+    :where(.c-table) tbody tr[aria-selected="true"] {
+      background: Highlight;
+      color: HighlightText;
+    }
   }
 }
