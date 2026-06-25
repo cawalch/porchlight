@@ -49,7 +49,8 @@
     }
 
     /* Density modes. */
-    :scope[data-density="compact"] {
+    :scope[data-density="compact"],
+    :scope[data-density="dense"] {
       --c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
 
       /* Tighter offset for table-level compact: the +0.5rem default is

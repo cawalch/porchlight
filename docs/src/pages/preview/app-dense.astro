@@ -1,0 +1,440 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// --- Mock data: dense monitoring/analytics console -------------------------
+
+interface Metric {
+  label: string;
+  value: string;
+  delta: string;
+  direction: 'up' | 'down' | 'flat';
+  tone: 'accent' | 'success' | 'danger' | 'warning';
+}
+
+const metrics: Metric[] = [
+  { label: 'Requests', value: '847.2k', delta: '+12.4%', direction: 'up', tone: 'accent' },
+  { label: 'Error Rate', value: '0.03%', delta: '-0.01%', direction: 'down', tone: 'success' },
+  { label: 'p50 Latency', value: '14ms', delta: '-3ms', direction: 'down', tone: 'success' },
+  { label: 'p99 Latency', value: '287ms', delta: '+42ms', direction: 'up', tone: 'warning' },
+  { label: 'CPU', value: '67%', delta: '+8%', direction: 'up', tone: 'warning' },
+  { label: 'Memory', value: '4.2GB', delta: '+0.3GB', direction: 'up', tone: 'accent' },
+  { label: 'Active Conn', value: '12,847', delta: '+340', direction: 'up', tone: 'accent' },
+  { label: 'Queue Depth', value: '23', delta: 'stable', direction: 'flat', tone: 'success' },
+];
+
+type Severity = 'crit' | 'high' | 'med' | 'low' | 'info';
+type Status = 'active' | 'ack' | 'resolved';
+
+interface Event {
+  ts: string;
+  sev: Severity;
+  source: string;
+  host: string;
+  msg: string;
+  status: Status;
+}
+
+const events: Event[] = [
+  { ts: '14:32:07', sev: 'crit', source: 'firewall', host: 'fw-edge-01', msg: '47 blocked connections from 203.0.113.42 — brute force SSH', status: 'active' },
+  { ts: '14:31:54', sev: 'high', source: 'ids', host: 'prod-web-03', msg: 'SQL injection pattern detected in POST /api/search?q=', status: 'ack' },
+  { ts: '14:31:22', sev: 'crit', source: 'edr', host: 'ws-014', msg: 'Malware signature match: trojan.win32.emotet — quarantined', status: 'active' },
+  { ts: '14:30:48', sev: 'med', source: 'auth', host: 'vpn-gw-01', msg: 'j.martinez login from unrecognized geo (SG) — challenged', status: 'ack' },
+  { ts: '14:30:15', sev: 'low', source: 'cert', host: 'api.internal', msg: 'TLS cert for api.internal.corp expires in 48h', status: 'active' },
+  { ts: '14:29:33', sev: 'med', source: 'waf', host: 'edge-lb-01', msg: 'Rate limit triggered: 8.4k req/s from distributed sources', status: 'resolved' },
+  { ts: '14:28:51', sev: 'high', source: 'dlp', host: '10.0.4.18', msg: '2.3GB outbound transfer to ext-cdn.unknown — flagged', status: 'active' },
+  { ts: '14:28:14', sev: 'info', source: 'deploy', host: 'ci-runner-02', msg: 'Deploy v2.14.3 → prod-cluster completed (3m 42s)', status: 'resolved' },
+  { ts: '14:27:39', sev: 'crit', source: 'ransomware', host: 'fs-02', msg: 'LockBit 3.0 IOC match — mass encryption on file-server-02', status: 'ack' },
+  { ts: '14:26:58', sev: 'low', source: 'dns', host: '10.0.1.8', msg: 'Abnormally long DNS queries to suspect-domain.xyz — blocked', status: 'resolved' },
+  { ts: '14:26:12', sev: 'med', source: 'api', host: 'api-gw-01', msg: 'API key ak_7f3a***2b9 used from new IP 203.0.113.50', status: 'active' },
+  { ts: '14:25:33', sev: 'info', source: 'backup', host: 'db-cluster-03', msg: 'Scheduled snapshot completed: 847GB in 4m 12s', status: 'resolved' },
+  { ts: '14:24:47', sev: 'high', source: 'priv-esc', host: 'db-cluster-03', msg: 'svc_backup attempted GRANT ALL on production DB — quarantined', status: 'ack' },
+  { ts: '14:24:01', sev: 'low', source: 'policy', host: '10.0.3.22', msg: 'File uploaded to unsanctioned cloud storage — logged', status: 'resolved' },
+  { ts: '14:23:18', sev: 'med', source: 'ddos', host: 'edge-lb-01', msg: 'SYN flood 12k pps on ports 80/443 — mitigated', status: 'resolved' },
+];
+
+const sevTone: Record<Severity, string> = {
+  crit: 'danger', high: 'warning', med: 'accent', low: '', info: '',
+};
+const sevLabel: Record<Severity, string> = {
+  crit: 'CRIT', high: 'HIGH', med: 'MED', low: 'LOW', info: 'INFO',
+};
+
+const navSections = [
+  { label: 'Monitor', items: ['Overview', 'Alerts', 'Events', 'Logs', 'Metrics', 'Traces'] },
+  { label: 'Investigate', items: ['Cases', 'Threat Intel', 'Hunt', 'Forensics'] },
+  { label: 'Manage', items: ['Rules', 'Assets', 'Users', 'Reports', 'Integrations'] },
+];
+---
+<BaseLayout title="Data-dense app · Porchlight">
+  <div data-density="dense" class="dense-app">
+    <header class="dense-topbar">
+      <div class="dense-topbar__left">
+        <button class="c-button c-button--icon" data-variant="ghost" aria-label="Toggle sidebar">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        </button>
+        <strong class="dense-brand">SENTRY<span>OPS</span></strong>
+        <span class="c-badge" data-tone="success">● live</span>
+      </div>
+      <div class="dense-search">
+        <input class="c-field__control" placeholder="Search events, IPs, hosts…" aria-label="Search" />
+        <kbd class="dense-kbd">⌘K</kbd>
+      </div>
+      <div class="dense-topbar__right">
+        <span class="c-badge" data-tone="danger">4 crit</span>
+        <span class="c-badge" data-tone="warning">7 high</span>
+        <button class="c-button" data-variant="ghost" aria-label="Notifications">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="dense-body">
+      <nav class="dense-sidebar">
+        {navSections.map((section) => (
+          <div class="dense-nav-group">
+            <span class="dense-nav-label">{section.label}</span>
+            {section.items.map((item, i) => (
+              <a class="dense-nav-item" class:list={[{ 'is-active': item === 'Events' }]} href="#">
+                <span>{item}</span>
+                {item === 'Alerts' && <span class="c-badge c-badge--mini" data-tone="danger">11</span>}
+                {item === 'Cases' && <span class="c-badge c-badge--mini" data-tone="accent">3</span>}
+              </a>
+            ))}
+          </div>
+        ))}
+      </nav>
+
+      <main class="dense-main">
+        <!-- KPI strip -->
+        <div class="dense-kpis">
+          {metrics.map((m) => (
+            <div class="dense-kpi">
+              <span class="dense-kpi__label">{m.label}</span>
+              <span class="dense-kpi__value">{m.value}</span>
+              <span class="dense-kpi__delta" data-tone={m.tone}>{m.delta}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Toolbar -->
+        <div class="dense-toolbar">
+          <div class="dense-toolbar__left">
+            <button class="c-button" data-variant="ghost" data-size="sm">All</button>
+            <button class="c-button" data-variant="ghost" data-size="sm">Critical</button>
+            <button class="c-button" data-variant="ghost" data-size="sm">High</button>
+            <span class="dense-toolbar__count">15 events · last 15 min</span>
+          </div>
+          <div class="dense-toolbar__right">
+            <button class="c-button" data-variant="secondary">
+              <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2" stroke-linecap="round"/></svg>
+              Filter
+            </button>
+            <button class="c-button" data-variant="secondary">
+              <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Export
+            </button>
+            <div class="c-split" style="--c-split-anchor: --dsb-1;">
+              <button type="button" class="c-button c-split__primary" data-variant="primary">Ack all</button>
+              <button type="button" class="c-button c-split__toggle" data-variant="primary" popovertarget="dsb-1" aria-label="More actions">
+                <svg class="c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </button>
+              <div popover class="c-split__menu" id="dsb-1">
+                <button class="c-split__option">Resolve all</button>
+                <button class="c-split__option">Assign to me</button>
+                <hr class="c-menu__divider" />
+                <button class="c-split__option" data-tone="danger">Suppress (24h)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event table -->
+        <div class="c-table-wrap dense-table" data-density="dense">
+          <table class="c-table">
+            <thead>
+              <tr>
+                <th data-sort="asc">Time</th>
+                <th>Sev</th>
+                <th>Source</th>
+                <th>Host</th>
+                <th>Message</th>
+                <th data-align="end">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map((e) => (
+                <tr>
+                  <td class="dense-mono">{e.ts}</td>
+                  <td><span class="c-badge" data-tone={sevTone[e.sev]}>{sevLabel[e.sev]}</span></td>
+                  <td class="dense-mono">{e.source}</td>
+                  <td class="dense-mono">{e.host}</td>
+                  <td class="dense-msg">{e.msg}</td>
+                  <td data-align="end">
+                    <span class:list={['dense-status', `dense-status--${e.status}`]}>{e.status}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="dense-pager">
+          <span class="dense-toolbar__count">Showing 1–15 of 2,847</span>
+          <nav class="c-pagination">
+            <button class="c-button" data-variant="ghost" aria-label="Previous">‹</button>
+            <button class="c-button" data-variant="ghost" aria-pressed="true">1</button>
+            <button class="c-button" data-variant="ghost">2</button>
+            <button class="c-button" data-variant="ghost">3</button>
+            <span class="dense-pager__ellipsis">…</span>
+            <button class="c-button" data-variant="ghost">190</button>
+            <button class="c-button" data-variant="ghost" aria-label="Next">›</button>
+          </nav>
+        </div>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .dense-app {
+    display: flex;
+    flex-direction: column;
+    block-size: 100dvh;
+    overflow: hidden;
+    margin: calc(-1 * var(--pl-space-8));
+    background: var(--pl-color-bg);
+    font-size: var(--pl-text-sm);
+  }
+
+  /* Topbar */
+  .dense-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+    padding: var(--pl-space-1) var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  .dense-topbar__left,
+  .dense-topbar__right {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+  }
+  .dense-brand {
+    font-size: var(--pl-text-sm);
+    letter-spacing: 0.05em;
+    color: var(--pl-color-text);
+  }
+  .dense-brand span {
+    color: var(--pl-color-accent);
+  }
+  .dense-search {
+    position: relative;
+    flex: 1;
+    max-inline-size: 32rem;
+  }
+  .dense-search input {
+    inline-size: 100%;
+    min-block-size: 1.75rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-sm);
+    font-family: inherit;
+  }
+  .dense-search input:focus-visible {
+    outline: var(--pl-focus-size) solid var(--pl-focus-color);
+    outline-offset: var(--pl-focus-offset);
+    border-color: var(--pl-color-accent);
+  }
+  .dense-kbd {
+    position: absolute;
+    inset-inline-end: var(--pl-space-2);
+    inset-block: 0;
+    margin-block: auto;
+    font-family: var(--pl-font-mono);
+    font-size: var(--pl-text-xs);
+    padding: 0.1rem 0.25rem;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-xs);
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text-muted);
+    block-size: fit-content;
+  }
+
+  /* Body grid */
+  .dense-body {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .dense-sidebar {
+    border-inline-end: 1px solid var(--pl-color-border);
+    overflow-y: auto;
+    padding: var(--pl-space-2);
+    scrollbar-width: thin;
+  }
+  .dense-nav-group {
+    margin-block-end: var(--pl-space-3);
+  }
+  .dense-nav-label {
+    display: block;
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pl-color-text-muted);
+    padding: var(--pl-space-1) var(--pl-space-2);
+    margin-block-end: var(--pl-space-1);
+  }
+  .dense-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-2);
+    padding: var(--pl-space-1) var(--pl-space-2);
+    border-radius: var(--pl-radius-sm);
+    font-size: var(--pl-text-sm);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+    min-block-size: 1.75rem;
+    transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+  }
+  .dense-nav-item:hover {
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text);
+  }
+  .dense-nav-item.is-active {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+    color: var(--pl-color-accent);
+    font-weight: var(--pl-font-weight-medium);
+  }
+
+  /* Mini badge for nav counts */
+  .c-badge--mini {
+    font-size: var(--pl-text-xs);
+    padding-inline: var(--pl-space-1);
+    min-block-size: 1rem;
+    line-height: 1rem;
+  }
+
+  /* Main content */
+  .dense-main {
+    overflow-y: auto;
+    padding: var(--pl-space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-3);
+  }
+
+  /* KPI strip */
+  .dense-kpis {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--pl-space-2);
+  }
+  @media (width < 80rem) {
+    .dense-kpis { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (width < 48rem) {
+    .dense-kpis { grid-template-columns: repeat(2, 1fr); }
+  }
+  .dense-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface);
+  }
+  .dense-kpi__label {
+    font-size: var(--pl-text-xs);
+    color: var(--pl-color-text-muted);
+    white-space: nowrap;
+  }
+  .dense-kpi__value {
+    font-size: var(--pl-text-lg);
+    font-weight: var(--pl-font-weight-bold);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .dense-kpi__delta {
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-medium);
+    color: var(--pl-color-text-muted);
+  }
+  .dense-kpi__delta[data-tone="success"] { color: var(--pl-color-success-text); }
+  .dense-kpi__delta[data-tone="danger"] { color: var(--pl-color-danger-text); }
+  .dense-kpi__delta[data-tone="warning"] { color: var(--pl-color-warning-text); }
+
+  /* Toolbar */
+  .dense-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+    flex-wrap: wrap;
+  }
+  .dense-toolbar__left,
+  .dense-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+  }
+  .dense-toolbar__count {
+    font-size: var(--pl-text-xs);
+    color: var(--pl-color-text-muted);
+    white-space: nowrap;
+  }
+
+  /* Dense table overrides */
+  .dense-table .c-table td,
+  .dense-table .c-table th {
+    font-size: var(--pl-text-sm);
+  }
+  .dense-mono {
+    font-family: var(--pl-font-mono);
+    font-size: var(--pl-text-xs);
+    white-space: nowrap;
+  }
+  .dense-msg {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-inline-size: 32rem;
+  }
+  .dense-status {
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--pl-color-text-muted);
+  }
+  .dense-status--active { color: var(--pl-color-danger-text); }
+  .dense-status--ack { color: var(--pl-color-warning-text); }
+  .dense-status--resolved { color: var(--pl-color-success-text); }
+
+  /* Pager */
+  .dense-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+  }
+  .dense-pager__ellipsis {
+    font-size: var(--pl-text-sm);
+    color: var(--pl-color-text-muted);
+    padding-inline: var(--pl-space-1);
+  }
+</style>
