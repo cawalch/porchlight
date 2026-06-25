@@ -72,6 +72,7 @@ const PAGES = [
   "/preview/page-header",
   "/preview/split-button",
   "/preview/app-dashboard",
+  "/preview/app-dense",
   "/preview/app-inbox",
   "/preview/app-marketing",
   "/preview/app-cases",

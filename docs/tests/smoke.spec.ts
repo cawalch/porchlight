@@ -1044,4 +1044,37 @@ test.describe("docs scaffold", () => {
     // Pagination.
     await expect(page.locator(".c-pagination")).toBeVisible();
   });
+
+  test("app-dense renders compact console with KPIs and event table", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-dense");
+    // The dense density tier is active on the container.
+    await expect(page.locator(".dense-app[data-density='dense']")).toBeVisible();
+    // Topbar with brand and search.
+    await expect(page.locator(".dense-brand")).toBeVisible();
+    await expect(page.locator(".dense-search input")).toBeVisible();
+    // KPI strip with 8 metrics.
+    expect(
+      await page.locator(".dense-kpi").count(),
+    ).toBeGreaterThanOrEqual(8);
+    // Event data table with rows.
+    await expect(page.locator(".dense-table .c-table")).toBeVisible();
+    const eventRows = page.locator(".dense-table tbody tr");
+    expect(await eventRows.count()).toBeGreaterThanOrEqual(10);
+    // Severity badges in table.
+    expect(
+      await page.locator(".dense-table .c-badge").count(),
+    ).toBeGreaterThanOrEqual(5);
+    // Split button in toolbar.
+    await expect(
+      page.locator(".dense-toolbar .c-split__toggle"),
+    ).toBeVisible();
+    // Sidebar nav sections.
+    expect(
+      await page.locator(".dense-nav-item").count(),
+    ).toBeGreaterThanOrEqual(10);
+    // Pagination.
+    await expect(page.locator(".dense-pager .c-pagination")).toBeVisible();
+  });
 });

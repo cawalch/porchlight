@@ -1,0 +1,77 @@
+---
+title: Data-dense mode
+description: A fourth density tier for SIEM dashboards, trading terminals, and analytics consoles where screen real estate is at a premium.
+status: stable
+since: 0.3.0
+---
+
+# Data-dense mode
+
+The `data-density="dense"` tier is the fourth and tightest density level,
+below `compact`. While `compact` only shrinks control geometry (button height,
+padding), `dense` also compresses the spacing scale, table row height, and
+small text sizes — maximizing information density for data-heavy screens.
+
+## When to use
+
+| Tier | Control height | Best for |
+|------|---------------|----------|
+| `touch` | 2.75rem (44px) | Mobile, tablets, kiosks |
+| `comfortable` | 2.5rem (40px) | Default — most SaaS apps |
+| `compact` | 2rem (32px) | Admin panels, settings, internal tools |
+| **`dense`** | **1.75rem (28px)** | **SIEM, analytics, log viewers, trading terminals** |
+
+## Usage
+
+Set `data-density="dense"` on a container — it cascades to all children:
+
+```html
+<div data-density="dense">
+  <!-- Everything inside is compressed: tighter controls, smaller gaps,
+       denser tables, smaller text in data areas. -->
+</div>
+```
+
+You can also set it on `<body>` if the entire app is data-dense.
+
+## What changes
+
+| Token group | comfortable | dense | Reduction |
+|-------------|------------|-------|-----------|
+| `--pl-control-block-size` | 2.5rem | 1.75rem | 30% |
+| `--pl-control-padding-inline` | 1rem | 0.5rem | 50% |
+| `--pl-space-4` | 1rem | 0.75rem | 25% |
+| `--pl-space-6` | 1.5rem | 1rem | 33% |
+| `--pl-text-sm` | 0.875rem | 0.8125rem | 7% |
+| `--pl-text-xs` | 0.75rem | 0.6875rem | 8% |
+
+Control height, spacing, and text all compress together so the visual rhythm
+stays consistent at the tighter scale.
+
+## Dense-specific patterns
+
+The [data-dense preview](../preview/app-dense) demonstrates:
+
+- **KPI strip** — 8 metrics in one row, compact tiles with value + delta
+- **Tight event table** — `data-density="dense"` on `.c-table-wrap` for
+  minimal row padding
+- **Compact sidebar** — 12rem width, mini badges for alert counts
+- **Slim toolbar** — filter buttons, split button, inline count text
+- **Mono text** — `--pl-font-mono` for IPs, hostnames, timestamps
+- **Truncated messages** — `.u-truncate` on long event descriptions
+
+## Mixing tiers
+
+You can nest density tiers — a `dense` page with a `comfortable` modal:
+
+```html
+<body data-density="dense">
+  <!-- Everything is dense -->
+  <dialog data-density="comfortable">
+    <!-- But this modal is comfortable -->
+  </dialog>
+</body>
+```
+
+This is useful when a dense dashboard opens a form or detail panel that
+needs more breathing room.
