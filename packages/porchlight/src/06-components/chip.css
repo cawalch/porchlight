@@ -102,6 +102,7 @@
 
     /* Remove button. */
     .c-chip__remove {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -112,11 +113,28 @@
       border-radius: 50%;
       background: transparent;
       color: inherit;
-      font-size: 0.75rem;
+      font-size: 0;
       line-height: 1;
       cursor: pointer;
       opacity: 0.7;
       transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-chip__remove::before,
+    .c-chip__remove::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: 0.5625rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .c-chip__remove::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
 
     .c-chip__remove:hover:not(:disabled) {

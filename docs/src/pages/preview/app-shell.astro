@@ -26,7 +26,7 @@ const nav = [
   </p>
 
   <div class="toggles">
-    <button type="button" data-toggle="collapse" aria-pressed="false">Collapse sidebar</button>
+    <button type="button" class="c-button" data-variant="secondary" data-size="sm" data-toggle="collapse" aria-pressed="false">Collapse sidebar</button>
     <span class="toggles__hint">or narrow the window below 60rem to auto-hide it</span>
   </div>
 
@@ -49,7 +49,7 @@ const nav = [
         <nav class="sidebar__nav" aria-label="Primary">
           {nav.map(([label], i) => (
             <a class="nav-item" href="#" aria-current={i === 0 ? 'page' : undefined}>
-              <span class="nav-item__icon" aria-hidden="true">●</span>
+              <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
               <span class="nav-item__label">{label}</span>
             </a>
           ))}
@@ -188,7 +188,8 @@ const nav = [
   }
   .nav-item__icon {
     flex-shrink: 0;
-    font-size: 0.5rem;
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
     color: var(--pl-color-text-muted);
   }
 

@@ -69,7 +69,7 @@ const eventFeed = [
         <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
-        <span class="siem-logo">🛡</span>
+        <svg class="siem-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z" stroke-linejoin="round"/><path d="M12 7v7" stroke-linecap="round"/><path d="M12 17h.01" stroke-linecap="round"/></svg>
         <strong>Lumigate</strong>
         <span class="c-badge" data-tone="danger">{severityCount('critical')} critical</span>
       </div>
@@ -166,7 +166,7 @@ const eventFeed = [
         <div class="siem-content-grid">
           <!-- Alert Queue -->
           <div class="siem-alert-panel">
-            <div class="c-card" style="border:0;">
+            <div class="c-card" data-surface="app" style="border:0;">
               <!-- Filter toolbar -->
               <div class="c-toolbar">
                 <div class="c-toolbar__group">
@@ -245,7 +245,7 @@ const eventFeed = [
 
           <!-- Live Event Stream -->
           <div class="siem-event-panel">
-            <div class="c-card">
+            <div class="c-card" data-surface="app">
               <div class="c-card__header">
                 <h2 class="c-card__title">Live Event Stream</h2>
                 <span class="c-badge" data-tone="success">
@@ -324,7 +324,12 @@ const eventFeed = [
     }
     .siem-topbar__left { display: flex; align-items: center; gap: var(--pl-space-2); }
     .siem-topbar__right { display: flex; align-items: center; gap: var(--pl-space-2); }
-    .siem-logo { font-size: 1.25rem; }
+    .siem-logo {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      color: var(--pl-color-accent);
+      flex-shrink: 0;
+    }
     .siem-kbd {
       font-family: var(--pl-font-mono);
       font-size: var(--pl-text-xs);

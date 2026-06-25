@@ -34,8 +34,10 @@
         oklch(100% 0 0deg / 94%),
         oklch(17% 0.04 250deg / 92%)
       );
-      backdrop-filter: blur(var(--pl-backdrop-blur-strong)) saturate(var(--pl-backdrop-saturate-strong));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong)) saturate(var(--pl-backdrop-saturate-strong));
+      backdrop-filter: blur(var(--pl-backdrop-blur-strong))
+        saturate(var(--pl-backdrop-saturate-strong));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong))
+        saturate(var(--pl-backdrop-saturate-strong));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
@@ -70,7 +72,8 @@
        against a busy background). */
     :scope::backdrop {
       background: var(--pl-color-scrim);
-      backdrop-filter: blur(var(--pl-backdrop-blur-scrim)) saturate(var(--pl-backdrop-saturate-scrim));
+      backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
+        saturate(var(--pl-backdrop-saturate-scrim));
     }
 
     .c-dialog__header {
@@ -82,11 +85,8 @@
       padding: var(--pl-space-5);
 
       /* Softer divider — the Liquid Glass surface is already visually separated */
-      border-block-end: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
 
     .c-dialog__title {
@@ -99,6 +99,7 @@
 
     /* Close button  -  a ghost-icon button top-right. */
     .c-dialog__close {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -111,10 +112,28 @@
       background: transparent;
       color: var(--pl-color-text-muted);
       font: inherit;
+      font-size: 0;
       cursor: pointer;
       transition:
         background-color var(--pl-duration-1) var(--pl-ease-standard),
         color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-dialog__close::before,
+    .c-dialog__close::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: 1rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .c-dialog__close::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
 
     .c-dialog__close:hover {
@@ -136,16 +155,13 @@
       justify-content: flex-end;
       gap: var(--pl-space-3);
       padding: var(--pl-space-5);
-      border-block-start: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 40%
-      );
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
 
     @media (forced-colors: active) {
       :scope {
-        border-color: ButtonBorder;
+        border: 1px solid ButtonBorder;
       }
     }
   }
