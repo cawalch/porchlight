@@ -52,7 +52,9 @@
     --pl-font-weight-bold: 700;
     --pl-font-weight-black: 900;
 
-    /* Type */
+    /* Type scale  -  fluid via clamp(). Values are hand-tuned (not a
+       pure modular ratio) to hit optical targets at the min/max ends.
+       The fluid slope between them scales smoothly with the viewport. */
     --pl-text-xs: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
     --pl-text-sm: clamp(0.875rem, 0.84rem + 0.1vi, 0.9375rem);
     --pl-text-md: 1rem;

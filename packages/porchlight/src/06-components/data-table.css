@@ -331,8 +331,13 @@
     }
   }
 
-  /* Row hover  -  OUTSIDE @scope (live-state pseudo on tbody tr). */
+  /* Row hover  -  OUTSIDE @scope (live-state pseudo on tbody tr).
+     content-visibility: auto skips rendering offscreen rows  -  a major
+     win for large tables (100+ rows). The browser only renders/layed-out
+     rows near the viewport. */
   :where(.c-table) tbody tr {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 2.5rem;
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
   }
 
