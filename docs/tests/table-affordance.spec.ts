@@ -56,3 +56,39 @@ test("sticky header has an opaque background", async ({ page }) => {
   );
   expect(bg, "header bg must not be transparent").not.toBe("transparent");
 });
+
+test("collapsed detail rows do not expose detail content", async ({ page }) => {
+  await page.goto("./preview/data-table");
+  const metrics = await page.evaluate(() =>
+    [...document.querySelectorAll(".c-table__detail:not([open])")].map(
+      (row) => {
+        const inner = row.querySelector(
+          ".c-table__detail-inner",
+        ) as HTMLElement;
+        const content = row.querySelector(
+          ".c-table__detail-content",
+        ) as HTMLElement;
+        const innerRect = inner.getBoundingClientRect();
+        const contentRect = content.getBoundingClientRect();
+        const contentStyle = getComputedStyle(content);
+        return {
+          contentHeight: contentRect.height,
+          innerHeight: innerRect.height,
+          paddingBlockEnd: contentStyle.paddingBlockEnd,
+          paddingBlockStart: contentStyle.paddingBlockStart,
+        };
+      },
+    ),
+  );
+
+  expect(
+    metrics,
+    "preview should include collapsed detail rows",
+  ).not.toHaveLength(0);
+  for (const metric of metrics) {
+    expect(metric.innerHeight).toBe(0);
+    expect(metric.contentHeight).toBe(0);
+    expect(metric.paddingBlockStart).toBe("0px");
+    expect(metric.paddingBlockEnd).toBe("0px");
+  }
+});

@@ -338,13 +338,20 @@
         var(--pl-ease-standard);
     }
 
-    .c-table .c-table__detail[open] .c-table__detail-inner {
+    .c-table .c-table__detail:is([open], [data-open]) .c-table__detail-inner {
       grid-template-rows: 1fr;
     }
 
     .c-table__detail-content {
       overflow: hidden;
-      padding: var(--pl-space-4);
+      min-block-size: 0;
+      padding-block: 0;
+      padding-inline: var(--pl-space-4);
+      transition: padding-block var(--pl-duration-3) var(--pl-ease-standard);
+    }
+
+    .c-table .c-table__detail:is([open], [data-open]) .c-table__detail-content {
+      padding-block: var(--pl-space-4);
     }
 
     /* The expand/collapse toggle button in a row. */
