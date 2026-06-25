@@ -69,6 +69,13 @@
       white-space: nowrap;
       cursor: pointer;
 
+      /* Per-tab max width: set --c-tabs-tab-max (e.g. 12rem) to cap label
+         width. When set, long labels truncate with an ellipsis instead of
+         stretching the tab list. Default is none (no truncation). */
+      max-inline-size: var(--c-tabs-tab-max, none);
+      overflow: hidden;
+      text-overflow: ellipsis;
+
       /* The selected indicator: a block-end accent line drawn INSIDE the tab.
          Transparent unless selected; box-shadow (not border) so selecting a
          tab never shifts layout. Sits flush over the tablist border. */

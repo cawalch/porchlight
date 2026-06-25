@@ -81,6 +81,7 @@
       min-inline-size: 0;
       font-size: var(--pl-text-sm);
       line-height: var(--pl-leading-normal);
+      text-wrap: pretty;
     }
 
     /* Allow the detail to truncate with .u-truncate if needed.

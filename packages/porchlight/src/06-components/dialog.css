@@ -124,6 +124,10 @@
 
     .c-dialog__body {
       padding: var(--pl-space-5);
+
+      /* Prevent orphans in dialog prose / descriptions. Degrades gracefully
+         in browsers without text-wrap: pretty support. */
+      text-wrap: pretty;
     }
 
     .c-dialog__footer {
