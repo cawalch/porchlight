@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+---
+<BaseLayout title="Page header · Porchlight">
+  <h1>Page header</h1>
+  <p>
+    A bare title + actions row for use <strong>inside</strong> a container.
+    Unlike <code>.c-toolbar</code> (which has padding, border, and a surface
+    background for shell-level bars), <code>.c-page-header</code> has no
+    chrome — no background, no border, no padding. It eliminates the ~65px of
+    dead space that <code>.c-toolbar</code> creates when nested inside
+    <code>.l-container</code>.
+  </p>
+
+  <h2>Basic</h2>
+  <div class="l-container">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Queue</h1>
+      </div>
+      <div class="c-page-header__actions">
+        <button class="c-button">Export</button>
+        <button class="c-button" data-variant="primary"><Icon name="plus" /> New item</button>
+      </div>
+    </div>
+    <p class="u-muted">Content below the header sits flush — no extra padding gap.</p>
+  </div>
+
+  <h2>With subtitle</h2>
+  <div class="l-container">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Operator queue</h1>
+        <span class="c-page-header__subtitle">12 pending · 3 in progress · 2 overdue</span>
+      </div>
+      <div class="c-page-header__actions">
+        <button class="c-button" data-variant="ghost">Filter</button>
+        <button class="c-button" data-variant="ghost">Sort</button>
+        <button class="c-button" data-variant="primary">Assign</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Above a data table</h2>
+  <div class="l-container">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Accounts</h1>
+      </div>
+      <div class="c-page-header__actions">
+        <span class="c-badge">247 total</span>
+        <button class="c-button" data-variant="primary">New account</button>
+      </div>
+    </div>
+    <div class="c-table-wrap">
+      <table class="c-table">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th data-align="end">MRR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Acme Ops</td>
+            <td data-align="end">$2,400</td>
+          </tr>
+          <tr>
+            <td>Northwind</td>
+            <td data-align="end">$8,100</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h2>Wrapping on narrow containers</h2>
+  <div style="max-inline-size: 24rem;">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Settings</h1>
+      </div>
+      <div class="c-page-header__actions">
+        <button class="c-button" data-variant="ghost">Cancel</button>
+        <button class="c-button" data-variant="primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
