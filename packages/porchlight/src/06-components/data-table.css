@@ -309,6 +309,11 @@
      */
     .c-table .c-table__detail td {
       padding: 0;
+
+      /* Reset the row min-height so the td can fully collapse when the inner
+         grid is at 0fr. Without this, min-block-size from the base cell rule
+         (~3rem) leaves a visible strip when collapsed. */
+      min-block-size: 0;
       border-block-end: 1px solid var(--pl-color-border);
 
       /* Slightly deeper tint than hover so the detail row reads as
