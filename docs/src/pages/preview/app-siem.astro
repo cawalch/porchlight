@@ -253,7 +253,7 @@ const eventFeed = [
                 </span>
               </div>
               <div class="c-card__body siem-event-body">
-                <ol class="c-timeline siem-timeline">
+                <ol class="c-timeline siem-timeline" tabindex="0" aria-label="Security event feed">
                   {eventFeed.map((e) => (
                     <li class="c-timeline__item" data-tone={e.tone}>
                       <span class="c-timeline__dot"></span>
