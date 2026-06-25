@@ -45,6 +45,7 @@
       );
       overflow-x: auto;
       scrollbar-width: none; /* Hide scrollbar in Firefox */
+      scrollbar-color: transparent transparent;
 
       &::-webkit-scrollbar {
         display: none; /* Hide scrollbar in Chrome/Safari */

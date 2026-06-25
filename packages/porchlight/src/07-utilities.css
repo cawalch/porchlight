@@ -47,6 +47,17 @@
     white-space: nowrap;
   }
 
+  /* Multi-line truncation: clamp to N lines with an ellipsis. Use
+     --u-line-clamp to set the line count (default: 2). Common SaaS need
+     for card titles, notification previews, comment snippets. */
+  :where(.u-line-clamp) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--u-line-clamp, 2);
+    line-clamp: var(--u-line-clamp, 2);
+    overflow: hidden;
+  }
+
   /* Vertical rhythm for prose blocks. The sibling selector adds space
      between top-level children, not before the first / after the last. Tune
      via --u-flow-space. */

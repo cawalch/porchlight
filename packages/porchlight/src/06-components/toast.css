@@ -24,12 +24,15 @@
  * z-index: --pl-z-toast (1100, above overlays/dialogs at 1000).
  */
 @layer porchlight.components {
-  /* Toast stack: fixed positioning, bottom-corner. */
+  /* Toast stack: fixed positioning, bottom-corner. isolation: isolate
+     contains the stacking context so toasts never bleed z-index to page
+     content  -  cleaner than an opacity hack. */
   :where(.c-toast-stack) {
     position: fixed;
     inset-block-end: var(--pl-space-4);
     inset-inline-end: var(--pl-space-4);
     z-index: var(--pl-z-toast);
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     gap: var(--pl-space-2);
