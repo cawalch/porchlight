@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`c-split-button` component.** A primary action button with a dropdown
+  toggle. Both segments share the same `data-variant` for visual consistency
+  across the seam. Uses anchor positioning for popover tethering; each
+  instance requires a unique `--c-split-anchor` name. Includes chevron
+  rotation on open. (#54)
+- **`c-description-list` component.** A key-value grid for detail panels
+  (account info, case metadata, user profiles). Responsive columns via
+  container queries with a `--c-description-min` token. (#53)
+- **`c-page-header` component.** A bare title + actions row for use inside
+  padded containers. Unlike `.c-toolbar`, it has no chrome (no padding,
+  border, or surface background). Includes optional subtitle and actions
+  slots. (#53)
+- **Data-dense density tier.** A fourth `[data-density="dense"]` preset
+  (1.75rem controls) that also compresses the spacing scale (~30%) and
+  small text sizes. Designed for SIEM dashboards, analytics consoles, and
+  trading terminals. Includes a full SIEM console preview page. (#58)
+- **`.u-line-clamp` utility.** Multi-line text truncation via the standard
+  `line-clamp` property with `-webkit-box` fallback. Accepts a
+  `--u-line-clamp` variable (default 2 lines). (#57)
+
+### Changed
+
+- **`scrollbar-color` standard property** added to tabs alongside the
+  existing `scrollbar-width: none`. (#57)
+- **`content-visibility: auto`** on data-table rows for lazy rendering of
+  large tables, with `contain-intrinsic-size` to prevent scrollbar jitter.
+  (#57)
+- **`isolation: isolate`** on the toast stack for a clean stacking context
+  without opacity hacks. (#57)
+- **Browser-support guide updated** with CSS Snapshot 2026 status column,
+  missing `@property` in the feature matrix, and corrected test counts.
+  (#56)
+
+### Fixed
+
+- **App-siem a11y violation.** Scrollable `<ol>` in the SIEM console lacked
+  `tabindex="0"` and `aria-label`, failing the `scrollable-region-focusable`
+  rule. Added both; removed erroneous `role="region"` that broke the
+  implicit `list` role. (#55)
+
 ## [0.2.0] - 2026-06-25
 
 ### Fixed

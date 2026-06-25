@@ -169,17 +169,30 @@ These drive card corners, dialog radius, table wrap radius, and toast radius.
 
 ## Density modes
 
-Three density presets control component geometry (padding, height, gap):
+Four density presets control component geometry:
+
+| Tier | Control height | Best for |
+|------|---------------|----------|
+| `compact` | 2rem (32px) | Admin panels, settings |
+| `comfortable` | 2.5rem (40px) | Default — most SaaS apps |
+| `touch` | 2.75rem (44px) | Mobile, tablets, kiosks |
+| `dense` | 1.75rem (28px) | SIEM, analytics, log viewers |
 
 ```html
 <div data-density="compact">Tighter controls</div>
 <div data-density="comfortable">Default</div>
 <div data-density="touch">Larger touch targets</div>
+<div data-density="dense">Maximum information density</div>
 ```
 
-Set on any ancestor. Density changes only affect `--pl-control-block-size`,
-`--pl-control-padding-inline`, and `--pl-control-gap`. Type, spacing, and
-radius are unchanged.
+Set on any ancestor. `compact`, `comfortable`, and `touch` change only
+`--pl-control-block-size`, `--pl-control-padding-inline`, and
+`--pl-control-gap` — type, spacing, and radius are unchanged.
+
+The `dense` tier goes further: it also compresses the `--pl-space-*` scale
+(~30% reduction) and small text sizes (`--pl-text-sm`, `--pl-text-xs`) for
+maximum information density. See the
+[Data-dense mode](/porchlight/components/app-dense) reference for details.
 
 ## Reduced motion
 
