@@ -39,6 +39,22 @@ focus ring - for navigation tiles and selectable list items.
 </a>
 ```
 
+## App surfaces
+
+Add `data-surface="app"` for tighter operational surfaces inside dense desktop
+app shells. It keeps the same border, elevation, spacing, and semantics, but
+uses the smaller large-surface radius so dashboard cards do not feel overly
+soft.
+
+```html
+<section class="c-card" data-surface="app">
+  <header class="c-card__header">
+    <h2 class="c-card__title">Queue health</h2>
+  </header>
+  <div class="c-card__body">23 jobs waiting</div>
+</section>
+```
+
 ## Class contract
 
 | Selector                     | Role                                            |
@@ -49,11 +65,12 @@ focus ring - for navigation tiles and selectable list items.
 | `.c-card__body`              | Main content.                                   |
 | `.c-card__footer`            | Optional action row with a top divider.         |
 | `[data-interactive]` / `<a>` | Enables hover lift + focus ring.                |
+| `[data-surface="app"]`       | Uses a tighter app-shell radius.                |
 
 ## Tokens consumed
 
 `--pl-color-{surface,border,text,text-muted}`,
-`--pl-shadow-{1,2}`, `--pl-focus-color`, `--pl-radius-xl`,
+`--pl-shadow-{1,2}`, `--pl-focus-color`, `--pl-radius-{lg,xl}`,
 `--pl-space-{2,3,4,5}`, `--pl-text-lg`, `--pl-leading-tight`,
 `--pl-duration-2`, `--pl-ease-standard`.
 

@@ -16,7 +16,7 @@ import Icon from '../../components/Icon.astro';
   <h2>Account menu</h2>
   <p>The canonical SaaS pattern: avatar → account/settings/sign-out.</p>
   <div class="demo-row">
-    <div class="c-menu">
+    <div class="c-menu" style="--c-menu-anchor: --account-menu-anchor;">
       <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="account-menu">
         <Icon name="gear" /> Account
       </button>
@@ -33,7 +33,7 @@ import Icon from '../../components/Icon.astro';
   <h2>Action menu</h2>
   <p>A compact actions menu — row-level actions in a data table.</p>
   <div class="demo-row">
-    <div class="c-menu">
+    <div class="c-menu" style="--c-menu-anchor: --row-menu-anchor;">
       <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="row-menu" aria-label="Row actions">
         <Icon name="gear" />
       </button>

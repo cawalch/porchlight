@@ -180,6 +180,24 @@ test.describe("docs scaffold", () => {
     await expect(popover).toBeHidden();
   });
 
+  test("popover menu examples use unique anchors", async ({ page }) => {
+    await page.goto("./preview/popover-menu");
+
+    // Every menu instance sets a unique --c-menu-anchor so popovers do not
+    // tether to the last trigger sharing the default anchor name.
+    const menus = page.locator(".c-menu");
+    const count = await menus.count();
+    expect(count).toBeGreaterThanOrEqual(2);
+    const anchors = new Set<string>();
+    for (let i = 0; i < count; i++) {
+      const style = (await menus.nth(i).getAttribute("style")) || "";
+      const match = style.match(/--c-menu-anchor:\s*(--[^;]+)/);
+      expect(match, `instance ${i} must set --c-menu-anchor`).not.toBeNull();
+      anchors.add(match![1].trim());
+    }
+    expect(anchors.size).toBe(count);
+  });
+
   test("dialog opens via trigger and closes via Esc", async ({ page }) => {
     await page.goto("./preview/dialog");
     await expect(
@@ -438,7 +456,9 @@ test.describe("docs scaffold", () => {
     // Should mention npm/pnpm install.
     await expect(content.getByText("npm install")).toBeVisible();
     // Should mention the layer pattern.
-    await expect(content.getByText(/@layer porchlight.*app/).first()).toBeVisible();
+    await expect(
+      content.getByText(/@layer porchlight.*app/).first(),
+    ).toBeVisible();
   });
 
   test("theming guide covers tokens and density", async ({ page }) => {
@@ -708,12 +728,8 @@ test.describe("docs scaffold", () => {
     // The dl element exists.
     await expect(page.locator(".c-description").first()).toBeVisible();
     // Terms and details are present.
-    await expect(
-      page.locator(".c-description__term").first(),
-    ).toBeVisible();
-    await expect(
-      page.locator(".c-description__detail").first(),
-    ).toBeVisible();
+    await expect(page.locator(".c-description__term").first()).toBeVisible();
+    await expect(page.locator(".c-description__detail").first()).toBeVisible();
     // Multiple rows exist.
     expect(
       await page.locator(".c-description__row").count(),
@@ -736,9 +752,7 @@ test.describe("docs scaffold", () => {
     // The component exists.
     await expect(page.locator(".c-page-header").first()).toBeVisible();
     // Title is present.
-    await expect(
-      page.locator(".c-page-header__title").first(),
-    ).toBeVisible();
+    await expect(page.locator(".c-page-header__title").first()).toBeVisible();
     // Actions contain real buttons.
     await expect(
       page.locator(".c-page-header__actions .c-button").first(),
@@ -777,15 +791,9 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
 
     // Primary + toggle segments are present.
-    await expect(
-      page.locator(".c-split__primary").first(),
-    ).toBeVisible();
-    await expect(
-      page.locator(".c-split__toggle").first(),
-    ).toBeVisible();
-    await expect(
-      page.locator(".c-split__chevron").first(),
-    ).toBeVisible();
+    await expect(page.locator(".c-split__primary").first()).toBeVisible();
+    await expect(page.locator(".c-split__toggle").first()).toBeVisible();
+    await expect(page.locator(".c-split__chevron").first()).toBeVisible();
 
     // Both segments of each instance share the same data-variant.
     const firstSplit = page.locator(".c-split").first();
@@ -802,9 +810,7 @@ test.describe("docs scaffold", () => {
       page.locator(".c-split__menu[popover]").first(),
     ).toBeAttached();
     // Options exist, including a danger item.
-    await expect(
-      page.locator(".c-split__option").first(),
-    ).toBeAttached();
+    await expect(page.locator(".c-split__option").first()).toBeAttached();
     await expect(
       page.locator(".c-split__option[data-tone='danger']").first(),
     ).toBeAttached();
@@ -836,9 +842,7 @@ test.describe("docs scaffold", () => {
     await page.locator("[popovertarget='sb-1']").click();
     await expect(menu).toBeVisible();
     // Options are real buttons inside the open popover.
-    await expect(
-      menu.locator(".c-split__option").first(),
-    ).toBeVisible();
+    await expect(menu.locator(".c-split__option").first()).toBeVisible();
     // Esc closes.
     await page.keyboard.press("Escape");
     await expect(menu).toBeHidden();
@@ -1050,14 +1054,14 @@ test.describe("docs scaffold", () => {
   }) => {
     await page.goto("./preview/app-dense");
     // The dense density tier is active on the container.
-    await expect(page.locator(".dense-app[data-density='dense']")).toBeVisible();
+    await expect(
+      page.locator(".dense-app[data-density='dense']"),
+    ).toBeVisible();
     // Topbar with brand and search.
     await expect(page.locator(".dense-brand")).toBeVisible();
     await expect(page.locator(".dense-search input")).toBeVisible();
     // KPI strip with 8 metrics.
-    expect(
-      await page.locator(".dense-kpi").count(),
-    ).toBeGreaterThanOrEqual(8);
+    expect(await page.locator(".dense-kpi").count()).toBeGreaterThanOrEqual(8);
     // Event data table with rows.
     await expect(page.locator(".dense-table .c-table")).toBeVisible();
     const eventRows = page.locator(".dense-table tbody tr");
@@ -1067,9 +1071,7 @@ test.describe("docs scaffold", () => {
       await page.locator(".dense-table .c-badge").count(),
     ).toBeGreaterThanOrEqual(5);
     // Split button in toolbar.
-    await expect(
-      page.locator(".dense-toolbar .c-split__toggle"),
-    ).toBeVisible();
+    await expect(page.locator(".dense-toolbar .c-split__toggle")).toBeVisible();
     // Sidebar nav sections.
     expect(
       await page.locator(".dense-nav-item").count(),

@@ -11,19 +11,20 @@ user's color scheme.
 
 ## Brand ramp
 
-A 9-step ramp at hue 260 (blue). Override `--pl-brand-*` to retheme.
+A 9-step ramp at hue 82 (amber-gold). Override `--pl-brand-*` to
+retheme.
 
-| Token          | Value                    | Light | Dark |
-| -------------- | ------------------------ | ----- | ---- |
-| `--pl-brand-1` | `oklch(96% 0.02 260deg)` |       |      |
-| `--pl-brand-2` | `oklch(88% 0.06 260deg)` |       |      |
-| `--pl-brand-3` | `oklch(78% 0.12 260deg)` |       |      |
-| `--pl-brand-4` | `oklch(68% 0.16 260deg)` |       |      |
-| `--pl-brand-5` | `oklch(63% 0.17 260deg)` |       |      |
-| `--pl-brand-6` | `oklch(58% 0.18 260deg)` |       |      |
-| `--pl-brand-7` | `oklch(50% 0.18 260deg)` |       |      |
-| `--pl-brand-8` | `oklch(42% 0.16 260deg)` |       |      |
-| `--pl-brand-9` | `oklch(32% 0.12 260deg)` |       |      |
+| Token          | Value                   | Purpose                |
+| -------------- | ----------------------- | ---------------------- |
+| `--pl-brand-1` | `oklch(97% 0.02 82deg)` | Lightest tint          |
+| `--pl-brand-2` | `oklch(89% 0.05 82deg)` | Subtle tint            |
+| `--pl-brand-3` | `oklch(80% 0.09 82deg)` | Soft tint              |
+| `--pl-brand-4` | `oklch(70% 0.13 82deg)` | Dark-mode accent       |
+| `--pl-brand-5` | `oklch(63% 0.15 82deg)` | Saturated middle       |
+| `--pl-brand-6` | `oklch(56% 0.14 82deg)` | Active/hover support   |
+| `--pl-brand-7` | `oklch(48% 0.11 82deg)` | Light-mode accent      |
+| `--pl-brand-8` | `oklch(39% 0.07 82deg)` | Deep accent support    |
+| `--pl-brand-9` | `oklch(29% 0.04 82deg)` | Darkest accent support |
 
 ## Semantic pairs
 
@@ -31,40 +32,40 @@ Foreground/background are defined as intentional pairs. Each pair is
 verified to meet WCAG-AA contrast (4.5:1 minimum) in both light and dark
 themes via the deterministic contrast test suite.
 
-| Token                    | Light value           | Dark value             | Purpose                |
-| ------------------------ | --------------------- | ---------------------- | ---------------------- |
-| `--pl-color-bg`          | `oklch(98% 0.01 260)` | `oklch(15% 0.02 260)`  | Page background        |
-| `--pl-color-surface`     | `oklch(100% 0 0)`     | `oklch(19% 0.02 260)`  | Cards, panels          |
-| `--pl-color-surface-2`   | `oklch(94% 0.01 260)` | `oklch(23% 0.025 260)` | Hover, subtle surfaces |
-| `--pl-color-text`        | `oklch(20% 0.02 260)` | `oklch(96% 0.01 260)`  | Primary text           |
-| `--pl-color-text-muted`  | `oklch(46% 0.03 260)` | `oklch(75% 0.02 260)`  | Secondary text         |
-| `--pl-color-border`      | `oklch(87% 0.02 260)` | `oklch(33% 0.03 260)`  | Dividers, borders      |
-| `--pl-color-accent`      | `brand-7`             | `brand-4`              | Links, primary actions |
-| `--pl-color-accent-text` | `white`               | `oklch(15% 0.02 260)`  | Text on accent         |
+| Token                    | Light value                    | Dark value                     | Purpose                |
+| ------------------------ | ------------------------------ | ------------------------------ | ---------------------- |
+| `--pl-color-bg`          | `oklch(98% 0.005 60deg)`       | `oklch(14% 0.008 55deg)`       | Page background        |
+| `--pl-color-surface`     | `oklch(100% 0 0deg)`           | `oklch(18% 0.008 55deg)`       | Cards, panels          |
+| `--pl-color-surface-2`   | `oklch(94% 0.008 60deg)`       | `oklch(22% 0.012 55deg)`       | Hover, subtle surfaces |
+| `--pl-color-text`        | `oklch(20% 0.012 55deg)`       | `oklch(96% 0.008 60deg)`       | Primary text           |
+| `--pl-color-text-muted`  | `oklch(46% 0.015 55deg)`       | `oklch(72% 0.012 55deg)`       | Secondary text         |
+| `--pl-color-border`      | `oklch(80% 0.015 55deg / 75%)` | `oklch(45% 0.012 55deg / 30%)` | Dividers, borders      |
+| `--pl-color-accent`      | `brand-7`                      | `brand-4`                      | Links, primary actions |
+| `--pl-color-accent-text` | `white`                        | `oklch(16% 0.01 55deg)`        | Text on accent         |
 
 ## Status colors
 
 Three semantic states, each with a fill, background tint, and text color:
 
-| Token group               | Light                 | Dark                  | Usage             |
-| ------------------------- | --------------------- | --------------------- | ----------------- |
-| `--pl-color-danger`       | `oklch(58% 0.2 25)`   | same                  | Icon, border      |
-| `--pl-color-danger-bg`    | `oklch(96% 0.03 25)`  | `oklch(24% 0.06 25)`  | Alert background  |
-| `--pl-color-danger-text`  | `oklch(38% 0.15 25)`  | `oklch(90% 0.05 25)`  | Text on tinted bg |
-| `--pl-color-success`      | `oklch(56% 0.16 150)` | same                  | Icon, border      |
-| `--pl-color-success-bg`   | `oklch(96% 0.03 150)` | `oklch(24% 0.06 150)` | Alert background  |
-| `--pl-color-success-text` | `oklch(36% 0.13 150)` | `oklch(80% 0.13 150)` | Text on tinted bg |
-| `--pl-color-warning`      | `oklch(58% 0.17 80)`  | same                  | Icon, border      |
-| `--pl-color-warning-bg`   | `oklch(96% 0.05 80)`  | `oklch(26% 0.07 80)`  | Alert background  |
-| `--pl-color-warning-text` | `oklch(42% 0.15 80)`  | `oklch(82% 0.13 80)`  | Text on tinted bg |
+| Token group               | Light                    | Dark                     | Usage             |
+| ------------------------- | ------------------------ | ------------------------ | ----------------- |
+| `--pl-color-danger`       | `oklch(60% 0.22 25deg)`  | same                     | Icon, border      |
+| `--pl-color-danger-bg`    | `oklch(96% 0.04 25deg)`  | `oklch(22% 0.08 25deg)`  | Alert background  |
+| `--pl-color-danger-text`  | `oklch(36% 0.18 25deg)`  | `oklch(90% 0.06 25deg)`  | Text on tinted bg |
+| `--pl-color-success`      | `oklch(58% 0.18 150deg)` | same                     | Icon, border      |
+| `--pl-color-success-bg`   | `oklch(96% 0.04 150deg)` | `oklch(22% 0.08 150deg)` | Alert background  |
+| `--pl-color-success-text` | `oklch(34% 0.15 150deg)` | `oklch(82% 0.15 150deg)` | Text on tinted bg |
+| `--pl-color-warning`      | `oklch(62% 0.19 75deg)`  | same                     | Icon, border      |
+| `--pl-color-warning-bg`   | `oklch(96% 0.06 75deg)`  | `oklch(24% 0.09 75deg)`  | Alert background  |
+| `--pl-color-warning-text` | `oklch(40% 0.17 75deg)`  | `oklch(84% 0.15 75deg)`  | Text on tinted bg |
 
 ## Focus ring
 
-| Token               | Light                 | Dark                  |
-| ------------------- | --------------------- | --------------------- |
-| `--pl-focus-color`  | `oklch(56% 0.22 260)` | `oklch(78% 0.16 260)` |
-| `--pl-focus-offset` | `2px`                 | `2px`                 |
-| `--pl-focus-size`   | `2px`                 | `2px`                 |
+| Token               | Light                   | Dark                    |
+| ------------------- | ----------------------- | ----------------------- |
+| `--pl-focus-color`  | `oklch(52% 0.14 82deg)` | `oklch(72% 0.13 82deg)` |
+| `--pl-focus-offset` | `2px`                   | `2px`                   |
+| `--pl-focus-size`   | `2px`                   | `2px`                   |
 
 ## Overriding colors
 

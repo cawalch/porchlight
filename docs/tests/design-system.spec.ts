@@ -206,3 +206,23 @@ test("field controls meet the WCAG AA touch-target minimum", async ({
     `fields must meet WCAG 2.5.8 AA (${AA_TARGET}px)`,
   ).toBeGreaterThanOrEqual(AA_TARGET);
 });
+
+test("control radius token resolves to rounded controls", async ({ page }) => {
+  await page.goto("./preview/button");
+  const radii = await page.evaluate(() => {
+    const button = document.querySelector(".c-button") as HTMLElement;
+    const root = document.documentElement;
+    return {
+      token: getComputedStyle(root).getPropertyValue("--pl-radius-control"),
+      button: getComputedStyle(button).borderRadius,
+    };
+  });
+  const buttonRadius = parseFloat(radii.button);
+  console.log(
+    `[design] --pl-radius-control=${radii.token.trim()} button radius=${radii.button}`,
+  );
+  expect(
+    buttonRadius,
+    "controls should use the non-zero radius token",
+  ).toBeGreaterThanOrEqual(6);
+});
