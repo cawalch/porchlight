@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   built-in `[aria-current]` affordance, and selected data-table rows get a
   first-class `aria-selected="true"` visual state, including sticky-column
   coverage.
+- **Nav groups and menu flyouts.** Adds `.c-nav__group`,
+  `.c-nav__group-label`, `.c-nav__divider`, and `.c-nav__menu` for desktop
+  sidebar grouping and `.c-menu` flyouts inside nav rows.
+- **Richer menu rows and sidebar placement.** Adds `.c-menu__item*` row
+  anatomy, shared menu-row tokens, `--pl-overlay-popover-bg`, and
+  `data-placement="inline-end"` for sidebar/icon-rail menu flyouts.
 
 ### Compatibility
 

@@ -21,8 +21,19 @@
   @scope (.c-menu) {
     :scope {
       --c-menu-anchor: --pl-menu-anchor;
+      --c-menu-position-area: block-end span-inline-end;
+      --c-menu-position-try-fallbacks: flip-block;
+      --c-menu-offset-block: var(--pl-space-2);
+      --c-menu-offset-inline: 0;
 
       display: inline-block;
+    }
+
+    :scope[data-placement="inline-end"] {
+      --c-menu-position-area: inline-end span-block-end;
+      --c-menu-position-try-fallbacks: flip-inline, flip-block;
+      --c-menu-offset-block: 0;
+      --c-menu-offset-inline: var(--pl-space-2);
     }
 
     .c-menu__trigger {
@@ -41,12 +52,11 @@
         transparent 30%
       );
       border-radius: var(--pl-radius-xl);
-      background: light-dark(
-        oklch(100% 0 0deg / 96%),
-        oklch(17% 0.04 250deg / 94%)
-      );
-      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      background: var(--pl-overlay-popover-bg);
+      backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
@@ -68,9 +78,10 @@
         inset: auto;
         position: absolute;
         position-anchor: var(--c-menu-anchor);
-        position-area: block-end span-inline-end;
-        position-try-fallbacks: flip-block;
-        margin-block-start: var(--pl-space-2);
+        position-area: var(--c-menu-position-area);
+        position-try-fallbacks: var(--c-menu-position-try-fallbacks);
+        margin-block-start: var(--c-menu-offset-block);
+        margin-inline-start: var(--c-menu-offset-inline);
       }
     }
 
@@ -98,15 +109,15 @@
   /* Menu items  -  OUTSIDE @scope (live-state pseudos :hover/:focus-visible on
      descendants don't reliably apply inside @scope; same lesson as .c-field).
      Each item is a full-width <a> or <button> for keyboard access. */
-  :where(.c-menu__popover) > :is(a, button) {
+  :where(.c-menu__popover) > :is(a, button, .c-menu__item) {
     display: flex;
     align-items: center;
     gap: var(--pl-space-2);
     inline-size: 100%;
-    min-block-size: 2.25rem;
-    padding-inline: var(--pl-space-3);
+    min-block-size: var(--pl-menu-row-min-block-size);
+    padding-inline: var(--pl-menu-row-padding-inline);
     border: 0;
-    border-radius: var(--pl-radius-sm);
+    border-radius: var(--pl-menu-row-radius);
     background: transparent;
     color: inherit;
     font: inherit;
@@ -115,22 +126,74 @@
     cursor: pointer;
   }
 
-  :where(.c-menu__popover) > :is(a, button):is(:hover, :focus-visible) {
-    background: var(--pl-color-surface-2);
+  :where(.c-menu__popover) > :is(a, button, .c-menu__item):is(:hover, :focus-visible) {
+    background: var(--pl-menu-row-hover-bg);
   }
 
-  :where(.c-menu__popover) > :is(a, button):focus-visible {
+  :where(.c-menu__popover) > :is(a, button, .c-menu__item):focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
     outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
+  :where(.c-menu__popover)
+    > :is(a, button, .c-menu__item):is(
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-selected]
+    ) {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+    color: var(--pl-color-accent);
+    font-weight: var(--pl-font-weight-semibold);
+    box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+  }
+
+  :where(.c-menu__item-icon) {
+    inline-size: var(--pl-menu-row-icon-size);
+    block-size: var(--pl-menu-row-icon-size);
+    flex-shrink: 0;
+    color: var(--pl-color-text-muted);
+  }
+
+  :where(.c-menu__item-body) {
+    display: grid;
+    gap: 0.125rem;
+    min-inline-size: 0;
+  }
+
+  :where(.c-menu__item-label) {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :where(.c-menu__item-description) {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-normal);
+    line-height: var(--pl-leading-tight);
+  }
+
+  :where(.c-menu__item-shortcut) {
+    margin-inline-start: auto;
+    padding: 0.125rem var(--pl-space-1);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text-muted);
+    font-family: var(--pl-font-mono);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-normal);
+    line-height: var(--pl-leading-tight);
+  }
+
   /* Destructive item  -  sign out, delete. */
-  :where(.c-menu__popover) > :is(a, button)[data-tone="danger"] {
+  :where(.c-menu__popover) > :is(a, button, .c-menu__item)[data-tone="danger"] {
     color: var(--pl-color-danger-text);
   }
 
   :where(.c-menu__popover)
-    > :is(a, button)[data-tone="danger"]:is(:hover, :focus-visible) {
+    > :is(a, button, .c-menu__item)[data-tone="danger"]:is(:hover, :focus-visible) {
     background: var(--pl-color-danger-bg);
   }
 
@@ -139,8 +202,19 @@
       border-color: ButtonBorder;
     }
 
-    :where(.c-menu__popover) > :is(a, button):focus-visible {
+    :where(.c-menu__popover) > :is(a, button, .c-menu__item):focus-visible {
       outline-color: Highlight;
+    }
+
+    :where(.c-menu__popover)
+      > :is(a, button, .c-menu__item):is(
+        [aria-current]:not([aria-current="false"]),
+        [aria-selected="true"],
+        [data-selected]
+      ) {
+      background: Highlight;
+      color: HighlightText;
+      box-shadow: none;
     }
   }
 }

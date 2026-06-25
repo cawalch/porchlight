@@ -21,11 +21,20 @@ import Icon from '../../components/Icon.astro';
         <Icon name="gear" /> Account
       </button>
       <div class="c-menu__popover" id="account-menu" popover>
-        <a href="#">Profile</a>
-        <a href="#">Settings</a>
-        <a href="#">Billing</a>
+        <a class="c-menu__item" href="#" aria-current="page">
+          <Icon name="gear" />
+          <span class="c-menu__item-body">
+            <span class="c-menu__item-label">Profile</span>
+            <span class="c-menu__item-description">Personal settings</span>
+          </span>
+          <kbd class="c-menu__item-shortcut">P</kbd>
+        </a>
+        <a class="c-menu__item" href="#">
+          <span class="c-menu__item-label">Settings</span>
+        </a>
+        <a class="c-menu__item" href="#">Billing</a>
         <hr class="c-menu__divider" />
-        <button type="button" data-tone="danger">Sign out</button>
+        <button class="c-menu__item" type="button" data-tone="danger">Sign out</button>
       </div>
     </div>
   </div>
@@ -38,11 +47,11 @@ import Icon from '../../components/Icon.astro';
         <Icon name="gear" />
       </button>
       <div class="c-menu__popover" id="row-menu" popover>
-        <button type="button">Edit</button>
-        <button type="button">Duplicate</button>
-        <button type="button">Export</button>
+        <button class="c-menu__item" type="button">Edit</button>
+        <button class="c-menu__item" type="button">Duplicate</button>
+        <button class="c-menu__item" type="button">Export</button>
         <hr class="c-menu__divider" />
-        <button type="button" data-tone="danger">Delete</button>
+        <button class="c-menu__item" type="button" data-tone="danger">Delete</button>
       </div>
     </div>
   </div>
@@ -53,15 +62,15 @@ import Icon from '../../components/Icon.astro';
     <div class="c-menu" style="--c-menu-anchor: --menu-a;">
       <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-a">Menu A</button>
       <div class="c-menu__popover" id="menu-a" popover>
-        <button type="button">Item A1</button>
-        <button type="button">Item A2</button>
+        <button class="c-menu__item" type="button">Item A1</button>
+        <button class="c-menu__item" type="button">Item A2</button>
       </div>
     </div>
     <div class="c-menu" style="--c-menu-anchor: --menu-b;">
       <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-b">Menu B</button>
       <div class="c-menu__popover" id="menu-b" popover>
-        <button type="button">Item B1</button>
-        <button type="button">Item B2</button>
+        <button class="c-menu__item" type="button">Item B1</button>
+        <button class="c-menu__item" type="button">Item B2</button>
       </div>
     </div>
   </div>

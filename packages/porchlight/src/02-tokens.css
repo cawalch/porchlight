@@ -199,6 +199,17 @@
 
     /* Overlay scrim — the modal/dialog backdrop tint. */
     --pl-color-scrim: oklch(0% 0 0deg / 55%);
+    --pl-overlay-popover-bg: light-dark(
+      oklch(100% 0 0deg / 96%),
+      oklch(17% 0.04 250deg / 94%)
+    );
+
+    /* Menu rows — shared by anchored menu-like surfaces. */
+    --pl-menu-row-min-block-size: 2.25rem;
+    --pl-menu-row-padding-inline: var(--pl-space-3);
+    --pl-menu-row-radius: var(--pl-radius-sm);
+    --pl-menu-row-hover-bg: var(--pl-color-surface-2);
+    --pl-menu-row-icon-size: 1rem;
 
     /* Controls */
     --pl-control-block-size: 2.5rem;

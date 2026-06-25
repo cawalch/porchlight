@@ -335,6 +335,62 @@ test("nav footer metadata actions stay compact and icon-aligned", async ({
   );
 });
 
+test("nav menu flyouts compose with menu rows and icon rail triggers", async ({
+  page,
+}) => {
+  await page.goto("./preview/nav");
+
+  const trigger = page.locator("[data-preview-nav-menu-trigger]");
+  await expect(trigger).toBeVisible();
+  await trigger.click();
+  await expect(page.locator("[data-preview-nav-menu]")).toBeVisible();
+
+  const metrics = await page.evaluate(() => {
+    const trigger = document.querySelector(
+      "[data-preview-nav-menu-trigger]",
+    ) as HTMLElement;
+    const menu = document.querySelector("[data-preview-nav-menu]") as HTMLElement;
+    const current = menu?.querySelector(
+      ".c-menu__item[aria-current='page']",
+    ) as HTMLElement;
+    const description = menu?.querySelector(
+      ".c-menu__item-description",
+    ) as HTMLElement;
+    const shortcut = menu?.querySelector(".c-menu__item-shortcut") as HTMLElement;
+    const railTrigger = document.querySelector(
+      '.c-nav[data-variant="icons"] .c-nav__menu .c-menu__trigger',
+    ) as HTMLElement;
+    if (!trigger || !menu || !current || !description || !shortcut || !railTrigger) {
+      return null;
+    }
+
+    const triggerRect = trigger.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+    const currentStyle = getComputedStyle(current);
+    return {
+      currentBg: currentStyle.backgroundColor,
+      currentShadow: currentStyle.boxShadow,
+      currentColor: currentStyle.color,
+      descriptionSize: getComputedStyle(description).fontSize,
+      menuLeft: menuRect.left,
+      shortcutFont: getComputedStyle(shortcut).fontFamily,
+      triggerRight: triggerRect.right,
+      railAccessibleName: railTrigger.getAttribute("aria-label"),
+      railTriggerWidth: railTrigger.getBoundingClientRect().width,
+    };
+  });
+
+  expect(metrics).not.toBeNull();
+  expect(metrics!.menuLeft).toBeGreaterThanOrEqual(metrics!.triggerRight);
+  expect(metrics!.currentBg).not.toBe("rgba(0, 0, 0, 0)");
+  expect(metrics!.currentShadow).toContain("inset");
+  expect(metrics!.currentColor).not.toBe("");
+  expect(metrics!.descriptionSize).not.toBe("");
+  expect(metrics!.shortcutFont).toContain("mono");
+  expect(metrics!.railAccessibleName).toBe("Reports");
+  expect(metrics!.railTriggerWidth).toBeGreaterThanOrEqual(32);
+});
+
 /* ------------------------------------------------------------------
  * Segmented: checked segment must differ from unchecked.
  * ------------------------------------------------------------------ */
