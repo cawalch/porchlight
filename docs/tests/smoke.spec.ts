@@ -21,10 +21,16 @@ test.describe("docs scaffold", () => {
     await expect(skip).toBeVisible();
   });
 
-  test("preview gallery page is reachable", async ({ page }) => {
+  test("preview index page is reachable", async ({ page }) => {
     await page.goto("./preview");
     await expect(
-      page.getByRole("heading", { name: "Preview gallery" }),
+      page.getByRole("heading", { name: "Preview index" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Components" }),
+    ).toBeVisible();
+    await expect(
+      page.getByPlaceholder("Search preview pages..."),
     ).toBeVisible();
   });
 
