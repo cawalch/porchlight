@@ -1,318 +1,294 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const b = import.meta.env.BASE_URL;
+
+const previewModules = import.meta.glob('./*.astro');
+const previewSlugs = Object.keys(previewModules)
+  .map((path) => path.replace('./', '').replace(/\.astro$/, ''))
+  .filter((slug) => slug !== 'index')
+  .sort((a, z) => a.localeCompare(z));
+const previewSlugSet = new Set(previewSlugs);
+
+const components = (await getCollection('components')).sort((a, z) =>
+  a.data.title.localeCompare(z.data.title),
+);
+const componentSlugSet = new Set(components.map((component) => component.id));
+
+const foundations = [
+  {
+    slug: 'reset',
+    title: 'Reset',
+    description: 'Layer order and minimal browser normalization.',
+  },
+  {
+    slug: 'tokens',
+    title: 'Tokens',
+    description: 'Primitive scales parsed live from source.',
+  },
+  {
+    slug: 'themes',
+    title: 'Themes and density',
+    description: 'Light, dark, compact, comfortable, and touch modes.',
+  },
+  {
+    slug: 'base',
+    title: 'Base',
+    description: 'Element defaults and the fluid type scale.',
+  },
+  {
+    slug: 'layout',
+    title: 'Layout',
+    description: 'Grid, cluster, sidebar, scroll area, and app shell primitives.',
+  },
+  {
+    slug: 'utilities',
+    title: 'Utilities',
+    description: 'Screen-reader, truncate, wrapping, flow, surface, and full-bleed helpers.',
+  },
+  {
+    slug: 'enhancements',
+    title: 'Enhancements',
+    description: '@supports-gated progressive CSS features.',
+  },
+].filter((item) => previewSlugSet.has(item.slug));
+const foundationSlugSet = new Set(foundations.map((item) => item.slug));
+
+const missingComponentPreviews = components
+  .filter((component) => !previewSlugSet.has(component.id))
+  .map((component) => component.id);
+
+if (missingComponentPreviews.length > 0) {
+  throw new Error(
+    `Missing preview pages for component docs: ${missingComponentPreviews.join(', ')}`,
+  );
+}
+
+const titleize = (slug: string) =>
+  slug
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+
+const standalonePreviewMeta: Record<string, { title: string; description: string }> = {
+  'app-cases': {
+    title: 'Case Review',
+    description: 'Case-management workspace with dense review surfaces.',
+  },
+  'app-dashboard': {
+    title: 'Responsive dashboard',
+    description: 'Full app shell with sidebar navigation, KPI grid, and data table.',
+  },
+  'app-inbox': {
+    title: 'Responsive inbox',
+    description: 'Master-detail layout with container-query collapse.',
+  },
+  'app-marketing': {
+    title: 'Marketing page',
+    description: 'Full-bleed hero, masonry cards, and scroll animation.',
+  },
+  'app-shell': {
+    title: 'App shell',
+    description: 'Desktop SaaS topbar, sidebar, and main work area.',
+  },
+  'app-siem': {
+    title: 'Security SIEM',
+    description: 'Security operations console with dense data regions.',
+  },
+  dashboard: {
+    title: 'Dashboard',
+    description: 'Enterprise SaaS dashboard composed from Porchlight components.',
+  },
+  settings: {
+    title: 'Settings',
+    description: 'SaaS settings page with sidebar navigation, forms, and tabs.',
+  },
+};
+
+const standalonePreviews = previewSlugs
+  .filter((slug) => !componentSlugSet.has(slug) && !foundationSlugSet.has(slug))
+  .map((slug) => ({
+    slug,
+    title: standalonePreviewMeta[slug]?.title ?? titleize(slug),
+    description: standalonePreviewMeta[slug]?.description ?? 'Standalone preview fixture.',
+  }))
+  .sort((a, z) => a.title.localeCompare(z.title));
 ---
 <BaseLayout title="Preview · Porchlight">
-  <h1>Preview gallery</h1>
-  <p>
-    Each Porchlight component ships with a kitchen-sink preview page linked
-    here. These pages double as the Playwright visual-regression fixtures.
-  </p>
-  <ul class="preview-grid">
-    <li>
-      <a class="placeholder" href="reset">
-        <strong>Reset</strong><br />
-        Layer order and minimal browser normalization.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="tokens">
-        <strong>Tokens</strong><br />
-        Primitive scales parsed live from source.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="themes">
-        <strong>Themes &amp; density</strong><br />
-        Live light/dark and compact/comfortable/touch playground.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="base">
-        <strong>Base</strong><br />
-        Element defaults and the fluid type scale.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="layout">
-        <strong>Layout</strong><br />
-        SaaS layout primitives: grid, cluster, sidebar, scroll area.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="app-shell">
-        <strong>App shell</strong><br />
-        Desktop SaaS topbar / sidebar / main grid.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="button">
-        <strong>Button</strong><br />
-        The canonical action control: variants, states, density.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="split-button">
-        <strong>Split button</strong><br />
-        Primary action + dropdown toggle with alternative actions.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="field">
-        <strong>Field</strong><br />
-        Native input wrapper: stacked, inline, grouped, states.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="form">
-        <strong>Form</strong><br />
-        SaaS form layouts: grids, choices, filters, billing, actions.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="card">
-        <strong>Card</strong><br />
-        Raised surface: container-query header, interactive variant.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="badge">
-        <strong>Badge</strong><br />
-        Status/count labels: tones via data-tone, WCAG-AA.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="popover-menu">
-        <strong>Popover menu</strong><br />
-        Native Popover API + anchor positioning + @starting-style.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="dialog">
-        <strong>Dialog</strong><br />
-        Native modal dialog: scrim, focus trap, entry/exit animation.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="data-table">
-        <strong>Data table</strong><br />
-        Sticky headers, scroll gutter, row hover, numeric columns.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="utilities">
-        <strong>Utilities</strong><br />
-        Screen-reader, truncate, wrapping, flow, surface, muted, full-bleed.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="enhancements">
-        <strong>Enhancements</strong><br />
-        @supports-gated Tier B: sticky-shadow, dividers, text-box.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="dashboard">
-        <strong>Dashboard</strong><br />
-        Enterprise SaaS dashboard: stats, table, toolbar, tabs, pagination.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="tabs">
-        <strong>Tabs</strong><br />
-        ARIA tablist with box-shadow indicator (no layout shift).
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="toolbar">
-        <strong>Toolbar</strong><br />
-        Action bar: search, filters, primary actions, dividers.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="description-list">
-        <strong>Description list</strong><br />
-        Key-value grid for detail panels and metadata.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="page-header">
-        <strong>Page header</strong><br />
-        Title + actions row for use inside containers (no chrome).
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="pagination">
-        <strong>Pagination</strong><br />
-        Previous/Next + numbered pages, compact variant.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="stat">
-        <strong>Stat</strong><br />
-        KPI tiles: value, unit, trend, sparkline.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="skeleton">
-        <strong>Skeleton</strong><br />
-        Loading placeholders: text, circle, rect shapes.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="empty-state">
-        <strong>Empty state</strong><br />
-        "No data" placeholder with title, description, CTA.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="alert">
-        <strong>Alert</strong><br />
-        Inline notifications: info, success, warning, danger tones.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="progress">
-        <strong>Progress</strong><br />
-        Linear bar: determinate, indeterminate, tone variants.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="avatar">
-        <strong>Avatar</strong><br />
-        User identity chips: initials, image, group stacking.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="settings">
-        <strong>Settings</strong><br />
-        A SaaS settings page: sidebar nav, forms, tabs.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="tooltip">
-        <strong>Tooltip</strong><br />
-        Hover/focus tooltip using CSS Anchor Positioning.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="accordion">
-        <strong>Accordion</strong><br />
-        Collapsible disclosure with auto-height animation.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="switch">
-        <strong>Switch</strong><br />
-        CSS-only toggle switch on a native checkbox.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="chip">
-        <strong>Chip</strong><br />
-        Removable tags with relative color syntax.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="drawer">
-        <strong>Drawer</strong><br />
-        Off-canvas slide-over panel (Popover API + @starting-style).
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="toast">
-        <strong>Toast</strong><br />
-        Transient notifications with @starting-style enter animation.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="scroll-progress">
-        <strong>Scroll progress</strong><br />
-        Fixed bar that fills on scroll + reveal-on-scroll demo.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="breadcrumb">
-        <strong>Breadcrumb</strong><br />
-        Navigation trail with CSS-only separators.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="stepper">
-        <strong>Stepper</strong><br />
-        Multi-step indicator with container-query collapse.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="timeline">
-        <strong>Timeline</strong><br />
-        Vertical activity feed with markers and connectors.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="textarea-auto">
-        <strong>Auto-growing textarea</strong><br />
-        Grows to fit content via field-sizing (zero JS).
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="segmented">
-        <strong>Segmented control</strong><br />
-        Compact inline switcher on native radios.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="tag-input">
-        <strong>Tag input</strong><br />
-        Multi-value input with removable chips.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="dropdown">
-        <strong>Dropdown</strong><br />
-        Custom select via Popover API + anchor positioning.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="file-upload">
-        <strong>File upload</strong><br />
-        Drag-and-drop zone with :has() states.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="command-palette">
-        <strong>Command palette</strong><br />
-        Cmd+K quick-action overlay via Popover API.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="nav">
-        <strong>Nav</strong><br />
-        Vertical sidebar navigation with collapsible sections.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="app-dense">
-        <strong>Data-dense app</strong><br />
-        SIEM console: dense tier, KPI strip, tight table, compact nav.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="app-dashboard">
-        <strong>Responsive dashboard</strong><br />
-        Full app shell: sidebar nav, KPI grid, data table.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="app-inbox">
-        <strong>Responsive inbox</strong><br />
-        Master-detail layout with container-query collapse.
-      </a>
-    </li>
-    <li>
-      <a class="placeholder" href="app-marketing">
-        <strong>Marketing page</strong><br />
-        Full-bleed hero, masonry cards, scroll animations.
-      </a>
-    </li>
-  </ul>
+  <section class="preview-hero">
+    <h1>Preview index</h1>
+    <p>
+      Live pages for visual checks, component QA, and composed app fixtures. Component
+      entries are generated from the docs collection, so missing previews fail the build.
+    </p>
+
+    <label class="preview-search">
+      <span class="u-visually-hidden">Search preview pages</span>
+      <input
+        class="c-field__control"
+        type="search"
+        placeholder="Search preview pages..."
+        data-preview-filter
+      />
+    </label>
+  </section>
+
+  <p class="preview-empty" data-preview-empty hidden>No preview pages match that search.</p>
+
+  <section class="preview-section" aria-labelledby="preview-foundations" data-preview-section>
+    <h2 id="preview-foundations">Foundations</h2>
+    <ul class="preview-grid">
+      {foundations.map((item) => (
+        <li data-preview-card data-preview-search={`${item.title} ${item.description} ${item.slug}`}>
+          <a class="preview-card" href={`${b}preview/${item.slug}`}>
+            <strong>{item.title}</strong>
+            <span>{item.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="preview-section" aria-labelledby="preview-components" data-preview-section>
+    <h2 id="preview-components">Components</h2>
+    <ul class="preview-grid">
+      {components.map((component) => (
+        <li
+          data-preview-card
+          data-preview-search={`${component.data.title} ${component.data.description ?? ''} ${component.data.status} ${component.id}`}
+        >
+          <article class="preview-card">
+            <a class="preview-card__main" href={`${b}preview/${component.id}`}>
+              <strong>{component.data.title}</strong>
+              <span>{component.data.description ?? 'Component preview page.'}</span>
+            </a>
+            <p class="preview-card__meta">
+              <span>Status: {component.data.status}</span>
+              <a href={`${b}components/${component.id}`}>Docs</a>
+            </p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {standalonePreviews.length > 0 && (
+    <section class="preview-section" aria-labelledby="preview-examples" data-preview-section>
+      <h2 id="preview-examples">Examples and fixtures</h2>
+      <ul class="preview-grid">
+        {standalonePreviews.map((item) => (
+          <li data-preview-card data-preview-search={`${item.title} ${item.description} ${item.slug}`}>
+            <a class="preview-card" href={`${b}preview/${item.slug}`}>
+              <strong>{item.title}</strong>
+              <span>{item.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </BaseLayout>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('[data-preview-filter]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-card]'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-section]'));
+  const empty = document.querySelector<HTMLElement>('[data-preview-empty]');
+
+  const applyFilter = () => {
+    const query = input?.value.trim().toLowerCase() ?? '';
+    let visibleCount = 0;
+
+    for (const card of cards) {
+      const text = card.dataset.previewSearch?.toLowerCase() ?? '';
+      const isVisible = query.length === 0 || text.includes(query);
+      card.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    }
+
+    for (const section of sections) {
+      section.hidden = !section.querySelector('[data-preview-card]:not([hidden])');
+    }
+
+    if (empty) empty.hidden = visibleCount !== 0;
+  };
+
+  input?.addEventListener('input', applyFilter);
+</script>
+
+<style>
+  .preview-hero {
+    max-inline-size: 44rem;
+  }
+
+  .preview-search {
+    display: block;
+    max-inline-size: 28rem;
+    margin-block-start: var(--pl-space-5);
+  }
+
+  .preview-section {
+    margin-block-start: var(--pl-space-8);
+  }
+
+  .preview-empty {
+    margin-block-start: var(--pl-space-6);
+    color: var(--pl-color-text-muted);
+  }
+
+  .preview-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-3);
+    block-size: 100%;
+    padding: var(--pl-space-5);
+    color: var(--pl-color-text-muted);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+    text-decoration: none;
+  }
+
+  .preview-card:hover {
+    border-color: color-mix(in oklab, var(--pl-color-accent), var(--pl-color-border) 55%);
+    color: var(--pl-color-text);
+  }
+
+  .preview-card strong {
+    display: block;
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-md);
+    line-height: 1.25;
+  }
+
+  .preview-card span {
+    display: block;
+    line-height: 1.45;
+  }
+
+  .preview-card__main {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .preview-card__main:hover strong {
+    color: var(--pl-color-accent);
+  }
+
+  .preview-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    align-items: center;
+    justify-content: space-between;
+    margin-block: auto 0;
+    padding-block-start: var(--pl-space-3);
+    border-block-start: 1px solid var(--pl-color-border);
+    font-size: var(--pl-text-sm);
+  }
+
+  .preview-card__meta a {
+    font-weight: 600;
+  }
+</style>
