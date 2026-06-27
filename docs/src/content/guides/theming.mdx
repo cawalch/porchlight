@@ -206,6 +206,20 @@ Porchlight respects `prefers-reduced-motion: reduce` automatically:
 You don't need to do anything. This is one of the few places `!important`
 is used (it's an accessibility guarantee).
 
+## Contrast preference
+
+When the browser reports `prefers-contrast: more`, Porchlight strengthens
+the structural tokens components already use:
+
+- `--pl-color-border` becomes more visible
+- `--pl-color-surface-2` separates stronger from the page background
+- `--pl-focus-size` increases to `3px`
+- `--pl-focus-glow-opacity` makes field glow rings easier to see
+
+This is a token-level adjustment, not a separate component mode. Apps can
+still override these tokens in their own layer when a brand needs different
+contrast behavior.
+
 ## Forced colors (High Contrast)
 
 Under Windows High Contrast mode, all semantic tokens remap to system

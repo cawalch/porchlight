@@ -11,6 +11,7 @@ import { test, expect } from "@playwright/test";
  *
  *   - RTL        : logical properties only, no overflow when direction flips.
  *   - forced     : semantic tokens remap to Windows system colors.
+ *   - contrast   : stronger boundary and focus tokens for prefers-contrast.
  *   - motion     : --pl-motion-scale zeroes + the universal 1ms clamp fires.
  *   - zoom       : content reflows at 200% with no horizontal scrollbar.
  *
@@ -104,6 +105,52 @@ test("forced colors remap semantic tokens to system colors", async ({
   expect(after.bg, "bg must map to Canvas").toContain("canvas");
   expect(after.text, "text must map to CanvasText").toContain("canvastext");
   expect(after.accent, "accent must map to Highlight").toContain("highlight");
+});
+
+// ---------------------------------------------------------------------------
+// Contrast preference. This is distinct from forced-colors: the existing
+// palette stays in charge, but boundaries and focus affordances get stronger.
+// Playwright does not expose this media feature through page.emulateMedia() in
+// this version, so Chromium's CDP emulation is the narrowest reliable probe.
+// ---------------------------------------------------------------------------
+test("prefers-contrast strengthens boundary and focus tokens", async ({
+  page,
+  browserName,
+}) => {
+  test.skip(
+    browserName !== "chromium",
+    "prefers-contrast CDP emulation is Chromium-only",
+  );
+
+  await page.goto("./preview/themes");
+  await reach(page, "Themes & density");
+
+  const read = () =>
+    page.evaluate(() => {
+      const cs = getComputedStyle(document.documentElement);
+      return {
+        border: cs.getPropertyValue("--pl-color-border").trim(),
+        surface2: cs.getPropertyValue("--pl-color-surface-2").trim(),
+        focusSize: cs.getPropertyValue("--pl-focus-size").trim(),
+        glowOpacity: cs.getPropertyValue("--pl-focus-glow-opacity").trim(),
+      };
+    });
+
+  const before = await read();
+  const client = await page.context().newCDPSession(page);
+  await client.send("Emulation.setEmulatedMedia", {
+    features: [{ name: "prefers-contrast", value: "more" }],
+  });
+  const after = await read();
+
+  expect(after.border, "border token should strengthen").not.toBe(
+    before.border,
+  );
+  expect(after.surface2, "surface-2 should separate more").not.toBe(
+    before.surface2,
+  );
+  expect(after.focusSize, "focus ring should become thicker").toBe("3px");
+  expect(after.glowOpacity, "field focus glow should strengthen").toBe("75%");
 });
 
 // ---------------------------------------------------------------------------
