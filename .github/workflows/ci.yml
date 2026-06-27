@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ["v*"]
   workflow_dispatch:
 
 # A single CI job that lint/builds the docs site and runs the Playwright suite.
@@ -51,6 +51,12 @@ jobs:
       - name: Lint CSS
         run: pnpm lint
 
+      - name: Lint JS/TS
+        run: pnpm lint:js
+
+      - name: Check formatting
+        run: pnpm format:check
+
       - name: Build framework (single-file dist)
         run: pnpm --filter @cawalch/porchlight build
 
@@ -92,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: main
     permissions:
-      id-token: write   # OIDC — required for trusted publishing
+      id-token: write # OIDC — required for trusted publishing
       contents: read
     steps:
       - name: Checkout
@@ -106,9 +112,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '24'   # Node 24 ships npm 11.x (≥ 11.5.1) for OIDC
+          node-version: "24" # Node 24 ships npm 11.x (≥ 11.5.1) for OIDC
           cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Ensure npm CLI supports trusted publishing (≥ 11.5.1)
         run: npm install -g npm@latest

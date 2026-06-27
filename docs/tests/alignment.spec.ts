@@ -14,20 +14,6 @@ import { test, expect } from "@playwright/test";
  * Reading real bounding rects = "pixel-perfect" made deterministic.
  */
 
-/** Element rect in CSS pixels (rounded). */
-async function rect(page: import("@playwright/test").Page, sel: string) {
-  return page.evaluate((sel) => {
-    const el = document.querySelector(sel) as HTMLElement;
-    const r = el.getBoundingClientRect();
-    return {
-      x: Math.round(r.x),
-      y: Math.round(r.y),
-      w: Math.round(r.width),
-      h: Math.round(r.height),
-    };
-  }, sel);
-}
-
 test("all buttons in the button variants row share one height", async ({
   page,
 }) => {
@@ -75,7 +61,6 @@ test("button icon + label are vertically centered (within 1px)", async ({
     ) as HTMLElement | undefined;
     if (!btn) return null;
     const icon = btn.querySelector("svg")!;
-    const label = btn.querySelector("svg")?.nextSibling as Text;
     const bCenter =
       btn.getBoundingClientRect().top + btn.getBoundingClientRect().height / 2;
     const iCenter =

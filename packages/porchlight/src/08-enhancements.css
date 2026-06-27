@@ -60,11 +60,8 @@
         );
         backdrop-filter: blur(16px) saturate(180%);
         -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border-block-end: 1px solid color-mix(
-          in oklab,
-          var(--pl-color-border),
-          transparent 55%
-        );
+        border-block-end: 1px solid
+          color-mix(in oklab, var(--pl-color-border), transparent 55%);
       }
     }
   }
@@ -125,21 +122,25 @@
     }
 
     ::view-transition-old(root) {
-      animation:
-        var(--pl-duration-exit) var(--pl-ease-accelerate) both pl-fade-out;
+      animation: var(--pl-duration-exit) var(--pl-ease-accelerate) both
+        pl-fade-out;
     }
 
     ::view-transition-new(root) {
-      animation:
-        var(--pl-duration-enter) var(--pl-ease-decelerate) both pl-fade-in;
+      animation: var(--pl-duration-enter) var(--pl-ease-decelerate) both
+        pl-fade-in;
     }
 
     @keyframes pl-fade-out {
-      to { opacity: 0; }
+      to {
+        opacity: 0;
+      }
     }
 
     @keyframes pl-fade-in {
-      from { opacity: 0; }
+      from {
+        opacity: 0;
+      }
     }
   }
 }

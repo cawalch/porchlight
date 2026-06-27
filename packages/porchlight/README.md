@@ -100,12 +100,12 @@ your `@layer` declaration is never reordered.
 
 ## Exports
 
-| Import path | What you get |
-|-------------|-------------|
-| `@cawalch/porchlight` | Prebuilt single-file CSS (recommended) |
-| `@cawalch/porchlight/min` | Minified prebuilt CSS |
+| Import path                  | What you get                                           |
+| ---------------------------- | ------------------------------------------------------ |
+| `@cawalch/porchlight`        | Prebuilt single-file CSS (recommended)                 |
+| `@cawalch/porchlight/min`    | Minified prebuilt CSS                                  |
 | `@cawalch/porchlight/source` | Raw source with `@import` (needs Lightning CSS / Vite) |
-| `@cawalch/porchlight/src/*` | Individual source layer files |
+| `@cawalch/porchlight/src/*`  | Individual source layer files                          |
 
 ## Browser support
 

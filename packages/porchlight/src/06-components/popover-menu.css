@@ -46,11 +46,8 @@
       min-inline-size: 12rem;
 
       /* Floating surface: softened border + Liquid Glass. */
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 30%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
       border-radius: var(--pl-radius-xl);
       background: var(--pl-overlay-popover-bg);
       backdrop-filter: blur(var(--pl-backdrop-blur))
@@ -126,7 +123,8 @@
     cursor: pointer;
   }
 
-  :where(.c-menu__popover) > :is(a, button, .c-menu__item):is(:hover, :focus-visible) {
+  :where(.c-menu__popover)
+    > :is(a, button, .c-menu__item):is(:hover, :focus-visible) {
     background: var(--pl-menu-row-hover-bg);
   }
 
@@ -193,7 +191,10 @@
   }
 
   :where(.c-menu__popover)
-    > :is(a, button, .c-menu__item)[data-tone="danger"]:is(:hover, :focus-visible) {
+    > :is(a, button, .c-menu__item)[data-tone="danger"]:is(
+      :hover,
+      :focus-visible
+    ) {
     background: var(--pl-color-danger-bg);
   }
 

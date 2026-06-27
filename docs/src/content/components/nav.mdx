@@ -153,7 +153,11 @@ not require the metadata to represent a user account.
     <svg class="c-nav__icon">...</svg>
   </a>
   <div class="c-menu c-nav__menu" data-placement="inline-end">
-    <button class="c-menu__trigger" aria-label="Reports" popovertarget="reports">
+    <button
+      class="c-menu__trigger"
+      aria-label="Reports"
+      popovertarget="reports"
+    >
       <svg class="c-nav__icon">...</svg>
       <span class="c-nav__label">Reports</span>
     </button>
@@ -168,30 +172,30 @@ group labels, and chevrons are visually hidden by the variant.
 
 ## Class contract
 
-| Selector                  | Role                             |
-| ------------------------- | -------------------------------- |
-| `.c-nav`                  | Container (flex column).         |
-| `.c-nav__item`            | A navigation link.               |
-| `.c-nav__item--child`     | Nested item inside a section.    |
-| `.c-nav__icon`            | Leading icon.                    |
-| `.c-nav__label`           | Text label.                      |
-| `.c-nav__badge`           | Trailing badge (count).          |
-| `.c-nav__group`           | Non-interactive item group.      |
-| `.c-nav__group-label`     | Quiet group label.               |
-| `.c-nav__divider`         | Separator between item groups.   |
-| `.c-nav__menu`            | `.c-menu` wrapper inside nav.    |
-| `.c-nav__footer`          | Bottom metadata/action region.   |
-| `.c-nav__meta`            | Compact metadata block.          |
-| `.c-nav__meta-icon`       | Metadata icon/avatar slot.       |
-| `.c-nav__meta-body`       | Metadata text stack.             |
-| `.c-nav__meta-label`      | Truncated metadata label.        |
-| `.c-nav__meta-description` | Secondary metadata row.          |
-| `.c-nav__actions`         | Compact action stack.            |
-| `.c-nav__action`          | Small full-width link/button.    |
-| `.c-nav__action-icon`     | Action icon slot.                |
-| `.c-nav__action-label`    | Truncated action label.          |
-| `.c-nav__section`         | Collapsible `<details>` group.   |
-| `.c-nav__section-trigger` | The `<summary>` (click target).  |
-| `.c-nav__chevron`         | Expand/collapse arrow.           |
-| `[aria-current]`          | Current item, except `"false"`.  |
-| `[data-variant="icons"]`  | Icons-only mode (hides labels).  |
+| Selector                   | Role                            |
+| -------------------------- | ------------------------------- |
+| `.c-nav`                   | Container (flex column).        |
+| `.c-nav__item`             | A navigation link.              |
+| `.c-nav__item--child`      | Nested item inside a section.   |
+| `.c-nav__icon`             | Leading icon.                   |
+| `.c-nav__label`            | Text label.                     |
+| `.c-nav__badge`            | Trailing badge (count).         |
+| `.c-nav__group`            | Non-interactive item group.     |
+| `.c-nav__group-label`      | Quiet group label.              |
+| `.c-nav__divider`          | Separator between item groups.  |
+| `.c-nav__menu`             | `.c-menu` wrapper inside nav.   |
+| `.c-nav__footer`           | Bottom metadata/action region.  |
+| `.c-nav__meta`             | Compact metadata block.         |
+| `.c-nav__meta-icon`        | Metadata icon/avatar slot.      |
+| `.c-nav__meta-body`        | Metadata text stack.            |
+| `.c-nav__meta-label`       | Truncated metadata label.       |
+| `.c-nav__meta-description` | Secondary metadata row.         |
+| `.c-nav__actions`          | Compact action stack.           |
+| `.c-nav__action`           | Small full-width link/button.   |
+| `.c-nav__action-icon`      | Action icon slot.               |
+| `.c-nav__action-label`     | Truncated action label.         |
+| `.c-nav__section`          | Collapsible `<details>` group.  |
+| `.c-nav__section-trigger`  | The `<summary>` (click target). |
+| `.c-nav__chevron`          | Expand/collapse arrow.          |
+| `[aria-current]`           | Current item, except `"false"`. |
+| `[data-variant="icons"]`   | Icons-only mode (hides labels). |

@@ -110,7 +110,11 @@
       border-color: var(--pl-color-accent);
       color: var(--pl-color-accent);
       box-shadow: 0 0 0 4px
-        color-mix(in oklab, var(--pl-color-accent), transparent var(--pl-focus-glow-opacity));
+        color-mix(
+          in oklab,
+          var(--pl-color-accent),
+          transparent var(--pl-focus-glow-opacity)
+        );
     }
 
     .c-stepper__label {

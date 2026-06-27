@@ -51,7 +51,8 @@ The detail slot accepts any content — badges, avatars, links:
 <div class="c-description__row">
   <dt class="c-description__term">Owner</dt>
   <dd class="c-description__detail">
-    <div class="c-avatar" data-size="sm">JS</div> Jane Smith
+    <div class="c-avatar" data-size="sm">JS</div>
+    Jane Smith
   </dd>
 </div>
 ```
@@ -76,10 +77,10 @@ For narrow sidebars or long-form values, stack terms above details:
 
 ## Layout modes
 
-| Mode | Class | When to use |
-|------|-------|-------------|
-| **Grid** (default) | `.c-description` | Detail panels, metadata grids. Two columns: label right-aligned, value on the right. Collapses to stacked below 32rem container width. |
-| **Stacked** | `.c-description[data-layout="stacked"]` | Narrow sidebars, long-form values, mobile-first layouts. Term above, detail below. |
+| Mode               | Class                                   | When to use                                                                                                                            |
+| ------------------ | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Grid** (default) | `.c-description`                        | Detail panels, metadata grids. Two columns: label right-aligned, value on the right. Collapses to stacked below 32rem container width. |
+| **Stacked**        | `.c-description[data-layout="stacked"]` | Narrow sidebars, long-form values, mobile-first layouts. Term above, detail below.                                                     |
 
 ## Responsive behavior
 
@@ -89,24 +90,24 @@ panel stacks even on a wide-screen desktop — no viewport hack needed.
 
 ## Class contract
 
-| Selector                  | Role                                           |
-| ------------------------- | ---------------------------------------------- |
-| `.c-description`          | The `<dl>` container (grid + query container). |
-| `.c-description__row`     | A wrapper `<div>` around each `<dt>`/`<dd>` pair. |
+| Selector                  | Role                                               |
+| ------------------------- | -------------------------------------------------- |
+| `.c-description`          | The `<dl>` container (grid + query container).     |
+| `.c-description__row`     | A wrapper `<div>` around each `<dt>`/`<dd>` pair.  |
 | `.c-description__term`    | The `<dt>` label (muted, semibold, right-aligned). |
-| `.c-description__detail`  | The `<dd>` value (accepts any content).        |
-| `[data-layout="stacked"]` | Single-column layout (term above detail).      |
-| `[data-dividers]`         | Hairline border between rows.                  |
+| `.c-description__detail`  | The `<dd>` value (accepts any content).            |
+| `[data-layout="stacked"]` | Single-column layout (term above detail).          |
+| `[data-dividers]`         | Hairline border between rows.                      |
 
 ## Tokens exposed
 
-| Token                       | Default                  | Purpose                                    |
-| --------------------------- | ------------------------ | ------------------------------------------ |
-| `--c-description-term-w`    | `auto`                   | Term column width. Set to `12rem` for a uniform label gutter. |
-| `--c-description-row-gap`   | `var(--pl-space-3)`      | Vertical spacing between rows.             |
-| `--c-description-col-gap`   | `var(--pl-space-4)`      | Horizontal spacing between term and detail. |
-| `--c-description-term-color`| `var(--pl-color-text-muted)` | Label text color.                      |
-| `--c-description-term-size` | `var(--pl-text-sm)`      | Label font size.                           |
+| Token                        | Default                      | Purpose                                                       |
+| ---------------------------- | ---------------------------- | ------------------------------------------------------------- |
+| `--c-description-term-w`     | `auto`                       | Term column width. Set to `12rem` for a uniform label gutter. |
+| `--c-description-row-gap`    | `var(--pl-space-3)`          | Vertical spacing between rows.                                |
+| `--c-description-col-gap`    | `var(--pl-space-4)`          | Horizontal spacing between term and detail.                   |
+| `--c-description-term-color` | `var(--pl-color-text-muted)` | Label text color.                                             |
+| `--c-description-term-size`  | `var(--pl-text-sm)`          | Label font size.                                              |
 
 ## Accessibility
 

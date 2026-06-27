@@ -203,7 +203,8 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
-    .c-nav__menu .c-menu__trigger:has(~ .c-menu__popover:popover-open)
+    .c-nav__menu
+      .c-menu__trigger:has(~ .c-menu__popover:popover-open)
       .c-nav__chevron {
       rotate: 90deg;
     }
@@ -230,11 +231,8 @@
       gap: var(--pl-space-2);
       min-inline-size: 0;
       padding: var(--pl-space-2);
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 35%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 35%);
       border-radius: var(--pl-radius-md);
       background: color-mix(
         in oklab,
@@ -251,11 +249,7 @@
       place-items: center;
       flex-shrink: 0;
       border-radius: var(--pl-radius-md);
-      background: color-mix(
-        in oklab,
-        var(--pl-color-accent),
-        transparent 88%
-      );
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
       color: var(--pl-color-accent);
     }
 
