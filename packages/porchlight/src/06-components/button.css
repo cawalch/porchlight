@@ -125,7 +125,7 @@
 
     /* Primary focus: accent glow instead of the generic outline. */
     :scope[data-variant="primary"]:focus-visible {
-      outline: none;
+      outline: 2px solid transparent;
       box-shadow:
         var(--pl-shadow-glow),
         inset 0 1px 0 var(--c-button-highlight);

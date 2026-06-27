@@ -62,7 +62,7 @@
   background: var(--pl-color-surface-2);
   font-size: 0.85em;
   font-family: var(--pl-font-mono);
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose :where(pre) {

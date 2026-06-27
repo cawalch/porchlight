@@ -32,7 +32,10 @@
   },
   "devDependencies": {
     "prettier": "^3.4.2",
-    "stylelint": "^16.0.0",
-    "stylelint-config-standard": "^36.0.0"
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1",
+    "stylelint-plugin-defensive-css": "^2.9.3",
+    "stylelint-use-logical": "^2.1.3"
   }
 }

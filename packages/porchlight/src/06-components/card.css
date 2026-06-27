@@ -198,7 +198,7 @@
 
     :scope[data-interactive]:focus-visible,
     :scope[href]:focus-visible {
-      outline: none;
+      outline: 2px solid transparent;
       box-shadow:
         0 0 0 var(--pl-focus-size) var(--pl-focus-color),
         var(--pl-shadow-2);

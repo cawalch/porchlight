@@ -1,5 +1,10 @@
 {
   "extends": ["stylelint-config-standard"],
+  "plugins": [
+    "stylelint-use-logical",
+    "stylelint-declaration-strict-value",
+    "stylelint-plugin-defensive-css"
+  ],
   "ignoreFiles": ["node_modules/**", "dist/**", "**/dist/**", ".astro/**"],
   "rules": {
     "at-rule-no-unknown": null,
@@ -15,6 +20,39 @@
     "keyframes-name-pattern": null,
     "value-keyword-case": null,
     "property-no-vendor-prefix": null,
-    "import-notation": "string"
+    "import-notation": "string",
+
+    "csstools/use-logical": [
+      true,
+      {
+        "severity": "error"
+      }
+    ],
+
+    "declaration-property-value-no-unknown": [
+      true,
+      {
+        "ignoreProperties": {
+          "transform-origin": ["/^inline-/", "/^block-/"]
+        }
+      }
+    ],
+
+    "scale-unlimited/declaration-strict-value": [
+      ["/color/", "fill", "stroke"],
+      {
+        "ignoreValues": [
+          "/^(inherit|initial|unset|revert)$/",
+          "transparent",
+          "currentColor",
+          "none",
+          "/^(light|dark)$/",
+          "/^(ButtonBorder|ButtonText|Canvas|CanvasText|GrayText|Highlight|HighlightText|LinkText|Mark|SelectedItem|SelectedItemText|VisitedText)$/"
+        ]
+      }
+    ],
+
+    "defensive-css/require-forced-colors-focus": true,
+    "defensive-css/require-focus-visible": true
   }
 }

@@ -43,7 +43,7 @@ body {
   transform: translateY(-200%);
 }
 
-.skip-link:focus {
+.skip-link:focus-visible {
   transform: none;
 }
 

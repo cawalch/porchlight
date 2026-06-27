@@ -129,7 +129,7 @@
     :scope[data-overflow="wrap"] .c-table :where(td) {
       white-space: normal;
       text-wrap: pretty;
-      word-break: break-word;
+      overflow-wrap: break-word;
       min-inline-size: 0;
     }
 
@@ -145,7 +145,7 @@
     .c-table :where(td)[data-overflow="wrap"] {
       white-space: normal;
       text-wrap: pretty;
-      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     /* Per-cell truncate (overrides table setting). */
