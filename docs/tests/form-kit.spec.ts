@@ -16,6 +16,12 @@ async function tabUntil(
   throw new Error(`Could not tab to ${selector}`);
 }
 
+function ringColor(boxShadow: string): string | null {
+  if (!boxShadow || boxShadow === "none") return null;
+  const ok = boxShadow.match(/oklch\([^)]+\)|oklab\([^)]+\)|rgba?\([^)]+\)/);
+  return ok ? ok[0] : null;
+}
+
 test("inline fields align on desktop and stack without overflow on mobile", async ({
   page,
 }) => {
@@ -123,7 +129,9 @@ test("form grids use multiple columns on desktop and one column on mobile", asyn
   }
 });
 
-test("choice groups keep native checkbox and radio controls", async ({ page }) => {
+test("choice groups keep native checkbox and radio controls", async ({
+  page,
+}) => {
   await page.goto("./preview/form");
 
   const group = page.locator("[data-preview-choice-group]");
@@ -163,16 +171,18 @@ test("input groups move focus indication to the group while labels target native
   await expect(input).toBeVisible();
 
   await tabUntil(page, "#workspace-slug");
-  const styles = await page.locator("[data-preview-input-group]").evaluate((el) => {
-    const inputEl = el.querySelector("input");
-    const groupStyle = getComputedStyle(el);
-    const inputStyle = inputEl ? getComputedStyle(inputEl) : null;
-    return {
-      active: inputEl === document.activeElement,
-      groupShadow: groupStyle.boxShadow,
-      inputShadow: inputStyle?.boxShadow ?? "",
-    };
-  });
+  const styles = await page
+    .locator("[data-preview-input-group]")
+    .evaluate((el) => {
+      const inputEl = el.querySelector("input");
+      const groupStyle = getComputedStyle(el);
+      const inputStyle = inputEl ? getComputedStyle(inputEl) : null;
+      return {
+        active: inputEl === document.activeElement,
+        groupShadow: groupStyle.boxShadow,
+        inputShadow: inputStyle?.boxShadow ?? "",
+      };
+    });
 
   expect(styles.active).toBe(true);
   expect(styles.groupShadow).not.toBe("none");
@@ -199,3 +209,53 @@ test("input groups reflect aria-invalid from server or framework validation", as
   expect(styles.shadow).not.toBe("none");
   expect(styles.borderColor).not.toBe("ButtonBorder");
 });
+
+for (const theme of ["light", "dark"] as const) {
+  test(`focused invalid input groups use the standard focus ring in ${theme}`, async ({
+    page,
+  }) => {
+    await page.goto("./preview/field");
+    await page.evaluate((value) => {
+      document.documentElement.setAttribute("data-theme", value);
+    }, theme);
+
+    await tabUntil(page, "#workspace-slug");
+    await page.waitForTimeout(300);
+    const focusColor = ringColor(
+      await page
+        .locator("[data-preview-input-group]")
+        .evaluate((el) => getComputedStyle(el).boxShadow),
+    );
+    expect(
+      focusColor,
+      "baseline input group focus ring must resolve",
+    ).not.toBeNull();
+
+    const invalid = page.locator("#server-slug");
+    await invalid.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    await page.waitForTimeout(300);
+
+    const invalidStyles = await page
+      .locator("[data-preview-group-invalid]")
+      .evaluate((el) => {
+        const style = getComputedStyle(el);
+        return {
+          ring: style.boxShadow,
+          borderColor: style.borderColor,
+        };
+      });
+    expect(ringColor(invalidStyles.ring)).toBe(focusColor);
+
+    const dangerBorder = await page.evaluate(() => {
+      const probe = document.createElement("div");
+      probe.style.color = "var(--pl-color-danger)";
+      document.body.append(probe);
+      const color = getComputedStyle(probe).color;
+      probe.remove();
+      return color;
+    });
+    expect(invalidStyles.borderColor).toBe(dangerBorder);
+  });
+}

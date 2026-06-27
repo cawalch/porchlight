@@ -8,7 +8,8 @@
  * State is driven by native pseudos and ARIA: :focus-visible, :user-invalid,
  * [aria-invalid="true"], :disabled. Focus draws a token-colored border AND a
  * 2px ring (box-shadow); invalid flips the border to danger and the hint to
- * danger-text. State rules live OUTSIDE @scope  -  :focus-visible /
+ * danger-text, while focused-invalid keeps the calmer focus ring. State rules
+ * live OUTSIDE @scope  -  :focus-visible /
  * :user-invalid inside @scope (.c-field) did not reliably apply to the focused
  * control. They stay in the same layer, with :where() for low specificity.
  *
@@ -155,6 +156,19 @@
       color-mix(
         in oklab,
         var(--pl-color-danger),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  /* Focused invalid fields keep the error border/hint but use the standard
+     focus glow, avoiding a harsh red halo around the active typing target. */
+  :where(.c-field)
+    .c-field__control:is(:user-invalid, [aria-invalid="true"]):focus-visible {
+    border-color: var(--pl-color-danger);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-focus-color),
         transparent var(--pl-focus-glow-opacity)
       );
   }

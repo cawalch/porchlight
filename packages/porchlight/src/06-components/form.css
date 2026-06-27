@@ -219,13 +219,33 @@
     :scope:has(.c-field__control:focus-visible) {
       border-color: var(--pl-focus-color);
       box-shadow: 0 0 0 4px
-        color-mix(in oklab, var(--pl-focus-color), transparent var(--pl-focus-glow-opacity));
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
     }
 
     :scope:has(.c-field__control:is(:user-invalid, [aria-invalid="true"])) {
       border-color: var(--pl-color-danger);
       box-shadow: 0 0 0 4px
-        color-mix(in oklab, var(--pl-color-danger), transparent var(--pl-focus-glow-opacity));
+        color-mix(
+          in oklab,
+          var(--pl-color-danger),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
+
+    :scope:has(
+      .c-field__control:is(:user-invalid, [aria-invalid="true"]):focus-visible
+    ) {
+      border-color: var(--pl-color-danger);
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
     }
 
     :scope:has(.c-field__control:disabled) {
@@ -233,7 +253,8 @@
       cursor: not-allowed;
     }
 
-    :scope:has(.c-field__control:disabled) :where(.c-field__control, .c-input-group__action) {
+    :scope:has(.c-field__control:disabled)
+      :where(.c-field__control, .c-input-group__action) {
       cursor: not-allowed;
     }
   }

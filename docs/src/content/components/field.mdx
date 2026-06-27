@@ -162,12 +162,13 @@ with `aria-describedby`. Porchlight treats that state the same as
 
 ## States
 
-| State       | Selector                                 | Behavior                                   |
-| ----------- | ---------------------------------------- | ------------------------------------------ |
-| focus       | `:focus-visible` (control)               | crisp accent ring + soft glow (box-shadow) |
-| invalid     | `:user-invalid`, `[aria-invalid="true"]` | danger ring + glow, hint → danger-text     |
-| disabled    | `:disabled` (control)                    | field muted (0.55 opacity), not-allowed    |
-| placeholder | `::placeholder`                          | text-muted                                 |
+| State           | Selector                                 | Behavior                                   |
+| --------------- | ---------------------------------------- | ------------------------------------------ |
+| focus           | `:focus-visible` (control)               | crisp accent ring + soft glow (box-shadow) |
+| invalid         | `:user-invalid`, `[aria-invalid="true"]` | danger ring + glow, hint -> danger-text    |
+| focused invalid | invalid + `:focus-visible`               | danger border/hint + standard focus glow   |
+| disabled        | `:disabled` (control)                    | field muted (0.55 opacity), not-allowed    |
+| placeholder     | `::placeholder`                          | text-muted                                 |
 
 ## Accessibility
 
@@ -182,7 +183,9 @@ with `aria-describedby`. Porchlight treats that state the same as
     than a browser default outline.
 - **Invalidity:** uses `:user-invalid` (Baseline 2024) for HTML5 constraints and
   `[aria-invalid="true"]` for server/framework errors. Never rely on color
-  alone: the hint text also changes to `danger-text`.
+  alone: the hint text also changes to `danger-text`. When an invalid control
+  has keyboard focus, the ring uses the standard focus color so the active
+  typing target does not flash a destructive halo.
 - **Error text association:** for screen-reader users, add `aria-describedby`
   on the control pointing at the hint's `id` (the wrapper-label association
   covers the label; the hint needs the explicit link).
