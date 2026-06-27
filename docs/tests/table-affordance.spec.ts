@@ -125,26 +125,24 @@ test("collapsed detail rows do not expose detail content", async ({ page }) => {
         ".c-table__detail:not([open]):not([data-open])",
       ),
     ].map((row) => {
-        const inner = row.querySelector(
-          ".c-table__detail-inner",
-        ) as HTMLElement;
-        const content = row.querySelector(
-          ".c-table__detail-content",
-        ) as HTMLElement;
-        const innerRect = inner.getBoundingClientRect();
-        const contentRect = content.getBoundingClientRect();
-        const contentStyle = getComputedStyle(content);
-        const child = content.firstElementChild as HTMLElement;
-        const childStyle = getComputedStyle(child);
-        return {
-          childVisibility: childStyle.visibility,
-          contentHeight: contentRect.height,
-          contentVisibility: contentStyle.visibility,
-          innerHeight: innerRect.height,
-          paddingBlockEnd: contentStyle.paddingBlockEnd,
-          paddingBlockStart: contentStyle.paddingBlockStart,
-        };
-      }),
+      const inner = row.querySelector(".c-table__detail-inner") as HTMLElement;
+      const content = row.querySelector(
+        ".c-table__detail-content",
+      ) as HTMLElement;
+      const innerRect = inner.getBoundingClientRect();
+      const contentRect = content.getBoundingClientRect();
+      const contentStyle = getComputedStyle(content);
+      const child = content.firstElementChild as HTMLElement;
+      const childStyle = getComputedStyle(child);
+      return {
+        childVisibility: childStyle.visibility,
+        contentHeight: contentRect.height,
+        contentVisibility: contentStyle.visibility,
+        innerHeight: innerRect.height,
+        paddingBlockEnd: contentStyle.paddingBlockEnd,
+        paddingBlockStart: contentStyle.paddingBlockStart,
+      };
+    }),
   );
 
   expect(

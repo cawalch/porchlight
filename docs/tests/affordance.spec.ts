@@ -360,9 +360,7 @@ test("nav footer metadata actions stay compact and icon-aligned", async ({
     const meta = document.querySelector(
       "[data-preview-nav-meta]",
     ) as HTMLElement;
-    const metaLabel = meta?.querySelector(
-      ".c-nav__meta-label",
-    ) as HTMLElement;
+    const metaLabel = meta?.querySelector(".c-nav__meta-label") as HTMLElement;
     const actions = [...document.querySelectorAll("[data-preview-nav-action]")];
     const collapsedActions = document.querySelector(
       '.c-nav[data-variant="icons"] .c-nav__actions',
@@ -371,7 +369,13 @@ test("nav footer metadata actions stay compact and icon-aligned", async ({
       ".c-nav__action",
     ) as HTMLElement;
     const icon = document.querySelector(".c-nav__action-icon") as HTMLElement;
-    if (!meta || !metaLabel || actions.length < 2 || !collapsedAction || !icon) {
+    if (
+      !meta ||
+      !metaLabel ||
+      actions.length < 2 ||
+      !collapsedAction ||
+      !icon
+    ) {
       return null;
     }
 
@@ -419,18 +423,29 @@ test("nav menu flyouts compose with menu rows and icon rail triggers", async ({
     const trigger = document.querySelector(
       "[data-preview-nav-menu-trigger]",
     ) as HTMLElement;
-    const menu = document.querySelector("[data-preview-nav-menu]") as HTMLElement;
+    const menu = document.querySelector(
+      "[data-preview-nav-menu]",
+    ) as HTMLElement;
     const current = menu?.querySelector(
       ".c-menu__item[aria-current='page']",
     ) as HTMLElement;
     const description = menu?.querySelector(
       ".c-menu__item-description",
     ) as HTMLElement;
-    const shortcut = menu?.querySelector(".c-menu__item-shortcut") as HTMLElement;
+    const shortcut = menu?.querySelector(
+      ".c-menu__item-shortcut",
+    ) as HTMLElement;
     const railTrigger = document.querySelector(
       '.c-nav[data-variant="icons"] .c-nav__menu .c-menu__trigger',
     ) as HTMLElement;
-    if (!trigger || !menu || !current || !description || !shortcut || !railTrigger) {
+    if (
+      !trigger ||
+      !menu ||
+      !current ||
+      !description ||
+      !shortcut ||
+      !railTrigger
+    ) {
       return null;
     }
 

@@ -104,11 +104,8 @@
      * ----------------------------------------------------------------- */
     :scope[data-dividers] .c-description__row {
       padding-block-end: var(--c-description-row-gap);
-      border-block-end: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 30%
-      );
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
     }
 
     :scope[data-dividers] .c-description__row:last-child {

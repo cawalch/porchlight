@@ -9,6 +9,7 @@ order: 1.5
 Porchlight provides a collection of lightweight layout primitives instead of rigid page grids. They are designed to manage the regions **around** components, allowing you to compose full pages out of custom components and utilities.
 
 All layout primitives live in `@layer porchlight.layout` and share a few core design principles:
+
 - **Zero specificity**: They are wrapped in `:where()` selectors, making them easy to override in your application CSS.
 - **Token-driven spacing**: Spacing gaps default to standard token values (e.g. `var(--pl-space-4)`).
 - **Tunable variables**: Each primitive exposes one or more `--l-*` CSS custom properties (like `--l-stack-gap` or `--l-grid-min`) so you can tune specific instances directly in HTML.
@@ -19,6 +20,7 @@ All layout primitives live in `@layer porchlight.layout` and share a few core de
 ## Primitive Reference
 
 ### 1. Stack (`.l-stack`)
+
 Use for vertical flow, such as form groups, card contents, settings sections, or stacked list items.
 
 ```html
@@ -28,11 +30,12 @@ Use for vertical flow, such as form groups, card contents, settings sections, or
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
+| Token           | Description                | Default             |
+| :-------------- | :------------------------- | :------------------ |
 | `--l-stack-gap` | Vertical gap between items | `var(--pl-space-4)` |
 
 ### 2. Cluster (`.l-cluster`)
+
 Use for horizontal wrapping groups where elements flow naturally. Ideal for toolbar controls, filter lists, chip groups, or buttons in an action row.
 
 ```html
@@ -42,13 +45,14 @@ Use for horizontal wrapping groups where elements flow naturally. Ideal for tool
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
-| `--l-cluster-gap` | Spacing between items | `var(--pl-space-3)` |
-| `--l-cluster-align` | Vertical alignment (`align-items`) | `center` |
-| `--l-cluster-justify` | Horizontal alignment (`justify-content`) | `flex-start` |
+| Token                 | Description                              | Default             |
+| :-------------------- | :--------------------------------------- | :------------------ |
+| `--l-cluster-gap`     | Spacing between items                    | `var(--pl-space-3)` |
+| `--l-cluster-align`   | Vertical alignment (`align-items`)       | `center`            |
+| `--l-cluster-justify` | Horizontal alignment (`justify-content`) | `flex-start`        |
 
 ### 3. Grid (`.l-grid`)
+
 An auto-fitting grid that wraps columns automatically when they fall below a minimum width. Perfect for dashboard KPI grids, search results, or card directories.
 
 ```html
@@ -59,12 +63,13 @@ An auto-fitting grid that wraps columns automatically when they fall below a min
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
-| `--l-grid-gap` | Grid gap | `var(--pl-space-4)` |
-| `--l-grid-min` | Minimum width before columns wrap | `16rem` |
+| Token          | Description                       | Default             |
+| :------------- | :-------------------------------- | :------------------ |
+| `--l-grid-gap` | Grid gap                          | `var(--pl-space-4)` |
+| `--l-grid-min` | Minimum width before columns wrap | `16rem`             |
 
 ### 4. Sidebar (`.l-sidebar`)
+
 A two-column layout consisting of a fixed-width column (typically a sidebar navigation or filter panel) and a flexible main column. It collapses to a single column when the viewport or parent container is narrower than `48rem`.
 
 > [!NOTE]
@@ -77,12 +82,13 @@ A two-column layout consisting of a fixed-width column (typically a sidebar navi
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
-| `--l-sidebar-gap` | Column gap | `var(--pl-space-4)` |
-| `--l-sidebar-size` | Width of the sidebar column | `16rem` |
+| Token              | Description                 | Default             |
+| :----------------- | :-------------------------- | :------------------ |
+| `--l-sidebar-gap`  | Column gap                  | `var(--pl-space-4)` |
+| `--l-sidebar-size` | Width of the sidebar column | `16rem`             |
 
 ### 5. Scroll Area (`.l-scroll-area`)
+
 An independent scroll container that contains overscroll to prevent scroll chaining to the main page. It uses `scrollbar-gutter: stable` to prevent layout shifts when scrollbars appear or disappear.
 
 ```html
@@ -92,6 +98,7 @@ An independent scroll container that contains overscroll to prevent scroll chain
 ```
 
 ### 6. Columns (`.l-columns`)
+
 A CSS multi-column layout optimized for card walls, search listings, or image galleries. Unlike CSS grids, masonry columns allow elements of varying heights to stack cleanly without horizontal gaps.
 
 ```html
@@ -101,13 +108,14 @@ A CSS multi-column layout optimized for card walls, search listings, or image ga
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
-| `--l-columns-gap` | Gap between columns and cards | `var(--pl-space-4)` |
-| `--l-columns-width` | Target column width | `16rem` |
-| `--l-columns-count` | Maximum column count (optional) | `auto` |
+| Token               | Description                     | Default             |
+| :------------------ | :------------------------------ | :------------------ |
+| `--l-columns-gap`   | Gap between columns and cards   | `var(--pl-space-4)` |
+| `--l-columns-width` | Target column width             | `16rem`             |
+| `--l-columns-count` | Maximum column count (optional) | `auto`              |
 
 ### 7. Container (`.l-container`)
+
 A centered, responsive max-width wrapper designed for dashboards, list views, and settings forms.
 
 ```html
@@ -117,12 +125,13 @@ A centered, responsive max-width wrapper designed for dashboards, list views, an
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
-| `--l-container-max` | Maximum inline width | `80rem` |
+| Token               | Description             | Default             |
+| :------------------ | :---------------------- | :------------------ |
+| `--l-container-max` | Maximum inline width    | `80rem`             |
 | `--l-container-pad` | Inline padding (gutter) | `var(--pl-space-4)` |
 
 ### 8. Inset (`.l-inset`)
+
 A centered column designed to constrain content inside a wider, full-bleed element (such as forms inside a hero banner or captions in a video section).
 
 ```html
@@ -133,15 +142,16 @@ A centered column designed to constrain content inside a wider, full-bleed eleme
 </div>
 ```
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
+| Token           | Description          | Default |
+| :-------------- | :------------------- | :------ |
 | `--l-inset-max` | Maximum inline width | `48rem` |
 
 ### 9. Page (`.l-page`)
+
 A centered max-width container optimized for readable prose and documentation content.
 
-| Token | Description | Default |
-| :--- | :--- | :--- |
+| Token          | Description          | Default |
+| :------------- | :------------------- | :------ |
 | `--l-page-max` | Maximum inline width | `88rem` |
 
 ---
@@ -149,11 +159,13 @@ A centered max-width container optimized for readable prose and documentation co
 ## App Shell Layout
 
 The `.l-app-shell` coordinates the main layout of a SaaS or dashboard application. It provides:
+
 - A sticky topbar (`.l-app-shell__topbar`).
 - A sidebar navigation rail (`.l-app-shell__sidebar`) supporting manual collapse toggles.
 - A scrolling main window (`.l-app-shell__main`) configured as a container query context.
 
 ### Responsive Behavior
+
 - **Desktop (60rem+)**: Sidebar and topbar are displayed side-by-side.
 - **Tablet / Mobile (< 60rem)**: The sidebar is hidden (`display: none`), prioritizing the work canvas.
 - **Sidebar Collapse**: Setting `data-sidebar="collapsed"` on `.l-app-shell__sidebar` transitions its width from `16rem` to `3.5rem`, transforming it into an icon rail.
@@ -177,13 +189,20 @@ The `.l-app-shell` coordinates the main layout of a SaaS or dashboard applicatio
 ## Page-Building Examples
 
 ### Example 1: SaaS Dashboard Page
+
 A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a split layout for recent activity.
 
 ```html
 <div class="l-app-shell">
   <!-- Sticky Header -->
-  <header class="l-app-shell__topbar c-card" style="border-radius: 0; border-inline: 0;">
-    <div class="l-cluster" style="--l-cluster-justify: space-between; padding: var(--pl-space-3);">
+  <header
+    class="l-app-shell__topbar c-card"
+    style="border-radius: 0; border-inline: 0;"
+  >
+    <div
+      class="l-cluster"
+      style="--l-cluster-justify: space-between; padding: var(--pl-space-3);"
+    >
       <strong>Logo</strong>
       <div class="l-cluster">
         <span>User Profile</span>
@@ -192,8 +211,14 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
   </header>
 
   <!-- Sidebar Rail -->
-  <aside class="l-app-shell__sidebar" style="background: var(--pl-color-surface-2); border-inline-end: 1px solid var(--pl-color-border);">
-    <nav class="l-stack" style="--l-stack-gap: var(--pl-space-1); padding: var(--pl-space-3);">
+  <aside
+    class="l-app-shell__sidebar"
+    style="background: var(--pl-color-surface-2); border-inline-end: 1px solid var(--pl-color-border);"
+  >
+    <nav
+      class="l-stack"
+      style="--l-stack-gap: var(--pl-space-1); padding: var(--pl-space-3);"
+    >
       <a class="c-nav__item" href="#" aria-current="page">Dashboard</a>
       <a class="c-nav__item" href="#">Team</a>
       <a class="c-nav__item" href="#">Settings</a>
@@ -203,7 +228,6 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
   <!-- Main Workspace -->
   <main class="l-app-shell__main" style="padding-block: var(--pl-space-6);">
     <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-6);">
-      
       <!-- Top Section -->
       <div class="l-cluster" style="--l-cluster-justify: space-between;">
         <h1>Dashboard</h1>
@@ -227,28 +251,35 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
       <div class="l-sidebar" style="--l-sidebar-size: 20rem;">
         <!-- Right side (Sidebar column) -->
         <div class="c-card">
-          <div class="c-card__header"><h3 class="c-card__title">Activity Feed</h3></div>
-          <div class="c-card__body l-stack" style="--l-stack-gap: var(--pl-space-3);">
+          <div class="c-card__header">
+            <h3 class="c-card__title">Activity Feed</h3>
+          </div>
+          <div
+            class="c-card__body l-stack"
+            style="--l-stack-gap: var(--pl-space-3);"
+          >
             <div>User created task A</div>
             <div>User merged branch B</div>
           </div>
         </div>
-        
+
         <!-- Left side (Main column) -->
         <div class="c-card">
-          <div class="c-card__header"><h3 class="c-card__title">Active Issues</h3></div>
+          <div class="c-card__header">
+            <h3 class="c-card__title">Active Issues</h3>
+          </div>
           <div class="c-card__body">
             <!-- Table component -->
           </div>
         </div>
       </div>
-
     </div>
   </main>
 </div>
 ```
 
 ### Example 2: Settings Form
+
 A classic setting view showing a side menu and stacked inputs that adapt when screen width decreases.
 
 ```html
@@ -266,22 +297,40 @@ A classic setting view showing a side menu and stacked inputs that adapt when sc
       <div class="c-card__header">
         <h2 class="c-card__title">Profile Settings</h2>
       </div>
-      
-      <div class="c-card__body l-stack" style="--l-stack-gap: var(--pl-space-4);">
+
+      <div
+        class="c-card__body l-stack"
+        style="--l-stack-gap: var(--pl-space-4);"
+      >
         <label class="c-field">
           <span class="c-field__label">Full Name</span>
-          <input class="c-field__control" type="text" value="Jane Doe" required />
+          <input
+            class="c-field__control"
+            type="text"
+            value="Jane Doe"
+            required
+          />
         </label>
-        
+
         <label class="c-field">
           <span class="c-field__label">Email Address</span>
-          <input class="c-field__control" type="email" value="jane@example.com" required />
+          <input
+            class="c-field__control"
+            type="email"
+            value="jane@example.com"
+            required
+          />
         </label>
       </div>
 
-      <div class="c-card__footer l-cluster" style="--l-cluster-justify: flex-end;">
+      <div
+        class="c-card__footer l-cluster"
+        style="--l-cluster-justify: flex-end;"
+      >
         <button class="c-button" type="button">Cancel</button>
-        <button class="c-button" data-variant="primary" type="submit">Save</button>
+        <button class="c-button" data-variant="primary" type="submit">
+          Save
+        </button>
       </div>
     </form>
   </div>

@@ -26,59 +26,59 @@ These are foundational CSS capabilities that are in the
 [CSS Snapshot 2026](https://www.w3.org/TR/css-2026/) Official Definition.
 Any browser from 2024+ supports all of them:
 
-| Feature                                                 | Baseline | CSS-2026 | Used for                          |
-| ------------------------------------------------------- | -------- | -------- | --------------------------------- |
-| Cascade layers (`@layer`)                               | 2024     | ✅ `css-cascade-5` | The entire framework architecture |
+| Feature                                                 | Baseline | CSS-2026             | Used for                          |
+| ------------------------------------------------------- | -------- | -------------------- | --------------------------------- |
+| Cascade layers (`@layer`)                               | 2024     | ✅ `css-cascade-5`   | The entire framework architecture |
 | Custom properties (`--var`)                             | 2023     | ✅ `css-variables-1` | All tokens                        |
-| `:has()`, `:is()`, `:where()`                           | 2024     | ✅ `selectors-4` | Selectors throughout              |
-| `oklch()` color                                         | 2023     | ✅ `css-color-4` | All color tokens                  |
-| Logical properties (`inline-size`, `block-start`, etc.) | 2023     | ✅ `css-logical-1` | RTL-aware layout                  |
-| CSS nesting                                             | 2024     | ✅ `css-nesting-1` | Source authoring                  |
+| `:has()`, `:is()`, `:where()`                           | 2024     | ✅ `selectors-4`     | Selectors throughout              |
+| `oklch()` color                                         | 2023     | ✅ `css-color-4`     | All color tokens                  |
+| Logical properties (`inline-size`, `block-start`, etc.) | 2023     | ✅ `css-logical-1`   | RTL-aware layout                  |
+| CSS nesting                                             | 2024     | ✅ `css-nesting-1`   | Source authoring                  |
 
 ## Baseline-modern features
 
 These are safe to use in production as of mid-2026. All major browsers
 (Chrome, Edge, Firefox, Safari) support them:
 
-| Feature                               | Baseline | CSS-2026 | Used for                                        |
-| ------------------------------------- | -------- | -------- | ----------------------------------------------- |
-| `@scope`                              | 2025     | ⚠️ `css-cascade-6` (pre-snapshot) | All components (scoped styles without BEM) |
-| `light-dark()`                        | 2024     | ✅ `css-color-adjust-1` | Automatic light/dark color pairs                |
-| `color-mix()`                         | 2024     | ✅ `css-color-5` | Derived tints (alert backgrounds, hover states) |
-| Popover API (`popover` attribute)     | 2024     | HTML spec | `c-menu` (popover-menu) component               |
-| `@starting-style`                     | 2024     | ✅ `css-transitions-1` | Dialog and popover enter animations             |
-| `transition-behavior: allow-discrete` | 2024     | ✅ `css-transitions-1` | Exit animations on `display: none` elements     |
-| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4` | `c-field` validation states                     |
-| `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4` | Heading and paragraph typography                |
-| Container queries (`@container`)      | 2023     | ✅ `css-contain-2` | Card, data-table responsive behavior            |
-| `prefers-contrast`                    | 2022     | ✅ `mediaqueries-5` | Stronger boundaries and focus affordances       |
-| `@property` (Houdini)                 | 2024     | ⚠️ pre-snapshot | Token type registration (`--pl-motion-scale`, etc.) |
+| Feature                               | Baseline | CSS-2026                          | Used for                                            |
+| ------------------------------------- | -------- | --------------------------------- | --------------------------------------------------- |
+| `@scope`                              | 2025     | ⚠️ `css-cascade-6` (pre-snapshot) | All components (scoped styles without BEM)          |
+| `light-dark()`                        | 2024     | ✅ `css-color-adjust-1`           | Automatic light/dark color pairs                    |
+| `color-mix()`                         | 2024     | ✅ `css-color-5`                  | Derived tints (alert backgrounds, hover states)     |
+| Popover API (`popover` attribute)     | 2024     | HTML spec                         | `c-menu` (popover-menu) component                   |
+| `@starting-style`                     | 2024     | ✅ `css-transitions-1`            | Dialog and popover enter animations                 |
+| `transition-behavior: allow-discrete` | 2024     | ✅ `css-transitions-1`            | Exit animations on `display: none` elements         |
+| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4`                  | `c-field` validation states                         |
+| `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4`                   | Heading and paragraph typography                    |
+| Container queries (`@container`)      | 2023     | ✅ `css-contain-2`                | Card, data-table responsive behavior                |
+| `prefers-contrast`                    | 2022     | ✅ `mediaqueries-5`               | Stronger boundaries and focus affordances           |
+| `@property` (Houdini)                 | 2024     | ⚠️ pre-snapshot                   | Token type registration (`--pl-motion-scale`, etc.) |
 
 ## Progressive enhancement features
 
 These features are gated behind `@supports`. The framework works perfectly
 without them; they add polish where supported:
 
-| Feature                                               | Baseline | CSS-2026 | Enhancement                                 | Fallback                                  |
-| ----------------------------------------------------- | -------- | -------- | ------------------------------------------- | ----------------------------------------- |
-| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot | `c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
-| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot | Grid dividers via `data-dividers`           | Normal grid gap (no divider line)         |
-| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3` | Optically-centered button/badge labels      | Standard half-leading (1px visual offset) |
-| Typed `attr()` (`attr(data-x type(<color>))`         | 2026     | ⚠️ pre-snapshot | `c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
+| Feature                                               | Baseline | CSS-2026                    | Enhancement                                 | Fallback                                  |
+| ----------------------------------------------------- | -------- | --------------------------- | ------------------------------------------- | ----------------------------------------- |
+| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot             | `c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
+| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot             | Grid dividers via `data-dividers`           | Normal grid gap (no divider line)         |
+| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3`           | Optically-centered button/badge labels      | Standard half-leading (1px visual offset) |
+| Typed `attr()` (`attr(data-x type(<color>))`          | 2026     | ⚠️ pre-snapshot             | `c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
 | View Transitions                                      | 2025     | ✅ `css-view-transitions-1` | Smooth cross-page fades on docs site        | Hard page reload                          |
 
 ## Experimental features
 
 These are not yet Baseline across all browsers. They are `@supports`-gated
 and degrade to a static but functional state. Note that several are in the
-CSS-2026 Official Definition (their *specification* is stable) even though
-*implementation* is still rolling out:
+CSS-2026 Official Definition (their _specification_ is stable) even though
+_implementation_ is still rolling out:
 
-| Feature                                                   | Chrome | CSS-2026 | Enhancement                             | Fallback                                   |
-| --------------------------------------------------------- | ------ | -------- | --------------------------------------- | ------------------------------------------ |
-| `interpolate-size: allow-keywords`                        | 149    | ✅ `css-sizing-4` | Smooth `height: auto` animations        | `grid-template-rows: 0fr -> 1fr` technique |
-| Scroll-driven animations (`animation-timeline: scroll()`) | 149    | ⚠️ pre-snapshot | Scroll-progress bar fills as you scroll | Bar hidden (no false progress)             |
-| Scroll-driven animations (`animation-timeline: view()`)   | 149    | ⚠️ pre-snapshot | Elements fade in on scroll              | Elements always visible                    |
+| Feature                                                   | Chrome | CSS-2026                       | Enhancement                             | Fallback                                   |
+| --------------------------------------------------------- | ------ | ------------------------------ | --------------------------------------- | ------------------------------------------ |
+| `interpolate-size: allow-keywords`                        | 149    | ✅ `css-sizing-4`              | Smooth `height: auto` animations        | `grid-template-rows: 0fr -> 1fr` technique |
+| Scroll-driven animations (`animation-timeline: scroll()`) | 149    | ⚠️ pre-snapshot                | Scroll-progress bar fills as you scroll | Bar hidden (no false progress)             |
+| Scroll-driven animations (`animation-timeline: view()`)   | 149    | ⚠️ pre-snapshot                | Elements fade in on scroll              | Elements always visible                    |
 | `field-sizing: content`                                   | 123    | ✅ `css-ui-4` / `css-sizing-4` | Textarea grows to fit content           | Fixed height                               |
 
 > **Note on `@property`-registered `contrast-color()`:** While

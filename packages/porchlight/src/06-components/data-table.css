@@ -45,11 +45,8 @@
          even when no scrollbar is present, which shows as a visible gap
          between the last column and the right border. overflow: auto handles
          layout-shift prevention on its own when the scrollbar actually appears. */
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 20%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 20%);
       border-radius: var(--c-table-radius);
       background: var(--pl-color-surface);
     }
@@ -63,7 +60,9 @@
          reduced to +0.25rem so rows are noticeably denser than comfortable,
          while still deriving from --pl-control-block-size so body-level
          density cascades through this override too. */
-      --c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.25rem);
+      --c-table-row-min-block-size: calc(
+        var(--pl-control-block-size) + 0.25rem
+      );
     }
 
     .c-table {
@@ -323,11 +322,8 @@
         var(--pl-color-surface-2),
         var(--pl-color-text) 2%
       );
-      box-shadow: inset var(--pl-accent-bar-width) 0 0 color-mix(
-        in oklab,
-        var(--pl-color-accent),
-        transparent 70%
-      );
+      box-shadow: inset var(--pl-accent-bar-width) 0 0
+        color-mix(in oklab, var(--pl-color-accent), transparent 70%);
     }
 
     .c-table__detail-inner {
@@ -476,11 +472,7 @@
      log tables). Very subtle at 50% transparent surface-2 so it doesn't
      clash with hover/selection states. */
   :where(.c-table-wrap[data-zebra]) .c-table tbody tr:nth-child(even) {
-    background: color-mix(
-      in oklab,
-      var(--pl-color-surface-2),
-      transparent 50%
-    );
+    background: color-mix(in oklab, var(--pl-color-surface-2), transparent 50%);
   }
 
   /* Loading state: suppress hover effects on skeleton rows. */

@@ -132,7 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   cell padding past 56rem; cards bump padding to `space-6` past 40rem;
   `.c-page-header` stacks cleanly at narrow widths; and `.c-stat__value`
   font-size now scales by the tile's actual width (shrinks <16rem, enlarges
-  >32rem) instead of viewport units. (#62)
+  > 32rem) instead of viewport units. (#62)
 - **Modern `text-wrap` across components.** `text-wrap: stable` on `<th>`
   headers, `balance` on page-header titles, and `pretty` (orphan prevention)
   on card body, description-list details, and dialog body. (#62)

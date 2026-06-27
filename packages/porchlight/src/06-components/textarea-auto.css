@@ -38,13 +38,21 @@
       outline: none;
       border-color: var(--pl-focus-color);
       box-shadow: 0 0 0 4px
-        color-mix(in oklab, var(--pl-focus-color), transparent var(--pl-focus-glow-opacity));
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
     }
 
     :scope:user-invalid {
       border-color: var(--pl-color-danger);
       box-shadow: 0 0 0 4px
-        color-mix(in oklab, var(--pl-color-danger), transparent var(--pl-focus-glow-opacity));
+        color-mix(
+          in oklab,
+          var(--pl-color-danger),
+          transparent var(--pl-focus-glow-opacity)
+        );
     }
 
     :scope:disabled {

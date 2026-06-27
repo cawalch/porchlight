@@ -80,15 +80,14 @@
       overflow-y: auto;
 
       /* Floating surface: softened border + Liquid Glass. */
-      border: 1px solid color-mix(
-        in oklab,
-        var(--pl-color-border),
-        transparent 30%
-      );
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
       border-radius: var(--pl-radius-xl);
       background: var(--pl-overlay-popover-bg);
-      backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur)) saturate(var(--pl-backdrop-saturate));
+      backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-shadow-3);
 
       /* Asymmetric motion. */
