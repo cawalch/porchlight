@@ -85,7 +85,9 @@ test("field invalid draws a visible danger ring", async ({ page }) => {
   ).toBeGreaterThanOrEqual(RING_DL);
 });
 
-test("aria-invalid draws the same visible danger treatment", async ({ page }) => {
+test("aria-invalid draws the same visible danger treatment", async ({
+  page,
+}) => {
   await page.goto("./preview/field");
   const surface = await page.evaluate(
     () => getComputedStyle(document.body).backgroundColor,
@@ -109,3 +111,51 @@ test("aria-invalid draws the same visible danger treatment", async ({ page }) =>
     .evaluate((el) => getComputedStyle(el).color);
   expect(hintColor).not.toBe(mutedColor);
 });
+
+for (const theme of ["light", "dark"] as const) {
+  test(`focused invalid fields use the standard focus ring in ${theme}`, async ({
+    page,
+  }) => {
+    await page.goto("./preview/field");
+    await page.evaluate((value) => {
+      document.documentElement.setAttribute("data-theme", value);
+    }, theme);
+
+    const normal = page.locator(".c-field__control").first();
+    await normal.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    await page.waitForTimeout(300);
+    const focusColor = ringColor(
+      await normal.evaluate((el) => getComputedStyle(el).boxShadow),
+    );
+    expect(focusColor, "baseline focus ring must resolve").not.toBeNull();
+
+    const invalid = page.locator(
+      "[data-preview-aria-invalid] .c-field__control",
+    );
+    await invalid.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    await page.waitForTimeout(300);
+
+    const invalidStyles = await invalid.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        ring: style.boxShadow,
+        borderColor: style.borderColor,
+      };
+    });
+    expect(ringColor(invalidStyles.ring)).toBe(focusColor);
+
+    const dangerBorder = await page.evaluate(() => {
+      const probe = document.createElement("div");
+      probe.style.color = "var(--pl-color-danger)";
+      document.body.append(probe);
+      const color = getComputedStyle(probe).color;
+      probe.remove();
+      return color;
+    });
+    expect(invalidStyles.borderColor).toBe(dangerBorder);
+  });
+}
