@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-06-26
+
+### Added
+
+- **`prefers-contrast` support.** A new `@media (prefers-contrast: more)`
+  block in the themes layer responds to the OS "increase contrast" setting by
+  deepening `--pl-color-surface-2` and `--pl-color-border`, and thickening the
+  focus ring (`--pl-focus-size: 3px`, tighter `--pl-focus-glow-opacity`). It
+  strengthens boundaries and focus affordances without changing component
+  contracts or forcing a new palette. (#75)
+
+### Changed
+
+- **Focused-invalid fields keep the calmer focus glow.** A focused invalid
+  field previously re-showed the danger-colored halo, which reads as a harsh
+  red ring around the active typing target. It now keeps the danger border
+  and hint text but uses the standard `--pl-focus-color` glow while focused —
+  so the error state stays visible without shouting at someone mid-correction.
+  Applies to both `.c-field` and `.c-input-group`. (#73)
+
+### Fixed
+
+- **Forced-colors focus rings were invisible on buttons and cards.** The
+  primary button's accent-glow focus ring and the interactive card's
+  box-shadow lift both relied on `outline: none` + `box-shadow`, which Windows
+  High Contrast suppresses entirely. Both now declare a transparent outline
+  that renders as a system-color focus indicator in Forced Colors. (#76)
+- **Skip-link used `:focus` instead of `:focus-visible`.** Switched so the
+  skip-link only reveals on keyboard focus, not on mouse click. (#76)
+- **Deprecated CSS modernized.** `word-break: break-word` →
+  `overflow-wrap: break-word` (data-table wrap modes, docs prose), and the
+  deprecated `clip` property → `clip-path: inset(50%)` (file-upload,
+  segmented, switch sr-only helpers). Behavior-preserving. (#76)
+
+### Tooling
+
+- **Stylelint stack upgraded** (16→17, config-standard 36→40) with three
+  new plugins: `stylelint-use-logical` (regression guard, 0 violations),
+  `declaration-strict-value` (enforces token usage on colors, 0 violations),
+  and a curated subset of `stylelint-plugin-defensive-css`
+  (`require-forced-colors-focus`, `require-focus-visible` — the rules that
+  surfaced the focus fixes above). (#76)
+- **Biome 2.5 added** as a JS/TS/JSON linter (CSS stays stylelint's domain).
+  Prettier kept as formatter — enforced in CI; it had been drifting 25 files
+  unenforced. (#76)
+
+### Docs
+
+- **Preview index auto-generated from docs** (no more hand-maintained list).
+  (#72)
+- **Model composition recipes** added to the docs. (#74)
+
 ## [0.6.0] - 2026-06-25
 
 ### Added
