@@ -51,6 +51,7 @@ These are safe to use in production as of mid-2026. All major browsers
 | `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4` | `c-field` validation states                     |
 | `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4` | Heading and paragraph typography                |
 | Container queries (`@container`)      | 2023     | ✅ `css-contain-2` | Card, data-table responsive behavior            |
+| `prefers-contrast`                    | 2022     | ✅ `mediaqueries-5` | Stronger boundaries and focus affordances       |
 | `@property` (Houdini)                 | 2024     | ⚠️ pre-snapshot | Token type registration (`--pl-motion-scale`, etc.) |
 
 ## Progressive enhancement features
@@ -127,9 +128,9 @@ functionality.
 
 Porchlight's test suite includes:
 
-- **167 Playwright tests** across 14 spec files
+- **213 Playwright tests** across 17 spec files
 - **Contrast tests** that compute WCAG ratios from OKLCH values (not
   axe-core, which cannot parse OKLCH computed colors as of v4.12)
-- **Accessibility-mode tests** for RTL, forced-colors, reduced-motion,
-  and 200% zoom
+- **Accessibility-mode tests** for RTL, forced-colors, prefers-contrast,
+  reduced-motion, and 200% zoom
 - **Smoke tests** for every preview and docs page

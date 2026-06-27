@@ -7,6 +7,7 @@
  *   - [data-theme]      sets color-scheme, which drives light-dark() in tokens.
  *   - [data-density]    resizes controls via the control tokens.
  *   - prefers-reduced-motion  zeroes the motion scale (and any transitions).
+ *   - prefers-contrast  strengthens boundaries and focus affordances.
  *   - forced-colors     remaps semantic tokens to Windows system colors so the
  *                       UI stays legible under High Contrast mode.
  *
@@ -92,6 +93,23 @@
       animation-duration: 1ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 1ms !important;
+    }
+  }
+
+  /* Contrast preference: make structural boundaries and focus affordances
+     clearer without changing component contracts or forcing a new palette. */
+  @media (prefers-contrast: more) {
+    :root {
+      --pl-color-surface-2: light-dark(
+        oklch(90% 0.012 60deg),
+        oklch(30% 0.014 55deg)
+      );
+      --pl-color-border: light-dark(
+        oklch(64% 0.018 55deg / 95%),
+        oklch(72% 0.014 55deg / 78%)
+      );
+      --pl-focus-size: 3px;
+      --pl-focus-glow-opacity: 75%;
     }
   }
 
