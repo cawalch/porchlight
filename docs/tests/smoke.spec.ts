@@ -534,6 +534,50 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
   });
 
+  test("composition recipes guide covers model-friendly app composition", async ({
+    page,
+  }) => {
+    await page.goto("./guides/composition-recipes");
+    const content = page.locator(".docs-content");
+    await expect(
+      content.getByRole("heading", {
+        name: "Composition Recipes",
+        exact: true,
+      }),
+    ).toBeVisible();
+    for (const heading of [
+      "App Shell Recipe",
+      "Dashboard Recipe",
+      "Data Region Recipe",
+      "Settings Page Recipe",
+      "Dense Admin View Recipe",
+    ]) {
+      await expect(
+        content.getByRole("heading", { name: heading, exact: true }),
+      ).toBeVisible();
+    }
+    await expect(
+      content.getByText("Do not make div-based tables"),
+    ).toBeVisible();
+    await expect(
+      content.getByText("Do not put page headers inside"),
+    ).toBeVisible();
+    await expect(
+      content.getByText("Do not nest cards inside cards"),
+    ).toBeVisible();
+  });
+
+  test("llms text assets expose composition guidance", async ({ page }) => {
+    for (const path of ["./llms.txt", "./llms-full.txt"]) {
+      const response = await page.goto(path);
+      expect(response?.ok(), `${path} should be reachable`).toBe(true);
+      const text = await page.locator("body").textContent();
+      expect(text).toContain("Porchlight");
+      expect(text?.toLowerCase()).toContain("composition");
+      expect(text?.toLowerCase()).toContain("data table");
+    }
+  });
+
   test("color token reference shows semantic pairs", async ({ page }) => {
     await page.goto("./tokens/color");
     const content = page.locator(".docs-content");
@@ -997,7 +1041,9 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-nav__group-label").first()).toBeVisible();
     await expect(page.locator(".c-nav__divider").first()).toBeAttached();
     await expect(page.locator(".c-nav__menu").first()).toBeVisible();
-    await expect(page.locator(".c-nav__menu .c-menu__trigger").first()).toBeVisible();
+    await expect(
+      page.locator(".c-nav__menu .c-menu__trigger").first(),
+    ).toBeVisible();
     // Generic footer metadata and compact nav actions exist.
     await expect(page.locator(".c-nav__meta").first()).toBeVisible();
     await expect(page.locator(".c-nav__action").first()).toBeVisible();

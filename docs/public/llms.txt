@@ -1,0 +1,32 @@
+# Porchlight LLM guide
+
+Porchlight is a native-CSS design system for SaaS apps. Use these docs when
+building with models:
+
+- Composition recipes: /guides/composition-recipes
+- Layout primitives: /guides/layout
+- Component reference: /components
+- Preview examples: /preview
+- Full model pack: /llms-full.txt
+
+Core composition rules:
+
+- Use layout primitives for structure: l-app-shell, l-container, l-stack,
+  l-grid, l-cluster, l-sidebar.
+- Use components for semantics and chrome: c-card, c-toolbar, c-page-header,
+  c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat.
+- Use utilities for small adjustments: u-muted, u-muted-sm, u-truncate,
+  u-sr-only, u-min-0.
+- Data table rule: always use a real table inside c-table-wrap. Do not make
+  div-based tables.
+- Toolbar rule: use c-page-header for page titles inside padded content; use
+  c-toolbar on the edge of a data region.
+- Card rule: do not nest cards inside cards for layout. Use l-grid,
+  l-sidebar, l-stack, or sibling cards.
+- Form rule: use real labels. For compact controls, use u-sr-only labels.
+
+Best first examples:
+
+- /preview/app-dashboard for a full app shell with KPI grid and data table.
+- /preview/dashboard for a compact composition proof.
+- /preview/app-dense for dense admin/data-console layouts.
