@@ -1,0 +1,212 @@
+# Porchlight model composition pack
+
+This file is optimized for coding models that need to compose Porchlight
+components into working app screens.
+
+## Mental model
+
+Porchlight has three composition layers:
+
+1. Layout primitives: l-app-shell, l-container, l-stack, l-grid, l-cluster,
+   l-sidebar. These create page structure.
+2. Components: c-card, c-toolbar, c-page-header, c-form, c-field,
+   c-input-group, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs,
+   c-badge. These provide semantics and chrome.
+3. Utilities: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0. These make
+   small adjustments.
+
+Use app CSS only for local glue. Prefer --pl-space-* tokens and existing
+layout primitives over new spacing systems.
+
+## Avoid
+
+- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside
+  c-table-wrap.
+- Do not put page headers inside c-toolbar. Use c-page-header inside padded
+  content; use c-toolbar at data-region edges.
+- Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack,
+  or sibling c-card elements.
+- Do not omit c-table-wrap around c-table.
+- Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and
+  --pl-space-* tokens.
+- Do not use placeholders as the only labels. Use visible labels or u-sr-only.
+
+## App shell skeleton
+
+```html
+<div class="l-app-shell">
+  <header class="l-app-shell__topbar">
+    <div class="l-cluster" style="--l-cluster-justify: space-between;">
+      <strong>Acme</strong>
+      <button class="c-button" data-variant="ghost">Search</button>
+    </div>
+  </header>
+  <aside class="l-app-shell__sidebar">
+    <nav class="c-nav" aria-label="Main navigation">
+      <a class="c-nav__item" href="/dashboard" aria-current="page">
+        <span class="c-nav__label">Dashboard</span>
+      </a>
+    </nav>
+  </aside>
+  <main class="l-app-shell__main">
+    <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-6);">
+      <!-- page sections -->
+    </div>
+  </main>
+</div>
+```
+
+## Dashboard skeleton
+
+```html
+<div class="c-page-header">
+  <div class="c-page-header__heading">
+    <h1 class="c-page-header__title">Dashboard</h1>
+    <span class="c-page-header__subtitle">Overview of workspace health</span>
+  </div>
+  <div class="c-page-header__actions">
+    <button class="c-button" data-variant="secondary">Export</button>
+    <button class="c-button" data-variant="primary">New report</button>
+  </div>
+</div>
+
+<div class="l-grid" style="--l-grid-min: 14rem;">
+  <section class="c-card" data-surface="app">
+    <div class="c-card__body">
+      <div class="c-stat">
+        <span class="c-stat__label">Monthly revenue</span>
+        <div class="c-stat__value">$48,200<span class="c-stat__unit">/mo</span></div>
+        <span class="c-stat__trend" data-direction="up">12.4%</span>
+      </div>
+    </div>
+  </section>
+</div>
+```
+
+## Data table region skeleton
+
+```html
+<section class="c-card" data-surface="app">
+  <div class="c-toolbar">
+    <div class="c-toolbar__group">
+      <label class="c-field">
+        <span class="u-sr-only">Search accounts</span>
+        <input class="c-field__control" type="search" placeholder="Search accounts..." />
+      </label>
+      <button class="c-button" data-variant="ghost">Filter</button>
+    </div>
+    <div class="c-toolbar__group">
+      <button class="c-button" data-variant="primary">New account</button>
+    </div>
+  </div>
+  <div class="c-table-wrap" style="border-inline: 0; border-radius: 0;">
+    <table class="c-table" style="--c-table-min: 42rem;">
+      <thead>
+        <tr>
+          <th class="c-table__check"><input type="checkbox" aria-label="Select all" /></th>
+          <th class="c-table__sticky-col" data-sort="asc">Account <span class="c-table__sort-icon"></span></th>
+          <th>Status</th>
+          <th data-align="end">MRR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr aria-selected="true">
+          <td class="c-table__check"><input type="checkbox" checked aria-label="Select Acme" /></td>
+          <td class="c-table__sticky-col">Acme Ops</td>
+          <td><span class="c-badge" data-tone="success">Active</span></td>
+          <td data-align="end">$2,400</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border);">
+    <div class="c-toolbar__group"><span class="u-muted-sm">Showing 1-10 of 247</span></div>
+    <div class="c-toolbar__group">
+      <nav class="c-pagination" aria-label="Accounts pagination">
+        <button class="c-pagination__nav" disabled>Prev</button>
+        <button class="c-pagination__page" aria-current="page">1</button>
+        <button class="c-pagination__nav">Next</button>
+      </nav>
+    </div>
+  </div>
+</section>
+```
+
+## Settings page skeleton
+
+```html
+<div class="l-sidebar" style="--l-sidebar-size: 14rem;">
+  <nav class="c-nav" aria-label="Settings sections">
+    <a class="c-nav__item" href="#profile" aria-current="page">
+      <span class="c-nav__label">Profile</span>
+    </a>
+  </nav>
+  <section class="c-card">
+    <div class="c-card__body">
+      <form class="c-form">
+        <div class="c-form__grid">
+          <label class="c-field">
+            <span class="c-field__label">Workspace name</span>
+            <input class="c-field__control" value="Acme Ops" />
+          </label>
+          <div class="c-field">
+            <label class="c-field__label" for="workspace-slug">Workspace URL</label>
+            <div class="c-input-group">
+              <input id="workspace-slug" class="c-field__control" value="acme-ops" />
+              <span class="c-input-group__addon">.porchlight.app</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+```
+
+## Dense admin skeleton
+
+```html
+<main class="l-app-shell__main" data-density="dense">
+  <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-4);">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Event queue</h1>
+        <span class="c-page-header__subtitle">1,248 events, 36 critical</span>
+      </div>
+    </div>
+    <section class="c-card" data-surface="app">
+      <div class="c-toolbar">
+        <div class="c-toolbar__group"><span class="u-muted-sm">Filtered to production</span></div>
+      </div>
+      <div class="c-table-wrap" data-density="dense" style="border-inline: 0; border-radius: 0;">
+        <table class="c-table" style="--c-table-min: 54rem;">
+          <thead>
+            <tr><th>Time</th><th>Host</th><th>Message</th><th data-align="end">Score</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><time>10:42:18</time></td>
+              <td><code>api-04</code></td>
+              <td class="u-truncate" style="max-inline-size: 22rem;">Unexpected auth spike from edge region</td>
+              <td data-align="end">98</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+```
+
+## Primary docs
+
+- /guides/composition-recipes
+- /guides/layout
+- /components/data-table
+- /components/toolbar
+- /components/page-header
+- /components/form
+- /components/app-dense
+- /preview/app-dashboard
+- /preview/dashboard
+- /preview/app-dense

@@ -26,6 +26,13 @@ const components = (await getCollection('components')).sort((a, z) =>
 const guides = (await getCollection('guides')).sort((a, z) =>
   (a.data.order ?? 0) - (z.data.order ?? 0),
 );
+const foundationGuideIds = [
+  'architecture',
+  'layout',
+  'composition-recipes',
+  'utilities',
+  'enhancements',
+];
 
 const here = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => {
@@ -40,7 +47,7 @@ const isActive = (href: string) => {
         <div class="docs-nav__section">
           <h2 class="docs-nav__heading">Getting Started</h2>
           <ul>
-            {guides.filter((g) => g.id !== 'architecture' && g.id !== 'layout' && g.id !== 'utilities' && g.id !== 'enhancements').map((guide) => (
+            {guides.filter((g) => !foundationGuideIds.includes(g.id)).map((guide) => (
               <li>
                 <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
                   {guide.data.title}
@@ -53,7 +60,7 @@ const isActive = (href: string) => {
         <div class="docs-nav__section">
           <h2 class="docs-nav__heading">Foundations</h2>
           <ul>
-            {guides.filter((g) => ['architecture', 'layout', 'utilities', 'enhancements'].includes(g.id)).map((guide) => (
+            {guides.filter((g) => foundationGuideIds.includes(g.id)).map((guide) => (
               <li>
                 <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
                   {guide.data.title}
