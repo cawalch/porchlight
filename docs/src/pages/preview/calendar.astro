@@ -184,7 +184,7 @@ const times = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '1
                         aria-selected={day.selected ? 'true' : undefined}
                         disabled={day.disabled}
                       >
-                        {day.label}
+                        <span class="c-calendar__day-label">{day.label}</span>
                       </button>
                     ))}
                   </div>
@@ -277,7 +277,7 @@ const times = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '1
                   data-in-range={day.inRange ? '' : undefined}
                   disabled={day.disabled}
                 >
-                  {day.label}
+                  <span class="c-calendar__day-label">{day.label}</span>
                 </button>
               ))}
             </div>

@@ -1,5 +1,6 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import sharp from "sharp";
 
 const newComponentPages = [
   { path: "./preview/calendar", heading: "Calendar", root: ".c-date-range" },
@@ -25,6 +26,26 @@ const newComponentPages = [
 
 const frameworkSpecificSelectorPattern =
   /\[(?:hx-[^\]]*|x-[^\]]*|v-[^\]]*|data-reactroot[^\]]*|data-v-[^\]]*)\]/;
+
+const pixelDistance = (a: Uint8Array, b: Uint8Array) =>
+  Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+
+const samplePagePixel = async (page: Page, point: { x: number; y: number }) => {
+  const buffer = await page.screenshot({
+    clip: {
+      x: Math.round(point.x),
+      y: Math.round(point.y),
+      width: 1,
+      height: 1,
+    },
+    scale: "css",
+  });
+  const { data } = await sharp(buffer)
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  return data;
+};
 
 test.describe("modern app component contracts", () => {
   for (const component of newComponentPages) {
@@ -69,6 +90,49 @@ test.describe("modern app component contracts", () => {
     await expect(
       page.locator(".c-date-range .c-calendar__day[data-in-range]"),
     ).toHaveCount(3);
+    await page
+      .locator(".c-date-range .c-calendar__grid")
+      .scrollIntoViewIfNeeded();
+    const rangeGapSamples = await page
+      .locator(".c-date-range .c-calendar__grid")
+      .evaluate((grid) => {
+        const start = grid
+          .querySelector<HTMLElement>("[data-range-start]")
+          ?.getBoundingClientRect();
+        const inRange = Array.from(
+          grid.querySelectorAll<HTMLElement>("[data-in-range]"),
+          (day) => day.getBoundingClientRect(),
+        );
+        const end = grid
+          .querySelector<HTMLElement>("[data-range-end]")
+          ?.getBoundingClientRect();
+
+        if (!start || inRange.length < 3 || !end) {
+          throw new Error("Expected complete range geometry");
+        }
+
+        const sampleY = start.top + start.height / 2;
+
+        return {
+          leftBridge: { x: (start.right + inRange[0].left) / 2, y: sampleY },
+          innerTrack: {
+            x: (inRange[0].right + inRange[1].left) / 2,
+            y: sampleY,
+          },
+          rightBridge: {
+            x: (inRange[inRange.length - 1].right + end.left) / 2,
+            y: sampleY,
+          },
+        };
+      });
+    const [leftBridge, innerTrack, rightBridge] = await Promise.all([
+      samplePagePixel(page, rangeGapSamples.leftBridge),
+      samplePagePixel(page, rangeGapSamples.innerTrack),
+      samplePagePixel(page, rangeGapSamples.rightBridge),
+    ]);
+
+    expect(pixelDistance(leftBridge, innerTrack)).toBeLessThanOrEqual(4);
+    expect(pixelDistance(rightBridge, innerTrack)).toBeLessThanOrEqual(4);
     await expect(
       page.locator(".c-date-range .c-calendar__day:disabled").first(),
     ).toBeVisible();

@@ -56,7 +56,7 @@ calendar shell but must keep business rules in the app layer.
         role="gridcell"
         data-outside-month
       >
-        29
+        <span class="c-calendar__day-label">29</span>
       </button>
       <button
         class="c-calendar__day"
@@ -64,7 +64,7 @@ calendar shell but must keep business rules in the app layer.
         role="gridcell"
         aria-current="date"
       >
-        1
+        <span class="c-calendar__day-label">1</span>
       </button>
       <button
         class="c-calendar__day"
@@ -72,7 +72,7 @@ calendar shell but must keep business rules in the app layer.
         role="gridcell"
         aria-selected="true"
       >
-        2
+        <span class="c-calendar__day-label">2</span>
       </button>
     </div>
   </div>
@@ -83,7 +83,9 @@ Day cells should be real `<button>` elements unless the date is purely static.
 Applications may use `role="grid"` with `role="gridcell"` and roving
 `tabindex`; when using grid roles, wrap each week in `role="row"`. Apps may
 also use a simpler button group when their accessibility model calls for it.
-Porchlight does not enforce either pattern in CSS.
+Porchlight does not enforce either pattern in CSS. The
+`.c-calendar__day-label` wrapper is optional, but recommended for range
+calendars because it lets the range track paint behind selected start/end days.
 
 ## Date Picker Field
 
@@ -156,7 +158,7 @@ contract. A range calendar can mark start, end, and in-range days with
           data-range-start
           aria-selected="true"
         >
-          16
+          <span class="c-calendar__day-label">16</span>
         </button>
         <button
           class="c-calendar__day"
@@ -164,7 +166,7 @@ contract. A range calendar can mark start, end, and in-range days with
           role="gridcell"
           data-in-range
         >
-          17
+          <span class="c-calendar__day-label">17</span>
         </button>
         <button
           class="c-calendar__day"
@@ -173,7 +175,7 @@ contract. A range calendar can mark start, end, and in-range days with
           data-range-end
           aria-selected="true"
         >
-          20
+          <span class="c-calendar__day-label">20</span>
         </button>
       </div>
     </div>
@@ -221,6 +223,7 @@ with labels if your app needs native form selection semantics.
 | `.c-calendar__grid`          | Seven-column date grid.                           |
 | `.c-calendar__row`           | Optional ARIA row wrapper for one calendar week.  |
 | `.c-calendar__day`           | Individual date button or gridcell.               |
+| `.c-calendar__day-label`     | Optional day number layer for selected/range art. |
 | `.c-calendar__footer`        | Optional shortcut/status/action row.              |
 | `.c-calendar__shortcut-list` | Optional list of quick date commands.             |
 | `.c-date-picker`             | Field + popover picker wrapper.                   |
