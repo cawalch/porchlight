@@ -54,6 +54,7 @@ test.describe("modern app component contracts", () => {
   test("calendar exposes semantic date, range, invalid, disabled, and popover state", async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 1024, height: 820 });
     await page.goto("./preview/calendar");
 
     await expect(page.locator(".c-calendar__grid[role='grid']")).toHaveCount(2);
@@ -79,6 +80,41 @@ test.describe("modern app component contracts", () => {
     await expect(popover).toBeHidden();
     await page.getByRole("button", { name: "Choose due date" }).click();
     await expect(popover).toBeVisible();
+
+    const popoverGeometry = await popover.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      const style = getComputedStyle(element);
+      const topElement = document.elementFromPoint(
+        Math.min(window.innerWidth - 1, rect.right - 4),
+        Math.min(
+          window.innerHeight - 1,
+          rect.top + Math.min(80, rect.height / 2),
+        ),
+      );
+
+      return {
+        bottom: rect.bottom,
+        right: rect.right,
+        scrollDelta: element.scrollHeight - element.clientHeight,
+        topElementId: topElement?.id,
+        topElementClass: `${topElement?.className ?? ""}`,
+        viewportHeight: window.innerHeight,
+        viewportWidth: window.innerWidth,
+        zIndex: Number.parseInt(style.zIndex, 10),
+      };
+    });
+
+    expect(popoverGeometry.scrollDelta).toBeLessThanOrEqual(1);
+    expect(popoverGeometry.right).toBeLessThanOrEqual(
+      popoverGeometry.viewportWidth + 1,
+    );
+    expect(popoverGeometry.bottom).toBeLessThanOrEqual(
+      popoverGeometry.viewportHeight + 1,
+    );
+    expect(popoverGeometry.zIndex).toBeGreaterThanOrEqual(1000);
+    expect(
+      `${popoverGeometry.topElementId} ${popoverGeometry.topElementClass}`,
+    ).toContain("case-due-calendar");
   });
 
   test("combobox exposes ARIA listbox contracts and async/invalid states", async ({

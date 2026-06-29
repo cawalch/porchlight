@@ -123,7 +123,9 @@ with an ISO value, or a read-only display input backed by hidden form data.
 ```
 
 Set `--c-date-picker-anchor` per instance when multiple picker popovers appear
-on one page. The default anchor is fine for a single picker.
+on one page. The default anchor is fine for a single picker. The picker popover
+uses the native top layer and an overlay z-index; it keeps a full month visible
+on ordinary desktop viewports, then scrolls only when the viewport is too short.
 
 ## Date Range
 
@@ -289,12 +291,13 @@ date library.
 
 ## Tokens Exposed
 
-| Token                          | Default                    | Purpose                           |
-| ------------------------------ | -------------------------- | --------------------------------- |
-| `--c-calendar-cell-size`       | `2.5rem`                   | Minimum day-cell block size.      |
-| `--c-calendar-gap`             | `--pl-space-1`             | Gap between grid cells.           |
-| `--c-calendar-radius`          | `--pl-radius-lg`           | Day-cell radius.                  |
-| `--c-calendar-range-bg`        | accent tint                | Fill behind in-range days.        |
-| `--c-calendar-range-hover-bg`  | stronger accent tint       | Hover fill for in-range days.     |
-| `--c-date-picker-anchor`       | `--pl-date-picker-anchor`  | Anchor name for a picker popover. |
-| `--c-date-picker-popover-size` | `min(100vi - 2rem, 23rem)` | Popover inline size.              |
+| Token                               | Default                           | Purpose                           |
+| ----------------------------------- | --------------------------------- | --------------------------------- |
+| `--c-calendar-cell-size`            | `2.5rem`                          | Minimum day-cell block size.      |
+| `--c-calendar-gap`                  | `--pl-space-1`                    | Gap between grid cells.           |
+| `--c-calendar-radius`               | `--pl-radius-lg`                  | Day-cell radius.                  |
+| `--c-calendar-range-bg`             | accent tint                       | Fill behind in-range days.        |
+| `--c-calendar-range-hover-bg`       | stronger accent tint              | Hover fill for in-range days.     |
+| `--c-date-picker-anchor`            | `--pl-date-picker-anchor`         | Anchor name for a picker popover. |
+| `--c-date-picker-popover-size`      | `min(100vi - 2rem, 23rem)`        | Popover inline size.              |
+| `--c-date-picker-popover-max-block` | `min(34rem, calc(100dvb - 2rem))` | Popover max block size.           |

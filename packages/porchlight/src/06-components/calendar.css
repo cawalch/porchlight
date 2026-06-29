@@ -258,6 +258,7 @@
     :scope {
       --c-date-picker-anchor: --pl-date-picker-anchor;
       --c-date-picker-popover-size: min(100vi - 2rem, 23rem);
+      --c-date-picker-popover-max-block: min(34rem, calc(100dvb - 2rem));
 
       display: grid;
       gap: var(--pl-space-2);
@@ -284,7 +285,7 @@
     .c-date-picker__popover {
       inline-size: var(--c-date-picker-popover-size);
       max-inline-size: calc(100vi - 2rem);
-      max-block-size: min(20rem, calc(100dvb - 2rem));
+      max-block-size: var(--c-date-picker-popover-max-block);
       margin: 0;
       padding: 0;
       border: 0;
@@ -293,10 +294,38 @@
       color: inherit;
       overflow: auto;
       overscroll-behavior: contain;
+      z-index: var(--pl-z-overlay);
+      opacity: 0;
+      transform: translateY(-4px);
+      transition:
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
     .c-date-picker__popover:popover-open {
       display: grid;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .c-date-picker__popover .c-calendar {
+      --c-calendar-cell-size: 2.25rem;
+
+      gap: var(--pl-space-2);
+      padding: var(--pl-space-2) var(--pl-space-3);
+    }
+
+    .c-date-picker__popover .c-calendar__footer {
+      font-size: var(--pl-text-xs);
+    }
+
+    @starting-style {
+      .c-date-picker__popover:popover-open {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
     }
 
     @supports (position-anchor: --x) {
@@ -307,6 +336,23 @@
         position-area: block-end span-inline-start;
         position-try-fallbacks: flip-block, flip-inline;
         margin-block-start: var(--pl-space-2);
+      }
+    }
+
+    @media (width < 52rem) {
+      .c-date-picker__popover {
+        position: fixed;
+        inset: var(--pl-space-4);
+        margin: auto;
+      }
+
+      @supports (position-anchor: --x) {
+        .c-date-picker__popover {
+          position-anchor: auto;
+          position-area: center;
+          position-try-fallbacks: none;
+          margin-block-start: auto;
+        }
       }
     }
   }
