@@ -79,6 +79,11 @@ is expressed with attributes such as `aria-expanded`, `aria-selected`,
 `aria-current` when the item represents the current page or route. Use
 `aria-selected` when the item is selected inside a tree widget.
 
+Tree items are explicit grid containers so whitespace produced by SSR,
+templates, or formatted JSX/HTML cannot create extra anonymous line boxes
+between rows. Only `.c-tree__item-row` and `.c-tree__group` participate in the
+vertical rhythm.
+
 ## Actions and Metadata
 
 ```html
@@ -165,3 +170,4 @@ elements, or framework selectors.
 | `--c-tree-indent`             | `1.25rem`           | Nested group indentation. |
 | `--c-tree-icon-size`          | `1rem`              | Icon slot size.           |
 | `--c-tree-expander-size`      | `1rem`              | Expander slot size.       |
+| `--c-tree-branch-gap`         | `var(--pl-space-1)` | Gap between sibling rows. |

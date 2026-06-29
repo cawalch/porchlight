@@ -127,6 +127,31 @@ test.describe("modern app component contracts", () => {
       page.locator(".c-tree__group[role='group']").first(),
     ).toBeVisible();
 
+    const treeRhythm = await page.evaluate(() => {
+      const rows = [...document.querySelectorAll(".c-tree__item-row")];
+      const rowRects = rows
+        .slice(0, 7)
+        .map((row) => row.getBoundingClientRect());
+      const gaps = rowRects
+        .slice(1)
+        .map((rect, index) => rect.top - rowRects[index].bottom)
+        .filter((gap) => gap >= 0);
+      const collapsedItem = document.querySelector(
+        '.c-tree__item[aria-expanded="false"]',
+      );
+      const collapsedRow = collapsedItem?.querySelector(".c-tree__item-row");
+      return {
+        maxGap: Math.max(...gaps),
+        collapsedItemHeight: collapsedItem?.getBoundingClientRect().height ?? 0,
+        collapsedRowHeight: collapsedRow?.getBoundingClientRect().height ?? 0,
+      };
+    });
+
+    expect(treeRhythm.maxGap).toBeLessThanOrEqual(8);
+    expect(treeRhythm.collapsedItemHeight).toBeLessThanOrEqual(
+      treeRhythm.collapsedRowHeight + 1,
+    );
+
     await page.goto("./preview/split-pane");
     const separator = page
       .locator(".c-split-pane__separator[role='separator']")
@@ -137,6 +162,17 @@ test.describe("modern app component contracts", () => {
     await expect(
       page.locator(".c-split-pane[data-orientation='vertical']"),
     ).toBeVisible();
+
+    const logSplitContainment = await page
+      .locator(".log-split .c-split-pane__pane--start")
+      .evaluate((pane) => ({
+        verticalOverflow: pane.scrollHeight - pane.clientHeight,
+        horizontalOverflow: pane.scrollWidth - pane.clientWidth,
+        scrollbarGutter: getComputedStyle(pane).scrollbarGutter,
+      }));
+    expect(logSplitContainment.verticalOverflow).toBeLessThanOrEqual(1);
+    expect(logSplitContainment.horizontalOverflow).toBeLessThanOrEqual(1);
+    expect(logSplitContainment.scrollbarGutter).toContain("stable");
   });
 
   test("workflow, chart, and filter surfaces expose app-owned state hooks", async ({

@@ -74,6 +74,7 @@
       min-inline-size: var(--c-split-pane-pane-min);
       overflow: auto;
       overscroll-behavior: contain;
+      scrollbar-gutter: stable;
       background: var(--pl-color-surface);
     }
 
@@ -94,6 +95,8 @@
     }
 
     .c-split-pane__pane-inner {
+      min-inline-size: 0;
+      max-inline-size: 100%;
       padding: var(--c-split-pane-pane-padding);
     }
 

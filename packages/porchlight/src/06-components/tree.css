@@ -32,13 +32,16 @@
       --c-tree-indent: 1.25rem;
       --c-tree-icon-size: 1rem;
       --c-tree-expander-size: 1rem;
+      --c-tree-branch-gap: var(--pl-space-1);
       --c-tree-actions-opacity: 0;
 
       display: grid;
-      gap: var(--pl-space-1);
+      align-content: start;
+      gap: var(--c-tree-branch-gap);
       min-inline-size: 0;
       color: var(--pl-color-text);
-      font-size: var(--pl-text-sm);
+      font-size: 0;
+      line-height: 0;
     }
 
     :scope[data-density="compact"],
@@ -50,7 +53,12 @@
     }
 
     .c-tree__item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
       min-inline-size: 0;
+      font-size: 0;
+      line-height: 0;
       outline: 0;
     }
 
@@ -63,6 +71,8 @@
       padding: var(--c-tree-row-padding-block) var(--c-tree-row-padding-inline);
       border-radius: var(--pl-radius-md);
       color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
       cursor: default;
       user-select: none;
       transition:
@@ -121,7 +131,8 @@
 
     .c-tree__group {
       display: grid;
-      gap: var(--pl-space-1);
+      align-content: start;
+      gap: var(--c-tree-branch-gap);
       margin-inline-start: calc(
         var(--c-tree-expander-size) + var(--c-tree-row-gap)
       );

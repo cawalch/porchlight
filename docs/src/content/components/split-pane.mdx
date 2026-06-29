@@ -130,6 +130,10 @@ drawer, tab, or app shell responds to its own width rather than the viewport.
 For dense enterprise screens where stacking would hide critical data, omit
 `data-collapse` and let panes overflow or use product-specific responsive rules.
 
+Each pane is its own scroll container with a stable scrollbar gutter. This keeps
+tables, editors, and log viewers from sliding under the pane edge when content
+starts scrolling.
+
 ## SSR and Framework Compatibility
 
 The component is plain HTML and CSS. It can be emitted by server-rendered apps,

@@ -384,6 +384,21 @@ test.describe("docs scaffold", () => {
     expect(await groups.count()).toBeGreaterThanOrEqual(2);
     // A divider exists.
     await expect(page.locator(".c-toolbar__divider").first()).toBeVisible();
+    const panelToolbar = page
+      .locator('.c-toolbar[data-surface="panel"]')
+      .first();
+    await expect(panelToolbar).toBeVisible();
+    const panelSurface = await panelToolbar.evaluate((toolbar) => {
+      const styles = getComputedStyle(toolbar);
+      return {
+        borderTopWidth: styles.borderTopWidth,
+        borderRadius: Number.parseFloat(styles.borderTopLeftRadius),
+        background: styles.backgroundColor,
+      };
+    });
+    expect(panelSurface.borderTopWidth).toBe("1px");
+    expect(panelSurface.borderRadius).toBeGreaterThan(0);
+    expect(panelSurface.background).not.toBe("rgba(0, 0, 0, 0)");
   });
 
   test("pagination renders active page and nav buttons", async ({ page }) => {

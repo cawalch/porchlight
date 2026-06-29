@@ -124,7 +124,7 @@ const ruleRows = [
   <section
     class="c-split-pane log-split"
     data-orientation="vertical"
-    style="--c-split-pane-start-size: minmax(12rem, 0.9fr); --c-split-pane-end-size: minmax(9rem, 0.65fr); --c-split-pane-min-block-size: 25rem;"
+    style="--c-split-pane-start-size: minmax(15rem, 1fr); --c-split-pane-end-size: minmax(9rem, 0.6fr); --c-split-pane-min-block-size: 27rem; --c-split-pane-pane-padding: var(--pl-space-3);"
     aria-label="Rule evaluation split pane"
   >
     <section
@@ -202,6 +202,10 @@ const ruleRows = [
   .process-builder,
   .log-split {
     margin-block-start: var(--pl-space-5);
+  }
+
+  .log-split .c-table-wrap {
+    --c-table-radius: var(--pl-radius-lg);
   }
 
   .explorer-list {
