@@ -9,7 +9,8 @@
     :scope {
       --c-filter-builder-pad: var(--pl-space-4);
       --c-filter-builder-gap: var(--pl-space-3);
-      --c-filter-builder-row-pad: var(--pl-space-3);
+      --c-filter-builder-row-pad-block: var(--pl-space-2);
+      --c-filter-builder-row-pad-inline: 0;
       --c-filter-builder-radius: var(--pl-radius-lg);
       --c-filter-builder-control-min: 10rem;
 
@@ -29,7 +30,7 @@
     :scope[data-density="compact"],
     :scope[data-density="dense"] {
       --c-filter-builder-pad: var(--pl-space-3);
-      --c-filter-builder-row-pad: var(--pl-space-2);
+      --c-filter-builder-row-pad-block: var(--pl-space-1);
       --c-filter-builder-control-min: 8rem;
     }
 
@@ -80,17 +81,17 @@
 
     .c-filter-builder__group {
       display: grid;
-      gap: var(--pl-space-3);
+      gap: var(--pl-space-2);
       min-inline-size: 0;
-      padding: var(--pl-space-3);
-      border: 1px solid
-        color-mix(in oklab, var(--pl-color-border), transparent 20%);
-      border-radius: var(--pl-radius-md);
-      background: color-mix(
-        in oklab,
-        var(--pl-color-surface-2),
-        var(--pl-color-surface) 58%
-      );
+      padding-block-start: var(--pl-space-3);
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      background: transparent;
+    }
+
+    .c-filter-builder__body > .c-filter-builder__group:first-child {
+      padding-block-start: 0;
+      border-block-start: 0;
     }
 
     .c-filter-builder__group[data-operator="or"] {
@@ -137,30 +138,39 @@
     }
 
     .c-filter-builder__row {
+      position: relative;
       display: grid;
       grid-template-columns:
-        minmax(var(--c-filter-builder-control-min), 1.1fr)
-        minmax(8rem, 0.8fr)
         minmax(var(--c-filter-builder-control-min), 1fr)
+        minmax(8rem, 0.72fr)
+        minmax(var(--c-filter-builder-control-min), 0.9fr)
         auto;
       gap: var(--pl-space-2);
-      align-items: start;
+      align-items: center;
       min-inline-size: 0;
-      padding: var(--c-filter-builder-row-pad);
-      border: 1px solid
+      padding-block: var(--c-filter-builder-row-pad-block);
+      padding-inline: var(--c-filter-builder-row-pad-inline);
+      border: 0;
+      border-block-start: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 22%);
-      border-radius: var(--pl-radius-md);
-      background: var(--pl-color-surface);
+      background: transparent;
+    }
+
+    .c-filter-builder__rows > .c-filter-builder__row:first-child {
+      border-block-start: 0;
     }
 
     .c-filter-builder__row[data-invalid],
     .c-filter-builder__row[aria-invalid="true"],
     .c-filter-builder__row.is-invalid {
-      border-color: color-mix(
+      padding-inline: var(--pl-space-2);
+      border-block-start-color: color-mix(
         in oklab,
         var(--pl-color-danger),
         transparent 45%
       );
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-danger-bg);
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-danger);
     }
 
@@ -177,7 +187,53 @@
     }
 
     .c-filter-builder__control {
+      appearance: none;
       inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      padding-block: var(--pl-space-1);
+      padding-inline: var(--pl-control-padding-inline);
+      border: var(--pl-control-border-width) solid var(--pl-color-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    select.c-filter-builder__control {
+      padding-inline-end: var(--pl-space-8);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='oklch(0.44 0.012 55)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right var(--pl-space-3) center;
+      background-size: 1rem;
+    }
+
+    .c-filter-builder__control:focus-visible {
+      outline: none;
+      border-color: var(--pl-focus-color);
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
+
+    .c-filter-builder__row:is(
+        [data-invalid],
+        [aria-invalid="true"],
+        .is-invalid
+      )
+      .c-filter-builder__control {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 30%
+      );
     }
 
     .c-filter-builder__message {
@@ -188,18 +244,56 @@
     }
 
     .c-filter-builder__remove {
+      position: relative;
       inline-size: var(--pl-control-block-size);
       block-size: var(--pl-control-block-size);
       padding: 0;
+      font-size: 0;
+    }
+
+    .c-filter-builder__remove::before,
+    .c-filter-builder__remove::after {
+      position: absolute;
+      inline-size: 0.75rem;
+      block-size: 0.125rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      content: "";
+    }
+
+    .c-filter-builder__remove::before {
+      transform: rotate(45deg);
+    }
+
+    .c-filter-builder__remove::after {
+      transform: rotate(-45deg);
     }
 
     @container c-filter-builder (inline-size < 48rem) {
       .c-filter-builder__row {
         grid-template-columns: 1fr;
+        padding-inline-end: calc(
+          var(--pl-control-block-size) + var(--pl-space-2)
+        );
+      }
+
+      .c-filter-builder__row[data-invalid],
+      .c-filter-builder__row[aria-invalid="true"],
+      .c-filter-builder__row.is-invalid {
+        padding-inline-start: var(--pl-space-2);
+      }
+
+      .c-filter-builder__field,
+      .c-filter-builder__operator,
+      .c-filter-builder__value,
+      .c-filter-builder__message {
+        grid-column: 1 / -1;
       }
 
       .c-filter-builder__remove {
-        justify-self: end;
+        position: absolute;
+        inset-block-start: var(--c-filter-builder-row-pad-block);
+        inset-inline-end: 0;
       }
     }
   }
