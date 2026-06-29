@@ -1,0 +1,93 @@
+---
+title: List/detail workspace
+description: A Porchlight-native app composition for queues, records, inspectors, and split-pane detail workflows.
+status: stable
+since: 0.9.0
+---
+
+# List/detail workspace
+
+Use this composition when users need to scan a queue, filter it quickly, and
+keep the selected record visible while they review details or take action. It
+combines the app shell, nav, toolbar, data table, split pane, badges, skeletons,
+empty state, drawer, and command palette patterns without adding new component
+CSS.
+
+## Preview
+
+Open the [list/detail workspace preview](../preview/app-list-detail).
+
+## Semantic HTML
+
+Keep the shell regions explicit:
+
+```html
+<div class="l-app-shell">
+  <header class="l-app-shell__topbar c-toolbar">...</header>
+  <aside class="l-app-shell__sidebar">
+    <nav class="c-nav" aria-label="Primary">...</nav>
+  </aside>
+  <main class="l-app-shell__main">...</main>
+</div>
+```
+
+Place the list and inspector in a split pane:
+
+```html
+<section
+  class="c-split-pane"
+  data-orientation="horizontal"
+  data-collapse="stack"
+>
+  <section class="c-split-pane__pane c-split-pane__pane--start">
+    <div class="c-toolbar">
+      <label class="c-field">
+        <span class="u-sr-only">Search requests</span>
+        <input class="c-field__control" type="search" />
+      </label>
+      <button class="c-button">Filter</button>
+    </div>
+    <div class="c-table-wrap">
+      <table class="c-table">
+        ...
+      </table>
+    </div>
+  </section>
+
+  <div
+    class="c-split-pane__separator"
+    role="separator"
+    aria-orientation="vertical"
+    aria-valuemin="35"
+    aria-valuemax="70"
+    aria-valuenow="58"
+    tabindex="0"
+  ></div>
+
+  <aside
+    class="c-split-pane__pane c-split-pane__pane--end"
+    aria-label="Selected request"
+  >
+    <header class="c-split-pane__header">...</header>
+    <div class="c-split-pane__pane-inner">...</div>
+  </aside>
+</section>
+```
+
+Use a real table when records are tabular. Put the primary action in the first
+cell as a button or link, apply `aria-selected="true"` to the selected row, and
+keep status in `.c-badge`. When there is no selected record, render `.c-empty`
+in the detail pane. When the list or detail pane is fetching, render
+`.c-skeleton` placeholders in the region that is waiting.
+
+## Guidance
+
+- Keep filters in `.c-toolbar` directly above the table or list.
+- Use `.c-split-pane` for persistent detail panes and `.c-drawer` for secondary
+  filter or edit surfaces.
+- Give each pane an accessible name and make scrollable panes focusable when
+  they contain long non-interactive content.
+- Keep row activation separate from bulk-selection checkboxes and disclosure
+  controls.
+- Let app JavaScript own search, selection, saved split sizes, and drawer form
+  behavior.

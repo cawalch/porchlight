@@ -1,0 +1,91 @@
+---
+title: Reporting dashboard
+description: A Porchlight-native analytics workspace composition for report controls, saved views, KPI stats, chart shells, insights, and breakdown tables.
+status: stable
+since: 0.9.0
+---
+
+# Reporting dashboard
+
+Use this composition for product analytics, revenue reports, operational
+scorecards, and executive summaries. It combines existing Porchlight primitives
+without adding dashboard-specific CSS.
+
+## Structure
+
+- `.c-page-header` for report title, date range, refresh, and export actions.
+- `.c-saved-views` and `.c-query-bar` for saved report views and active
+  filters.
+- `.c-tabs` for summary, acquisition, retention, or forecast views.
+- `.l-grid` with `.c-card[data-surface="app"]` and `.c-stat` for KPI tiles.
+- `.c-chart` for app-owned SVG, Canvas, or image charts with legends and
+  fallback data.
+- `.c-table-wrap` and `.c-table` for channel, segment, or cohort breakdowns.
+- `.c-empty` for insight, no-data, loading, or restricted-report states.
+
+## Semantic HTML
+
+```html
+<section aria-labelledby="revenue-report-title">
+  <div class="c-page-header">
+    <div class="c-page-header__heading">
+      <h1 class="c-page-header__title" id="revenue-report-title">
+        Revenue performance
+      </h1>
+      <span class="c-page-header__subtitle">May 1-31, 2026</span>
+    </div>
+    <div class="c-page-header__actions">
+      <label class="c-field">
+        <span class="u-sr-only">Start date</span>
+        <input class="c-field__control" type="date" value="2026-05-01" />
+      </label>
+      <button class="c-button" data-variant="secondary">Export CSV</button>
+    </div>
+  </div>
+
+  <nav class="c-saved-views" aria-label="Saved report views">
+    <span class="c-saved-views__label">Views</span>
+    <ul class="c-saved-views__list">
+      <li class="c-saved-views__item">
+        <button class="c-saved-views__button" aria-current="true">
+          Executive <span class="c-saved-views__count">12</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <section
+    class="c-chart"
+    aria-labelledby="trend-title"
+    aria-describedby="trend-description"
+  >
+    <header class="c-chart__header">
+      <div>
+        <h2 class="c-chart__title" id="trend-title">Revenue trend</h2>
+        <p class="c-chart__description" id="trend-description">
+          Recurring revenue and forecast by week.
+        </p>
+      </div>
+    </header>
+    <div class="c-chart__plot" role="img" aria-label="Revenue trend chart">
+      <!-- App-owned SVG, Canvas, or image. -->
+    </div>
+  </section>
+</section>
+```
+
+## Guidance
+
+Keep report controls as real form fields with labels. Saved views should be
+buttons when they mutate the current report state, or links when they navigate
+to persisted URLs. Give every chart a heading, description, useful plot label,
+legend, and table fallback for source data. Use `<time>` for generated-at and
+range labels, and align numeric table cells with `data-align="end"`.
+
+For loading, empty, and error cases, keep the region in place and swap the
+chart plot or insight panel to a `.c-empty` or `.c-chart[data-state]` state.
+Announce result-count changes from app code with an `aria-live` region.
+
+## Preview
+
+See the [reporting dashboard preview](../preview/app-reporting-dashboard).

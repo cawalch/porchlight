@@ -1,0 +1,575 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const navItems = [
+  ['Command center', '12', true],
+  ['Queues', '4', false],
+  ['Automations', '', false],
+  ['Audit trail', '', false],
+] as const;
+
+const commands = [
+  {
+    id: 'assign-vendor',
+    group: 'Route work',
+    label: 'Assign priority vendor',
+    shortcut: 'A',
+    tone: 'accent',
+    target: 'Procurement queue',
+    status: 'Ready',
+    impact: 'Moves 14 vendor checks to Maya Patel with SLA watch enabled.',
+    result: '14 matching requests',
+  },
+  {
+    id: 'open-risk',
+    group: 'Route work',
+    label: 'Open risk exceptions',
+    shortcut: 'R',
+    tone: 'warning',
+    target: 'Risk desk',
+    status: 'Needs review',
+    impact: 'Filters the workspace to high-value exceptions blocked on risk.',
+    result: '6 exceptions',
+  },
+  {
+    id: 'publish-brief',
+    group: 'Create',
+    label: 'Publish morning brief',
+    shortcut: 'B',
+    tone: 'success',
+    target: 'Operations digest',
+    status: 'Draft ready',
+    impact: 'Builds a shareable summary from today\'s queue movement.',
+    result: '1 digest',
+  },
+  {
+    id: 'freeze-export',
+    group: 'Protect',
+    label: 'Freeze export jobs',
+    shortcut: 'F',
+    tone: 'danger',
+    target: 'Exports',
+    status: 'Guarded',
+    impact: 'Pauses scheduled exports until the incident window is closed.',
+    result: '3 jobs',
+  },
+] as const;
+
+const groupedCommands = commands.reduce(
+  (groups, command) => {
+    groups[command.group] = [...(groups[command.group] ?? []), command];
+    return groups;
+  },
+  {} as Record<string, typeof commands[number][]>,
+);
+---
+
+<BaseLayout title="Command-driven workspace · Porchlight">
+  <div class="l-app-shell" style="--app-sidebar-size: 15rem;">
+    <header class="l-app-shell__topbar" data-glass>
+      <div class="c-toolbar" data-surface="flush">
+        <div class="c-toolbar__group">
+          <button
+            class="c-button"
+            data-variant="ghost"
+            data-size="sm"
+            type="button"
+            aria-label="Toggle sidebar"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <strong>Ops Console</strong>
+          <span class="c-badge" data-tone="success">
+            <span class="c-badge__dot"></span>
+            Live
+          </span>
+        </div>
+        <div class="c-toolbar__group">
+          <button
+            class="c-button"
+            data-variant="secondary"
+            type="button"
+            popovertarget="workspace-command"
+            aria-haspopup="dialog"
+            aria-controls="workspace-command"
+            aria-expanded="false"
+            data-command-trigger
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-3.5-3.5"></path>
+            </svg>
+            Search commands
+            <span class="c-badge">Cmd K</span>
+          </button>
+          <button class="c-button" data-variant="primary" type="button" data-run-selected>
+            Run selected
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <aside class="l-app-shell__sidebar" style="border-inline-end: 1px solid var(--pl-color-border); background: var(--pl-color-surface); padding: var(--pl-space-3);">
+      <nav class="c-nav" aria-label="Workspace navigation">
+        <div class="c-nav__group">
+          <span class="c-nav__group-label">Workspace</span>
+        </div>
+        {
+          navItems.map(([label, count, current]) => (
+            <a class="c-nav__item" href="#" aria-current={current ? 'page' : undefined}>
+              <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <path d="M8 9h8M8 13h5"></path>
+              </svg>
+              <span class="c-nav__label">{label}</span>
+              {count && <span class="c-badge c-nav__badge" data-tone={current ? 'accent' : undefined}>{count}</span>}
+            </a>
+          ))
+        }
+        <hr class="c-nav__divider" />
+        <div class="c-nav__footer">
+          <div class="c-nav__meta">
+            <span class="c-nav__meta-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="5"></circle>
+              </svg>
+            </span>
+            <span class="c-nav__meta-body">
+              <span class="c-nav__meta-label">Command mode</span>
+              <span class="c-nav__meta-description">4 saved automations</span>
+            </span>
+          </div>
+          <div class="c-nav__actions">
+            <button class="c-nav__action" type="button" popovertarget="workspace-command">
+              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" stroke-linecap="round"></path>
+              </svg>
+              <span class="c-nav__action-label">New command</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="l-app-shell__main">
+      <div class="l-container" style="--l-container-max: 86rem; padding-block: var(--pl-space-5);">
+        <div class="c-page-header">
+          <div class="c-page-header__heading">
+            <h1 class="c-page-header__title">Command center</h1>
+            <p class="c-page-header__subtitle">Search, select, inspect, and run workspace actions from one surface.</p>
+          </div>
+          <div class="c-page-header__actions">
+            <span class="c-chip">Queue: Vendor onboarding</span>
+            <span class="c-chip" data-tone="warning">SLA watch</span>
+          </div>
+        </div>
+
+        <div class="c-toolbar" data-surface="panel" style="margin-block-end: var(--pl-space-4);">
+          <div class="c-toolbar__group" style="flex: 1 1 18rem;">
+            <div class="c-combobox" style="max-inline-size: 24rem;">
+              <div class="c-combobox__control">
+                <input
+                  class="c-combobox__input"
+                  type="search"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-controls="workspace-scope"
+                  aria-label="Command scope"
+                  value="All workspaces"
+                />
+                <svg class="c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+              <div class="c-combobox__popup" id="workspace-scope" role="listbox" hidden></div>
+            </div>
+            <span class="u-muted-sm">12 runnable commands</span>
+          </div>
+          <div class="c-toolbar__group">
+            <button class="c-button" data-variant="ghost" data-size="sm" type="button">Needs review</button>
+            <button class="c-button" data-variant="ghost" data-size="sm" type="button">Assigned to me</button>
+            <button class="c-button" data-variant="secondary" data-size="sm" type="button">Save view</button>
+          </div>
+        </div>
+
+        <div
+          class="c-split-pane"
+          data-collapse="stack"
+          style="--c-split-pane-start-size: minmax(18rem, 0.82fr); --c-split-pane-end-size: minmax(20rem, 1fr); --c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));"
+        >
+          <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="workspace-results-title">
+            <header class="c-split-pane__header">
+              <div class="u-min-0">
+                <h2 class="c-split-pane__title" id="workspace-results-title">Command results</h2>
+                <p class="c-split-pane__description">Best matches from the active queue</p>
+              </div>
+              <span class="c-badge" data-tone="accent">4 groups</span>
+            </header>
+            <div class="c-split-pane__pane-inner">
+              <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+                {
+                  commands.map((command, index) => (
+                    <button
+                      class="c-card"
+                      data-surface="app"
+                      data-interactive
+                      data-command-card
+                      data-command={command.id}
+                      type="button"
+                      aria-pressed={index === 0 ? 'true' : 'false'}
+                      style="inline-size: 100%; text-align: start;"
+                    >
+                      <span class="c-card__header">
+                        <span class="c-card__title">{command.label}</span>
+                        <span class="c-badge" data-tone={command.tone}>{command.result}</span>
+                      </span>
+                      <span class="c-card__body">
+                        <span class="u-line-clamp">{command.impact}</span>
+                      </span>
+                      <span class="c-card__footer" style="justify-content: space-between;">
+                        <span class="c-chip" data-size="sm">{command.target}</span>
+                        <span class="u-muted-sm">{command.status}</span>
+                      </span>
+                    </button>
+                  ))
+                }
+              </div>
+            </div>
+          </section>
+
+          <div class="c-split-pane__separator" aria-hidden="true"></div>
+
+          <section class="c-split-pane__pane c-split-pane__pane--end" aria-labelledby="workspace-detail-title">
+            <header class="c-split-pane__header">
+              <div class="u-min-0">
+                <h2 class="c-split-pane__title" id="workspace-detail-title" data-detail-title>{commands[0].label}</h2>
+                <p class="c-split-pane__description" data-detail-target>{commands[0].target}</p>
+              </div>
+              <span class="c-badge" data-tone={commands[0].tone} data-detail-status>{commands[0].status}</span>
+            </header>
+            <div class="c-split-pane__pane-inner">
+              <div class="l-stack" style="--l-stack-gap: var(--pl-space-4);">
+                <article class="c-card" data-surface="app">
+                  <div class="c-card__header">
+                    <h3 class="c-card__title">Command detail</h3>
+                    <span class="c-badge" data-detail-shortcut>{commands[0].shortcut}</span>
+                  </div>
+                  <div class="c-card__body">
+                    <p data-detail-impact>{commands[0].impact}</p>
+                  </div>
+                  <div class="c-card__footer">
+                    <button class="c-button" data-variant="ghost" type="button" popovertarget="workspace-drawer">
+                      Inspect inputs
+                    </button>
+                    <button class="c-button" data-variant="primary" type="button" data-run-selected>
+                      Run command
+                    </button>
+                  </div>
+                </article>
+
+                <section class="c-card" data-surface="app" aria-labelledby="recent-commands-title">
+                  <div class="c-card__header">
+                    <h3 class="c-card__title" id="recent-commands-title">Recent commands</h3>
+                    <span class="c-badge">Live</span>
+                  </div>
+                  <div class="c-card__body">
+                    <div class="c-chip-group" data-recent-commands>
+                      <span class="c-chip" data-tone="success">Publish morning brief</span>
+                      <span class="c-chip">Assign priority vendor</span>
+                      <span class="c-chip" data-tone="warning">Open risk exceptions</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="c-card" data-surface="app" aria-labelledby="feedback-title">
+                  <div class="c-card__header">
+                    <h3 class="c-card__title" id="feedback-title">Action feedback</h3>
+                    <span class="c-badge" data-tone="success">Ready</span>
+                  </div>
+                  <div class="c-card__body">
+                    <p data-feedback>Palette opened. Choose a command or press Run selected.</p>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div popover class="c-drawer" id="workspace-drawer" data-side="end">
+    <div class="c-drawer__header">
+      <h2 class="c-drawer__title">Command inputs</h2>
+      <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="workspace-drawer" aria-label="Close">
+        Close
+      </button>
+    </div>
+    <div class="c-drawer__body">
+      <div class="l-stack" style="--l-stack-gap: var(--pl-space-4);">
+        <label class="c-field">
+          <span class="c-field__label">Owner</span>
+          <input class="c-field__control" value="Maya Patel" />
+        </label>
+        <label class="c-field">
+          <span class="c-field__label">Due window</span>
+          <input class="c-field__control" value="Today, 4:00 PM" />
+        </label>
+        <div class="c-chip-group">
+          <span class="c-chip">Vendor</span>
+          <span class="c-chip" data-tone="warning">SLA</span>
+          <span class="c-chip" data-tone="success">Auto-route</span>
+        </div>
+      </div>
+    </div>
+    <div class="c-drawer__footer">
+      <button class="c-button" data-variant="ghost" popovertarget="workspace-drawer">Cancel</button>
+      <button class="c-button" data-variant="primary" popovertarget="workspace-drawer">Apply</button>
+    </div>
+  </div>
+
+  <div popover class="c-command" id="workspace-command" role="dialog" aria-labelledby="workspace-command-title">
+    <h2 id="workspace-command-title" class="u-sr-only">Workspace commands</h2>
+    <input
+      class="c-command__search"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="workspace-command-list"
+      aria-activedescendant={commands[0].id}
+      aria-label="Search commands"
+      placeholder="Type a command or queue name..."
+    />
+    <div class="c-command__body" id="workspace-command-list" role="listbox" aria-label="Commands">
+      {
+        Object.entries(groupedCommands).map(([group, items]) => (
+          <div class="c-command__group">
+            <h3 class="c-command__heading">{group}</h3>
+            {items.map((command, index) => (
+              <button
+                class="c-command__item"
+                id={command.id}
+                type="button"
+                role="option"
+                aria-selected={command.id === commands[0].id ? 'true' : 'false'}
+                data-command={command.id}
+                data-selected={index === 0 && group === commands[0].group ? true : undefined}
+              >
+                <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span>{command.label}</span>
+                <span class="c-command__shortcut">{command.shortcut}</span>
+              </button>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+    <footer class="c-command__footer">
+      <span>Arrow keys navigate</span>
+      <span>Enter selects</span>
+      <span>Esc closes</span>
+    </footer>
+  </div>
+
+  <div class="c-toast-stack" role="region" aria-label="Notifications">
+    <div class="c-toast" data-tone="success" data-visible role="status" data-toast>
+      <span class="c-toast__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+      <div class="c-toast__content">
+        <span class="c-toast__title" data-toast-title>Command ready</span>
+        <span class="c-toast__body" data-toast-body>Assign priority vendor is selected.</span>
+      </div>
+      <button class="c-toast__close" type="button" aria-label="Dismiss" data-toast-dismiss>Close</button>
+    </div>
+  </div>
+
+  <script>
+    const commandData = new Map([
+      [
+        'assign-vendor',
+        {
+          label: 'Assign priority vendor',
+          shortcut: 'A',
+          tone: 'accent',
+          target: 'Procurement queue',
+          status: 'Ready',
+          impact: 'Moves 14 vendor checks to Maya Patel with SLA watch enabled.',
+          feedback: '14 vendor checks are staged for assignment.',
+        },
+      ],
+      [
+        'open-risk',
+        {
+          label: 'Open risk exceptions',
+          shortcut: 'R',
+          tone: 'warning',
+          target: 'Risk desk',
+          status: 'Needs review',
+          impact: 'Filters the workspace to high-value exceptions blocked on risk.',
+          feedback: 'Risk exceptions are loaded in the results pane.',
+        },
+      ],
+      [
+        'publish-brief',
+        {
+          label: 'Publish morning brief',
+          shortcut: 'B',
+          tone: 'success',
+          target: 'Operations digest',
+          status: 'Draft ready',
+          impact: "Builds a shareable summary from today's queue movement.",
+          feedback: 'The morning brief draft is ready to publish.',
+        },
+      ],
+      [
+        'freeze-export',
+        {
+          label: 'Freeze export jobs',
+          shortcut: 'F',
+          tone: 'danger',
+          target: 'Exports',
+          status: 'Guarded',
+          impact: 'Pauses scheduled exports until the incident window is closed.',
+          feedback: 'Export jobs are guarded until you confirm.',
+        },
+      ],
+    ]);
+
+    const palette = document.getElementById('workspace-command');
+    const search = palette?.querySelector('.c-command__search');
+    const opener = document.querySelector('[data-command-trigger]');
+    const items = () => Array.from(palette?.querySelectorAll('.c-command__item') ?? []);
+    let selectedIndex = 0;
+    let selectedCommand = 'assign-vendor';
+
+    function setText(selector: string, value: string) {
+      const element = document.querySelector(selector);
+      if (element) element.textContent = value;
+    }
+
+    function showToast(title: string, body: string, tone = 'success') {
+      const toast = document.querySelector('[data-toast]');
+      if (!toast) return;
+      toast.removeAttribute('data-visible');
+      toast.setAttribute('data-tone', tone);
+      setText('[data-toast-title]', title);
+      setText('[data-toast-body]', body);
+      requestAnimationFrame(() => toast.setAttribute('data-visible', ''));
+    }
+
+    function updateSelection(commandId: string, shouldClose = false) {
+      const command = commandData.get(commandId);
+      if (!command) return;
+      selectedCommand = commandId;
+
+      document.querySelectorAll('[data-command-card]').forEach((card) => {
+        card.setAttribute('aria-pressed', String(card.getAttribute('data-command') === commandId));
+      });
+
+      items().forEach((item, itemIndex) => {
+        const selected = item.getAttribute('data-command') === commandId;
+        item.toggleAttribute('data-selected', selected);
+        item.setAttribute('aria-selected', String(selected));
+        if (selected) selectedIndex = itemIndex;
+      });
+
+      if (search) search.setAttribute('aria-activedescendant', commandId);
+      setText('[data-detail-title]', command.label);
+      setText('[data-detail-target]', command.target);
+      setText('[data-detail-status]', command.status);
+      setText('[data-detail-shortcut]', command.shortcut);
+      setText('[data-detail-impact]', command.impact);
+      setText('[data-feedback]', command.feedback);
+      document.querySelector('[data-detail-status]')?.setAttribute('data-tone', command.tone);
+
+      const recent = document.querySelector('[data-recent-commands]');
+      if (recent) {
+        const chip = document.createElement('span');
+        chip.className = 'c-chip';
+        chip.setAttribute('data-tone', command.tone);
+        chip.textContent = command.label;
+        recent.prepend(chip);
+        while (recent.children.length > 4) recent.lastElementChild?.remove();
+      }
+
+      showToast('Command selected', command.feedback, command.tone);
+      if (shouldClose) palette?.hidePopover();
+    }
+
+    function setPaletteSelection(index: number) {
+      const commands = items();
+      if (!commands.length) return;
+      selectedIndex = (index + commands.length) % commands.length;
+      const selected = commands[selectedIndex];
+      updateSelection(selected.getAttribute('data-command') ?? selectedCommand);
+      selected.scrollIntoView({ block: 'nearest' });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        palette?.showPopover();
+      }
+    });
+
+    palette?.addEventListener('toggle', () => {
+      const open = palette.matches(':popover-open');
+      opener?.setAttribute('aria-expanded', String(open));
+      if (open && search instanceof HTMLInputElement) {
+        search.focus();
+        setPaletteSelection(selectedIndex);
+      }
+    });
+
+    search?.addEventListener('keydown', (event) => {
+      if (!(event instanceof KeyboardEvent)) return;
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setPaletteSelection(selectedIndex + 1);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setPaletteSelection(selectedIndex - 1);
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        updateSelection(selectedCommand, true);
+      } else if (event.key === 'Escape') {
+        palette?.hidePopover();
+      }
+    });
+
+    items().forEach((item, index) => {
+      item.addEventListener('pointerenter', () => setPaletteSelection(index));
+      item.addEventListener('click', () => {
+        updateSelection(item.getAttribute('data-command') ?? selectedCommand, true);
+      });
+    });
+
+    document.querySelectorAll('[data-command-card]').forEach((card) => {
+      card.addEventListener('click', () => {
+        updateSelection(card.getAttribute('data-command') ?? selectedCommand);
+      });
+    });
+
+    document.querySelectorAll('[data-run-selected]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const command = commandData.get(selectedCommand);
+        if (!command) return;
+        showToast('Command run', command.feedback, command.tone);
+        setText('[data-feedback]', `Ran: ${command.feedback}`);
+      });
+    });
+
+    document.querySelector('[data-toast-dismiss]')?.addEventListener('click', () => {
+      document.querySelector('[data-toast]')?.removeAttribute('data-visible');
+    });
+
+    requestAnimationFrame(() => palette?.showPopover());
+  </script>
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+title: Command-driven workspace
+description: App-shell composition kit for command-centered products with palette search, split results, details, recents, and feedback.
+status: stable
+since: 0.9.0
+---
+
+# Command-driven workspace
+
+Use this composition when the command palette is the primary way to move,
+filter, and act. It combines the app shell, nav, toolbar, combobox,
+split-pane, command palette, chips, badges, and toasts into one workflow.
+
+[Open the preview](../preview/app-command-workspace)
+
+## Semantic HTML
+
+```html
+<div class="l-app-shell">
+  <header class="l-app-shell__topbar">
+    <button
+      class="c-button"
+      popovertarget="workspace-command"
+      aria-haspopup="dialog"
+      aria-controls="workspace-command"
+      aria-expanded="false"
+    >
+      Search commands
+    </button>
+  </header>
+
+  <aside class="l-app-shell__sidebar">
+    <nav class="c-nav" aria-label="Workspace">
+      <a class="c-nav__item" aria-current="page" href="/queue">
+        <span class="c-nav__label">Command center</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="l-app-shell__main">
+    <div class="c-toolbar" data-surface="flush">...</div>
+    <div class="c-split-pane" data-collapse="stack">
+      <section class="c-split-pane__pane c-split-pane__pane--start">
+        <h2 class="c-split-pane__title">Results</h2>
+      </section>
+      <div class="c-split-pane__separator" aria-hidden="true"></div>
+      <section class="c-split-pane__pane c-split-pane__pane--end">
+        <h2 class="c-split-pane__title">Command details</h2>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div
+  popover
+  class="c-command"
+  id="workspace-command"
+  role="dialog"
+  aria-labelledby="workspace-command-title"
+>
+  <h2 id="workspace-command-title" class="u-sr-only">Workspace commands</h2>
+  <input
+    class="c-command__search"
+    role="combobox"
+    aria-expanded="true"
+    aria-controls="workspace-command-list"
+    aria-label="Search commands"
+  />
+  <div class="c-command__body" id="workspace-command-list" role="listbox">
+    <div class="c-command__group">
+      <h3 class="c-command__heading">Route work</h3>
+      <button class="c-command__item" role="option">
+        Assign priority vendor
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+Keep the command trigger as a real button with `popovertarget`. The palette
+should be a `role="dialog"` with a combobox search and a `role="listbox"` of
+button options. When JavaScript adds keyboard navigation, keep
+`aria-activedescendant`, `aria-selected`, and `[data-selected]` synchronized.
+
+Use headings for the result and detail panes, not generic divs. Put command
+status in text badges or chips, and announce completed actions with a toast
+using `role="status"`.
+
+## Composition Notes
+
+- Put global navigation in `.l-app-shell__sidebar` and keep command search in
+  the topbar.
+- Use `.c-toolbar` for scoped filters and mode controls above the work area.
+- Use `.c-split-pane` for results plus detail/preview so selection never hides
+  context.
+- Use `.c-combobox` when a command needs a structured target, owner, or scope.
+- Use `.c-toast` for command feedback; inline copy should remain short.

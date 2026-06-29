@@ -1,0 +1,328 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface SettingsNavItem {
+  label: string;
+  href: string;
+  current?: boolean;
+  badge?: string;
+}
+
+const settingsNav: SettingsNavItem[] = [
+  { label: 'Account', href: '#account', current: true },
+  { label: 'Team', href: '#team' },
+  { label: 'Security', href: '#security', badge: '2' },
+  { label: 'Billing', href: '#billing' },
+  { label: 'Danger zone', href: '#danger-zone' },
+] as const;
+---
+<BaseLayout title="Settings console · Porchlight">
+  <div class="l-app-shell" style="--app-sidebar-size: 17rem;">
+    <header class="l-app-shell__topbar c-toolbar">
+      <div class="c-toolbar__group">
+        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Open main menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" /></svg>
+        </button>
+        <strong>Northstar Admin</strong>
+        <span class="c-badge" data-tone="success"><span class="c-badge__dot"></span>Healthy</span>
+      </div>
+      <div class="c-toolbar__group">
+        <label class="c-field c-field--inline" style="min-inline-size: min(100%, 20rem);">
+          <span class="u-sr-only">Search settings</span>
+          <input class="c-field__control" type="search" placeholder="Search settings" />
+        </label>
+        <button class="c-button" data-variant="secondary" data-size="sm">Audit log</button>
+        <button class="c-button" data-variant="primary" data-size="sm" form="settings-console-form">Save changes</button>
+      </div>
+    </header>
+
+    <aside class="l-app-shell__sidebar">
+      <nav class="c-nav" aria-label="Settings" style="padding: var(--pl-space-3);">
+        <div class="c-nav__group">
+          <span class="c-nav__group-label">Settings</span>
+        </div>
+        {settingsNav.map((item) => (
+          <a class="c-nav__item" href={item.href} aria-current={item.current ? 'page' : undefined}>
+            <span class="c-nav__label">{item.label}</span>
+            {item.badge && <span class="c-badge c-nav__badge" data-tone="warning">{item.badge}</span>}
+          </a>
+        ))}
+        <hr class="c-nav__divider" />
+        <details class="c-nav__section" open>
+          <summary class="c-nav__section-trigger">
+            <span>Workspace</span>
+            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </summary>
+          <a class="c-nav__item c-nav__item--child" href="#"><span class="c-nav__label">Integrations</span></a>
+          <a class="c-nav__item c-nav__item--child" href="#"><span class="c-nav__label">API keys</span></a>
+        </details>
+        <div class="c-nav__footer">
+          <div class="c-nav__meta">
+            <span class="c-nav__meta-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+            </span>
+            <span class="c-nav__meta-body">
+              <span class="c-nav__meta-label">admin@northstar.example</span>
+              <span class="c-nav__meta-description"><span class="c-badge" data-tone="accent">Owner</span> Production</span>
+            </span>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="l-app-shell__main">
+      <div class="l-container" style="--l-container-max: 76rem; padding-block: var(--pl-space-6);">
+        <div class="c-page-header">
+          <div class="c-page-header__heading">
+            <h1 class="c-page-header__title">Settings</h1>
+            <span class="c-page-header__subtitle">Manage account, team, security, billing, and destructive actions.</span>
+          </div>
+          <div class="c-page-header__actions">
+            <span class="c-badge" data-tone="warning">2 reviews needed</span>
+            <button class="c-button" data-variant="secondary" type="button">Discard</button>
+            <button class="c-button" data-variant="primary" form="settings-console-form">Save changes</button>
+          </div>
+        </div>
+
+        <div class="l-stack" style="--l-stack-gap: var(--pl-space-5);">
+          <div class="c-alert" data-tone="warning" role="status">
+            <div class="c-alert__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
+            </div>
+            <div class="c-alert__content">
+              <div class="c-alert__title">Security review pending</div>
+              <div class="c-alert__body">SAML enforcement and invoice contacts need owner approval before they apply.</div>
+            </div>
+          </div>
+
+          <div class="c-tabs">
+            <div class="c-tabs__list" role="tablist" aria-label="Settings groups">
+              <button class="c-tabs__tab" id="tab-account" type="button" role="tab" aria-selected="true" aria-controls="panel-settings" tabindex="0">General</button>
+              <button class="c-tabs__tab" id="tab-activity" type="button" role="tab" aria-selected="false" aria-controls="panel-activity" tabindex="-1">Activity</button>
+              <button class="c-tabs__tab" id="tab-access" type="button" role="tab" aria-selected="false" aria-controls="panel-access" tabindex="-1">Access</button>
+            </div>
+
+            <div class="c-tabs__panel" id="panel-settings" role="tabpanel" aria-labelledby="tab-account">
+              <form class="c-form" id="settings-console-form" action="#" method="post">
+                <section class="c-card" data-surface="app" id="account" aria-labelledby="account-heading">
+                  <div class="c-card__header">
+                    <h2 class="c-card__title" id="account-heading">Account</h2>
+                    <span class="c-badge" data-tone="success">Active</span>
+                  </div>
+                  <div class="c-card__body">
+                    <div class="c-form__section">
+                      <div class="c-form__header">
+                        <h3>Workspace profile</h3>
+                        <p>Public identity and regional defaults for the account.</p>
+                      </div>
+                      <div class="c-form__body">
+                        <div class="c-form__grid">
+                          <label class="c-field" for="workspace-name">
+                            <span class="c-field__label">Workspace name</span>
+                            <input class="c-field__control" id="workspace-name" name="workspace-name" value="Northstar Labs" autocomplete="organization" />
+                          </label>
+                          <label class="c-field" for="workspace-slug">
+                            <span class="c-field__label">Workspace slug</span>
+                            <div class="c-input-group">
+                              <span class="c-input-group__addon">app/</span>
+                              <input class="c-field__control" id="workspace-slug" name="workspace-slug" value="northstar" pattern="[a-z0-9-]+" aria-describedby="workspace-slug-hint" />
+                            </div>
+                            <span class="c-field__hint" id="workspace-slug-hint">Lowercase letters, numbers, and hyphens.</span>
+                          </label>
+                          <label class="c-field" for="region">
+                            <span class="c-field__label">Region</span>
+                            <select class="c-field__control" id="region" name="region">
+                              <option>US Central</option>
+                              <option>US East</option>
+                              <option>EU West</option>
+                            </select>
+                          </label>
+                          <label class="c-field" for="timezone">
+                            <span class="c-field__label">Timezone</span>
+                            <select class="c-field__control" id="timezone" name="timezone">
+                              <option>America/Chicago</option>
+                              <option>America/New_York</option>
+                              <option>Europe/London</option>
+                            </select>
+                          </label>
+                        </div>
+                        <dl class="c-description" data-dividers>
+                          <div class="c-description__row">
+                            <dt class="c-description__term">Plan</dt>
+                            <dd class="c-description__detail">Enterprise annual</dd>
+                          </div>
+                          <div class="c-description__row">
+                            <dt class="c-description__term">Account ID</dt>
+                            <dd class="c-description__detail"><code>acct_84f31</code></dd>
+                          </div>
+                          <div class="c-description__row">
+                            <dt class="c-description__term">Status</dt>
+                            <dd class="c-description__detail"><span class="c-badge" data-tone="success">Good standing</span></dd>
+                          </div>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+            <section class="c-card" data-surface="app" id="team" aria-labelledby="team-heading">
+              <div class="c-card__header">
+                <h2 class="c-card__title" id="team-heading">Team</h2>
+                <button class="c-button" data-variant="secondary" type="button">Invite member</button>
+              </div>
+              <div class="c-card__body">
+                <div class="c-form__section">
+                  <div class="c-form__header">
+                    <h3>Membership defaults</h3>
+                    <p>Set defaults for new teammates and approval queues.</p>
+                  </div>
+                  <div class="c-form__body">
+                    <div class="c-form__grid">
+                      <label class="c-field" for="default-role">
+                        <span class="c-field__label">Default role</span>
+                        <select class="c-field__control" id="default-role" name="default-role">
+                          <option>Member</option>
+                          <option>Analyst</option>
+                          <option>Admin</option>
+                        </select>
+                      </label>
+                      <label class="c-field" for="seat-limit">
+                        <span class="c-field__label">Seat limit</span>
+                        <div class="c-input-group">
+                          <input class="c-field__control" id="seat-limit" name="seat-limit" type="number" min="1" value="84" />
+                          <span class="c-input-group__addon">seats</span>
+                        </div>
+                      </label>
+                    </div>
+                    <fieldset class="c-choice-group">
+                      <legend class="c-choice-group__legend">Approvals</legend>
+                      <div class="c-choice-list">
+                        <label class="c-choice">
+                          <input class="c-choice__input" type="checkbox" name="approval-invites" checked />
+                          <span>
+                            <span class="c-choice__label">Require owner approval for external domains</span>
+                            <span class="c-choice__description">Invites outside approved domains enter the review queue.</span>
+                          </span>
+                        </label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="c-card" data-surface="app" id="security" aria-labelledby="security-heading">
+              <div class="c-card__header">
+                <h2 class="c-card__title" id="security-heading">Security</h2>
+                <span class="c-badge" data-tone="warning">Review</span>
+              </div>
+              <div class="c-card__body">
+                <div class="c-form__section">
+                  <div class="c-form__header">
+                    <h3>Authentication policy</h3>
+                    <p>Controls that protect every workspace sign-in.</p>
+                  </div>
+                  <div class="c-form__body">
+                    <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+                      <label class="c-switch">
+                        <input class="c-switch__input" type="checkbox" role="switch" name="sso-required" checked />
+                        <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+                        <span class="c-switch__label">Require single sign-on</span>
+                      </label>
+                      <label class="c-switch">
+                        <input class="c-switch__input" type="checkbox" role="switch" name="mfa-required" checked />
+                        <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+                        <span class="c-switch__label">Require multi-factor authentication</span>
+                      </label>
+                      <label class="c-switch">
+                        <input class="c-switch__input" type="checkbox" role="switch" name="session-timeout" />
+                        <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+                        <span class="c-switch__label">Expire idle sessions after 30 minutes</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="c-card" data-surface="app" id="billing" aria-labelledby="billing-heading">
+              <div class="c-card__header">
+                <h2 class="c-card__title" id="billing-heading">Billing</h2>
+                <span class="c-badge">Renews Aug 14</span>
+              </div>
+              <div class="c-card__body">
+                <div class="c-form__section">
+                  <div class="c-form__header">
+                    <h3>Invoice settings</h3>
+                    <p>Billing contacts and purchase order details.</p>
+                  </div>
+                  <div class="c-form__body">
+                    <div class="c-form__grid">
+                      <label class="c-field" for="billing-email">
+                        <span class="c-field__label">Billing email</span>
+                        <input class="c-field__control" id="billing-email" name="billing-email" type="email" value="finance@northstar.example" autocomplete="email" />
+                      </label>
+                      <label class="c-field" for="purchase-order">
+                        <span class="c-field__label">Purchase order</span>
+                        <input class="c-field__control" id="purchase-order" name="purchase-order" value="PO-2026-1184" />
+                      </label>
+                    </div>
+                    <fieldset class="c-choice-group">
+                      <legend class="c-choice-group__legend">Billing cadence</legend>
+                      <div class="c-choice-list" data-layout="inline">
+                        <label class="c-choice">
+                          <input class="c-choice__input" type="radio" name="cadence" checked />
+                          <span><span class="c-choice__label">Annual</span></span>
+                        </label>
+                        <label class="c-choice">
+                          <input class="c-choice__input" type="radio" name="cadence" />
+                          <span><span class="c-choice__label">Monthly</span></span>
+                        </label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="c-card" data-surface="app" id="danger-zone" aria-labelledby="danger-heading">
+              <div class="c-card__header">
+                <h2 class="c-card__title" id="danger-heading">Danger zone</h2>
+                <span class="c-badge" data-tone="danger">Owner only</span>
+              </div>
+              <div class="c-card__body">
+                <div class="c-alert" data-tone="danger">
+                  <div class="c-alert__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
+                  </div>
+                  <div class="c-alert__content">
+                    <div class="c-alert__title">Destructive actions are permanent</div>
+                    <div class="c-alert__body">Export audit logs and transfer ownership before deleting this workspace.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="c-card__footer">
+                <button class="c-button" data-variant="secondary" type="button">Transfer ownership</button>
+                <button class="c-button" type="button">Delete workspace</button>
+              </div>
+            </section>
+
+                <div class="c-toolbar" data-surface="panel" aria-label="Save settings">
+                  <div class="c-toolbar__group">
+                    <span class="u-muted">Unsaved changes in Security and Billing</span>
+                  </div>
+                  <div class="c-toolbar__group">
+                    <button class="c-button" data-variant="ghost" type="reset">Reset</button>
+                    <button class="c-button" data-variant="primary" type="submit">Save changes</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="c-tabs__panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" hidden></div>
+            <div class="c-tabs__panel" id="panel-access" role="tabpanel" aria-labelledby="tab-access" hidden></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

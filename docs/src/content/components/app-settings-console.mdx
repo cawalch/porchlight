@@ -1,0 +1,88 @@
+---
+title: Settings console
+description: A Porchlight-native admin settings composition for account, team, security, billing, and destructive workflows.
+status: stable
+since: 0.9.0
+---
+
+# Settings console
+
+The settings console is a composed app pattern, not a single component. It
+uses the app shell, sidebar nav, tabs, cards, forms, switches, alerts, badges,
+toolbars, and description lists to create a practical admin surface.
+
+[Open the live preview](../preview/app-settings-console).
+
+## Structure
+
+Use a real app landmark split: topbar, settings navigation, and the main form
+area. Keep the section names stable so people can scan and deep-link to the
+right task.
+
+```html
+<div class="l-app-shell">
+  <header class="l-app-shell__topbar c-toolbar">...</header>
+  <aside class="l-app-shell__sidebar">
+    <nav class="c-nav" aria-label="Settings">...</nav>
+  </aside>
+  <main class="l-app-shell__main">
+    <form class="c-form">...</form>
+  </main>
+</div>
+```
+
+## Form sections
+
+Each settings area should be a native form section with a heading and concise
+help text. Use `.c-form__grid` for editable fields and `.c-description` for
+read-only account state.
+
+```html
+<section class="c-form__section" aria-labelledby="settings-account">
+  <div class="c-form__header">
+    <h2 id="settings-account">Account</h2>
+    <p>Workspace identity and regional defaults.</p>
+  </div>
+  <div class="c-form__body">
+    <div class="c-form__grid">
+      <label class="c-field">
+        <span class="c-field__label">Workspace name</span>
+        <input
+          class="c-field__control"
+          name="workspace"
+          value="Northstar Labs"
+        />
+      </label>
+    </div>
+  </div>
+</section>
+```
+
+## Toggles
+
+Render switches as native checkboxes with `role="switch"`. Keep the label next
+to the control and put policy details in nearby helper copy.
+
+```html
+<label class="c-switch">
+  <input class="c-switch__input" type="checkbox" role="switch" checked />
+  <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
+  <span class="c-switch__label">Require single sign-on</span>
+</label>
+```
+
+## Semantic HTML guidance
+
+- Use one `<form>` for the settings page and submit with a visible save action.
+- Group related controls with `<section>` plus `aria-labelledby`.
+- Use `<fieldset>` and `<legend>` for radio or checkbox groups.
+- Connect hints and validation messages with `aria-describedby`.
+- Use native `<button type="submit">` for save, and reserve danger actions for
+  explicit buttons in a danger section.
+- Use `<dl>` for read-only billing, plan, owner, and status metadata.
+
+## Preview
+
+The [settings console preview](../preview/app-settings-console) shows account,
+team, security, billing, status banners, a danger zone, and a save action bar
+using existing Porchlight classes only.

@@ -13,7 +13,9 @@ permissions:
   contents: write
   pull-requests: write
 
-concurrency: pr-preview-${{ github.event.number }}
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
 
 jobs:
   preview:

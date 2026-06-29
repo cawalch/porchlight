@@ -21,7 +21,7 @@ Porchlight has three composition layers:
 
 ## Agent decision flow
 
-1. Pick the closest recipe: App shell, Dashboard, Data region, Settings page, Dense admin, Validation form.
+1. Pick the closest recipe: App shell, List/detail workspace, Queue triage, Process builder/admin shell, Settings console, Reporting dashboard, Command-driven workspace, Dashboard, Data region, Settings page, Dense admin, Validation form.
 2. Preserve semantic HTML first, then add Porchlight classes.
 3. Use preview pages as visual truth and component pages as class-contract truth.
 4. Add app CSS only when a local product layout cannot be expressed with existing layout primitives or tokens.
@@ -42,6 +42,12 @@ Porchlight has three composition layers:
 ## Recipe index
 
 - App shell: Use for workspaces, dashboards, inboxes, consoles, and admin tools.
+- List/detail workspace: Use a split pane when users need to scan records and act on one selected item without route churn.
+- Queue triage: Use workflow lanes, saved views, a priority table, and compact decision fields for operational review.
+- Process builder/admin shell: Use a low-friction library/map/inspector layout for authoring workflows without exposing every advanced control at once.
+- Settings console: Use local navigation, grouped native forms, alerts, and explicit destructive-action framing.
+- Reporting dashboard: Use filter controls, KPI stats, chart shells, insight queues, and source tables for repeat reporting.
+- Command-driven workspace: Use command palette semantics plus visible result/detail surfaces when commands are the primary app control.
 - Dashboard: Use c-page-header, l-grid KPI cards, and app-surface cards.
 - Data region: Use c-card, c-toolbar, c-table-wrap, c-table, and pagination.
 - Settings page: Use l-sidebar for local nav and c-form/c-field for real controls.
@@ -355,7 +361,13 @@ Generated from docs/src/content/components so this list tracks the documented co
 
 - accordion: /components/accordion
 - alert: /components/alert
+- app-command-workspace: /components/app-command-workspace
 - app-dense: /components/app-dense
+- app-list-detail: /components/app-list-detail
+- app-process-builder: /components/app-process-builder
+- app-queue-triage: /components/app-queue-triage
+- app-reporting-dashboard: /components/app-reporting-dashboard
+- app-settings-console: /components/app-settings-console
 - avatar: /components/avatar
 - badge: /components/badge
 - breadcrumb: /components/breadcrumb
@@ -402,6 +414,12 @@ Generated from docs/src/content/components so this list tracks the documented co
 
 ## Best first examples
 
+- /preview/app-list-detail: list/detail workspace with a persistent table and selected-record panel
+- /preview/app-queue-triage: queue triage workspace with SLA lanes, priority list, and decision fields
+- /preview/app-process-builder: process builder/admin shell with library, draft map, and inspector panel
+- /preview/app-settings-console: settings console with local navigation, forms, alerts, and danger zone
+- /preview/app-reporting-dashboard: reporting dashboard with filters, KPIs, charts, and breakdown table
+- /preview/app-command-workspace: command-driven workspace with palette, result cards, detail, and feedback
 - /preview/app-dashboard: full app shell with KPI grid, data table, nav, and page actions
 - /preview/dashboard: compact dashboard composition proof
 - /preview/app-dense: dense admin/data-console layout
@@ -416,10 +434,16 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/accordion
 - /preview/alert
 - /preview/app-cases
+- /preview/app-command-workspace
 - /preview/app-dashboard
 - /preview/app-dense
 - /preview/app-inbox
+- /preview/app-list-detail
 - /preview/app-marketing
+- /preview/app-process-builder
+- /preview/app-queue-triage
+- /preview/app-reporting-dashboard
+- /preview/app-settings-console
 - /preview/app-shell
 - /preview/app-siem
 - /preview/avatar

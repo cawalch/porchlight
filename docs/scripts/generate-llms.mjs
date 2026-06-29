@@ -28,6 +28,30 @@ const primaryLinks = [
 
 const bestExamples = [
   [
+    "/preview/app-list-detail",
+    "list/detail workspace with a persistent table and selected-record panel",
+  ],
+  [
+    "/preview/app-queue-triage",
+    "queue triage workspace with SLA lanes, priority list, and decision fields",
+  ],
+  [
+    "/preview/app-process-builder",
+    "process builder/admin shell with library, draft map, and inspector panel",
+  ],
+  [
+    "/preview/app-settings-console",
+    "settings console with local navigation, forms, alerts, and danger zone",
+  ],
+  [
+    "/preview/app-reporting-dashboard",
+    "reporting dashboard with filters, KPIs, charts, and breakdown table",
+  ],
+  [
+    "/preview/app-command-workspace",
+    "command-driven workspace with palette, result cards, detail, and feedback",
+  ],
+  [
     "/preview/app-dashboard",
     "full app shell with KPI grid, data table, nav, and page actions",
   ],
@@ -69,6 +93,30 @@ const recipeIndex = [
   [
     "App shell",
     "Use for workspaces, dashboards, inboxes, consoles, and admin tools.",
+  ],
+  [
+    "List/detail workspace",
+    "Use a split pane when users need to scan records and act on one selected item without route churn.",
+  ],
+  [
+    "Queue triage",
+    "Use workflow lanes, saved views, a priority table, and compact decision fields for operational review.",
+  ],
+  [
+    "Process builder/admin shell",
+    "Use a low-friction library/map/inspector layout for authoring workflows without exposing every advanced control at once.",
+  ],
+  [
+    "Settings console",
+    "Use local navigation, grouped native forms, alerts, and explicit destructive-action framing.",
+  ],
+  [
+    "Reporting dashboard",
+    "Use filter controls, KPI stats, chart shells, insight queues, and source tables for repeat reporting.",
+  ],
+  [
+    "Command-driven workspace",
+    "Use command palette semantics plus visible result/detail surfaces when commands are the primary app control.",
   ],
   ["Dashboard", "Use c-page-header, l-grid KPI cards, and app-surface cards."],
   [
@@ -355,6 +403,12 @@ ${links(bestExamples)}
 ## Agent routing
 
 - Building a full app screen: start with /guides/composition-recipes, then copy the closest /preview/app-* pattern.
+- Building list/detail UX: use /components/app-list-detail and /preview/app-list-detail.
+- Building triage UX: use /components/app-queue-triage and /preview/app-queue-triage.
+- Building process/admin UX: use /components/app-process-builder and /preview/app-process-builder.
+- Building settings UX: use /components/app-settings-console and /preview/app-settings-console.
+- Building reporting UX: use /components/app-reporting-dashboard and /preview/app-reporting-dashboard.
+- Building command-first UX: use /components/app-command-workspace and /preview/app-command-workspace.
 - Building a table workflow: use /components/data-table and /preview/data-table.
 - Building forms: use /components/form, /components/field, /preview/form, and /preview/field.
 - Building dense/admin UX: use /components/app-dense and /preview/app-dense.

@@ -365,7 +365,7 @@ test.describe("docs scaffold", () => {
     // The selected tab is visible.
     const selected = page.locator(".c-tabs__tab[aria-selected='true']").first();
     await expect(selected).toBeVisible();
-    await expect(await selected.textContent()).toContain("Overview");
+    await expect(selected).toContainText("Overview");
     // A disabled tab exists.
     await expect(page.locator(".c-tabs__tab[disabled]")).toBeDisabled();
     // The active panel is visible (not hidden).
@@ -1312,5 +1312,56 @@ test.describe("docs scaffold", () => {
     ).toBeGreaterThanOrEqual(10);
     // Pagination.
     await expect(page.locator(".dense-pager .c-pagination")).toBeVisible();
+  });
+
+  test.describe("app composition kits", () => {
+    const kits = [
+      {
+        route: "./preview/app-list-detail",
+        heading: "Operator queue",
+        selector: ".c-split-pane",
+      },
+      {
+        route: "./preview/app-queue-triage",
+        heading: "Queue triage",
+        selector: ".c-workflow-board",
+      },
+      {
+        route: "./preview/app-process-builder",
+        heading: "Vendor onboarding",
+        selector: ".c-tabs",
+      },
+      {
+        route: "./preview/app-settings-console",
+        heading: "Settings",
+        selector: "#settings-console-form",
+      },
+      {
+        route: "./preview/app-reporting-dashboard",
+        heading: "Revenue performance",
+        selector: ".c-chart",
+      },
+      {
+        route: "./preview/app-command-workspace",
+        heading: "Command center",
+        selector: "#workspace-command",
+      },
+    ];
+
+    for (const kit of kits) {
+      test(`${kit.route.replace("./preview/", "")} renders`, async ({
+        page,
+      }) => {
+        await page.goto(kit.route);
+        await expect(
+          page.getByRole("heading", {
+            name: kit.heading,
+            exact: true,
+            level: 1,
+          }),
+        ).toBeVisible();
+        await expect(page.locator(kit.selector).first()).toBeAttached();
+      });
+    }
   });
 });

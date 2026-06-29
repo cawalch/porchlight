@@ -242,6 +242,45 @@
         }
       }
     }
+
+    @media (width < 42rem) {
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"]) {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows:
+          minmax(12rem, auto)
+          var(--c-split-pane-separator-size)
+          minmax(16rem, 1fr);
+        overflow: visible;
+      }
+
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .c-split-pane__pane--start {
+        grid-area: 1 / 1;
+      }
+
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .c-split-pane__pane--end {
+        grid-area: 3 / 1;
+      }
+
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .c-split-pane__separator {
+        grid-area: 2 / 1;
+        cursor: row-resize;
+      }
+
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .c-split-pane__separator::before {
+        inline-size: 100%;
+        block-size: var(--c-split-pane-separator-line-size);
+      }
+
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .c-split-pane__separator::after {
+        inline-size: 2rem;
+        block-size: 0.1875rem;
+      }
+    }
   }
 
   @media (forced-colors: active) {
