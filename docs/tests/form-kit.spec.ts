@@ -1,4 +1,13 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const testDir = dirname(fileURLToPath(import.meta.url));
+const componentCssFiles = [
+  resolve(testDir, "../../packages/porchlight/src/06-components/field.css"),
+  resolve(testDir, "../../packages/porchlight/src/06-components/form.css"),
+];
 
 async function tabUntil(
   page: import("@playwright/test").Page,
@@ -21,6 +30,192 @@ function ringColor(boxShadow: string): string | null {
   const ok = boxShadow.match(/oklch\([^)]+\)|oklab\([^)]+\)|rgba?\([^)]+\)/);
   return ok ? ok[0] : null;
 }
+
+async function resolveTokenColor(
+  page: import("@playwright/test").Page,
+  token: string,
+) {
+  return page.evaluate((tokenName) => {
+    const probe = document.createElement("div");
+    probe.style.color = `var(${tokenName})`;
+    document.body.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return color;
+  }, token);
+}
+
+test("field and form CSS stay framework agnostic", async () => {
+  const css = componentCssFiles
+    .map((file) => readFileSync(file, "utf8"))
+    .join("\n");
+
+  expect(css).toContain('.c-field__hint[data-tone="warning"]');
+  expect(css).toContain('.c-choice-group__hint[data-tone="warning"]');
+  expect(css).not.toMatch(
+    /\[(?:hx-|x-|v-|data-reactroot|data-reactid|data-v-)[^\]]*\]/,
+  );
+});
+
+test("field messages support required markers and explicit tones", async ({
+  page,
+}) => {
+  await page.goto("./preview/field");
+
+  const required = page.locator("[data-preview-required]");
+  await expect(required.locator(".c-field__required")).toHaveText("*");
+  await expect(required.locator(".c-field__control")).toHaveAttribute(
+    "required",
+    "",
+  );
+  await expect(required.locator(".c-field__control")).toHaveAttribute(
+    "aria-describedby",
+    "workspace-name-help",
+  );
+
+  const warningText = await resolveTokenColor(page, "--pl-color-warning-text");
+  const successText = await resolveTokenColor(page, "--pl-color-success-text");
+  const dangerText = await resolveTokenColor(page, "--pl-color-danger-text");
+
+  await expect(
+    page.locator('.c-field__hint[data-tone="warning"]').first(),
+  ).toHaveCSS("color", warningText);
+  await expect(
+    page.locator('.c-field__hint[data-tone="success"]').first(),
+  ).toHaveCSS("color", successText);
+  await expect(
+    page.locator('.c-field__hint[data-tone="danger"]').first(),
+  ).toHaveCSS("color", dangerText);
+
+  const messages = page.locator("[data-preview-messages] .c-field__messages");
+  await expect(messages.locator(".c-field__hint")).toHaveCount(3);
+  const layout = await messages.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return {
+      display: style.display,
+      rowGap: parseFloat(style.rowGap),
+      overflow: el.scrollWidth > el.clientWidth + 1,
+    };
+  });
+  expect(layout.display).toBe("grid");
+  expect(layout.rowGap).toBeGreaterThan(0);
+  expect(layout.overflow).toBe(false);
+});
+
+test("native and ARIA validity states remain standard HTML driven", async ({
+  page,
+}) => {
+  await page.goto("./preview/field");
+
+  const neutral = page.locator("[data-preview-aria-valid] .c-field__control");
+  const neutralStyles = await neutral.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return {
+      invalid: el.getAttribute("aria-invalid"),
+      shadow: style.boxShadow,
+      borderColor: style.borderColor,
+    };
+  });
+  expect(neutralStyles.invalid).toBe("false");
+  expect(neutralStyles.shadow).toBe("none");
+  expect(neutralStyles.borderColor).not.toBe(
+    await resolveTokenColor(page, "--pl-color-danger"),
+  );
+
+  const urlField = page.locator(".c-field__control[type='url']");
+  await urlField.fill("not-a-url");
+  await urlField.blur();
+  await page.waitForTimeout(300);
+
+  const hintColor = await urlField.evaluate((el) => {
+    const hint = el.closest(".c-field")?.querySelector(".c-field__hint");
+    return hint instanceof HTMLElement ? getComputedStyle(hint).color : null;
+  });
+  expect(hintColor).toBe(
+    await resolveTokenColor(page, "--pl-color-danger-text"),
+  );
+});
+
+test("framework-neutral fragments can be replaced and retoggled", async ({
+  page,
+}) => {
+  await page.goto("./preview/field");
+
+  await page.locator("[data-preview-framework-contract]").evaluate((el) => {
+    el.outerHTML = `
+      <div class="c-field" data-preview-framework-contract>
+        <label class="c-field__label" for="fragment-email">Fragment email</label>
+        <input
+          id="fragment-email"
+          class="c-field__control"
+          name="email"
+          type="email"
+          value="taken@example.com"
+          aria-invalid="true"
+          aria-describedby="fragment-email-error"
+        />
+        <span
+          class="c-field__hint"
+          id="fragment-email-error"
+          data-tone="danger"
+          role="alert"
+        >That email is already invited.</span>
+      </div>
+    `;
+  });
+
+  const fragment = page.locator("[data-preview-framework-contract]");
+  const dangerState = await fragment.evaluate((el) => {
+    const input = el.querySelector(".c-field__control");
+    const hint = el.querySelector(".c-field__hint");
+    if (!(input instanceof HTMLElement) || !(hint instanceof HTMLElement)) {
+      return null;
+    }
+
+    return {
+      invalid: input.getAttribute("aria-invalid"),
+      inputShadow: getComputedStyle(input).boxShadow,
+      hintColor: getComputedStyle(hint).color,
+    };
+  });
+  expect(dangerState).not.toBeNull();
+  expect(dangerState!.invalid).toBe("true");
+  expect(dangerState!.inputShadow).not.toBe("none");
+  expect(dangerState!.hintColor).toBe(
+    await resolveTokenColor(page, "--pl-color-danger-text"),
+  );
+
+  await fragment.locator(".c-field__control").evaluate((el) => {
+    el.setAttribute("aria-invalid", "false");
+    el.setAttribute("value", "new@example.com");
+  });
+  await fragment.locator(".c-field__hint").evaluate((el) => {
+    el.setAttribute("data-tone", "warning");
+    el.removeAttribute("role");
+    el.textContent = "Changing this address sends a confirmation email.";
+  });
+  await page.waitForTimeout(300);
+
+  const warningState = await fragment.evaluate((el) => {
+    const input = el.querySelector(".c-field__control");
+    const hint = el.querySelector(".c-field__hint");
+    if (!(input instanceof HTMLElement) || !(hint instanceof HTMLElement)) {
+      return null;
+    }
+
+    return {
+      invalid: input.getAttribute("aria-invalid"),
+      inputShadow: getComputedStyle(input).boxShadow,
+      hintColor: getComputedStyle(hint).color,
+    };
+  });
+  expect(warningState).not.toBeNull();
+  expect(warningState!.invalid).toBe("false");
+  expect(warningState!.inputShadow).toBe("none");
+  expect(warningState!.hintColor).toBe(
+    await resolveTokenColor(page, "--pl-color-warning-text"),
+  );
+});
 
 test("inline fields align on desktop and stack without overflow on mobile", async ({
   page,
@@ -141,6 +336,10 @@ test("choice groups keep native checkbox and radio controls", async ({
   await expect(first).toHaveAttribute("type", "checkbox");
   await expect(first).toBeChecked();
   await expect(group.locator(".c-choice__input:disabled")).toBeVisible();
+  await expect(group.locator(".c-choice-group__hint")).toHaveCSS(
+    "color",
+    await resolveTokenColor(page, "--pl-color-warning-text"),
+  );
 
   await tabUntil(page, "[data-preview-choice-group] .c-choice__input");
   const focus = await first.evaluate((el) => {
@@ -157,6 +356,22 @@ test("choice groups keep native checkbox and radio controls", async ({
 
   const checkedRadio = page.locator("input[name='cadence']:checked");
   await expect(checkedRadio).toHaveAttribute("type", "radio");
+});
+
+test("choice group hints support grouped invalid state", async ({ page }) => {
+  await page.goto("./preview/form");
+
+  const group = page.locator("[data-preview-choice-invalid]");
+  await expect(group).toHaveAttribute("aria-invalid", "true");
+  await expect(group).toHaveAttribute(
+    "aria-describedby",
+    "review-routing-error",
+  );
+  await expect(group.locator(".c-choice-group__hint")).toHaveCSS(
+    "color",
+    await resolveTokenColor(page, "--pl-color-danger-text"),
+  );
+  await expect(group.locator(".c-choice__input")).toHaveCount(2);
 });
 
 test("input groups move focus indication to the group while labels target native inputs", async ({

@@ -57,7 +57,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <p>Native checkboxes with descriptions and disabled states.</p>
       </div>
       <div class="c-form__body">
-        <fieldset class="c-choice-group" data-preview-choice-group>
+        <fieldset class="c-choice-group" data-preview-choice-group aria-describedby="email-updates-help">
           <legend class="c-choice-group__legend">Email updates</legend>
           <div class="c-choice-list">
             <label class="c-choice">
@@ -82,6 +82,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               </span>
             </label>
           </div>
+          <span class="c-choice-group__hint" id="email-updates-help" data-tone="warning">
+            Security alerts stay enabled for account owners.
+          </span>
         </fieldset>
       </div>
     </section>
@@ -115,7 +118,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </div>
         </div>
 
-        <fieldset class="c-choice-group">
+        <fieldset class="c-choice-group" aria-describedby="billing-cadence-help">
           <legend class="c-choice-group__legend">Billing cadence</legend>
           <div class="c-choice-list" data-layout="inline">
             <label class="c-choice">
@@ -127,6 +130,38 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <span class="c-choice__label">Annual</span>
             </label>
           </div>
+          <span class="c-choice-group__hint" id="billing-cadence-help" data-tone="success">
+            Annual billing is active for this workspace.
+          </span>
+        </fieldset>
+      </div>
+    </section>
+  </form>
+
+  <h2>Choice validation</h2>
+  <form class="c-form demo-form">
+    <section class="c-form__section">
+      <div class="c-form__body">
+        <fieldset
+          class="c-choice-group"
+          data-preview-choice-invalid
+          aria-invalid="true"
+          aria-describedby="review-routing-error"
+        >
+          <legend class="c-choice-group__legend">Review routing</legend>
+          <div class="c-choice-list">
+            <label class="c-choice">
+              <input class="c-choice__input" type="radio" name="routing" />
+              <span class="c-choice__label">Any available reviewer</span>
+            </label>
+            <label class="c-choice">
+              <input class="c-choice__input" type="radio" name="routing" />
+              <span class="c-choice__label">Assigned team only</span>
+            </label>
+          </div>
+          <span class="c-choice-group__hint" id="review-routing-error" data-tone="danger" role="alert">
+            Select a routing policy before saving.
+          </span>
         </fieldset>
       </div>
     </section>
