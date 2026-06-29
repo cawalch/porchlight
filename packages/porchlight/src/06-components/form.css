@@ -99,6 +99,26 @@
       font-weight: var(--pl-font-weight-semibold);
     }
 
+    .c-choice-group__hint {
+      display: block;
+      margin-block-start: var(--pl-space-2);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .c-choice-group__hint[data-tone="success"] {
+      color: var(--pl-color-success-text);
+    }
+
+    .c-choice-group__hint[data-tone="warning"] {
+      color: var(--pl-color-warning-text);
+    }
+
+    .c-choice-group__hint[data-tone="danger"] {
+      color: var(--pl-color-danger-text);
+    }
+
     .c-choice-list {
       display: grid;
       gap: var(--c-choice-gap);
@@ -145,6 +165,10 @@
     .c-choice:has(.c-choice__input:disabled) {
       opacity: var(--pl-opacity-disabled);
       cursor: not-allowed;
+    }
+
+    :scope[aria-invalid="true"] .c-choice-group__hint:not([data-tone]) {
+      color: var(--pl-color-danger-text);
     }
   }
 

@@ -1,9 +1,9 @@
 /*
  * Porchlight  -  field component
  * ===========================================================================
- * A labeled form control: label, native input, and hint. Wraps native
+ * A labeled form control: label, native input, and hint/messages. Wraps native
  * <input>/<select>/<textarea> so we inherit all their behavior (constraint
- * validation, autofill, IME, autofill). No JS, no custom widgets.
+ * validation, autofill, IME, spellcheck). No JS, no custom widgets.
  *
  * State is driven by native pseudos and ARIA: :focus-visible, :user-invalid,
  * [aria-invalid="true"], :disabled. Focus draws a token-colored border AND a
@@ -48,10 +48,20 @@
     }
 
     .c-field__label {
+      display: inline-flex;
+      gap: var(--pl-space-1);
+      align-items: baseline;
+      min-inline-size: 0;
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-semibold);
 
       /* Logical "for" association: clicking the label focuses the input it wraps. */
+    }
+
+    .c-field__required {
+      color: var(--pl-color-danger-text);
+      font-weight: var(--pl-font-weight-bold);
+      line-height: 1;
     }
 
     :scope.c-field--inline .c-field__label {
@@ -97,16 +107,35 @@
     .c-field__hint {
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
     }
 
-    :scope.c-field--inline .c-field__hint {
+    .c-field__hint[data-tone="success"] {
+      color: var(--pl-color-success-text);
+    }
+
+    .c-field__hint[data-tone="warning"] {
+      color: var(--pl-color-warning-text);
+    }
+
+    .c-field__hint[data-tone="danger"] {
+      color: var(--pl-color-danger-text);
+    }
+
+    .c-field__messages {
+      display: grid;
+      gap: var(--pl-space-1);
+      min-inline-size: 0;
+    }
+
+    :scope.c-field--inline :is(.c-field__hint, .c-field__messages) {
       grid-column: 2;
     }
 
     :scope.c-field--inline:has(
         :is(.u-sr-only, .u-focusable-sr-only, .u-visually-hidden)
       )
-      .c-field__hint {
+      :is(.c-field__hint, .c-field__messages) {
       grid-column: auto;
     }
 
@@ -119,7 +148,7 @@
         padding-block-start: 0;
       }
 
-      :scope.c-field--inline .c-field__hint {
+      :scope.c-field--inline :is(.c-field__hint, .c-field__messages) {
         grid-column: auto;
       }
     }
@@ -176,7 +205,7 @@
   :where(.c-field):has(
       .c-field__control:is(:user-invalid, [aria-invalid="true"])
     )
-    .c-field__hint {
+    .c-field__hint:not([data-tone]) {
     color: var(--pl-color-danger-text);
   }
 

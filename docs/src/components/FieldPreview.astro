@@ -3,9 +3,35 @@
 ---
 <div class="demo l-stack">
   <label class="c-field">
-    <span class="c-field__label">Workspace name</span>
-    <input class="c-field__control" required placeholder="Acme Ops" />
-    <span class="c-field__hint">Use a name your team recognizes.</span>
+    <span class="c-field__label">
+      Workspace name
+      <span class="c-field__required" aria-hidden="true">*</span>
+    </span>
+    <input class="c-field__control" required placeholder="Acme Ops" aria-describedby="preview-name-help" />
+    <span class="c-field__hint" id="preview-name-help">Use a name your team recognizes.</span>
+  </label>
+  <label class="c-field">
+    <span class="c-field__label">Storage limit</span>
+    <input class="c-field__control" type="number" value="92" aria-describedby="preview-storage-warning" />
+    <span class="c-field__hint" id="preview-storage-warning" data-tone="warning">Approaching the plan limit.</span>
+  </label>
+  <label class="c-field">
+    <span class="c-field__label">Workspace URL</span>
+    <input class="c-field__control" required value="acme ops" aria-invalid="true" aria-describedby="preview-slug-help preview-slug-error" />
+    <span class="c-field__messages">
+      <span class="c-field__hint" id="preview-slug-help">Use lowercase letters, numbers, and hyphens.</span>
+      <span class="c-field__hint" id="preview-slug-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
+    </span>
+  </label>
+  <label class="c-field">
+    <span class="c-field__label">Invite status</span>
+    <input class="c-field__control" type="email" value="ops@example.com" aria-describedby="preview-invite-success" />
+    <span class="c-field__hint" id="preview-invite-success" data-tone="success">Ready to invite.</span>
+  </label>
+  <label class="c-field">
+    <span class="c-field__label">Notes</span>
+    <textarea class="c-field__control" rows="3" placeholder="Add context..."></textarea>
+    <span class="c-field__hint">Textarea uses the same field surface.</span>
   </label>
   <label class="c-field c-field--inline">
     <span class="c-field__label">Region</span>

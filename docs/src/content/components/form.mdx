@@ -1,6 +1,6 @@
 ---
 title: Form
-description: Layout helpers for SaaS forms, grids, sections, actions, choice lists, and input groups.
+description: Layout helpers for SaaS forms, grids, sections, actions, choice lists, choice messages, and input groups.
 status: stable
 since: 0.4.1
 ---
@@ -12,10 +12,11 @@ sections, billing forms, filter bars, modal create/edit flows, dense admin
 metadata, choice groups, and prefix/suffix input groups. It is CSS-only and
 keeps native form controls in the DOM.
 
-Porchlight is frontend agnostic. Plain HTML forms, server-rendered fragments,
-htmx swaps, Alpine state, and heavier client frameworks all use the same
-contract: native controls, HTML5 constraints, `aria-invalid`, and
-`aria-describedby`.
+Porchlight is frontend agnostic. Plain HTML forms, HATEOAS/server-rendered
+fragments, htmx-style swaps, Alpine-style state, Vue, React, and heavier client
+frameworks all use the same contract: native controls, semantic form elements,
+HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
+`data-tone` message attributes.
 
 ## Form Layout
 
@@ -50,24 +51,25 @@ contract: native controls, HTML5 constraints, `aria-invalid`, and
 
 ## Class Contract
 
-| Selector                 | Role                                                |
-| ------------------------ | --------------------------------------------------- |
-| `.c-form`                | Form root with vertical section rhythm.             |
-| `.c-form__section`       | A logical form section.                             |
-| `.c-form__header`        | Section heading and summary copy.                   |
-| `.c-form__body`          | Field stack inside a section.                       |
-| `.c-form__grid`          | Responsive field grid.                              |
-| `.c-form__row`           | Wrapping row for filters and short fields.          |
-| `.c-form__actions`       | Submit/cancel action row.                           |
-| `.c-choice-group`        | Fieldset wrapper for checkbox/radio choices.        |
-| `.c-choice-list`         | Stacked or inline list of choices.                  |
-| `.c-choice`              | Native checkbox/radio label row.                    |
-| `.c-choice__input`       | Native checkbox/radio input.                        |
-| `.c-choice__label`       | Primary choice text.                                |
-| `.c-choice__description` | Optional secondary choice text.                     |
-| `.c-input-group`         | Prefix/suffix/action wrapper around a native field. |
-| `.c-input-group__addon`  | Non-interactive prefix or suffix.                   |
-| `.c-input-group__action` | Button aligned inside the group.                    |
+| Selector                 | Role                                                 |
+| ------------------------ | ---------------------------------------------------- |
+| `.c-form`                | Form root with vertical section rhythm.              |
+| `.c-form__section`       | A logical form section.                              |
+| `.c-form__header`        | Section heading and summary copy.                    |
+| `.c-form__body`          | Field stack inside a section.                        |
+| `.c-form__grid`          | Responsive field grid.                               |
+| `.c-form__row`           | Wrapping row for filters and short fields.           |
+| `.c-form__actions`       | Submit/cancel action row.                            |
+| `.c-choice-group`        | Fieldset wrapper for checkbox/radio choices.         |
+| `.c-choice-group__hint`  | Helper, warning, success, or error text for choices. |
+| `.c-choice-list`         | Stacked or inline list of choices.                   |
+| `.c-choice`              | Native checkbox/radio label row.                     |
+| `.c-choice__input`       | Native checkbox/radio input.                         |
+| `.c-choice__label`       | Primary choice text.                                 |
+| `.c-choice__description` | Optional secondary choice text.                      |
+| `.c-input-group`         | Prefix/suffix/action wrapper around a native field.  |
+| `.c-input-group__addon`  | Non-interactive prefix or suffix.                    |
+| `.c-input-group__action` | Button aligned inside the group.                     |
 
 ## Choice Groups
 
@@ -85,6 +87,9 @@ Use real `fieldset` and `legend` for groups of related checkboxes or radios.
       </span>
     </label>
   </div>
+  <span class="c-choice-group__hint" data-tone="warning">
+    Security alerts stay enabled for account owners.
+  </span>
 </fieldset>
 ```
 
@@ -106,14 +111,17 @@ action. Use explicit labels when an action button sits beside the input.
 </div>
 ```
 
-## htmx and Alpine
+## Framework-agnostic rendering
 
-Porchlight has no runtime dependency on htmx or Alpine. Use those tools to swap
-or toggle standard HTML attributes rather than Porchlight-specific state
-classes.
+Porchlight has no runtime dependency on any rendering layer. Use servers,
+hypermedia libraries, reactive attribute bindings, or component frameworks to
+emit standard HTML. The CSS never selects on `hx-*`, `x-*`, `v-*`, React data
+attributes, or framework-owned classes.
+
+### Server or HATEOAS fragment
 
 ```html
-<form class="c-form" hx-post="/settings" hx-target="this" hx-swap="outerHTML">
+<form class="c-form" action="/settings" method="post">
   <div class="c-field">
     <label class="c-field__label" for="team-slug">Team slug</label>
     <input
@@ -132,6 +140,13 @@ classes.
 </form>
 ```
 
+The server can return the same form or field fragment with updated
+`aria-invalid`, `aria-describedby`, values, and messages. A hypermedia library
+such as htmx can perform that swap, but Porchlight only sees the resulting
+HTML.
+
+### Reactive attributes
+
 ```html
 <div x-data="{ error: '' }" class="c-field">
   <label class="c-field__label" for="budget-limit">Budget limit</label>
@@ -143,6 +158,27 @@ classes.
     aria-describedby="budget-limit-error"
   />
   <span class="c-field__hint" id="budget-limit-error" x-text="error"></span>
+</div>
+```
+
+The Alpine-style example above toggles standard attributes. Vue, React, and
+other component systems should render the same final DOM rather than needing a
+Porchlight adapter:
+
+```html
+<div class="c-field">
+  <label class="c-field__label" for="quota">Quota</label>
+  <input
+    id="quota"
+    class="c-field__control"
+    name="quota"
+    type="number"
+    aria-invalid="false"
+    aria-describedby="quota-help"
+  />
+  <span class="c-field__hint" id="quota-help" data-tone="success">
+    Current quota is valid.
+  </span>
 </div>
 ```
 
@@ -166,5 +202,7 @@ classes.
   by assistive technology.
 - Use `aria-invalid="true"` for server-side errors or framework-managed errors;
   native HTML5 validation continues to use `:user-invalid`.
+- Use `.c-choice-group__hint` with `aria-describedby` on the `fieldset` for
+  grouped checkbox/radio help, warnings, or errors.
 - Do not put buttons inside wrapper labels. Use `for`/`id` for input groups with
   actions.

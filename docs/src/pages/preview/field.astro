@@ -12,10 +12,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Primitive controls</h2>
   <div class="demo field-grid">
-    <label class="c-field">
-      <span class="c-field__label">Workspace name</span>
-      <input class="c-field__control" required placeholder="Acme Ops" />
-      <span class="c-field__hint">Use a name your team recognizes.</span>
+    <label class="c-field" data-preview-required>
+      <span class="c-field__label">
+        Workspace name
+        <span class="c-field__required" aria-hidden="true">*</span>
+      </span>
+      <input class="c-field__control" required placeholder="Acme Ops" aria-describedby="workspace-name-help" />
+      <span class="c-field__hint" id="workspace-name-help">Use a name your team recognizes.</span>
     </label>
 
     <label class="c-field">
@@ -39,6 +42,58 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <textarea class="c-field__control" rows="3" placeholder="Add context for support..."></textarea>
       <span class="c-field__hint">Textarea uses the same field surface.</span>
     </label>
+  </div>
+
+  <h2>Messages</h2>
+  <div class="demo field-grid">
+    <div class="c-field" data-preview-message-tones>
+      <label class="c-field__label" for="storage-limit">Storage limit</label>
+      <input
+        id="storage-limit"
+        class="c-field__control"
+        type="number"
+        value="92"
+        aria-describedby="storage-limit-warning"
+      />
+      <span class="c-field__hint" id="storage-limit-warning" data-tone="warning">
+        This workspace is close to its storage limit.
+      </span>
+    </div>
+
+    <div class="c-field">
+      <label class="c-field__label" for="backup-email">Backup email</label>
+      <input
+        id="backup-email"
+        class="c-field__control"
+        type="email"
+        value="ops@example.com"
+        aria-describedby="backup-email-success"
+      />
+      <span class="c-field__hint" id="backup-email-success" data-tone="success">
+        Email verified.
+      </span>
+    </div>
+
+    <div class="c-field" data-preview-messages>
+      <label class="c-field__label" for="project-slug">
+        Project slug
+        <span class="c-field__required" aria-hidden="true">*</span>
+      </label>
+      <input
+        id="project-slug"
+        class="c-field__control"
+        required
+        pattern="[a-z0-9-]+"
+        value="acme ops"
+        aria-invalid="true"
+        aria-describedby="project-slug-help project-slug-warning project-slug-error"
+      />
+      <span class="c-field__messages">
+        <span class="c-field__hint" id="project-slug-help">Use lowercase letters, numbers, and hyphens.</span>
+        <span class="c-field__hint" id="project-slug-warning" data-tone="warning">Changing this updates future invite links.</span>
+        <span class="c-field__hint" id="project-slug-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
+      </span>
+    </div>
   </div>
 
   <h2>Inline labels</h2>
@@ -124,7 +179,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         aria-invalid="true"
         aria-describedby="server-email-error"
       />
-      <span class="c-field__hint" id="server-email-error" role="alert">That email is already invited.</span>
+      <span class="c-field__hint" id="server-email-error" data-tone="danger" role="alert">That email is already invited.</span>
+    </div>
+
+    <div class="c-field" data-preview-aria-valid>
+      <label class="c-field__label" for="clean-email">Valid server state</label>
+      <input
+        id="clean-email"
+        class="c-field__control"
+        type="email"
+        value="new@example.com"
+        aria-invalid="false"
+        aria-describedby="clean-email-help"
+      />
+      <span class="c-field__hint" id="clean-email-help">Explicit false invalid state stays neutral.</span>
     </div>
 
     <div class="c-field">
@@ -139,7 +207,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         />
         <span class="c-input-group__addon">.porchlight.app</span>
       </div>
-      <span class="c-field__hint" id="server-slug-error" role="alert">Use lowercase letters, numbers, and hyphens.</span>
+      <span class="c-field__hint" id="server-slug-error" data-tone="danger" role="alert">Use lowercase letters, numbers, and hyphens.</span>
     </div>
 
     <label class="c-field">
@@ -153,6 +221,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <input class="c-field__control" value="pk_live_••••" disabled />
       <span class="c-field__hint">Disabled controls are muted and skipped.</span>
     </label>
+  </div>
+
+  <h2>Framework-neutral rendering</h2>
+  <div class="demo field-grid">
+    <div class="c-field" data-preview-framework-contract>
+      <label class="c-field__label" for="fragment-email">Fragment email</label>
+      <input
+        id="fragment-email"
+        class="c-field__control"
+        type="email"
+        name="email"
+        value="queued@example.com"
+        aria-describedby="fragment-email-help"
+      />
+      <span class="c-field__hint" id="fragment-email-help">
+        This field can be replaced by any server or framework that emits the same HTML.
+      </span>
+    </div>
   </div>
 </BaseLayout>
 
