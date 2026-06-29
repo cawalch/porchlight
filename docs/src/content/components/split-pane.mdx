@@ -1,0 +1,171 @@
+---
+title: Split pane
+description: CSS-only horizontal and vertical split panes for explorers, editors, inspectors, and process builder shells.
+status: stable
+since: 1.1.0
+---
+
+# Split pane
+
+The `.c-split-pane` component gives enterprise app shells a first-class split
+layout: object explorer plus work surface, editor plus inspector, logs plus
+details, or process map plus configuration panel. It is CSS-only and
+dependency-free. Apps own resizing behavior, keyboard handling, saved sizes, and
+responsive product decisions.
+
+The separator is real rendered HTML. When the split is interactive, use
+`role="separator"` with `aria-orientation`, `aria-valuenow`, `aria-valuemin`,
+and `aria-valuemax`. When the split is only a visual divider, keep the separator
+non-focusable and omit the value attributes.
+
+## Semantic HTML
+
+```html
+<div class="c-split-pane" data-orientation="horizontal" data-collapse="stack">
+  <section class="c-split-pane__pane c-split-pane__pane--start">
+    <div class="c-split-pane__header">
+      <h2 class="c-split-pane__title">Process folders</h2>
+    </div>
+    <div class="c-split-pane__pane-inner">...</div>
+  </section>
+
+  <div
+    class="c-split-pane__separator"
+    role="separator"
+    aria-orientation="vertical"
+    aria-valuemin="20"
+    aria-valuemax="60"
+    aria-valuenow="32"
+    tabindex="0"
+  ></div>
+
+  <section class="c-split-pane__pane c-split-pane__pane--end">
+    <div class="c-split-pane__header">
+      <h2 class="c-split-pane__title">Rule editor</h2>
+    </div>
+    <div class="c-split-pane__pane-inner">...</div>
+  </section>
+</div>
+```
+
+For horizontal pane layouts, the separator itself has
+`aria-orientation="vertical"` because the separator line is vertical. For
+vertical pane layouts, use `aria-orientation="horizontal"`.
+
+## Fixed and Static Splits
+
+```html
+<div
+  class="c-split-pane"
+  data-layout="fixed-start"
+  style="--c-split-pane-fixed-size: 18rem;"
+>
+  <aside class="c-split-pane__pane c-split-pane__pane--start">...</aside>
+  <div class="c-split-pane__separator" aria-hidden="true"></div>
+  <main class="c-split-pane__pane c-split-pane__pane--end">...</main>
+</div>
+```
+
+Use `data-layout="fixed-start"` for a fixed explorer/sidebar and flexible work
+surface. Use `data-layout="fixed-end"` for a fixed inspector/details pane. If
+the divider is decorative, omit `role="separator"` and make it unfocusable.
+
+## Vertical Split
+
+```html
+<div
+  class="c-split-pane"
+  data-orientation="vertical"
+  style="--c-split-pane-start-size: minmax(12rem, 1fr);"
+>
+  <section class="c-split-pane__pane c-split-pane__pane--start">...</section>
+  <div
+    class="c-split-pane__separator"
+    role="separator"
+    aria-orientation="horizontal"
+    aria-valuemin="25"
+    aria-valuemax="75"
+    aria-valuenow="45"
+    tabindex="0"
+  ></div>
+  <section class="c-split-pane__pane c-split-pane__pane--end">...</section>
+</div>
+```
+
+## Resizing Contract
+
+Porchlight does not resize panes. Your app can update custom properties on the
+root element:
+
+```html
+<div
+  class="c-split-pane"
+  style="
+    --c-split-pane-start-size: minmax(18rem, 34%);
+    --c-split-pane-end-size: minmax(0, 1fr);
+  "
+>
+  ...
+</div>
+```
+
+When resizing is interactive:
+
+- Make the separator focusable with `tabindex="0"`.
+- Add `role="separator"` and the correct `aria-orientation`.
+- Keep `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` in sync with the
+  current split percentage or application-defined unit.
+- Support pointer resizing and keyboard resizing with arrow keys.
+- Persist user sizes in app state, local storage, user preferences, or the
+  server according to your product needs.
+- Respect min/max sizes so panes do not collapse into unusable controls.
+- If a pane itself scrolls and does not contain keyboard-focusable content,
+  make the pane focusable with `tabindex="0"` and provide an accessible label.
+
+## Responsive Behavior
+
+Add `data-collapse="stack"` to horizontal splits that should stack in narrow
+containers. The component uses a container query, so a split pane inside a
+drawer, tab, or app shell responds to its own width rather than the viewport.
+For dense enterprise screens where stacking would hide critical data, omit
+`data-collapse` and let panes overflow or use product-specific responsive rules.
+
+## SSR and Framework Compatibility
+
+The component is plain HTML and CSS. It can be emitted by server-rendered apps,
+hypermedia responses, Web Components, or component frameworks. There are no
+framework-specific selectors and no JavaScript dependency. A client controller
+can enhance the separator after render by updating attributes and CSS custom
+properties without changing the markup contract.
+
+## Class Contract
+
+| Selector                          | Role                                            |
+| --------------------------------- | ----------------------------------------------- |
+| `.c-split-pane`                   | Grid container for two panes and one separator. |
+| `.c-split-pane__pane`             | Scrollable pane.                                |
+| `.c-split-pane__pane--start`      | First pane.                                     |
+| `.c-split-pane__pane--end`        | Second pane.                                    |
+| `.c-split-pane__separator`        | Divider or interactive resize handle.           |
+| `.c-split-pane__pane-inner`       | Optional padded pane body.                      |
+| `.c-split-pane__header`           | Sticky pane header.                             |
+| `.c-split-pane__title`            | Header title.                                   |
+| `.c-split-pane__description`      | Secondary header text.                          |
+| `[data-orientation="horizontal"]` | Side-by-side panes.                             |
+| `[data-orientation="vertical"]`   | Stacked panes.                                  |
+| `[data-layout="fixed-start"]`     | Fixed first pane.                               |
+| `[data-layout="fixed-end"]`       | Fixed second pane.                              |
+| `[data-collapse="stack"]`         | Stack horizontal panes in narrow containers.    |
+| `[data-variant="plain"]`          | Remove outer border and radius.                 |
+
+## Tokens Exposed
+
+| Token                                | Default                 | Purpose                              |
+| ------------------------------------ | ----------------------- | ------------------------------------ |
+| `--c-split-pane-start-size`          | `minmax(16rem, 0.85fr)` | First pane grid size.                |
+| `--c-split-pane-end-size`            | `minmax(0, 1fr)`        | Second pane grid size.               |
+| `--c-split-pane-fixed-size`          | `18rem` or `22rem`      | Fixed pane size for layout variants. |
+| `--c-split-pane-separator-size`      | `0.75rem`               | Hit area for the separator.          |
+| `--c-split-pane-separator-line-size` | `1px`                   | Visible separator line.              |
+| `--c-split-pane-min-block-size`      | `24rem`                 | Minimum container height.            |
+| `--c-split-pane-pane-padding`        | `var(--pl-space-4)`     | Optional inner padding.              |

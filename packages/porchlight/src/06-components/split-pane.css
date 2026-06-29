@@ -1,0 +1,253 @@
+/*
+ * Porchlight  -  split pane component
+ * ===========================================================================
+ * CSS-only split panes for app shells, object explorers, editors, inspectors,
+ * and process builders. Apps own pointer/keyboard resize behavior and persist
+ * sizes by updating custom properties or data attributes.
+ *
+ * Structure:
+ *   <div class="c-split-pane" data-orientation="horizontal">
+ *     <section class="c-split-pane__pane c-split-pane__pane--start">...</section>
+ *     <div class="c-split-pane__separator" role="separator" aria-orientation="vertical"></div>
+ *     <section class="c-split-pane__pane c-split-pane__pane--end">...</section>
+ *   </div>
+ *
+ * Horizontal means panes are side by side, so the separator is vertical.
+ * Vertical means panes are stacked, so the separator is horizontal.
+ */
+@layer porchlight.components {
+  @scope (.c-split-pane) {
+    :scope {
+      --c-split-pane-start-size: minmax(16rem, 0.85fr);
+      --c-split-pane-end-size: minmax(0, 1fr);
+      --c-split-pane-separator-size: 0.75rem;
+      --c-split-pane-separator-line-size: 1px;
+      --c-split-pane-min-block-size: 24rem;
+      --c-split-pane-pane-min: 0;
+      --c-split-pane-pane-padding: var(--pl-space-4);
+
+      display: grid;
+      min-block-size: var(--c-split-pane-min-block-size);
+      min-inline-size: 0;
+      overflow: hidden;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-xl);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      container: c-split-pane / inline-size;
+    }
+
+    :scope,
+    :scope[data-orientation="horizontal"] {
+      grid-template-columns:
+        var(--c-split-pane-start-size)
+        var(--c-split-pane-separator-size)
+        var(--c-split-pane-end-size);
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    :scope[data-orientation="vertical"] {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        var(--c-split-pane-start-size)
+        var(--c-split-pane-separator-size)
+        var(--c-split-pane-end-size);
+    }
+
+    :scope[data-layout="fixed-start"] {
+      --c-split-pane-start-size: var(--c-split-pane-fixed-size, 18rem);
+      --c-split-pane-end-size: minmax(0, 1fr);
+    }
+
+    :scope[data-layout="fixed-end"] {
+      --c-split-pane-start-size: minmax(0, 1fr);
+      --c-split-pane-end-size: var(--c-split-pane-fixed-size, 22rem);
+    }
+
+    :scope[data-variant="plain"] {
+      border: 0;
+      border-radius: 0;
+    }
+
+    .c-split-pane__pane {
+      min-block-size: var(--c-split-pane-pane-min);
+      min-inline-size: var(--c-split-pane-pane-min);
+      overflow: auto;
+      overscroll-behavior: contain;
+      background: var(--pl-color-surface);
+    }
+
+    .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .c-split-pane__pane--end {
+      grid-area: 1 / 3;
+    }
+
+    :scope[data-orientation="vertical"] .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    :scope[data-orientation="vertical"] .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .c-split-pane__pane-inner {
+      padding: var(--c-split-pane-pane-padding);
+    }
+
+    .c-split-pane__separator {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-inline-size: 0;
+      min-block-size: 0;
+      border: 0;
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      touch-action: none;
+      user-select: none;
+      cursor: col-resize;
+    }
+
+    .c-split-pane__separator::before {
+      content: "";
+      inline-size: var(--c-split-pane-separator-line-size);
+      block-size: 100%;
+      background: var(--pl-color-border);
+    }
+
+    .c-split-pane__separator::after {
+      content: "";
+      position: absolute;
+      inline-size: 0.1875rem;
+      block-size: 2rem;
+      border-radius: var(--pl-radius-pill);
+      background: color-mix(in oklab, currentColor, transparent 35%);
+      opacity: 0;
+      transition:
+        opacity var(--pl-duration-1) var(--pl-ease-standard),
+        background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-split-pane__separator:hover::after,
+    .c-split-pane__separator:focus-visible::after,
+    .c-split-pane__separator[aria-valuenow]::after {
+      opacity: 1;
+    }
+
+    .c-split-pane__separator:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(-1 * var(--pl-focus-size));
+      z-index: var(--pl-z-raised);
+    }
+
+    .c-split-pane__separator[aria-disabled="true"],
+    .c-split-pane__separator[disabled] {
+      opacity: var(--pl-opacity-disabled);
+      cursor: default;
+      touch-action: auto;
+    }
+
+    :scope[data-orientation="vertical"] .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    :scope:not([data-orientation="vertical"]) .c-split-pane__separator {
+      grid-area: 1 / 2;
+    }
+
+    :scope[data-orientation="vertical"] .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    :scope[data-orientation="vertical"] .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
+
+    .c-split-pane__header {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: var(--pl-z-raised);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      min-block-size: var(--pl-control-block-size);
+      padding: var(--pl-space-3) var(--pl-space-4);
+      border-block-end: 1px solid var(--pl-color-border);
+      background: color-mix(in oklab, var(--pl-color-surface), transparent 3%);
+    }
+
+    .c-split-pane__title {
+      margin: 0;
+      min-inline-size: 0;
+      overflow: hidden;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+      line-height: var(--pl-leading-tight);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-split-pane__description {
+      margin: 0;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-snug);
+    }
+
+    :scope[data-collapse="stack"] {
+      @container c-split-pane (inline-size < 42rem) {
+        :scope:not([data-orientation="vertical"]) {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows:
+            minmax(12rem, auto)
+            var(--c-split-pane-separator-size)
+            minmax(16rem, 1fr);
+          overflow: visible;
+        }
+
+        :scope:not([data-orientation="vertical"]) .c-split-pane__pane--start {
+          grid-area: 1 / 1;
+        }
+
+        :scope:not([data-orientation="vertical"]) .c-split-pane__pane--end {
+          grid-area: 3 / 1;
+        }
+
+        :scope:not([data-orientation="vertical"]) .c-split-pane__separator {
+          grid-area: 2 / 1;
+          cursor: row-resize;
+        }
+
+        :scope:not([data-orientation="vertical"])
+          .c-split-pane__separator::before {
+          inline-size: 100%;
+          block-size: var(--c-split-pane-separator-line-size);
+        }
+
+        :scope:not([data-orientation="vertical"])
+          .c-split-pane__separator::after {
+          inline-size: 2rem;
+          block-size: 0.1875rem;
+        }
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-split-pane__separator::before, .c-split-pane__separator::after) {
+      background: CanvasText;
+    }
+
+    :where(.c-split-pane__separator:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+}

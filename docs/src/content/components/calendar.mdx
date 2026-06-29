@@ -1,0 +1,300 @@
+---
+title: Calendar
+description: Date, date-range, and time picker contracts for app-owned calendar behavior.
+status: experimental
+since: 1.0.0
+---
+
+# Calendar
+
+The `.c-calendar` contract styles date grids, date picker popovers, date-range
+fields, and time options without owning date logic. Porchlight provides the
+surface, spacing, focus treatment, and visual state mapping; the application
+owns date math, locale labels, roving tabindex, keyboard behavior, validation,
+and persistence.
+
+Use it when a SaaS, BPM, workflow, ticketing, or admin UI needs a consistent
+calendar shell but must keep business rules in the app layer.
+
+## Semantic HTML
+
+```html
+<section class="c-calendar" aria-labelledby="due-date-month">
+  <header class="c-calendar__header">
+    <button
+      class="c-calendar__nav-button"
+      type="button"
+      aria-label="Previous month"
+    >
+      ‹
+    </button>
+    <h2 class="c-calendar__heading" id="due-date-month">June 2026</h2>
+    <button
+      class="c-calendar__nav-button"
+      type="button"
+      aria-label="Next month"
+    >
+      ›
+    </button>
+  </header>
+
+  <div class="c-calendar__weekdays" aria-hidden="true">
+    <span class="c-calendar__weekday">Mon</span>
+    <span class="c-calendar__weekday">Tue</span>
+    <span class="c-calendar__weekday">Wed</span>
+    <span class="c-calendar__weekday">Thu</span>
+    <span class="c-calendar__weekday">Fri</span>
+    <span class="c-calendar__weekday">Sat</span>
+    <span class="c-calendar__weekday">Sun</span>
+  </div>
+
+  <div class="c-calendar__grid" role="grid" aria-labelledby="due-date-month">
+    <div class="c-calendar__row" role="row">
+      <button
+        class="c-calendar__day"
+        type="button"
+        role="gridcell"
+        data-outside-month
+      >
+        29
+      </button>
+      <button
+        class="c-calendar__day"
+        type="button"
+        role="gridcell"
+        aria-current="date"
+      >
+        1
+      </button>
+      <button
+        class="c-calendar__day"
+        type="button"
+        role="gridcell"
+        aria-selected="true"
+      >
+        2
+      </button>
+    </div>
+  </div>
+</section>
+```
+
+Day cells should be real `<button>` elements unless the date is purely static.
+Applications may use `role="grid"` with `role="gridcell"` and roving
+`tabindex`; when using grid roles, wrap each week in `role="row"`. Apps may
+also use a simpler button group when their accessibility model calls for it.
+Porchlight does not enforce either pattern in CSS.
+
+## Date Picker Field
+
+Pair the calendar with `.c-field` and the native Popover API for dependency-free
+field disclosure. The visible field may be a native date input, a text input
+with an ISO value, or a read-only display input backed by hidden form data.
+
+```html
+<div class="c-field c-date-picker">
+  <label class="c-field__label" for="case-due-date">Due date</label>
+  <div class="c-date-picker__field">
+    <input
+      class="c-field__control c-date-picker__control"
+      id="case-due-date"
+      name="due_date"
+      inputmode="numeric"
+      autocomplete="off"
+      value="2026-06-18"
+      aria-describedby="case-due-date-help"
+    />
+    <button
+      class="c-button c-date-picker__trigger"
+      type="button"
+      popovertarget="case-due-calendar"
+      aria-label="Choose due date"
+    >
+      Calendar
+    </button>
+  </div>
+  <span class="c-field__hint" id="case-due-date-help"
+    >Local SLA timezone: America/Chicago.</span
+  >
+  <div class="c-date-picker__popover" id="case-due-calendar" popover>
+    <section class="c-calendar" aria-labelledby="case-due-month">...</section>
+  </div>
+</div>
+```
+
+Set `--c-date-picker-anchor` per instance when multiple picker popovers appear
+on one page. The default anchor is fine for a single picker.
+
+## Date Range
+
+Use `.c-date-range` around two explicit fields when the app needs a start/end
+contract. A range calendar can mark start, end, and in-range days with
+`data-range-start`, `data-range-end`, and `data-in-range`.
+
+```html
+<div class="c-date-range">
+  <div class="c-date-range__fields">
+    <label class="c-field">
+      <span class="c-field__label">SLA starts</span>
+      <input class="c-field__control" name="sla_start" value="2026-06-16" />
+    </label>
+    <label class="c-field">
+      <span class="c-field__label">SLA ends</span>
+      <input class="c-field__control" name="sla_end" value="2026-06-20" />
+    </label>
+  </div>
+  <section class="c-calendar" aria-labelledby="sla-month">
+    <h2 class="c-calendar__heading" id="sla-month">June 2026</h2>
+    <div class="c-calendar__grid" role="grid" aria-labelledby="sla-month">
+      <div class="c-calendar__row" role="row">
+        <button
+          class="c-calendar__day"
+          type="button"
+          role="gridcell"
+          data-range-start
+          aria-selected="true"
+        >
+          16
+        </button>
+        <button
+          class="c-calendar__day"
+          type="button"
+          role="gridcell"
+          data-in-range
+        >
+          17
+        </button>
+        <button
+          class="c-calendar__day"
+          type="button"
+          role="gridcell"
+          data-range-end
+          aria-selected="true"
+        >
+          20
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+```
+
+## Time Options
+
+`.c-time-picker` styles discrete time choices. Use real buttons, or radio inputs
+with labels if your app needs native form selection semantics.
+
+```html
+<div class="c-time-picker" role="listbox" aria-label="Reminder time">
+  <div class="c-time-picker__grid">
+    <button class="c-time-picker__option" type="button" role="option">
+      08:30
+    </button>
+    <button
+      class="c-time-picker__option"
+      type="button"
+      role="option"
+      aria-selected="true"
+    >
+      09:00
+    </button>
+    <button class="c-time-picker__option" type="button" role="option" disabled>
+      09:30
+    </button>
+  </div>
+</div>
+```
+
+## Class Contract
+
+| Selector                     | Role                                              |
+| ---------------------------- | ------------------------------------------------- |
+| `.c-calendar`                | Calendar surface wrapper.                         |
+| `.c-calendar__header`        | Month heading and navigation row.                 |
+| `.c-calendar__heading`       | Current month/range title.                        |
+| `.c-calendar__nav`           | Optional wrapper for previous/next controls.      |
+| `.c-calendar__nav-button`    | Month navigation button.                          |
+| `.c-calendar__weekdays`      | Seven-column weekday label row.                   |
+| `.c-calendar__weekday`       | Weekday label, usually `aria-hidden`.             |
+| `.c-calendar__grid`          | Seven-column date grid.                           |
+| `.c-calendar__row`           | Optional ARIA row wrapper for one calendar week.  |
+| `.c-calendar__day`           | Individual date button or gridcell.               |
+| `.c-calendar__footer`        | Optional shortcut/status/action row.              |
+| `.c-calendar__shortcut-list` | Optional list of quick date commands.             |
+| `.c-date-picker`             | Field + popover picker wrapper.                   |
+| `.c-date-picker__field`      | Input and trigger row.                            |
+| `.c-date-picker__control`    | Native field control inside the picker row.       |
+| `.c-date-picker__trigger`    | Button that opens the calendar popover.           |
+| `.c-date-picker__popover`    | Native `popover` element containing the calendar. |
+| `.c-date-range`              | Start/end field and calendar wrapper.             |
+| `.c-date-range__fields`      | Responsive two-field date range grid.             |
+| `.c-time-picker`             | Time option surface.                              |
+| `.c-time-picker__grid`       | Responsive time option grid.                      |
+| `.c-time-picker__option`     | Selectable time button.                           |
+
+## State Contract
+
+| State         | Attribute                                              | Notes                                                             |
+| ------------- | ------------------------------------------------------ | ----------------------------------------------------------------- |
+| today         | `aria-current="date"` or `data-today`                  | Use `aria-current="date"` when it reflects the real current date. |
+| selected day  | `aria-selected="true"` or `data-selected`              | App controls single-date selection.                               |
+| disabled day  | `disabled`, `aria-disabled="true"`, or `data-disabled` | Prefer native `disabled` for real buttons that cannot be chosen.  |
+| outside month | `data-outside-month`                                   | Muted visual state for leading/trailing dates.                    |
+| range start   | `data-range-start`                                     | Usually paired with `aria-selected="true"`.                       |
+| range end     | `data-range-end`                                       | Usually paired with `aria-selected="true"`.                       |
+| in range      | `data-in-range`                                        | Applies the connecting range fill.                                |
+| invalid field | `aria-invalid="true"` on a nested field control        | Field hint inherits the danger tone unless explicitly toned.      |
+| selected time | `aria-selected="true"` or `data-selected`              | Works on `.c-time-picker__option`.                                |
+
+## Accessibility Contract
+
+Porchlight intentionally does not implement calendar interaction. Your app
+should provide:
+
+- Localized month headings, weekday labels, date names, and time formats.
+- Keyboard behavior for previous/next month, day movement, Home/End, PageUp,
+  PageDown, selection, and dismissal if you expose a grid picker.
+- Roving `tabindex` or another documented focus model for the grid.
+- `aria-live` announcements when changing months if the update is not obvious.
+- Validation timing and messaging via `aria-invalid`, `aria-describedby`, and
+  `role="alert"` where appropriate.
+- Time zone and cutoff rules for SLA, due-date, and business-calendar logic.
+
+For purely native browser behavior, use `<input type="date">`,
+`<input type="datetime-local">`, or `<input type="time">` inside `.c-field`
+instead. Reach for `.c-calendar` when the product needs a custom grid or range
+surface.
+
+## SSR, Hypermedia, And Frameworks
+
+Any renderer can emit this contract. Server-rendered pages, hypermedia
+fragment swaps, web components, React, Vue, Svelte, Solid, and similar
+component systems should all produce the same classes, ARIA, native controls,
+and `data-*` state attributes. Porchlight selectors are framework-agnostic and
+do not rely on runtime-specific attributes.
+
+## Limitations
+
+This component does not calculate dates, enforce min/max constraints, format
+locale strings, trap focus, manage the Popover API from unsupported browsers,
+or serialize ranges. It is a CSS contract for modern application markup, not a
+date library.
+
+## Tokens Consumed
+
+`--pl-color-{accent,accent-text,border,danger-text,surface,surface-2,text,text-muted}`,
+`--pl-control-{block-size,border-width,padding-inline,radius}`,
+`--pl-focus-{color,offset,size}`, `--pl-font-weight-*`,
+`--pl-radius-{sm,lg,xl}`, `--pl-shadow-2`, and `--pl-space-*`.
+
+## Tokens Exposed
+
+| Token                          | Default                    | Purpose                           |
+| ------------------------------ | -------------------------- | --------------------------------- |
+| `--c-calendar-cell-size`       | `2.5rem`                   | Minimum day-cell block size.      |
+| `--c-calendar-gap`             | `--pl-space-1`             | Gap between grid cells.           |
+| `--c-calendar-radius`          | `--pl-radius-lg`           | Day-cell radius.                  |
+| `--c-calendar-range-bg`        | accent tint                | Fill behind in-range days.        |
+| `--c-calendar-range-hover-bg`  | stronger accent tint       | Hover fill for in-range days.     |
+| `--c-date-picker-anchor`       | `--pl-date-picker-anchor`  | Anchor name for a picker popover. |
+| `--c-date-picker-popover-size` | `min(100vi - 2rem, 23rem)` | Popover inline size.              |

@@ -1,0 +1,285 @@
+/*
+ * Porchlight  -  chart shell component
+ * ===========================================================================
+ * An accessible frame for app-owned charts. Porchlight provides metric
+ * headers, legends, plotting slots, loading/empty/error states, and a table
+ * fallback container. It does not draw charts or prescribe a charting engine.
+ */
+@layer porchlight.components {
+  @scope (.c-chart) {
+    :scope {
+      --c-chart-pad: var(--pl-space-4);
+      --c-chart-gap: var(--pl-space-4);
+      --c-chart-radius: var(--pl-radius-lg);
+      --c-chart-plot-min-block-size: 16rem;
+      --c-chart-grid-color: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 32%
+      );
+      --c-chart-axis-color: var(--pl-color-text-muted);
+
+      container: c-chart / inline-size;
+      display: grid;
+      gap: var(--c-chart-gap);
+      min-inline-size: 0;
+      padding: var(--c-chart-pad);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      border-radius: var(--c-chart-radius);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-1);
+      color: var(--pl-color-text);
+    }
+
+    :scope[data-density="compact"],
+    :scope[data-density="dense"] {
+      --c-chart-pad: var(--pl-space-3);
+      --c-chart-gap: var(--pl-space-3);
+      --c-chart-plot-min-block-size: 12rem;
+    }
+
+    .c-chart__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+    }
+
+    .c-chart__title,
+    .c-chart__metric-value,
+    .c-chart__state-title {
+      margin: 0;
+      line-height: var(--pl-leading-tight);
+    }
+
+    .c-chart__title {
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-md);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-chart__description,
+    .c-chart__metric-label,
+    .c-chart__metric-delta,
+    .c-chart__caption {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-snug);
+    }
+
+    .c-chart__description {
+      max-inline-size: 64ch;
+      margin-block-start: var(--pl-space-1);
+      text-wrap: pretty;
+    }
+
+    .c-chart__metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-4);
+      justify-content: flex-end;
+    }
+
+    .c-chart__metric {
+      display: grid;
+      gap: var(--pl-space-1);
+      min-inline-size: 7rem;
+      text-align: end;
+    }
+
+    .c-chart__metric-value {
+      font-size: var(--pl-text-xl);
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--pl-font-weight-bold);
+    }
+
+    .c-chart__metric-delta[data-direction="up"] {
+      color: var(--pl-color-success-text);
+    }
+
+    .c-chart__metric-delta[data-direction="down"] {
+      color: var(--pl-color-danger-text);
+    }
+
+    .c-chart__toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+    }
+
+    .c-chart__plot {
+      position: relative;
+      display: grid;
+      min-block-size: var(--c-chart-plot-min-block-size);
+      min-inline-size: 0;
+      overflow: hidden;
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 28%);
+      border-radius: var(--pl-radius-md);
+      background:
+        linear-gradient(var(--c-chart-grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--c-chart-grid-color) 1px, transparent 1px),
+        var(--pl-color-surface);
+      background-size:
+        100% 25%,
+        12.5% 100%,
+        auto;
+    }
+
+    .c-chart__plot > :where(svg, canvas) {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+      min-block-size: var(--c-chart-plot-min-block-size);
+    }
+
+    .c-chart__plot > svg {
+      overflow: visible;
+    }
+
+    .c-chart__overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: var(--pl-space-4);
+      background: color-mix(in oklab, var(--pl-color-surface), transparent 8%);
+    }
+
+    .c-chart__state {
+      display: grid;
+      justify-items: center;
+      gap: var(--pl-space-2);
+      max-inline-size: 28rem;
+      color: var(--pl-color-text-muted);
+      text-align: center;
+      text-wrap: pretty;
+    }
+
+    .c-chart__state-title {
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    :scope[data-state="loading"] .c-chart__plot,
+    .c-chart__plot[data-state="loading"] {
+      background: linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--pl-color-surface-2), transparent 28%) 0%,
+        color-mix(in oklab, var(--pl-color-surface), transparent 8%) 42%,
+        color-mix(in oklab, var(--pl-color-surface-2), transparent 28%) 84%
+      );
+      background-size: 200% 100%;
+      animation: c-chart-loading calc(1.4s * var(--pl-motion-scale))
+        var(--pl-ease-standard) infinite;
+    }
+
+    :scope[data-state="empty"] .c-chart__plot,
+    .c-chart__plot[data-state="empty"] {
+      background: var(--pl-color-surface);
+    }
+
+    :scope[data-state="error"] .c-chart__plot,
+    .c-chart__plot[data-state="error"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 48%
+      );
+      background: var(--pl-color-danger-bg);
+    }
+
+    .c-chart__legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2) var(--pl-space-4);
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      list-style: none;
+    }
+
+    .c-chart__legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-chart__swatch {
+      flex: 0 0 auto;
+      inline-size: 0.75rem;
+      block-size: 0.75rem;
+      border-radius: var(--pl-radius-xs);
+      background: var(--c-chart-series-color, var(--pl-color-accent));
+    }
+
+    .c-chart__table {
+      overflow: auto;
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 20%);
+      border-radius: var(--pl-radius-md);
+    }
+
+    .c-chart__table[hidden] {
+      display: none;
+    }
+
+    .c-chart__caption {
+      text-wrap: pretty;
+    }
+
+    @container c-chart (inline-size < 38rem) {
+      .c-chart__header,
+      .c-chart__toolbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .c-chart__metrics {
+        justify-content: flex-start;
+      }
+
+      .c-chart__metric {
+        text-align: start;
+      }
+    }
+  }
+
+  @keyframes c-chart-loading {
+    from {
+      background-position: 200% 0;
+    }
+
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(
+      .c-chart[data-state="loading"] .c-chart__plot,
+      .c-chart__plot[data-state="loading"]
+    ) {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-chart, .c-chart__plot, .c-chart__table) {
+      border-color: ButtonBorder;
+    }
+
+    :where(.c-chart__swatch) {
+      outline: 1px solid ButtonBorder;
+    }
+  }
+}

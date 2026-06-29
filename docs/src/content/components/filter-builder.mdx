@@ -1,0 +1,149 @@
+---
+title: Filter builder
+description: CSS-only query builder, query chips, and saved view bar for SaaS data surfaces.
+status: stable
+since: 1.1.0
+---
+
+# Filter builder
+
+`.c-filter-builder` styles query rows and groups for data-heavy SaaS screens.
+`.c-query-bar`, `.c-query-chip`, and `.c-saved-views` cover the companion
+saved-view and active-filter surfaces. Porchlight does not define a query
+grammar, serialize filters, run searches, or persist views.
+
+## Query builder HTML
+
+```html
+<form class="c-filter-builder" aria-labelledby="filter-title">
+  <header class="c-filter-builder__header">
+    <div>
+      <h2 class="c-filter-builder__title" id="filter-title">Filter requests</h2>
+      <p class="c-filter-builder__description">Build an AND/OR query.</p>
+    </div>
+    <div class="c-filter-builder__actions">
+      <button class="c-button" data-variant="secondary" type="button">
+        Add group
+      </button>
+      <button class="c-button" data-variant="primary" type="submit">
+        Apply
+      </button>
+    </div>
+  </header>
+
+  <div class="c-filter-builder__body">
+    <section
+      class="c-filter-builder__group"
+      data-operator="and"
+      aria-labelledby="group-risk"
+    >
+      <header class="c-filter-builder__group-header">
+        <h3 class="c-filter-builder__group-title" id="group-risk">
+          <span class="c-filter-builder__joiner">AND</span>
+          Risk filters
+        </h3>
+      </header>
+
+      <div class="c-filter-builder__rows">
+        <div class="c-filter-builder__row">
+          <div class="c-filter-builder__field">
+            <label class="u-sr-only" for="field-1">Field</label>
+            <select
+              class="c-field__control c-filter-builder__control"
+              id="field-1"
+            >
+              <option>Status</option>
+            </select>
+          </div>
+          <div class="c-filter-builder__operator">
+            <label class="u-sr-only" for="operator-1">Operator</label>
+            <select
+              class="c-field__control c-filter-builder__control"
+              id="operator-1"
+            >
+              <option>is</option>
+            </select>
+          </div>
+          <div class="c-filter-builder__value">
+            <label class="u-sr-only" for="value-1">Value</label>
+            <input
+              class="c-field__control c-filter-builder__control"
+              id="value-1"
+              value="Blocked"
+            />
+          </div>
+          <button
+            class="c-button c-filter-builder__remove"
+            data-variant="ghost"
+            type="button"
+            aria-label="Remove filter"
+          >
+            x
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>
+```
+
+## Active filters and saved views
+
+```html
+<nav class="c-saved-views" aria-label="Saved views">
+  <span class="c-saved-views__label">Views</span>
+  <ul class="c-saved-views__list">
+    <li class="c-saved-views__item">
+      <button class="c-saved-views__button" aria-current="true">
+        My queue <span class="c-saved-views__count">18</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<div class="c-query-bar" role="search" aria-label="Active request filters">
+  <span class="c-query-bar__label">Filters</span>
+  <div class="c-query-bar__chips">
+    <span class="c-query-chip">
+      <span class="c-query-chip__field">Status</span>
+      <span class="c-query-chip__operator">is</span>
+      <span class="c-query-chip__value">Blocked</span>
+      <button class="c-query-chip__remove" aria-label="Remove status filter">
+        x
+      </button>
+    </span>
+  </div>
+</div>
+```
+
+## State hooks
+
+| Selector or attribute                                                                   | Purpose                                    |
+| --------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `.c-filter-builder[data-density="compact"]`, `[data-density="dense"]`                   | Tighter builder spacing.                   |
+| `.c-filter-builder__group[data-operator="and"]`                                         | AND group metadata hook.                   |
+| `.c-filter-builder__group[data-operator="or"]`                                          | OR group metadata hook with accent border. |
+| `.c-filter-builder__row[aria-invalid="true"]`, `[data-invalid]`, `.is-invalid`          | Invalid query row.                         |
+| `.c-filter-builder__row[aria-disabled="true"]`, `[data-disabled]`, `.is-disabled`       | Disabled query row.                        |
+| `.c-query-chip[aria-invalid="true"]`, `[data-invalid]`, `.is-invalid`                   | Invalid active-filter chip.                |
+| `.c-saved-views__button[aria-current="true"]`, `[aria-pressed="true"]`, `[data-active]` | Current saved view.                        |
+
+## Accessibility responsibilities
+
+Use real form controls with labels, even when labels are visually hidden. Keep
+invalid rows connected to error text with `aria-describedby`, and set
+`aria-invalid="true"` on the row or the individual control. Saved views should
+be buttons or links depending on whether they mutate state or navigate. When a
+filter changes result counts, announce the new count in an app-owned live
+region.
+
+## SSR, hypermedia, and frameworks
+
+The contract is plain rendered HTML. SSR can render an applied query and saved
+views from server state. Hypermedia apps can replace one group, one row, or the
+result count without changing CSS. Component frameworks can map their query
+objects to the same classes and attributes without framework-specific selectors.
+
+## Preview
+
+See the [filter builder preview](../preview/filter-builder).

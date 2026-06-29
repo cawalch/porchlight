@@ -1,0 +1,380 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const ruleRows = [
+  ['Coverage verified', 'Pass', '99.2%'],
+  ['High-value loss', 'Review', '12.8%'],
+  ['Duplicate claim', 'Block', '3.4%'],
+  ['Manual exception', 'Queue', '7.1%'],
+] as const;
+---
+<BaseLayout title="Split pane · Porchlight">
+  <h1>Split pane</h1>
+  <p>
+    CSS-only split layouts for explorers, editors, inspectors, logs, and
+    process-builder shells. The app owns resize logic and persistence; the
+    separator exposes the ARIA contract.
+  </p>
+
+  <section
+    class="c-split-pane process-builder"
+    data-orientation="horizontal"
+    data-collapse="stack"
+    style="--c-split-pane-start-size: minmax(17rem, 0.72fr); --c-split-pane-end-size: minmax(0, 1.4fr);"
+    aria-label="Process builder split pane"
+  >
+    <aside
+      class="c-split-pane__pane c-split-pane__pane--start"
+      aria-label="Process explorer pane"
+      tabindex="0"
+    >
+      <header class="c-split-pane__header">
+        <div>
+          <h2 class="c-split-pane__title">Process explorer</h2>
+          <p class="c-split-pane__description">Claims automation</p>
+        </div>
+        <span class="c-badge" data-tone="accent">18</span>
+      </header>
+      <div class="c-split-pane__pane-inner explorer-list">
+        <a href="#" class="explorer-item" aria-current="page">
+          <span class="explorer-item__icon">P</span>
+          <span>
+            <strong>FNOL triage</strong>
+            <small>Published process</small>
+          </span>
+        </a>
+        <a href="#" class="explorer-item">
+          <span class="explorer-item__icon">R</span>
+          <span>
+            <strong>Coverage verification</strong>
+            <small>Rule-backed process</small>
+          </span>
+        </a>
+        <a href="#" class="explorer-item">
+          <span class="explorer-item__icon">Q</span>
+          <span>
+            <strong>Exception queue</strong>
+            <small>Human review lane</small>
+          </span>
+        </a>
+      </div>
+    </aside>
+
+    <div
+      class="c-split-pane__separator"
+      role="separator"
+      aria-orientation="vertical"
+      aria-valuemin="24"
+      aria-valuemax="52"
+      aria-valuenow="34"
+      aria-label="Resize process explorer"
+      tabindex="0"
+    ></div>
+
+    <main
+      class="c-split-pane__pane c-split-pane__pane--end builder-workspace"
+      aria-label="Process builder workspace pane"
+      tabindex="0"
+    >
+      <header class="c-split-pane__header">
+        <div>
+          <h2 class="c-split-pane__title">FNOL triage</h2>
+          <p class="c-split-pane__description">Version 18, staged for production</p>
+        </div>
+        <div class="builder-actions">
+          <button class="builder-button" type="button">Preview</button>
+          <button class="builder-button builder-button--primary" type="button">Publish</button>
+        </div>
+      </header>
+
+      <div class="builder-grid">
+        <section class="builder-canvas" aria-label="Process map">
+          <div class="node node--start">Receive claim</div>
+          <div class="node">Validate coverage</div>
+          <div class="node node--selected">Score urgency</div>
+          <div class="node">Assign handler</div>
+          <div class="node node--end">Notify claimant</div>
+        </section>
+
+        <aside class="inspector" aria-label="Inspector">
+          <div class="inspector__header">
+            <h3>Score urgency</h3>
+            <span class="c-badge" data-tone="warning">Review</span>
+          </div>
+          <dl class="inspector__list">
+            <div>
+              <dt>Owner</dt>
+              <dd>Claims Ops</dd>
+            </div>
+            <div>
+              <dt>SLA</dt>
+              <dd>4 hours</dd>
+            </div>
+            <div>
+              <dt>Rules attached</dt>
+              <dd>4 active</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </main>
+  </section>
+
+  <h2>Vertical log/details split</h2>
+  <section
+    class="c-split-pane log-split"
+    data-orientation="vertical"
+    style="--c-split-pane-start-size: minmax(12rem, 0.9fr); --c-split-pane-end-size: minmax(9rem, 0.65fr); --c-split-pane-min-block-size: 25rem;"
+    aria-label="Rule evaluation split pane"
+  >
+    <section
+      class="c-split-pane__pane c-split-pane__pane--start"
+      aria-label="Rule evaluation results pane"
+      tabindex="0"
+    >
+      <header class="c-split-pane__header">
+        <div>
+          <h2 class="c-split-pane__title">Rule evaluation</h2>
+          <p class="c-split-pane__description">Latest simulation run</p>
+        </div>
+      </header>
+      <div class="c-split-pane__pane-inner">
+        <div class="c-table-wrap" data-density="compact">
+          <table class="c-table" style="--c-table-min: 34rem;">
+            <thead>
+              <tr>
+                <th>Rule</th>
+                <th>Action</th>
+                <th data-align="end">Matched</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ruleRows.map(([rule, action, matched], index) => (
+                <tr aria-selected={index === 1 ? 'true' : undefined}>
+                  <td>{rule}</td>
+                  <td>{action}</td>
+                  <td data-align="end">{matched}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div
+      class="c-split-pane__separator"
+      role="separator"
+      aria-orientation="horizontal"
+      aria-valuemin="30"
+      aria-valuemax="70"
+      aria-valuenow="58"
+      aria-label="Resize run details"
+      tabindex="0"
+    ></div>
+
+    <section
+      class="c-split-pane__pane c-split-pane__pane--end"
+      aria-label="Selected rule details pane"
+      tabindex="0"
+    >
+      <header class="c-split-pane__header">
+        <div>
+          <h2 class="c-split-pane__title">Selected rule details</h2>
+          <p class="c-split-pane__description">High-value loss</p>
+        </div>
+      </header>
+      <div class="c-split-pane__pane-inner detail-copy">
+        <p>
+          Claims over the authority threshold are routed to senior adjusters
+          when coverage and jurisdiction signals are present.
+        </p>
+        <div class="detail-strip">
+          <span>Threshold</span>
+          <strong>$25,000</strong>
+        </div>
+      </div>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .process-builder,
+  .log-split {
+    margin-block-start: var(--pl-space-5);
+  }
+
+  .explorer-list {
+    display: grid;
+    gap: var(--pl-space-2);
+  }
+
+  .explorer-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--pl-space-3);
+    padding: var(--pl-space-2);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text);
+    text-decoration: none;
+  }
+
+  .explorer-item:hover,
+  .explorer-item[aria-current="page"] {
+    background: var(--pl-color-surface-2);
+  }
+
+  .explorer-item[aria-current="page"] {
+    color: var(--pl-color-accent);
+    font-weight: var(--pl-font-weight-semibold);
+    box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+  }
+
+  .explorer-item small {
+    display: block;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-normal);
+  }
+
+  .explorer-item__icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: var(--pl-radius-md);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+    color: var(--pl-color-accent);
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .builder-actions {
+    display: flex;
+    gap: var(--pl-space-2);
+  }
+
+  .builder-button {
+    min-block-size: 2rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    font: inherit;
+    font-size: var(--pl-text-sm);
+  }
+
+  .builder-button--primary {
+    border-color: var(--pl-color-accent);
+    background: var(--pl-color-accent);
+    color: var(--pl-color-accent-text);
+  }
+
+  .builder-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+    gap: var(--pl-space-4);
+    padding: var(--pl-space-4);
+  }
+
+  .builder-canvas {
+    display: grid;
+    gap: var(--pl-space-3);
+    align-content: start;
+    min-block-size: 24rem;
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background:
+      linear-gradient(var(--pl-color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--pl-color-border) 1px, transparent 1px),
+      var(--pl-color-bg);
+    background-size: 2rem 2rem;
+  }
+
+  .node {
+    inline-size: min(100%, 20rem);
+    padding: var(--pl-space-3) var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+    box-shadow: 0 0.25rem 1rem oklch(0% 0 0deg / 6%);
+  }
+
+  .node--selected {
+    border-color: var(--pl-color-accent);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--pl-color-accent), transparent 75%);
+  }
+
+  .node--start,
+  .node--end {
+    background: var(--pl-color-surface-2);
+  }
+
+  .inspector {
+    align-self: start;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+
+  .inspector__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-2);
+    padding: var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+
+  .inspector__header h3 {
+    margin: 0;
+    font-size: var(--pl-text-sm);
+  }
+
+  .inspector__list {
+    display: grid;
+    gap: var(--pl-space-3);
+    margin: 0;
+    padding: var(--pl-space-3);
+  }
+
+  .inspector__list div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+  }
+
+  .inspector__list dt {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+  }
+
+  .inspector__list dd {
+    margin: 0;
+    font-size: var(--pl-text-sm);
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .detail-copy p {
+    margin-block-start: 0;
+    color: var(--pl-color-text-muted);
+  }
+
+  .detail-strip {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+    padding: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface-2);
+  }
+
+  @media (width < 54rem) {
+    .builder-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

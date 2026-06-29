@@ -1,0 +1,283 @@
+/*
+ * Porchlight  -  tree view component
+ * ===========================================================================
+ * A CSS-only tree view for app navigation, object explorers, process folders,
+ * rule libraries, and other nested SaaS/BPM structures.
+ *
+ * Structure:
+ *   <div class="c-tree" role="tree" aria-label="Process library">
+ *     <div class="c-tree__item" role="treeitem" aria-expanded="true">
+ *       <div class="c-tree__item-row">
+ *         <span class="c-tree__expander" aria-hidden="true">...</span>
+ *         <span class="c-tree__icon" aria-hidden="true">...</span>
+ *         <span class="c-tree__label">Approvals</span>
+ *         <span class="c-tree__badge">12</span>
+ *       </div>
+ *       <div class="c-tree__group" role="group">
+ *         <div class="c-tree__item" role="treeitem" aria-selected="true">...</div>
+ *       </div>
+ *     </div>
+ *   </div>
+ *
+ * Porchlight styles rendered HTML only. Apps own roving tabindex, keyboard
+ * movement, selection, async loading, drag/drop, and persistence.
+ */
+@layer porchlight.components {
+  @scope (.c-tree) {
+    :scope {
+      --c-tree-row-min-block-size: 2rem;
+      --c-tree-row-gap: var(--pl-space-2);
+      --c-tree-row-padding-block: var(--pl-space-1);
+      --c-tree-row-padding-inline: var(--pl-space-2);
+      --c-tree-indent: 1.25rem;
+      --c-tree-icon-size: 1rem;
+      --c-tree-expander-size: 1rem;
+      --c-tree-actions-opacity: 0;
+
+      display: grid;
+      gap: var(--pl-space-1);
+      min-inline-size: 0;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+    }
+
+    :scope[data-density="compact"],
+    :scope[data-density="dense"] {
+      --c-tree-row-min-block-size: 1.75rem;
+      --c-tree-row-gap: var(--pl-space-1);
+      --c-tree-row-padding-block: 0.125rem;
+      --c-tree-indent: 1rem;
+    }
+
+    .c-tree__item {
+      min-inline-size: 0;
+      outline: 0;
+    }
+
+    .c-tree__item-row {
+      display: flex;
+      align-items: center;
+      gap: var(--c-tree-row-gap);
+      min-block-size: var(--c-tree-row-min-block-size);
+      min-inline-size: 0;
+      padding: var(--c-tree-row-padding-block) var(--c-tree-row-padding-inline);
+      border-radius: var(--pl-radius-md);
+      color: var(--pl-color-text-muted);
+      cursor: default;
+      user-select: none;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-tree__item-row:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .c-tree__item:focus-visible > .c-tree__item-row,
+    .c-tree__item-row:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-tree__item[aria-selected="true"] > .c-tree__item-row {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-semibold);
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .c-tree__item[aria-current]:not([aria-current="false"])
+      > .c-tree__item-row {
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-tree__item[aria-disabled="true"] > .c-tree__item-row,
+    .c-tree__item[disabled] > .c-tree__item-row {
+      opacity: var(--pl-opacity-disabled);
+      cursor: not-allowed;
+    }
+
+    .c-tree__item[aria-busy="true"] > .c-tree__item-row {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-tree__item[aria-busy="true"] .c-tree__label::after {
+      content: "";
+      display: inline-block;
+      inline-size: 0.5em;
+      block-size: 0.5em;
+      margin-inline-start: var(--pl-space-2);
+      border: 2px solid currentColor;
+      border-inline-end-color: transparent;
+      border-radius: var(--pl-radius-pill);
+      vertical-align: -0.05em;
+      animation: c-tree-spin calc(900ms * var(--pl-motion-scale)) linear
+        infinite;
+    }
+
+    .c-tree__group {
+      display: grid;
+      gap: var(--pl-space-1);
+      margin-inline-start: calc(
+        var(--c-tree-expander-size) + var(--c-tree-row-gap)
+      );
+      padding-inline-start: var(--c-tree-indent);
+      border-inline-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 25%);
+    }
+
+    .c-tree__item[aria-expanded="false"] > .c-tree__group,
+    .c-tree__item:not([aria-expanded]) > .c-tree__group[hidden] {
+      display: none;
+    }
+
+    .c-tree__expander {
+      inline-size: var(--c-tree-expander-size);
+      block-size: var(--c-tree-expander-size);
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 var(--c-tree-expander-size);
+      color: var(--pl-color-text-muted);
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    .c-tree__item[aria-expanded="true"] > .c-tree__item-row .c-tree__expander {
+      rotate: 90deg;
+    }
+
+    .c-tree__item:not([aria-expanded]) > .c-tree__item-row .c-tree__expander {
+      visibility: hidden;
+    }
+
+    .c-tree__expander :where(svg),
+    svg.c-tree__expander {
+      inline-size: var(--c-tree-expander-size);
+      block-size: var(--c-tree-expander-size);
+    }
+
+    .c-tree__icon {
+      inline-size: var(--c-tree-icon-size);
+      block-size: var(--c-tree-icon-size);
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 var(--c-tree-icon-size);
+      color: inherit;
+    }
+
+    .c-tree__icon :where(svg),
+    svg.c-tree__icon {
+      inline-size: var(--c-tree-icon-size);
+      block-size: var(--c-tree-icon-size);
+    }
+
+    .c-tree__label {
+      flex: 1 1 auto;
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-tree__meta {
+      flex: 0 0 auto;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .c-tree__badge {
+      flex: 0 0 auto;
+      min-inline-size: 1.5rem;
+      padding-inline: var(--pl-space-1);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      line-height: 1.5;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .c-tree__item[aria-selected="true"] > .c-tree__item-row .c-tree__badge {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 82%);
+      color: var(--pl-color-accent);
+    }
+
+    .c-tree__actions {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      margin-inline-start: auto;
+      opacity: var(--c-tree-actions-opacity);
+      transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-tree__item-row:hover .c-tree__actions,
+    .c-tree__item:focus-within > .c-tree__item-row .c-tree__actions,
+    .c-tree__actions:focus-within {
+      opacity: 1;
+    }
+
+    .c-tree__action {
+      appearance: none;
+      display: inline-grid;
+      place-items: center;
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+      border: 0;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .c-tree__action:hover {
+      background: color-mix(in oklab, var(--pl-color-surface-2), white 8%);
+      color: var(--pl-color-text);
+    }
+
+    .c-tree__action:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-tree__action :where(svg),
+    svg.c-tree__action {
+      inline-size: 0.875rem;
+      block-size: 0.875rem;
+    }
+
+    :scope[data-actions="persistent"] {
+      --c-tree-actions-opacity: 1;
+    }
+  }
+
+  @keyframes c-tree-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.c-tree__item[aria-busy="true"] .c-tree__label::after) {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-tree__item[aria-selected="true"] > .c-tree__item-row) {
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    :where(.c-tree__item:focus-visible > .c-tree__item-row) {
+      outline-color: Highlight;
+    }
+  }
+}

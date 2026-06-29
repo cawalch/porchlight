@@ -1,0 +1,167 @@
+---
+title: Tree view
+description: Role-first tree view for object explorers, nested navigation, process folders, rule libraries, and app sidebars.
+status: stable
+since: 1.1.0
+---
+
+# Tree view
+
+The `.c-tree` component styles rendered tree markup for enterprise app
+navigation: process folders, case files, rule sets, document libraries, tenant
+hierarchies, and workflow builders. It is CSS-only and framework-neutral. Your
+app owns focus movement, selection, lazy loading, drag and drop, and persistence.
+
+Use the ARIA tree roles as the contract: `role="tree"` on the container,
+`role="treeitem"` on each item, and `role="group"` for nested children. State
+is expressed with attributes such as `aria-expanded`, `aria-selected`,
+`aria-current`, `aria-disabled`, and `aria-busy`.
+
+## Semantic HTML
+
+```html
+<div class="c-tree" role="tree" aria-label="Process library">
+  <div class="c-tree__item" role="treeitem" aria-expanded="true" tabindex="0">
+    <div class="c-tree__item-row">
+      <span class="c-tree__expander" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+      </span>
+      <span class="c-tree__icon" aria-hidden="true">...</span>
+      <span class="c-tree__label">Approvals</span>
+      <span class="c-tree__badge">12</span>
+    </div>
+
+    <div class="c-tree__group" role="group">
+      <div
+        class="c-tree__item"
+        role="treeitem"
+        aria-selected="true"
+        tabindex="-1"
+      >
+        <div class="c-tree__item-row">
+          <span class="c-tree__expander" aria-hidden="true"></span>
+          <span class="c-tree__icon" aria-hidden="true">...</span>
+          <span class="c-tree__label">Manager approval</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## State Attributes
+
+```html
+<div class="c-tree__item" role="treeitem" aria-expanded="false">
+  <div class="c-tree__item-row">...</div>
+  <div class="c-tree__group" role="group">...</div>
+</div>
+
+<div class="c-tree__item" role="treeitem" aria-selected="true">
+  <div class="c-tree__item-row">Selected item</div>
+</div>
+
+<div class="c-tree__item" role="treeitem" aria-current="page">
+  <div class="c-tree__item-row">Current destination</div>
+</div>
+
+<div class="c-tree__item" role="treeitem" aria-disabled="true">
+  <div class="c-tree__item-row">Locked folder</div>
+</div>
+
+<div class="c-tree__item" role="treeitem" aria-busy="true">
+  <div class="c-tree__item-row">Loading children</div>
+</div>
+```
+
+`aria-expanded="false"` hides the direct child `.c-tree__group`. Omit
+`aria-expanded` on leaf nodes so the expander slot is reserved but hidden. Use
+`aria-current` when the item represents the current page or route. Use
+`aria-selected` when the item is selected inside a tree widget.
+
+## Actions and Metadata
+
+```html
+<div class="c-tree" role="tree" data-actions="persistent">
+  <div class="c-tree__item" role="treeitem" tabindex="0">
+    <div class="c-tree__item-row">
+      <span class="c-tree__expander" aria-hidden="true"></span>
+      <span class="c-tree__label">Eligibility rules</span>
+      <span class="c-tree__meta">4 changed</span>
+      <span class="c-tree__actions">
+        <button class="c-tree__action" type="button" aria-label="Add rule">
+          ...
+        </button>
+        <button class="c-tree__action" type="button" aria-label="More actions">
+          ...
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+```
+
+Actions are optional. Keep destructive or editing actions as real buttons with
+durable accessible names. `data-actions="persistent"` keeps row actions visible;
+otherwise they appear on hover or focus.
+
+## Accessibility Responsibilities
+
+Porchlight does not ship a tree controller. The app should implement the WAI-ARIA
+tree view interaction model that fits its product:
+
+- Keep exactly one tree item in the tab order when using roving focus.
+- Move focus with arrow keys, Home, End, and optional typeahead.
+- Toggle `aria-expanded` when folders open or close.
+- Keep `aria-selected` in sync with single-select or multi-select state.
+- Use `aria-current` only for current location, not ordinary selection.
+- Mark unavailable items with `aria-disabled="true"` and prevent activation.
+- Announce lazy loading with `aria-busy="true"` while children are fetched.
+
+For simple sidebar navigation that only needs links and native disclosure, use
+`.c-nav` instead. Use `.c-tree` when the hierarchy behaves like a selectable
+widget or object explorer.
+
+## SSR and Framework Compatibility
+
+The component is rendered HTML plus CSS. It works from server-rendered templates,
+hypermedia responses, Web Components, React, Vue, Svelte, Astro, Rails, Django,
+Phoenix, Laravel, or any other stack that can emit the class names and ARIA
+attributes. Porchlight does not require client-only rendering, hydration, custom
+elements, or framework selectors.
+
+## Class Contract
+
+| Selector                      | Role                                           |
+| ----------------------------- | ---------------------------------------------- |
+| `.c-tree`                     | Tree container. Use with `role="tree"`.        |
+| `.c-tree__item`               | Tree item wrapper. Use with `role="treeitem"`. |
+| `.c-tree__item-row`           | Visual row surface for one item.               |
+| `.c-tree__group`              | Nested child group. Use with `role="group"`.   |
+| `.c-tree__expander`           | Leading disclosure icon slot.                  |
+| `.c-tree__icon`               | Optional item icon slot.                       |
+| `.c-tree__label`              | Truncated primary label.                       |
+| `.c-tree__meta`               | Quiet trailing metadata text.                  |
+| `.c-tree__badge`              | Numeric count or short status badge.           |
+| `.c-tree__actions`            | Optional trailing action group.                |
+| `.c-tree__action`             | Small icon button inside a row.                |
+| `[aria-expanded="true"]`      | Expanded branch, rotates expander.             |
+| `[aria-expanded="false"]`     | Collapsed branch, hides direct group.          |
+| `[aria-selected="true"]`      | Selected item.                                 |
+| `[aria-current]`              | Current route or current object.               |
+| `[aria-disabled="true"]`      | Disabled item.                                 |
+| `[aria-busy="true"]`          | Loading item.                                  |
+| `[data-density="compact"]`    | Tighter row density.                           |
+| `[data-actions="persistent"]` | Always-visible row actions.                    |
+
+## Tokens Exposed
+
+| Token                         | Default             | Purpose                   |
+| ----------------------------- | ------------------- | ------------------------- |
+| `--c-tree-row-min-block-size` | `2rem`              | Minimum row height.       |
+| `--c-tree-row-gap`            | `var(--pl-space-2)` | Gap between row parts.    |
+| `--c-tree-row-padding-block`  | `var(--pl-space-1)` | Vertical row padding.     |
+| `--c-tree-row-padding-inline` | `var(--pl-space-2)` | Horizontal row padding.   |
+| `--c-tree-indent`             | `1.25rem`           | Nested group indentation. |
+| `--c-tree-icon-size`          | `1rem`              | Icon slot size.           |
+| `--c-tree-expander-size`      | `1rem`              | Expander slot size.       |
