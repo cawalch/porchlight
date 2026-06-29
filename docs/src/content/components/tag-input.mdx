@@ -14,11 +14,22 @@ layout. Auto-grows via `field-sizing: content` where supported.
 ## Semantic HTML
 
 ```html
-<div class="c-tag-input">
-  <span class="c-chip">React <button class="c-chip__remove">x</button></span>
-  <input class="c-tag-input__field" placeholder="Add tag..." />
+<div class="c-field">
+  <label class="c-field__label" for="tags">Tags</label>
+  <div class="c-tag-input">
+    <span class="c-chip">
+      React
+      <button class="c-chip__remove" type="button" aria-label="Remove React">
+        x
+      </button>
+    </span>
+    <input id="tags" class="c-tag-input__field" placeholder="Add tag..." />
+  </div>
 </div>
 ```
+
+Use explicit `for`/`id` labels for tag inputs that include removable chips.
+Do not wrap chip remove buttons inside a `<label>`.
 
 ## Class contract
 

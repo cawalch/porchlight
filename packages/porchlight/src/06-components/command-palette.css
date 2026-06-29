@@ -9,11 +9,11 @@
  *
  * Structure:
  *   <div popover class="c-command" id="cmdk">
- *     <input class="c-command__search" placeholder="Type a command..." />
- *     <div class="c-command__body">
+ *     <input class="c-command__search" role="combobox" aria-controls="cmd-list" />
+ *     <div class="c-command__body" id="cmd-list" role="listbox">
  *       <div class="c-command__group">
  *         <h3 class="c-command__heading">Actions</h3>
- *         <button class="c-command__item" data-selected>
+ *         <button class="c-command__item" role="option" aria-selected="true" data-selected>
  *           <svg class="c-command__icon">...</svg>
  *           <span>Create new project</span>
  *         </button>
@@ -132,11 +132,11 @@
     }
 
     .c-command__item:hover,
-    .c-command__item[data-selected] {
+    .c-command__item:is([data-selected], [aria-selected="true"]) {
       background: var(--pl-color-surface-2);
     }
 
-    .c-command__item[data-selected] {
+    .c-command__item:is([data-selected], [aria-selected="true"]) {
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
       color: var(--pl-color-accent);
     }
@@ -192,7 +192,7 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-command__item[data-selected]) {
+    :where(.c-command__item:is([data-selected], [aria-selected="true"])) {
       box-shadow: inset 2px 0 0 Highlight;
       color: Highlight;
     }

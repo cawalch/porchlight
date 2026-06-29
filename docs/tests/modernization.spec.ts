@@ -28,7 +28,7 @@ const overlayPages = [
   {
     path: "./preview/dropdown",
     heading: "Dropdown",
-    triggerName: "Select a project",
+    triggerName: "Project Alpha",
     surface: "#dd-1",
   },
   {
