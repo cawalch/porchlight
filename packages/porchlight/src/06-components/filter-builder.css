@@ -1,0 +1,536 @@
+/*
+ * Porchlight  -  filter builder component
+ * ===========================================================================
+ * CSS-only UI contracts for query builders, query chips, and saved views.
+ * Apps own query grammar, validation, persistence, and execution.
+ */
+@layer porchlight.components {
+  @scope (.c-filter-builder) {
+    :scope {
+      --c-filter-builder-pad: var(--pl-space-4);
+      --c-filter-builder-gap: var(--pl-space-3);
+      --c-filter-builder-row-pad-block: var(--pl-space-2);
+      --c-filter-builder-row-pad-inline: 0;
+      --c-filter-builder-radius: var(--pl-radius-lg);
+      --c-filter-builder-control-min: 10rem;
+
+      container: c-filter-builder / inline-size;
+      display: grid;
+      gap: var(--c-filter-builder-gap);
+      min-inline-size: 0;
+      padding: var(--c-filter-builder-pad);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      border-radius: var(--c-filter-builder-radius);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-1);
+      color: var(--pl-color-text);
+    }
+
+    :scope[data-density="compact"],
+    :scope[data-density="dense"] {
+      --c-filter-builder-pad: var(--pl-space-3);
+      --c-filter-builder-row-pad-block: var(--pl-space-1);
+      --c-filter-builder-control-min: 8rem;
+    }
+
+    .c-filter-builder__header,
+    .c-filter-builder__footer,
+    .c-filter-builder__group-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-filter-builder__title,
+    .c-filter-builder__group-title {
+      margin: 0;
+      line-height: var(--pl-leading-tight);
+    }
+
+    .c-filter-builder__title {
+      font-size: var(--pl-text-md);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-filter-builder__description,
+    .c-filter-builder__meta,
+    .c-filter-builder__hint {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-snug);
+      text-wrap: pretty;
+    }
+
+    .c-filter-builder__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--pl-space-2);
+    }
+
+    .c-filter-builder__body {
+      display: grid;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+    }
+
+    .c-filter-builder__group {
+      display: grid;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding-block-start: var(--pl-space-3);
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      background: transparent;
+    }
+
+    .c-filter-builder__body > .c-filter-builder__group:first-child {
+      padding-block-start: 0;
+      border-block-start: 0;
+    }
+
+    .c-filter-builder__group[data-operator="or"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 65%
+      );
+    }
+
+    .c-filter-builder__group-title {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-bold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .c-filter-builder__joiner {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-inline-size: 2.5rem;
+      min-block-size: 1.5rem;
+      padding-inline: var(--pl-space-2);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 20%);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-bold);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .c-filter-builder__rows {
+      display: grid;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-filter-builder__row {
+      position: relative;
+      display: grid;
+      grid-template-columns:
+        minmax(var(--c-filter-builder-control-min), 1fr)
+        minmax(8rem, 0.72fr)
+        minmax(var(--c-filter-builder-control-min), 0.9fr)
+        auto;
+      gap: var(--pl-space-2);
+      align-items: center;
+      min-inline-size: 0;
+      padding-block: var(--c-filter-builder-row-pad-block);
+      padding-inline: var(--c-filter-builder-row-pad-inline);
+      border: 0;
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 22%);
+      background: transparent;
+    }
+
+    .c-filter-builder__rows > .c-filter-builder__row:first-child {
+      border-block-start: 0;
+    }
+
+    .c-filter-builder__row[data-invalid],
+    .c-filter-builder__row[aria-invalid="true"],
+    .c-filter-builder__row.is-invalid {
+      padding-inline: var(--pl-space-2);
+      border-block-start-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 45%
+      );
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-danger-bg);
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-danger);
+    }
+
+    .c-filter-builder__row[data-disabled],
+    .c-filter-builder__row[aria-disabled="true"],
+    .c-filter-builder__row.is-disabled {
+      opacity: 0.62;
+    }
+
+    .c-filter-builder__field,
+    .c-filter-builder__operator,
+    .c-filter-builder__value {
+      min-inline-size: 0;
+    }
+
+    .c-filter-builder__control {
+      appearance: none;
+      inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      padding-block: var(--pl-space-1);
+      padding-inline: var(--pl-control-padding-inline);
+      border: var(--pl-control-border-width) solid var(--pl-color-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    select.c-filter-builder__control {
+      padding-inline-end: var(--pl-space-8);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='oklch(0.44 0.012 55)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right var(--pl-space-3) center;
+      background-size: 1rem;
+    }
+
+    .c-filter-builder__control:focus-visible {
+      outline: none;
+      border-color: var(--pl-focus-color);
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
+
+    .c-filter-builder__row:is(
+        [data-invalid],
+        [aria-invalid="true"],
+        .is-invalid
+      )
+      .c-filter-builder__control {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 30%
+      );
+    }
+
+    .c-filter-builder__message {
+      grid-column: 1 / -1;
+      color: var(--pl-color-danger-text);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-snug);
+    }
+
+    .c-filter-builder__remove {
+      position: relative;
+      inline-size: var(--pl-control-block-size);
+      block-size: var(--pl-control-block-size);
+      padding: 0;
+      font-size: 0;
+    }
+
+    .c-filter-builder__remove::before,
+    .c-filter-builder__remove::after {
+      position: absolute;
+      inline-size: 0.75rem;
+      block-size: 0.125rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      content: "";
+    }
+
+    .c-filter-builder__remove::before {
+      transform: rotate(45deg);
+    }
+
+    .c-filter-builder__remove::after {
+      transform: rotate(-45deg);
+    }
+
+    @container c-filter-builder (inline-size < 48rem) {
+      .c-filter-builder__row {
+        grid-template-columns: 1fr;
+        padding-inline-end: calc(
+          var(--pl-control-block-size) + var(--pl-space-2)
+        );
+      }
+
+      .c-filter-builder__row[data-invalid],
+      .c-filter-builder__row[aria-invalid="true"],
+      .c-filter-builder__row.is-invalid {
+        padding-inline-start: var(--pl-space-2);
+      }
+
+      .c-filter-builder__field,
+      .c-filter-builder__operator,
+      .c-filter-builder__value,
+      .c-filter-builder__message {
+        grid-column: 1 / -1;
+      }
+
+      .c-filter-builder__remove {
+        position: absolute;
+        inset-block-start: var(--c-filter-builder-row-pad-block);
+        inset-inline-end: 0;
+      }
+    }
+  }
+
+  @scope (.c-query-bar) {
+    :scope {
+      container: c-query-bar / inline-size;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding: var(--pl-space-3);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+    }
+
+    .c-query-bar__label {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+    }
+
+    .c-query-bar__chips {
+      display: flex;
+      flex: 1 1 16rem;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-query-bar__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: var(--pl-space-2);
+      margin-inline-start: auto;
+    }
+  }
+
+  @scope (.c-query-chip) {
+    :scope {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      max-inline-size: 100%;
+      padding: var(--pl-space-1) var(--pl-space-2);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-accent), transparent 70%);
+      border-radius: var(--pl-radius-pill);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-surface) 92%
+      );
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-snug);
+    }
+
+    :scope[data-invalid],
+    :scope[aria-invalid="true"],
+    :scope.is-invalid {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 44%
+      );
+      background: var(--pl-color-danger-bg);
+      color: var(--pl-color-danger-text);
+    }
+
+    :scope[data-disabled],
+    :scope[aria-disabled="true"],
+    :scope.is-disabled {
+      opacity: 0.62;
+    }
+
+    .c-query-chip__field,
+    .c-query-chip__operator,
+    .c-query-chip__value {
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-query-chip__operator {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-query-chip__remove {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 1rem;
+      block-size: 1rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-pill);
+      background: transparent;
+      color: inherit;
+      font-size: 0;
+      opacity: 0.74;
+    }
+
+    .c-query-chip__remove::before,
+    .c-query-chip__remove::after {
+      content: "";
+      position: absolute;
+      inline-size: 0.5625rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+    }
+
+    .c-query-chip__remove::before {
+      transform: rotate(45deg);
+    }
+
+    .c-query-chip__remove::after {
+      transform: rotate(-45deg);
+    }
+
+    .c-query-chip__remove:hover:not(:disabled) {
+      opacity: 1;
+      background: color-mix(in oklab, currentColor, transparent 90%);
+    }
+
+    .c-query-chip__remove:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(var(--pl-focus-offset) / 2);
+    }
+  }
+
+  @scope (.c-saved-views) {
+    :scope {
+      container: c-saved-views / inline-size;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-saved-views__label {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+    }
+
+    .c-saved-views__list {
+      display: flex;
+      flex: 1 1 18rem;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .c-saved-views__item {
+      min-inline-size: 0;
+    }
+
+    .c-saved-views__button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      max-inline-size: 100%;
+      min-block-size: var(--pl-control-block-size);
+      padding: 0 var(--pl-control-padding-inline);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 15%);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .c-saved-views__button:hover:not(:disabled) {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 55%
+      );
+      color: var(--pl-color-text);
+    }
+
+    .c-saved-views__button[aria-current="true"],
+    .c-saved-views__button[aria-pressed="true"],
+    .c-saved-views__button[data-active],
+    .c-saved-views__button.is-active {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 50%
+      );
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-surface) 90%
+      );
+      color: var(--pl-color-text);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-saved-views__button:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .c-saved-views__count {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(
+      .c-filter-builder,
+      .c-filter-builder__group,
+      .c-filter-builder__row,
+      .c-query-bar,
+      .c-query-chip,
+      .c-saved-views__button
+    ) {
+      border-color: ButtonBorder;
+    }
+  }
+}

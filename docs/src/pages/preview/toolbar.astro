@@ -11,7 +11,7 @@ import Icon from '../../components/Icon.astro';
   </p>
 
   <h2>Table toolbar</h2>
-  <div class="c-toolbar">
+  <div class="c-toolbar" data-surface="panel">
     <div class="c-toolbar__group">
       <label class="c-field c-field--inline">
         <span class="u-sr-only">Search accounts</span>
@@ -28,7 +28,7 @@ import Icon from '../../components/Icon.astro';
   </div>
 
   <h2>Compact (embedded)</h2>
-  <div class="c-toolbar" data-density="compact">
+  <div class="c-toolbar" data-density="compact" data-surface="panel">
     <div class="c-toolbar__group">
       <button class="c-button" data-variant="ghost">Bulk edit</button>
       <button class="c-button" data-variant="ghost">Archive</button>
@@ -40,7 +40,7 @@ import Icon from '../../components/Icon.astro';
 
   <h2>Inside a card</h2>
   <div class="c-card">
-    <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+    <div class="c-toolbar" data-surface="flush">
       <div class="c-toolbar__group">
         <strong>Recent activity</strong>
       </div>

@@ -1,0 +1,407 @@
+/*
+ * Porchlight  -  workflow board component
+ * ===========================================================================
+ * A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes,
+ * WIP/count metadata, and visual state hooks for app-owned drag/drop.
+ *
+ * Structure:
+ *   .c-workflow-board
+ *     .c-workflow-board__header
+ *     .c-workflow-board__swimlane
+ *       .c-workflow-board__swimlane-header
+ *       .c-workflow-board__lanes
+ *         .c-workflow-lane
+ *           .c-workflow-lane__header
+ *           .c-workflow-lane__body
+ *             .c-workflow-card
+ *
+ * State hooks are classes or attributes only. The app owns drag/drop, sorting,
+ * updates, persistence, and live announcements.
+ */
+@layer porchlight.components {
+  @scope (.c-workflow-board) {
+    :scope {
+      --c-workflow-board-gap: var(--pl-space-4);
+      --c-workflow-board-lane-min: 16rem;
+      --c-workflow-board-lane-size: minmax(
+        var(--c-workflow-board-lane-min),
+        1fr
+      );
+      --c-workflow-board-card-pad: var(--pl-space-3);
+      --c-workflow-board-card-radius: var(--pl-radius-lg);
+      --c-workflow-board-lane-radius: var(--pl-radius-lg);
+      --c-workflow-board-lane-bg: color-mix(
+        in oklab,
+        var(--pl-color-surface-2),
+        var(--pl-color-surface) 52%
+      );
+
+      container: c-workflow-board / inline-size;
+      display: grid;
+      gap: var(--c-workflow-board-gap);
+      color: var(--pl-color-text);
+    }
+
+    .c-workflow-board__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+    }
+
+    .c-workflow-board__title,
+    .c-workflow-board__swimlane-title,
+    .c-workflow-lane__title,
+    .c-workflow-card__title {
+      margin: 0;
+      line-height: var(--pl-leading-tight);
+    }
+
+    .c-workflow-board__title {
+      font-size: var(--pl-text-lg);
+      font-weight: var(--pl-font-weight-bold);
+    }
+
+    .c-workflow-board__meta,
+    .c-workflow-board__swimlane-meta,
+    .c-workflow-lane__meta,
+    .c-workflow-card__meta {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-snug);
+    }
+
+    .c-workflow-board__tools {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--pl-space-2);
+    }
+
+    .c-workflow-board__swimlane {
+      display: grid;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+    }
+
+    .c-workflow-board__swimlane + .c-workflow-board__swimlane {
+      padding-block-start: var(--pl-space-4);
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+
+    .c-workflow-board__swimlane-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+    }
+
+    .c-workflow-board__swimlane-title {
+      font-size: var(--pl-text-md);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-workflow-board__lanes {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        var(--c-workflow-board-lane-size)
+      );
+      gap: var(--c-workflow-board-gap);
+      align-items: start;
+      min-inline-size: 0;
+    }
+
+    .c-workflow-board__lanes[data-scroll="inline"] {
+      grid-auto-columns: var(--c-workflow-board-lane-size);
+      grid-auto-flow: column;
+      grid-template-columns: none;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: inline proximity;
+      padding-block-end: var(--pl-space-2);
+    }
+
+    .c-workflow-board__lanes[data-scroll="inline"] > .c-workflow-lane {
+      scroll-snap-align: start;
+    }
+
+    @container c-workflow-board (inline-size < 44rem) {
+      .c-workflow-board__lanes {
+        grid-auto-columns: minmax(15rem, 86cqi);
+        grid-auto-flow: column;
+        grid-template-columns: none;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: inline proximity;
+        padding-block-end: var(--pl-space-2);
+      }
+
+      .c-workflow-lane {
+        scroll-snap-align: start;
+      }
+    }
+  }
+
+  @scope (.c-workflow-lane) {
+    :scope {
+      display: grid;
+      grid-template-rows: auto minmax(8rem, 1fr);
+      min-inline-size: 0;
+      min-block-size: 14rem;
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 18%);
+      border-radius: var(--c-workflow-board-lane-radius, var(--pl-radius-lg));
+      background: var(
+        --c-workflow-board-lane-bg,
+        color-mix(
+          in oklab,
+          var(--pl-color-surface-2),
+          var(--pl-color-surface) 52%
+        )
+      );
+      box-shadow: inset 0 1px 0 color-mix(in oklab, white, transparent 82%);
+    }
+
+    :scope[data-tone="accent"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 64%
+      );
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    :scope[data-drop-target],
+    :scope.is-drop-target {
+      border-style: dashed;
+      border-color: var(--pl-color-accent);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-surface) 92%
+      );
+    }
+
+    :scope[aria-disabled="true"],
+    :scope[data-disabled],
+    :scope.is-disabled {
+      opacity: 0.62;
+    }
+
+    .c-workflow-lane__header {
+      display: grid;
+      gap: var(--pl-space-2);
+      padding: var(--pl-space-3);
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 20%);
+    }
+
+    .c-workflow-lane__heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+    }
+
+    .c-workflow-lane__title {
+      min-inline-size: 0;
+      overflow: hidden;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-workflow-lane__count,
+    .c-workflow-lane__wip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-inline-size: 1.5rem;
+      min-block-size: 1.5rem;
+      padding-inline: var(--pl-space-2);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .c-workflow-lane__wip {
+      justify-self: start;
+      border: 1px solid transparent;
+    }
+
+    .c-workflow-lane__wip[data-state="warning"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-warning),
+        transparent 45%
+      );
+      background: var(--pl-color-warning-bg);
+      color: var(--pl-color-warning-text);
+    }
+
+    .c-workflow-lane__wip[data-state="danger"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 45%
+      );
+      background: var(--pl-color-danger-bg);
+      color: var(--pl-color-danger-text);
+    }
+
+    .c-workflow-lane__body {
+      display: grid;
+      align-content: start;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-3);
+      min-block-size: 8rem;
+    }
+
+    .c-workflow-lane__empty {
+      display: grid;
+      place-items: center;
+      min-block-size: 6rem;
+      border: 1px dashed
+        color-mix(in oklab, var(--pl-color-border), transparent 15%);
+      border-radius: var(--pl-radius-md);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      text-align: center;
+    }
+  }
+
+  @scope (.c-workflow-card) {
+    :scope {
+      display: grid;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding: var(--c-workflow-board-card-pad, var(--pl-space-3));
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 12%);
+      border-radius: var(--c-workflow-board-card-radius, var(--pl-radius-lg));
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-1);
+      color: var(--pl-color-text);
+      text-decoration: none;
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard),
+        transform var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    :scope:is(a, button, [data-interactive]) {
+      cursor: pointer;
+    }
+
+    :scope:is(a, button, [data-interactive]):hover {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 60%
+      );
+      box-shadow: var(--pl-shadow-2);
+      transform: translateY(-1px);
+    }
+
+    :scope:focus-visible,
+    :scope:has(:focus-visible) {
+      outline: 2px solid transparent;
+      box-shadow:
+        0 0 0 var(--pl-focus-size) var(--pl-focus-color),
+        var(--pl-shadow-2);
+    }
+
+    :scope[aria-selected="true"],
+    :scope[data-selected],
+    :scope.is-selected {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 35%
+      );
+      box-shadow:
+        inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent),
+        0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 78%),
+        var(--pl-shadow-1);
+    }
+
+    :scope[data-dragging],
+    :scope.is-dragging {
+      opacity: 0.72;
+      transform: rotate(0.5deg) scale(0.99);
+      box-shadow: var(--pl-shadow-2);
+    }
+
+    :scope[data-overdue],
+    :scope[data-priority="high"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent 58%
+      );
+    }
+
+    .c-workflow-card__header,
+    .c-workflow-card__footer {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .c-workflow-card__title {
+      min-inline-size: 0;
+      overflow: hidden;
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-workflow-card__body {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      text-wrap: pretty;
+    }
+
+    .c-workflow-card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2);
+      align-items: center;
+    }
+
+    .c-workflow-card__assignees {
+      display: flex;
+      align-items: center;
+      margin-inline-start: auto;
+    }
+
+    .c-workflow-card__assignees > * + * {
+      margin-inline-start: -0.375rem;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-workflow-lane, .c-workflow-card, .c-workflow-lane__empty) {
+      border-color: ButtonBorder;
+    }
+
+    :where(
+      .c-workflow-lane[data-drop-target],
+      .c-workflow-lane.is-drop-target
+    ) {
+      border-color: Highlight;
+    }
+  }
+}

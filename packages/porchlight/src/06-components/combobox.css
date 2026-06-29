@@ -1,0 +1,360 @@
+/*
+ * Porchlight  -  combobox component
+ * ===========================================================================
+ * A framework-neutral combobox/autocomplete contract for entity lookup,
+ * async search, select-only triggers, and optional multi-select chips.
+ *
+ * Porchlight owns the visual shell only. Apps own filtering, async loading,
+ * keyboard behavior, selection, hidden values, and validation timing.
+ *
+ * Structure:
+ *   <div class="c-combobox">
+ *     <div class="c-combobox__control">
+ *       <input
+ *         class="c-combobox__input"
+ *         role="combobox"
+ *         aria-autocomplete="list"
+ *         aria-expanded="true"
+ *         aria-controls="assignee-list"
+ *         aria-activedescendant="assignee-nia"
+ *       />
+ *       <svg class="c-combobox__chevron">...</svg>
+ *     </div>
+ *     <div class="c-combobox__popup" id="assignee-list" role="listbox">
+ *       <button class="c-combobox__option" role="option" aria-selected="true">
+ *         <span class="c-combobox__label">Nia Gomez</span>
+ *         <span class="c-combobox__description">Process owner</span>
+ *       </button>
+ *     </div>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.c-combobox) {
+    :scope {
+      --c-combobox-min-inline: 16rem;
+      --c-combobox-popup-max-block: min(18rem, 50dvb);
+      --c-combobox-popup-offset: var(--pl-space-1);
+      --c-combobox-option-gap: var(--pl-space-1);
+
+      position: relative;
+      display: grid;
+      gap: var(--pl-space-1);
+      inline-size: 100%;
+      min-inline-size: 0;
+      color: var(--pl-color-text);
+    }
+
+    .c-combobox__control {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-control-gap);
+      inline-size: 100%;
+      min-inline-size: 0;
+      min-block-size: var(--pl-control-block-size);
+      padding-inline: var(--pl-control-padding-inline);
+      border: var(--pl-control-border-width) solid var(--pl-color-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      transition:
+        border-color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .c-combobox__control[role="combobox"] {
+      cursor: pointer;
+      text-align: start;
+    }
+
+    .c-combobox__input {
+      flex: 1 1 8rem;
+      min-inline-size: 0;
+      padding-block: var(--pl-space-1);
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      outline: none;
+    }
+
+    .c-combobox__input::placeholder {
+      color: var(--pl-color-text-muted);
+    }
+
+    .c-combobox__value {
+      display: grid;
+      flex: 1;
+      min-inline-size: 0;
+      padding-block: var(--pl-space-1);
+      text-align: start;
+    }
+
+    .c-combobox__value .c-combobox__description {
+      margin-block-start: 0.125rem;
+    }
+
+    .c-combobox__chevron {
+      inline-size: 1rem;
+      block-size: 1rem;
+      margin-inline-start: auto;
+      color: var(--pl-color-text-muted);
+      flex-shrink: 0;
+      pointer-events: none;
+      transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
+    }
+
+    :is(
+        .c-combobox__input,
+        .c-combobox__control[role="combobox"]
+      )[aria-expanded="true"]
+      ~ .c-combobox__chevron,
+    .c-combobox__control[role="combobox"][aria-expanded="true"]
+      .c-combobox__chevron,
+    .c-combobox__control:has(
+        :is(.c-combobox__input, [role="combobox"])[aria-expanded="true"]
+      )
+      .c-combobox__chevron {
+      rotate: 180deg;
+    }
+
+    .c-combobox__popup {
+      position: absolute;
+      z-index: var(--pl-z-overlay);
+      inset-block-start: calc(100% + var(--c-combobox-popup-offset));
+      inset-inline: 0;
+      min-inline-size: min(100%, var(--c-combobox-min-inline));
+      max-block-size: var(--c-combobox-popup-max-block);
+      padding: var(--pl-space-2);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-overlay-popover-bg);
+      box-shadow: var(--pl-shadow-3);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .c-combobox__popup[hidden] {
+      display: none;
+    }
+
+    .c-combobox__list {
+      display: grid;
+      gap: var(--c-combobox-option-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .c-combobox__option {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--pl-space-1) var(--pl-space-3);
+      inline-size: 100%;
+      min-block-size: var(--pl-menu-row-min-block-size);
+      padding-block: var(--pl-space-2);
+      padding-inline: var(--pl-menu-row-padding-inline);
+      border: 0;
+      border-radius: var(--pl-menu-row-radius);
+      background: transparent;
+      color: var(--pl-color-text);
+      font: inherit;
+      font-size: var(--pl-text-sm);
+      text-align: start;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .c-combobox__option:is(:hover, :focus-visible, [data-active]),
+    .c-combobox__option[aria-selected="true"] {
+      background: var(--pl-menu-row-hover-bg);
+    }
+
+    .c-combobox__option:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(var(--pl-focus-offset) * -1);
+    }
+
+    .c-combobox__option[aria-selected="true"] {
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-semibold);
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .c-combobox__option[aria-disabled="true"] {
+      color: var(--pl-color-text-muted);
+      cursor: not-allowed;
+      opacity: var(--pl-opacity-disabled);
+    }
+
+    .c-combobox__label {
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-combobox__description {
+      grid-column: 1 / -1;
+      min-inline-size: 0;
+      overflow: hidden;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-normal);
+      line-height: var(--pl-leading-snug);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .c-combobox__meta {
+      justify-self: end;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-normal);
+      white-space: nowrap;
+    }
+
+    .c-combobox__status {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-block-size: var(--pl-menu-row-min-block-size);
+      padding-block: var(--pl-space-2);
+      padding-inline: var(--pl-menu-row-padding-inline);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+    }
+
+    .c-combobox__status[data-loading]::before {
+      content: "";
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      opacity: 0.7;
+      box-shadow:
+        0.75rem 0 0 color-mix(in oklab, currentColor, transparent 35%),
+        1.5rem 0 0 color-mix(in oklab, currentColor, transparent 65%);
+    }
+
+    .c-combobox__status[data-loading] {
+      padding-inline-start: var(--pl-menu-row-padding-inline);
+    }
+
+    .c-combobox__chips {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      padding-block: var(--pl-space-2);
+    }
+
+    :scope.c-combobox--multi .c-combobox__control {
+      align-items: center;
+      min-block-size: auto;
+      padding-inline: var(--pl-space-2);
+    }
+
+    :scope.c-combobox--multi .c-combobox__input {
+      flex-basis: 7rem;
+      min-block-size: 1.5rem;
+      padding-block: 0;
+    }
+  }
+
+  :where(.c-combobox)
+    .c-combobox__control:has(
+      :is(.c-combobox__input, [role="combobox"]):focus-visible
+    ),
+  :where(.c-combobox) .c-combobox__control[role="combobox"]:focus-visible {
+    outline: none;
+    border-color: var(--pl-focus-color);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-focus-color),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  :where(.c-combobox)
+    .c-combobox__control:has(
+      .c-combobox__input:is(:user-invalid, [aria-invalid="true"])
+    ),
+  :where(.c-combobox) .c-combobox__control[aria-invalid="true"] {
+    border-color: var(--pl-color-danger);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-color-danger),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  :where(.c-combobox)
+    .c-combobox__control:has(
+      .c-combobox__input:is(:user-invalid, [aria-invalid="true"]):focus-visible
+    ),
+  :where(.c-combobox) .c-combobox__control[aria-invalid="true"]:focus-visible {
+    border-color: var(--pl-color-danger);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-focus-color),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  :where(.c-combobox):has(
+    :is(.c-combobox__input, .c-combobox__control):is(
+      :disabled,
+      [aria-disabled="true"]
+    )
+  ) {
+    opacity: var(--pl-opacity-disabled);
+  }
+
+  :where(.c-combobox)
+    :is(.c-combobox__input, .c-combobox__control):is(
+      :disabled,
+      [aria-disabled="true"]
+    ) {
+    cursor: not-allowed;
+  }
+
+  @media (width < 40rem) {
+    :where(.c-combobox) {
+      --c-combobox-popup-max-block: min(16rem, 45dvb);
+    }
+
+    :where(.c-combobox__option) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    :where(.c-combobox__meta) {
+      justify-self: start;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.c-combobox__control, .c-combobox__popup) {
+      border-color: ButtonBorder;
+      background: Canvas;
+    }
+
+    :where(.c-combobox__option:focus-visible) {
+      outline-color: Highlight;
+    }
+
+    :where(.c-combobox__option[aria-selected="true"]) {
+      color: Highlight;
+      box-shadow: inset 2px 0 0 Highlight;
+    }
+  }
+}

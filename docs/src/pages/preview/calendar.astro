@@ -1,0 +1,432 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+type CalendarDay = {
+  label: string;
+  outside?: boolean;
+  today?: boolean;
+  disabled?: boolean;
+  selected?: boolean;
+  start?: boolean;
+  end?: boolean;
+  inRange?: boolean;
+};
+
+const chunkWeeks = (days: CalendarDay[]) =>
+  Array.from({ length: Math.ceil(days.length / 7) }, (_, index) =>
+    days.slice(index * 7, index * 7 + 7),
+  );
+
+const dueDays: CalendarDay[] = [
+  { label: '25', outside: true },
+  { label: '26', outside: true },
+  { label: '27', outside: true },
+  { label: '28', outside: true },
+  { label: '29', outside: true },
+  { label: '30', outside: true },
+  { label: '1', today: true },
+  { label: '2' },
+  { label: '3' },
+  { label: '4' },
+  { label: '5' },
+  { label: '6', disabled: true },
+  { label: '7', disabled: true },
+  { label: '8' },
+  { label: '9' },
+  { label: '10' },
+  { label: '11' },
+  { label: '12' },
+  { label: '13', disabled: true },
+  { label: '14', disabled: true },
+  { label: '15' },
+  { label: '16' },
+  { label: '17' },
+  { label: '18', selected: true },
+  { label: '19' },
+  { label: '20', disabled: true },
+  { label: '21', disabled: true },
+  { label: '22' },
+  { label: '23' },
+  { label: '24' },
+  { label: '25' },
+  { label: '26' },
+  { label: '27', disabled: true },
+  { label: '28', disabled: true },
+  { label: '29' },
+  { label: '30' },
+  { label: '1', outside: true },
+  { label: '2', outside: true },
+  { label: '3', outside: true },
+  { label: '4', outside: true, disabled: true },
+  { label: '5', outside: true, disabled: true },
+];
+const rangeDays: CalendarDay[] = [
+  { label: '25', outside: true },
+  { label: '26', outside: true },
+  { label: '27', outside: true },
+  { label: '28', outside: true },
+  { label: '29', outside: true },
+  { label: '30', outside: true },
+  { label: '1', today: true },
+  { label: '2' },
+  { label: '3' },
+  { label: '4' },
+  { label: '5' },
+  { label: '6', disabled: true },
+  { label: '7', disabled: true },
+  { label: '8' },
+  { label: '9' },
+  { label: '10' },
+  { label: '11' },
+  { label: '12' },
+  { label: '13', disabled: true },
+  { label: '14', disabled: true },
+  { label: '15' },
+  { label: '16', start: true },
+  { label: '17', inRange: true },
+  { label: '18', inRange: true },
+  { label: '19', inRange: true },
+  { label: '20', end: true },
+  { label: '21', disabled: true },
+  { label: '22' },
+  { label: '23' },
+  { label: '24' },
+  { label: '25' },
+  { label: '26' },
+  { label: '27', disabled: true },
+  { label: '28', disabled: true },
+  { label: '29' },
+  { label: '30' },
+  { label: '1', outside: true },
+  { label: '2', outside: true },
+  { label: '3', outside: true },
+  { label: '4', outside: true, disabled: true },
+  { label: '5', outside: true, disabled: true },
+];
+const dueWeeks = chunkWeeks(dueDays);
+const rangeWeeks = chunkWeeks(rangeDays);
+const times = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30'];
+---
+
+<BaseLayout title="Calendar · Porchlight">
+  <h1>Calendar</h1>
+  <p>
+    Date, date-range, and time picker contracts for app-owned scheduling
+    behavior. The markup is semantic; app code owns calendar math,
+    localization, keyboard movement, and validation timing.
+  </p>
+
+  <section class="calendar-shell" aria-labelledby="calendar-scheduling-title">
+    <div>
+      <h2 id="calendar-scheduling-title">Case scheduling</h2>
+      <p>
+        A BPM case form with due-date, read-only routing metadata, and server
+        validation. The picker trigger can use the native Popover API without
+        adding a JavaScript dependency.
+      </p>
+    </div>
+
+    <div class="case-panel">
+      <div class="case-panel__header">
+        <div>
+          <p class="eyebrow">BPM case</p>
+          <h3>Vendor onboarding review</h3>
+        </div>
+        <span class="c-badge" data-tone="warning">SLA watch</span>
+      </div>
+
+      <div class="case-form">
+        <div class="c-field c-date-picker" style="--c-date-picker-anchor: --case-due-picker;">
+          <label class="c-field__label" for="case-due-date">Due date</label>
+          <div class="c-date-picker__field">
+            <input
+              class="c-field__control c-date-picker__control"
+              id="case-due-date"
+              name="due_date"
+              inputmode="numeric"
+              autocomplete="off"
+              value="2026-06-18"
+              aria-describedby="case-due-date-help"
+            />
+            <button
+              class="c-button c-date-picker__trigger"
+              type="button"
+              popovertarget="case-due-calendar"
+              aria-label="Choose due date"
+            >
+              <Icon name="gear" /> Pick
+            </button>
+          </div>
+          <span class="c-field__hint" id="case-due-date-help">Local SLA timezone: America/Chicago.</span>
+          <div class="c-date-picker__popover" id="case-due-calendar" popover>
+            <section class="c-calendar" aria-labelledby="case-due-month">
+              <header class="c-calendar__header">
+                <button class="c-calendar__nav-button" type="button" aria-label="Previous month">‹</button>
+                <h3 class="c-calendar__heading" id="case-due-month">June 2026</h3>
+                <button class="c-calendar__nav-button" type="button" aria-label="Next month">›</button>
+              </header>
+              <div class="c-calendar__weekdays" aria-hidden="true">
+                {weekdays.map((day) => <span class="c-calendar__weekday">{day}</span>)}
+              </div>
+              <div class="c-calendar__grid" role="grid" aria-labelledby="case-due-month">
+                {dueWeeks.map((week) => (
+                  <div class="c-calendar__row" role="row">
+                    {week.map((day) => (
+                      <button
+                        class="c-calendar__day"
+                        type="button"
+                        role="gridcell"
+                        data-outside-month={day.outside ? '' : undefined}
+                        aria-current={day.today ? 'date' : undefined}
+                        aria-selected={day.selected ? 'true' : undefined}
+                        disabled={day.disabled}
+                      >
+                        <span class="c-calendar__day-label">{day.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <footer class="c-calendar__footer">
+                <span>Business days only</span>
+                <ul class="c-calendar__shortcut-list" aria-label="Date shortcuts">
+                  <li><button class="c-button" type="button" data-variant="ghost">Today</button></li>
+                  <li><button class="c-button" type="button" data-variant="ghost">+5 days</button></li>
+                </ul>
+              </footer>
+            </section>
+          </div>
+        </div>
+
+        <label class="c-field">
+          <span class="c-field__label">Queue</span>
+          <input class="c-field__control" value="Procurement Ops" readonly />
+          <span class="c-field__hint">Read-only values keep native copy behavior.</span>
+        </label>
+
+        <div class="c-field">
+          <label class="c-field__label" for="blocked-date">Exception date</label>
+          <input
+            id="blocked-date"
+            class="c-field__control"
+            value="2026-06-15"
+            aria-invalid="true"
+            aria-describedby="blocked-date-error"
+          />
+          <span class="c-field__hint" id="blocked-date-error" data-tone="danger" role="alert">
+            This date is before the assigned team is available.
+          </span>
+        </div>
+
+        <label class="c-field">
+          <span class="c-field__label">Closed period</span>
+          <input class="c-field__control" value="2026-06-22" disabled />
+          <span class="c-field__hint">Disabled dates are skipped by form submission.</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="calendar-shell" aria-labelledby="calendar-range-title">
+    <div>
+      <h2 id="calendar-range-title">SLA window</h2>
+      <p>
+        Range state is app-authored with <code>data-range-start</code>,
+        <code>data-in-range</code>, and <code>data-range-end</code>. Porchlight
+        only paints the connective shape.
+      </p>
+    </div>
+
+    <div class="range-panel c-date-range">
+      <div class="c-date-range__fields">
+        <label class="c-field">
+          <span class="c-field__label">SLA starts</span>
+          <input class="c-field__control" name="sla_start" value="2026-06-16" />
+        </label>
+        <label class="c-field">
+          <span class="c-field__label">SLA ends</span>
+          <input class="c-field__control" name="sla_end" value="2026-06-20" />
+        </label>
+      </div>
+
+      <section class="c-calendar" aria-labelledby="sla-month">
+        <header class="c-calendar__header">
+          <button class="c-calendar__nav-button" type="button" aria-label="Previous month">‹</button>
+          <h3 class="c-calendar__heading" id="sla-month">June 2026</h3>
+          <button class="c-calendar__nav-button" type="button" aria-label="Next month">›</button>
+        </header>
+        <div class="c-calendar__weekdays" aria-hidden="true">
+          {weekdays.map((day) => <span class="c-calendar__weekday">{day}</span>)}
+        </div>
+        <div class="c-calendar__grid" role="grid" aria-labelledby="sla-month">
+          {rangeWeeks.map((week) => (
+            <div class="c-calendar__row" role="row">
+              {week.map((day) => (
+                <button
+                  class="c-calendar__day"
+                  type="button"
+                  role="gridcell"
+                  data-outside-month={day.outside ? '' : undefined}
+                  aria-current={day.today ? 'date' : undefined}
+                  aria-selected={day.start || day.end ? 'true' : undefined}
+                  data-range-start={day.start ? '' : undefined}
+                  data-range-end={day.end ? '' : undefined}
+                  data-in-range={day.inRange ? '' : undefined}
+                  disabled={day.disabled}
+                >
+                  <span class="c-calendar__day-label">{day.label}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+        <footer class="c-calendar__footer">
+          <span>Weekends disabled by policy</span>
+          <span>5 business days</span>
+        </footer>
+      </section>
+    </div>
+  </section>
+
+  <section class="calendar-shell" aria-labelledby="calendar-time-title">
+    <div>
+      <h2 id="calendar-time-title">Escalation time</h2>
+      <p>
+        Time options are discrete buttons here, suitable for appointment slots,
+        SLA reminders, and workflow escalation windows.
+      </p>
+    </div>
+
+    <div class="time-layout">
+      <div class="c-time-picker" role="listbox" aria-label="Escalation time">
+        <div class="c-time-picker__grid">
+          {times.map((time) => (
+            <button
+              class="c-time-picker__option"
+              type="button"
+              role="option"
+              aria-selected={time === '09:00' ? 'true' : undefined}
+              disabled={time === '11:30'}
+            >
+              {time}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="time-summary">
+        <p class="eyebrow">Reminder policy</p>
+        <h3>Notify owner at 09:00</h3>
+        <p>
+          The selected time is visual state only. Production apps should pair it
+          with form data, validation, and localized display strings.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .calendar-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 1fr);
+    gap: var(--pl-space-6);
+    align-items: start;
+    margin-block-start: var(--pl-space-8);
+  }
+
+  .calendar-shell h2 {
+    margin-block-start: 0;
+  }
+
+  .case-panel,
+  .range-panel,
+  .time-summary {
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-surface);
+  }
+
+  .case-panel {
+    display: grid;
+    gap: var(--pl-space-5);
+    padding: var(--pl-space-5);
+  }
+
+  .case-panel__header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+  }
+
+  .case-panel__header h3,
+  .time-summary h3 {
+    margin-block: var(--pl-space-1) 0;
+    font-size: var(--pl-text-lg);
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-semibold);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .case-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--pl-space-4);
+  }
+
+  .case-form .c-date-picker {
+    grid-column: 1 / -1;
+  }
+
+  .range-panel {
+    display: grid;
+    gap: var(--pl-space-4);
+    padding: var(--pl-space-5);
+  }
+
+  .range-panel .c-calendar {
+    inline-size: 100%;
+    box-shadow: none;
+  }
+
+  .time-layout {
+    display: grid;
+    gap: var(--pl-space-4);
+  }
+
+  .time-summary {
+    padding: var(--pl-space-5);
+  }
+
+  .time-summary p:last-child {
+    margin-block-end: 0;
+  }
+
+  @media (width < 52rem) {
+    .calendar-shell {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width < 34rem) {
+    .case-form {
+      grid-template-columns: 1fr;
+    }
+
+    .case-panel,
+    .range-panel,
+    .time-summary {
+      padding: var(--pl-space-4);
+    }
+  }
+</style>

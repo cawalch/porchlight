@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const bars = [82, 104, 96, 128, 116, 142, 156, 149, 172, 188, 176, 204];
+const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+---
+<BaseLayout title="Chart shell · Porchlight">
+  <section class="chart-preview">
+    <header class="chart-preview__header">
+      <div>
+        <h1>Chart shell</h1>
+        <p>Accessible chart framing for app-owned SVG, Canvas, fallbacks, metric headers, and states.</p>
+      </div>
+      <div class="c-segmented" role="radiogroup" aria-label="Reporting range">
+        <label class="c-segmented__item"><input type="radio" name="range" /><span>30d</span></label>
+        <label class="c-segmented__item"><input type="radio" name="range" checked /><span>12mo</span></label>
+        <label class="c-segmented__item"><input type="radio" name="range" /><span>YTD</span></label>
+      </div>
+    </header>
+
+    <section class="c-chart" aria-labelledby="throughput-title" aria-describedby="throughput-desc">
+      <header class="c-chart__header">
+        <div>
+          <h2 class="c-chart__title" id="throughput-title">Workflow throughput</h2>
+          <p class="c-chart__description" id="throughput-desc">Completed process instances and breached SLA volume by month.</p>
+        </div>
+        <div class="c-chart__metrics" aria-label="Summary metrics">
+          <div class="c-chart__metric">
+            <span class="c-chart__metric-label">Completed</span>
+            <strong class="c-chart__metric-value">1,713</strong>
+            <span class="c-chart__metric-delta" data-direction="up">+12.8%</span>
+          </div>
+          <div class="c-chart__metric">
+            <span class="c-chart__metric-label">SLA breach</span>
+            <strong class="c-chart__metric-value">3.4%</strong>
+            <span class="c-chart__metric-delta" data-direction="down">-1.1%</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="c-chart__plot" role="img" aria-label="Bar chart showing monthly completed workflow items trending upward">
+        <svg viewBox="0 0 720 280" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+          <line x1="44" y1="236" x2="696" y2="236" stroke="var(--pl-color-border)" />
+          <line x1="44" y1="40" x2="44" y2="236" stroke="var(--pl-color-border)" />
+          {bars.map((value, index) => {
+            const x = 64 + index * 52;
+            const height = value * 0.82;
+            const y = 236 - height;
+            return (
+              <>
+                <rect x={x} y={y} width="28" height={height} rx="5" fill="var(--pl-color-accent)" opacity="0.88" />
+                <text x={x + 14} y="260" text-anchor="middle" fill="var(--pl-color-text-muted)" font-size="12">{labels[index]}</text>
+              </>
+            );
+          })}
+          <path d="M78 186 L130 168 L182 160 L234 132 L286 144 L338 116 L390 108 L442 112 L494 92 L546 76 L598 84 L650 52" fill="none" stroke="var(--pl-color-success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <ul class="c-chart__legend" aria-label="Series">
+        <li class="c-chart__legend-item"><span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-accent);"></span>Completed items</li>
+        <li class="c-chart__legend-item"><span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-success);"></span>Median cycle time</li>
+      </ul>
+
+      <p class="c-chart__caption">Fallback table can be disclosed by the app or linked as source data.</p>
+      <div class="c-chart__table">
+        <table class="c-table" style="--c-table-min: 32rem;">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th data-align="end">Completed</th>
+              <th data-align="end">Breach rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {labels.slice(-4).map((label, index) => (
+              <tr>
+                <td>{label}</td>
+                <td data-align="end">{bars[bars.length - 4 + index]}</td>
+                <td data-align="end">{['4.8%', '3.9%', '3.6%', '3.4%'][index]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="chart-preview__grid">
+      <section class="c-chart" data-state="loading" aria-busy="true" aria-labelledby="loading-title">
+        <header class="c-chart__header">
+          <h2 class="c-chart__title" id="loading-title">Live agent capacity</h2>
+        </header>
+        <div class="c-chart__plot" data-state="loading">
+          <div class="c-chart__overlay">
+            <div class="c-chart__state">
+              <p class="c-chart__state-title">Loading chart</p>
+              <p>Fetching real-time availability from the workforce service.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="c-chart" data-state="empty" aria-labelledby="empty-title">
+        <header class="c-chart__header">
+          <h2 class="c-chart__title" id="empty-title">Escalations</h2>
+        </header>
+        <div class="c-chart__plot" data-state="empty">
+          <div class="c-chart__overlay">
+            <div class="c-chart__state">
+              <p class="c-chart__state-title">No escalation data</p>
+              <p>This saved view has no matching incidents for the selected range.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="c-chart" data-state="error" role="alert" aria-labelledby="error-title">
+        <header class="c-chart__header">
+          <h2 class="c-chart__title" id="error-title">Risk trend</h2>
+        </header>
+        <div class="c-chart__plot" data-state="error">
+          <div class="c-chart__overlay">
+            <div class="c-chart__state">
+              <p class="c-chart__state-title">Chart unavailable</p>
+              <p>The analytics warehouse returned a timeout. Retry from the app action bar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .chart-preview {
+    display: grid;
+    gap: var(--pl-space-6);
+  }
+
+  .chart-preview__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--pl-space-4);
+  }
+
+  .chart-preview__header p {
+    max-inline-size: 62ch;
+    color: var(--pl-color-text-muted);
+  }
+
+  .chart-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--pl-space-4);
+  }
+</style>

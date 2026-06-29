@@ -50,6 +50,12 @@ const overlayPages = [
     surface: "#drawer-end",
   },
   {
+    path: "./preview/calendar",
+    heading: "Calendar",
+    triggerName: "Choose due date",
+    surface: "#case-due-calendar",
+  },
+  {
     path: "./preview/dialog",
     heading: "Dialog",
     triggerName: "Delete account",

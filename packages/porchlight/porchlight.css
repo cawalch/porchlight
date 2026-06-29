@@ -53,9 +53,16 @@
 @import "src/06-components/textarea-auto.css";
 @import "src/06-components/segmented.css";
 @import "src/06-components/tag-input.css";
+@import "src/06-components/calendar.css";
+@import "src/06-components/combobox.css";
 @import "src/06-components/dropdown.css";
 @import "src/06-components/file-upload.css";
 @import "src/06-components/command-palette.css";
+@import "src/06-components/tree.css";
+@import "src/06-components/split-pane.css";
+@import "src/06-components/filter-builder.css";
+@import "src/06-components/workflow-board.css";
+@import "src/06-components/chart.css";
 @import "src/06-components/nav.css";
 @import "src/07-utilities.css";
 @import "src/08-enhancements.css";

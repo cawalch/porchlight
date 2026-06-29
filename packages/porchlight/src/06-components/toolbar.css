@@ -19,6 +19,11 @@
       --c-toolbar-gap: var(--pl-space-3);
       --c-toolbar-pad: var(--pl-space-3);
       --c-toolbar-min: 10rem;
+      --c-toolbar-border-color: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        transparent 20%
+      );
 
       container: c-toolbar / inline-size;
       display: flex;
@@ -27,9 +32,26 @@
       justify-content: space-between;
       gap: var(--c-toolbar-gap);
       padding: var(--c-toolbar-pad);
-      border-block-end: 1px solid
-        color-mix(in oklab, var(--pl-color-border), transparent 20%);
+      border-block-end: 1px solid var(--c-toolbar-border-color);
       background: var(--pl-color-surface);
+    }
+
+    :scope[data-surface="panel"] {
+      border: 1px solid var(--c-toolbar-border-color);
+      border-radius: var(--pl-radius-lg);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-surface),
+        var(--pl-color-bg) 8%
+      );
+      box-shadow: var(--pl-shadow-1);
+    }
+
+    :scope[data-surface="flush"] {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     /* Leading group  -  search, filters, selection count. Grows to fill. */
@@ -56,7 +78,7 @@
       inline-size: 1px;
       block-size: 1.5rem;
       align-self: center;
-      background: color-mix(in oklab, var(--pl-color-border), transparent 20%);
+      background: var(--c-toolbar-border-color);
     }
 
     /* Tighten padding when the toolbar is narrow (container query). */

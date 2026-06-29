@@ -11,6 +11,7 @@ const closedSurfacePages = [
   { path: "popover-menu", selector: ".c-menu__popover[popover]" },
   { path: "dropdown", selector: ".c-dropdown__menu[popover]" },
   { path: "split-button", selector: ".c-split__menu[popover]" },
+  { path: "calendar", selector: ".c-date-picker__popover[popover]" },
   { path: "command-palette", selector: ".c-command[popover]" },
   { path: "drawer", selector: ".c-drawer[popover]" },
   { path: "dialog", selector: "dialog.c-dialog" },
