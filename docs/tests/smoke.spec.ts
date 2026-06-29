@@ -568,14 +568,27 @@ test.describe("docs scaffold", () => {
   });
 
   test("llms text assets expose composition guidance", async ({ page }) => {
-    for (const path of ["./llms.txt", "./llms-full.txt"]) {
-      const response = await page.goto(path);
-      expect(response?.ok(), `${path} should be reachable`).toBe(true);
-      const text = await page.locator("body").textContent();
-      expect(text).toContain("Porchlight");
-      expect(text?.toLowerCase()).toContain("composition");
-      expect(text?.toLowerCase()).toContain("data table");
-    }
+    const shortResponse = await page.goto("./llms.txt");
+    expect(shortResponse?.ok(), "./llms.txt should be reachable").toBe(true);
+    const shortText = await page.locator("body").textContent();
+    expect(shortText).toContain("Porchlight");
+    expect(shortText).toContain("## Agent routing");
+    expect(shortText).toContain(
+      "Do not make htmx, Alpine, Vue, or React wrappers",
+    );
+    expect(shortText).toContain("/preview/field");
+
+    const fullResponse = await page.goto("./llms-full.txt");
+    expect(fullResponse?.ok(), "./llms-full.txt should be reachable").toBe(
+      true,
+    );
+    const fullText = await page.locator("body").textContent();
+    expect(fullText).toContain("generated from the same source as /llms.txt");
+    expect(fullText).toContain("## Validation form skeleton");
+    expect(fullText).toContain("Generated from docs/src/content/components");
+    expect(fullText).toContain("- reveal: /components/reveal");
+    expect(fullText).toContain("- /preview/app-siem");
+    expect(fullText).toContain("aria-invalid");
   });
 
   test("color token reference shows semantic pairs", async ({ page }) => {

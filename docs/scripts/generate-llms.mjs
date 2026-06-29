@@ -1,57 +1,96 @@
-# Porchlight model composition pack
+import { readdir, readFile, writeFile } from "node:fs/promises";
 
-> This file is optimized for coding agents that need to compose Porchlight components into working app screens. It is generated from the same source as /llms.txt so the short and full model guides stay synchronized.
+const ROOT = new URL("../", import.meta.url);
+const PUBLIC = new URL("public/", ROOT);
 
-## Project identity
+const paths = {
+  short: new URL("llms.txt", PUBLIC),
+  full: new URL("llms-full.txt", PUBLIC),
+};
 
-Porchlight is a no-dependency, native-CSS framework for SaaS applications, admin consoles, dense data tools, and model-generated UI. It is not Tailwind, Bootstrap, CSS-in-JS, a React component library, or a JavaScript runtime. Components are HTML/CSS contracts: any server, HATEOAS flow, htmx swap, Alpine state, Vue component, React component, or plain HTML template should emit the same semantic DOM.
+const sourcePaths = {
+  components: new URL("src/content/components/", ROOT),
+  previews: new URL("src/pages/preview/", ROOT),
+};
 
-Base docs URL: https://cawalch.github.io/porchlight/
+const baseUrl = "https://cawalch.github.io/porchlight/";
 
-## Mental model
+const primaryLinks = [
+  ["Getting started", "/guides/getting-started"],
+  ["Composition recipes", "/guides/composition-recipes"],
+  ["Layout primitives", "/guides/layout"],
+  ["Utilities", "/guides/utilities"],
+  ["Browser support", "/guides/browser-support"],
+  ["Component reference", "/components"],
+  ["Preview gallery", "/preview"],
+  ["Full model pack", "/llms-full.txt"],
+];
 
-Porchlight has three composition layers:
+const bestExamples = [
+  [
+    "/preview/app-dashboard",
+    "full app shell with KPI grid, data table, nav, and page actions",
+  ],
+  ["/preview/dashboard", "compact dashboard composition proof"],
+  ["/preview/app-dense", "dense admin/data-console layout"],
+  ["/preview/app-cases", "case queue with filters and detail panel"],
+  [
+    "/preview/form",
+    "forms, grids, input groups, choice groups, and validation states",
+  ],
+  [
+    "/preview/field",
+    "native controls, messages, required markers, and framework-neutral validation",
+  ],
+];
 
-- Use layout primitives for structure: l-app-shell, l-container, l-stack, l-grid, l-cluster, l-sidebar.
-- Use components for semantics and chrome: c-card, c-toolbar, c-page-header, c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs, c-badge.
-- Use utilities only for small adjustments: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0.
-- Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.
-- Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.
-- Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.
+const coreRules = [
+  "Use layout primitives for structure: l-app-shell, l-container, l-stack, l-grid, l-cluster, l-sidebar.",
+  "Use components for semantics and chrome: c-card, c-toolbar, c-page-header, c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs, c-badge.",
+  "Use utilities only for small adjustments: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0.",
+  "Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.",
+  "Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.",
+  "Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.",
+];
 
-## Agent decision flow
+const avoidRules = [
+  "Do not make div-based tables. Use table/thead/tbody/tr/th/td inside c-table-wrap.",
+  "Do not put page headers inside c-toolbar. Use c-page-header inside padded content; use c-toolbar on data-region edges.",
+  "Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack, or sibling c-card elements.",
+  "Do not omit c-table-wrap around c-table.",
+  "Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and --pl-space-* tokens.",
+  "Do not use placeholders as the only labels. Use visible labels or u-sr-only labels.",
+  "Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.",
+  "Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.",
+  "Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.",
+];
 
-1. Pick the closest recipe: App shell, Dashboard, Data region, Settings page, Dense admin, Validation form.
-2. Preserve semantic HTML first, then add Porchlight classes.
-3. Use preview pages as visual truth and component pages as class-contract truth.
-4. Add app CSS only when a local product layout cannot be expressed with existing layout primitives or tokens.
-5. Verify mobile, 200% zoom, keyboard focus, reduced motion, forced colors, and RTL when changing shared components.
+const recipeIndex = [
+  [
+    "App shell",
+    "Use for workspaces, dashboards, inboxes, consoles, and admin tools.",
+  ],
+  ["Dashboard", "Use c-page-header, l-grid KPI cards, and app-surface cards."],
+  [
+    "Data region",
+    "Use c-card, c-toolbar, c-table-wrap, c-table, and pagination.",
+  ],
+  [
+    "Settings page",
+    "Use l-sidebar for local nav and c-form/c-field for real controls.",
+  ],
+  [
+    "Dense admin",
+    "Use density, truncation, numeric alignment, and real table semantics.",
+  ],
+  [
+    "Validation form",
+    "Use native constraints, aria-invalid, aria-describedby, and data-tone messages.",
+  ],
+];
 
-## Avoid
-
-- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside c-table-wrap.
-- Do not put page headers inside c-toolbar. Use c-page-header inside padded content; use c-toolbar on data-region edges.
-- Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack, or sibling c-card elements.
-- Do not omit c-table-wrap around c-table.
-- Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and --pl-space-* tokens.
-- Do not use placeholders as the only labels. Use visible labels or u-sr-only labels.
-- Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.
-- Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.
-- Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.
-
-## Recipe index
-
-- App shell: Use for workspaces, dashboards, inboxes, consoles, and admin tools.
-- Dashboard: Use c-page-header, l-grid KPI cards, and app-surface cards.
-- Data region: Use c-card, c-toolbar, c-table-wrap, c-table, and pagination.
-- Settings page: Use l-sidebar for local nav and c-form/c-field for real controls.
-- Dense admin: Use density, truncation, numeric alignment, and real table semantics.
-- Validation form: Use native constraints, aria-invalid, aria-describedby, and data-tone messages.
-
-## App shell skeleton
-
-```html
-<div class="l-app-shell">
+const snippets = {
+  appShell: `<div class="l-app-shell">
   <header class="l-app-shell__topbar">
     <div class="l-cluster" style="--l-cluster-justify: space-between;">
       <strong>Acme</strong>
@@ -70,13 +109,8 @@ Porchlight has three composition layers:
       <!-- page sections -->
     </div>
   </main>
-</div>
-```
-
-## Dashboard skeleton
-
-```html
-<div class="c-page-header">
+</div>`,
+  dashboard: `<div class="c-page-header">
   <div class="c-page-header__heading">
     <h1 class="c-page-header__title">Dashboard</h1>
     <span class="c-page-header__subtitle">Overview of workspace health</span>
@@ -97,13 +131,8 @@ Porchlight has three composition layers:
       </div>
     </div>
   </section>
-</div>
-```
-
-## Data table region skeleton
-
-```html
-<section class="c-card" data-surface="app">
+</div>`,
+  dataRegion: `<section class="c-card" data-surface="app">
   <div class="c-toolbar">
     <div class="c-toolbar__group">
       <label class="c-field">
@@ -146,13 +175,8 @@ Porchlight has three composition layers:
       </nav>
     </div>
   </div>
-</section>
-```
-
-## Settings page skeleton
-
-```html
-<div class="l-sidebar" style="--l-sidebar-size: 14rem;">
+</section>`,
+  settings: `<div class="l-sidebar" style="--l-sidebar-size: 14rem;">
   <nav class="c-nav" aria-label="Settings sections">
     <a class="c-nav__item" href="#profile" aria-current="page">
       <span class="c-nav__label">Profile</span>
@@ -177,13 +201,8 @@ Porchlight has three composition layers:
       </form>
     </div>
   </section>
-</div>
-```
-
-## Dense admin skeleton
-
-```html
-<main class="l-app-shell__main" data-density="dense">
+</div>`,
+  denseAdmin: `<main class="l-app-shell__main" data-density="dense">
   <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-4);">
     <div class="c-page-header">
       <div class="c-page-header__heading">
@@ -212,13 +231,8 @@ Porchlight has three composition layers:
       </div>
     </section>
   </div>
-</main>
-```
-
-## Validation form skeleton
-
-```html
-<form class="c-form">
+</main>`,
+  validationForm: `<form class="c-form">
   <div class="c-form__grid">
     <label class="c-field">
       <span class="c-field__label">
@@ -247,8 +261,163 @@ Porchlight has three composition layers:
       </span>
     </div>
   </div>
-</form>
-```
+</form>`,
+};
+
+function bullets(items) {
+  return items.map((item) => `- ${item}`).join("\n");
+}
+
+function links(items) {
+  return items.map(([label, href]) => `- ${label}: ${href}`).join("\n");
+}
+
+function absoluteLinks(items) {
+  return items
+    .map(
+      ([label, href]) =>
+        `- ${label}: ${new URL(href.replace(/^\//, ""), baseUrl).toString()}`,
+    )
+    .join("\n");
+}
+
+function routeLinks(slugs, prefix) {
+  return slugs.map((slug) => `- ${prefix}/${slug}`).join("\n");
+}
+
+function componentReference(componentLinks) {
+  return componentLinks
+    .map((slug) => `- ${slug}: /components/${slug}`)
+    .join("\n");
+}
+
+function fenced(value) {
+  return `\`\`\`html\n${value}\n\`\`\``;
+}
+
+async function slugsFrom(directory, extension) {
+  const entries = await readdir(directory, { withFileTypes: true });
+
+  return entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(extension))
+    .map((entry) => entry.name.slice(0, -extension.length))
+    .filter((slug) => slug !== "index")
+    .sort((a, b) => a.localeCompare(b));
+}
+
+function assertRoutesExist(previewLinks) {
+  const knownPreviews = new Set(previewLinks);
+  const missingPreviews = bestExamples
+    .map(([route]) => route.replace(/^\/preview\//, ""))
+    .filter((slug) => !knownPreviews.has(slug));
+
+  if (missingPreviews.length > 0) {
+    throw new Error(
+      `Curated LLM preview routes are missing: ${missingPreviews.join(", ")}`,
+    );
+  }
+}
+
+async function loadReference() {
+  const [componentLinks, previewLinks] = await Promise.all([
+    slugsFrom(sourcePaths.components, ".mdx"),
+    slugsFrom(sourcePaths.previews, ".astro"),
+  ]);
+
+  assertRoutesExist(previewLinks);
+
+  return { componentLinks, previewLinks };
+}
+
+function renderShort() {
+  return `# Porchlight LLM guide
+
+> Porchlight is a no-dependency, native-CSS framework for modern SaaS and admin interfaces. It uses real HTML semantics, CSS custom properties, native CSS layers/scopes, and framework-agnostic component classes.
+
+Use this short file to route quickly. Use /llms-full.txt when generating or refactoring full screens.
+
+## Primary docs
+
+${links(primaryLinks)}
+
+## Core composition rules
+
+${bullets(coreRules)}
+
+## Avoid
+
+${bullets(avoidRules)}
+
+## Best first examples
+
+${links(bestExamples)}
+
+## Agent routing
+
+- Building a full app screen: start with /guides/composition-recipes, then copy the closest /preview/app-* pattern.
+- Building a table workflow: use /components/data-table and /preview/data-table.
+- Building forms: use /components/form, /components/field, /preview/form, and /preview/field.
+- Building dense/admin UX: use /components/app-dense and /preview/app-dense.
+- Unsure which class exists: use /components first, then /preview for rendered composition.
+`;
+}
+
+function renderFull({ componentLinks, previewLinks }) {
+  return `# Porchlight model composition pack
+
+> This file is optimized for coding agents that need to compose Porchlight components into working app screens. It is generated from the same source as /llms.txt so the short and full model guides stay synchronized.
+
+## Project identity
+
+Porchlight is a no-dependency, native-CSS framework for SaaS applications, admin consoles, dense data tools, and model-generated UI. It is not Tailwind, Bootstrap, CSS-in-JS, a React component library, or a JavaScript runtime. Components are HTML/CSS contracts: any server, HATEOAS flow, htmx swap, Alpine state, Vue component, React component, or plain HTML template should emit the same semantic DOM.
+
+Base docs URL: ${baseUrl}
+
+## Mental model
+
+Porchlight has three composition layers:
+
+${bullets(coreRules)}
+
+## Agent decision flow
+
+1. Pick the closest recipe: ${recipeIndex.map(([name]) => name).join(", ")}.
+2. Preserve semantic HTML first, then add Porchlight classes.
+3. Use preview pages as visual truth and component pages as class-contract truth.
+4. Add app CSS only when a local product layout cannot be expressed with existing layout primitives or tokens.
+5. Verify mobile, 200% zoom, keyboard focus, reduced motion, forced colors, and RTL when changing shared components.
+
+## Avoid
+
+${bullets(avoidRules)}
+
+## Recipe index
+
+${recipeIndex.map(([name, desc]) => `- ${name}: ${desc}`).join("\n")}
+
+## App shell skeleton
+
+${fenced(snippets.appShell)}
+
+## Dashboard skeleton
+
+${fenced(snippets.dashboard)}
+
+## Data table region skeleton
+
+${fenced(snippets.dataRegion)}
+
+## Settings page skeleton
+
+${fenced(snippets.settings)}
+
+## Dense admin skeleton
+
+${fenced(snippets.denseAdmin)}
+
+## Validation form skeleton
+
+${fenced(snippets.validationForm)}
 
 ## Component contracts
 
@@ -324,10 +493,10 @@ Porchlight selectors are framework-agnostic. Do not rely on hx-*, x-*, v-*, data
 
 ## Installation and cascade
 
-```css
+\`\`\`css
 @layer porchlight, app;
 @import "@cawalch/porchlight";
-```
+\`\`\`
 
 Use the prebuilt stylesheet where possible. If a bundler cannot parse modern CSS features, copy the prebuilt dist CSS to public assets and load it with a link tag.
 
@@ -340,134 +509,74 @@ Use the prebuilt stylesheet where possible. If a bundler cannot parse modern CSS
 
 ## Primary docs
 
-- Getting started: /guides/getting-started
-- Composition recipes: /guides/composition-recipes
-- Layout primitives: /guides/layout
-- Utilities: /guides/utilities
-- Browser support: /guides/browser-support
-- Component reference: /components
-- Preview gallery: /preview
-- Full model pack: /llms-full.txt
+${links(primaryLinks)}
 
 ## Component reference
 
 Generated from docs/src/content/components so this list tracks the documented component set.
 
-- accordion: /components/accordion
-- alert: /components/alert
-- app-dense: /components/app-dense
-- avatar: /components/avatar
-- badge: /components/badge
-- breadcrumb: /components/breadcrumb
-- button: /components/button
-- card: /components/card
-- chip: /components/chip
-- command-palette: /components/command-palette
-- data-table: /components/data-table
-- description-list: /components/description-list
-- dialog: /components/dialog
-- drawer: /components/drawer
-- dropdown: /components/dropdown
-- empty-state: /components/empty-state
-- field: /components/field
-- file-upload: /components/file-upload
-- form: /components/form
-- nav: /components/nav
-- page-header: /components/page-header
-- pagination: /components/pagination
-- popover-menu: /components/popover-menu
-- progress: /components/progress
-- reveal: /components/reveal
-- scroll-progress: /components/scroll-progress
-- segmented: /components/segmented
-- skeleton: /components/skeleton
-- split-button: /components/split-button
-- stat: /components/stat
-- stepper: /components/stepper
-- switch: /components/switch
-- tabs: /components/tabs
-- tag-input: /components/tag-input
-- textarea-auto: /components/textarea-auto
-- timeline: /components/timeline
-- toast: /components/toast
-- toolbar: /components/toolbar
-- tooltip: /components/tooltip
+${componentReference(componentLinks)}
 
 ## Best first examples
 
-- /preview/app-dashboard: full app shell with KPI grid, data table, nav, and page actions
-- /preview/dashboard: compact dashboard composition proof
-- /preview/app-dense: dense admin/data-console layout
-- /preview/app-cases: case queue with filters and detail panel
-- /preview/form: forms, grids, input groups, choice groups, and validation states
-- /preview/field: native controls, messages, required markers, and framework-neutral validation
+${links(bestExamples)}
 
 ## Preview reference
 
 Generated from docs/src/pages/preview so this list tracks rendered examples.
 
-- /preview/accordion
-- /preview/alert
-- /preview/app-cases
-- /preview/app-dashboard
-- /preview/app-dense
-- /preview/app-inbox
-- /preview/app-marketing
-- /preview/app-shell
-- /preview/app-siem
-- /preview/avatar
-- /preview/badge
-- /preview/base
-- /preview/breadcrumb
-- /preview/button
-- /preview/card
-- /preview/chip
-- /preview/command-palette
-- /preview/dashboard
-- /preview/data-table
-- /preview/description-list
-- /preview/dialog
-- /preview/drawer
-- /preview/dropdown
-- /preview/empty-state
-- /preview/enhancements
-- /preview/field
-- /preview/file-upload
-- /preview/form
-- /preview/layout
-- /preview/nav
-- /preview/page-header
-- /preview/pagination
-- /preview/popover-menu
-- /preview/progress
-- /preview/reset
-- /preview/reveal
-- /preview/scroll-progress
-- /preview/segmented
-- /preview/settings
-- /preview/skeleton
-- /preview/split-button
-- /preview/stat
-- /preview/stepper
-- /preview/switch
-- /preview/tabs
-- /preview/tag-input
-- /preview/textarea-auto
-- /preview/themes
-- /preview/timeline
-- /preview/toast
-- /preview/tokens
-- /preview/toolbar
-- /preview/tooltip
-- /preview/utilities
+${routeLinks(previewLinks, "/preview")}
 
 ## Absolute URLs
 
-- Getting started: https://cawalch.github.io/porchlight/guides/getting-started
-- Composition recipes: https://cawalch.github.io/porchlight/guides/composition-recipes
-- Layout primitives: https://cawalch.github.io/porchlight/guides/layout
-- Utilities: https://cawalch.github.io/porchlight/guides/utilities
-- Browser support: https://cawalch.github.io/porchlight/guides/browser-support
-- Component reference: https://cawalch.github.io/porchlight/components
-- Preview gallery: https://cawalch.github.io/porchlight/preview
-- Full model pack: https://cawalch.github.io/porchlight/llms-full.txt
+${absoluteLinks(primaryLinks)}
+`;
+}
+
+async function updateFile(path, content, check) {
+  let existing = "";
+  try {
+    existing = await readFile(path, "utf8");
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+
+  if (existing === content) return false;
+
+  if (check) {
+    throw new Error(
+      `${path.pathname} is out of date. Run pnpm --filter ./docs llms:generate.`,
+    );
+  }
+
+  await writeFile(path, content);
+  return true;
+}
+
+async function main() {
+  const check = process.argv.includes("--check");
+  const reference = await loadReference();
+  const shortChanged = await updateFile(paths.short, renderShort(), check);
+  const fullChanged = await updateFile(
+    paths.full,
+    renderFull(reference),
+    check,
+  );
+
+  if (!check) {
+    const changed = [
+      shortChanged && "llms.txt",
+      fullChanged && "llms-full.txt",
+    ].filter(Boolean);
+    console.log(
+      changed.length > 0
+        ? `Updated ${changed.join(", ")}`
+        : "LLM files already up to date",
+    );
+  }
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exit(1);
+});

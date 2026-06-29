@@ -57,6 +57,9 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
+      - name: Check LLM docs
+        run: node docs/scripts/generate-llms.mjs --check
+
       - name: Build framework (single-file dist)
         run: pnpm --filter @cawalch/porchlight build
 

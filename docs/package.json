@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "test": "playwright test",
     "test:serve": "astro build && astro preview --port 4321 --host",
-    "astro:check": "astro check"
+    "astro:check": "astro check",
+    "llms:generate": "node scripts/generate-llms.mjs",
+    "llms:check": "node scripts/generate-llms.mjs --check"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
