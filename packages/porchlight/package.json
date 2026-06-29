@@ -1,6 +1,6 @@
 {
   "name": "@cawalch/porchlight",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A no-dependency, native-CSS framework for building accessible, themeable web applications.",
   "license": "MIT",
   "type": "module",

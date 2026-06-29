@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-06-29
+
+### Added
+
+- **Modern app component contracts.** Added CSS-only, framework-agnostic
+  contracts for calendar/date picker/time picker, combobox, tree view, split
+  pane, filter builder/query chips/saved views, workflow board, and chart shell.
+  These are wired into the packaged `porchlight.css` entrypoint with matching
+  docs, previews, and Playwright coverage. (#80)
+- **Form-field contract hardening.** Fields and forms now support optional
+  required markers, toned field hints, stacked field messages, choice-group hint
+  tones, and copyable framework-agnostic examples for plain HTML, SSR fragments,
+  hypermedia swaps, and component renderers. (#77)
+- **Generated LLM guidance assets.** Added `docs/scripts/generate-llms.mjs` as
+  the source of truth for `llms.txt` and `llms-full.txt`, including component
+  and preview references derived from the docs tree. (#78)
+
+### Changed
+
+- **Dropdown docs now describe a button-triggered option menu.** The component
+  guidance no longer overclaims native-select replacement behavior, and the
+  preview syncs `aria-expanded` and `aria-checked` state for copied examples.
+  (#79)
+- **Command palette docs and preview use stronger dialog, combobox, and listbox
+  semantics.** The preview now demonstrates keyboard handling for arrow keys,
+  Enter, and Escape while keeping the CSS package runtime-agnostic. (#79)
+- **Toolbar, field, and form previews expanded around app-like usage.** The docs
+  now show denser operational layouts and emitted HTML contracts instead of only
+  isolated primitives. (#77, #80)
+
+### Fixed
+
+- **Tag input examples no longer wrap removable chip buttons inside labels.**
+  This keeps the copied markup safer for assistive tech and form behavior. (#79)
+- **Calendar range and picker overlays stay bounded.** Date-picker popovers now
+  remain viewport-bounded with internal scrolling where needed, and range joins
+  render smoothly across selected start/end/in-range days. (#80)
+- **Modern component accessibility gaps closed.** Added fixes and tests for
+  calendar rows, combobox listbox status rows, focusable split panes, workflow
+  selected-card state, dropdown checked state, and command-palette interaction
+  contracts. (#79, #80)
+
+### Tooling
+
+- **CI now checks generated LLM docs.** GitHub Actions runs the generator in
+  check mode so committed model guidance cannot drift from the source of truth.
+  (#78)
+
 ## [0.7.0] - 2026-06-26
 
 ### Added
