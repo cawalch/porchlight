@@ -864,6 +864,14 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-tag-input__field").first()).toBeVisible();
     await expect(page.locator(".c-tag-input .c-chip").first()).toBeVisible();
     await expect(page.locator(".c-chip__remove").first()).toBeVisible();
+
+    const labelsWithButtons = await page
+      .locator("label.c-field:has(button)")
+      .count();
+    expect(
+      labelsWithButtons,
+      "tag inputs must not wrap remove buttons in labels",
+    ).toBe(0);
   });
 
   test("description list renders terms and details", async ({ page }) => {
@@ -920,12 +928,39 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     await expect(page.locator(".c-dropdown__trigger").first()).toBeVisible();
     await expect(page.locator(".c-dropdown__chevron").first()).toBeVisible();
+    await expect(page.locator("#dd-trigger-1")).toHaveAttribute(
+      "aria-haspopup",
+      "menu",
+    );
+    await expect(page.locator("#dd-trigger-1")).toHaveAttribute(
+      "aria-controls",
+      "dd-1",
+    );
+    await expect(page.locator("#dd-trigger-1")).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     // Menus exist with popover attr.
-    await expect(
-      page.locator(".c-dropdown__menu[popover]").first(),
-    ).toBeAttached();
+    const menu = page.locator("#dd-1");
+    await expect(menu).toBeAttached();
+    await expect(menu).toHaveAttribute("role", "menu");
     // Options exist.
     await expect(page.locator(".c-dropdown__option").first()).toBeAttached();
+    await expect(
+      menu.locator("[role='menuitemradio']").first(),
+    ).toHaveAttribute("aria-checked", "true");
+
+    await page.locator("#dd-trigger-1").click();
+    await expect(menu).toBeVisible();
+    await expect(page.locator("#dd-trigger-1")).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
+    await page.getByRole("menuitemradio", { name: "Project Beta" }).click();
+    await expect(page.locator("#dd-trigger-1")).toContainText("Project Beta");
+    await expect(
+      page.getByRole("menuitemradio", { name: "Project Beta" }),
+    ).toHaveAttribute("aria-checked", "true");
   });
 
   test("split button renders segments, menu, and unique anchors", async ({
@@ -1018,11 +1053,37 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Command palette", exact: true }),
     ).toBeVisible();
     await expect(page.locator(".c-command[popover]")).toBeAttached();
+    await expect(page.locator(".c-command[popover]")).toHaveAttribute(
+      "role",
+      "dialog",
+    );
+    await expect(
+      page.getByRole("button", { name: "Open command palette" }),
+    ).toHaveAttribute("aria-expanded", "false");
     await expect(page.locator(".c-command__search")).toBeAttached();
+    await expect(page.locator(".c-command__search")).toHaveAttribute(
+      "role",
+      "combobox",
+    );
     await expect(page.locator(".c-command__item").first()).toBeAttached();
     await expect(page.locator(".c-command__heading").first()).toBeAttached();
     // Footer exists (may be hidden since popover is closed).
     await expect(page.locator(".c-command__footer")).toBeAttached();
+
+    await page.getByRole("button", { name: "Open command palette" }).click();
+    await expect(page.locator("#cmdk")).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Open command palette" }),
+    ).toHaveAttribute("aria-expanded", "true");
+    await page.getByLabel("Search commands").press("ArrowDown");
+    await expect(page.locator("#cmdk-import")).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    await expect(page.getByLabel("Search commands")).toHaveAttribute(
+      "aria-activedescendant",
+      "cmdk-import",
+    );
   });
 
   test("nav renders items, active state, and collapsible sections", async ({

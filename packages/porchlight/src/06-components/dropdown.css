@@ -1,12 +1,14 @@
 /*
  * Porchlight  -  dropdown component
  * ===========================================================================
- * A custom select replacement using the Popover API + anchor positioning.
- * Unlike native <select>, this supports icons, descriptions, multi-select,
- * and fully custom option rendering.
+ * A button-triggered option menu using the Popover API + anchor positioning.
+ * Use it for sort/filter/action choices that need richer rendering than a
+ * native select. For form submission, keep a native select or sync a hidden
+ * input in app JavaScript.
  *
  * The trigger uses popovertarget to open declaratively. The menu is anchored
- * to the trigger. Options are <button> or <a> elements for keyboard access.
+ * to the trigger. Options are <button> or <a> elements for keyboard access;
+ * selected rows can use aria-selected or aria-checked.
  *
  * Structure:
  *   <div class="c-dropdown">
@@ -14,8 +16,8 @@
  *       Choose... <svg class="c-dropdown__chevron">...</svg>
  *     </button>
  *     <div popover class="c-dropdown__menu" id="dd-1">
- *       <button class="c-dropdown__option" aria-selected="true">Option A</button>
- *       <button class="c-dropdown__option">Option B</button>
+ *       <button class="c-dropdown__option" role="menuitemradio" aria-checked="true">Option A</button>
+ *       <button class="c-dropdown__option" role="menuitemradio" aria-checked="false">Option B</button>
  *     </div>
  *   </div>
  */
@@ -125,7 +127,8 @@
   }
 
   /* Dropdown options  -  OUTSIDE @scope (live-state pseudos). */
-  :where(.c-dropdown__menu) > :is(a, button, [role="option"]) {
+  :where(.c-dropdown__menu)
+    > :is(a, button, [role="option"], [role^="menuitem"]) {
     display: flex;
     align-items: center;
     gap: var(--pl-space-2);
@@ -144,17 +147,22 @@
   }
 
   :where(.c-dropdown__menu)
-    > :is(a, button, [role="option"]):is(:hover, :focus-visible) {
+    > :is(a, button, [role="option"], [role^="menuitem"]):is(
+      :hover,
+      :focus-visible
+    ) {
     background: var(--pl-menu-row-hover-bg);
   }
 
-  :where(.c-dropdown__menu) > :is(a, button, [role="option"]):focus-visible {
+  :where(.c-dropdown__menu)
+    > :is(a, button, [role="option"], [role^="menuitem"]):focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
     outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   /* Selected option: accent color + subtle tint background for clarity. */
-  :where(.c-dropdown__menu) > [aria-selected="true"] {
+  :where(.c-dropdown__menu)
+    > :is([aria-selected="true"], [aria-checked="true"]) {
     color: var(--pl-color-accent);
     font-weight: var(--pl-font-weight-semibold);
     background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);

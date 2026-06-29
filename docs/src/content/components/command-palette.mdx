@@ -7,22 +7,56 @@ since: 1.0.0
 
 # Command Palette
 
-The `.c-command` is a Cmd+K quick-action search overlay. Uses the Popover
+The `.c-command` is a Cmd+K quick-action search overlay. It uses the Popover
 API for top-layer rendering and `@starting-style` for smooth enter/exit.
-The framework provides the visual structure; the app provides keyboard
-navigation (arrow keys, enter, escape).
+Porchlight provides the visual structure; the app owns filtering, activation,
+and keyboard state.
 
 ## Semantic HTML
 
 ```html
-<button popovertarget="cmdk">Open</button>
+<button
+  popovertarget="cmdk"
+  aria-haspopup="dialog"
+  aria-controls="cmdk"
+  aria-expanded="false"
+>
+  Open
+</button>
 
-<div popover class="c-command" id="cmdk">
-  <input class="c-command__search" placeholder="Type a command..." />
-  <div class="c-command__body">
+<div
+  popover
+  class="c-command"
+  id="cmdk"
+  role="dialog"
+  aria-labelledby="cmdk-title"
+>
+  <h2 id="cmdk-title" class="u-sr-only">Command palette</h2>
+  <input
+    class="c-command__search"
+    role="combobox"
+    aria-expanded="true"
+    aria-controls="cmdk-list"
+    aria-activedescendant="cmdk-create"
+    aria-label="Search commands"
+    placeholder="Type a command..."
+  />
+  <div
+    class="c-command__body"
+    id="cmdk-list"
+    role="listbox"
+    aria-label="Commands"
+  >
     <div class="c-command__group">
       <h3 class="c-command__heading">Actions</h3>
-      <button class="c-command__item" data-selected>
+      <button
+        class="c-command__item"
+        id="cmdk-create"
+        type="button"
+        role="option"
+        aria-selected="true"
+        data-selected
+      >
         <svg class="c-command__icon">...</svg>
         <span>Create project</span>
         <span class="c-command__shortcut">C</span>
@@ -37,17 +71,24 @@ navigation (arrow keys, enter, escape).
 </div>
 ```
 
+Keep focus on `.c-command__search` while arrow keys move the active command.
+Synchronize the opener's `aria-expanded`, the search input's
+`aria-activedescendant`, each item's `aria-selected`, and optional
+`data-selected` for styling. Enter should activate the selected command; Escape
+can call `hidePopover()`.
+
 ## Class contract
 
-| Selector               | Role                                 |
-| ---------------------- | ------------------------------------ |
-| `.c-command`           | The popover palette.                 |
-| `.c-command__search`   | Top search input.                    |
-| `.c-command__body`     | Scrollable action list.              |
-| `.c-command__group`    | Named group of actions.              |
-| `.c-command__heading`  | Group label (uppercase, muted).      |
-| `.c-command__item`     | An action button.                    |
-| `.c-command__icon`     | Leading icon.                        |
-| `.c-command__shortcut` | Keyboard shortcut badge.             |
-| `.c-command__footer`   | Footer with keyboard hints.          |
-| `[data-selected]`      | Highlighted (keyboard-focused) item. |
+| Selector               | Role                                              |
+| ---------------------- | ------------------------------------------------- |
+| `.c-command`           | The popover palette, usually `role="dialog"`.     |
+| `.c-command__search`   | Top search input, usually a combobox.             |
+| `.c-command__body`     | Scrollable action list, usually `role="listbox"`. |
+| `.c-command__group`    | Named group of actions.                           |
+| `.c-command__heading`  | Group label (uppercase, muted).                   |
+| `.c-command__item`     | An action button.                                 |
+| `.c-command__icon`     | Leading icon.                                     |
+| `.c-command__shortcut` | Keyboard shortcut badge.                          |
+| `.c-command__footer`   | Footer with keyboard hints.                       |
+| `[data-selected]`      | Highlighted (keyboard-focused) item.              |
+| `[aria-selected]`      | Semantic selected/active option state.            |

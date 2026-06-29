@@ -1,38 +1,75 @@
 ---
 title: Dropdown
-description: Custom select replacement using Popover API + anchor positioning. Supports icons, descriptions, custom rendering.
+description: Button-triggered option menu using Popover API + anchor positioning. Supports icons, descriptions, and custom rendering.
 status: stable
 since: 1.0.0
 ---
 
 # Dropdown
 
-The `.c-dropdown` is a custom select replacement using the Popover API +
-CSS Anchor Positioning. Supports icons, multi-select, and fully custom
-option rendering - things native `<select>` can't do.
+The `.c-dropdown` is a button-triggered option menu using the Popover API +
+CSS Anchor Positioning. Use it for sort menus, filter pickers, and action
+choices that need icons or richer rows.
+
+For ordinary forms, prefer a native `<select>`. If an app uses `.c-dropdown`
+as a select-like control, app JavaScript must sync `aria-expanded`, the checked
+or selected option, and a hidden input or other submitted value.
 
 ## Semantic HTML
 
 ```html
 <div class="c-dropdown">
-  <button class="c-dropdown__trigger" popovertarget="dd-1">
-    Choose...
+  <button
+    class="c-dropdown__trigger"
+    id="project-trigger"
+    popovertarget="dd-1"
+    aria-haspopup="menu"
+    aria-controls="dd-1"
+    aria-expanded="false"
+  >
+    <span class="c-dropdown__label">Project Alpha</span>
     <svg class="c-dropdown__chevron">...</svg>
   </button>
-  <div popover class="c-dropdown__menu" id="dd-1">
-    <button class="c-dropdown__option" aria-selected="true">Option A</button>
-    <button class="c-dropdown__option">Option B</button>
+  <div
+    popover
+    class="c-dropdown__menu"
+    id="dd-1"
+    role="menu"
+    aria-labelledby="project-trigger"
+  >
+    <button
+      class="c-dropdown__option"
+      type="button"
+      role="menuitemradio"
+      aria-checked="true"
+    >
+      Project Alpha
+    </button>
+    <button
+      class="c-dropdown__option"
+      type="button"
+      role="menuitemradio"
+      aria-checked="false"
+    >
+      Project Beta
+    </button>
   </div>
 </div>
 ```
 
+Update `aria-expanded` when the popover opens or closes. For single-choice
+menus, use `role="menuitemradio"` plus `aria-checked`; for command/action
+menus, use `role="menuitem"` and do not present the component as a submitted
+form value unless you sync one.
+
 ## Class contract
 
-| Selector               | Role                            |
-| ---------------------- | ------------------------------- |
-| `.c-dropdown`          | Container (inline-block).       |
-| `.c-dropdown__trigger` | The button that opens the menu. |
-| `.c-dropdown__chevron` | Arrow icon (rotates when open). |
-| `.c-dropdown__menu`    | The popover menu (anchored).    |
-| `.c-dropdown__option`  | A menu item (button or link).   |
-| `[aria-selected]`      | Highlighted option.             |
+| Selector               | Role                                                  |
+| ---------------------- | ----------------------------------------------------- |
+| `.c-dropdown`          | Container (inline-block).                             |
+| `.c-dropdown__trigger` | The button that opens the menu. Sync `aria-expanded`. |
+| `.c-dropdown__chevron` | Arrow icon (rotates when open).                       |
+| `.c-dropdown__menu`    | The popover menu (anchored).                          |
+| `.c-dropdown__option`  | A menu item (button or link).                         |
+| `[aria-selected]`      | Highlighted option.                                   |
+| `[aria-checked]`       | Checked menuitemradio option.                         |

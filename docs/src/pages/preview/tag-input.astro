@@ -11,35 +11,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Basic</h2>
-  <label class="c-field">
-    <span class="c-field__label">Skills</span>
+  <div class="c-field">
+    <label class="c-field__label" for="skills">Skills</label>
     <div class="c-tag-input">
       <span class="c-chip" data-tone="success">TypeScript <button class="c-chip__remove" aria-label="Remove TypeScript">x</button></span>
       <span class="c-chip" data-tone="success">React <button class="c-chip__remove" aria-label="Remove React">x</button></span>
       <span class="c-chip" data-tone="success">CSS <button class="c-chip__remove" aria-label="Remove CSS">x</button></span>
-      <input class="c-tag-input__field" placeholder="Add a skill..." />
+      <input id="skills" class="c-tag-input__field" placeholder="Add a skill..." />
     </div>
-  </label>
+  </div>
 
   <h2>Empty</h2>
-  <label class="c-field">
-    <span class="c-field__label">Email recipients</span>
+  <div class="c-field">
+    <label class="c-field__label" for="email-recipients">Email recipients</label>
     <div class="c-tag-input">
-      <input class="c-tag-input__field" type="email" placeholder="Type an email and press Enter..." />
+      <input id="email-recipients" class="c-tag-input__field" type="email" placeholder="Type an email and press Enter..." />
     </div>
-  </label>
+  </div>
 
   <h2>In a form</h2>
   <div class="l-stack" style="--l-stack-gap: var(--pl-space-3); max-inline-size: 30rem;">
-    <label class="c-field">
-      <span class="c-field__label">Product tags</span>
+    <div class="c-field">
+      <label class="c-field__label" for="product-tags">Product tags</label>
       <div class="c-tag-input">
         <span class="c-chip">featured <button class="c-chip__remove" aria-label="Remove featured">x</button></span>
         <span class="c-chip">new <button class="c-chip__remove" aria-label="Remove new">x</button></span>
         <span class="c-chip" data-tone="warning">limited <button class="c-chip__remove" aria-label="Remove limited">x</button></span>
-        <input class="c-tag-input__field" placeholder="Add tag..." />
+        <input id="product-tags" class="c-tag-input__field" placeholder="Add tag..." aria-describedby="product-tags-help" />
       </div>
-      <span class="c-field__hint">Press Enter or comma to add a tag.</span>
-    </label>
+      <span class="c-field__hint" id="product-tags-help">Press Enter or comma to add a tag.</span>
+    </div>
   </div>
 </BaseLayout>
