@@ -589,6 +589,40 @@ const groupedCommands = commands.reduce(
     --c-split-pane-pane-padding: var(--pl-space-5);
   }
 
+  @container (inline-size < 64rem) {
+    .command-split {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        minmax(16rem, auto)
+        var(--c-split-pane-separator-size)
+        minmax(20rem, 1fr);
+      overflow: visible;
+    }
+
+    .command-split > .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .command-split > .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .command-split > .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    .command-split > .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    .command-split > .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
+  }
+
   @media (width < 42rem) {
     .command-workspace {
       --l-container-pad: var(--pl-space-3);

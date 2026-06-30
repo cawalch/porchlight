@@ -1363,5 +1363,54 @@ test.describe("docs scaffold", () => {
         await expect(page.locator(kit.selector).first()).toBeAttached();
       });
     }
+
+    test("split-heavy kits keep primary work surfaces readable at narrow app widths", async ({
+      page,
+    }) => {
+      const surfaces = [
+        {
+          route: "./preview/app-list-detail",
+          selector: ".c-table-wrap",
+          minWidth: 680,
+        },
+        {
+          route: "./preview/app-queue-triage",
+          selector: ".c-workflow-board",
+          minWidth: 600,
+        },
+        {
+          route: "./preview/app-process-builder",
+          selector: ".c-workflow-board",
+          minWidth: 560,
+        },
+        {
+          route: "./preview/app-command-workspace",
+          selector: "[data-command-card]",
+          minWidth: 620,
+        },
+      ];
+
+      await page.setViewportSize({ width: 1024, height: 768 });
+
+      for (const surface of surfaces) {
+        await page.goto(surface.route);
+
+        if (surface.route.endsWith("app-command-workspace")) {
+          await page
+            .locator("#workspace-command")
+            .evaluate((popover: HTMLElement) => popover.hidePopover?.());
+        }
+
+        const width = await page
+          .locator(surface.selector)
+          .first()
+          .evaluate((element) => element.getBoundingClientRect().width);
+
+        expect(width).toBeGreaterThanOrEqual(surface.minWidth);
+        expect(
+          await page.evaluate(() => document.documentElement.scrollWidth),
+        ).toBeLessThanOrEqual(1025);
+      }
+    });
   });
 });

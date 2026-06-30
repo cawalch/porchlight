@@ -821,6 +821,46 @@ const steps: ProcessLane[] = [
     --c-split-pane-pane-padding: var(--pl-space-5);
   }
 
+  @container (inline-size < 64rem) {
+    .builder-split,
+    .builder-editor-split {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        minmax(12rem, auto)
+        var(--c-split-pane-separator-size)
+        minmax(20rem, 1fr);
+      overflow: visible;
+    }
+
+    .builder-split > .c-split-pane__pane--start,
+    .builder-editor-split > .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .builder-split > .c-split-pane__pane--end,
+    .builder-editor-split > .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .builder-split > .c-split-pane__separator,
+    .builder-editor-split > .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    .builder-split > .c-split-pane__separator::before,
+    .builder-editor-split > .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    .builder-split > .c-split-pane__separator::after,
+    .builder-editor-split > .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
+  }
+
   @media (width < 42rem) {
     .builder-workspace {
       --l-container-pad: var(--pl-space-3);
