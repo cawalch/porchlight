@@ -5,9 +5,10 @@
  * Zero JavaScript for positioning. Auto-flips when near viewport edges via
  * position-try-fallbacks.
  *
- * The tooltip appears on :hover and :focus-visible of the trigger. It is
- * tethered via anchor-name/position-anchor. Without anchor positioning
- * support (@supports gate), the tooltip is hidden (no misleading placement).
+ * The tooltip appears on :hover of the trigger and :focus-visible of the
+ * trigger or a focusable descendant. It is tethered via
+ * anchor-name/position-anchor. Without anchor positioning support
+ * (@supports gate), the tooltip is hidden (no misleading placement).
  *
  * Structure: .c-tooltip wraps a trigger element. The tooltip body is a child
  * with role="tooltip" and an id referenced by aria-describedby on the trigger.
@@ -52,7 +53,12 @@
       color: var(--c-tooltip-text);
       font-size: var(--c-tooltip-font-size);
       line-height: var(--pl-leading-tight);
-      max-inline-size: var(--c-tooltip-max-inline);
+      inline-size: max-content;
+      max-inline-size: min(
+        var(--c-tooltip-max-inline),
+        calc(100vw - var(--pl-space-8))
+      );
+      overflow-wrap: break-word;
       text-wrap: balance;
       box-shadow: var(--pl-shadow-2);
       z-index: var(--pl-z-overlay);
@@ -64,16 +70,19 @@
     /* Anchor positioning: tether above the trigger, try flipping below. */
     @supports (position-anchor: --x) {
       .c-tooltip__body {
+        position: fixed;
         position-anchor: var(--c-tooltip-anchor);
-        position-area: block-start span-inline-end;
+        position-area: block-start;
         margin-block-end: var(--pl-space-2);
+        margin-inline: var(--pl-space-2);
         position-try-fallbacks: flip-block;
       }
     }
 
-    /* Show on trigger hover/focus. */
+    /* Show on trigger hover or keyboard focus within the trigger wrapper. */
     :scope:has(.c-tooltip__trigger:hover) .c-tooltip__body,
-    :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body {
+    :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body,
+    :scope:has(.c-tooltip__trigger :focus-visible) .c-tooltip__body {
       opacity: 1;
       display: block;
     }
@@ -81,7 +90,8 @@
     /* Enter animation. */
     @starting-style {
       :scope:has(.c-tooltip__trigger:hover) .c-tooltip__body,
-      :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body {
+      :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body,
+      :scope:has(.c-tooltip__trigger :focus-visible) .c-tooltip__body {
         opacity: 0;
       }
     }
