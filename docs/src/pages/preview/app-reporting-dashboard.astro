@@ -54,7 +54,7 @@ const toneFor = (status: string) =>
   ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning' }[status] ?? 'accent');
 ---
 <BaseLayout title="Reporting dashboard · Porchlight">
-  <main class="l-container l-stack" style="--l-stack-gap: var(--pl-space-5); --l-container-max: 92rem;">
+  <section class="preview-bleed l-container l-stack reporting-workspace">
     <section class="l-stack" aria-labelledby="report-title" style="--l-stack-gap: var(--pl-space-4);">
       <div class="c-page-header">
         <div class="c-page-header__heading">
@@ -323,5 +323,20 @@ const toneFor = (status: string) =>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 </BaseLayout>
+
+<style>
+  .reporting-workspace {
+    --l-container-max: 104rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  @media (width < 42rem) {
+    .reporting-workspace {
+      --l-container-pad: var(--pl-space-3);
+      --l-stack-gap: var(--pl-space-4);
+    }
+  }
+</style>

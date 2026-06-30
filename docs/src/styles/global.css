@@ -120,9 +120,9 @@ main {
 
 /* App-shell pages use a full-bleed grid that owns its own layout — the
    content-width constraint and padding above must NOT apply.
-   Only triggers when the app shell is a DIRECT child of main (a real
-   full-bleed app page), not when it's nested inside a <section> demo. */
-main:has(> .l-app-shell, > .hero-bleed) {
+   Only triggers for direct-child app shells or opted-in preview surfaces, not
+   when an app shell is nested inside a <section> demo. */
+main:has(> .l-app-shell, > .hero-bleed, > .preview-bleed) {
   inline-size: 100%;
   max-inline-size: none;
   margin-inline: 0;

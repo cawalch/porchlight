@@ -71,7 +71,7 @@ const settingsNav: SettingsNavItem[] = [
     </aside>
 
     <main class="l-app-shell__main">
-      <div class="l-container" style="--l-container-max: 76rem; padding-block: var(--pl-space-6);">
+      <div class="l-container settings-workspace">
         <div class="c-page-header">
           <div class="c-page-header__heading">
             <h1 class="c-page-header__title">Settings</h1>
@@ -326,3 +326,20 @@ const settingsNav: SettingsNavItem[] = [
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .settings-workspace {
+    --l-container-max: 88rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+
+    padding-block: var(--pl-space-6);
+  }
+
+  @media (width < 42rem) {
+    .settings-workspace {
+      --l-container-pad: var(--pl-space-3);
+
+      padding-block: var(--pl-space-4);
+    }
+  }
+</style>

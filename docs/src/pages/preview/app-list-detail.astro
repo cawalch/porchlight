@@ -128,7 +128,7 @@ const selected = requests[0];
     </aside>
 
     <main class="l-app-shell__main">
-      <div class="l-container l-stack" style="--l-container-max: 96rem; --l-stack-gap: var(--pl-space-4); padding-block: var(--pl-space-4);">
+      <div class="l-container l-stack list-detail-workspace">
         <div class="c-page-header">
           <div class="c-page-header__heading">
             <h1 class="c-page-header__title">Operator queue</h1>
@@ -141,10 +141,9 @@ const selected = requests[0];
         </div>
 
         <section
-          class="c-split-pane"
+          class="c-split-pane list-detail-split"
           data-orientation="horizontal"
           data-collapse="stack"
-          style="--c-split-pane-start-size: minmax(38rem, 1.45fr); --c-split-pane-end-size: minmax(20rem, 0.8fr); --c-split-pane-min-block-size: 38rem;"
           aria-label="Request list and selected detail"
         >
           <section class="c-split-pane__pane c-split-pane__pane--start" aria-label="Request queue">
@@ -481,3 +480,34 @@ const selected = requests[0];
     });
   </script>
 </BaseLayout>
+
+<style>
+  .list-detail-workspace {
+    --l-container-max: 108rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --l-stack-gap: var(--pl-space-5);
+
+    padding-block: var(--pl-space-5);
+  }
+
+  .list-detail-split {
+    --c-split-pane-start-size: minmax(42rem, 1.38fr);
+    --c-split-pane-end-size: minmax(24rem, 0.82fr);
+    --c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
+    --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  @media (width < 42rem) {
+    .list-detail-workspace {
+      --l-container-pad: var(--pl-space-3);
+      --l-stack-gap: var(--pl-space-4);
+
+      padding-block: var(--pl-space-3);
+    }
+
+    .list-detail-split {
+      --c-split-pane-min-block-size: 0;
+      --c-split-pane-pane-padding: var(--pl-space-4);
+    }
+  }
+</style>

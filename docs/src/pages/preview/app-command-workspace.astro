@@ -154,7 +154,7 @@ const groupedCommands = commands.reduce(
     </aside>
 
     <main class="l-app-shell__main">
-      <div class="l-container" style="--l-container-max: 86rem; padding-block: var(--pl-space-5);">
+      <div class="l-container l-stack command-workspace">
         <div class="c-page-header">
           <div class="c-page-header__heading">
             <h1 class="c-page-header__title">Command center</h1>
@@ -195,9 +195,8 @@ const groupedCommands = commands.reduce(
         </div>
 
         <div
-          class="c-split-pane"
+          class="c-split-pane command-split"
           data-collapse="stack"
-          style="--c-split-pane-start-size: minmax(18rem, 0.82fr); --c-split-pane-end-size: minmax(20rem, 1fr); --c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));"
         >
           <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="workspace-results-title">
             <header class="c-split-pane__header">
@@ -573,3 +572,34 @@ const groupedCommands = commands.reduce(
     requestAnimationFrame(() => palette?.showPopover());
   </script>
 </BaseLayout>
+
+<style>
+  .command-workspace {
+    --l-container-max: 104rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --l-stack-gap: var(--pl-space-5);
+
+    padding-block: var(--pl-space-5);
+  }
+
+  .command-split {
+    --c-split-pane-start-size: minmax(24rem, 0.88fr);
+    --c-split-pane-end-size: minmax(28rem, 1.12fr);
+    --c-split-pane-min-block-size: min(38rem, calc(100dvb - 12rem));
+    --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  @media (width < 42rem) {
+    .command-workspace {
+      --l-container-pad: var(--pl-space-3);
+      --l-stack-gap: var(--pl-space-4);
+
+      padding-block: var(--pl-space-3);
+    }
+
+    .command-split {
+      --c-split-pane-min-block-size: 0;
+      --c-split-pane-pane-padding: var(--pl-space-4);
+    }
+  }
+</style>
