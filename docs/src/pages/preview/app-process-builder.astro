@@ -513,117 +513,119 @@ const steps: ProcessLane[] = [
                 aria-label="Process map and inspector"
               >
                 <section
-                  class="c-split-pane__pane c-split-pane__pane--start"
+                  class="c-split-pane__pane c-split-pane__pane--start builder-map-pane"
                   aria-label="Process map"
                   tabindex="0"
                 >
-                  <section
-                    class="c-workflow-board"
-                    aria-labelledby="vendor-map-title"
-                  >
-                    <div class="c-workflow-board__header">
-                      <div>
-                        <h3
-                          class="c-workflow-board__title"
-                          id="vendor-map-title"
-                        >
-                          Vendor onboarding
-                        </h3>
-                        <p class="c-workflow-board__meta">
-                          Sequence view for the current draft.
-                        </p>
-                      </div>
-                      <div class="c-workflow-board__tools">
-                        <button
-                          class="c-button"
-                          data-variant="secondary"
-                          data-size="sm"
-                          type="button"
-                        >
-                          Add step
-                        </button>
-                      </div>
-                    </div>
-
+                  <div class="c-split-pane__pane-inner builder-map-pane__inner">
                     <section
-                      class="c-workflow-board__swimlane"
-                      aria-labelledby="draft-path"
+                      class="c-workflow-board"
+                      aria-labelledby="vendor-map-title"
                     >
-                      <div class="c-workflow-board__swimlane-header">
-                        <h4
-                          class="c-workflow-board__swimlane-title"
-                          id="draft-path"
-                        >
-                          Approval path
-                        </h4>
-                        <span class="c-workflow-board__swimlane-meta">
-                          Low-code map with app-owned ordering
-                        </span>
+                      <div class="c-workflow-board__header">
+                        <div>
+                          <h3
+                            class="c-workflow-board__title"
+                            id="vendor-map-title"
+                          >
+                            Vendor onboarding
+                          </h3>
+                          <p class="c-workflow-board__meta">
+                            Sequence view for the current draft.
+                          </p>
+                        </div>
+                        <div class="c-workflow-board__tools">
+                          <button
+                            class="c-button"
+                            data-variant="secondary"
+                            data-size="sm"
+                            type="button"
+                          >
+                            Add step
+                          </button>
+                        </div>
                       </div>
-                      <div class="c-workflow-board__lanes" data-scroll="inline">
-                        {
-                          steps.map((lane) => (
-                            <section
-                              class="c-workflow-lane"
-                              aria-labelledby={`lane-${lane.title.toLowerCase()}`}
-                            >
-                              <header class="c-workflow-lane__header">
-                                <div class="c-workflow-lane__heading">
-                                  <h5
-                                    class="c-workflow-lane__title"
-                                    id={`lane-${lane.title.toLowerCase()}`}
+
+                      <section
+                        class="c-workflow-board__swimlane"
+                        aria-labelledby="draft-path"
+                      >
+                        <div class="c-workflow-board__swimlane-header">
+                          <h4
+                            class="c-workflow-board__swimlane-title"
+                            id="draft-path"
+                          >
+                            Approval path
+                          </h4>
+                          <span class="c-workflow-board__swimlane-meta">
+                            Low-code map with app-owned ordering
+                          </span>
+                        </div>
+                        <div class="c-workflow-board__lanes">
+                          {
+                            steps.map((lane) => (
+                              <section
+                                class="c-workflow-lane"
+                                aria-labelledby={`lane-${lane.title.toLowerCase()}`}
+                              >
+                                <header class="c-workflow-lane__header">
+                                  <div class="c-workflow-lane__heading">
+                                    <h5
+                                      class="c-workflow-lane__title"
+                                      id={`lane-${lane.title.toLowerCase()}`}
+                                    >
+                                      {lane.title}
+                                    </h5>
+                                    <span class="c-workflow-lane__count">
+                                      {lane.count}
+                                    </span>
+                                  </div>
+                                  <span
+                                    class="c-workflow-lane__wip"
+                                    data-state={lane.state}
                                   >
-                                    {lane.title}
-                                  </h5>
-                                  <span class="c-workflow-lane__count">
-                                    {lane.count}
+                                    {lane.wip}
                                   </span>
+                                </header>
+                                <div class="c-workflow-lane__body">
+                                  {lane.cards.map((card) => (
+                                    <article
+                                      class="c-workflow-card"
+                                      data-selected={
+                                        card.selected ? '' : undefined
+                                      }
+                                      data-priority={
+                                        card.high ? 'high' : undefined
+                                      }
+                                    >
+                                      <div class="c-workflow-card__header">
+                                        <h6 class="c-workflow-card__title">
+                                          {card.title}
+                                        </h6>
+                                        <span
+                                          class="c-badge"
+                                          data-tone={card.tone}
+                                        >
+                                          {card.badge}
+                                        </span>
+                                      </div>
+                                      <p class="c-workflow-card__body">
+                                        {card.body}
+                                      </p>
+                                      <div class="c-workflow-card__meta">
+                                        <span>{card.id}</span>
+                                        <span>2 fields</span>
+                                      </div>
+                                    </article>
+                                  ))}
                                 </div>
-                                <span
-                                  class="c-workflow-lane__wip"
-                                  data-state={lane.state}
-                                >
-                                  {lane.wip}
-                                </span>
-                              </header>
-                              <div class="c-workflow-lane__body">
-                                {lane.cards.map((card) => (
-                                  <article
-                                    class="c-workflow-card"
-                                    data-selected={
-                                      card.selected ? '' : undefined
-                                    }
-                                    data-priority={
-                                      card.high ? 'high' : undefined
-                                    }
-                                  >
-                                    <div class="c-workflow-card__header">
-                                      <h6 class="c-workflow-card__title">
-                                        {card.title}
-                                      </h6>
-                                      <span
-                                        class="c-badge"
-                                        data-tone={card.tone}
-                                      >
-                                        {card.badge}
-                                      </span>
-                                    </div>
-                                    <p class="c-workflow-card__body">
-                                      {card.body}
-                                    </p>
-                                    <div class="c-workflow-card__meta">
-                                      <span>{card.id}</span>
-                                      <span>2 fields</span>
-                                    </div>
-                                  </article>
-                                ))}
-                              </div>
-                            </section>
-                          ))
-                        }
-                      </div>
+                              </section>
+                            ))
+                          }
+                        </div>
+                      </section>
                     </section>
-                  </section>
+                  </div>
                 </section>
 
                 <div
@@ -819,6 +821,61 @@ const steps: ProcessLane[] = [
     --c-split-pane-fixed-size: clamp(26rem, 24vi, 32rem);
     --c-split-pane-min-block-size: 38rem;
     --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  .builder-map-pane__inner {
+    min-block-size: 100%;
+  }
+
+  .builder-map-pane .c-workflow-board {
+    min-inline-size: 0;
+  }
+
+  .builder-map-pane .c-workflow-board__lanes {
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    overflow-x: visible;
+    padding-block-end: 0;
+    scroll-snap-type: none;
+  }
+
+  .builder-map-pane .c-workflow-lane {
+    scroll-snap-align: none;
+  }
+
+  @container (inline-size < 88rem) {
+    .builder-editor-split {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        minmax(20rem, auto)
+        var(--c-split-pane-separator-size)
+        minmax(20rem, 1fr);
+      overflow: visible;
+    }
+
+    .builder-editor-split > .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .builder-editor-split > .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .builder-editor-split > .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    .builder-editor-split > .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    .builder-editor-split > .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
   }
 
   @container (inline-size < 64rem) {

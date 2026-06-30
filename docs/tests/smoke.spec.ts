@@ -1412,5 +1412,45 @@ test.describe("docs scaffold", () => {
         ).toBeLessThanOrEqual(1025);
       }
     });
+
+    test("process builder map keeps readable inset without unnecessary lane scroll", async ({
+      page,
+    }) => {
+      for (const width of [1600, 1024]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto("./preview/app-process-builder");
+
+        const layout = await page.evaluate(() => {
+          const pane = document.querySelector(".builder-map-pane");
+          const board = document.querySelector(
+            ".builder-map-pane .c-workflow-board",
+          );
+          const lanes = document.querySelector(
+            ".builder-map-pane .c-workflow-board__lanes",
+          );
+
+          if (!(pane && board && lanes)) {
+            return null;
+          }
+
+          const paneRect = pane.getBoundingClientRect();
+          const boardRect = board.getBoundingClientRect();
+
+          return {
+            inlineInset: boardRect.left - paneRect.left,
+            blockInset: boardRect.top - paneRect.top,
+            laneClientWidth: lanes.clientWidth,
+            laneScrollWidth: lanes.scrollWidth,
+          };
+        });
+
+        expect(layout).not.toBeNull();
+        expect(layout!.inlineInset).toBeGreaterThanOrEqual(16);
+        expect(layout!.blockInset).toBeGreaterThanOrEqual(16);
+        expect(layout!.laneScrollWidth).toBeLessThanOrEqual(
+          layout!.laneClientWidth + 1,
+        );
+      }
+    });
   });
 });
