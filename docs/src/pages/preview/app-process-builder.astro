@@ -830,7 +830,19 @@ const steps: ProcessLane[] = [
 
   .builder-split,
   .builder-editor-split {
+    position: relative;
     overflow: visible;
+  }
+
+  .builder-split::after,
+  .builder-editor-split::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border: 1px solid var(--pl-color-border);
+    border-radius: inherit;
   }
 
   .builder-split .c-split-pane__header {

@@ -1470,8 +1470,9 @@ test.describe("docs scaffold", () => {
         const inspector = document.querySelector(
           ".builder-editor-split > .c-split-pane__pane--end",
         );
+        const editorSplit = document.querySelector(".builder-editor-split");
 
-        if (!(siteHeader && appTopbar && map && inspector)) {
+        if (!(siteHeader && appTopbar && map && inspector && editorSplit)) {
           return null;
         }
 
@@ -1480,6 +1481,7 @@ test.describe("docs scaffold", () => {
         const inspectorRect = inspector.getBoundingClientRect();
         const mapStyle = getComputedStyle(map);
         const inspectorStyle = getComputedStyle(inspector);
+        const frameStroke = getComputedStyle(editorSplit, "::after");
 
         return {
           appTopbarBelowHeader: appTopbarRect.bottom <= 0,
@@ -1494,6 +1496,10 @@ test.describe("docs scaffold", () => {
           inspectorUsesPageScroll:
             inspectorStyle.overflowY === "visible" &&
             inspectorStyle.overscrollBehavior === "auto",
+          editorFrameStroke:
+            frameStroke.borderTopStyle === "solid" &&
+            frameStroke.borderTopWidth === "1px" &&
+            frameStroke.borderRadius !== "0px",
         };
       });
 
@@ -1503,6 +1509,7 @@ test.describe("docs scaffold", () => {
       expect(desktopLayout!.inspectorInline).toBe(true);
       expect(desktopLayout!.mapUsesPageScroll).toBe(true);
       expect(desktopLayout!.inspectorUsesPageScroll).toBe(true);
+      expect(desktopLayout!.editorFrameStroke).toBe(true);
     });
   });
 });
