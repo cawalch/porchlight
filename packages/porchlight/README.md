@@ -1,6 +1,8 @@
 # @cawalch/porchlight
 
-The Porchlight CSS framework package. See the root [README](../../README.md) and the [docs site](https://cawalch.github.io/porchlight) for full documentation.
+Porchlight is a no-dependency, native-CSS framework for accessible,
+themeable web applications. See the root [README](../../README.md) and
+the [docs site](https://cawalch.github.io/porchlight) for full guidance.
 
 ## Install
 
@@ -10,107 +12,180 @@ pnpm add @cawalch/porchlight
 npm install @cawalch/porchlight
 ```
 
-## Quick start
+## Full Bundle
 
-The main export is the **prebuilt** stylesheet (single file, no `@import` to resolve):
-
-```css
-/* app.css */
-@import "@cawalch/porchlight";
-```
-
-## Layer ordering
-
-Porchlight wraps every rule in `@layer porchlight.*`. Declare your layer order
-**before** the import so your app styles win:
-
-```css
-@layer porchlight, app;
-
-@import "@cawalch/porchlight";
-```
-
-Do **not** pass `layer(...)` to the `@import` — Porchlight already self-layers.
-
-## Bundler notes
-
-### Vite (recommended)
-
-Works out of the box. Vite uses esbuild + Lightning CSS under the hood and
-handles modern CSS syntax (`@property`, `@scope`, `@container scroll-state()`)
-natively.
+The main export is a prebuilt stylesheet: one file, no `@import` statements
+for your bundler to resolve.
 
 ```css
 @layer porchlight, app;
 @import "@cawalch/porchlight";
+
+@layer app {
+  /* your product styles */
+}
 ```
 
-### esbuild / Bun
+## Smaller Bundles
 
-esbuild and Bun's built-in CSS parsers **do not understand** `@property`,
-`@scope`, or `@container scroll-state()`. They throw a hard parse error on these
-features even though the CSS is already prebuilt.
+If your app only uses a few components, start with `core.css`, then import
+the pieces you need.
 
-**Workaround — bypass the bundler's CSS pipeline:**
+```css
+@layer porchlight, app;
 
-Copy the prebuilt file directly into your project's static/public assets folder
-and load it via a `<link>` tag instead of a CSS `@import`:
+@import "@cawalch/porchlight/core.css";
+@import "@cawalch/porchlight/layout.css";
+@import "@cawalch/porchlight/components/button.css";
+@import "@cawalch/porchlight/components/field.css";
+@import "@cawalch/porchlight/components/card.css";
+@import "@cawalch/porchlight/utilities.css";
+```
+
+`core.css` includes layer order, reset, tokens, themes, and base styles.
+Component files depend on those tokens, so load `core.css` first.
+
+If you want the whole practical framework without experimental enhancement
+syntax, use `compat.css`. It includes core, layout, all components, and
+utilities, but leaves out `enhancements.css`.
+
+```css
+@layer porchlight, app;
+@import "@cawalch/porchlight/compat.css";
+```
+
+## Static HTML
+
+For server-rendered apps or pipelines that copy assets directly, use the
+included copy helper:
 
 ```sh
-cp node_modules/@cawalch/porchlight/dist/porchlight.css ./static/porchlight.css
+npx porchlight copy --out public/porchlight --compat
+```
+
+For a smaller static slice, name the components you use:
+
+```sh
+npx porchlight copy --out public/porchlight --components button,field --layout --utilities
 ```
 
 ```html
-<!-- index.html -->
-<link rel="stylesheet" href="/porchlight.css" />
+<link rel="stylesheet" href="/porchlight/core.css" />
+<link rel="stylesheet" href="/porchlight/components/button.css" />
+<link rel="stylesheet" href="/porchlight/components/field.css" />
+<link rel="stylesheet" href="/app.css" />
 ```
 
-Then declare your layer order in your app's own CSS:
+In `app.css`, declare your layer order before writing overrides:
 
 ```css
-/* app.css — loaded after porchlight.css */
 @layer porchlight, app;
+
+@layer app {
+  /* app overrides */
+}
 ```
 
-### @layer + @import ordering caveat
+The generated `dist/porchlight.manifest.json` lists every packaged CSS file,
+component name, and recommended copy order for scripts.
 
-Some bundlers **hoist** `@import` statements to the top of the file during
-processing, which can move them above your `@layer` declaration and reverse the
-intended order. If you encounter this:
+## Vite
 
-1. Import Porchlight from your **entry JS/TS** file, not from CSS:
+Vite handles CSS `@import` and modern CSS syntax well, so either the full
+bundle or selected component imports work.
+
+```css
+@layer porchlight, app;
+@import "@cawalch/porchlight/core.css";
+@import "@cawalch/porchlight/components/button.css";
+@import "@cawalch/porchlight/components/data-table.css";
+@import "@cawalch/porchlight/utilities.css";
+```
+
+You can also import CSS from your JS/TS entry when that is more convenient:
 
 ```ts
-// app.ts
-import "@cawalch/porchlight";
+import "@cawalch/porchlight/core.css";
+import "@cawalch/porchlight/components/button.css";
 import "./app.css";
 ```
 
-2. Declare `@layer` only in your app's CSS (no `@import` there to hoist):
+## Bun And Other Static Pipelines
+
+Bun 1.3.14 can bundle `compat.css` and selected component imports. It may
+print non-fatal warnings for `@property`.
 
 ```css
-/* app.css */
 @layer porchlight, app;
-
-/* your styles */
+@import "@cawalch/porchlight/compat.css";
 ```
 
-This guarantees the JS loader injects Porchlight first, then your CSS — and
-your `@layer` declaration is never reordered.
+```css
+@layer porchlight, app;
+@import "@cawalch/porchlight/core.css";
+@import "@cawalch/porchlight/components/button.css";
+```
+
+The full default bundle and `enhancements.css` include
+`@container scroll-state(...)`, which Bun 1.3.14 does not parse. If you need
+those enhancement rules, bypass CSS parsing and copy the prebuilt files to
+static assets instead:
+
+```sh
+bun x porchlight copy --out public/porchlight --full
+```
+
+That path is also the best fit for Go, Rails, Django, and other
+server-rendered apps that serve CSS through a static file handler.
+
+## Tokens
+
+Porchlight ships generated token metadata for editor autocomplete,
+validation, and custom tooling.
+
+```ts
+import tokenDoc, { tokenGroups } from "@cawalch/porchlight/tokens";
+
+console.log(tokenDoc.tokens["--pl-color-accent"].value);
+console.log(tokenGroups.map((group) => group.name));
+```
+
+JSON is available too:
+
+```ts
+import tokens from "@cawalch/porchlight/tokens.json";
+```
 
 ## Exports
 
-| Import path                  | What you get                                           |
-| ---------------------------- | ------------------------------------------------------ |
-| `@cawalch/porchlight`        | Prebuilt single-file CSS (recommended)                 |
-| `@cawalch/porchlight/min`    | Minified prebuilt CSS                                  |
-| `@cawalch/porchlight/source` | Raw source with `@import` (needs Lightning CSS / Vite) |
-| `@cawalch/porchlight/src/*`  | Individual source layer files                          |
+| Import path                                 | What you get                             |
+| ------------------------------------------- | ---------------------------------------- |
+| `@cawalch/porchlight`                       | Full prebuilt CSS bundle                 |
+| `@cawalch/porchlight/min.css`               | Minified full bundle                     |
+| `@cawalch/porchlight/compat.css`            | Bun-friendly bundle without enhancements |
+| `@cawalch/porchlight/core.css`              | Layer order, reset, tokens, themes, base |
+| `@cawalch/porchlight/layout.css`            | Layout primitives                        |
+| `@cawalch/porchlight/components.css`        | All component CSS                        |
+| `@cawalch/porchlight/components/button.css` | One component CSS file                   |
+| `@cawalch/porchlight/utilities.css`         | Utility classes                          |
+| `@cawalch/porchlight/enhancements.css`      | Progressive enhancement layer            |
+| `@cawalch/porchlight/tokens`                | Typed token metadata module              |
+| `@cawalch/porchlight/tokens.json`           | Token metadata JSON                      |
+| `@cawalch/porchlight/manifest.json`         | Static-copy manifest                     |
+| `@cawalch/porchlight/src/*`                 | Raw source escape hatch                  |
 
-## Browser support
+## Layer Ordering
 
-Targets Chrome/Edge 149+, Safari 18+, Firefox 135+. Uses `@layer`, `@scope`,
-`@property`, OKLCH, `light-dark()`, `color-mix()`, `:has()`, container queries,
-Popover API, and anchor positioning. See the
+Porchlight wraps every rule in `@layer porchlight.*`. Declare your app layer
+after Porchlight so product CSS wins without specificity fights.
+
+Do not pass `layer(...)` to these imports. Porchlight already self-layers.
+
+## Browser Support
+
+Targets Chrome/Edge 149+, Safari 18+, Firefox 135+. Porchlight uses
+modern CSS including `@layer`, `@scope`, `@property`, OKLCH,
+`light-dark()`, `color-mix()`, `:has()`, container queries, Popover API,
+and anchor positioning. See the
 [Browser Support guide](https://cawalch.github.io/porchlight/guides/browser-support)
-for the full feature matrix mapped to the [CSS Snapshot 2026](https://www.w3.org/TR/css-2026/).
+for the full feature matrix.

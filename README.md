@@ -33,7 +33,7 @@ pnpm add @cawalch/porchlight
 ```css
 /* Place the framework in the cascade before importing it, so your app wins. */
 @layer porchlight, app;
-@import "@cawalch/porchlight/porchlight.css";
+@import "@cawalch/porchlight";
 ```
 
 The package is pre-1.0; npm releases follow matching git tags such as `v0.9.0`.

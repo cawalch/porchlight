@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added modular package artifacts for smaller CSS installs: `core.css`,
+  `compat.css`, `layout.css`, `components.css`, per-component CSS files,
+  `utilities.css`, and `enhancements.css`. The npm package also now ships a
+  static-copy manifest plus generated token metadata in JSON, ESM, and
+  TypeScript declaration forms. (#82)
+- Added a zero-dependency `porchlight copy --out <dir>` helper so Bun,
+  Go/server-rendered, and static-asset pipelines can copy full, compat, or
+  selected component CSS without writing their own `cp node_modules/...`
+  scripts. (#82)
+
+### Changed
+
+- Simplified package exports around canonical CSS and token entry points,
+  replacing duplicate aliases with readable `.css` subpaths and clearer
+  Vite, Bun, and static-asset setup docs. (#82)
+
 ## [0.9.0] - 2026-06-30
 
 ### Added
