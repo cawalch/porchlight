@@ -1413,6 +1413,86 @@ test.describe("docs scaffold", () => {
       }
     });
 
+    test("list detail preview keeps medium-width spacing and table overflow controlled", async ({
+      page,
+    }) => {
+      for (const width of [1024, 1440, 1600]) {
+        await page.setViewportSize({
+          width,
+          height: width === 1024 ? 576 : 720,
+        });
+        await page.goto("./preview/app-list-detail");
+
+        const layout = await page.evaluate(() => {
+          const shellTopbar = document.querySelector(
+            ".list-detail-shell > .l-app-shell__topbar",
+          );
+          const sidebar = document.querySelector(".l-app-shell__sidebar");
+          const workspace = document.querySelector(".list-detail-workspace");
+          const split = document.querySelector(".list-detail-split");
+          const startPane = document.querySelector(
+            ".list-detail-split > .c-split-pane__pane--start",
+          );
+          const endPane = document.querySelector(
+            ".list-detail-split > .c-split-pane__pane--end",
+          );
+          const tableWrap = document.querySelector(".list-detail-table");
+          const dueHeader = document.querySelector(
+            ".list-detail-table th:nth-child(6)",
+          );
+
+          if (
+            !(
+              shellTopbar &&
+              sidebar &&
+              workspace &&
+              split &&
+              startPane &&
+              endPane &&
+              tableWrap &&
+              dueHeader
+            )
+          ) {
+            return null;
+          }
+
+          const sidebarRect = sidebar.getBoundingClientRect();
+          const workspaceRect = workspace.getBoundingClientRect();
+          const splitRect = split.getBoundingClientRect();
+          const startRect = startPane.getBoundingClientRect();
+          const endRect = endPane.getBoundingClientRect();
+
+          return {
+            appTopbarStatic:
+              getComputedStyle(shellTopbar).position === "static",
+            workspaceAligned:
+              Math.abs(workspaceRect.left - splitRect.left) < 2 &&
+              workspaceRect.left - sidebarRect.right >= 16,
+            tableDoesNotForceHorizontalScroll:
+              tableWrap.scrollWidth <= tableWrap.clientWidth + 1,
+            detailStacksWhenNarrow:
+              innerWidth > 1024 || endRect.top > startRect.bottom,
+            detailInlineWhenWide:
+              innerWidth < 1440 ||
+              (Math.abs(startRect.top - endRect.top) < 4 &&
+                endRect.left > startRect.left),
+            dueColumnResponsive:
+              innerWidth < 1600
+                ? getComputedStyle(dueHeader).display === "none"
+                : getComputedStyle(dueHeader).display !== "none",
+          };
+        });
+
+        expect(layout).not.toBeNull();
+        expect(layout!.appTopbarStatic).toBe(true);
+        expect(layout!.workspaceAligned).toBe(true);
+        expect(layout!.tableDoesNotForceHorizontalScroll).toBe(true);
+        expect(layout!.detailStacksWhenNarrow).toBe(true);
+        expect(layout!.detailInlineWhenWide).toBe(true);
+        expect(layout!.dueColumnResponsive).toBe(true);
+      }
+    });
+
     test("process builder map keeps readable inset without unnecessary lane scroll", async ({
       page,
     }) => {

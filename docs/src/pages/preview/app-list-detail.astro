@@ -60,7 +60,7 @@ const selected = requests[0];
 ---
 
 <BaseLayout title="List/detail workspace · Porchlight">
-  <div class="l-app-shell">
+  <div class="l-app-shell list-detail-shell">
     <header class="l-app-shell__topbar c-toolbar" data-surface="panel">
       <div class="c-toolbar__group">
         <button class="c-button" data-variant="ghost" data-size="sm" type="button" aria-label="Toggle navigation">
@@ -175,8 +175,8 @@ const selected = requests[0];
               </div>
             </div>
 
-            <div class="c-table-wrap" data-density="compact">
-              <table class="c-table" style="--c-table-min: 48rem;">
+            <div class="c-table-wrap list-detail-table" data-density="compact" data-overflow="truncate">
+              <table class="c-table">
                 <thead>
                   <tr>
                     <th class="c-table__check">
@@ -482,8 +482,13 @@ const selected = requests[0];
 </BaseLayout>
 
 <style>
+  .list-detail-shell > .l-app-shell__topbar {
+    position: static;
+    z-index: auto;
+  }
+
   .list-detail-workspace {
-    --l-container-max: 108rem;
+    --l-container-max: 104rem;
     --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
     --l-stack-gap: var(--pl-space-5);
 
@@ -495,6 +500,16 @@ const selected = requests[0];
     --c-split-pane-end-size: minmax(24rem, 0.82fr);
     --c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
     --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  .list-detail-table {
+    --c-table-min: min(100%, 42rem);
+  }
+
+  @container c-table-wrap (inline-size < 48rem) {
+    .list-detail-table .c-table :where(th, td):nth-child(6) {
+      display: none;
+    }
   }
 
   @container (inline-size < 64rem) {
@@ -542,6 +557,10 @@ const selected = requests[0];
     .list-detail-split {
       --c-split-pane-min-block-size: 0;
       --c-split-pane-pane-padding: var(--pl-space-4);
+    }
+
+    .list-detail-table {
+      --c-table-min: 100%;
     }
   }
 </style>
