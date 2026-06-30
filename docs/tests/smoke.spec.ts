@@ -1452,5 +1452,57 @@ test.describe("docs scaffold", () => {
         );
       }
     });
+
+    test("process builder preview keeps desktop inspector inline and page scroll intact", async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1600, height: 900 });
+      await page.goto("./preview/app-process-builder");
+      await page.locator(".builder-editor-split").scrollIntoViewIfNeeded();
+
+      const desktopLayout = await page.evaluate(() => {
+        const siteHeader = document.querySelector(".site-header");
+        const topElement = document.elementFromPoint(innerWidth / 2, 24);
+        const appTopbar = document.querySelector(
+          ".builder-shell > .l-app-shell__topbar",
+        );
+        const map = document.querySelector(".builder-map-pane");
+        const inspector = document.querySelector(
+          ".builder-editor-split > .c-split-pane__pane--end",
+        );
+
+        if (!(siteHeader && appTopbar && map && inspector)) {
+          return null;
+        }
+
+        const appTopbarRect = appTopbar.getBoundingClientRect();
+        const mapRect = map.getBoundingClientRect();
+        const inspectorRect = inspector.getBoundingClientRect();
+        const mapStyle = getComputedStyle(map);
+        const inspectorStyle = getComputedStyle(inspector);
+
+        return {
+          appTopbarBelowHeader: appTopbarRect.bottom <= 0,
+          docsHeaderOwnsTopHitTarget:
+            topElement === siteHeader || siteHeader.contains(topElement),
+          inspectorInline:
+            Math.abs(mapRect.top - inspectorRect.top) < 4 &&
+            inspectorRect.left > mapRect.left,
+          mapUsesPageScroll:
+            mapStyle.overflowY === "visible" &&
+            mapStyle.overscrollBehavior === "auto",
+          inspectorUsesPageScroll:
+            inspectorStyle.overflowY === "visible" &&
+            inspectorStyle.overscrollBehavior === "auto",
+        };
+      });
+
+      expect(desktopLayout).not.toBeNull();
+      expect(desktopLayout!.appTopbarBelowHeader).toBe(true);
+      expect(desktopLayout!.docsHeaderOwnsTopHitTarget).toBe(true);
+      expect(desktopLayout!.inspectorInline).toBe(true);
+      expect(desktopLayout!.mapUsesPageScroll).toBe(true);
+      expect(desktopLayout!.inspectorUsesPageScroll).toBe(true);
+    });
   });
 });
