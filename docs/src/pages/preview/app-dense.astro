@@ -93,7 +93,7 @@ const navSections = [
         {navSections.map((section) => (
           <div class="dense-nav-group">
             <span class="dense-nav-label">{section.label}</span>
-            {section.items.map((item, i) => (
+            {section.items.map((item) => (
               <a class="dense-nav-item" class:list={[{ 'is-active': item === 'Events' }]} href="#">
                 <span>{item}</span>
                 {item === 'Alerts' && <span class="c-badge c-badge--mini" data-tone="danger">11</span>}

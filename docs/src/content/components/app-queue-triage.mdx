@@ -1,0 +1,47 @@
+---
+title: Queue triage kit
+description: Operational queue composition for intake, SLA review, assignment, and activity history.
+status: stable
+since: 0.9.0
+---
+
+# Queue triage kit
+
+Use this composition when operators need to scan a shared work queue, isolate
+SLA risk, open the highest-impact item, and act without leaving the first
+screen. It combines app shell navigation, saved views, query chips, workflow
+lanes, a dense table, a split detail panel, badges, and timeline activity.
+
+## Composition
+
+- **Queue sidebar:** use `.l-app-shell__sidebar` with `.c-nav` for saved queue
+  groups, ownership scopes, and live counts.
+- **Triage toolbar:** use `.c-toolbar` for search, view controls, bulk actions,
+  export, and assignment.
+- **Filters:** use `.c-saved-views` and `.c-query-bar` so applied filters stay
+  visible above the queue.
+- **Swimlane/list:** use `.c-workflow-board` for status lanes and `.c-table`
+  for sortable operational records.
+- **Detail/action panel:** use `.c-split-pane` to keep the selected item,
+  decision controls, metadata, and `.c-timeline` activity visible.
+
+## Semantic HTML
+
+Keep each region explicit:
+
+- The page is an app shell with a labelled navigation sidebar and one main work
+  region.
+- Saved views are buttons when they mutate the current queue and links when
+  they navigate to durable URLs.
+- Queue cards are articles or list items with headings, IDs, SLA badges, and
+  real links or buttons for activation.
+- Table rows use native table markup. Put the primary row action in the first
+  meaningful cell, and keep bulk selection as checkboxes.
+- The selected item panel should use a heading, labelled metadata groups,
+  explicit action buttons, and an ordered timeline.
+- Announce result-count, assignment, and status changes with an app-owned live
+  region when the queue updates.
+
+## Preview
+
+See the [queue triage preview](../preview/app-queue-triage).

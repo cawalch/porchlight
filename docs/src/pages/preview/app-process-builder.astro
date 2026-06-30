@@ -1,0 +1,963 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+type ProcessCard = {
+  id: string;
+  title: string;
+  body: string;
+  badge: string;
+  tone: string;
+  selected?: boolean;
+  high?: boolean;
+};
+
+type ProcessLane = {
+  title: string;
+  count: number;
+  wip: string;
+  state?: string;
+  cards: ProcessCard[];
+};
+
+const chevron =
+  '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>';
+const folderIcon =
+  '<path d="M3 6.5A2.5 2.5 0 0 1 5.5 4H10l2 2.5h6.5A2.5 2.5 0 0 1 21 9v8.5A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/>';
+const processIcon =
+  '<rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="4" width="7" height="6" rx="1.5"/><rect x="8.5" y="14" width="7" height="6" rx="1.5"/><path d="M10 7h4"/><path d="M17.5 10v2a2 2 0 0 1-2 2h-7a2 2 0 0 0-2 2v1"/>';
+const ruleIcon =
+  '<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="m3 6 1 1 2-2"/><path d="m3 12 1 1 2-2"/><path d="m3 18 1 1 2-2"/>';
+
+const steps: ProcessLane[] = [
+  {
+    title: 'Intake',
+    count: 2,
+    wip: '2 configured',
+    cards: [
+      {
+        id: 'STEP-01',
+        title: 'Collect request',
+        body: 'Requester details, vendor profile, and contract basics.',
+        badge: 'Ready',
+        tone: 'success',
+      },
+      {
+        id: 'STEP-02',
+        title: 'Classify risk',
+        body: 'Rules assign low, standard, or elevated review paths.',
+        badge: 'Rules',
+        tone: 'accent',
+      },
+    ],
+  },
+  {
+    title: 'Review',
+    count: 3,
+    wip: '1 warning',
+    state: 'warning',
+    cards: [
+      {
+        id: 'STEP-03',
+        title: 'Security review',
+        body: 'SOC 2 packet and data handling questionnaire.',
+        badge: 'Selected',
+        tone: 'warning',
+        selected: true,
+      },
+      {
+        id: 'STEP-04',
+        title: 'Finance approval',
+        body: 'Spend threshold and payment terms approval.',
+        badge: 'Owner',
+        tone: 'danger',
+        high: true,
+      },
+    ],
+  },
+  {
+    title: 'Publish',
+    count: 1,
+    wip: '1 step',
+    cards: [
+      {
+        id: 'STEP-05',
+        title: 'Notify requester',
+        body: 'Send decision, due date, and next actions.',
+        badge: 'Draft',
+        tone: 'default',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Process Builder · Porchlight">
+  <div class="l-app-shell builder-shell">
+    <header
+      class="l-app-shell__topbar l-cluster"
+      style="--l-cluster-justify: space-between; --l-cluster-gap: var(--pl-space-4); padding-inline: var(--pl-space-4);"
+    >
+      <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-3);">
+        <button
+          class="c-button"
+          data-variant="ghost"
+          data-size="sm"
+          type="button"
+          aria-label="Toggle admin navigation"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            style="inline-size: 1.25rem; block-size: 1.25rem;"
+            aria-hidden="true"
+          >
+            <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"></path>
+          </svg>
+        </button>
+        <strong>Veyra Admin</strong>
+        <span class="u-muted-sm">Process Studio</span>
+      </div>
+      <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+        <span class="c-badge" data-tone="warning">1 warning</span>
+        <span class="c-badge" data-tone="success">Autosaved</span>
+        <div class="c-avatar" data-size="sm">CW</div>
+      </div>
+    </header>
+
+    <aside class="l-app-shell__sidebar">
+      <nav class="c-nav" aria-label="Admin navigation">
+        <a href="#" class="c-nav__item">
+          <svg
+            class="c-nav__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+          </svg>
+          <span class="c-nav__label">Overview</span>
+        </a>
+        <a href="#" class="c-nav__item" aria-current="page">
+          <svg
+            class="c-nav__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M10 7h4"></path>
+            <path d="M12 3v4"></path>
+            <path d="M5 11h14"></path>
+            <rect x="3" y="15" width="7" height="6" rx="1.5"></rect>
+            <rect x="14" y="15" width="7" height="6" rx="1.5"></rect>
+          </svg>
+          <span class="c-nav__label">Processes</span>
+          <span class="c-badge c-nav__badge" data-tone="accent">12</span>
+        </a>
+        <a href="#" class="c-nav__item">
+          <svg
+            class="c-nav__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M8 6h13"></path>
+            <path d="M8 12h13"></path>
+            <path d="M8 18h13"></path>
+            <path d="m3 6 1 1 2-2"></path>
+            <path d="m3 12 1 1 2-2"></path>
+            <path d="m3 18 1 1 2-2"></path>
+          </svg>
+          <span class="c-nav__label">Rules</span>
+        </a>
+        <details class="c-nav__section" open>
+          <summary class="c-nav__section-trigger">
+            <svg
+              class="c-nav__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path
+                d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+              ></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            </svg>
+            <span>Teams</span>
+            <svg
+              class="c-nav__chevron"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path
+                d="m9 18 6-6-6-6"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </summary>
+          <a href="#" class="c-nav__item c-nav__item--child">
+            <span class="c-nav__label">Procurement</span>
+          </a>
+          <a href="#" class="c-nav__item c-nav__item--child">
+            <span class="c-nav__label">Security</span>
+          </a>
+        </details>
+      </nav>
+    </aside>
+
+    <main class="l-app-shell__main">
+      <div
+        class="l-container l-stack builder-workspace"
+      >
+        <div class="c-page-header">
+          <div class="c-page-header__heading">
+            <h1 class="c-page-header__title">Vendor onboarding</h1>
+            <span class="c-page-header__subtitle">
+              Draft v12, staged for Procurement Ops
+            </span>
+          </div>
+          <div class="c-page-header__actions">
+            <button class="c-button" data-variant="secondary" type="button">
+              Preview
+            </button>
+            <button class="c-button" data-variant="primary" type="button">
+              Publish
+            </button>
+          </div>
+        </div>
+
+        <div class="c-toolbar" data-surface="panel" aria-label="Draft actions">
+          <div class="c-toolbar__group">
+            <div class="c-segmented" role="radiogroup" aria-label="Builder mode">
+              <label class="c-segmented__item">
+                <input type="radio" name="mode" checked />
+                <span>Map</span>
+              </label>
+              <label class="c-segmented__item">
+                <input type="radio" name="mode" />
+                <span>Rules</span>
+              </label>
+              <label class="c-segmented__item">
+                <input type="radio" name="mode" />
+                <span>Test</span>
+              </label>
+            </div>
+            <label class="c-field c-field--inline">
+              <span class="u-sr-only">Search process</span>
+              <input
+                class="c-field__control"
+                type="search"
+                placeholder="Search steps..."
+              />
+            </label>
+          </div>
+          <div class="c-toolbar__group">
+            <span class="u-muted-sm">Saved 2 minutes ago</span>
+            <div class="c-toolbar__divider"></div>
+            <button class="c-button" data-variant="ghost" type="button">
+              History
+            </button>
+            <button class="c-button" data-variant="secondary" type="button">
+              Save draft
+            </button>
+          </div>
+        </div>
+
+        <section class="c-alert" data-tone="warning" role="status">
+          <div class="c-alert__icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <path d="M12 9v4"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+          </div>
+          <div class="c-alert__content">
+            <div class="c-alert__title">Publish check needs attention</div>
+            <div class="c-alert__body">
+              Finance approval is missing an owner. The draft can still be
+              saved.
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="c-split-pane builder-split"
+          data-orientation="horizontal"
+          data-collapse="stack"
+          aria-label="Process builder workspace"
+        >
+          <aside
+            class="c-split-pane__pane c-split-pane__pane--start"
+            aria-label="Process library"
+            tabindex="0"
+          >
+            <header class="c-split-pane__header">
+              <div>
+                <h2 class="c-split-pane__title">Library</h2>
+                <p class="c-split-pane__description">Processes and rule sets</p>
+              </div>
+              <button
+                class="c-button"
+                data-variant="ghost"
+                data-size="sm"
+                type="button"
+              >
+                New
+              </button>
+            </header>
+            <div class="c-split-pane__pane-inner">
+              <div
+                class="c-tree"
+                role="tree"
+                aria-label="Process library"
+                data-actions="persistent"
+                data-density="compact"
+              >
+                <div
+                  class="c-tree__item"
+                  role="treeitem"
+                  aria-expanded="true"
+                  tabindex="0"
+                >
+                  <div class="c-tree__item-row">
+                    <span class="c-tree__expander" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        set:html={chevron}
+                      />
+                    </span>
+                    <span class="c-tree__icon" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        set:html={folderIcon}
+                      />
+                    </span>
+                    <span class="c-tree__label">Procurement</span>
+                    <span class="c-tree__badge">4</span>
+                  </div>
+                  <div class="c-tree__group" role="group">
+                    <div
+                      class="c-tree__item"
+                      role="treeitem"
+                      aria-current="page"
+                      aria-selected="true"
+                      tabindex="-1"
+                    >
+                      <div class="c-tree__item-row">
+                        <span class="c-tree__expander" aria-hidden="true"></span>
+                        <span class="c-tree__icon" aria-hidden="true">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            set:html={processIcon}
+                          />
+                        </span>
+                        <span class="c-tree__label">Vendor onboarding</span>
+                        <span class="c-tree__meta">v12</span>
+                      </div>
+                    </div>
+                    <div class="c-tree__item" role="treeitem" tabindex="-1">
+                      <div class="c-tree__item-row">
+                        <span class="c-tree__expander" aria-hidden="true"></span>
+                        <span class="c-tree__icon" aria-hidden="true">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            set:html={processIcon}
+                          />
+                        </span>
+                        <span class="c-tree__label">Purchase request</span>
+                        <span class="c-tree__meta">draft</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="c-tree__item"
+                  role="treeitem"
+                  aria-expanded="true"
+                  tabindex="-1"
+                >
+                  <div class="c-tree__item-row">
+                    <span class="c-tree__expander" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        set:html={chevron}
+                      />
+                    </span>
+                    <span class="c-tree__icon" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        set:html={folderIcon}
+                      />
+                    </span>
+                    <span class="c-tree__label">Shared rules</span>
+                    <span class="c-tree__badge">18</span>
+                  </div>
+                  <div class="c-tree__group" role="group">
+                    <div class="c-tree__item" role="treeitem" tabindex="-1">
+                      <div class="c-tree__item-row">
+                        <span class="c-tree__expander" aria-hidden="true"></span>
+                        <span class="c-tree__icon" aria-hidden="true">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            set:html={ruleIcon}
+                          />
+                        </span>
+                        <span class="c-tree__label">Spend threshold</span>
+                        <span class="c-tree__meta">3 used</span>
+                      </div>
+                    </div>
+                    <div
+                      class="c-tree__item"
+                      role="treeitem"
+                      aria-disabled="true"
+                      tabindex="-1"
+                    >
+                      <div class="c-tree__item-row">
+                        <span class="c-tree__expander" aria-hidden="true"></span>
+                        <span class="c-tree__icon" aria-hidden="true">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            set:html={ruleIcon}
+                          />
+                        </span>
+                        <span class="c-tree__label">Compliance hold</span>
+                        <span class="c-tree__meta">locked</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div
+            class="c-split-pane__separator"
+            role="separator"
+            aria-orientation="vertical"
+            aria-valuemin="20"
+            aria-valuemax="45"
+            aria-valuenow="28"
+            aria-label="Resize process library"
+            tabindex="0"
+          ></div>
+
+          <section
+            class="c-split-pane__pane c-split-pane__pane--end"
+            aria-label="Process editor"
+            tabindex="0"
+          >
+            <header class="c-split-pane__header">
+              <div>
+                <h2 class="c-split-pane__title">Draft map</h2>
+                <p class="c-split-pane__description">
+                  Select a step to edit details and validation.
+                </p>
+              </div>
+              <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+                <span class="c-badge" data-tone="accent">5 steps</span>
+                <span class="c-badge" data-tone="warning">1 warning</span>
+              </div>
+            </header>
+            <div class="c-split-pane__pane-inner">
+              <div
+                class="c-split-pane builder-editor-split"
+                data-orientation="horizontal"
+                data-layout="fixed-end"
+                data-collapse="stack"
+                aria-label="Process map and inspector"
+              >
+                <section
+                  class="c-split-pane__pane c-split-pane__pane--start builder-map-pane"
+                  aria-label="Process map"
+                  tabindex="0"
+                >
+                  <div class="c-split-pane__pane-inner builder-map-pane__inner">
+                    <section
+                      class="c-workflow-board"
+                      aria-labelledby="vendor-map-title"
+                    >
+                      <div class="c-workflow-board__header">
+                        <div>
+                          <h3
+                            class="c-workflow-board__title"
+                            id="vendor-map-title"
+                          >
+                            Vendor onboarding
+                          </h3>
+                          <p class="c-workflow-board__meta">
+                            Sequence view for the current draft.
+                          </p>
+                        </div>
+                        <div class="c-workflow-board__tools">
+                          <button
+                            class="c-button"
+                            data-variant="secondary"
+                            data-size="sm"
+                            type="button"
+                          >
+                            Add step
+                          </button>
+                        </div>
+                      </div>
+
+                      <section
+                        class="c-workflow-board__swimlane"
+                        aria-labelledby="draft-path"
+                      >
+                        <div class="c-workflow-board__swimlane-header">
+                          <h4
+                            class="c-workflow-board__swimlane-title"
+                            id="draft-path"
+                          >
+                            Approval path
+                          </h4>
+                          <span class="c-workflow-board__swimlane-meta">
+                            Low-code map with app-owned ordering
+                          </span>
+                        </div>
+                        <div class="c-workflow-board__lanes">
+                          {
+                            steps.map((lane) => (
+                              <section
+                                class="c-workflow-lane"
+                                aria-labelledby={`lane-${lane.title.toLowerCase()}`}
+                              >
+                                <header class="c-workflow-lane__header">
+                                  <div class="c-workflow-lane__heading">
+                                    <h5
+                                      class="c-workflow-lane__title"
+                                      id={`lane-${lane.title.toLowerCase()}`}
+                                    >
+                                      {lane.title}
+                                    </h5>
+                                    <span class="c-workflow-lane__count">
+                                      {lane.count}
+                                    </span>
+                                  </div>
+                                  <span
+                                    class="c-workflow-lane__wip"
+                                    data-state={lane.state}
+                                  >
+                                    {lane.wip}
+                                  </span>
+                                </header>
+                                <div class="c-workflow-lane__body">
+                                  {lane.cards.map((card) => (
+                                    <article
+                                      class="c-workflow-card"
+                                      data-selected={
+                                        card.selected ? '' : undefined
+                                      }
+                                      data-priority={
+                                        card.high ? 'high' : undefined
+                                      }
+                                    >
+                                      <div class="c-workflow-card__header">
+                                        <h6 class="c-workflow-card__title">
+                                          {card.title}
+                                        </h6>
+                                        <span
+                                          class="c-badge"
+                                          data-tone={card.tone}
+                                        >
+                                          {card.badge}
+                                        </span>
+                                      </div>
+                                      <p class="c-workflow-card__body">
+                                        {card.body}
+                                      </p>
+                                      <div class="c-workflow-card__meta">
+                                        <span>{card.id}</span>
+                                        <span>2 fields</span>
+                                      </div>
+                                    </article>
+                                  ))}
+                                </div>
+                              </section>
+                            ))
+                          }
+                        </div>
+                      </section>
+                    </section>
+                  </div>
+                </section>
+
+                <div
+                  class="c-split-pane__separator"
+                  role="separator"
+                  aria-orientation="vertical"
+                  aria-valuemin="62"
+                  aria-valuemax="82"
+                  aria-valuenow="72"
+                  aria-label="Resize inspector"
+                  tabindex="0"
+                ></div>
+
+                <aside
+                  class="c-split-pane__pane c-split-pane__pane--end"
+                  aria-label="Selected step inspector"
+                  tabindex="0"
+                >
+                  <header class="c-split-pane__header">
+                    <div>
+                      <h3 class="c-split-pane__title" id="inspector-title">
+                        Security review
+                      </h3>
+                      <p class="c-split-pane__description">
+                        STEP-03, selected step
+                      </p>
+                    </div>
+                    <span class="c-badge" data-tone="warning">Needs owner</span>
+                  </header>
+                  <div class="c-split-pane__pane-inner">
+                    <div class="c-tabs">
+                      <div
+                        class="c-tabs__list"
+                        role="tablist"
+                        aria-label="Inspector panels"
+                      >
+                        <button
+                          class="c-tabs__tab"
+                          role="tab"
+                          aria-selected="true"
+                          id="tab-settings"
+                          aria-controls="panel-settings"
+                          tabindex="0"
+                        >
+                          Settings
+                        </button>
+                        <button
+                          class="c-tabs__tab"
+                          role="tab"
+                          aria-selected="false"
+                          id="tab-validation"
+                          aria-controls="panel-validation"
+                          tabindex="-1"
+                        >
+                          Validation
+                          <span class="c-tabs__count">1</span>
+                        </button>
+                      </div>
+                      <div
+                        class="c-tabs__panel"
+                        role="tabpanel"
+                        id="panel-settings"
+                        aria-labelledby="tab-settings"
+                      >
+                        <form
+                          class="c-form"
+                          aria-labelledby="inspector-title"
+                          action="#"
+                        >
+                          <section class="c-form__section">
+                            <div class="c-form__header">
+                              <h4>Step details</h4>
+                              <p>Keep required metadata close to the map.</p>
+                            </div>
+                            <div class="c-form__body">
+                              <label class="c-field">
+                                <span class="c-field__label">Step label</span>
+                                <input
+                                  class="c-field__control"
+                                  name="label"
+                                  value="Security review"
+                                />
+                              </label>
+                              <div class="c-form__grid">
+                                <label class="c-field">
+                                  <span class="c-field__label">Owner</span>
+                                  <select
+                                    class="c-field__control"
+                                    name="owner"
+                                    aria-invalid="true"
+                                    aria-describedby="owner-warning"
+                                  >
+                                    <option>Unassigned</option>
+                                    <option>Security Ops</option>
+                                    <option>Procurement Ops</option>
+                                  </select>
+                                  <span
+                                    class="c-field__hint"
+                                    id="owner-warning"
+                                    data-tone="warning"
+                                    role="alert"
+                                  >
+                                    Required before publish.
+                                  </span>
+                                </label>
+                                <label class="c-field">
+                                  <span class="c-field__label">SLA</span>
+                                  <select class="c-field__control" name="sla">
+                                    <option>2 business days</option>
+                                    <option>4 business hours</option>
+                                    <option>1 week</option>
+                                  </select>
+                                </label>
+                              </div>
+                              <label class="c-field">
+                                <span class="c-field__label">Instructions</span>
+                                <textarea
+                                  class="c-field__control"
+                                  name="instructions"
+                                  rows="4"
+                                >Review SOC 2 packet and data handling scope before finance approval.</textarea>
+                              </label>
+                            </div>
+                          </section>
+                          <div class="c-form__actions">
+                            <button
+                              class="c-button"
+                              data-variant="ghost"
+                              type="button"
+                            >
+                              Revert
+                            </button>
+                            <button
+                              class="c-button"
+                              data-variant="primary"
+                              type="submit"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                      <div
+                        class="c-tabs__panel"
+                        role="tabpanel"
+                        id="panel-validation"
+                        aria-labelledby="tab-validation"
+                        hidden
+                      >
+                        <div class="c-alert" data-tone="warning">
+                          <div class="c-alert__content">
+                            <div class="c-alert__title">Owner required</div>
+                            <div class="c-alert__body">
+                              Assign Security Ops or another team before
+                              publishing this draft.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .builder-shell {
+    --app-sidebar-size: 18rem;
+  }
+
+  .builder-shell > .l-app-shell__topbar {
+    position: static;
+    z-index: auto;
+  }
+
+  .builder-workspace {
+    --l-container-max: 112rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --l-stack-gap: var(--pl-space-5);
+
+    padding-block: var(--pl-space-5);
+  }
+
+  .builder-split {
+    --c-split-pane-start-size: minmax(18rem, 0.42fr);
+    --c-split-pane-end-size: minmax(0, 1.72fr);
+    --c-split-pane-min-block-size: min(48rem, calc(100dvb - 10rem));
+    --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  .builder-editor-split {
+    --c-split-pane-fixed-size: clamp(20rem, 22vi, 28rem);
+    --c-split-pane-min-block-size: 38rem;
+    --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  .builder-split,
+  .builder-editor-split {
+    position: relative;
+    overflow: visible;
+  }
+
+  .builder-split::after,
+  .builder-editor-split::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    border: 1px solid var(--pl-color-border);
+    border-radius: inherit;
+  }
+
+  .builder-split .c-split-pane__header {
+    position: static;
+    z-index: auto;
+  }
+
+  .builder-split > .c-split-pane__pane,
+  .builder-editor-split > .c-split-pane__pane {
+    overflow: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
+  }
+
+  .builder-map-pane__inner {
+    min-block-size: 100%;
+  }
+
+  .builder-map-pane .c-workflow-board {
+    min-inline-size: 0;
+  }
+
+  .builder-map-pane .c-workflow-board__lanes {
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    overflow-x: visible;
+    padding-block-end: 0;
+    scroll-snap-type: none;
+  }
+
+  .builder-map-pane .c-workflow-lane {
+    scroll-snap-align: none;
+  }
+
+  @container (inline-size < 52rem) {
+    .builder-editor-split {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        minmax(20rem, auto)
+        var(--c-split-pane-separator-size)
+        minmax(20rem, 1fr);
+      overflow: visible;
+    }
+
+    .builder-editor-split > .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .builder-editor-split > .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .builder-editor-split > .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    .builder-editor-split > .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    .builder-editor-split > .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
+  }
+
+  @container (inline-size < 64rem) {
+    .builder-split {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows:
+        minmax(12rem, auto)
+        var(--c-split-pane-separator-size)
+        minmax(20rem, 1fr);
+      overflow: visible;
+    }
+
+    .builder-split > .c-split-pane__pane--start {
+      grid-area: 1 / 1;
+    }
+
+    .builder-split > .c-split-pane__pane--end {
+      grid-area: 3 / 1;
+    }
+
+    .builder-split > .c-split-pane__separator {
+      grid-area: 2 / 1;
+      cursor: row-resize;
+    }
+
+    .builder-split > .c-split-pane__separator::before {
+      inline-size: 100%;
+      block-size: var(--c-split-pane-separator-line-size);
+    }
+
+    .builder-split > .c-split-pane__separator::after {
+      inline-size: 2rem;
+      block-size: 0.1875rem;
+    }
+  }
+
+  @media (width < 42rem) {
+    .builder-workspace {
+      --l-container-pad: var(--pl-space-3);
+      --l-stack-gap: var(--pl-space-4);
+
+      padding-block: var(--pl-space-3);
+    }
+
+    .builder-split,
+    .builder-editor-split {
+      --c-split-pane-min-block-size: 0;
+      --c-split-pane-pane-padding: var(--pl-space-4);
+    }
+  }
+</style>

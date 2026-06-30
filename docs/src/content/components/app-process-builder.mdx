@@ -1,0 +1,83 @@
+---
+title: App process builder
+description: Porchlight-native admin shell recipe for process drafts, step maps, validation feedback, and inspector forms.
+status: stable
+since: 0.9.0
+---
+
+# App process builder
+
+Use this composition for admin tools that edit a process, workflow, approval
+chain, or rule-backed form. The pattern is intentionally low-friction: an app
+shell, process tree, compact step map, inspector form, action toolbar, and
+validation feedback. Porchlight supplies the CSS contracts; your app owns data,
+selection, autosave, validation, permissions, and publishing.
+
+## Structure
+
+- `.l-app-shell` frames the admin area with persistent navigation.
+- `.c-page-header` names the current draft and carries publish actions.
+- `.c-toolbar` groups mode switches, preview, history, and save controls.
+- `.c-split-pane` separates the process tree, map, and inspector.
+- `.c-tree` represents folders, process drafts, and rule groups.
+- `.c-workflow-board` renders a readable step map without requiring a canvas.
+- `.c-form`, `.c-field`, `.c-tabs`, `.c-badge`, and `.c-alert` make the
+  inspector actionable and stateful.
+
+## Semantic HTML
+
+```html
+<div class="l-app-shell">
+  <header class="l-app-shell__topbar">...</header>
+  <aside class="l-app-shell__sidebar">
+    <nav class="c-nav" aria-label="Admin navigation">...</nav>
+  </aside>
+
+  <main class="l-app-shell__main">
+    <div class="c-page-header">
+      <div class="c-page-header__heading">
+        <h1 class="c-page-header__title">Vendor onboarding</h1>
+        <span class="c-page-header__subtitle">Draft v12, autosaved</span>
+      </div>
+      <div class="c-page-header__actions">...</div>
+    </div>
+
+    <div class="c-toolbar" aria-label="Process draft actions">...</div>
+
+    <section class="c-alert" data-tone="warning" role="status">
+      <div class="c-alert__content">
+        <div class="c-alert__title">Draft has warnings</div>
+        <div class="c-alert__body">Fix one missing owner before publish.</div>
+      </div>
+    </section>
+
+    <section class="c-split-pane" data-collapse="stack">
+      <aside class="c-split-pane__pane c-split-pane__pane--start">
+        <div class="c-tree" role="tree" aria-label="Process library">...</div>
+      </aside>
+      <div class="c-split-pane__separator" role="separator"></div>
+      <section class="c-split-pane__pane c-split-pane__pane--end">
+        <section class="c-workflow-board" aria-labelledby="map-title">
+          ...
+        </section>
+        <form class="c-form" aria-labelledby="inspector-title">...</form>
+      </section>
+    </section>
+  </main>
+</div>
+```
+
+Keep headings, forms, buttons, tabs, and tree items real HTML elements. Use
+`aria-selected`, `aria-current`, `aria-invalid`, `aria-describedby`, and
+`role="status"` from app state rather than styling-only flags.
+
+## Guidance
+
+Prefer selection plus inspector editing before introducing a freeform canvas.
+Use the tree for durable structure, the map for sequence and status, and the
+inspector for focused edits. If the app later adds drag/drop, keep keyboard
+ordering and live announcements in application logic.
+
+## Preview
+
+See the [app process builder preview](../preview/app-process-builder).

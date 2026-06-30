@@ -207,7 +207,7 @@ test("chip tones are visually distinct", async ({ page }) => {
   console.log("[chip] backgrounds:", bgs);
 
   // Each tone should differ from the default by a visible lightness step.
-  const def = bgs["default"];
+  const def = bgs.default;
   for (const [tone, bg] of Object.entries(bgs)) {
     if (tone === "default") continue;
     expect(

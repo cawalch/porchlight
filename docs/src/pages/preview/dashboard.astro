@@ -20,14 +20,6 @@ const accounts = [
   ['Wayne Enterprises', 'Enterprise', 'Trialing', '$2,400', 32],
 ] as const;
 
-const nav = [
-  ['Dashboard', true],
-  ['Accounts', false],
-  ['Billing', false],
-  ['Usage', false],
-  ['Settings', false],
-] as const;
-
 const toneFor = (status: string) =>
   ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[status] ?? 'accent');
 ---

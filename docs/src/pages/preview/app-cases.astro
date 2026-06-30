@@ -203,7 +203,7 @@ const activity = [
               <tbody>
                 {cases.map((c, i) => (
                   <tr aria-selected={i === 0 ? 'true' : undefined} data-popover-target="case-detail" style="cursor:pointer;">
-                    <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`} onclick="event.stopPropagation()"/></td>
+                    <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`}/></td>
                     <td class="c-table__sticky-col"><code style="font-size:var(--pl-text-xs);">{c.id}</code></td>
                     <td><strong style="font-weight:var(--pl-font-weight-medium);">{c.title}</strong></td>
                     <td>

@@ -7,7 +7,7 @@
   "homepage": "https://cawalch.github.io/porchlight",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cawalch/porchlight.git",
+    "url": "git+https://github.com/cawalch/porchlight.git",
     "directory": "packages/porchlight"
   },
   "bugs": {

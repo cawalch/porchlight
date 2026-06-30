@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added six app composition kits for the next wave of product surfaces:
+  list/detail workspace, queue triage, process builder/admin shell, settings
+  console, reporting dashboard, and command-driven workspace. Each ships with
+  component guidance, a preview route, generated model-pack links, and smoke
+  coverage.
+
+### Fixed
+
+- Corrected component `since` metadata so docs point to the release that first
+  shipped each public component, including the `0.8.0` modern app contracts.
+- Updated the README release note to describe current pre-1.0 npm tags.
+
+### Tooling
+
+- Serialized docs and PR-preview deployments that push to `gh-pages`, avoiding
+  the non-fast-forward race seen when a PR preview cleanup overlaps a main docs
+  deploy.
+- Migrated Biome config to the current `preset` field, normalized the package
+  repository URL for npm publish, and removed remaining local lint/check hints.
+
 ## [0.8.0] - 2026-06-29
 
 ### Added

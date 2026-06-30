@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+const kpis = [
+  {
+    label: 'Gross revenue',
+    value: '$482.4k',
+    unit: '',
+    direction: 'up',
+    trend: '+12.8% vs prior',
+    spark: 'M0 30 L10 28 L20 25 L30 26 L40 18 L50 16 L60 10 L70 5',
+    tone: undefined,
+  },
+  {
+    label: 'Pipeline coverage',
+    value: '3.7',
+    unit: 'x',
+    direction: 'up',
+    trend: '+0.4x',
+    spark: 'M0 32 L10 26 L20 28 L30 22 L40 19 L50 14 L60 12 L70 8',
+    tone: undefined,
+  },
+  {
+    label: 'Expansion rate',
+    value: '118',
+    unit: '%',
+    direction: 'up',
+    trend: '+5.1 pts',
+    spark: 'M0 24 L10 23 L20 18 L30 20 L40 15 L50 12 L60 8 L70 6',
+    tone: 'success',
+  },
+  {
+    label: 'At-risk ARR',
+    value: '$38.2k',
+    unit: '',
+    direction: 'down',
+    trend: '-9.4%',
+    spark: 'M0 8 L10 12 L20 14 L30 18 L40 22 L50 24 L60 29 L70 32',
+    tone: 'warning',
+  },
+];
+
+const bars = [62, 74, 68, 91, 86, 104, 118, 126, 132, 149, 142, 164];
+const weeks = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12'];
+const channels = [
+  { name: 'Self-serve', segment: 'SMB', revenue: '$142.8k', growth: '+18.6%', conversion: '9.4%', status: 'Ahead' },
+  { name: 'Sales assisted', segment: 'Mid-market', revenue: '$188.1k', growth: '+11.2%', conversion: '21.8%', status: 'On track' },
+  { name: 'Partner', segment: 'Enterprise', revenue: '$96.4k', growth: '+6.8%', conversion: '14.2%', status: 'Watch' },
+  { name: 'Expansion', segment: 'Existing', revenue: '$55.1k', growth: '+24.1%', conversion: '31.6%', status: 'Ahead' },
+];
+
+const toneFor = (status: string) =>
+  ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning' }[status] ?? 'accent');
+---
+<BaseLayout title="Reporting dashboard · Porchlight">
+  <section class="preview-bleed l-container l-stack reporting-workspace">
+    <section class="l-stack" aria-labelledby="report-title" style="--l-stack-gap: var(--pl-space-4);">
+      <div class="c-page-header">
+        <div class="c-page-header__heading">
+          <h1 class="c-page-header__title" id="report-title">Revenue performance</h1>
+          <span class="c-page-header__subtitle">
+            Generated <time datetime="2026-06-29T09:42:00">Jun 29, 2026 at 9:42 AM</time>
+          </span>
+        </div>
+        <div class="c-page-header__actions">
+          <label class="c-field">
+            <span class="u-sr-only">Start date</span>
+            <input class="c-field__control" type="date" value="2026-06-01" />
+          </label>
+          <label class="c-field">
+            <span class="u-sr-only">End date</span>
+            <input class="c-field__control" type="date" value="2026-06-29" />
+          </label>
+          <button class="c-button" data-variant="secondary">Refresh</button>
+          <button class="c-button" data-variant="primary">
+            <Icon name="download" />
+            Export
+          </button>
+        </div>
+      </div>
+
+      <nav class="c-saved-views" aria-label="Saved report views">
+        <span class="c-saved-views__label">Views</span>
+        <ul class="c-saved-views__list">
+          <li class="c-saved-views__item">
+            <button class="c-saved-views__button" aria-current="true">
+              Executive <span class="c-saved-views__count">12</span>
+            </button>
+          </li>
+          <li class="c-saved-views__item">
+            <button class="c-saved-views__button">
+              Acquisition <span class="c-saved-views__count">8</span>
+            </button>
+          </li>
+          <li class="c-saved-views__item">
+            <button class="c-saved-views__button">
+              Expansion <span class="c-saved-views__count">5</span>
+            </button>
+          </li>
+          <li class="c-saved-views__item">
+            <button class="c-saved-views__button">
+              At risk <span class="c-saved-views__count">3</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="c-query-bar" role="search" aria-label="Active report filters">
+        <span class="c-query-bar__label">Filters</span>
+        <div class="c-query-bar__chips">
+          <span class="c-query-chip">
+            <span class="c-query-chip__field">Region</span>
+            <span class="c-query-chip__operator">is</span>
+            <span class="c-query-chip__value">North America</span>
+            <button class="c-query-chip__remove" aria-label="Remove region filter">x</button>
+          </span>
+          <span class="c-query-chip">
+            <span class="c-query-chip__field">Plan</span>
+            <span class="c-query-chip__operator">is not</span>
+            <span class="c-query-chip__value">Free</span>
+            <button class="c-query-chip__remove" aria-label="Remove plan filter">x</button>
+          </span>
+          <span class="c-query-chip">
+            <span class="c-query-chip__field">Owner</span>
+            <span class="c-query-chip__operator">includes</span>
+            <span class="c-query-chip__value">Growth team</span>
+            <button class="c-query-chip__remove" aria-label="Remove owner filter">x</button>
+          </span>
+        </div>
+        <div class="c-query-bar__actions">
+          <button class="c-button" data-variant="ghost" data-size="sm">Clear</button>
+          <button class="c-button" data-variant="secondary" data-size="sm">Save view</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="c-tabs">
+      <div class="c-tabs__list" role="tablist" aria-label="Report sections">
+        <button class="c-tabs__tab" role="tab" aria-selected="true" id="tab-summary" aria-controls="panel-summary" tabindex="0">
+          Summary <span class="c-tabs__count">4</span>
+        </button>
+        <button class="c-tabs__tab" role="tab" aria-selected="false" id="tab-acquisition" aria-controls="panel-acquisition" tabindex="-1">
+          Acquisition
+        </button>
+        <button class="c-tabs__tab" role="tab" aria-selected="false" id="tab-retention" aria-controls="panel-retention" tabindex="-1">
+          Retention
+        </button>
+      </div>
+      <div class="c-tabs__panel l-stack" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary" style="--l-stack-gap: var(--pl-space-5);">
+        <section class="l-grid" aria-label="Key performance indicators" style="--l-grid-min: 14rem;">
+          {kpis.map((item) => (
+            <article class="c-card" data-surface="app">
+              <div class="c-card__body">
+                <div class="c-stat">
+                  <span class="c-stat__label">{item.label}</span>
+                  <div class="c-stat__value" data-tone={item.tone}>
+                    {item.value}<span class="c-stat__unit">{item.unit}</span>
+                  </div>
+                  <span class="c-stat__trend" data-direction={item.direction}>{item.trend}</span>
+                  <div class="c-stat__spark">
+                    <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <path
+                        d={item.spark}
+                        fill="none"
+                        stroke={item.direction === 'down' ? 'var(--pl-color-danger)' : 'var(--pl-color-success)'}
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+
+        <div class="l-sidebar" style="--l-sidebar-size: 20rem;">
+          <section class="c-chart" aria-labelledby="revenue-trend-title" aria-describedby="revenue-trend-description">
+            <header class="c-chart__header">
+              <div>
+                <h2 class="c-chart__title" id="revenue-trend-title">Revenue trend</h2>
+                <p class="c-chart__description" id="revenue-trend-description">
+                  Weekly recurring revenue with forecast overlay.
+                </p>
+              </div>
+              <div class="c-chart__metrics" aria-label="Trend summary">
+                <div class="c-chart__metric">
+                  <span class="c-chart__metric-label">Forecast</span>
+                  <strong class="c-chart__metric-value">$514k</strong>
+                  <span class="c-chart__metric-delta" data-direction="up">+6.5%</span>
+                </div>
+              </div>
+            </header>
+            <div class="c-chart__plot" role="img" aria-label="Bar and line chart showing weekly revenue increasing across the quarter">
+              <svg viewBox="0 0 720 280" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+                <line x1="44" y1="236" x2="696" y2="236" stroke="var(--pl-color-border)" />
+                <line x1="44" y1="40" x2="44" y2="236" stroke="var(--pl-color-border)" />
+                {bars.map((value, index) => {
+                  const x = 64 + index * 52;
+                  const height = value * 0.92;
+                  const y = 236 - height;
+                  return (
+                    <>
+                      <rect x={x} y={y} width="28" height={height} rx="5" fill="var(--pl-color-accent)" opacity="0.9" />
+                      <text x={x + 14} y="260" text-anchor="middle" fill="var(--pl-color-text-muted)" font-size="12">{weeks[index]}</text>
+                    </>
+                  );
+                })}
+                <path d="M78 188 L130 174 L182 166 L234 136 L286 145 L338 118 L390 106 L442 96 L494 90 L546 70 L598 76 L650 50" fill="none" stroke="var(--pl-color-success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <ul class="c-chart__legend" aria-label="Series">
+              <li class="c-chart__legend-item">
+                <span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-accent);"></span>
+                Actual revenue
+              </li>
+              <li class="c-chart__legend-item">
+                <span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-success);"></span>
+                Forecast
+              </li>
+            </ul>
+            <p class="c-chart__caption">Includes closed-won expansion and self-serve upgrades.</p>
+          </section>
+
+          <aside class="l-stack" aria-label="Report insights" style="--l-stack-gap: var(--pl-space-4);">
+            <section class="c-card" data-surface="app">
+              <header class="c-card__header">
+                <h2 class="c-card__title">Insight queue</h2>
+                <span class="c-badge" data-tone="success">New</span>
+              </header>
+              <div class="c-card__body l-stack">
+                <p>Expansion revenue is carrying 31% of the month-over-month lift.</p>
+                <p class="u-muted-sm">Recommended action: review partner channel enablement before the next forecast lock.</p>
+              </div>
+              <footer class="c-card__footer">
+                <button class="c-button" data-variant="secondary" data-size="sm">Add note</button>
+              </footer>
+            </section>
+
+            <section class="c-chart" data-state="empty" aria-labelledby="anomaly-title">
+              <header class="c-chart__header">
+                <h2 class="c-chart__title" id="anomaly-title">Anomalies</h2>
+              </header>
+              <div class="c-chart__plot" data-state="empty">
+                <div class="c-chart__overlay">
+                  <div class="c-chart__state">
+                    <p class="c-chart__state-title">No material anomalies</p>
+                    <p>All tracked segments stayed within expected variance.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+
+        <section class="c-card" data-surface="app" aria-labelledby="breakdown-title">
+          <div class="c-toolbar">
+            <div class="c-toolbar__group">
+              <h2 class="c-card__title" id="breakdown-title">Channel breakdown</h2>
+              <span class="c-badge">4 rows</span>
+            </div>
+            <div class="c-toolbar__group">
+              <label class="c-field">
+                <span class="u-sr-only">Search channels</span>
+                <input class="c-field__control" type="search" placeholder="Search channels..." />
+              </label>
+              <button class="c-button" data-variant="secondary" data-size="sm">
+                <Icon name="download" />
+                CSV
+              </button>
+            </div>
+          </div>
+          <div class="c-table-wrap" data-density="compact">
+            <table class="c-table" style="--c-table-min: 48rem;">
+              <thead>
+                <tr>
+                  <th class="c-table__sticky-col" data-sort="asc">Channel <span class="c-table__sort-icon"></span></th>
+                  <th>Segment</th>
+                  <th data-align="end" data-sort="desc">Revenue <span class="c-table__sort-icon"></span></th>
+                  <th data-align="end">Growth</th>
+                  <th data-align="end">Conversion</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {channels.map((channel, index) => (
+                  <tr aria-selected={index === 0 ? 'true' : undefined}>
+                    <td class="c-table__sticky-col">{channel.name}</td>
+                    <td>{channel.segment}</td>
+                    <td data-align="end">{channel.revenue}</td>
+                    <td data-align="end">{channel.growth}</td>
+                    <td data-align="end">{channel.conversion}</td>
+                    <td>
+                      <span class="c-badge" data-tone={toneFor(channel.status)}>{channel.status}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div class="c-toolbar">
+            <div class="c-toolbar__group">
+              <span class="u-muted-sm" aria-live="polite">Showing 4 matching channels for Executive.</span>
+            </div>
+            <div class="c-toolbar__group">
+              <button class="c-button" data-variant="ghost" data-size="sm">Open source data</button>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="c-tabs__panel" role="tabpanel" id="panel-acquisition" aria-labelledby="tab-acquisition" hidden>
+        <div class="c-empty">
+          <h2 class="c-empty__title">Acquisition view is saved</h2>
+          <p class="c-empty__description">Switch tabs in app code to render the acquisition-specific report body.</p>
+        </div>
+      </div>
+      <div class="c-tabs__panel" role="tabpanel" id="panel-retention" aria-labelledby="tab-retention" hidden>
+        <div class="c-empty">
+          <h2 class="c-empty__title">Retention view is saved</h2>
+          <p class="c-empty__description">Use the same shell for cohorts, renewals, and risk reporting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .reporting-workspace {
+    --l-container-max: 104rem;
+    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  @media (width < 42rem) {
+    .reporting-workspace {
+      --l-container-pad: var(--pl-space-3);
+      --l-stack-gap: var(--pl-space-4);
+    }
+  }
+</style>

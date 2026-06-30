@@ -36,7 +36,7 @@ pnpm add @cawalch/porchlight
 @import "@cawalch/porchlight/porchlight.css";
 ```
 
-The package is pre-1.0; the npm release follows `v1.0.0`.
+The package is pre-1.0; npm releases follow matching git tags such as `v0.8.0`.
 
 ## Development
 
