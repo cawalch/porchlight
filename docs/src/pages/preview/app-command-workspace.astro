@@ -573,3 +573,15 @@ const groupedCommands = commands.reduce(
     requestAnimationFrame(() => palette?.showPopover());
   </script>
 </BaseLayout>
+
+<style>
+  .l-app-shell__main .c-split-pane {
+    overflow: visible;
+  }
+
+  .l-app-shell__main .c-split-pane > .c-split-pane__pane {
+    overflow: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
+  }
+</style>

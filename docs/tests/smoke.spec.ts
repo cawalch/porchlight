@@ -1,4 +1,45 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+async function expectDocumentScrollsOver(page: Page, selector: string) {
+  const target = await page.evaluate((targetSelector) => {
+    const element = document.querySelector(targetSelector);
+    if (!element) return null;
+
+    const rect = element.getBoundingClientRect();
+    const scrollRoot = document.scrollingElement;
+    if (!scrollRoot) return null;
+
+    return {
+      hasPageScroll: scrollRoot.scrollHeight > scrollRoot.clientHeight + 100,
+      x: Math.min(Math.max(rect.left + rect.width / 2, 1), innerWidth - 2),
+      y: Math.min(
+        Math.max(rect.top + Math.min(rect.height / 2, 240), 80),
+        innerHeight - 2,
+      ),
+    };
+  }, selector);
+
+  expect(
+    target,
+    `${selector} should exist for wheel-scroll check`,
+  ).not.toBeNull();
+  if (!target!.hasPageScroll) return;
+
+  await page.evaluate(() => {
+    document.scrollingElement?.scrollTo({ top: 0 });
+  });
+  await page.mouse.move(target!.x, target!.y);
+  await page.mouse.wheel(0, 360);
+  await page.waitForTimeout(50);
+
+  const scrollTop = await page.evaluate(
+    () => document.scrollingElement?.scrollTop ?? 0,
+  );
+  expect(
+    scrollTop,
+    `${selector} should allow page wheel scrolling`,
+  ).toBeGreaterThan(80);
+}
 
 /**
  * Scaffold smoke tests: confirm the site builds and the accessible chrome
@@ -1317,7 +1358,7 @@ test.describe("docs scaffold", () => {
   test("list detail preview keeps medium-width spacing and table overflow controlled", async ({
     page,
   }) => {
-    for (const width of [1024, 1440, 1600]) {
+    for (const width of [1024, 1280, 1440, 1600]) {
       await page.setViewportSize({
         width,
         height: width === 1024 ? 576 : 720,
@@ -1338,6 +1379,7 @@ test.describe("docs scaffold", () => {
           ".list-detail-split > .c-split-pane__pane--end",
         );
         const tableWrap = document.querySelector(".list-detail-table");
+        const listBody = document.querySelector(".list-detail-list-body");
         const dueHeader = document.querySelector(
           ".list-detail-table th:nth-child(6)",
         );
@@ -1351,6 +1393,7 @@ test.describe("docs scaffold", () => {
             startPane &&
             endPane &&
             tableWrap &&
+            listBody &&
             dueHeader
           )
         ) {
@@ -1362,18 +1405,33 @@ test.describe("docs scaffold", () => {
         const splitRect = split.getBoundingClientRect();
         const startRect = startPane.getBoundingClientRect();
         const endRect = endPane.getBoundingClientRect();
+        const listBodyStyle = getComputedStyle(listBody);
+        const startPaneStyle = getComputedStyle(startPane);
+        const endPaneStyle = getComputedStyle(endPane);
+        const tableWrapStyle = getComputedStyle(tableWrap);
 
         return {
           appTopbarStatic: getComputedStyle(shellTopbar).position === "static",
           workspaceAligned:
             Math.abs(workspaceRect.left - splitRect.left) < 2 &&
             workspaceRect.left - sidebarRect.right >= 16,
-          tableDoesNotForceHorizontalScroll:
-            tableWrap.scrollWidth <= tableWrap.clientWidth + 1,
+          tableOverflowControlled:
+            tableWrap.scrollWidth >= tableWrap.clientWidth &&
+            tableWrapStyle.overflowX === "auto" &&
+            tableWrap.getBoundingClientRect().right <=
+              startRect.right - parseFloat(listBodyStyle.paddingInlineEnd) + 1,
+          listBodyInset:
+            parseFloat(listBodyStyle.paddingInlineStart) >= 12 &&
+            parseFloat(listBodyStyle.paddingInlineEnd) >= 12,
+          panesUsePageScroll:
+            startPaneStyle.overflowY === "visible" &&
+            endPaneStyle.overflowY === "visible" &&
+            startPaneStyle.overscrollBehavior === "auto" &&
+            endPaneStyle.overscrollBehavior === "auto",
           detailStacksWhenNarrow:
             innerWidth > 1024 || endRect.top > startRect.bottom,
           detailInlineWhenWide:
-            innerWidth < 1440 ||
+            innerWidth < 1280 ||
             (Math.abs(startRect.top - endRect.top) < 4 &&
               endRect.left > startRect.left),
           dueColumnResponsive:
@@ -1386,7 +1444,9 @@ test.describe("docs scaffold", () => {
       expect(layout).not.toBeNull();
       expect(layout!.appTopbarStatic).toBe(true);
       expect(layout!.workspaceAligned).toBe(true);
-      expect(layout!.tableDoesNotForceHorizontalScroll).toBe(true);
+      expect(layout!.tableOverflowControlled).toBe(true);
+      expect(layout!.listBodyInset).toBe(true);
+      expect(layout!.panesUsePageScroll).toBe(true);
       expect(layout!.detailStacksWhenNarrow).toBe(true);
       expect(layout!.detailInlineWhenWide).toBe(true);
       expect(layout!.dueColumnResponsive).toBe(true);
@@ -1449,6 +1509,119 @@ test.describe("docs scaffold", () => {
     expect(desktopLayout!.mapUsesPageScroll).toBe(true);
     expect(desktopLayout!.inspectorUsesPageScroll).toBe(true);
     expect(desktopLayout!.editorFrameStroke).toBe(true);
+  });
+
+  test("app split-pane examples keep page scroll and contained table overflow", async ({
+    page,
+  }) => {
+    const examples = [
+      {
+        route: "./preview/app-list-detail",
+        splitSelectors: [".list-detail-split"],
+      },
+      {
+        route: "./preview/app-queue-triage",
+        splitSelectors: [".l-app-shell__main > .c-split-pane"],
+      },
+      {
+        route: "./preview/app-process-builder",
+        splitSelectors: [".builder-split", ".builder-editor-split"],
+      },
+      {
+        route: "./preview/app-command-workspace",
+        splitSelectors: [".l-app-shell__main .c-split-pane"],
+      },
+    ];
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+
+    for (const example of examples) {
+      await page.goto(example.route);
+
+      const state = await page.evaluate((splitSelectors) => {
+        const splits = splitSelectors.map((selector) => {
+          const split = document.querySelector(selector);
+          const panes = split
+            ? [
+                ...split.querySelectorAll<HTMLElement>(
+                  ":scope > .c-split-pane__pane",
+                ),
+              ]
+            : [];
+
+          return {
+            selector,
+            exists: Boolean(split),
+            panes: panes.map((pane) => {
+              const style = getComputedStyle(pane);
+              return {
+                overflowY: style.overflowY,
+                overscrollBehavior: style.overscrollBehavior,
+                scrollbarGutter: style.scrollbarGutter,
+              };
+            }),
+          };
+        });
+
+        const tableWraps = [
+          ...document.querySelectorAll<HTMLElement>(
+            ".l-app-shell__main .c-table-wrap",
+          ),
+        ].map((wrap) => {
+          const rect = wrap.getBoundingClientRect();
+          const style = getComputedStyle(wrap);
+          return {
+            width: rect.width,
+            right: rect.right,
+            scrollDelta: wrap.scrollWidth - wrap.clientWidth,
+            overflowX: style.overflowX,
+          };
+        });
+
+        return {
+          splits,
+          tableWraps,
+        };
+      }, example.splitSelectors);
+
+      for (const split of state.splits) {
+        expect(
+          split.exists,
+          `${example.route} should render ${split.selector}`,
+        ).toBe(true);
+        expect(
+          split.panes.length,
+          `${example.route} should expose split panes for ${split.selector}`,
+        ).toBeGreaterThanOrEqual(2);
+        expect(
+          split.panes.every(
+            (pane) =>
+              pane.overflowY === "visible" &&
+              pane.overscrollBehavior === "auto" &&
+              pane.scrollbarGutter === "auto",
+          ),
+          `${example.route} panes should use page scroll for ${split.selector}`,
+        ).toBe(true);
+      }
+
+      for (const tableWrap of state.tableWraps) {
+        expect(
+          tableWrap.right,
+          `${example.route} table scroller should stay inside the viewport`,
+        ).toBeLessThanOrEqual(1281);
+        expect(
+          tableWrap.width,
+          `${example.route} data table should keep usable desktop width`,
+        ).toBeGreaterThanOrEqual(480);
+        expect(
+          tableWrap.scrollDelta <= 1 ||
+            ["auto", "scroll"].includes(tableWrap.overflowX),
+          `${example.route} overflowing tables should scroll inside .c-table-wrap`,
+        ).toBe(true);
+      }
+
+      await expectDocumentScrollsOver(page, example.splitSelectors[0]);
+    }
   });
 
   test.describe("app composition kits", () => {

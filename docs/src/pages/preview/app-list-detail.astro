@@ -156,90 +156,92 @@ const selected = requests[0];
               <span class="c-badge" data-tone="warning">3 SLA risks</span>
             </header>
 
-            <div class="c-toolbar" data-surface="flush">
-              <div class="c-toolbar__group">
-                <label class="c-field">
-                  <span class="u-sr-only">Search requests</span>
-                  <input class="c-field__control" type="search" placeholder="Search requests" data-request-search />
-                </label>
-                <select class="c-field__control" aria-label="Priority filter">
-                  <option>All priorities</option>
-                  <option>Critical</option>
-                  <option>High</option>
-                  <option>Normal</option>
-                </select>
+            <div class="c-split-pane__pane-inner list-detail-list-body">
+              <div class="c-toolbar" data-surface="flush">
+                <div class="c-toolbar__group">
+                  <label class="c-field">
+                    <span class="u-sr-only">Search requests</span>
+                    <input class="c-field__control" type="search" placeholder="Search requests" data-request-search />
+                  </label>
+                  <select class="c-field__control" aria-label="Priority filter">
+                    <option>All priorities</option>
+                    <option>Critical</option>
+                    <option>High</option>
+                    <option>Normal</option>
+                  </select>
+                </div>
+                <div class="c-toolbar__group">
+                  <div class="c-toolbar__divider"></div>
+                  <button class="c-button" data-variant="ghost" data-size="sm" type="button">Export</button>
+                  <button class="c-button" data-variant="secondary" data-size="sm" type="button">Bulk edit</button>
+                </div>
               </div>
-              <div class="c-toolbar__group">
-                <div class="c-toolbar__divider"></div>
-                <button class="c-button" data-variant="ghost" data-size="sm" type="button">Export</button>
-                <button class="c-button" data-variant="secondary" data-size="sm" type="button">Bulk edit</button>
-              </div>
-            </div>
 
-            <div class="c-table-wrap list-detail-table" data-density="compact" data-overflow="truncate">
-              <table class="c-table">
-                <thead>
-                  <tr>
-                    <th class="c-table__check">
-                      <input type="checkbox" aria-label="Select all requests" />
-                    </th>
-                    <th class="c-table__sticky-col" data-sort="asc">Request <span class="c-table__sort-icon"></span></th>
-                    <th>Owner</th>
-                    <th>Status</th>
-                    <th>Priority</th>
-                    <th data-align="end" data-sort>Due <span class="c-table__sort-icon"></span></th>
-                  </tr>
-                </thead>
-                <tbody data-request-rows>
-                  {requests.map((request, index) => (
-                    <tr
-                      aria-selected={index === 0 ? 'true' : undefined}
-                      data-request-row
-                      data-request-id={request.id}
-                      data-request-title={request.title}
-                      data-request-owner={request.owner}
-                      data-request-team={request.team}
-                      data-request-status={request.status}
-                      data-request-tone={request.tone}
-                      data-request-priority={request.priority}
-                      data-request-due={request.due}
-                      data-request-age={request.age}
-                      data-request-summary={request.summary}
-                      data-request-next={request.next}
-                    >
-                      <td class="c-table__check">
-                        <input type="checkbox" checked={index === 0} aria-label={`Select ${request.id}`} />
-                      </td>
-                      <td class="c-table__sticky-col">
-                        <button class="c-button" data-variant="ghost" data-size="sm" type="button" data-select-request>
-                          {request.id}
-                        </button>
-                        <span class="u-muted-sm u-truncate">{request.title}</span>
-                      </td>
-                      <td>{request.owner}</td>
-                      <td><span class="c-badge" data-tone={request.tone}>{request.status}</span></td>
-                      <td>{request.priority}</td>
-                      <td data-align="end">{request.due}</td>
+              <div class="c-table-wrap list-detail-table" data-density="compact" data-overflow="truncate">
+                <table class="c-table">
+                  <thead>
+                    <tr>
+                      <th class="c-table__check">
+                        <input type="checkbox" aria-label="Select all requests" />
+                      </th>
+                      <th class="c-table__sticky-col" data-sort="asc">Request <span class="c-table__sort-icon"></span></th>
+                      <th>Owner</th>
+                      <th>Status</th>
+                      <th>Priority</th>
+                      <th data-align="end" data-sort>Due <span class="c-table__sort-icon"></span></th>
                     </tr>
-                  ))}
-                  <tr data-empty-row hidden>
-                    <td colspan="6">
-                      <div class="c-empty">
-                        <h3 class="c-empty__title">No matching requests</h3>
-                        <p class="c-empty__description">Clear search or adjust filters to bring the queue back.</p>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-loading>
-                    <td class="c-table__check"><span class="c-skeleton" data-shape="circle" style="inline-size: 1rem; block-size: 1rem;"></span></td>
-                    <td class="c-table__sticky-col"><span class="c-skeleton" data-shape="text" style="inline-size: 11rem;"></span></td>
-                    <td><span class="c-skeleton" data-shape="text" style="inline-size: 7rem;"></span></td>
-                    <td><span class="c-skeleton" data-shape="text" style="inline-size: 5rem;"></span></td>
-                    <td><span class="c-skeleton" data-shape="text" style="inline-size: 4rem;"></span></td>
-                    <td data-align="end"><span class="c-skeleton" data-shape="text" style="inline-size: 3rem;"></span></td>
-                  </tr>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody data-request-rows>
+                    {requests.map((request, index) => (
+                      <tr
+                        aria-selected={index === 0 ? 'true' : undefined}
+                        data-request-row
+                        data-request-id={request.id}
+                        data-request-title={request.title}
+                        data-request-owner={request.owner}
+                        data-request-team={request.team}
+                        data-request-status={request.status}
+                        data-request-tone={request.tone}
+                        data-request-priority={request.priority}
+                        data-request-due={request.due}
+                        data-request-age={request.age}
+                        data-request-summary={request.summary}
+                        data-request-next={request.next}
+                      >
+                        <td class="c-table__check">
+                          <input type="checkbox" checked={index === 0} aria-label={`Select ${request.id}`} />
+                        </td>
+                        <td class="c-table__sticky-col">
+                          <button class="c-button" data-variant="ghost" data-size="sm" type="button" data-select-request>
+                            {request.id}
+                          </button>
+                          <span class="u-muted-sm u-truncate">{request.title}</span>
+                        </td>
+                        <td>{request.owner}</td>
+                        <td><span class="c-badge" data-tone={request.tone}>{request.status}</span></td>
+                        <td>{request.priority}</td>
+                        <td data-align="end">{request.due}</td>
+                      </tr>
+                    ))}
+                    <tr data-empty-row hidden>
+                      <td colspan="6">
+                        <div class="c-empty">
+                          <h3 class="c-empty__title">No matching requests</h3>
+                          <p class="c-empty__description">Clear search or adjust filters to bring the queue back.</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-loading>
+                      <td class="c-table__check"><span class="c-skeleton" data-shape="circle" style="inline-size: 1rem; block-size: 1rem;"></span></td>
+                      <td class="c-table__sticky-col"><span class="c-skeleton" data-shape="text" style="inline-size: 11rem;"></span></td>
+                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 7rem;"></span></td>
+                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 5rem;"></span></td>
+                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 4rem;"></span></td>
+                      <td data-align="end"><span class="c-skeleton" data-shape="text" style="inline-size: 3rem;"></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 
@@ -497,14 +499,29 @@ const selected = requests[0];
   }
 
   .list-detail-split {
-    --c-split-pane-start-size: minmax(42rem, 1.38fr);
-    --c-split-pane-end-size: minmax(24rem, 0.82fr);
+    --c-split-pane-start-size: minmax(40rem, 1.35fr);
+    --c-split-pane-end-size: minmax(19rem, 0.85fr);
     --c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
     --c-split-pane-pane-padding: var(--pl-space-5);
   }
 
+  .list-detail-split > .c-split-pane__pane {
+    overflow: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
+  }
+
+  .list-detail-list-body {
+    display: grid;
+    gap: var(--pl-space-3);
+  }
+
+  .list-detail-list-body > .c-toolbar {
+    padding: 0;
+  }
+
   .list-detail-table {
-    --c-table-min: min(100%, 42rem);
+    --c-table-min: 40rem;
   }
 
   @container c-table-wrap (inline-size < 48rem) {
@@ -513,7 +530,7 @@ const selected = requests[0];
     }
   }
 
-  @container (inline-size < 64rem) {
+  @container (inline-size < 60rem) {
     .list-detail-split {
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows:
