@@ -1314,6 +1314,143 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".dense-pager .c-pagination")).toBeVisible();
   });
 
+  test("list detail preview keeps medium-width spacing and table overflow controlled", async ({
+    page,
+  }) => {
+    for (const width of [1024, 1440, 1600]) {
+      await page.setViewportSize({
+        width,
+        height: width === 1024 ? 576 : 720,
+      });
+      await page.goto("./preview/app-list-detail");
+
+      const layout = await page.evaluate(() => {
+        const shellTopbar = document.querySelector(
+          ".list-detail-shell > .l-app-shell__topbar",
+        );
+        const sidebar = document.querySelector(".l-app-shell__sidebar");
+        const workspace = document.querySelector(".list-detail-workspace");
+        const split = document.querySelector(".list-detail-split");
+        const startPane = document.querySelector(
+          ".list-detail-split > .c-split-pane__pane--start",
+        );
+        const endPane = document.querySelector(
+          ".list-detail-split > .c-split-pane__pane--end",
+        );
+        const tableWrap = document.querySelector(".list-detail-table");
+        const dueHeader = document.querySelector(
+          ".list-detail-table th:nth-child(6)",
+        );
+
+        if (
+          !(
+            shellTopbar &&
+            sidebar &&
+            workspace &&
+            split &&
+            startPane &&
+            endPane &&
+            tableWrap &&
+            dueHeader
+          )
+        ) {
+          return null;
+        }
+
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const workspaceRect = workspace.getBoundingClientRect();
+        const splitRect = split.getBoundingClientRect();
+        const startRect = startPane.getBoundingClientRect();
+        const endRect = endPane.getBoundingClientRect();
+
+        return {
+          appTopbarStatic: getComputedStyle(shellTopbar).position === "static",
+          workspaceAligned:
+            Math.abs(workspaceRect.left - splitRect.left) < 2 &&
+            workspaceRect.left - sidebarRect.right >= 16,
+          tableDoesNotForceHorizontalScroll:
+            tableWrap.scrollWidth <= tableWrap.clientWidth + 1,
+          detailStacksWhenNarrow:
+            innerWidth > 1024 || endRect.top > startRect.bottom,
+          detailInlineWhenWide:
+            innerWidth < 1440 ||
+            (Math.abs(startRect.top - endRect.top) < 4 &&
+              endRect.left > startRect.left),
+          dueColumnResponsive:
+            innerWidth < 1600
+              ? getComputedStyle(dueHeader).display === "none"
+              : getComputedStyle(dueHeader).display !== "none",
+        };
+      });
+
+      expect(layout).not.toBeNull();
+      expect(layout!.appTopbarStatic).toBe(true);
+      expect(layout!.workspaceAligned).toBe(true);
+      expect(layout!.tableDoesNotForceHorizontalScroll).toBe(true);
+      expect(layout!.detailStacksWhenNarrow).toBe(true);
+      expect(layout!.detailInlineWhenWide).toBe(true);
+      expect(layout!.dueColumnResponsive).toBe(true);
+    }
+  });
+
+  test("process builder preview keeps desktop inspector inline and page scroll intact", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1600, height: 800 });
+    await page.goto("./preview/app-process-builder");
+
+    const desktopLayout = await page.evaluate(() => {
+      const siteHeader = document.querySelector(".site-header");
+      const appTopbar = document.querySelector(
+        ".builder-shell > .l-app-shell__topbar",
+      );
+      const map = document.querySelector(
+        ".builder-editor-split > .c-split-pane__pane--start",
+      );
+      const inspector = document.querySelector(
+        ".builder-editor-split > .c-split-pane__pane--end",
+      );
+      const editorSplit = document.querySelector(".builder-editor-split");
+
+      if (!(siteHeader && appTopbar && map && inspector && editorSplit)) {
+        return null;
+      }
+
+      const appTopbarRect = appTopbar.getBoundingClientRect();
+      const siteHeaderRect = siteHeader.getBoundingClientRect();
+      const mapRect = map.getBoundingClientRect();
+      const inspectorRect = inspector.getBoundingClientRect();
+      const mapStyle = getComputedStyle(map);
+      const inspectorStyle = getComputedStyle(inspector);
+      const frameStroke = getComputedStyle(editorSplit, "::after");
+
+      return {
+        appTopbarClearsSiteHeader:
+          appTopbarRect.top >= siteHeaderRect.bottom - 1,
+        inspectorInline:
+          Math.abs(mapRect.top - inspectorRect.top) < 4 &&
+          inspectorRect.left > mapRect.left,
+        mapUsesPageScroll:
+          mapStyle.overflowY === "visible" &&
+          mapStyle.overscrollBehavior === "auto",
+        inspectorUsesPageScroll:
+          inspectorStyle.overflowY === "visible" &&
+          inspectorStyle.overscrollBehavior === "auto",
+        editorFrameStroke:
+          frameStroke.borderTopStyle === "solid" &&
+          frameStroke.borderTopWidth === "1px" &&
+          frameStroke.borderRadius !== "0px",
+      };
+    });
+
+    expect(desktopLayout).not.toBeNull();
+    expect(desktopLayout!.appTopbarClearsSiteHeader).toBe(true);
+    expect(desktopLayout!.inspectorInline).toBe(true);
+    expect(desktopLayout!.mapUsesPageScroll).toBe(true);
+    expect(desktopLayout!.inspectorUsesPageScroll).toBe(true);
+    expect(desktopLayout!.editorFrameStroke).toBe(true);
+  });
+
   test.describe("app composition kits", () => {
     const kits = [
       {
