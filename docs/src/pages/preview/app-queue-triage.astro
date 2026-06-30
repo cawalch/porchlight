@@ -145,7 +145,7 @@ const selectedItem = queueItems[0];
 ---
 
 <BaseLayout title="Queue triage · Porchlight">
-  <div class="l-app-shell" data-density="compact">
+  <div class="l-app-shell queue-shell">
     <header class="l-app-shell__topbar">
       <div class="c-toolbar">
         <div class="c-toolbar__group">
@@ -225,12 +225,12 @@ const selectedItem = queueItems[0];
     </aside>
 
     <main class="l-app-shell__main" aria-labelledby="queue-title">
-      <div
-        class="c-split-pane"
-        data-layout="fixed-end"
-        data-collapse="stack"
-        style="--c-split-pane-fixed-size: 28rem;"
-      >
+      <div class="l-container queue-workspace">
+        <div
+          class="c-split-pane queue-split"
+          data-layout="fixed-end"
+          data-collapse="stack"
+        >
         <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="queue-title">
           <div class="c-split-pane__header">
             <div>
@@ -238,7 +238,7 @@ const selectedItem = queueItems[0];
               <p class="c-split-pane__description">43 open items · 12 unassigned · median wait 31m</p>
             </div>
           </div>
-          <div class="c-split-pane__pane-inner">
+          <div class="c-split-pane__pane-inner l-stack queue-pane-stack">
             <nav class="c-saved-views" aria-label="Saved queue views">
               <span class="c-saved-views__label">Views</span>
               <ul class="c-saved-views__list">
@@ -398,7 +398,7 @@ const selectedItem = queueItems[0];
               <p class="c-split-pane__description">{selectedItem.account}</p>
             </div>
           </div>
-          <div class="c-split-pane__pane-inner">
+          <div class="c-split-pane__pane-inner l-stack queue-pane-stack">
             <article class="c-card" data-surface="app">
               <header class="c-card__header">
                 <h3 class="c-card__title">{selectedItem.title}</h3>
@@ -491,7 +491,45 @@ const selectedItem = queueItems[0];
             </section>
           </div>
         </aside>
+        </div>
       </div>
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .queue-shell {
+    --app-sidebar-size: 17rem;
+  }
+
+  .queue-workspace {
+    --l-container-max: 104rem;
+
+    padding-block: var(--pl-space-5);
+  }
+
+  .queue-split {
+    --c-split-pane-fixed-size: clamp(30rem, 28vi, 36rem);
+    --c-split-pane-min-block-size: min(52rem, calc(100dvb - 10rem));
+    --c-split-pane-pane-padding: var(--pl-space-5);
+  }
+
+  .queue-pane-stack {
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  @media (width < 42rem) {
+    .queue-workspace {
+      padding-block: var(--pl-space-3);
+    }
+
+    .queue-split {
+      --c-split-pane-min-block-size: 0;
+      --c-split-pane-pane-padding: var(--pl-space-4);
+    }
+
+    .queue-pane-stack {
+      --l-stack-gap: var(--pl-space-4);
+    }
+  }
+</style>
