@@ -29,28 +29,43 @@
     "native-css"
   ],
   "style": "dist/porchlight.css",
+  "bin": {
+    "porchlight": "bin/porchlight.mjs"
+  },
   "sideEffects": [
-    "*.css"
+    "**/*.css"
   ],
   "exports": {
     ".": "./dist/porchlight.css",
-    "./css": "./dist/porchlight.css",
-    "./min": "./dist/porchlight.min.css",
-    "./source": "./porchlight.css",
-    "./porchlight.css": "./porchlight.css",
-    "./dist": "./dist/porchlight.css",
-    "./dist/porchlight.css": "./dist/porchlight.css",
-    "./dist/porchlight.min.css": "./dist/porchlight.min.css",
+    "./min.css": "./dist/porchlight.min.css",
+    "./compat.css": "./dist/compat.css",
+    "./core.css": "./dist/core.css",
+    "./layout.css": "./dist/layout.css",
+    "./components.css": "./dist/components.css",
+    "./components/*.css": "./dist/components/*.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./enhancements.css": "./dist/enhancements.css",
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "default": "./dist/tokens.js"
+    },
+    "./tokens.json": "./dist/tokens.json",
+    "./manifest.json": "./dist/porchlight.manifest.json",
     "./src/*": "./src/*"
   },
   "files": [
+    "bin",
     "porchlight.css",
     "src",
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
+    "test:package": "pnpm build && node scripts/smoke-package.mjs",
+    "prepack": "pnpm build",
     "prepublishOnly": "pnpm build"
   },
   "publishConfig": {

@@ -9,7 +9,7 @@
  * Consumers place the framework in the cascade before importing:
  *
  *   @layer porchlight, app;
- *   @import "@cawalch/porchlight/porchlight.css";
+ *   @import "@cawalch/porchlight";
  *
  * Do NOT add `layer(...)` to this import: modules self-layer.
  */

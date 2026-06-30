@@ -1,8 +1,8 @@
 /*
  * Porchlight docs chrome.
  *
- * The docs site consumes the REAL framework: global.css imports
- * @cawalch/porchlight, and this file now adds only site-chrome layout
+ * The docs site consumes the REAL framework source: global.css imports the
+ * tracked package entry, and this file adds only site-chrome layout
  * (header, nav, footer, skip-link, hero, preview grid, page shell) on top of
  * the framework's own base layer.
  *
@@ -14,7 +14,7 @@
  * intentionally UNLAYERED so it wins where it needs to without fighting
  * specificity.
  */
-@import "@cawalch/porchlight/porchlight.css";
+@import "../../../packages/porchlight/porchlight.css";
 
 :root {
   --doc-max-inline: 72rem;
