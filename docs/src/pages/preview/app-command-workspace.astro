@@ -65,7 +65,7 @@ const groupedCommands = commands.reduce(
 ---
 
 <BaseLayout title="Command-driven workspace · Porchlight">
-  <div class="l-app-shell" style="--app-sidebar-size: 15rem;">
+  <div class="l-app-shell command-shell">
     <header class="l-app-shell__topbar" data-glass>
       <div class="c-toolbar" data-surface="flush">
         <div class="c-toolbar__group">
@@ -76,7 +76,7 @@ const groupedCommands = commands.reduce(
             type="button"
             aria-label="Toggle sidebar"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;" aria-hidden="true">
+            <svg class="command-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -97,7 +97,7 @@ const groupedCommands = commands.reduce(
             aria-expanded="false"
             data-command-trigger
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;" aria-hidden="true">
+            <svg class="command-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-3.5-3.5"></path>
             </svg>
@@ -111,7 +111,7 @@ const groupedCommands = commands.reduce(
       </div>
     </header>
 
-    <aside class="l-app-shell__sidebar" style="border-inline-end: 1px solid var(--pl-color-border); background: var(--pl-color-surface); padding: var(--pl-space-3);">
+    <aside class="l-app-shell__sidebar command-sidebar">
       <nav class="c-nav" aria-label="Workspace navigation">
         <div class="c-nav__group">
           <span class="c-nav__group-label">Workspace</span>
@@ -154,7 +154,7 @@ const groupedCommands = commands.reduce(
     </aside>
 
     <main class="l-app-shell__main">
-      <div class="l-container" style="--l-container-max: 86rem; padding-block: var(--pl-space-5);">
+      <div class="l-container command-container">
         <div class="c-page-header">
           <div class="c-page-header__heading">
             <h1 class="c-page-header__title">Command center</h1>
@@ -166,9 +166,9 @@ const groupedCommands = commands.reduce(
           </div>
         </div>
 
-        <div class="c-toolbar" data-surface="panel" style="margin-block-end: var(--pl-space-4);">
-          <div class="c-toolbar__group" style="flex: 1 1 18rem;">
-            <div class="c-combobox" style="max-inline-size: 24rem;">
+        <div class="c-toolbar command-toolbar" data-surface="panel">
+          <div class="c-toolbar__group command-toolbar__scope">
+            <div class="c-combobox command-scope-select">
               <div class="c-combobox__control">
                 <input
                   class="c-combobox__input"
@@ -195,9 +195,8 @@ const groupedCommands = commands.reduce(
         </div>
 
         <div
-          class="c-split-pane"
+          class="c-split-pane command-split"
           data-collapse="stack"
-          style="--c-split-pane-start-size: minmax(18rem, 0.82fr); --c-split-pane-end-size: minmax(20rem, 1fr); --c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));"
         >
           <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="workspace-results-title">
             <header class="c-split-pane__header">
@@ -208,7 +207,7 @@ const groupedCommands = commands.reduce(
               <span class="c-badge" data-tone="accent">4 groups</span>
             </header>
             <div class="c-split-pane__pane-inner">
-              <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+              <div class="l-stack command-results-stack">
                 {
                   commands.map((command, index) => (
                     <button
@@ -219,7 +218,6 @@ const groupedCommands = commands.reduce(
                       data-command={command.id}
                       type="button"
                       aria-pressed={index === 0 ? 'true' : 'false'}
-                      style="inline-size: 100%; text-align: start;"
                     >
                       <span class="c-card__header">
                         <span class="c-card__title">{command.label}</span>
@@ -228,7 +226,7 @@ const groupedCommands = commands.reduce(
                       <span class="c-card__body">
                         <span class="u-line-clamp">{command.impact}</span>
                       </span>
-                      <span class="c-card__footer" style="justify-content: space-between;">
+                      <span class="c-card__footer command-card-footer">
                         <span class="c-chip" data-size="sm">{command.target}</span>
                         <span class="u-muted-sm">{command.status}</span>
                       </span>
@@ -250,7 +248,7 @@ const groupedCommands = commands.reduce(
               <span class="c-badge" data-tone={commands[0].tone} data-detail-status>{commands[0].status}</span>
             </header>
             <div class="c-split-pane__pane-inner">
-              <div class="l-stack" style="--l-stack-gap: var(--pl-space-4);">
+              <div class="l-stack command-detail-stack">
                 <article class="c-card" data-surface="app">
                   <div class="c-card__header">
                     <h3 class="c-card__title">Command detail</h3>
@@ -308,7 +306,7 @@ const groupedCommands = commands.reduce(
       </button>
     </div>
     <div class="c-drawer__body">
-      <div class="l-stack" style="--l-stack-gap: var(--pl-space-4);">
+      <div class="l-stack command-drawer-stack">
         <label class="c-field">
           <span class="c-field__label">Owner</span>
           <input class="c-field__control" value="Maya Patel" />
@@ -575,6 +573,63 @@ const groupedCommands = commands.reduce(
 </BaseLayout>
 
 <style>
+  .command-shell {
+    --app-sidebar-size: 15rem;
+  }
+
+  .command-icon {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  .command-sidebar {
+    padding: var(--pl-space-3);
+    border-inline-end: 1px solid var(--pl-color-border);
+    background: var(--pl-color-surface);
+  }
+
+  .command-container {
+    --l-container-max: 86rem;
+
+    padding-block: var(--pl-space-5);
+  }
+
+  .command-toolbar {
+    margin-block-end: var(--pl-space-4);
+  }
+
+  .command-toolbar__scope {
+    flex: 1 1 18rem;
+  }
+
+  .command-scope-select {
+    max-inline-size: 24rem;
+  }
+
+  .command-split {
+    --c-split-pane-start-size: minmax(18rem, 0.82fr);
+    --c-split-pane-end-size: minmax(20rem, 1fr);
+    --c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));
+  }
+
+  .command-results-stack {
+    --l-stack-gap: var(--pl-space-3);
+  }
+
+  [data-command-card] {
+    inline-size: 100%;
+    text-align: start;
+  }
+
+  .command-card-footer {
+    justify-content: space-between;
+  }
+
+  .command-detail-stack,
+  .command-drawer-stack {
+    --l-stack-gap: var(--pl-space-4);
+  }
+
   .l-app-shell__main .c-split-pane {
     overflow: visible;
   }

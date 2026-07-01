@@ -77,21 +77,21 @@ const toneFor = (s: string) =>
               <td colspan="99">
                 <div class="c-table__detail-inner">
                   <div class="c-table__detail-content">
-                    <div class="l-grid" style="--l-grid-min: 12rem;">
+                    <div class="l-grid table-detail-grid">
                       <div>
-                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Account ID</p>
+                        <p class="u-muted table-detail-label">Account ID</p>
                         <p>acct_{1000 + i}</p>
                       </div>
                       <div>
-                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Owner</p>
+                        <p class="u-muted table-detail-label">Owner</p>
                         <p>{r.name.split(' ').map(w => w[0]).join('')} Admin</p>
                       </div>
                       <div>
-                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">Region</p>
+                        <p class="u-muted table-detail-label">Region</p>
                         <p>us-east-1</p>
                       </div>
                       <div>
-                        <p class="u-muted" style="font-size: var(--pl-text-xs); text-transform: uppercase; letter-spacing: 0.04em;">API calls (30d)</p>
+                        <p class="u-muted table-detail-label">API calls (30d)</p>
                         <p>{(r.seats * 1247).toLocaleString()}</p>
                       </div>
                     </div>
@@ -108,7 +108,7 @@ const toneFor = (s: string) =>
   <h2>Compact density</h2>
   <p>Same data with <code>data-density="compact"</code> for tighter rows.</p>
   <div class="c-table-wrap" data-density="compact">
-    <table class="c-table" style="--c-table-min: 36rem;">
+    <table class="c-table table-demo-narrow">
       <thead>
         <tr>
           <th class="c-table__sticky-col" data-sort="asc">
@@ -135,7 +135,7 @@ const toneFor = (s: string) =>
   <h2>Loading state</h2>
   <p>Skeleton rows while data is fetching.</p>
   <div class="c-table-wrap">
-    <table class="c-table" style="--c-table-min: 36rem;">
+    <table class="c-table table-demo-narrow">
       <thead>
         <tr>
           <th class="c-table__sticky-col">Account</th>
@@ -146,9 +146,9 @@ const toneFor = (s: string) =>
       <tbody data-loading>
         {[1, 2, 3].map(() => (
           <tr>
-            <td class="c-table__sticky-col"><span class="c-skeleton" data-shape="text" style="inline-size: 8rem;"></span></td>
-            <td><span class="c-skeleton" data-shape="text" style="inline-size: 5rem;"></span></td>
-            <td data-align="end"><span class="c-skeleton" data-shape="text" style="inline-size: 4rem;"></span></td>
+            <td class="c-table__sticky-col"><span class="c-skeleton table-skeleton-account" data-shape="text"></span></td>
+            <td><span class="c-skeleton table-skeleton-plan" data-shape="text"></span></td>
+            <td data-align="end"><span class="c-skeleton table-skeleton-mrr" data-shape="text"></span></td>
           </tr>
         ))}
       </tbody>
@@ -172,3 +172,31 @@ const toneFor = (s: string) =>
     });
   });
 </script>
+
+<style>
+  .table-detail-grid {
+    --l-grid-min: 12rem;
+  }
+
+  .table-detail-label {
+    font-size: var(--pl-text-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .table-demo-narrow {
+    --c-table-min: 36rem;
+  }
+
+  .table-skeleton-account {
+    inline-size: 8rem;
+  }
+
+  .table-skeleton-plan {
+    inline-size: 5rem;
+  }
+
+  .table-skeleton-mrr {
+    inline-size: 4rem;
+  }
+</style>

@@ -64,7 +64,7 @@ const selected = requests[0];
     <header class="l-app-shell__topbar c-toolbar" data-surface="panel">
       <div class="c-toolbar__group">
         <button class="c-button" data-variant="ghost" data-size="sm" type="button" aria-label="Toggle navigation">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.125rem; block-size: 1.125rem;" aria-hidden="true">
+          <svg class="list-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
           </svg>
         </button>
@@ -73,7 +73,7 @@ const selected = requests[0];
       </div>
       <div class="c-toolbar__group">
         <button class="c-button" data-variant="ghost" data-size="sm" type="button" popovertarget="workspace-command" aria-label="Open command palette">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.125rem; block-size: 1.125rem;" aria-hidden="true">
+          <svg class="list-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
@@ -144,7 +144,6 @@ const selected = requests[0];
           class="c-split-pane list-detail-split"
           data-orientation="horizontal"
           data-collapse="stack"
-          style="--c-split-pane-start-size: minmax(38rem, 1.45fr); --c-split-pane-end-size: minmax(20rem, 0.8fr); --c-split-pane-min-block-size: 38rem;"
           aria-label="Request list and selected detail"
         >
           <section class="c-split-pane__pane c-split-pane__pane--start" aria-label="Request queue">
@@ -232,12 +231,12 @@ const selected = requests[0];
                       </td>
                     </tr>
                     <tr data-loading>
-                      <td class="c-table__check"><span class="c-skeleton" data-shape="circle" style="inline-size: 1rem; block-size: 1rem;"></span></td>
-                      <td class="c-table__sticky-col"><span class="c-skeleton" data-shape="text" style="inline-size: 11rem;"></span></td>
-                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 7rem;"></span></td>
-                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 5rem;"></span></td>
-                      <td><span class="c-skeleton" data-shape="text" style="inline-size: 4rem;"></span></td>
-                      <td data-align="end"><span class="c-skeleton" data-shape="text" style="inline-size: 3rem;"></span></td>
+                      <td class="c-table__check"><span class="c-skeleton list-detail-skeleton-check" data-shape="circle"></span></td>
+                      <td class="c-table__sticky-col"><span class="c-skeleton list-detail-skeleton-request" data-shape="text"></span></td>
+                      <td><span class="c-skeleton list-detail-skeleton-owner" data-shape="text"></span></td>
+                      <td><span class="c-skeleton list-detail-skeleton-status" data-shape="text"></span></td>
+                      <td><span class="c-skeleton list-detail-skeleton-priority" data-shape="text"></span></td>
+                      <td data-align="end"><span class="c-skeleton list-detail-skeleton-due" data-shape="text"></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -265,7 +264,7 @@ const selected = requests[0];
               <span class="c-badge" data-tone={selected.tone} data-detail-status>{selected.status}</span>
             </header>
 
-            <div class="c-split-pane__pane-inner l-stack" style="--l-stack-gap: var(--pl-space-4);" data-detail-content>
+            <div class="c-split-pane__pane-inner l-stack list-detail-content-stack" data-detail-content>
               <section class="c-card" data-surface="app">
                 <div class="c-card__header">
                   <h3 class="c-card__title">Summary</h3>
@@ -498,10 +497,15 @@ const selected = requests[0];
     padding-block: var(--pl-space-5);
   }
 
+  .list-detail-icon {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
   .list-detail-split {
-    --c-split-pane-start-size: minmax(40rem, 1.35fr);
-    --c-split-pane-end-size: minmax(19rem, 0.85fr);
-    --c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
+    --c-split-pane-start-size: minmax(38rem, 1.45fr);
+    --c-split-pane-end-size: minmax(20rem, 0.8fr);
+    --c-split-pane-min-block-size: 38rem;
     --c-split-pane-pane-padding: var(--pl-space-5);
   }
 
@@ -522,6 +526,35 @@ const selected = requests[0];
 
   .list-detail-table {
     --c-table-min: 40rem;
+  }
+
+  .list-detail-content-stack {
+    --l-stack-gap: var(--pl-space-4);
+  }
+
+  .list-detail-skeleton-check {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  .list-detail-skeleton-request {
+    inline-size: 11rem;
+  }
+
+  .list-detail-skeleton-owner {
+    inline-size: 7rem;
+  }
+
+  .list-detail-skeleton-status {
+    inline-size: 5rem;
+  }
+
+  .list-detail-skeleton-priority {
+    inline-size: 4rem;
+  }
+
+  .list-detail-skeleton-due {
+    inline-size: 3rem;
   }
 
   @container c-table-wrap (inline-size < 48rem) {
