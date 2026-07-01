@@ -19,7 +19,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="c-drawer__header">
       <h2 class="c-drawer__title">Filters</h2>
       <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="drawer-end" aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+        <svg class="drawer-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="c-drawer__body">
@@ -62,16 +62,40 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="c-drawer__header">
       <h2 class="c-drawer__title">Navigation</h2>
       <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="drawer-start" aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+        <svg class="drawer-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="c-drawer__body">
-      <nav aria-label="Sections" style="display: flex; flex-direction: column; gap: var(--pl-space-2);">
-        <a href="#" style="color: var(--pl-color-accent); font-weight: 600; text-decoration: none; padding: var(--pl-space-2) var(--pl-space-3);">Dashboard</a>
-        <a href="#" style="color: var(--pl-color-text-muted); text-decoration: none; padding: var(--pl-space-2) var(--pl-space-3);">Projects</a>
-        <a href="#" style="color: var(--pl-color-text-muted); text-decoration: none; padding: var(--pl-space-2) var(--pl-space-3);">Team</a>
-        <a href="#" style="color: var(--pl-color-text-muted); text-decoration: none; padding: var(--pl-space-2) var(--pl-space-3);">Settings</a>
+      <nav class="drawer-demo-nav" aria-label="Sections">
+        <a class="drawer-demo-nav-link is-active" href="#">Dashboard</a>
+        <a class="drawer-demo-nav-link" href="#">Projects</a>
+        <a class="drawer-demo-nav-link" href="#">Team</a>
+        <a class="drawer-demo-nav-link" href="#">Settings</a>
       </nav>
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .drawer-demo-icon {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  .drawer-demo-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-space-2);
+  }
+
+  .drawer-demo-nav-link {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+  }
+
+  .drawer-demo-nav-link.is-active {
+    color: var(--pl-color-accent);
+    font-weight: 600;
+  }
+</style>
