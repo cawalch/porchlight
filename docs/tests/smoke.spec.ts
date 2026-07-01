@@ -1052,17 +1052,23 @@ test.describe("docs scaffold", () => {
       page.locator(".c-split__option[data-tone='danger']").first(),
     ).toBeAttached();
 
-    // Every instance has a unique --c-split-anchor inline style so popovers
-    // don't all tether to the last toggle on the page.
-    const splits = page.locator(".c-split[style]");
+    // Every menu-bearing instance has a unique split anchor so popovers don't
+    // all tether to the last toggle on the page. The value may come from local
+    // preview CSS rather than an inline style.
+    const splits = page.locator(".c-split:has(.c-split__menu)");
     const count = await splits.count();
     expect(count).toBeGreaterThanOrEqual(2);
     const anchors = new Set<string>();
     for (let i = 0; i < count; i++) {
-      const style = (await splits.nth(i).getAttribute("style")) || "";
-      const match = style.match(/--c-split-anchor:\s*(--[^;]+)/);
-      expect(match, `instance ${i} must set --c-split-anchor`).not.toBeNull();
-      anchors.add(match![1].trim());
+      const anchor = await splits
+        .nth(i)
+        .evaluate((split) =>
+          getComputedStyle(split).getPropertyValue("--c-split-anchor").trim(),
+        );
+      expect(anchor, `instance ${i} must set --c-split-anchor`).toMatch(
+        /^--.+/,
+      );
+      anchors.add(anchor);
     }
     // No two instances share an anchor name.
     expect(anchors.size).toBe(count);

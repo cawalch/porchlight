@@ -54,8 +54,8 @@ const toneFor = (status: string) =>
   ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning' }[status] ?? 'accent');
 ---
 <BaseLayout title="Reporting dashboard · Porchlight">
-  <main class="l-container l-stack" style="--l-stack-gap: var(--pl-space-5); --l-container-max: 92rem;">
-    <section class="l-stack" aria-labelledby="report-title" style="--l-stack-gap: var(--pl-space-4);">
+  <main class="l-container l-stack reporting-shell">
+    <section class="l-stack reporting-header-stack" aria-labelledby="report-title">
       <div class="c-page-header">
         <div class="c-page-header__heading">
           <h1 class="c-page-header__title" id="report-title">Revenue performance</h1>
@@ -147,8 +147,8 @@ const toneFor = (status: string) =>
           Retention
         </button>
       </div>
-      <div class="c-tabs__panel l-stack" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary" style="--l-stack-gap: var(--pl-space-5);">
-        <section class="l-grid" aria-label="Key performance indicators" style="--l-grid-min: 14rem;">
+      <div class="c-tabs__panel l-stack reporting-panel-stack" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary">
+        <section class="l-grid reporting-kpi-grid" aria-label="Key performance indicators">
           {kpis.map((item) => (
             <article class="c-card" data-surface="app">
               <div class="c-card__body">
@@ -176,7 +176,7 @@ const toneFor = (status: string) =>
           ))}
         </section>
 
-        <div class="l-sidebar" style="--l-sidebar-size: 20rem;">
+        <div class="l-sidebar reporting-sidebar">
           <section class="c-chart" aria-labelledby="revenue-trend-title" aria-describedby="revenue-trend-description">
             <header class="c-chart__header">
               <div>
@@ -213,18 +213,18 @@ const toneFor = (status: string) =>
             </div>
             <ul class="c-chart__legend" aria-label="Series">
               <li class="c-chart__legend-item">
-                <span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-accent);"></span>
+                <span class="c-chart__swatch reporting-swatch-actual"></span>
                 Actual revenue
               </li>
               <li class="c-chart__legend-item">
-                <span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-success);"></span>
+                <span class="c-chart__swatch reporting-swatch-forecast"></span>
                 Forecast
               </li>
             </ul>
             <p class="c-chart__caption">Includes closed-won expansion and self-serve upgrades.</p>
           </section>
 
-          <aside class="l-stack" aria-label="Report insights" style="--l-stack-gap: var(--pl-space-4);">
+          <aside class="l-stack reporting-insights" aria-label="Report insights">
             <section class="c-card" data-surface="app">
               <header class="c-card__header">
                 <h2 class="c-card__title">Insight queue</h2>
@@ -273,7 +273,7 @@ const toneFor = (status: string) =>
             </div>
           </div>
           <div class="c-table-wrap" data-density="compact">
-            <table class="c-table" style="--c-table-min: 48rem;">
+            <table class="c-table reporting-table">
               <thead>
                 <tr>
                   <th class="c-table__sticky-col" data-sort="asc">Channel <span class="c-table__sort-icon"></span></th>
@@ -325,3 +325,39 @@ const toneFor = (status: string) =>
     </div>
   </main>
 </BaseLayout>
+
+<style>
+  .reporting-shell {
+    --l-container-max: 92rem;
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  .reporting-header-stack,
+  .reporting-insights {
+    --l-stack-gap: var(--pl-space-4);
+  }
+
+  .reporting-panel-stack {
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  .reporting-kpi-grid {
+    --l-grid-min: 14rem;
+  }
+
+  .reporting-sidebar {
+    --l-sidebar-size: 20rem;
+  }
+
+  .reporting-swatch-actual {
+    --c-chart-series-color: var(--pl-color-accent);
+  }
+
+  .reporting-swatch-forecast {
+    --c-chart-series-color: var(--pl-color-success);
+  }
+
+  .reporting-table {
+    --c-table-min: 48rem;
+  }
+</style>
