@@ -130,31 +130,31 @@
       color: var(--pl-color-text);
       font-weight: var(--pl-font-weight-semibold);
     }
-
-    /* Container-query collapse to vertical. */
-    @container (max-width: 36rem) {
-      .c-stepper__step {
-        flex-direction: row;
-        align-items: center;
-        flex: 0 0 100%;
-        inline-size: 100%;
-        text-align: start;
-        padding-block-end: var(--pl-space-4);
-
-        &::before {
-          inset-block: var(--c-stepper-marker-size) 0;
-          inset-inline: calc(var(--c-stepper-marker-size) / 2) auto;
-          inline-size: 2px;
-        }
-      }
-    }
-
-    /* Container query context (applied outside @scope). */
   }
 
   /* Container query context. */
   :where(.c-stepper) {
+    container-name: c-stepper;
     container-type: inline-size;
+  }
+
+  /* Container-query collapse to vertical. */
+  @container c-stepper (max-width: 36rem) {
+    .c-stepper > .c-stepper__step {
+      flex-direction: row;
+      align-items: center;
+      flex: 0 0 100%;
+      inline-size: 100%;
+      text-align: start;
+      padding-block-end: var(--pl-space-4);
+
+      &::before {
+        inset-block: var(--c-stepper-marker-size) 0;
+        inset-inline: calc(var(--c-stepper-marker-size) / 2) auto;
+        inline-size: 2px;
+        block-size: auto;
+      }
+    }
   }
 
   @media (forced-colors: active) {
