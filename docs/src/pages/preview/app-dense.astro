@@ -201,6 +201,7 @@ const navSections = [
     display: flex;
     flex-direction: column;
     block-size: 100dvh;
+    inline-size: calc(100% + (2 * var(--pl-space-8)));
     overflow: hidden;
     margin: calc(-1 * var(--pl-space-8));
     background: var(--pl-color-bg);
@@ -214,6 +215,7 @@ const navSections = [
     justify-content: space-between;
     gap: var(--pl-space-3);
     padding: var(--pl-space-1) var(--pl-space-3);
+    min-inline-size: 0;
     border-block-end: 1px solid var(--pl-color-border);
     background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
     backdrop-filter: blur(8px);
@@ -224,6 +226,7 @@ const navSections = [
     display: flex;
     align-items: center;
     gap: var(--pl-space-2);
+    min-inline-size: 0;
   }
   .dense-brand {
     font-size: var(--pl-text-sm);
@@ -236,6 +239,7 @@ const navSections = [
   .dense-search {
     position: relative;
     flex: 1;
+    min-inline-size: 12rem;
     max-inline-size: 32rem;
   }
   .dense-search input {
@@ -272,7 +276,8 @@ const navSections = [
   /* Body grid */
   .dense-body {
     display: grid;
-    grid-template-columns: 12rem 1fr;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    min-inline-size: 0;
     flex: 1;
     overflow: hidden;
   }
@@ -335,6 +340,7 @@ const navSections = [
     display: flex;
     flex-direction: column;
     gap: var(--pl-space-3);
+    min-inline-size: 0;
   }
 
   /* KPI strip */
@@ -403,6 +409,9 @@ const navSections = [
   .dense-table .c-table th {
     font-size: var(--pl-text-sm);
   }
+  .dense-table {
+    max-inline-size: 100%;
+  }
   .dense-mono {
     font-family: var(--pl-font-mono);
     font-size: var(--pl-text-xs);
@@ -436,5 +445,68 @@ const navSections = [
     font-size: var(--pl-text-sm);
     color: var(--pl-color-text-muted);
     padding-inline: var(--pl-space-1);
+  }
+
+  @media (width < 48rem) {
+    .dense-app {
+      block-size: auto;
+      min-block-size: 100dvh;
+      inline-size: calc(100% + (2 * var(--pl-space-4)));
+      margin: calc(-1 * var(--pl-space-4));
+      overflow: visible;
+    }
+
+    .dense-topbar {
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: var(--pl-space-2);
+      padding: var(--pl-space-2);
+    }
+
+    .dense-search {
+      order: 3;
+      flex: 1 0 100%;
+      min-inline-size: 0;
+      max-inline-size: none;
+    }
+
+    .dense-topbar__right {
+      margin-inline-start: auto;
+    }
+
+    .dense-body {
+      display: block;
+      overflow: visible;
+    }
+
+    .dense-sidebar {
+      display: none;
+    }
+
+    .dense-main {
+      overflow: visible;
+      padding: var(--pl-space-2);
+    }
+
+    .dense-kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dense-toolbar,
+    .dense-pager {
+      align-items: stretch;
+    }
+
+    .dense-toolbar__left,
+    .dense-toolbar__right,
+    .dense-pager .c-pagination {
+      overflow-x: auto;
+      max-inline-size: 100%;
+      scrollbar-width: thin;
+    }
+
+    .dense-pager {
+      flex-direction: column;
+    }
   }
 </style>
