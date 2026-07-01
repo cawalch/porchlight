@@ -25,16 +25,16 @@ const toneFor = (s: string) =>
     <header class="l-app-shell__topbar app-topbar">
       <div class="app-topbar__left">
         <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+          <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <strong>Porchlight</strong>
       </div>
       <div class="app-topbar__right">
         <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo" aria-label="Search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="u-muted" style="font-size: var(--pl-text-xs);">Cmd+K</span>
+          <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="u-muted dashboard-shortcut-label">Cmd+K</span>
         </button>
-        <div class="c-avatar" data-size="sm" style="background: var(--pl-color-accent);">JD</div>
+        <div class="c-avatar dashboard-avatar" data-size="sm">JD</div>
       </div>
     </header>
 
@@ -72,8 +72,8 @@ const toneFor = (s: string) =>
 
     <!-- Main content -->
     <main class="l-app-shell__main">
-      <div class="l-container" style="--l-container-max: 80rem; padding-block: var(--pl-space-6);">
-        <div class="l-stack" style="--l-stack-gap: var(--pl-space-6);">
+      <div class="l-container dashboard-shell">
+        <div class="l-stack dashboard-stack">
           <!-- Heading + segmented view toggle -->
           <div class="dash-header">
             <div>
@@ -88,7 +88,7 @@ const toneFor = (s: string) =>
           </div>
 
           <!-- KPI grid: auto-fits from 4 columns down to 1 -->
-          <div class="l-grid" style="--l-grid-min: 14rem;">
+          <div class="l-grid dashboard-kpi-grid">
             {stats.map((s) => (
               <div class="c-card" data-surface="app">
                 <div class="c-card__body">
@@ -111,7 +111,7 @@ const toneFor = (s: string) =>
           <div class="c-card" data-surface="app">
             <div class="c-toolbar">
               <div class="c-toolbar__group">
-                <span class="u-muted" style="font-size: var(--pl-text-sm);">5 accounts</span>
+                <span class="u-muted dashboard-text-sm">5 accounts</span>
               </div>
               <div class="c-toolbar__group">
                 <div class="c-segmented" role="radiogroup" aria-label="View">
@@ -121,8 +121,8 @@ const toneFor = (s: string) =>
                 <button class="c-button" data-variant="secondary" data-size="sm">Export</button>
               </div>
             </div>
-            <div class="c-table-wrap" style="border: 0; border-radius: 0;">
-              <table class="c-table" style="--c-table-min: 36rem;">
+            <div class="c-table-wrap dashboard-table-wrap">
+              <table class="c-table dashboard-table">
                 <thead>
                   <tr>
                     <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
@@ -147,9 +147,9 @@ const toneFor = (s: string) =>
                 </tbody>
               </table>
             </div>
-            <div class="c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border);">
+            <div class="c-toolbar dashboard-pagination-toolbar">
               <div class="c-toolbar__group">
-                <span class="u-muted" style="font-size: var(--pl-text-sm);">Page 1 of 12</span>
+                <span class="u-muted dashboard-text-sm">Page 1 of 12</span>
               </div>
               <div class="c-toolbar__group">
                 <nav class="c-pagination" aria-label="Pagination">
@@ -242,6 +242,28 @@ const toneFor = (s: string) =>
       display: flex;
       align-items: center;
       gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+    .app-topbar__right {
+      justify-content: flex-end;
+    }
+    .dashboard-icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .dashboard-shortcut-label {
+      font-size: var(--pl-text-xs);
+    }
+    .dashboard-avatar {
+      background: var(--pl-color-accent);
+    }
+    .dashboard-shell {
+      --l-container-max: 80rem;
+      padding-block: var(--pl-space-6);
+    }
+    .dashboard-stack {
+      --l-stack-gap: var(--pl-space-6);
     }
     .dash-header {
       display: flex;
@@ -249,6 +271,31 @@ const toneFor = (s: string) =>
       justify-content: space-between;
       gap: var(--pl-space-4);
       flex-wrap: wrap;
+    }
+    .dashboard-kpi-grid {
+      --l-grid-min: 14rem;
+    }
+    .dashboard-text-sm {
+      font-size: var(--pl-text-sm);
+    }
+    .dashboard-table-wrap {
+      border: 0;
+      border-radius: 0;
+    }
+    .dashboard-table {
+      --c-table-min: 36rem;
+    }
+    .dashboard-pagination-toolbar {
+      border-block-start: 1px solid var(--pl-color-border);
+      border-block-end: 0;
+    }
+    @media (width < 40rem) {
+      .dashboard-shortcut-label {
+        display: none;
+      }
+      .app-topbar__right {
+        gap: var(--pl-space-1);
+      }
     }
     /* Break out of main constraint to a wider layout
        (handled centrally in global.css via main:has(> .l-app-shell)). */

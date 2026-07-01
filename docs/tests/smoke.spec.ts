@@ -2,20 +2,50 @@ import { test, expect, type Page } from "@playwright/test";
 
 async function expectDocumentScrollsOver(page: Page, selector: string) {
   const target = await page.evaluate((targetSelector) => {
-    const element = document.querySelector(targetSelector);
+    const element = document.querySelector<HTMLElement>(targetSelector);
     if (!element) return null;
 
-    const rect = element.getBoundingClientRect();
     const scrollRoot = document.scrollingElement;
     if (!scrollRoot) return null;
 
-    return {
-      hasPageScroll: scrollRoot.scrollHeight > scrollRoot.clientHeight + 100,
-      x: Math.min(Math.max(rect.left + rect.width / 2, 1), innerWidth - 2),
-      y: Math.min(
-        Math.max(rect.top + Math.min(rect.height / 2, 240), 80),
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(Math.max(value, min), max);
+    const pointFor = (
+      rect: DOMRect,
+      inlineOffset: number,
+      blockOffset: number,
+    ) => ({
+      x: clamp(
+        rect.left + Math.min(inlineOffset, rect.width / 2),
+        1,
+        innerWidth - 2,
+      ),
+      y: clamp(
+        rect.top + Math.min(blockOffset, Math.max(rect.height / 2, 1)),
+        80,
         innerHeight - 2,
       ),
+    });
+
+    const directPanes = [
+      ...element.querySelectorAll<HTMLElement>(":scope > .c-split-pane__pane"),
+    ];
+    const candidateRects = [element, ...directPanes]
+      .map((candidate) => candidate.getBoundingClientRect())
+      .filter(
+        (rect) =>
+          rect.width > 0 &&
+          rect.height > 0 &&
+          rect.bottom > 0 &&
+          rect.top < innerHeight,
+      );
+
+    return {
+      hasPageScroll: scrollRoot.scrollHeight > scrollRoot.clientHeight + 100,
+      candidates: candidateRects.flatMap((rect) => [
+        pointFor(rect, 48, 96),
+        pointFor(rect, rect.width / 2, 240),
+      ]),
     };
   }, selector);
 
@@ -25,12 +55,26 @@ async function expectDocumentScrollsOver(page: Page, selector: string) {
   ).not.toBeNull();
   if (!target!.hasPageScroll) return;
 
-  await page.evaluate(() => {
-    document.scrollingElement?.scrollTo({ top: 0 });
-  });
-  await page.mouse.move(target!.x, target!.y);
-  await page.mouse.wheel(0, 360);
-  await page.waitForTimeout(50);
+  expect(
+    target!.candidates.length,
+    `${selector} should expose visible points for wheel-scroll check`,
+  ).toBeGreaterThan(0);
+
+  for (const candidate of target!.candidates) {
+    await page.evaluate(() => {
+      document.scrollingElement?.scrollTo({ top: 0 });
+    });
+    await page.mouse.move(candidate.x, candidate.y);
+    await page.mouse.wheel(0, 520);
+
+    const scrolled = await page
+      .waitForFunction(() => (document.scrollingElement?.scrollTop ?? 0) > 80, {
+        timeout: 800,
+      })
+      .then(() => true)
+      .catch(() => false);
+    if (scrolled) return;
+  }
 
   const scrollTop = await page.evaluate(
     () => document.scrollingElement?.scrollTop ?? 0,
