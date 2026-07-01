@@ -35,8 +35,8 @@ const testimonials = [
   </section>
 
   <!-- Stats bar -->
-  <section class="l-container" style="padding-block: var(--pl-space-8);">
-    <div class="l-grid" style="--l-grid-min: 10rem;">
+  <section class="l-container marketing-section marketing-section--lg">
+    <div class="l-grid marketing-stats-grid">
       <div class="stat-block"><span class="stat-block__value">34</span><span class="stat-block__label">Components</span></div>
       <div class="stat-block"><span class="stat-block__value">0</span><span class="stat-block__label">Dependencies</span></div>
       <div class="stat-block"><span class="stat-block__value">143</span><span class="stat-block__label">Tests</span></div>
@@ -45,17 +45,17 @@ const testimonials = [
   </section>
 
   <!-- Feature cards in multi-column masonry -->
-  <section class="l-container" style="padding-block: var(--pl-space-6);">
+  <section class="l-container marketing-section">
     <h2 class="section-heading c-reveal">Why Porchlight?</h2>
-    <div class="l-columns" style="--l-columns-count: 3;">
+    <div class="l-columns marketing-feature-columns">
       {features.map((f, i) => (
-        <div class={`c-card c-reveal${i > 0 ? ` data-delay="${Math.min(i, 3)}"` : ''}`}>
+        <div class="c-card c-reveal" data-delay={i > 0 ? Math.min(i, 3) : undefined}>
           <div class="c-card__body">
             <span class="feature-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;" set:html={f.icon} stroke-linecap="round" stroke-linejoin="round"/>
+              <svg class="feature-badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={f.icon} stroke-linecap="round" stroke-linejoin="round"/>
             </span>
             <h3 class="feature-card-title">{f.title}</h3>
-            <p class="u-muted" style="font-size: var(--pl-text-sm);">{f.body}</p>
+            <p class="u-muted feature-card-body">{f.body}</p>
           </div>
         </div>
       ))}
@@ -63,7 +63,7 @@ const testimonials = [
   </section>
 
   <!-- Code example -->
-  <section class="l-container" style="padding-block: var(--pl-space-8);">
+  <section class="l-container marketing-section marketing-section--lg">
     <h2 class="section-heading c-reveal">Get started in seconds</h2>
     <div class="c-reveal" data-delay="1">
       <pre><code>pnpm add @cawalch/porchlight</code></pre>
@@ -74,14 +74,14 @@ const testimonials = [
   </section>
 
   <!-- Testimonials in columns -->
-  <section class="l-container" style="padding-block: var(--pl-space-6);">
+  <section class="l-container marketing-section">
     <h2 class="section-heading c-reveal">Loved by developers</h2>
-    <div class="l-columns" style="--l-columns-count: 2;">
+    <div class="l-columns marketing-testimonial-columns">
       {testimonials.map((t) => (
         <div class="c-card c-reveal">
           <div class="c-card__body">
-            <p style="font-size: var(--pl-text-md); line-height: 1.6; margin-block-end: var(--pl-space-3);">"{t.quote}"</p>
-            <p class="u-muted" style="font-size: var(--pl-text-sm);">{t.author}</p>
+            <p class="testimonial-quote">"{t.quote}"</p>
+            <p class="u-muted testimonial-author">{t.author}</p>
           </div>
         </div>
       ))}
@@ -89,7 +89,7 @@ const testimonials = [
   </section>
 
   <!-- CTA with full-bleed -->
-  <section class="hero-bleed" style="padding-block: var(--pl-space-10);">
+  <section class="hero-bleed hero-bleed--cta">
     <div class="l-inset">
       <h2 class="hero-title">Ready to build?</h2>
       <p class="hero-sub">Join developers building modern web apps with Porchlight.</p>
@@ -120,6 +120,21 @@ const testimonials = [
       font-size: var(--pl-text-xl);
       margin-block-end: var(--pl-space-5);
     }
+    .marketing-section {
+      padding-block: var(--pl-space-6);
+    }
+    .marketing-section--lg {
+      padding-block: var(--pl-space-8);
+    }
+    .marketing-stats-grid {
+      --l-grid-min: 10rem;
+    }
+    .marketing-feature-columns {
+      --l-columns-count: 3;
+    }
+    .marketing-testimonial-columns {
+      --l-columns-count: 2;
+    }
     .stat-block {
       text-align: center;
       display: flex;
@@ -146,10 +161,26 @@ const testimonials = [
       background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
       color: var(--pl-color-accent);
     }
+    .feature-badge__icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+    }
     .feature-card-title {
       font-size: var(--pl-text-md);
       font-weight: 600;
       margin-block-end: var(--pl-space-2);
+    }
+    .feature-card-body,
+    .testimonial-author {
+      font-size: var(--pl-text-sm);
+    }
+    .testimonial-quote {
+      margin-block-end: var(--pl-space-3);
+      font-size: var(--pl-text-md);
+      line-height: 1.6;
+    }
+    .hero-bleed--cta {
+      padding-block: var(--pl-space-10);
     }
     /* Full-bleed layout handled centrally in global.css. */
 
@@ -163,5 +194,6 @@ const testimonials = [
       overflow-x: auto;
       font-size: var(--pl-text-sm);
       font-family: var(--pl-font-mono);
+    }
   </style>
 </BaseLayout>
