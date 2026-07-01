@@ -85,7 +85,7 @@ const toneFor = (status: string) =>
         </div>
 
         <div class="c-tabs__panel" role="tabpanel" id="dash-panel-all" aria-labelledby="dash-tab-all">
-          <div class="c-table-wrap" style="border: 0; border-radius: 0;">
+          <div class="c-table-wrap dashboard-table-wrap">
             <table class="c-table">
               <thead>
                 <tr>
@@ -118,7 +118,7 @@ const toneFor = (status: string) =>
       <!-- Table footer with pagination -->
       <div class="c-toolbar dashboard-footer">
         <div class="c-toolbar__group">
-          <span class="u-muted" style="font-size: var(--pl-text-sm);">Showing 1–7 of 247</span>
+          <span class="u-muted dashboard-footer-count">Showing 1–7 of 247</span>
         </div>
         <div class="c-toolbar__group">
           <nav class="c-pagination" aria-label="Table pagination" data-size="sm">
@@ -140,7 +140,7 @@ const toneFor = (status: string) =>
     <h2 id="side-heading" class="section-title">Activity &amp; loading states</h2>
     <div class="l-grid">
       <div class="c-card">
-        <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+        <div class="c-toolbar dashboard-card-toolbar">
           <div class="c-toolbar__group"><strong>Recent activity</strong></div>
           <div class="c-toolbar__group"><button class="c-button" data-variant="ghost">View all</button></div>
         </div>
@@ -166,16 +166,16 @@ const toneFor = (status: string) =>
       </div>
 
       <div class="c-card">
-        <div class="c-toolbar" style="border-block-end: 1px solid var(--pl-color-border);">
+        <div class="c-toolbar dashboard-card-toolbar">
           <div class="c-toolbar__group"><strong>Loading report…</strong></div>
         </div>
         <div class="c-card__body">
           <div class="c-skeleton-group">
-            <div class="c-skeleton" data-shape="text" style="--c-skeleton-w: 40%;"></div>
+            <div class="c-skeleton dashboard-skeleton-w-40" data-shape="text"></div>
             <div class="c-skeleton" data-shape="text"></div>
-            <div class="c-skeleton" data-shape="text" style="--c-skeleton-w: 85%;"></div>
-            <div class="c-skeleton" data-shape="text" data-line="sm" style="--c-skeleton-w: 60%;"></div>
-            <div class="c-skeleton" data-shape="rect" style="--c-skeleton-w: 5rem; margin-block-start: var(--pl-space-2);"></div>
+            <div class="c-skeleton dashboard-skeleton-w-85" data-shape="text"></div>
+            <div class="c-skeleton dashboard-skeleton-w-60" data-shape="text" data-line="sm"></div>
+            <div class="c-skeleton dashboard-skeleton-action" data-shape="rect"></div>
           </div>
         </div>
       </div>
@@ -209,13 +209,22 @@ const toneFor = (status: string) =>
   }
   .table-section { margin-block-end: var(--pl-space-6); }
   .side-section { margin-block-end: var(--pl-space-6); }
-  .dashboard-tabs .c-table-wrap { border-radius: 0; }
+  .dashboard-table-wrap {
+    border: 0;
+    border-radius: 0;
+  }
   .dashboard-footer {
     border-block-end: 0;
     border-block-start: 1px solid var(--pl-color-border);
     justify-content: space-between;
   }
+  .dashboard-footer-count {
+    font-size: var(--pl-text-sm);
+  }
   .dashboard-footer .c-toolbar__group:last-child { justify-content: flex-end; }
+  .dashboard-card-toolbar {
+    border-block-end: 1px solid var(--pl-color-border);
+  }
   .panel-placeholder {
     padding: var(--pl-space-5);
     color: var(--pl-color-text-muted);
@@ -227,4 +236,18 @@ const toneFor = (status: string) =>
     font-size: var(--pl-text-sm);
   }
   .activity-item .u-muted { margin-inline-start: auto; white-space: nowrap; }
+  .dashboard-skeleton-w-40 {
+    --c-skeleton-w: 40%;
+  }
+  .dashboard-skeleton-w-60 {
+    --c-skeleton-w: 60%;
+  }
+  .dashboard-skeleton-w-85 {
+    --c-skeleton-w: 85%;
+  }
+  .dashboard-skeleton-action {
+    --c-skeleton-w: 5rem;
+
+    margin-block-start: var(--pl-space-2);
+  }
 </style>
