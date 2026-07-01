@@ -41,11 +41,11 @@ const messages = [
     </nav>
 
     <!-- Master-detail via .l-sidebar (collapses inside narrow containers) -->
-    <div class="l-sidebar" style="--l-sidebar-size: 20rem; --l-sidebar-gap: var(--pl-space-4);">
+    <div class="l-sidebar inbox-master-detail">
       <!-- Message list -->
       <div class="msg-list">
         <div class="msg-list__toolbar">
-          <label class="c-field c-field--inline" style="flex: 1;">
+          <label class="c-field c-field--inline inbox-search-field">
             <span class="u-sr-only">Search messages</span>
             <input class="c-field__control" type="search" placeholder="Search inbox..."/>
           </label>
@@ -58,7 +58,7 @@ const messages = [
                 <span class="msg-item__time">{m.time}</span>
               </div>
               <div class="msg-item__subject">
-                {m.starred && <svg viewBox="0 0 24 24" fill="currentColor" style="inline-size: 0.875rem; block-size: 0.875rem; color: var(--pl-color-warning); flex-shrink: 0;"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>}
+                {m.starred && <svg class="msg-item__star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>}
                 {m.subject}
               </div>
               <p class="msg-item__preview">{m.preview}</p>
@@ -73,7 +73,7 @@ const messages = [
           <div>
             <h2>Re: Q3 Roadmap Review</h2>
             <div class="msg-detail__meta">
-              <div class="c-avatar" data-size="sm" style="background: var(--pl-color-accent);">SC</div>
+              <div class="c-avatar msg-detail__avatar" data-size="sm">SC</div>
               <div>
                 <strong>Sarah Chen</strong>
                 <span class="u-muted">sarah@example.com</span>
@@ -82,11 +82,11 @@ const messages = [
           </div>
           <div class="l-cluster">
             <button class="c-button" data-variant="ghost" data-size="sm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg class="msg-detail__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               Star
             </button>
             <button class="c-button" data-variant="ghost" data-size="sm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="m4 4 8 8 8-8"/></svg>
+              <svg class="msg-detail__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="m4 4 8 8 8-8"/></svg>
               Archive
             </button>
           </div>
@@ -109,7 +109,7 @@ const messages = [
             <span class="u-sr-only">Reply</span>
             <textarea class="c-textarea-auto" rows="2" placeholder="Reply to Sarah..."></textarea>
           </label>
-          <div class="l-cluster" style="margin-block-start: var(--pl-space-2);">
+          <div class="l-cluster msg-detail__reply-actions">
             <button class="c-button" data-variant="primary" data-size="sm">Send reply</button>
             <button class="c-button" data-variant="ghost" data-size="sm">Forward</button>
           </div>
@@ -135,6 +135,13 @@ const messages = [
         border-block-end: 1px solid var(--pl-color-border);
         padding-block-end: var(--pl-space-4);
       }
+    }
+    .inbox-master-detail {
+      --l-sidebar-size: 20rem;
+      --l-sidebar-gap: var(--pl-space-4);
+    }
+    .inbox-search-field {
+      flex: 1;
     }
     .msg-list {
       display: flex;
@@ -187,6 +194,12 @@ const messages = [
       gap: var(--pl-space-1);
       font-size: var(--pl-text-sm);
     }
+    .msg-item__star {
+      inline-size: 0.875rem;
+      block-size: 0.875rem;
+      flex-shrink: 0;
+      color: var(--pl-color-warning);
+    }
     .msg-item__preview {
       font-size: var(--pl-text-xs);
       color: var(--pl-color-text-muted);
@@ -218,10 +231,20 @@ const messages = [
       margin-block-start: var(--pl-space-2);
       font-size: var(--pl-text-sm);
     }
+    .msg-detail__avatar {
+      background: var(--pl-color-accent);
+    }
     .msg-detail__meta strong { display: block; }
+    .msg-detail__action-icon {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
     .msg-detail__body p {
       margin-block-end: var(--pl-space-3);
       line-height: 1.6;
+    }
+    .msg-detail__reply-actions {
+      margin-block-start: var(--pl-space-2);
     }
     /* Docs content constraint handled by global.css. */
   </style>
