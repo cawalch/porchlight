@@ -2,9 +2,9 @@
 /**
  * BaseLayout — the HTML shell for every docs page.
  *
- * Styling lives in src/styles/global.css and uses its own temporary --doc-*
- * namespace. Once the Porchlight token system lands (Phase 1), the docs chrome
- * will consume --pl-* tokens instead.
+ * Styling lives in src/styles/global.css. The docs chrome now consumes the
+ * Porchlight --pl-* token layer directly; only docs-specific layout geometry
+ * remains under --doc-* custom properties.
  */
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
