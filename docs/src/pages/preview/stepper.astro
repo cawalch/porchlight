@@ -27,7 +27,7 @@ const steps = [
   </ol>
 
   <h2>All completed</h2>
-  <ol class="c-stepper" style="margin-block-start: var(--pl-space-6);">
+  <ol class="c-stepper stepper-spaced">
     <li class="c-stepper__step" data-state="completed">
       <span class="c-stepper__marker">1</span>
       <span class="c-stepper__label">Step one</span>
@@ -43,7 +43,7 @@ const steps = [
   </ol>
 
   <h2>In a narrow container (vertical collapse)</h2>
-  <div style="max-inline-size: 20rem; margin-block-start: var(--pl-space-6);">
+  <div class="stepper-narrow-demo">
     <ol class="c-stepper">
       <li class="c-stepper__step" data-state="completed">
         <span class="c-stepper__marker">1</span>
@@ -60,3 +60,14 @@ const steps = [
     </ol>
   </div>
 </BaseLayout>
+
+<style>
+  .stepper-spaced,
+  .stepper-narrow-demo {
+    margin-block-start: var(--pl-space-6);
+  }
+
+  .stepper-narrow-demo {
+    max-inline-size: 20rem;
+  }
+</style>

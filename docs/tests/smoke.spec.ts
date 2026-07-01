@@ -909,6 +909,66 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".c-stepper__marker").first()).toBeVisible();
   });
 
+  test("stepper collapses vertically in narrow containers", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("./preview/stepper");
+
+    const state = await page.evaluate(() => {
+      const scrollRoot = document.scrollingElement;
+      const steppers = [
+        ...document.querySelectorAll<HTMLElement>(".c-stepper"),
+      ];
+
+      return {
+        overflowX: scrollRoot
+          ? scrollRoot.scrollWidth - scrollRoot.clientWidth
+          : 0,
+        steppers: steppers.map((stepper) => {
+          const rect = stepper.getBoundingClientRect();
+          const steps = [
+            ...stepper.querySelectorAll<HTMLElement>(".c-stepper__step"),
+          ].map((step) => {
+            const stepRect = step.getBoundingClientRect();
+            const style = getComputedStyle(step);
+            const connectorStyle = getComputedStyle(step, "::before");
+            return {
+              inlineSize: stepRect.width,
+              flexDirection: style.flexDirection,
+              textAlign: style.textAlign,
+              connectorBlockSize:
+                connectorStyle.content === "none"
+                  ? 0
+                  : Number.parseFloat(connectorStyle.blockSize),
+            };
+          });
+
+          return { inlineSize: rect.width, steps };
+        }),
+      };
+    });
+
+    expect(state.overflowX).toBeLessThanOrEqual(1);
+    expect(
+      state.steppers.every((stepper) =>
+        stepper.steps.every(
+          (step) =>
+            step.flexDirection === "row" &&
+            step.textAlign === "start" &&
+            Math.abs(step.inlineSize - stepper.inlineSize) <= 1,
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      state.steppers.every((stepper) =>
+        stepper.steps
+          .slice(0, -1)
+          .every((step) => step.connectorBlockSize >= 12),
+      ),
+    ).toBe(true);
+  });
+
   test("timeline renders items with dots and content", async ({ page }) => {
     await page.goto("./preview/timeline");
     await expect(
