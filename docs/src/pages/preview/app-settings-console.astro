@@ -17,17 +17,17 @@ const settingsNav: SettingsNavItem[] = [
 ] as const;
 ---
 <BaseLayout title="Settings console · Porchlight">
-  <div class="l-app-shell" style="--app-sidebar-size: 17rem;">
+  <div class="l-app-shell settings-console-shell">
     <header class="l-app-shell__topbar c-toolbar">
       <div class="c-toolbar__group">
         <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Open main menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1.25rem; block-size: 1.25rem;" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" /></svg>
+          <svg class="settings-console-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" /></svg>
         </button>
         <strong>Northstar Admin</strong>
         <span class="c-badge" data-tone="success"><span class="c-badge__dot"></span>Healthy</span>
       </div>
       <div class="c-toolbar__group">
-        <label class="c-field c-field--inline" style="min-inline-size: min(100%, 20rem);">
+        <label class="c-field c-field--inline settings-console-search">
           <span class="u-sr-only">Search settings</span>
           <input class="c-field__control" type="search" placeholder="Search settings" />
         </label>
@@ -37,7 +37,7 @@ const settingsNav: SettingsNavItem[] = [
     </header>
 
     <aside class="l-app-shell__sidebar">
-      <nav class="c-nav" aria-label="Settings" style="padding: var(--pl-space-3);">
+      <nav class="c-nav settings-console-nav" aria-label="Settings">
         <div class="c-nav__group">
           <span class="c-nav__group-label">Settings</span>
         </div>
@@ -71,7 +71,7 @@ const settingsNav: SettingsNavItem[] = [
     </aside>
 
     <main class="l-app-shell__main">
-      <div class="l-container" style="--l-container-max: 76rem; padding-block: var(--pl-space-6);">
+      <div class="l-container settings-console-container">
         <div class="c-page-header">
           <div class="c-page-header__heading">
             <h1 class="c-page-header__title">Settings</h1>
@@ -84,7 +84,7 @@ const settingsNav: SettingsNavItem[] = [
           </div>
         </div>
 
-        <div class="l-stack" style="--l-stack-gap: var(--pl-space-5);">
+        <div class="l-stack settings-console-stack">
           <div class="c-alert" data-tone="warning" role="status">
             <div class="c-alert__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
@@ -223,7 +223,7 @@ const settingsNav: SettingsNavItem[] = [
                     <p>Controls that protect every workspace sign-in.</p>
                   </div>
                   <div class="c-form__body">
-                    <div class="l-stack" style="--l-stack-gap: var(--pl-space-3);">
+                    <div class="l-stack settings-console-security-stack">
                       <label class="c-switch">
                         <input class="c-switch__input" type="checkbox" role="switch" name="sso-required" checked />
                         <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
@@ -326,3 +326,36 @@ const settingsNav: SettingsNavItem[] = [
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .settings-console-shell {
+    --app-sidebar-size: 17rem;
+  }
+
+  .settings-console-menu-icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+
+  .settings-console-search {
+    min-inline-size: min(100%, 20rem);
+  }
+
+  .settings-console-nav {
+    padding: var(--pl-space-3);
+  }
+
+  .settings-console-container {
+    --l-container-max: 76rem;
+
+    padding-block: var(--pl-space-6);
+  }
+
+  .settings-console-stack {
+    --l-stack-gap: var(--pl-space-5);
+  }
+
+  .settings-console-security-stack {
+    --l-stack-gap: var(--pl-space-3);
+  }
+</style>
