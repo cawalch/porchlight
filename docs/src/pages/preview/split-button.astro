@@ -23,7 +23,7 @@ const chevron =
     across the seam.
   </p>
   <div class="l-cluster row">
-    <div class="c-split" style="--c-split-anchor: --sb-1;">
+    <div class="c-split split-anchor-1">
       <button type="button" class="c-button c-split__primary" data-variant="primary">
         <Icon name="plus" /> New report
       </button>
@@ -39,7 +39,7 @@ const chevron =
       </div>
     </div>
 
-    <div class="c-split" style="--c-split-anchor: --sb-2;">
+    <div class="c-split split-anchor-2">
       <button type="button" class="c-button c-split__primary" data-variant="secondary">
         Export
       </button>
@@ -54,7 +54,7 @@ const chevron =
       </div>
     </div>
 
-    <div class="c-split" style="--c-split-anchor: --sb-3;">
+    <div class="c-split split-anchor-3">
       <button type="button" class="c-button c-split__primary" data-variant="ghost">
         Filter
       </button>
@@ -69,7 +69,7 @@ const chevron =
       </div>
     </div>
 
-    <div class="c-split" style="--c-split-anchor: --sb-4;">
+    <div class="c-split split-anchor-4">
       <button type="button" class="c-button c-split__primary">
         Save
       </button>
@@ -88,7 +88,7 @@ const chevron =
 
   <h2>With icons</h2>
   <div class="l-cluster row">
-    <div class="c-split" style="--c-split-anchor: --sb-5;">
+    <div class="c-split split-anchor-5">
       <button type="button" class="c-button c-split__primary" data-variant="primary">
         <Icon name="download" /> Download
       </button>
@@ -98,11 +98,11 @@ const chevron =
       </button>
       <div popover class="c-split__menu" id="sb-5">
         <button class="c-split__option">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <svg class="split-option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
           PDF
         </button>
         <button class="c-split__option">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size: 1rem; block-size: 1rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <svg class="split-option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
           Spreadsheet
         </button>
       </div>
@@ -125,7 +125,7 @@ const chevron =
   <h2>Density</h2>
   <p>Sizing is driven by <code>--pl-control-block-size</code> on an ancestor's <code>[data-density]</code>.</p>
   <div class="l-cluster row" data-density="compact">
-    <div class="c-split" style="--c-split-anchor: --sb-6;">
+    <div class="c-split split-anchor-6">
       <button type="button" class="c-button c-split__primary" data-variant="secondary">
         compact
       </button>
@@ -140,7 +140,7 @@ const chevron =
     </div>
   </div>
   <div class="l-cluster row" data-density="touch">
-    <div class="c-split" style="--c-split-anchor: --sb-7;">
+    <div class="c-split split-anchor-7">
       <button type="button" class="c-button c-split__primary" data-variant="primary">
         touch
       </button>
@@ -159,5 +159,38 @@ const chevron =
 <style>
   .row {
     margin-block-end: var(--pl-space-4);
+  }
+
+  .split-anchor-1 {
+    --c-split-anchor: --sb-1;
+  }
+
+  .split-anchor-2 {
+    --c-split-anchor: --sb-2;
+  }
+
+  .split-anchor-3 {
+    --c-split-anchor: --sb-3;
+  }
+
+  .split-anchor-4 {
+    --c-split-anchor: --sb-4;
+  }
+
+  .split-anchor-5 {
+    --c-split-anchor: --sb-5;
+  }
+
+  .split-anchor-6 {
+    --c-split-anchor: --sb-6;
+  }
+
+  .split-anchor-7 {
+    --c-split-anchor: --sb-7;
+  }
+
+  .split-option-icon {
+    inline-size: 1rem;
+    block-size: 1rem;
   }
 </style>

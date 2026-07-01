@@ -67,7 +67,7 @@ const eventFeed = [
     <header class="l-app-shell__topbar siem-topbar">
       <div class="siem-topbar__left">
         <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+          <svg class="siem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <svg class="siem-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z" stroke-linejoin="round"/><path d="M12 7v7" stroke-linecap="round"/><path d="M12 17h.01" stroke-linecap="round"/></svg>
         <strong>Lumigate</strong>
@@ -75,12 +75,12 @@ const eventFeed = [
       </div>
       <div class="siem-topbar__right">
         <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk" aria-label="Search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1.25rem;block-size:1.25rem;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="u-muted" style="font-size:var(--pl-text-xs);">Search alerts…</span>
+          <svg class="siem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="u-muted siem-search-label">Search alerts…</span>
           <kbd class="siem-kbd">⌘K</kbd>
         </button>
-        <span class="u-muted" style="font-size:var(--pl-text-xs);">SOC Analyst</span>
-        <div class="c-avatar" data-size="sm" style="background:var(--pl-color-accent);color:var(--pl-color-accent-text);">AR</div>
+        <span class="u-muted siem-role-label">SOC Analyst</span>
+        <div class="c-avatar siem-avatar" data-size="sm">AR</div>
       </div>
     </header>
 
@@ -138,7 +138,7 @@ const eventFeed = [
               <label class="c-segmented__item"><input type="radio" name="window"/><span>7d</span></label>
             </div>
             <button class="c-button" data-variant="primary" data-size="sm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="siem-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Export Report
             </button>
           </div>
@@ -150,8 +150,8 @@ const eventFeed = [
             <div class="siem-kpi">
               <div class="siem-kpi__info">
                 <span class="siem-kpi__label">{k.label}</span>
-                <span class="siem-kpi__value">{k.value}<span style="font-size:var(--pl-text-sm);color:var(--pl-color-text-muted);">{k.unit}</span></span>
-                <span class="siem-kpi__trend" style={k.direction === 'up' ? 'color:var(--pl-color-danger)' : k.direction === 'down' ? 'color:var(--pl-color-success)' : 'color:var(--pl-color-text-muted)'}>{k.trend}</span>
+                <span class="siem-kpi__value">{k.value}<span class="siem-kpi__unit">{k.unit}</span></span>
+                <span class="siem-kpi__trend" data-direction={k.direction}>{k.trend}</span>
               </div>
               <div class="siem-kpi__spark">
                 <svg viewBox="0 0 70 36" width="48" height="32" preserveAspectRatio="none" aria-hidden="true">
@@ -166,7 +166,7 @@ const eventFeed = [
         <div class="siem-content-grid">
           <!-- Alert Queue -->
           <div class="siem-alert-panel">
-            <div class="c-card" data-surface="app" style="border:0;">
+            <div class="c-card siem-alert-card" data-surface="app">
               <!-- Filter toolbar -->
               <div class="c-toolbar">
                 <div class="c-toolbar__group">
@@ -176,18 +176,18 @@ const eventFeed = [
                   <span class="c-chip">{severityCount('low')} low</span>
                 </div>
                 <div class="c-toolbar__group">
-                  <div class="c-field" style="display:inline-flex;">
-                    <input type="search" class="c-field__control" placeholder="Filter by IP, rule…" style="inline-size:14rem;" aria-label="Filter alerts"/>
+                  <div class="c-field siem-filter-field">
+                    <input type="search" class="c-field__control siem-filter-input" placeholder="Filter by IP, rule…" aria-label="Filter alerts"/>
                   </div>
                   <button class="c-button" data-variant="secondary" data-size="sm">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="inline-size:1rem;block-size:1rem;"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+                    <svg class="siem-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
                     Filter
                   </button>
                 </div>
               </div>
 
               <!-- Data table -->
-              <div class="c-table-wrap" style="border:0;border-radius:0;--c-table-min:48rem;">
+              <div class="c-table-wrap siem-alert-table">
                 <table class="c-table">
                   <thead>
                     <tr>
@@ -205,20 +205,20 @@ const eventFeed = [
                     {alerts.map((a, i) => (
                       <tr aria-selected={i === 0 ? 'true' : undefined}>
                         <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.id}`}/></td>
-                        <td class="c-table__sticky-col"><code style="font-size:var(--pl-text-xs);">{a.id}</code></td>
+                        <td class="c-table__sticky-col"><code class="siem-code">{a.id}</code></td>
                         <td>
-                          <span class="c-badge" data-tone={severityTone(a.severity)} style="text-transform:capitalize;">{a.severity}</span>
+                          <span class="c-badge siem-severity" data-tone={severityTone(a.severity)}>{a.severity}</span>
                         </td>
                         <td>{a.rule}</td>
-                        <td><code style="font-size:var(--pl-text-xs);">{a.sourceIp}</code></td>
-                        <td><span style="font-size:var(--pl-text-sm);">{a.dest}</span></td>
+                        <td><code class="siem-code">{a.sourceIp}</code></td>
+                        <td><span class="siem-destination">{a.dest}</span></td>
                         <td>
                           {a.status === 'Open' && <span class="c-badge" data-tone="danger">{a.status}</span>}
                           {a.status === 'Investigating' && <span class="c-badge" data-tone="warning">{a.status}</span>}
                           {a.status === 'Contained' && <span class="c-badge" data-tone="accent">{a.status}</span>}
                           {a.status === 'Resolved' && <span class="c-badge" data-tone="success">{a.status}</span>}
                         </td>
-                        <td data-align="end"><span class="u-muted" style="font-size:var(--pl-text-xs);">{a.time}</span></td>
+                        <td data-align="end"><span class="u-muted siem-time">{a.time}</span></td>
                       </tr>
                     ))}
                   </tbody>
@@ -226,9 +226,9 @@ const eventFeed = [
               </div>
 
               <!-- Pagination toolbar -->
-              <div class="c-toolbar" style="border-block-end:0;border-block-start:1px solid var(--pl-color-border);">
+              <div class="c-toolbar siem-pagination-toolbar">
                 <div class="c-toolbar__group">
-                  <span class="u-muted" style="font-size:var(--pl-text-sm);">{alerts.length} of {1247} alerts</span>
+                  <span class="u-muted siem-alert-count">{alerts.length} of {1247} alerts</span>
                 </div>
                 <div class="c-toolbar__group">
                   <nav class="c-pagination" aria-label="Alert pagination">
@@ -262,7 +262,7 @@ const eventFeed = [
                           <span class="c-timeline__title">{e.title}</span>
                           <time class="c-timeline__time siem-event-time">{e.time}</time>
                         </div>
-                        <p class="c-timeline__body" style="font-size:var(--pl-text-xs);">{e.body}</p>
+                        <p class="c-timeline__body siem-event-copy">{e.body}</p>
                       </div>
                     </li>
                   ))}
@@ -323,11 +323,34 @@ const eventFeed = [
       border-block-end: 1px solid var(--pl-color-border);
     }
     .siem-topbar__left { display: flex; align-items: center; gap: var(--pl-space-2); }
-    .siem-topbar__right { display: flex; align-items: center; gap: var(--pl-space-2); }
+    .siem-topbar__right { display: flex; align-items: center; justify-content: flex-end; gap: var(--pl-space-2); }
+    .siem-topbar__left,
+    .siem-topbar__right {
+      min-inline-size: 0;
+    }
     .siem-logo {
       inline-size: 1.25rem;
       block-size: 1.25rem;
       color: var(--pl-color-accent);
+      flex-shrink: 0;
+    }
+    .siem-icon {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .siem-icon-sm {
+      inline-size: 1rem;
+      block-size: 1rem;
+      flex-shrink: 0;
+    }
+    .siem-search-label,
+    .siem-role-label {
+      font-size: var(--pl-text-xs);
+    }
+    .siem-avatar {
+      background: var(--pl-color-accent);
+      color: var(--pl-color-accent-text);
       flex-shrink: 0;
     }
     .siem-kbd {
@@ -338,6 +361,16 @@ const eventFeed = [
       border-radius: var(--pl-radius-xs);
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text-muted);
+    }
+    @media (width < 40rem) {
+      .siem-search-label,
+      .siem-role-label,
+      .siem-kbd {
+        display: none;
+      }
+      .siem-topbar__right {
+        gap: var(--pl-space-1);
+      }
     }
 
     .siem-main {
@@ -366,6 +399,7 @@ const eventFeed = [
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
+      min-inline-size: 0;
       padding: var(--pl-space-3);
       border: 1px solid var(--pl-color-border);
       border-radius: var(--pl-radius-lg);
@@ -375,6 +409,7 @@ const eventFeed = [
       display: flex;
       flex-direction: column;
       gap: 0.125rem;
+      min-inline-size: 0;
     }
     .siem-kpi__label {
       font-size: var(--pl-text-xs);
@@ -386,13 +421,28 @@ const eventFeed = [
       font-weight: var(--pl-font-weight-bold);
       line-height: 1.2;
     }
+    .siem-kpi__unit {
+      font-size: var(--pl-text-sm);
+      color: var(--pl-color-text-muted);
+    }
     .siem-kpi__trend {
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-medium);
     }
+    .siem-kpi__trend[data-direction="up"] { color: var(--pl-color-danger); }
+    .siem-kpi__trend[data-direction="down"] { color: var(--pl-color-success); }
+    .siem-kpi__trend[data-direction="flat"] { color: var(--pl-color-text-muted); }
     .siem-kpi__spark { flex-shrink: 0; }
     @media (width < 60rem) {
       .siem-kpis { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (width < 30rem) {
+      .siem-kpi {
+        gap: var(--pl-space-2);
+      }
+      .siem-kpi__spark svg {
+        inline-size: 2.5rem;
+      }
     }
 
     .siem-content-grid {
@@ -400,6 +450,41 @@ const eventFeed = [
       grid-template-columns: minmax(0, 1fr) 20rem;
       gap: var(--pl-space-3);
       align-items: start;
+    }
+    .siem-alert-panel {
+      min-inline-size: 0;
+    }
+    .siem-alert-card {
+      border: 0;
+    }
+    .siem-filter-field {
+      display: inline-flex;
+    }
+    .siem-filter-input {
+      inline-size: 14rem;
+      max-inline-size: 100%;
+    }
+    .siem-alert-table {
+      --c-table-min: 48rem;
+      border: 0;
+      border-radius: 0;
+      contain: paint;
+    }
+    .siem-code,
+    .siem-time,
+    .siem-event-copy {
+      font-size: var(--pl-text-xs);
+    }
+    .siem-severity {
+      text-transform: capitalize;
+    }
+    .siem-destination,
+    .siem-alert-count {
+      font-size: var(--pl-text-sm);
+    }
+    .siem-pagination-toolbar {
+      border-block-start: 1px solid var(--pl-color-border);
+      border-block-end: 0;
     }
     @media (width < 80rem) {
       .siem-content-grid { grid-template-columns: 1fr; }

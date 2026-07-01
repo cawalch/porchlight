@@ -61,7 +61,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2><code>.u-surface</code></h2>
   <p>Panel styling for ad-hoc grouping (when you don't need a full <code>.c-card</code>): bg, text, border, radius.</p>
   <div class="demo">
-    <div class="u-surface" style="padding: var(--pl-space-4);">
+    <div class="u-surface utility-surface">
       An ad-hoc surface: useful for inline callouts that don't deserve a component.
     </div>
   </div>
@@ -84,7 +84,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Badge/chip group</h2>
   <p>Use <code>.l-cluster</code> with a smaller gap for wrapping groups of compact labels.</p>
-  <div class="demo l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+  <div class="demo l-cluster utility-chip-cluster">
     <span class="c-badge">Queued</span>
     <span class="c-badge" data-tone="success">Ready</span>
     <span class="c-chip">Finance</span>
@@ -94,7 +94,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2><code>.u-full-bleed</code></h2>
   <p>Break an element out to the viewport edges inside a constrained container (a wide table or image in a prose column).</p>
   <div class="demo narrow">
-    <div class="u-surface u-full-bleed" style="padding: var(--pl-space-3); text-align: center;">
+    <div class="u-surface u-full-bleed utility-full-bleed">
       This breaks out beyond the narrow demo container to the viewport edges.
     </div>
   </div>
@@ -109,6 +109,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border: 1px dashed var(--pl-color-border);
     border-radius: var(--pl-radius-md);
     padding: var(--pl-space-2);
+  }
+  .truncate-box .u-truncate {
+    display: block;
   }
   .utility-row {
     display: flex;
@@ -128,6 +131,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .u-icon-title svg {
     inline-size: 1rem;
     block-size: 1rem;
+  }
+  .utility-surface {
+    padding: var(--pl-space-4);
+  }
+  .utility-chip-cluster {
+    --l-cluster-gap: var(--pl-space-2);
+  }
+  .utility-full-bleed {
+    padding: var(--pl-space-3);
+    text-align: center;
   }
   .narrow {
     max-inline-size: 24rem;
