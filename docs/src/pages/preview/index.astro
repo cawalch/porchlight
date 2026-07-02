@@ -114,44 +114,87 @@ const standalonePreviews = previewSlugs
     description: standalonePreviewMeta[slug]?.description ?? 'Standalone preview fixture.',
   }))
   .sort((a, z) => a.title.localeCompare(z.title));
+
+const previewTotal = foundations.length + components.length + standalonePreviews.length;
+const stableCount = components.filter((component) => component.data.status === 'stable').length;
+const experimentalCount = components.filter((component) => component.data.status === 'experimental').length;
+const plannedCount = components.filter((component) => component.data.status === 'planned').length;
 ---
 <BaseLayout title="Preview · Porchlight">
-  <section class="preview-hero">
-    <h1>Preview index</h1>
-    <p>
-      Live pages for visual checks, component QA, and composed app fixtures. Component
-      entries are generated from the docs collection, so missing previews fail the build.
-    </p>
+  <section class="preview-hero" aria-labelledby="preview-title">
+    <div>
+      <p class="preview-eyebrow">Live QA surface</p>
+      <h1 id="preview-title">Preview index</h1>
+      <p>
+        Searchable live pages for component QA, CSS regression checks, and composed app
+        fixtures. Component entries are generated from the docs collection, so missing
+        previews fail the build.
+      </p>
+    </div>
 
-    <label class="preview-search">
-      <span class="u-visually-hidden">Search preview pages</span>
-      <input
-        class="c-field__control"
-        type="search"
-        placeholder="Search preview pages..."
-        data-preview-filter
-      />
-    </label>
+    <aside class="preview-search-panel" aria-label="Preview search and counts">
+      <label class="preview-search">
+        <span>Search previews</span>
+        <input
+          class="c-field__control"
+          type="search"
+          placeholder="Search preview pages..."
+          data-preview-filter
+        />
+      </label>
+      <dl class="preview-stats">
+        <div>
+          <dt>Total</dt>
+          <dd>{previewTotal}</dd>
+        </div>
+        <div>
+          <dt>Components</dt>
+          <dd>{components.length}</dd>
+        </div>
+        <div>
+          <dt>Apps</dt>
+          <dd>{standalonePreviews.length}</dd>
+        </div>
+      </dl>
+    </aside>
   </section>
 
   <p class="preview-empty" data-preview-empty hidden>No preview pages match that search.</p>
 
   <section class="preview-section" aria-labelledby="preview-foundations" data-preview-section>
-    <h2 id="preview-foundations">Foundations</h2>
+    <header class="preview-section__header">
+      <div>
+        <p class="preview-eyebrow">Framework layer</p>
+        <h2 id="preview-foundations">Foundations</h2>
+      </div>
+      <span>{foundations.length} pages</span>
+    </header>
     <ul class="preview-grid">
       {foundations.map((item) => (
         <li data-preview-card data-preview-search={`${item.title} ${item.description} ${item.slug}`}>
-          <a class="preview-card" href={`${b}preview/${item.slug}`}>
-            <strong>{item.title}</strong>
-            <span>{item.description}</span>
-          </a>
+          <article class="preview-card">
+            <a class="preview-card__main" href={`${b}preview/${item.slug}`}>
+              <strong>{item.title}</strong>
+              <span>{item.description}</span>
+            </a>
+            <p class="preview-card__meta">
+              <span>CSS foundation</span>
+              <a href={`${b}preview/${item.slug}`}>Preview</a>
+            </p>
+          </article>
         </li>
       ))}
     </ul>
   </section>
 
   <section class="preview-section" aria-labelledby="preview-components" data-preview-section>
-    <h2 id="preview-components">Components</h2>
+    <header class="preview-section__header">
+      <div>
+        <p class="preview-eyebrow">Generated from docs</p>
+        <h2 id="preview-components">Components</h2>
+      </div>
+      <span>{stableCount} stable / {experimentalCount} experimental / {plannedCount} planned</span>
+    </header>
     <ul class="preview-grid">
       {components.map((component) => (
         <li
@@ -164,8 +207,11 @@ const standalonePreviews = previewSlugs
               <span>{component.data.description ?? 'Component preview page.'}</span>
             </a>
             <p class="preview-card__meta">
-              <span>Status: {component.data.status}</span>
-              <a href={`${b}components/${component.id}`}>Docs</a>
+              <span class="preview-card__status" data-status={component.data.status}>{component.data.status}</span>
+              <span class="preview-card__links">
+                <a href={`${b}preview/${component.id}`}>Preview</a>
+                <a href={`${b}components/${component.id}`}>Docs</a>
+              </span>
             </p>
           </article>
         </li>
@@ -175,14 +221,26 @@ const standalonePreviews = previewSlugs
 
   {standalonePreviews.length > 0 && (
     <section class="preview-section" aria-labelledby="preview-examples" data-preview-section>
-      <h2 id="preview-examples">Examples and fixtures</h2>
+      <header class="preview-section__header">
+        <div>
+          <p class="preview-eyebrow">Composed screens</p>
+          <h2 id="preview-examples">Examples and fixtures</h2>
+        </div>
+        <span>{standalonePreviews.length} pages</span>
+      </header>
       <ul class="preview-grid">
         {standalonePreviews.map((item) => (
           <li data-preview-card data-preview-search={`${item.title} ${item.description} ${item.slug}`}>
-            <a class="preview-card" href={`${b}preview/${item.slug}`}>
-              <strong>{item.title}</strong>
-              <span>{item.description}</span>
-            </a>
+            <article class="preview-card">
+              <a class="preview-card__main" href={`${b}preview/${item.slug}`}>
+                <strong>{item.title}</strong>
+                <span>{item.description}</span>
+              </a>
+              <p class="preview-card__meta">
+                <span>Fixture</span>
+                <a href={`${b}preview/${item.slug}`}>Preview</a>
+              </p>
+            </article>
           </li>
         ))}
       </ul>
@@ -219,17 +277,97 @@ const standalonePreviews = previewSlugs
 
 <style>
   .preview-hero {
-    max-inline-size: 44rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+    gap: var(--pl-space-6);
+    align-items: end;
+    padding-block-end: var(--pl-space-6);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+
+  .preview-eyebrow {
+    margin-block-end: var(--pl-space-2);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .preview-hero h1 {
+    margin-block-end: var(--pl-space-3);
+  }
+
+  .preview-hero p:not(.preview-eyebrow) {
+    max-inline-size: 58rem;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-lg);
+    line-height: var(--pl-leading-normal);
+  }
+
+  .preview-search-panel {
+    display: grid;
+    gap: var(--pl-space-4);
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
   }
 
   .preview-search {
-    display: block;
-    max-inline-size: 28rem;
-    margin-block-start: var(--pl-space-5);
+    display: grid;
+    gap: var(--pl-space-2);
+    margin: 0;
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-sm);
+    font-weight: 700;
+  }
+
+  .preview-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--pl-space-3);
+    margin: 0;
+  }
+
+  .preview-stats div {
+    min-inline-size: 0;
+  }
+
+  .preview-stats dt {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+  }
+
+  .preview-stats dd {
+    margin: 0;
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-xl);
+    font-weight: 800;
+    line-height: 1;
   }
 
   .preview-section {
     margin-block-start: var(--pl-space-8);
+  }
+
+  .preview-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-3);
+    align-items: end;
+    justify-content: space-between;
+    margin-block-end: var(--pl-space-3);
+  }
+
+  .preview-section__header h2,
+  .preview-section__header p {
+    margin-block: 0;
+  }
+
+  .preview-section__header > span {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
   }
 
   .preview-empty {
@@ -242,10 +380,10 @@ const standalonePreviews = previewSlugs
     flex-direction: column;
     gap: var(--pl-space-3);
     block-size: 100%;
-    padding: var(--pl-space-5);
+    padding: var(--pl-space-4);
     color: var(--pl-color-text-muted);
     border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
+    border-radius: var(--pl-radius-md);
     background: var(--pl-color-surface);
     text-decoration: none;
   }
@@ -268,6 +406,8 @@ const standalonePreviews = previewSlugs
   }
 
   .preview-card__main {
+    display: grid;
+    gap: var(--pl-space-2);
     color: inherit;
     text-decoration: none;
   }
@@ -283,12 +423,47 @@ const standalonePreviews = previewSlugs
     align-items: center;
     justify-content: space-between;
     margin-block: auto 0;
-    padding-block-start: var(--pl-space-3);
+    padding-block-start: var(--pl-space-2);
     border-block-start: 1px solid var(--pl-color-border);
     font-size: var(--pl-text-sm);
   }
 
-  .preview-card__meta a {
+  .preview-card__status {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.5rem;
+    padding-inline: var(--pl-space-2);
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface-2);
+    color: var(--pl-color-text-muted);
     font-weight: 600;
+  }
+
+  .preview-card__status[data-status='stable'] {
+    color: var(--pl-color-success);
+  }
+
+  .preview-card__status[data-status='experimental'] {
+    color: var(--pl-color-warning);
+  }
+
+  .preview-card__links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+  }
+
+  .preview-card__meta a {
+    font-weight: 700;
+  }
+
+  @media (width < 46rem) {
+    .preview-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .preview-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>

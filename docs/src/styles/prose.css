@@ -15,6 +15,7 @@
 
 .prose {
   max-inline-size: none;
+  min-inline-size: 0;
 }
 
 .prose :where(h1) {
@@ -66,6 +67,8 @@
 }
 
 .prose :where(pre) {
+  inline-size: 100%;
+  max-inline-size: 100%;
   margin-block: var(--pl-space-5);
   padding: var(--pl-space-5);
   border: 1px solid var(--pl-color-border);
@@ -85,7 +88,10 @@
 }
 
 .prose :where(table) {
+  display: block;
   inline-size: 100%;
+  max-inline-size: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   margin-block: var(--pl-space-5);
 }

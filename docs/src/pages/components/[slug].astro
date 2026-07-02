@@ -1,4 +1,6 @@
 ---
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { getCollection, render } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import '../../styles/prose.css';
@@ -14,10 +16,22 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const title = `${entry.data.title} · Porchlight`;
+const b = import.meta.env.BASE_URL;
+const repo = 'https://github.com/cawalch/porchlight';
+const styleSource = new URL(`../../../../packages/porchlight/src/06-components/${entry.id}.css`, import.meta.url);
+const hasStyleSource = existsSync(fileURLToPath(styleSource));
 ---
-<DocsLayout title={title} description={entry.data.description}>
+<DocsLayout
+  title={title}
+  description={entry.data.description}
+  sectionLabel="Component"
+  status={entry.data.status}
+  since={entry.data.since}
+  previewHref={`${b}preview/${entry.id}`}
+  sourceHref={`${repo}/blob/main/docs/src/content/components/${entry.id}.mdx`}
+  styleHref={hasStyleSource ? `${repo}/blob/main/packages/porchlight/src/06-components/${entry.id}.css` : undefined}
+>
   <article class="prose">
-    <a href={`${import.meta.env.BASE_URL}preview/${entry.id}`} class="c-button" data-variant="secondary" style="float: right; margin-block-start: 0.25rem;">View live preview</a>
     <Content />
   </article>
 </DocsLayout>

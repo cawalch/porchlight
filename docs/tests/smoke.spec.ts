@@ -213,6 +213,36 @@ test.describe("docs scaffold", () => {
     ).toBeDisabled();
   });
 
+  test("component docs expose search, preview, styles, and page contents", async ({
+    page,
+  }) => {
+    await page.goto("./components/button");
+    const content = page.locator(".docs-content");
+    const rail = page.locator(".docs-rail");
+
+    await expect(
+      content.getByRole("heading", { name: "Button", exact: true }),
+    ).toBeVisible();
+    await expect(
+      rail.getByRole("link", { name: "Live preview" }),
+    ).toHaveAttribute("href", /\/preview\/button$/);
+    await expect(
+      rail.getByRole("link", { name: "Style source" }),
+    ).toHaveAttribute("href", /button\.css$/);
+    await expect(
+      rail.getByRole("link", { name: "When to use what" }),
+    ).toBeVisible();
+
+    const search = page.getByLabel("Search docs");
+    await search.fill("timeline");
+    await expect(
+      page.locator(".docs-sidebar").getByRole("link", { name: "Timeline" }),
+    ).toBeVisible();
+    await expect(
+      page.locator(".docs-sidebar").getByRole("link", { name: "Button" }),
+    ).toBeHidden();
+  });
+
   test("field page renders labels and the hint", async ({ page }) => {
     await page.goto("./preview/field");
     await expect(
@@ -734,9 +764,9 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Porchlight", exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("Zero JavaScript")).toBeVisible();
-    await expect(page.getByText("WCAG-AA verified")).toBeVisible();
-    await expect(page.getByText("pnpm add @cawalch/porchlight")).toBeVisible();
+    await expect(page.getByText("Choose the artifact you need")).toBeVisible();
+    await expect(page.getByText("Preview before you ship")).toBeVisible();
+    await expect(page.getByText("pnpm --filter ./docs test")).toBeVisible();
   });
 
   test("tooltip renders trigger and tooltip body", async ({ page }) => {

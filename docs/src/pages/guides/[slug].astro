@@ -14,8 +14,19 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const title = `${entry.data.title} · Porchlight`;
+const b = import.meta.env.BASE_URL;
+const repo = 'https://github.com/cawalch/porchlight';
+const previewModules = import.meta.glob('../preview/*.astro');
+const hasPreview = Object.hasOwn(previewModules, `../preview/${entry.id}.astro`);
 ---
-<DocsLayout title={title} description={entry.data.description}>
+<DocsLayout
+  title={title}
+  description={entry.data.description}
+  sectionLabel="Guide"
+  previewHref={hasPreview ? `${b}preview/${entry.id}` : undefined}
+  sourceHref={`${repo}/blob/main/docs/src/content/guides/${entry.id}.mdx`}
+  styleHref={`${repo}/tree/main/packages/porchlight/src`}
+>
   <article class="prose">
     <Content />
   </article>
