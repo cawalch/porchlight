@@ -1,14 +1,15 @@
 name: Publish Pages
 
 # Publishes the current gh-pages branch through the GitHub Pages Actions deploy
-# path. This replaces the generated legacy pages-build-deployment workflow so
-# slow Pages queues use a controlled timeout instead of failing at 10 minutes.
+# path after production docs updates or an explicit manual dispatch. PR Preview
+# updates are written to gh-pages, but they do not automatically publish to Pages
+# so preview churn cannot cancel or crowd out the production deployment queue.
 #
 # Requires GitHub Pages source/build type to be set to "GitHub Actions"
 # (`build_type: workflow` in the Pages API).
 on:
   workflow_run:
-    workflows: ["Deploy docs", "PR Preview"]
+    workflows: ["Deploy docs"]
     types: [completed]
   workflow_dispatch:
 
@@ -43,4 +44,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          timeout: 3600000
+          timeout: 600000
