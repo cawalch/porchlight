@@ -6,7 +6,9 @@ name: PR Preview
 # let the production docs deploy prune stale previews so it cannot cancel the
 # publish of the merged site.
 #
-# Requires GitHub Pages to be configured to serve the gh-pages branch.
+# The gh-pages branch is kept as the static artifact store. The Publish Pages
+# workflow deploys that branch content from the default branch so protected
+# environment rules do not reject pull request refs.
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]

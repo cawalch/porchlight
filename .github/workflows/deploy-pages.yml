@@ -1,12 +1,15 @@
 name: Deploy docs
 
-# Builds the docs site and deploys it to the ROOT of the gh-pages branch.
-# GitHub Pages serves the gh-pages branch (configured once in repo Settings).
+# Builds the docs site and writes it to the ROOT of the gh-pages branch.
 #
 # Uses force_orphan to create a clean orphan commit each deploy. This avoids
 # non-fast-forward push failures when the PR-preview action has also pushed
 # to gh-pages between deploys. PR previews under /pr-preview/ are preserved
 # by fetching open PR previews from the remote before the clean deploy.
+#
+# The Publish Pages workflow deploys the resulting gh-pages branch through the
+# GitHub Pages Actions path with a longer timeout than the generated legacy
+# pages-build-deployment workflow.
 on:
   push:
     branches: [main]
