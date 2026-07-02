@@ -24,8 +24,10 @@
       grid-template-columns: auto 1fr;
       gap: var(--c-alert-gap);
       padding: var(--c-alert-pad);
+      padding-inline-start: calc(
+        var(--c-alert-pad) + var(--pl-accent-bar-width)
+      );
       border: 1px solid var(--pl-color-border);
-      border-inline-start: var(--pl-accent-bar-width) solid var(--c-alert-tone);
       border-radius: var(--pl-radius-xl);
       background: color-mix(
         in oklab,
@@ -33,6 +35,16 @@
         var(--pl-color-surface) 92%
       );
       color: var(--pl-color-text);
+      overflow: hidden;
+    }
+
+    :scope::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      inline-size: var(--pl-accent-bar-width);
+      background: var(--c-alert-tone);
     }
 
     .c-alert__icon {

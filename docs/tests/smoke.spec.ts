@@ -1656,6 +1656,38 @@ test.describe("docs scaffold", () => {
     expect(desktopLayout!.editorFrameStroke).toBe(true);
   });
 
+  test("process builder preview clips rounded mobile shells", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 430, height: 640 });
+    await page.goto("./preview/app-process-builder");
+
+    const clippedShells = await page.evaluate(() => {
+      const alert = document.querySelector(".c-alert[data-tone='warning']");
+      const builderSplit = document.querySelector(".builder-split");
+      const editorSplit = document.querySelector(".builder-editor-split");
+
+      if (!(alert && builderSplit && editorSplit)) {
+        return null;
+      }
+
+      return [alert, builderSplit, editorSplit].map((element) => {
+        const style = getComputedStyle(element);
+        return {
+          borderRadius: style.borderRadius,
+          overflow: style.overflow,
+        };
+      });
+    });
+
+    expect(clippedShells).not.toBeNull();
+    expect(
+      clippedShells!.every(
+        (shell) => shell.overflow === "hidden" && shell.borderRadius !== "0px",
+      ),
+    ).toBe(true);
+  });
+
   test("app split-pane examples keep page scroll and contained table overflow", async ({
     page,
   }) => {
