@@ -6,7 +6,7 @@ name: Deploy docs
 # Uses force_orphan to create a clean orphan commit each deploy. This avoids
 # non-fast-forward push failures when the PR-preview action has also pushed
 # to gh-pages between deploys. PR previews under /pr-preview/ are preserved
-# by fetching them from the remote before the clean deploy.
+# by fetching open PR previews from the remote before the clean deploy.
 on:
   push:
     branches: [main]
@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: read
 
 concurrency:
   group: gh-pages
@@ -45,19 +46,36 @@ jobs:
         env:
           ASTRO_BASE: /porchlight/
 
-      # Preserve PR previews from the existing gh-pages branch so they
-      # survive the force_orphan clean deploy.
-      - name: Preserve PR previews
+      # Preserve only open PR previews from the existing gh-pages branch so
+      # merged PR previews are pruned by the production deploy itself.
+      - name: Preserve open PR previews
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git fetch origin gh-pages:gh-pages-temp 2>/dev/null || true
-          if git show-ref --verify --quiet refs/tags/gh-pages-temp 2>/dev/null \
-             || git show-ref --verify --quiet refs/remotes/origin/gh-pages 2>/dev/null; then
-            mkdir -p docs/dist/pr-preview
-            git archive gh-pages-temp pr-preview/ 2>/dev/null | tar -x -C docs/dist || true
-            echo "Preserved pr-preview/ from gh-pages"
-          else
+          set -euo pipefail
+
+          git fetch origin gh-pages:refs/remotes/origin/gh-pages 2>/dev/null || true
+          if ! git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
             echo "No existing gh-pages branch — skipping preview preservation"
+            exit 0
           fi
+
+          mapfile -t open_prs < <(gh pr list --state open --json number --jq '.[].number')
+          if [ "${#open_prs[@]}" -eq 0 ]; then
+            echo "No open PR previews to preserve"
+            exit 0
+          fi
+
+          mkdir -p docs/dist/pr-preview
+          for pr in "${open_prs[@]}"; do
+            preview_path="pr-preview/pr-${pr}/"
+            if git cat-file -e "refs/remotes/origin/gh-pages:${preview_path}" 2>/dev/null; then
+              git archive refs/remotes/origin/gh-pages "${preview_path}" | tar -x -C docs/dist
+              echo "Preserved ${preview_path}"
+            else
+              echo "No existing preview for PR ${pr}"
+            fi
+          done
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

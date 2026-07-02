@@ -2,7 +2,9 @@ name: PR Preview
 
 # Builds the docs site for each PR with a PR-scoped base path and deploys it to
 # /pr/<number>/ on the gh-pages branch. The action posts the preview URL as a
-# PR comment and removes the preview when the PR is closed.
+# PR comment. Unmerged closed PRs still remove their preview, but merged PRs
+# let the production docs deploy prune stale previews so it cannot cancel the
+# publish of the merged site.
 #
 # Requires GitHub Pages to be configured to serve the gh-pages branch.
 on:
@@ -19,6 +21,7 @@ concurrency:
 
 jobs:
   preview:
+    if: github.event.action != 'closed' || github.event.pull_request.merged == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
