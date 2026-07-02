@@ -13,11 +13,27 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  sectionLabel?: string;
+  status?: string;
+  since?: string;
+  previewHref?: string;
+  sourceHref?: string;
+  styleHref?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  sectionLabel = 'Docs',
+  status,
+  since,
+  previewHref,
+  sourceHref,
+  styleHref,
+} = Astro.props;
 
 const b = import.meta.env.BASE_URL;
+const repo = 'https://github.com/cawalch/porchlight';
 
 // Fetch collections for the sidebar nav.
 const components = (await getCollection('components')).sort((a, z) =>
@@ -39,17 +55,38 @@ const isActive = (href: string) => {
   const clean = href.replace(/^\//, '');
   return here.endsWith(clean) || here === clean.replace(/\/$/, '');
 };
+
+const actionLinks = [
+  previewHref && { href: previewHref, label: 'Live preview', tone: 'primary' },
+  sourceHref && { href: sourceHref, label: 'Content source' },
+  styleHref && { href: styleHref, label: 'Style source' },
+].filter(Boolean) as { href: string; label: string; tone?: string }[];
 ---
 <BaseLayout title={title} description={description}>
   <div class="docs-shell">
     <aside class="docs-sidebar" aria-label="Documentation navigation">
+      <div class="docs-search">
+        <label for="docs-nav-filter">Search docs</label>
+        <input
+          id="docs-nav-filter"
+          class="c-field__control"
+          type="search"
+          placeholder="Filter pages..."
+          data-docs-nav-filter
+        />
+      </div>
       <nav class="docs-nav">
-        <div class="docs-nav__section">
+        <div class="docs-nav__section" data-docs-nav-section>
           <h2 class="docs-nav__heading">Getting Started</h2>
           <ul>
             {guides.filter((g) => !foundationGuideIds.includes(g.id)).map((guide) => (
               <li>
-                <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
+                <a
+                  href={`${b}guides/${guide.id}`}
+                  aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}
+                  data-docs-nav-link
+                  data-docs-search={`${guide.data.title} ${guide.data.description ?? ''} guide getting started`}
+                >
                   {guide.data.title}
                 </a>
               </li>
@@ -57,28 +94,43 @@ const isActive = (href: string) => {
           </ul>
         </div>
 
-        <div class="docs-nav__section">
+        <div class="docs-nav__section" data-docs-nav-section>
           <h2 class="docs-nav__heading">Foundations</h2>
           <ul>
             {guides.filter((g) => foundationGuideIds.includes(g.id)).map((guide) => (
               <li>
-                <a href={`${b}guides/${guide.id}`} aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}>
+                <a
+                  href={`${b}guides/${guide.id}`}
+                  aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}
+                  data-docs-nav-link
+                  data-docs-search={`${guide.data.title} ${guide.data.description ?? ''} foundation layout css utilities`}
+                >
                   {guide.data.title}
                 </a>
               </li>
             ))}
             <li>
-              <a href={`${b}tokens`} aria-current={isActive('/tokens') ? 'page' : undefined}>Token reference</a>
+              <a
+                href={`${b}tokens`}
+                aria-current={isActive('/tokens') ? 'page' : undefined}
+                data-docs-nav-link
+                data-docs-search="Token reference color spacing typography styles css"
+              >Token reference</a>
             </li>
           </ul>
         </div>
 
-        <div class="docs-nav__section">
+        <div class="docs-nav__section" data-docs-nav-section>
           <h2 class="docs-nav__heading">Components</h2>
           <ul>
             {components.map((comp) => (
               <li>
-                <a href={`${b}components/${comp.id}`} aria-current={isActive(`/components/${comp.id}`) ? 'page' : undefined}>
+                <a
+                  href={`${b}components/${comp.id}`}
+                  aria-current={isActive(`/components/${comp.id}`) ? 'page' : undefined}
+                  data-docs-nav-link
+                  data-docs-search={`${comp.data.title} ${comp.data.description ?? ''} ${comp.data.status} component preview style`}
+                >
                   {comp.data.title}
                 </a>
               </li>
@@ -86,41 +138,152 @@ const isActive = (href: string) => {
           </ul>
         </div>
 
-        <div class="docs-nav__section">
+        <div class="docs-nav__section" data-docs-nav-section>
           <h2 class="docs-nav__heading">Examples</h2>
           <ul>
-            <li><a href={`${b}preview/dashboard`}>Dashboard</a></li>
-            <li><a href={`${b}preview/settings`}>Settings</a></li>
-            <li><a href={`${b}preview/app-dashboard`}>SaaS Portal</a></li>
-            <li><a href={`${b}preview/app-siem`}>Security SIEM</a></li>
-            <li><a href={`${b}preview/app-cases`}>Case Review</a></li>
-            <li><a href={`${b}preview/app-inbox`}>Inbox</a></li>
-            <li><a href={`${b}preview/app-list-detail`}>List/Detail</a></li>
-            <li><a href={`${b}preview/app-queue-triage`}>Queue Triage</a></li>
-            <li><a href={`${b}preview/app-process-builder`}>Process Builder</a></li>
-            <li><a href={`${b}preview/app-settings-console`}>Settings Console</a></li>
-            <li><a href={`${b}preview/app-reporting-dashboard`}>Reporting Dashboard</a></li>
-            <li><a href={`${b}preview/app-command-workspace`}>Command Workspace</a></li>
-            <li><a href={`${b}preview/app-marketing`}>Marketing Page</a></li>
-            <li><a href={`${b}preview/app-shell`}>App Shell</a></li>
+            <li><a href={`${b}preview/dashboard`} data-docs-nav-link data-docs-search="Dashboard preview example">Dashboard</a></li>
+            <li><a href={`${b}preview/settings`} data-docs-nav-link data-docs-search="Settings preview example">Settings</a></li>
+            <li><a href={`${b}preview/app-dashboard`} data-docs-nav-link data-docs-search="SaaS Portal app dashboard preview example">SaaS Portal</a></li>
+            <li><a href={`${b}preview/app-siem`} data-docs-nav-link data-docs-search="Security SIEM preview example">Security SIEM</a></li>
+            <li><a href={`${b}preview/app-cases`} data-docs-nav-link data-docs-search="Case Review preview example">Case Review</a></li>
+            <li><a href={`${b}preview/app-inbox`} data-docs-nav-link data-docs-search="Inbox preview example">Inbox</a></li>
+            <li><a href={`${b}preview/app-list-detail`} data-docs-nav-link data-docs-search="List Detail preview example">List/Detail</a></li>
+            <li><a href={`${b}preview/app-queue-triage`} data-docs-nav-link data-docs-search="Queue Triage preview example">Queue Triage</a></li>
+            <li><a href={`${b}preview/app-process-builder`} data-docs-nav-link data-docs-search="Process Builder preview example">Process Builder</a></li>
+            <li><a href={`${b}preview/app-settings-console`} data-docs-nav-link data-docs-search="Settings Console preview example">Settings Console</a></li>
+            <li><a href={`${b}preview/app-reporting-dashboard`} data-docs-nav-link data-docs-search="Reporting Dashboard preview example">Reporting Dashboard</a></li>
+            <li><a href={`${b}preview/app-command-workspace`} data-docs-nav-link data-docs-search="Command Workspace preview example">Command Workspace</a></li>
+            <li><a href={`${b}preview/app-marketing`} data-docs-nav-link data-docs-search="Marketing Page preview example">Marketing Page</a></li>
+            <li><a href={`${b}preview/app-shell`} data-docs-nav-link data-docs-search="App Shell preview example">App Shell</a></li>
           </ul>
         </div>
       </nav>
+      <p class="docs-search-empty" data-docs-nav-empty hidden>No docs pages match that search.</p>
     </aside>
 
-    <div class="docs-content">
+    <div class="docs-content" data-docs-content>
+      <header class="docs-page-header">
+        <div>
+          <p class="docs-page-header__eyebrow">{sectionLabel}</p>
+          {description && <p class="docs-page-header__description">{description}</p>}
+        </div>
+        {(status || since) && (
+          <dl class="docs-page-meta" aria-label="Page metadata">
+            {status && (
+              <div>
+                <dt>Status</dt>
+                <dd>{status}</dd>
+              </div>
+            )}
+            {since && (
+              <div>
+                <dt>Since</dt>
+                <dd>{since}</dd>
+              </div>
+            )}
+          </dl>
+        )}
+        {actionLinks.length > 0 && (
+          <div class="docs-page-actions" aria-label="Page actions">
+            {actionLinks.map((action) => (
+              <a
+                class:list={['docs-rail-action', action.tone === 'primary' && 'docs-rail-action--primary']}
+                href={action.href}
+              >{action.label}</a>
+            ))}
+          </div>
+        )}
+      </header>
       <slot />
     </div>
+
+    <aside class="docs-rail" aria-label="Page tools">
+      <section class="docs-rail-card">
+        <h2>Page tools</h2>
+        {actionLinks.length > 0 ? (
+          <div class="docs-rail-actions">
+            {actionLinks.map((action) => (
+              <a
+                class:list={['docs-rail-action', action.tone === 'primary' && 'docs-rail-action--primary']}
+                href={action.href}
+              >{action.label}</a>
+            ))}
+          </div>
+        ) : (
+          <p>Use the links below to jump into the live previews and token reference.</p>
+        )}
+      </section>
+
+      <section class="docs-rail-card">
+        <h2>Styles</h2>
+        <ul class="docs-rail-list">
+          <li><a href={`${b}tokens`}>Token reference</a></li>
+          <li><a href={`${b}preview/tokens`}>Token preview</a></li>
+          <li><a href={`${repo}/tree/main/packages/porchlight/src`}>CSS source</a></li>
+        </ul>
+      </section>
+
+      <section class="docs-rail-card" data-docs-toc-card hidden>
+        <h2>On this page</h2>
+        <ol class="docs-toc" data-docs-toc></ol>
+      </section>
+    </aside>
   </div>
 </BaseLayout>
+
+<script>
+  const navInput = document.querySelector<HTMLInputElement>('[data-docs-nav-filter]');
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-docs-nav-link]'));
+  const navSections = Array.from(document.querySelectorAll<HTMLElement>('[data-docs-nav-section]'));
+  const navEmpty = document.querySelector<HTMLElement>('[data-docs-nav-empty]');
+
+  const applyDocsFilter = () => {
+    const query = navInput?.value.trim().toLowerCase() ?? '';
+    let visibleCount = 0;
+
+    for (const link of navLinks) {
+      const haystack = `${link.textContent ?? ''} ${link.dataset.docsSearch ?? ''}`.toLowerCase();
+      const visible = query.length === 0 || haystack.includes(query);
+      const item = link.closest('li');
+      if (item instanceof HTMLElement) item.hidden = !visible;
+      if (visible) visibleCount += 1;
+    }
+
+    for (const section of navSections) {
+      section.hidden = !section.querySelector('li:not([hidden])');
+    }
+
+    if (navEmpty) navEmpty.hidden = visibleCount !== 0;
+  };
+
+  navInput?.addEventListener('input', applyDocsFilter);
+
+  const content = document.querySelector<HTMLElement>('[data-docs-content]');
+  const toc = document.querySelector<HTMLOListElement>('[data-docs-toc]');
+  const tocCard = document.querySelector<HTMLElement>('[data-docs-toc-card]');
+  const headings = Array.from(content?.querySelectorAll<HTMLHeadingElement>('.prose h2[id], .prose h3[id]') ?? []);
+
+  if (toc && tocCard && headings.length > 0) {
+    for (const heading of headings.slice(0, 12)) {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `#${heading.id}`;
+      link.textContent = heading.textContent ?? '';
+      if (heading.tagName === 'H3') item.dataset.depth = '3';
+      item.append(link);
+      toc.append(item);
+    }
+    tocCard.hidden = false;
+  }
+</script>
 
 <style>
   .docs-shell {
     display: grid;
-    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-    gap: var(--pl-space-6);
+    grid-template-columns: minmax(0, 16rem) minmax(0, 52rem) minmax(0, 16rem);
+    gap: var(--pl-space-5);
     align-items: start;
-    max-inline-size: 80rem;
+    max-inline-size: 92rem;
     margin-inline: auto;
     padding-inline: var(--doc-pad);
   }
@@ -131,6 +294,28 @@ const isActive = (href: string) => {
     max-block-size: calc(100vh - 5rem);
     overflow-y: auto;
     padding-block-end: var(--pl-space-4);
+  }
+
+  .docs-search {
+    display: grid;
+    gap: var(--pl-space-2);
+    margin-block-end: var(--pl-space-4);
+    padding: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+
+  .docs-search label {
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-sm);
+    font-weight: 700;
+  }
+
+  .docs-search-empty {
+    margin-block-start: var(--pl-space-4);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
   }
 
   .docs-nav__section + .docs-nav__section {
@@ -177,8 +362,152 @@ const isActive = (href: string) => {
   .docs-content {
     padding-block: var(--pl-space-6) var(--pl-space-10);
     min-inline-size: 0;
-    /* Constrain content width for readability within the grid column */
-    max-inline-size: 52rem;
+  }
+
+  .docs-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-4);
+    align-items: end;
+    justify-content: space-between;
+    margin-block-end: var(--pl-space-5);
+    padding-block-end: var(--pl-space-5);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+
+  .docs-page-header__eyebrow {
+    margin-block-end: var(--pl-space-2);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .docs-page-header__description {
+    max-inline-size: 60ch;
+    margin: 0;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-md);
+    line-height: var(--pl-leading-normal);
+  }
+
+  .docs-page-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-3);
+    margin: 0;
+  }
+
+  .docs-page-meta div {
+    min-inline-size: 5.5rem;
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+  }
+
+  .docs-page-meta dt {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+  }
+
+  .docs-page-meta dd {
+    margin: 0;
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-sm);
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  .docs-page-actions {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    inline-size: 100%;
+  }
+
+  .docs-rail {
+    position: sticky;
+    inset-block-start: calc(2.75rem + 1px + var(--pl-space-4));
+    display: grid;
+    gap: var(--pl-space-3);
+    max-block-size: calc(100vh - 5rem);
+    overflow-y: auto;
+    padding-block-end: var(--pl-space-4);
+  }
+
+  .docs-rail-card {
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+
+  .docs-rail-card h2 {
+    margin-block: 0 var(--pl-space-3);
+    font-size: var(--pl-text-sm);
+    line-height: 1.2;
+  }
+
+  .docs-rail-card p {
+    margin: 0;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    line-height: 1.45;
+  }
+
+  .docs-rail-actions {
+    display: grid;
+    gap: var(--pl-space-2);
+  }
+
+  .docs-rail-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.25rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-sm);
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .docs-rail-action--primary {
+    border-color: var(--pl-color-accent);
+    background: var(--pl-color-accent);
+    color: var(--pl-color-accent-text);
+  }
+
+  .docs-rail-list,
+  .docs-toc {
+    display: grid;
+    gap: var(--pl-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .docs-rail-list a,
+  .docs-toc a {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  .docs-rail-list a:hover,
+  .docs-toc a:hover {
+    color: var(--pl-color-accent);
+    text-decoration: underline;
+  }
+
+  .docs-toc li[data-depth='3'] {
+    padding-inline-start: var(--pl-space-3);
   }
 
   /* Override the default main constraint for docs pages */
@@ -189,6 +518,37 @@ const isActive = (href: string) => {
     padding-block-start: var(--pl-space-5);
   }
 
+  @media (width < 76rem) {
+    .docs-shell {
+      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    }
+
+    .docs-rail {
+      position: relative;
+      inset-block-start: 0;
+      grid-column: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-block-size: none;
+      overflow: visible;
+    }
+
+    .docs-rail-card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .docs-page-actions {
+      display: flex;
+    }
+
+    .docs-page-actions .docs-rail-action {
+      flex: 1 1 10rem;
+    }
+
+    .docs-rail .docs-rail-card:first-child {
+      display: none;
+    }
+  }
+
   @media (width < 48rem) {
     .docs-shell {
       grid-template-columns: 1fr;
@@ -197,9 +557,17 @@ const isActive = (href: string) => {
     .docs-sidebar {
       position: relative;
       inset-block-start: 0;
-      max-block-size: none;
-      border-block-end: 1px solid var(--pl-color-border);
-      padding-block-end: var(--pl-space-4);
+      max-block-size: min(24rem, 58dvh);
+      overflow-y: auto;
+      padding: var(--pl-space-3);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+    }
+
+    .docs-rail {
+      grid-column: auto;
+      grid-template-columns: 1fr;
     }
   }
 </style>

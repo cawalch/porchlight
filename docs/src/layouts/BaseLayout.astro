@@ -25,7 +25,9 @@ const b = import.meta.env.BASE_URL;
 const link = (path: string) => `${b}${path.replace(/^\//, '')}`;
 
 const nav = [
-  { href: link('guides/getting-started'), label: 'Docs', external: false },
+  { href: link('guides/getting-started'), label: 'Start', external: false },
+  { href: link('components/button'), label: 'Components', external: false },
+  { href: link('tokens'), label: 'Tokens', external: false },
   { href: link('preview'), label: 'Preview', external: false },
   { href: 'https://github.com/cawalch/porchlight', label: 'GitHub', external: true },
 ];
@@ -34,9 +36,11 @@ const here = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => {
   if (href.startsWith('http')) return false;
   const clean = href.replace(/\/$/, '');
-  // Exact match, or prefix match for nav sections (Docs matches /guides/* and /tokens/* and /components/*)
+  // Exact match, or prefix match for nav sections.
   if (here === clean) return true;
-  if (clean.endsWith('getting-started') && (here.includes('/guides/') || here.includes('/tokens/') || here.includes('/components/'))) return true;
+  if (clean.endsWith('getting-started') && here.includes('/guides/')) return true;
+  if (clean.endsWith('components/button') && here.includes('/components/')) return true;
+  if (clean.endsWith('tokens') && here.includes('/tokens')) return true;
   if (clean.endsWith('preview') && here.includes('/preview/')) return true;
   return false;
 };

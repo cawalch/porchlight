@@ -5,25 +5,35 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 // Only show published token pages in the sidebar listing.
 const tokens = (await getCollection('tokens'));
 const b = import.meta.env.BASE_URL;
+const repo = 'https://github.com/cawalch/porchlight';
 ---
-<DocsLayout title="Token Reference · Porchlight">
-  <h1>Token Reference</h1>
-  <p>
-    Porchlight design tokens parsed live from source. These pages reflect
-    the actual <code>02-tokens.css</code> and <code>03-themes.css</code>
-    source, not hand-maintained tables.
-  </p>
-  {tokens.length > 0 ? (
-    <ul>
-      {tokens.map((token) => (
-        <li>
-          <a href={`${b}tokens/${token.id}`}>
-            <strong>{token.data.title}</strong>
-          </a>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p class="u-muted">Token reference pages are being written. Check back soon.</p>
-  )}
+<DocsLayout
+  title="Token Reference · Porchlight"
+  description="Source-backed color, type, spacing, radius, motion, and control tokens."
+  sectionLabel="Token reference"
+  previewHref={`${b}preview/tokens`}
+  sourceHref={`${repo}/tree/main/docs/src/content/tokens`}
+  styleHref={`${repo}/blob/main/packages/porchlight/src/02-tokens.css`}
+>
+  <article class="prose">
+    <h1>Token Reference</h1>
+    <p>
+      Porchlight design tokens parsed live from source. These pages reflect
+      the actual <code>02-tokens.css</code> and <code>03-themes.css</code>
+      source, not hand-maintained tables.
+    </p>
+    {tokens.length > 0 ? (
+      <ul>
+        {tokens.map((token) => (
+          <li>
+            <a href={`${b}tokens/${token.id}`}>
+              <strong>{token.data.title}</strong>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="u-muted">Token reference pages are being written. Check back soon.</p>
+    )}
+  </article>
 </DocsLayout>
