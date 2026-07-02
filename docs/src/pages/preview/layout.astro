@@ -53,7 +53,7 @@ const rows = [
         <button type="button" class="pill" aria-pressed={i === 0 ? 'true' : undefined}>{f}</button>
       ))}
     </div>
-    <div class="l-cluster actions" style="--l-cluster-justify: flex-end;">
+    <div class="l-cluster actions actions--end">
       <button type="button" class="btn">Export</button>
       <button type="button" class="btn btn--primary">New account</button>
     </div>
@@ -66,8 +66,8 @@ const rows = [
     <strong>wrapping panel</strong> (<code>.demo-panel</code>) is the container.
   </p>
   <div class="demo-panel" data-resizable>
-    <div class="l-sidebar" style="--l-sidebar-size: 12rem;">
-      <nav class="l-stack side-nav" style="--l-stack-gap: var(--pl-space-1);">
+    <div class="l-sidebar settings-sidebar-demo">
+      <nav class="l-stack side-nav">
         <a class="side-nav__item is-current" href="#general">General</a>
         <a class="side-nav__item" href="#billing">Billing</a>
         <a class="side-nav__item" href="#team">Team</a>
@@ -77,7 +77,7 @@ const rows = [
       <div class="l-stack detail">
         <h3>General</h3>
         <p>Workspace name, default locale, and session preferences live here.</p>
-        <div class="l-cluster" style="--l-cluster-justify: flex-end;">
+        <div class="l-cluster detail-actions">
           <button type="button" class="btn">Cancel</button>
           <button type="button" class="btn btn--primary">Save</button>
         </div>
@@ -123,7 +123,7 @@ const rows = [
     Set column count via <code>--l-columns-count</code> or let it auto-fit.
     Items use <code>break-inside: avoid</code> so cards don't split.
   </p>
-  <div class="l-columns columns-demo" style="--l-columns-count: 3;">
+  <div class="l-columns columns-demo">
     {[1, 2, 3, 4, 5, 6].map((n) => (
       <div class="column-card">
         <strong>Card {n}</strong>
@@ -231,6 +231,10 @@ const rows = [
   .filter-row {
     --l-cluster-gap: var(--pl-space-2);
   }
+  .actions--end,
+  .detail-actions {
+    --l-cluster-justify: flex-end;
+  }
   .pill, .btn {
     min-block-size: var(--pl-control-block-size);
     padding-inline: var(--pl-control-padding-inline);
@@ -269,6 +273,12 @@ const rows = [
     background: color-mix(in oklab, var(--pl-color-accent), transparent 70%);
     border-start-end-radius: var(--pl-radius-lg);
     border-end-end-radius: var(--pl-radius-lg);
+  }
+  .settings-sidebar-demo {
+    --l-sidebar-size: 12rem;
+  }
+  .side-nav {
+    --l-stack-gap: var(--pl-space-1);
   }
   .side-nav__item {
     padding: var(--pl-space-2) var(--pl-space-3);
@@ -329,6 +339,8 @@ const rows = [
   }
 
   .columns-demo {
+    --l-columns-count: 3;
+
     margin-block: var(--pl-space-4);
   }
 
