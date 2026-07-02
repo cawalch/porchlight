@@ -1,14 +1,17 @@
 ---
 /**
- * DocsLayout — wraps BaseLayout with a sidebar navigation.
+ * DocsLayout - the workbench shell for guide, token, and component docs.
  *
- * Used by guide pages, token reference pages, and component docs.
- * Preview pages and the homepage continue using BaseLayout directly
- * (they're full-width kitchen-sink demos, not docs content).
+ * The docs pages are no longer treated as static article pages with helper
+ * links. They present Porchlight as a living CSS system: a command/search
+ * surface, source atlas, document canvas, and preview/style inspector.
  */
 import { getCollection } from 'astro:content';
+import Icon from '../components/Icon.astro';
 import BaseLayout from './BaseLayout.astro';
 import '../styles/global.css';
+
+type ActionIcon = 'book' | 'code' | 'eye' | 'file' | 'grid';
 
 interface Props {
   title?: string;
@@ -34,8 +37,8 @@ const {
 
 const b = import.meta.env.BASE_URL;
 const repo = 'https://github.com/cawalch/porchlight';
+const pageName = title?.replace(/\s+·\s+Porchlight$/, '') ?? sectionLabel;
 
-// Fetch collections for the sidebar nav.
 const components = (await getCollection('components')).sort((a, z) =>
   a.data.title.localeCompare(z.data.title),
 );
@@ -49,6 +52,11 @@ const foundationGuideIds = [
   'utilities',
   'enhancements',
 ];
+const gettingStartedGuides = guides.filter((guide) => !foundationGuideIds.includes(guide.id));
+const foundationGuides = guides.filter((guide) => foundationGuideIds.includes(guide.id));
+
+const stableCount = components.filter((component) => component.data.status === 'stable').length;
+const experimentalCount = components.filter((component) => component.data.status === 'experimental').length;
 
 const here = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => {
@@ -57,191 +65,311 @@ const isActive = (href: string) => {
 };
 
 const actionLinks = [
-  previewHref && { href: previewHref, label: 'Live preview', tone: 'primary' },
-  sourceHref && { href: sourceHref, label: 'Content source' },
-  styleHref && { href: styleHref, label: 'Style source' },
-].filter(Boolean) as { href: string; label: string; tone?: string }[];
+  previewHref && { href: previewHref, label: 'Live preview', icon: 'eye', tone: 'primary' },
+  sourceHref && { href: sourceHref, label: 'Content source', icon: 'file' },
+  styleHref && { href: styleHref, label: 'Style source', icon: 'code' },
+].filter(Boolean) as { href: string; label: string; icon: ActionIcon; tone?: string }[];
+
+const surfaceLinks = [
+  { href: `${b}tokens`, label: 'Token reference', detail: 'Color, type, spacing', icon: 'grid' },
+  { href: `${b}preview/tokens`, label: 'Token preview', detail: 'Rendered scales', icon: 'eye' },
+  { href: `${repo}/tree/main/packages/porchlight/src`, label: 'CSS source', detail: 'Layered framework files', icon: 'code' },
+] as { href: string; label: string; detail: string; icon: ActionIcon }[];
+
+const screenLinks = [
+  { href: `${b}preview/dashboard`, label: 'Dashboard', meta: 'Preview', search: 'Dashboard preview example' },
+  { href: `${b}preview/settings`, label: 'Settings', meta: 'Preview', search: 'Settings preview example' },
+  { href: `${b}preview/app-dashboard`, label: 'SaaS Portal', meta: 'App', search: 'SaaS Portal app dashboard preview example' },
+  { href: `${b}preview/app-siem`, label: 'Security SIEM', meta: 'App', search: 'Security SIEM preview example' },
+  { href: `${b}preview/app-cases`, label: 'Case Review', meta: 'App', search: 'Case Review preview example' },
+  { href: `${b}preview/app-inbox`, label: 'Inbox', meta: 'App', search: 'Inbox preview example' },
+  { href: `${b}preview/app-list-detail`, label: 'List/Detail', meta: 'App', search: 'List Detail preview example' },
+  { href: `${b}preview/app-queue-triage`, label: 'Queue Triage', meta: 'App', search: 'Queue Triage preview example' },
+  { href: `${b}preview/app-process-builder`, label: 'Process Builder', meta: 'App', search: 'Process Builder preview example' },
+  { href: `${b}preview/app-settings-console`, label: 'Settings Console', meta: 'App', search: 'Settings Console preview example' },
+  { href: `${b}preview/app-reporting-dashboard`, label: 'Reporting Dashboard', meta: 'App', search: 'Reporting Dashboard preview example' },
+  { href: `${b}preview/app-command-workspace`, label: 'Command Workspace', meta: 'App', search: 'Command Workspace preview example' },
+  { href: `${b}preview/app-marketing`, label: 'Marketing Page', meta: 'Page', search: 'Marketing Page preview example' },
+  { href: `${b}preview/app-shell`, label: 'App Shell', meta: 'Layout', search: 'App Shell preview example' },
+];
+
+const commandSections = [
+  {
+    title: 'Getting Started',
+    links: gettingStartedGuides.map((guide) => ({
+      href: `${b}guides/${guide.id}`,
+      label: guide.data.title,
+      meta: 'Guide',
+      search: `${guide.data.title} ${guide.data.description ?? ''} guide getting started`,
+      current: isActive(`/guides/${guide.id}`),
+    })),
+  },
+  {
+    title: 'Foundations',
+    links: [
+      ...foundationGuides.map((guide) => ({
+        href: `${b}guides/${guide.id}`,
+        label: guide.data.title,
+        meta: 'Guide',
+        search: `${guide.data.title} ${guide.data.description ?? ''} foundation layout css utilities`,
+        current: isActive(`/guides/${guide.id}`),
+      })),
+      {
+        href: `${b}tokens`,
+        label: 'Token reference',
+        meta: 'Styles',
+        search: 'Token reference color spacing typography styles css',
+        current: isActive('/tokens'),
+      },
+    ],
+  },
+  {
+    title: 'Components',
+    links: components.map((component) => ({
+      href: `${b}components/${component.id}`,
+      label: component.data.title,
+      meta: component.data.status,
+      search: `${component.data.title} ${component.data.description ?? ''} ${component.data.status} component preview style`,
+      current: isActive(`/components/${component.id}`),
+    })),
+  },
+  {
+    title: 'Screens',
+    links: screenLinks.map((link) => ({
+      ...link,
+      current: isActive(link.href),
+    })),
+  },
+];
 ---
 <BaseLayout title={title} description={description}>
-  <div class="docs-shell">
-    <aside class="docs-sidebar" aria-label="Documentation navigation">
-      <div class="docs-search">
-        <label for="docs-nav-filter">Search docs</label>
-        <input
-          id="docs-nav-filter"
-          class="c-field__control"
-          type="search"
-          placeholder="Filter pages..."
-          data-docs-nav-filter
-        />
+  <div class="docs-workbench" data-density="compact">
+    <section class="docs-studio" aria-label="Documentation workbench">
+      <div class="docs-stage">
+        <div class="docs-stage__copy">
+          <p class="docs-stage__eyebrow">
+            <span>{sectionLabel}</span>
+            <span>Porchlight CSS</span>
+          </p>
+          <p class="docs-stage__title">{pageName}</p>
+          {description && <p class="docs-stage__description">{description}</p>}
+        </div>
+
+        <div class="docs-stage__command">
+          <button
+            class="docs-command-trigger"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="docs-command-dialog"
+            data-docs-command-open
+          >
+            <Icon name="search" />
+            <span>Search docs, components, styles</span>
+            <kbd>Cmd K</kbd>
+          </button>
+
+          <p class="docs-command-bar__meta" aria-label="Workbench coverage">
+            <span>{components.length} components</span>
+            <span>{stableCount} stable</span>
+            <span>{experimentalCount} experimental</span>
+          </p>
+        </div>
+
+        {(status || since || actionLinks.length > 0) && (
+          <div class="docs-stage__dock">
+            {(status || since) && (
+              <dl class="docs-page-meta" aria-label="Page metadata">
+                {status && (
+                  <div>
+                    <dt>Status</dt>
+                    <dd>{status}</dd>
+                  </div>
+                )}
+                {since && (
+                  <div>
+                    <dt>Since</dt>
+                    <dd>{since}</dd>
+                  </div>
+                )}
+              </dl>
+            )}
+
+            {actionLinks.length > 0 && (
+              <div class="docs-page-actions" aria-label="Page actions">
+                {actionLinks.map((action) => (
+                  <a
+                    class:list={['docs-action', action.tone === 'primary' && 'docs-action--primary']}
+                    href={action.href}
+                  ><Icon name={action.icon} /> {action.label}</a>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      <nav class="docs-nav">
-        <div class="docs-nav__section" data-docs-nav-section>
-          <h2 class="docs-nav__heading">Getting Started</h2>
-          <ul>
-            {guides.filter((g) => !foundationGuideIds.includes(g.id)).map((guide) => (
-              <li>
-                <a
-                  href={`${b}guides/${guide.id}`}
-                  aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}
-                  data-docs-nav-link
-                  data-docs-search={`${guide.data.title} ${guide.data.description ?? ''} guide getting started`}
-                >
-                  {guide.data.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
 
-        <div class="docs-nav__section" data-docs-nav-section>
-          <h2 class="docs-nav__heading">Foundations</h2>
-          <ul>
-            {guides.filter((g) => foundationGuideIds.includes(g.id)).map((guide) => (
-              <li>
-                <a
-                  href={`${b}guides/${guide.id}`}
-                  aria-current={isActive(`/guides/${guide.id}`) ? 'page' : undefined}
-                  data-docs-nav-link
-                  data-docs-search={`${guide.data.title} ${guide.data.description ?? ''} foundation layout css utilities`}
-                >
-                  {guide.data.title}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={`${b}tokens`}
-                aria-current={isActive('/tokens') ? 'page' : undefined}
-                data-docs-nav-link
-                data-docs-search="Token reference color spacing typography styles css"
-              >Token reference</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="docs-nav__section" data-docs-nav-section>
-          <h2 class="docs-nav__heading">Components</h2>
-          <ul>
-            {components.map((comp) => (
-              <li>
-                <a
-                  href={`${b}components/${comp.id}`}
-                  aria-current={isActive(`/components/${comp.id}`) ? 'page' : undefined}
-                  data-docs-nav-link
-                  data-docs-search={`${comp.data.title} ${comp.data.description ?? ''} ${comp.data.status} component preview style`}
-                >
-                  {comp.data.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="docs-nav__section" data-docs-nav-section>
-          <h2 class="docs-nav__heading">Examples</h2>
-          <ul>
-            <li><a href={`${b}preview/dashboard`} data-docs-nav-link data-docs-search="Dashboard preview example">Dashboard</a></li>
-            <li><a href={`${b}preview/settings`} data-docs-nav-link data-docs-search="Settings preview example">Settings</a></li>
-            <li><a href={`${b}preview/app-dashboard`} data-docs-nav-link data-docs-search="SaaS Portal app dashboard preview example">SaaS Portal</a></li>
-            <li><a href={`${b}preview/app-siem`} data-docs-nav-link data-docs-search="Security SIEM preview example">Security SIEM</a></li>
-            <li><a href={`${b}preview/app-cases`} data-docs-nav-link data-docs-search="Case Review preview example">Case Review</a></li>
-            <li><a href={`${b}preview/app-inbox`} data-docs-nav-link data-docs-search="Inbox preview example">Inbox</a></li>
-            <li><a href={`${b}preview/app-list-detail`} data-docs-nav-link data-docs-search="List Detail preview example">List/Detail</a></li>
-            <li><a href={`${b}preview/app-queue-triage`} data-docs-nav-link data-docs-search="Queue Triage preview example">Queue Triage</a></li>
-            <li><a href={`${b}preview/app-process-builder`} data-docs-nav-link data-docs-search="Process Builder preview example">Process Builder</a></li>
-            <li><a href={`${b}preview/app-settings-console`} data-docs-nav-link data-docs-search="Settings Console preview example">Settings Console</a></li>
-            <li><a href={`${b}preview/app-reporting-dashboard`} data-docs-nav-link data-docs-search="Reporting Dashboard preview example">Reporting Dashboard</a></li>
-            <li><a href={`${b}preview/app-command-workspace`} data-docs-nav-link data-docs-search="Command Workspace preview example">Command Workspace</a></li>
-            <li><a href={`${b}preview/app-marketing`} data-docs-nav-link data-docs-search="Marketing Page preview example">Marketing Page</a></li>
-            <li><a href={`${b}preview/app-shell`} data-docs-nav-link data-docs-search="App Shell preview example">App Shell</a></li>
-          </ul>
-        </div>
+      <nav class="docs-atlas" aria-label="Documentation atlas">
+        {commandSections.map((section) => (
+          <section class="docs-atlas__section">
+            <h2>{section.title}</h2>
+            <ul>
+              {[...section.links].sort((a, z) => Number(z.current) - Number(a.current)).map((link) => (
+                <li>
+                  <a href={link.href} aria-current={link.current ? 'page' : undefined}>
+                    <span>{link.label}</span>
+                    <small>{link.meta}</small>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </nav>
-      <p class="docs-search-empty" data-docs-nav-empty hidden>No docs pages match that search.</p>
-    </aside>
+    </section>
 
-    <div class="docs-content" data-docs-content>
-      <header class="docs-page-header">
-        <div>
-          <p class="docs-page-header__eyebrow">{sectionLabel}</p>
-          {description && <p class="docs-page-header__description">{description}</p>}
+    <dialog
+      id="docs-command-dialog"
+      class="docs-command-dialog"
+      aria-labelledby="docs-command-title"
+      data-docs-command-dialog
+    >
+      <div class="docs-command-dialog__panel">
+        <header class="docs-command-dialog__header">
+          <div>
+            <p>Command</p>
+            <h2 id="docs-command-title">Search Porchlight</h2>
+          </div>
+          <button class="docs-command-dialog__close" type="button" data-docs-command-close>
+            Close
+          </button>
+        </header>
+
+        <label class="docs-command-dialog__search" for="docs-command-filter">
+          <span><Icon name="search" /> Search docs</span>
+          <input
+            id="docs-command-filter"
+            class="c-field__control"
+            type="search"
+            placeholder="Filter docs, components, styles..."
+            data-docs-command-filter
+          />
+        </label>
+
+        <nav class="docs-command-dialog__quick" aria-label="Command shortcuts">
+          <a href={`${b}components/button`}><Icon name="book" /> Components</a>
+          <a href={`${b}tokens`}><Icon name="grid" /> Tokens</a>
+          <a href={`${b}preview`}><Icon name="eye" /> Previews</a>
+        </nav>
+
+        <div class="docs-command-dialog__results">
+          <nav class="docs-command-results" aria-label="Search results">
+            {commandSections.map((section) => (
+              <section class="docs-command-results__section" data-docs-command-section>
+                <h3>{section.title}</h3>
+                <ul>
+                  {section.links.map((link) => (
+                    <li>
+                      <a
+                        href={link.href}
+                        aria-current={link.current ? 'page' : undefined}
+                        data-docs-command-link
+                        data-docs-search={link.search}
+                      >
+                        <span>{link.label}</span>
+                        <small>{link.meta}</small>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </nav>
+          <p class="docs-search-empty" data-docs-command-empty hidden>No docs pages match that search.</p>
         </div>
-        {(status || since) && (
-          <dl class="docs-page-meta" aria-label="Page metadata">
-            {status && (
-              <div>
-                <dt>Status</dt>
-                <dd>{status}</dd>
+      </div>
+    </dialog>
+
+    <div class="docs-shell">
+      <div class="docs-content" data-docs-content>
+        <div class="docs-article-surface">
+          <slot />
+        </div>
+      </div>
+
+      <aside class="docs-rail" aria-label="Live preview and page tools">
+        <section class="docs-preview-panel">
+          <header>
+            <p>Inspector</p>
+            <h2>{previewHref ? 'Preview viewport' : 'Reference map'}</h2>
+          </header>
+          {previewHref ? (
+            <>
+              <a class="docs-preview-panel__open" href={previewHref}><Icon name="eye" /> Open full preview</a>
+              <div class="docs-preview-panel__frame" aria-label={`${pageName} live preview`}>
+                <iframe src={previewHref} title={`${pageName} live preview`} loading="lazy"></iframe>
               </div>
-            )}
-            {since && (
-              <div>
-                <dt>Since</dt>
-                <dd>{since}</dd>
-              </div>
-            )}
-          </dl>
-        )}
-        {actionLinks.length > 0 && (
-          <div class="docs-page-actions" aria-label="Page actions">
-            {actionLinks.map((action) => (
-              <a
-                class:list={['docs-rail-action', action.tone === 'primary' && 'docs-rail-action--primary']}
-                href={action.href}
-              >{action.label}</a>
+            </>
+          ) : (
+            <p class="docs-preview-panel__empty">
+              This page has no dedicated fixture. Use the style links below to inspect the rendered token layer.
+            </p>
+          )}
+        </section>
+
+        <section class="docs-rail-card">
+          <h2>Source paths</h2>
+          {actionLinks.length > 0 ? (
+            <div class="docs-rail-actions">
+              {actionLinks.map((action) => (
+                <a
+                  class:list={['docs-action', action.tone === 'primary' && 'docs-action--primary']}
+                  href={action.href}
+                ><Icon name={action.icon} /> {action.label}</a>
+              ))}
+            </div>
+          ) : (
+            <p>Use the style map to move between token references, preview fixtures, and source files.</p>
+          )}
+        </section>
+
+        <section class="docs-rail-card">
+          <h2>Styles</h2>
+          <ul class="docs-surface-list">
+            {surfaceLinks.map((link) => (
+              <li>
+                <a href={link.href}>
+                  <Icon name={link.icon} />
+                  <span>
+                    <strong>{link.label}</strong>
+                    <small>{link.detail}</small>
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
-        )}
-      </header>
-      <slot />
+          </ul>
+        </section>
+
+        <section class="docs-rail-card" data-docs-toc-card hidden>
+          <h2>On this page</h2>
+          <ol class="docs-toc" data-docs-toc></ol>
+        </section>
+      </aside>
     </div>
-
-    <aside class="docs-rail" aria-label="Page tools">
-      <section class="docs-rail-card">
-        <h2>Page tools</h2>
-        {actionLinks.length > 0 ? (
-          <div class="docs-rail-actions">
-            {actionLinks.map((action) => (
-              <a
-                class:list={['docs-rail-action', action.tone === 'primary' && 'docs-rail-action--primary']}
-                href={action.href}
-              >{action.label}</a>
-            ))}
-          </div>
-        ) : (
-          <p>Use the links below to jump into the live previews and token reference.</p>
-        )}
-      </section>
-
-      <section class="docs-rail-card">
-        <h2>Styles</h2>
-        <ul class="docs-rail-list">
-          <li><a href={`${b}tokens`}>Token reference</a></li>
-          <li><a href={`${b}preview/tokens`}>Token preview</a></li>
-          <li><a href={`${repo}/tree/main/packages/porchlight/src`}>CSS source</a></li>
-        </ul>
-      </section>
-
-      <section class="docs-rail-card" data-docs-toc-card hidden>
-        <h2>On this page</h2>
-        <ol class="docs-toc" data-docs-toc></ol>
-      </section>
-    </aside>
   </div>
 </BaseLayout>
 
 <script>
-  const navInput = document.querySelector<HTMLInputElement>('[data-docs-nav-filter]');
-  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-docs-nav-link]'));
-  const navSections = Array.from(document.querySelectorAll<HTMLElement>('[data-docs-nav-section]'));
-  const navEmpty = document.querySelector<HTMLElement>('[data-docs-nav-empty]');
+  const commandDialog = document.querySelector<HTMLDialogElement>('[data-docs-command-dialog]');
+  const commandInput = document.querySelector<HTMLInputElement>('[data-docs-command-filter]');
+  const commandLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-docs-command-link]'));
+  const commandSections = Array.from(document.querySelectorAll<HTMLElement>('[data-docs-command-section]'));
+  const commandEmpty = document.querySelector<HTMLElement>('[data-docs-command-empty]');
 
-  const applyDocsFilter = () => {
-    const query = navInput?.value.trim().toLowerCase() ?? '';
+  const applyCommandFilter = () => {
+    const query = commandInput?.value.trim().toLowerCase() ?? '';
     let visibleCount = 0;
 
-    for (const link of navLinks) {
+    for (const link of commandLinks) {
       const haystack = `${link.textContent ?? ''} ${link.dataset.docsSearch ?? ''}`.toLowerCase();
       const visible = query.length === 0 || haystack.includes(query);
       const item = link.closest('li');
@@ -249,14 +377,57 @@ const actionLinks = [
       if (visible) visibleCount += 1;
     }
 
-    for (const section of navSections) {
+    for (const section of commandSections) {
       section.hidden = !section.querySelector('li:not([hidden])');
     }
 
-    if (navEmpty) navEmpty.hidden = visibleCount !== 0;
+    if (commandEmpty) commandEmpty.hidden = visibleCount !== 0;
   };
 
-  navInput?.addEventListener('input', applyDocsFilter);
+  const openCommandDialog = () => {
+    if (!commandDialog) return;
+    if (!commandDialog.open) commandDialog.showModal();
+    if (commandInput) {
+      commandInput.value = '';
+      applyCommandFilter();
+      window.requestAnimationFrame(() => commandInput.focus({ preventScroll: true }));
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-docs-command-open]').forEach((button) => {
+    button.addEventListener('click', openCommandDialog);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-docs-command-close]').forEach((button) => {
+    button.addEventListener('click', () => commandDialog?.close());
+  });
+
+  commandInput?.addEventListener('input', applyCommandFilter);
+  commandLinks.forEach((link) => {
+    link.addEventListener('click', () => commandDialog?.close());
+  });
+
+  commandDialog?.addEventListener('click', (event) => {
+    const rect = commandDialog.getBoundingClientRect();
+    const clickedInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInside) commandDialog.close();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && commandDialog?.open) {
+      commandDialog.close();
+      return;
+    }
+
+    if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
+    event.preventDefault();
+    openCommandDialog();
+  });
 
   const content = document.querySelector<HTMLElement>('[data-docs-content]');
   const toc = document.querySelector<HTMLOListElement>('[data-docs-toc]');
@@ -275,41 +446,481 @@ const actionLinks = [
     }
     tocCard.hidden = false;
   }
+
+  const proseTables = Array.from(document.querySelectorAll<HTMLTableElement>('.prose table'));
+  for (const table of proseTables) {
+    if (table.scrollWidth <= table.clientWidth) continue;
+    table.tabIndex = 0;
+    table.setAttribute('aria-label', table.caption?.textContent?.trim() || 'Scrollable table');
+  }
 </script>
 
 <style>
-  .docs-shell {
-    display: grid;
-    grid-template-columns: minmax(0, 16rem) minmax(0, 52rem) minmax(0, 16rem);
-    gap: var(--pl-space-5);
-    align-items: start;
-    max-inline-size: 92rem;
-    margin-inline: auto;
+  :global(body:has(.docs-workbench)) {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--pl-color-surface-2), transparent 28%) 0,
+        var(--pl-color-bg) 24rem
+      );
+  }
+
+  .docs-workbench {
+    --docs-panel-bg: color-mix(in oklab, var(--pl-color-surface), transparent 6%);
+    --docs-panel-strong: color-mix(in oklab, var(--pl-color-surface), var(--pl-color-accent) 3%);
+    --docs-line: color-mix(in oklab, var(--pl-color-border), transparent 20%);
+    --docs-line-strong: color-mix(in oklab, var(--pl-color-accent), transparent 58%);
+    --docs-ink-soft: color-mix(in oklab, var(--pl-color-text-muted), var(--pl-color-text) 20%);
+
+    inline-size: 100%;
     padding-inline: var(--doc-pad);
   }
 
-  .docs-sidebar {
-    position: sticky;
-    inset-block-start: calc(2.75rem + 1px + var(--pl-space-4));
-    max-block-size: calc(100vh - 5rem);
-    overflow-y: auto;
-    padding-block-end: var(--pl-space-4);
+  .docs-studio {
+    max-inline-size: 112rem;
+    margin-inline: auto;
+    padding-block-start: var(--pl-space-3);
   }
 
-  .docs-search {
+  .docs-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(19rem, 32rem) minmax(15rem, 23rem);
+    gap: var(--pl-space-6);
+    align-items: end;
+    padding-block: var(--pl-space-6);
+    border-block: 1px solid var(--docs-line);
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--pl-color-accent), transparent 90%),
+        transparent 32%
+      );
+  }
+
+  .docs-stage::before {
+    content: "";
+    position: absolute;
+    inset-block: var(--pl-space-6);
+    inset-inline-start: 0;
+    inline-size: 3px;
+    border-radius: var(--pl-radius-pill);
+    background: var(--pl-color-accent);
+  }
+
+  .docs-stage__copy {
+    min-inline-size: 0;
+    padding-inline-start: var(--pl-space-5);
+  }
+
+  .docs-stage__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    margin-block: 0 var(--pl-space-2);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .docs-stage__eyebrow span + span {
+    color: var(--pl-color-text-muted);
+  }
+
+  .docs-stage__title {
+    max-inline-size: 15ch;
+    margin: 0;
+    color: var(--pl-color-text);
+    font-size: 4rem;
+    font-weight: var(--pl-font-weight-black);
+    letter-spacing: 0;
+    line-height: 0.9;
+  }
+
+  .docs-stage__description {
+    max-inline-size: 58ch;
+    margin: var(--pl-space-4) 0 0;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-lg);
+    line-height: var(--pl-leading-normal);
+  }
+
+  .docs-stage__command,
+  .docs-stage__dock {
+    display: grid;
+    gap: var(--pl-space-3);
+    min-inline-size: 0;
+  }
+
+  .docs-command-trigger {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: var(--pl-space-3);
+    align-items: center;
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-lg);
+    background:
+      linear-gradient(135deg, var(--docs-panel-strong), var(--docs-panel-bg)),
+      var(--pl-color-surface);
+    color: var(--pl-color-text-muted);
+    box-shadow: var(--pl-shadow-1);
+    cursor: pointer;
+  }
+
+  .docs-command-trigger:hover,
+  .docs-command-trigger:focus-visible {
+    border-color: var(--docs-line-strong);
+    color: var(--pl-color-text);
+  }
+
+  .docs-command-trigger span {
+    min-inline-size: 0;
+    overflow: hidden;
+    font-size: var(--pl-text-sm);
+    font-weight: var(--pl-font-weight-semibold);
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .docs-command-trigger kbd {
+    min-inline-size: 3.25rem;
+    padding: var(--pl-space-1) var(--pl-space-2);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-sm);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text-muted);
+    font-family: var(--pl-font-sans);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-align: center;
+  }
+
+  .docs-command-bar__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    justify-content: flex-end;
+    margin: 0;
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .docs-command-bar__meta span + span::before {
+    content: "/";
+    margin-inline-end: var(--pl-space-2);
+    color: color-mix(in oklab, var(--pl-color-text-muted), transparent 45%);
+  }
+
+  .docs-atlas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(12rem, 1fr));
+    gap: var(--pl-space-4);
+    padding-block: var(--pl-space-4);
+    border-block-end: 1px solid var(--docs-line);
+  }
+
+  .docs-atlas__section {
+    min-inline-size: 0;
+  }
+
+  .docs-atlas h2 {
+    margin: 0 0 var(--pl-space-2);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-black);
+    text-transform: uppercase;
+  }
+
+  .docs-atlas ul {
+    display: flex;
+    gap: var(--pl-space-2);
+    margin: 0;
+    padding: 0 var(--pl-space-8) var(--pl-space-1) 0;
+    overflow-x: auto;
+    list-style: none;
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 2rem), transparent 100%);
+    scrollbar-gutter: stable;
+  }
+
+  .docs-atlas a {
+    display: grid;
+    gap: var(--pl-space-1);
+    inline-size: max-content;
+    min-inline-size: 9rem;
+    max-inline-size: 13rem;
+    min-block-size: 3.25rem;
+    padding: var(--pl-space-2);
+    border: 1px solid transparent;
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    text-decoration: none;
+  }
+
+  .docs-atlas a:hover,
+  .docs-atlas a:focus-visible {
+    border-color: var(--docs-line);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 94%);
+    color: var(--pl-color-text);
+  }
+
+  .docs-atlas a[aria-current='page'] {
+    border-color: var(--docs-line-strong);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+    color: var(--pl-color-text);
+  }
+
+  .docs-atlas span,
+  .docs-atlas small {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .docs-atlas span {
+    font-size: var(--pl-text-sm);
+    font-weight: var(--pl-font-weight-bold);
+  }
+
+  .docs-atlas small {
+    color: color-mix(in oklab, var(--pl-color-text-muted), transparent 18%);
+    font-size: var(--pl-text-xs);
+    text-transform: capitalize;
+  }
+
+  .docs-command-dialog {
+    inline-size: min(48rem, calc(100vw - 2rem));
+    max-inline-size: none;
+    margin: clamp(1rem, 10dvh, 5rem) auto auto;
+    padding: 0;
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    box-shadow: var(--pl-shadow-3);
+    overflow: hidden;
+  }
+
+  .docs-command-dialog::backdrop {
+    background: color-mix(in oklab, var(--pl-color-bg), transparent 18%);
+    backdrop-filter: blur(var(--pl-backdrop-blur));
+  }
+
+  .docs-command-dialog__panel {
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    max-block-size: min(42rem, calc(100dvh - 2rem));
+  }
+
+  .docs-command-dialog__header {
+    display: flex;
+    gap: var(--pl-space-4);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--pl-space-4) var(--pl-space-4) var(--pl-space-3);
+    border-block-end: 1px solid var(--docs-line);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--pl-color-accent), transparent 92%),
+        color-mix(in oklab, var(--pl-color-surface), transparent 4%)
+      );
+  }
+
+  .docs-command-dialog__header p,
+  .docs-command-dialog__header h2 {
+    margin: 0;
+  }
+
+  .docs-command-dialog__header p {
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .docs-command-dialog__header h2 {
+    font-size: var(--pl-text-lg);
+    line-height: var(--pl-leading-tight);
+  }
+
+  .docs-command-dialog__close {
+    min-block-size: 2rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-md);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 10%);
+    color: var(--pl-color-text-muted);
+    font: inherit;
+    font-size: var(--pl-text-sm);
+    font-weight: var(--pl-font-weight-bold);
+    cursor: pointer;
+  }
+
+  .docs-command-dialog__close:hover,
+  .docs-command-dialog__close:focus-visible {
+    border-color: var(--docs-line-strong);
+    color: var(--pl-color-text);
+  }
+
+  .docs-command-dialog__search {
     display: grid;
     gap: var(--pl-space-2);
-    margin-block-end: var(--pl-space-4);
-    padding: var(--pl-space-3);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
+    margin: 0;
+    padding: var(--pl-space-4);
+    border-block-end: 1px solid var(--docs-line);
   }
 
-  .docs-search label {
+  .docs-command-dialog__search span {
+    display: inline-flex;
+    gap: var(--pl-space-2);
+    align-items: center;
+    color: var(--docs-ink-soft);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+  }
+
+  .docs-command-dialog__quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    padding: var(--pl-space-3) var(--pl-space-4);
+    border-block-end: 1px solid var(--docs-line);
+  }
+
+  .docs-command-dialog__quick a,
+  .docs-action,
+  .docs-preview-panel__open,
+  .docs-surface-list a {
+    text-decoration: none;
+  }
+
+  .docs-command-dialog__quick a {
+    display: inline-flex;
+    gap: var(--pl-space-2);
+    align-items: center;
+    min-block-size: 2rem;
+    padding-inline: var(--pl-space-3);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-pill);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 18%);
     color: var(--pl-color-text);
     font-size: var(--pl-text-sm);
-    font-weight: 700;
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .docs-command-dialog__results {
+    min-block-size: 0;
+    padding: var(--pl-space-4);
+    overflow-y: auto;
+  }
+
+  .docs-command-results {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--pl-space-4);
+  }
+
+  .docs-command-results__section {
+    min-inline-size: 0;
+  }
+
+  .docs-command-results h3 {
+    margin: 0 0 var(--pl-space-2);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .docs-command-results ul {
+    display: grid;
+    gap: var(--pl-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .docs-command-results a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--pl-space-2);
+    align-items: center;
+    min-block-size: 2.25rem;
+    padding: var(--pl-space-2);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .docs-command-results a:hover,
+  .docs-command-results a:focus-visible {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+    color: var(--pl-color-text);
+  }
+
+  .docs-command-results a[aria-current='page'] {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+    color: var(--pl-color-text);
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .docs-command-results a span,
+  .docs-command-results a small {
+    min-inline-size: 0;
+  }
+
+  .docs-command-results a span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .docs-command-results a small {
+    color: color-mix(in oklab, var(--pl-color-text-muted), transparent 18%);
+    font-size: var(--pl-text-xs);
+    text-transform: capitalize;
+  }
+
+  .docs-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 72rem) minmax(18rem, 24rem);
+    gap: var(--pl-space-6);
+    align-items: start;
+    max-inline-size: 112rem;
+    margin-inline: auto;
+    padding-block: var(--pl-space-6) var(--pl-space-10);
+  }
+
+  .docs-rail {
+    position: sticky;
+    inset-block-start: calc(3.75rem + var(--pl-space-4));
+    max-block-size: calc(100dvh - 5.75rem);
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .docs-sidebar {
+    padding: var(--pl-space-3);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-xl);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 8%);
+  }
+
+  .docs-sidebar__label {
+    margin-block: 0 var(--pl-space-3);
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
   }
 
   .docs-search-empty {
@@ -319,33 +930,68 @@ const actionLinks = [
   }
 
   .docs-nav__section + .docs-nav__section {
-    margin-block-start: var(--pl-space-5);
+    margin-block-start: var(--pl-space-4);
+    padding-block-start: var(--pl-space-4);
+    border-block-start: 1px solid var(--docs-line);
   }
 
   .docs-nav__heading {
     margin-block-end: var(--pl-space-2);
-    padding-inline-start: var(--pl-space-3);
-    font-size: var(--pl-text-xs);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    padding-inline: var(--pl-space-2);
     color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
   }
 
   .docs-nav ul {
+    display: grid;
+    gap: var(--pl-space-1);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .docs-nav a {
-    display: block;
-    padding: var(--pl-space-1) var(--pl-space-3);
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--pl-space-2);
+    align-items: center;
+    min-block-size: 2rem;
+    padding: var(--pl-space-1) var(--pl-space-2);
     border-radius: var(--pl-radius-md);
     color: var(--pl-color-text-muted);
     font-size: var(--pl-text-sm);
     text-decoration: none;
-    line-height: 1.4;
+    line-height: 1.25;
+  }
+
+  .docs-nav a::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.45rem;
+    inset-inline-start: 0;
+    inline-size: 2px;
+    border-radius: var(--pl-radius-pill);
+    background: transparent;
+  }
+
+  .docs-nav a span,
+  .docs-nav a small {
+    min-inline-size: 0;
+  }
+
+  .docs-nav a span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .docs-nav a small {
+    color: color-mix(in oklab, var(--pl-color-text-muted), transparent 18%);
+    font-size: var(--pl-text-xs);
+    text-transform: capitalize;
   }
 
   .docs-nav a:hover {
@@ -355,56 +1001,82 @@ const actionLinks = [
 
   .docs-nav a[aria-current='page'] {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
-    color: var(--pl-color-accent);
-    font-weight: 600;
+    color: var(--pl-color-text);
+    font-weight: var(--pl-font-weight-semibold);
+  }
+
+  .docs-nav a[aria-current='page']::before {
+    background: var(--pl-color-accent);
   }
 
   .docs-content {
-    padding-block: var(--pl-space-6) var(--pl-space-10);
     min-inline-size: 0;
   }
 
   .docs-page-header {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: var(--pl-space-4);
     align-items: end;
-    justify-content: space-between;
-    margin-block-end: var(--pl-space-5);
-    padding-block-end: var(--pl-space-5);
-    border-block-end: 1px solid var(--pl-color-border);
+    padding: var(--pl-space-5);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-xl) var(--pl-radius-xl) 0 0;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--pl-color-accent), transparent 92%),
+        color-mix(in oklab, var(--pl-color-surface), transparent 4%)
+      );
+  }
+
+  .docs-page-header__copy {
+    min-inline-size: 0;
   }
 
   .docs-page-header__eyebrow {
-    margin-block-end: var(--pl-space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    margin-block: 0 var(--pl-space-2);
     color: var(--pl-color-accent);
     font-size: var(--pl-text-xs);
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: var(--pl-font-weight-bold);
     text-transform: uppercase;
   }
 
-  .docs-page-header__description {
-    max-inline-size: 60ch;
+  .docs-page-header__eyebrow span + span {
+    color: var(--pl-color-text-muted);
+  }
+
+  .docs-page-header__title {
     margin: 0;
+    color: var(--pl-color-text);
+    font-size: var(--pl-text-2xl);
+    font-weight: var(--pl-font-weight-black);
+    line-height: var(--pl-leading-tight);
+  }
+
+  .docs-page-header__description {
+    max-inline-size: 62ch;
+    margin: var(--pl-space-2) 0 0;
     color: var(--pl-color-text-muted);
     font-size: var(--pl-text-md);
     line-height: var(--pl-leading-normal);
   }
 
   .docs-page-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--pl-space-3);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(5rem, 1fr));
+    gap: var(--pl-space-2);
     margin: 0;
   }
 
   .docs-page-meta div {
-    min-inline-size: 5.5rem;
+    min-inline-size: 0;
     padding: var(--pl-space-2) var(--pl-space-3);
-    border: 1px solid var(--pl-color-border);
+    border: 1px solid var(--docs-line);
     border-radius: var(--pl-radius-md);
-    background: var(--pl-color-surface);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
   }
 
   .docs-page-meta dt {
@@ -416,45 +1088,111 @@ const actionLinks = [
     margin: 0;
     color: var(--pl-color-text);
     font-size: var(--pl-text-sm);
-    font-weight: 700;
+    font-weight: var(--pl-font-weight-bold);
     text-transform: capitalize;
   }
 
   .docs-page-actions {
-    display: none;
+    grid-column: 1 / -1;
+    display: flex;
     flex-wrap: wrap;
     gap: var(--pl-space-2);
-    inline-size: 100%;
+  }
+
+  .docs-article-surface {
+    min-inline-size: 0;
+    padding: var(--pl-space-6);
+    border: 1px solid var(--docs-line);
+    border-block-start: 3px solid var(--pl-color-accent);
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-surface);
+    box-shadow: var(--pl-shadow-1);
   }
 
   .docs-rail {
-    position: sticky;
-    inset-block-start: calc(2.75rem + 1px + var(--pl-space-4));
     display: grid;
     gap: var(--pl-space-3);
-    max-block-size: calc(100vh - 5rem);
-    overflow-y: auto;
-    padding-block-end: var(--pl-space-4);
   }
 
+  .docs-preview-panel,
+  .docs-rail-card {
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-xl);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 6%);
+    box-shadow: var(--pl-shadow-1);
+  }
+
+  .docs-preview-panel {
+    overflow: hidden;
+  }
+
+  .docs-preview-panel header,
   .docs-rail-card {
     padding: var(--pl-space-4);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
   }
 
-  .docs-rail-card h2 {
-    margin-block: 0 var(--pl-space-3);
-    font-size: var(--pl-text-sm);
-    line-height: 1.2;
+  .docs-preview-panel header {
+    display: grid;
+    gap: var(--pl-space-1);
+    border-block-end: 1px solid var(--docs-line);
+    background: color-mix(in oklab, var(--pl-color-surface-2), transparent 30%);
   }
 
+  .docs-preview-panel p,
   .docs-rail-card p {
     margin: 0;
     color: var(--pl-color-text-muted);
     font-size: var(--pl-text-sm);
-    line-height: 1.45;
+    line-height: var(--pl-leading-normal);
+  }
+
+  .docs-preview-panel header p {
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .docs-preview-panel h2,
+  .docs-rail-card h2 {
+    margin: 0 0 var(--pl-space-3);
+    font-size: var(--pl-text-sm);
+    line-height: 1.2;
+  }
+
+  .docs-preview-panel header h2 {
+    margin: 0;
+  }
+
+  .docs-preview-panel__open {
+    display: inline-flex;
+    gap: var(--pl-space-2);
+    align-items: center;
+    margin: var(--pl-space-3) var(--pl-space-3) 0;
+    color: var(--pl-color-accent);
+    font-size: var(--pl-text-sm);
+    font-weight: var(--pl-font-weight-bold);
+  }
+
+  .docs-preview-panel__frame {
+    aspect-ratio: 4 / 3;
+    margin: var(--pl-space-3);
+    border: 1px solid var(--docs-line-strong);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-bg);
+    overflow: hidden;
+  }
+
+  .docs-preview-panel__frame iframe {
+    inline-size: 200%;
+    block-size: 200%;
+    border: 0;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+  }
+
+  .docs-preview-panel__empty {
+    padding: var(--pl-space-4);
   }
 
   .docs-rail-actions {
@@ -462,28 +1200,29 @@ const actionLinks = [
     gap: var(--pl-space-2);
   }
 
-  .docs-rail-action {
+  .docs-action {
     display: inline-flex;
+    gap: var(--pl-space-2);
     align-items: center;
     justify-content: center;
     min-block-size: 2.25rem;
     padding-inline: var(--pl-space-3);
-    border: 1px solid var(--pl-color-border);
+    border: 1px solid var(--docs-line);
     border-radius: var(--pl-radius-md);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 8%);
     color: var(--pl-color-accent);
     font-size: var(--pl-text-sm);
-    font-weight: 700;
+    font-weight: var(--pl-font-weight-bold);
     text-align: center;
-    text-decoration: none;
   }
 
-  .docs-rail-action--primary {
+  .docs-action--primary {
     border-color: var(--pl-color-accent);
     background: var(--pl-color-accent);
     color: var(--pl-color-accent-text);
   }
 
-  .docs-rail-list,
+  .docs-surface-list,
   .docs-toc {
     display: grid;
     gap: var(--pl-space-2);
@@ -492,15 +1231,45 @@ const actionLinks = [
     list-style: none;
   }
 
-  .docs-rail-list a,
+  .docs-surface-list a {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--pl-space-3);
+    align-items: center;
+    padding: var(--pl-space-2);
+    border-radius: var(--pl-radius-md);
+    color: var(--pl-color-text);
+  }
+
+  .docs-surface-list a:hover {
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+  }
+
+  .docs-surface-list svg {
+    color: var(--pl-color-accent);
+  }
+
+  .docs-surface-list strong,
+  .docs-surface-list small {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .docs-surface-list strong {
+    font-size: var(--pl-text-sm);
+  }
+
+  .docs-surface-list small,
   .docs-toc a {
     color: var(--pl-color-text-muted);
     font-size: var(--pl-text-sm);
     line-height: 1.35;
+  }
+
+  .docs-toc a {
     text-decoration: none;
   }
 
-  .docs-rail-list a:hover,
   .docs-toc a:hover {
     color: var(--pl-color-accent);
     text-decoration: underline;
@@ -510,64 +1279,139 @@ const actionLinks = [
     padding-inline-start: var(--pl-space-3);
   }
 
-  /* Override the default main constraint for docs pages */
-  :global(main:has(.docs-shell)) {
+  :global(main:has(.docs-workbench)) {
     inline-size: 100%;
     max-inline-size: none;
     margin-inline: 0;
-    padding-block-start: var(--pl-space-5);
+    padding-block: var(--pl-space-4) 0;
   }
 
-  @media (width < 76rem) {
+  @media (width < 88rem) {
+    .docs-stage {
+      grid-template-columns: minmax(0, 1fr) minmax(19rem, 30rem);
+    }
+
+    .docs-stage__dock {
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+
+    .docs-atlas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .docs-shell {
-      grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+      grid-template-columns: 1fr;
     }
 
     .docs-rail {
       position: relative;
       inset-block-start: 0;
-      grid-column: 2;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       max-block-size: none;
       overflow: visible;
     }
 
-    .docs-rail-card:last-child {
+    .docs-preview-panel {
       grid-column: 1 / -1;
-    }
-
-    .docs-page-actions {
-      display: flex;
-    }
-
-    .docs-page-actions .docs-rail-action {
-      flex: 1 1 10rem;
-    }
-
-    .docs-rail .docs-rail-card:first-child {
-      display: none;
     }
   }
 
-  @media (width < 48rem) {
-    .docs-shell {
+  @media (width < 68rem) {
+    .docs-stage {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .docs-stage__dock {
       grid-template-columns: 1fr;
     }
 
-    .docs-sidebar {
-      position: relative;
-      inset-block-start: 0;
-      max-block-size: min(24rem, 58dvh);
-      overflow-y: auto;
-      padding: var(--pl-space-3);
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-lg);
-      background: var(--pl-color-surface);
+    .docs-command-bar__meta {
+      justify-content: flex-start;
     }
 
     .docs-rail {
-      grid-column: auto;
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width < 42rem) {
+    .docs-workbench {
+      padding-inline: max(0.75rem, var(--doc-pad));
+    }
+
+    .docs-stage {
+      gap: var(--pl-space-4);
+      padding-block: var(--pl-space-5);
+    }
+
+    .docs-stage__copy {
+      padding-inline-start: var(--pl-space-4);
+    }
+
+    .docs-stage__title {
+      font-size: 2.5rem;
+      line-height: 0.95;
+    }
+
+    .docs-stage__description {
+      font-size: var(--pl-text-md);
+    }
+
+    .docs-atlas {
+      display: flex;
+      gap: var(--pl-space-3);
+      overflow-x: auto;
+      padding-block: var(--pl-space-3);
+      scrollbar-gutter: stable;
+    }
+
+    .docs-atlas__section {
+      min-inline-size: 14rem;
+    }
+
+    .docs-command-trigger {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .docs-command-trigger kbd {
+      display: none;
+    }
+
+    .docs-command-dialog {
+      inline-size: calc(100vw - 1rem);
+    }
+
+    .docs-command-dialog__header,
+    .docs-command-dialog__search,
+    .docs-command-dialog__quick,
+    .docs-command-dialog__results {
+      padding-inline: var(--pl-space-3);
+    }
+
+    .docs-command-results {
+      grid-template-columns: 1fr;
+    }
+
+    .docs-page-header,
+    .docs-article-surface,
+    .docs-rail-card,
+    .docs-preview-panel header {
+      padding: var(--pl-space-4);
+    }
+
+    .docs-page-header {
+      grid-template-columns: 1fr;
+    }
+
+    .docs-page-meta {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .docs-page-actions .docs-action {
+      flex: 1 1 11rem;
     }
   }
 </style>

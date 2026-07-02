@@ -278,11 +278,32 @@ const plannedCount = components.filter((component) => component.data.status === 
 <style>
   .preview-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
-    gap: var(--pl-space-6);
-    align-items: end;
-    padding-block-end: var(--pl-space-6);
-    border-block-end: 1px solid var(--pl-color-border);
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 25rem);
+    gap: var(--pl-space-4);
+    align-items: stretch;
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-2xl);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--pl-color-surface), var(--pl-color-accent) 5%),
+        color-mix(in oklab, var(--pl-color-surface-2), transparent 18%)
+      );
+    box-shadow: var(--pl-shadow-2);
+  }
+
+  .preview-hero > div {
+    display: grid;
+    align-content: end;
+    padding: var(--pl-space-6);
+    border-radius: var(--pl-radius-xl);
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--pl-color-surface), transparent 12%),
+        transparent
+      );
   }
 
   .preview-eyebrow {
@@ -296,6 +317,8 @@ const plannedCount = components.filter((component) => component.data.status === 
 
   .preview-hero h1 {
     margin-block-end: var(--pl-space-3);
+    font-size: var(--pl-text-3xl);
+    line-height: var(--pl-leading-tight);
   }
 
   .preview-hero p:not(.preview-eyebrow) {
@@ -308,10 +331,11 @@ const plannedCount = components.filter((component) => component.data.status === 
   .preview-search-panel {
     display: grid;
     gap: var(--pl-space-4);
+    align-content: center;
     padding: var(--pl-space-4);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
+    border: 1px solid color-mix(in oklab, var(--pl-color-accent), transparent 62%);
+    border-radius: var(--pl-radius-xl);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 6%);
   }
 
   .preview-search {
@@ -332,6 +356,10 @@ const plannedCount = components.filter((component) => component.data.status === 
 
   .preview-stats div {
     min-inline-size: 0;
+    padding: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 10%);
   }
 
   .preview-stats dt {
@@ -349,6 +377,8 @@ const plannedCount = components.filter((component) => component.data.status === 
 
   .preview-section {
     margin-block-start: var(--pl-space-8);
+    padding-block-start: var(--pl-space-5);
+    border-block-start: 1px solid var(--pl-color-border);
   }
 
   .preview-section__header {
@@ -376,6 +406,7 @@ const plannedCount = components.filter((component) => component.data.status === 
   }
 
   .preview-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--pl-space-3);
@@ -383,14 +414,32 @@ const plannedCount = components.filter((component) => component.data.status === 
     padding: var(--pl-space-4);
     color: var(--pl-color-text-muted);
     border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-md);
-    background: var(--pl-color-surface);
+    border-radius: var(--pl-radius-lg);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--pl-color-surface), transparent 3%),
+        color-mix(in oklab, var(--pl-color-surface), var(--pl-color-surface-2) 18%)
+      );
+    box-shadow: var(--pl-shadow-1);
     text-decoration: none;
+  }
+
+  .preview-card::before {
+    content: "";
+    position: absolute;
+    inset-block-start: var(--pl-space-3);
+    inset-inline-start: 0;
+    inline-size: 3px;
+    block-size: 2rem;
+    border-radius: var(--pl-radius-pill);
+    background: color-mix(in oklab, var(--pl-color-accent), transparent 20%);
   }
 
   .preview-card:hover {
     border-color: color-mix(in oklab, var(--pl-color-accent), var(--pl-color-border) 55%);
     color: var(--pl-color-text);
+    transform: translateY(-1px);
   }
 
   .preview-card strong {

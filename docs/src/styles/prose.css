@@ -96,6 +96,11 @@
   margin-block: var(--pl-space-5);
 }
 
+.prose :where(table:focus-visible) {
+  outline: var(--pl-focus-size) solid var(--pl-focus-color);
+  outline-offset: var(--pl-focus-offset);
+}
+
 .prose :where(th, td) {
   padding: var(--pl-space-3) var(--pl-space-4);
   border-block-end: 1px solid var(--pl-color-border);

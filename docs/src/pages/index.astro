@@ -174,17 +174,36 @@ const componentHighlights = [
 
 <style>
   .home-dashboard {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(17rem, 0.7fr);
-    gap: var(--pl-space-6);
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 25rem);
+    gap: var(--pl-space-4);
     align-items: stretch;
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-2xl);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--pl-color-accent), transparent 90%),
+        color-mix(in oklab, var(--pl-color-surface), transparent 4%) 38%,
+        color-mix(in oklab, var(--pl-color-surface-2), transparent 18%)
+      );
+    box-shadow: var(--pl-shadow-2);
   }
 
   .home-hero {
     display: grid;
     align-content: center;
-    min-block-size: 22rem;
-    padding-block: var(--pl-space-8);
+    min-block-size: 24rem;
+    padding: var(--pl-space-6);
+    border-radius: var(--pl-radius-xl);
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--pl-color-surface), transparent 12%),
+        transparent
+      );
   }
 
   .home-eyebrow {
@@ -236,8 +255,8 @@ const componentHighlights = [
     min-block-size: var(--pl-control-block-size);
     padding-inline: var(--pl-space-4);
     border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
+    border-radius: var(--pl-radius-pill);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 8%);
   }
 
   .home-action:hover,
@@ -256,21 +275,31 @@ const componentHighlights = [
   .home-snapshot {
     display: grid;
     align-content: center;
+    min-block-size: 100%;
     padding: var(--pl-space-5);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
+    border: 1px solid color-mix(in oklab, var(--pl-color-accent), transparent 62%);
+    border-radius: var(--pl-radius-xl);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--pl-color-text), transparent 95%),
+        color-mix(in oklab, var(--pl-color-surface), transparent 4%)
+      );
   }
 
   .home-snapshot dl {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--pl-space-4);
+    gap: var(--pl-space-3);
     margin: 0;
   }
 
   .home-snapshot div {
     min-inline-size: 0;
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 10%);
   }
 
   .home-snapshot dt {
@@ -288,10 +317,8 @@ const componentHighlights = [
 
   .home-panel {
     margin-block-start: var(--pl-space-6);
-    padding: var(--pl-space-5);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-    background: var(--pl-color-surface);
+    padding-block: var(--pl-space-6);
+    border-block-start: 1px solid var(--pl-color-border);
   }
 
   .home-panel h2,
@@ -318,7 +345,7 @@ const componentHighlights = [
 
   .home-panel--start {
     display: grid;
-    grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(14rem, 0.32fr) minmax(0, 1fr);
     gap: var(--pl-space-5);
     align-items: start;
   }
@@ -341,9 +368,11 @@ const componentHighlights = [
     min-inline-size: 0;
     padding: var(--pl-space-4);
     border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-md);
+    border-radius: var(--pl-radius-lg);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 8%);
     color: var(--pl-color-text);
     text-decoration: none;
+    box-shadow: var(--pl-shadow-1);
   }
 
   .home-path small,
@@ -354,7 +383,7 @@ const componentHighlights = [
   }
 
   .home-grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.78fr);
   }
 
   .home-guide-groups {

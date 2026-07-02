@@ -17,7 +17,7 @@
 @import "../../../packages/porchlight/porchlight.css";
 
 :root {
-  --doc-max-inline: 72rem;
+  --doc-max-inline: 76rem;
   --doc-pad: clamp(1rem, 0.6rem + 2vi, 2rem);
 }
 
@@ -47,27 +47,67 @@ body {
   transform: none;
 }
 
-/* Sticky header with a translucent backdrop. */
+/* Sticky header with a translucent app-bar backdrop. */
 .site-header {
   position: sticky;
   inset-block-start: 0;
   z-index: 10;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem var(--doc-pad);
-  background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
-  backdrop-filter: blur(8px);
+  padding: 0.625rem var(--doc-pad);
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--pl-color-surface), var(--pl-color-accent) 4%),
+    color-mix(in oklab, var(--pl-color-surface), transparent 10%)
+  );
   border-block-end: 1px solid var(--pl-color-border);
+  box-shadow: 0 1px 0
+    color-mix(in oklab, var(--pl-color-surface), transparent 35%);
+  backdrop-filter: blur(var(--pl-backdrop-blur));
 }
 
 .site-header__brand {
-  font-size: 1.125rem;
-  font-weight: 700;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--pl-space-2);
+  align-items: center;
+  min-inline-size: 0;
   color: var(--pl-color-text);
   text-decoration: none;
+}
+
+.site-header__mark {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: var(--pl-radius-md);
+  background: var(--pl-color-accent);
+  color: var(--pl-color-accent-text);
+  font-size: var(--pl-text-sm);
+  font-weight: var(--pl-font-weight-black);
+  box-shadow: var(--pl-shadow-glow);
+}
+
+.site-header__brand-copy {
+  display: grid;
+  gap: 0.0625rem;
+  min-inline-size: 0;
+  line-height: 1.05;
+}
+
+.site-header__brand-copy strong {
+  font-size: 1rem;
+  font-weight: var(--pl-font-weight-black);
+}
+
+.site-header__brand-copy small {
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-xs);
+  font-weight: var(--pl-font-weight-medium);
 }
 
 .site-nav {
@@ -86,25 +126,32 @@ body {
 
 .site-nav a {
   display: inline-block;
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--pl-radius-lg);
+  min-block-size: 2rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--pl-radius-pill);
   color: var(--pl-color-text-muted);
   font-size: 0.9375rem;
+  font-weight: var(--pl-font-weight-medium);
   text-decoration: none;
 }
 
 .site-nav a:hover {
-  background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+  border-color: color-mix(in oklab, var(--pl-color-border), transparent 20%);
+  background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
   color: var(--pl-color-text);
 }
 
 .site-nav a[aria-current="page"] {
+  border-color: color-mix(in oklab, var(--pl-color-accent), transparent 62%);
+  background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
   color: var(--pl-color-accent);
   font-weight: 600;
 }
 
 @media (width < 24rem) {
   .site-header {
+    grid-template-columns: 1fr;
     gap: 0.5rem;
   }
 
@@ -114,10 +161,6 @@ body {
 
   .site-nav ul {
     justify-content: flex-start;
-  }
-
-  .site-header__brand {
-    font-size: 1rem;
   }
 
   .site-nav a {
