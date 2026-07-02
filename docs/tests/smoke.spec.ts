@@ -248,6 +248,27 @@ test.describe("docs scaffold", () => {
     await expect(dialog).toBeHidden();
   });
 
+  test("command search remains interactive after docs client navigation", async ({
+    page,
+  }) => {
+    await page.goto("./components/button");
+    await page.locator(".docs-atlas a[href$='/components/field']").click();
+    await expect(
+      page.getByRole("heading", { name: "Field", exact: true, level: 1 }),
+    ).toBeVisible();
+
+    await page
+      .getByRole("button", {
+        name: "Search docs, components, styles Cmd K",
+        exact: true,
+      })
+      .click();
+
+    const dialog = page.getByRole("dialog", { name: "Search Porchlight" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByLabel("Search docs")).toBeFocused();
+  });
+
   test("field page renders labels and the hint", async ({ page }) => {
     await page.goto("./preview/field");
     await expect(
