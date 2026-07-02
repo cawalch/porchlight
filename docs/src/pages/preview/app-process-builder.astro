@@ -849,7 +849,7 @@ const steps: ProcessLane[] = [
   .builder-split,
   .builder-editor-split {
     position: relative;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .builder-split::after,
@@ -903,7 +903,7 @@ const steps: ProcessLane[] = [
         minmax(20rem, auto)
         var(--c-split-pane-separator-size)
         minmax(20rem, 1fr);
-      overflow: visible;
+      overflow: hidden;
     }
 
     .builder-editor-split > .c-split-pane__pane--start {
@@ -937,7 +937,7 @@ const steps: ProcessLane[] = [
         minmax(12rem, auto)
         var(--c-split-pane-separator-size)
         minmax(20rem, 1fr);
-      overflow: visible;
+      overflow: hidden;
     }
 
     .builder-split > .c-split-pane__pane--start {

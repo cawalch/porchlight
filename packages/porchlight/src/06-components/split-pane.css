@@ -213,7 +213,7 @@
             minmax(12rem, auto)
             var(--c-split-pane-separator-size)
             minmax(16rem, 1fr);
-          overflow: visible;
+          overflow: hidden;
         }
 
         :scope:not([data-orientation="vertical"]) .c-split-pane__pane--start {
@@ -250,7 +250,7 @@
           minmax(12rem, auto)
           var(--c-split-pane-separator-size)
           minmax(16rem, 1fr);
-        overflow: visible;
+        overflow: hidden;
       }
 
       :scope[data-collapse="stack"]:not([data-orientation="vertical"])
