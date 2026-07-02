@@ -362,13 +362,16 @@ const commandSections = [
 </BaseLayout>
 
 <script>
-  const commandDialog = document.querySelector<HTMLDialogElement>('[data-docs-command-dialog]');
-  const commandInput = document.querySelector<HTMLInputElement>('[data-docs-command-filter]');
-  const commandLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-docs-command-link]'));
-  const commandSections = Array.from(document.querySelectorAll<HTMLElement>('[data-docs-command-section]'));
-  const commandEmpty = document.querySelector<HTMLElement>('[data-docs-command-empty]');
+  const getCommandElements = () => ({
+    commandDialog: document.querySelector<HTMLDialogElement>('[data-docs-command-dialog]'),
+    commandInput: document.querySelector<HTMLInputElement>('[data-docs-command-filter]'),
+    commandLinks: Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-docs-command-link]')),
+    commandSections: Array.from(document.querySelectorAll<HTMLElement>('[data-docs-command-section]')),
+    commandEmpty: document.querySelector<HTMLElement>('[data-docs-command-empty]'),
+  });
 
   const applyCommandFilter = () => {
+    const { commandInput, commandLinks, commandSections, commandEmpty } = getCommandElements();
     const query = commandInput?.value.trim().toLowerCase() ?? '';
     let visibleCount = 0;
 
@@ -388,6 +391,7 @@ const commandSections = [
   };
 
   const openCommandDialog = () => {
+    const { commandDialog, commandInput } = getCommandElements();
     if (!commandDialog) return;
     if (!commandDialog.open) commandDialog.showModal();
     if (commandInput) {
@@ -397,40 +401,66 @@ const commandSections = [
     }
   };
 
-  document.querySelectorAll<HTMLElement>('[data-docs-command-open]').forEach((button) => {
-    button.addEventListener('click', openCommandDialog);
-  });
+  const bindCommandDialog = () => {
+    const { commandDialog, commandInput, commandLinks } = getCommandElements();
 
-  document.querySelectorAll<HTMLElement>('[data-docs-command-close]').forEach((button) => {
-    button.addEventListener('click', () => commandDialog?.close());
-  });
+    document.querySelectorAll<HTMLElement>('[data-docs-command-open]').forEach((button) => {
+      if (button.dataset.docsCommandOpenBound === 'true') return;
+      button.dataset.docsCommandOpenBound = 'true';
+      button.addEventListener('click', openCommandDialog);
+    });
 
-  commandInput?.addEventListener('input', applyCommandFilter);
-  commandLinks.forEach((link) => {
-    link.addEventListener('click', () => commandDialog?.close());
-  });
+    document.querySelectorAll<HTMLElement>('[data-docs-command-close]').forEach((button) => {
+      if (button.dataset.docsCommandCloseBound === 'true') return;
+      button.dataset.docsCommandCloseBound = 'true';
+      button.addEventListener('click', () => getCommandElements().commandDialog?.close());
+    });
 
-  commandDialog?.addEventListener('click', (event) => {
-    const rect = commandDialog.getBoundingClientRect();
-    const clickedInside =
-      event.clientX >= rect.left &&
-      event.clientX <= rect.right &&
-      event.clientY >= rect.top &&
-      event.clientY <= rect.bottom;
-
-    if (!clickedInside) commandDialog.close();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && commandDialog?.open) {
-      commandDialog.close();
-      return;
+    if (commandInput?.dataset.docsCommandFilterBound !== 'true') {
+      commandInput.dataset.docsCommandFilterBound = 'true';
+      commandInput.addEventListener('input', applyCommandFilter);
     }
 
-    if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
-    event.preventDefault();
-    openCommandDialog();
-  });
+    commandLinks.forEach((link) => {
+      if (link.dataset.docsCommandLinkBound === 'true') return;
+      link.dataset.docsCommandLinkBound = 'true';
+      link.addEventListener('click', () => getCommandElements().commandDialog?.close());
+    });
+
+    if (commandDialog?.dataset.docsCommandDialogBound !== 'true') {
+      commandDialog.dataset.docsCommandDialogBound = 'true';
+      commandDialog.addEventListener('click', (event) => {
+        const rect = commandDialog.getBoundingClientRect();
+        const clickedInside =
+          event.clientX >= rect.left &&
+          event.clientX <= rect.right &&
+          event.clientY >= rect.top &&
+          event.clientY <= rect.bottom;
+
+        if (!clickedInside) commandDialog.close();
+      });
+    }
+  };
+
+  bindCommandDialog();
+
+  if (document.documentElement.dataset.docsCommandGlobalBound !== 'true') {
+    document.documentElement.dataset.docsCommandGlobalBound = 'true';
+    document.addEventListener('astro:page-load', bindCommandDialog);
+
+    document.addEventListener('keydown', (event) => {
+      const { commandDialog } = getCommandElements();
+
+      if (event.key === 'Escape' && commandDialog?.open) {
+        commandDialog.close();
+        return;
+      }
+
+      if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
+      event.preventDefault();
+      openCommandDialog();
+    });
+  }
 
   const content = document.querySelector<HTMLElement>('[data-docs-content]');
   const toc = document.querySelector<HTMLOListElement>('[data-docs-toc]');
