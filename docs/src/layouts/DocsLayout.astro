@@ -210,7 +210,10 @@ const commandSections = [
 
       <nav class="docs-atlas" aria-label="Documentation atlas">
         {commandSections.map((section) => (
-          <section class="docs-atlas__section">
+          <section
+            class="docs-atlas__section"
+            data-atlas-section={section.title.toLowerCase().replace(/\s+/g, '-')}
+          >
             <h2>{section.title}</h2>
             <ul>
               {[...section.links].sort((a, z) => Number(z.current) - Number(a.current)).map((link) => (
@@ -619,18 +622,32 @@ const commandSections = [
 
   .docs-atlas {
     display: grid;
-    grid-template-columns: repeat(4, minmax(12rem, 1fr));
-    gap: var(--pl-space-4);
+    grid-template-columns:
+      minmax(0, 0.9fr)
+      minmax(0, 1.15fr)
+      minmax(0, 2fr)
+      minmax(0, 0.95fr);
+    gap: var(--pl-space-3);
+    align-items: start;
     padding-block: var(--pl-space-4);
     border-block-end: 1px solid var(--docs-line);
   }
 
   .docs-atlas__section {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: var(--pl-space-3);
     min-inline-size: 0;
+    padding: var(--pl-space-3);
+    border: 1px solid var(--docs-line);
+    border-radius: var(--pl-radius-md);
+    background:
+      linear-gradient(180deg, var(--docs-panel-strong), transparent 78%),
+      var(--docs-panel-bg);
   }
 
   .docs-atlas h2 {
-    margin: 0 0 var(--pl-space-2);
+    margin: 0;
     color: var(--pl-color-accent);
     font-size: var(--pl-text-xs);
     font-weight: var(--pl-font-weight-black);
@@ -638,22 +655,38 @@ const commandSections = [
   }
 
   .docs-atlas ul {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
     gap: var(--pl-space-2);
     margin: 0;
-    padding: 0 var(--pl-space-8) var(--pl-space-1) 0;
-    overflow-x: auto;
+    padding: 0;
+    overflow: visible;
     list-style: none;
-    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 2rem), transparent 100%);
+  }
+
+  .docs-atlas__section[data-atlas-section='components'] ul,
+  .docs-atlas__section[data-atlas-section='screens'] ul {
+    padding-inline-end: var(--pl-space-1);
+    overflow-x: hidden;
+    overflow-y: auto;
     scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .docs-atlas__section[data-atlas-section='components'] ul {
+    max-block-size: clamp(8.75rem, 20vh, 10rem);
+  }
+
+  .docs-atlas__section[data-atlas-section='screens'] ul {
+    max-block-size: clamp(7rem, 16vh, 8rem);
   }
 
   .docs-atlas a {
     display: grid;
+    grid-template-rows: auto 1fr;
     gap: var(--pl-space-1);
-    inline-size: max-content;
-    min-inline-size: 9rem;
-    max-inline-size: 13rem;
+    inline-size: 100%;
+    min-inline-size: 0;
     min-block-size: 3.25rem;
     padding: var(--pl-space-2);
     border: 1px solid transparent;
@@ -679,19 +712,25 @@ const commandSections = [
   .docs-atlas small {
     min-inline-size: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .docs-atlas span {
+    display: -webkit-box;
     font-size: var(--pl-text-sm);
     font-weight: var(--pl-font-weight-bold);
+    line-height: var(--pl-leading-tight);
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .docs-atlas small {
     color: color-mix(in oklab, var(--pl-color-text-muted), transparent 18%);
     font-size: var(--pl-text-xs);
+    line-height: var(--pl-leading-tight);
+    text-overflow: ellipsis;
     text-transform: capitalize;
+    white-space: nowrap;
   }
 
   .docs-command-dialog {
@@ -1301,6 +1340,10 @@ const commandSections = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .docs-atlas__section[data-atlas-section='components'] {
+      grid-column: 1 / -1;
+    }
+
     .docs-shell {
       grid-template-columns: 1fr;
     }
@@ -1361,15 +1404,17 @@ const commandSections = [
     }
 
     .docs-atlas {
-      display: flex;
+      grid-template-columns: 1fr;
       gap: var(--pl-space-3);
-      overflow-x: auto;
       padding-block: var(--pl-space-3);
-      scrollbar-gutter: stable;
     }
 
     .docs-atlas__section {
-      min-inline-size: 14rem;
+      min-inline-size: 0;
+    }
+
+    .docs-atlas__section[data-atlas-section='components'] {
+      grid-column: auto;
     }
 
     .docs-command-trigger {
