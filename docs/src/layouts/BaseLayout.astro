@@ -59,7 +59,13 @@ const isActive = (href: string) => {
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="site-header__brand" href={b}>Porchlight</a>
+      <a class="site-header__brand" href={b} aria-label="Porchlight docs home">
+        <span class="site-header__mark" aria-hidden="true">P</span>
+        <span class="site-header__brand-copy">
+          <strong>Porchlight</strong>
+          <small>CSS workbench</small>
+        </span>
+      </a>
       <nav class="site-nav" aria-label="Primary">
         <ul>
           {nav.map((item) => (

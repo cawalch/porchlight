@@ -233,14 +233,19 @@ test.describe("docs scaffold", () => {
       rail.getByRole("link", { name: "When to use what" }),
     ).toBeVisible();
 
-    const search = page.getByLabel("Search docs");
+    const command = page.getByRole("button", { name: /Search docs/ });
+    await expect(command).toBeVisible();
+    await command.click();
+
+    const dialog = page.getByRole("dialog", { name: "Search Porchlight" });
+    await expect(dialog).toBeVisible();
+
+    const search = dialog.getByLabel("Search docs");
     await search.fill("timeline");
-    await expect(
-      page.locator(".docs-sidebar").getByRole("link", { name: "Timeline" }),
-    ).toBeVisible();
-    await expect(
-      page.locator(".docs-sidebar").getByRole("link", { name: "Button" }),
-    ).toBeHidden();
+    await expect(dialog.getByRole("link", { name: "Timeline" })).toBeVisible();
+    await expect(dialog.getByRole("link", { name: "Button" })).toBeHidden();
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
   });
 
   test("field page renders labels and the hint", async ({ page }) => {
