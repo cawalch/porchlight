@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/pr-preview/pr-80/favicon.svg" type="image/svg+xml"><title>Theming · Porchlight</title><meta name="description" content="Override design tokens, create brand themes, and understand the light-dark() color system."><meta name="generator" content="Astro v5.18.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/pr-preview/pr-80/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><style>.prose{max-inline-size:none}.prose :where(h1){margin-block-end:var(--pl-space-5);font-size:var(--pl-text-xl);font-weight:700;line-height:var(--pl-leading-tight)}.prose :where(h2){margin-block:var(--pl-space-8) var(--pl-space-4);font-size:var(--pl-text-lg);font-weight:600;line-height:var(--pl-leading-tight)}.prose :where(h3){margin-block:var(--pl-space-6) var(--pl-space-3);font-size:var(--pl-text-md);font-weight:600}.prose :where(p){margin-block-end:var(--pl-space-4);line-height:1.7}.prose :where(ul,ol){margin-block-end:var(--pl-space-4);padding-inline-start:var(--pl-space-6);line-height:1.7}.prose :where(li){margin-block-end:var(--pl-space-2)}.prose :where(li)::marker{color:var(--pl-color-text-muted)}.prose :where(code){padding:.1em .25em;border-radius:var(--pl-radius-sm);background:var(--pl-color-surface-2);font-size:.85em;font-family:var(--pl-font-mono);overflow-wrap:break-word}.prose :where(pre){margin-block:var(--pl-space-5);padding:var(--pl-space-5);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);background:var(--pl-color-surface-2);overflow-x:auto;font-size:var(--pl-text-sm);line-height:1.6}.prose :where(pre) :where(code){padding:0;background:none;border:0;font-size:inherit;word-break:normal}.prose :where(table){inline-size:100%;border-collapse:collapse;margin-block:var(--pl-space-5)}.prose :where(th,td){padding:var(--pl-space-3) var(--pl-space-4);border-block-end:1px solid var(--pl-color-border);text-align:start;vertical-align:top}.prose :where(th){color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);font-weight:600}.prose :where(blockquote){margin-block:var(--pl-space-5);padding:var(--pl-space-4) var(--pl-space-5);border-inline-start:3px solid var(--pl-color-accent);background:var(--pl-color-surface-2);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted)}.prose :where(blockquote) :where(p:last-child){margin-block-end:0}.prose :where(a){color:var(--pl-color-accent);text-decoration:underline;text-underline-offset:.15em}.prose :where(a:hover){text-decoration-thickness:2px}.prose :where(hr){margin-block:var(--pl-space-8);border:0;border-block-start:1px solid var(--pl-color-border)}.prose :where(img){max-inline-size:100%;block-size:auto;border-radius:var(--pl-radius-lg)}
+</style>
+<link rel="stylesheet" href="/porchlight/pr-preview/pr-80/_astro/_slug_.BLIvKA4S.css">
+<style>.docs-shell[data-astro-cid-mw7aashj]{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--pl-space-6);align-items:start;max-inline-size:80rem;margin-inline:auto;padding-inline:var(--doc-pad)}.docs-sidebar[data-astro-cid-mw7aashj]{position:sticky;inset-block-start:calc(2.75rem + 1px + var(--pl-space-4));max-block-size:calc(100vh - 5rem);overflow-y:auto;padding-block-end:var(--pl-space-4)}.docs-nav__section[data-astro-cid-mw7aashj]+.docs-nav__section[data-astro-cid-mw7aashj]{margin-block-start:var(--pl-space-5)}.docs-nav__heading[data-astro-cid-mw7aashj]{margin-block-end:var(--pl-space-2);padding-inline-start:var(--pl-space-3);font-size:var(--pl-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--pl-color-text-muted)}.docs-nav[data-astro-cid-mw7aashj] ul[data-astro-cid-mw7aashj]{margin:0;padding:0;list-style:none}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]{display:block;padding:var(--pl-space-1) var(--pl-space-3);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);text-decoration:none;line-height:1.4}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]:hover{background:color-mix(in oklab,var(--pl-color-accent),transparent 92%);color:var(--pl-color-text)}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj][aria-current=page]{background:color-mix(in oklab,var(--pl-color-accent),transparent 88%);color:var(--pl-color-accent);font-weight:600}.docs-content[data-astro-cid-mw7aashj]{padding-block:var(--pl-space-6) var(--pl-space-10);min-inline-size:0;max-inline-size:52rem}main:has(.docs-shell){inline-size:100%;max-inline-size:none;margin-inline:0;padding-block-start:var(--pl-space-5)}@media(width<48rem){.docs-shell[data-astro-cid-mw7aashj]{grid-template-columns:1fr}.docs-sidebar[data-astro-cid-mw7aashj]{position:relative;inset-block-start:0;max-block-size:none;border-block-end:1px solid var(--pl-color-border);padding-block-end:var(--pl-space-4)}}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <a class="site-header__brand" href="/porchlight/pr-preview/pr-80/">Porchlight</a> <nav class="site-nav" aria-label="Primary"> <ul> <li> <a href="/porchlight/pr-preview/pr-80/guides/getting-started" aria-current="page">Docs</a> </li><li> <a href="/porchlight/pr-preview/pr-80/preview">Preview</a> </li><li> <a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a> </li> </ul> </nav> </header> <main id="main">  <div class="docs-shell" data-astro-cid-mw7aashj> <aside class="docs-sidebar" aria-label="Documentation navigation" data-astro-cid-mw7aashj> <nav class="docs-nav" data-astro-cid-mw7aashj> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Getting Started</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/getting-started" data-astro-cid-mw7aashj> Getting Started </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/theming" aria-current="page" data-astro-cid-mw7aashj> Theming </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/browser-support" data-astro-cid-mw7aashj> Browser Support </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Foundations</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/architecture" data-astro-cid-mw7aashj> Architecture &amp; layer model </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/layout" data-astro-cid-mw7aashj> Layout &amp; Page Building </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/composition-recipes" data-astro-cid-mw7aashj> Composition Recipes </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/utilities" data-astro-cid-mw7aashj> Utilities </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/guides/enhancements" data-astro-cid-mw7aashj> Enhancements </a> </li> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/tokens" data-astro-cid-mw7aashj>Token reference</a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Components</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/accordion" data-astro-cid-mw7aashj> Accordion </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/alert" data-astro-cid-mw7aashj> Alert </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/textarea-auto" data-astro-cid-mw7aashj> Auto-Growing Textarea </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/avatar" data-astro-cid-mw7aashj> Avatar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/badge" data-astro-cid-mw7aashj> Badge </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/breadcrumb" data-astro-cid-mw7aashj> Breadcrumb </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/button" data-astro-cid-mw7aashj> Button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/calendar" data-astro-cid-mw7aashj> Calendar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/card" data-astro-cid-mw7aashj> Card </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/chart" data-astro-cid-mw7aashj> Chart shell </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/chip" data-astro-cid-mw7aashj> Chip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/combobox" data-astro-cid-mw7aashj> Combobox </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/command-palette" data-astro-cid-mw7aashj> Command Palette </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/data-table" data-astro-cid-mw7aashj> Data table </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/app-dense" data-astro-cid-mw7aashj> Data-dense mode </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/description-list" data-astro-cid-mw7aashj> Description list </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/dialog" data-astro-cid-mw7aashj> Dialog </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/drawer" data-astro-cid-mw7aashj> Drawer </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/dropdown" data-astro-cid-mw7aashj> Dropdown </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/empty-state" data-astro-cid-mw7aashj> Empty state </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/field" data-astro-cid-mw7aashj> Field </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/file-upload" data-astro-cid-mw7aashj> File Upload </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/filter-builder" data-astro-cid-mw7aashj> Filter builder </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/form" data-astro-cid-mw7aashj> Form </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/nav" data-astro-cid-mw7aashj> Nav </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/page-header" data-astro-cid-mw7aashj> Page header </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/pagination" data-astro-cid-mw7aashj> Pagination </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/popover-menu" data-astro-cid-mw7aashj> Popover menu </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/progress" data-astro-cid-mw7aashj> Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/reveal" data-astro-cid-mw7aashj> Reveal </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/scroll-progress" data-astro-cid-mw7aashj> Scroll Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/segmented" data-astro-cid-mw7aashj> Segmented Control </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/skeleton" data-astro-cid-mw7aashj> Skeleton </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/split-button" data-astro-cid-mw7aashj> Split button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/split-pane" data-astro-cid-mw7aashj> Split pane </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/stat" data-astro-cid-mw7aashj> Stat </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/stepper" data-astro-cid-mw7aashj> Stepper </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/switch" data-astro-cid-mw7aashj> Switch </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/tabs" data-astro-cid-mw7aashj> Tabs </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/tag-input" data-astro-cid-mw7aashj> Tag Input </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/timeline" data-astro-cid-mw7aashj> Timeline </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/toast" data-astro-cid-mw7aashj> Toast </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/toolbar" data-astro-cid-mw7aashj> Toolbar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/tooltip" data-astro-cid-mw7aashj> Tooltip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/tree" data-astro-cid-mw7aashj> Tree view </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-80/components/workflow-board" data-astro-cid-mw7aashj> Workflow board </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Examples</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/dashboard" data-astro-cid-mw7aashj>Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/settings" data-astro-cid-mw7aashj>Settings</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-dashboard" data-astro-cid-mw7aashj>SaaS Portal</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-siem" data-astro-cid-mw7aashj>Security SIEM</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-cases" data-astro-cid-mw7aashj>Case Review</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-inbox" data-astro-cid-mw7aashj>Inbox</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-marketing" data-astro-cid-mw7aashj>Marketing Page</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-80/preview/app-shell" data-astro-cid-mw7aashj>App Shell</a></li> </ul> </div> </nav> </aside> <div class="docs-content" data-astro-cid-mw7aashj>  <article class="prose"> <h1 id="theming">Theming</h1>
+<p>Porchlight is fully token-driven. Every color, spacing value, font size,
+radius, and motion duration is a CSS custom property you can override. This
+guide covers the token architecture, how to create a brand theme, and how
+the light/dark system works.</p>
+<h2 id="token-hierarchy">Token hierarchy</h2>
+<p>Tokens are split into two layers:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Prefix</th><th>Purpose</th></tr></thead><tbody><tr><td><strong>Primitive</strong> (<code>02-tokens.css</code>)</td><td><code>--pl-*</code></td><td>Raw design scales: font sizes, spacing steps, OKLCH color ramp, radii, motion, shadows</td></tr><tr><td><strong>Semantic</strong> (<code>02-tokens.css</code>)</td><td><code>--pl-color-*</code></td><td>Foreground/background pairs: <code>bg</code>, <code>surface</code>, <code>text</code>, <code>border</code>, <code>accent</code>, <code>danger-*</code>, <code>success-*</code>, <code>warning-*</code></td></tr><tr><td><strong>Component-local</strong></td><td><code>--c-*</code></td><td>Per-component tokens defined inside <code>@scope</code> (e.g., <code>--c-alert-tone</code>)</td></tr></tbody></table>
+<p>Semantic tokens use <code>light-dark()</code> so they automatically adapt to the
+user’s color scheme. Override primitives to retheme the entire system;
+override semantic tokens to fine-tune specific roles.</p>
+<h2 id="light-and-dark">Light and dark</h2>
+<p>Porchlight uses the CSS <code>color-scheme</code> property to drive <code>light-dark()</code>
+color pairs. Two ways to control the active scheme:</p>
+<h3 id="system-preference-default">System preference (default)</h3>
+<p>Omit the <code>data-theme</code> attribute. The browser follows the OS setting:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">html</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#6A737D">  &lt;!-- follows prefers-color-scheme --&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">html</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="explicit-theme">Explicit theme</h3>
+<p>Set <code>data-theme</code> on the root element:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">html</span><span style="color:#B392F0"> data-theme</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;dark&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#6A737D">  &lt;!-- always dark --&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">html</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Valid values: <code>light</code>, <code>dark</code>, or omit for system.</p>
+<h2 id="creating-a-brand-theme">Creating a brand theme</h2>
+<p>Override the accent color pair to instantly rebrand. Both the accent and
+its text color need to meet WCAG-AA contrast (4.5:1 minimum):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  :root</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    /* Your brand color in OKLCH */</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-accent</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">55</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.22</span><span style="color:#79B8FF"> 290</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-accent-text</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">98</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.01</span><span style="color:#79B8FF"> 290</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    /* The accent ramp is derived from these via color-mix().</span></span>
+<span class="line"><span style="color:#6A737D">       Override individual steps if you need full control: */</span></span>
+<span class="line"><span style="color:#6A737D">    /* --pl-color-accent-300: oklch(...); */</span></span>
+<span class="line"><span style="color:#6A737D">    /* --pl-color-accent-700: oklch(...); */</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  /* Dark theme brand override */</span></span>
+<span class="line"><span style="color:#B392F0">  :root</span><span style="color:#E1E4E8">[</span><span style="color:#B392F0">data-theme</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;dark&quot;</span><span style="color:#E1E4E8">] {</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-accent</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">70</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.18</span><span style="color:#79B8FF"> 290</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-accent-text</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">20</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.05</span><span style="color:#79B8FF"> 290</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>To go deeper, override the semantic surface/text tokens:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  :root</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-bg</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">99</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.005</span><span style="color:#79B8FF"> 260</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-surface</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">97</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.008</span><span style="color:#79B8FF"> 260</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-color-text</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">25</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.02</span><span style="color:#79B8FF"> 260</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="advanced-full-brand-ramp">Advanced: full brand ramp</h2>
+<p>The accent color is <strong>derived</strong> from a 9-step brand ramp:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>--pl-brand-1  (lightest)  →  --pl-brand-9  (darkest)</span></span>
+<span class="line"><span>--pl-color-accent = light-dark(var(--pl-brand-7), var(--pl-brand-4))</span></span></code></pre>
+<p>To retheme with your brand hue, override the ramp steps. Each step varies
+lightness while keeping the same hue and chroma direction:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  :root</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    /* Target red: hue 25°  */</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-1</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">96</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.02</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-2</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">88</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.05</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-3</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">79</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.09</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-4</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">69</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.17</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">/* dark-mode accent  */</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-5</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">62</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.19</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-6</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">55</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.2</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-7</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">47</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.21</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">/* light-mode accent  */</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-8</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">38</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.16</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-brand-9</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">oklch</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">29</span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 0.1</span><span style="color:#79B8FF"> 25</span><span style="color:#F97583">deg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="three-tokens-to-update-together">Three tokens to update together</h3>
+<p>When you change the brand hue, <strong>three</strong> tokens need attention:</p>
+<ol>
+<li>
+<p><strong>Brand ramp</strong> (<code>--pl-brand-1</code> through <code>--pl-brand-9</code>) — sets the accent.</p>
+</li>
+<li>
+<p><strong>Focus ring</strong> (<code>--pl-focus-color</code>) — a separate token, not derived from
+the brand ramp. It defaults to hue <code>82°</code> (amber). Override it to match:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#E1E4E8">--pl-focus-color: light-dark(oklch(50% 0</span><span style="color:#B392F0">.18</span><span style="color:#E1E4E8"> 25deg), oklch(70% 0</span><span style="color:#B392F0">.15</span><span style="color:#E1E4E8"> 25deg));</span></span></code></pre>
+</li>
+<li>
+<p><strong>Danger hue</strong> (<code>--pl-color-danger</code>) — defaults to <code>oklch(60% 0.22 25deg)</code>.
+If your brand is red/orange (hue ~25°), the danger state will visually
+collide with primary actions. Shift danger to a different hue to maintain
+semantic clarity:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#E1E4E8">--pl-color-danger: oklch(57% 0</span><span style="color:#B392F0">.23</span><span style="color:#E1E4E8"> 12deg);</span></span>
+<span class="line"><span style="color:#E1E4E8">--pl-color-danger-text: light-dark(</span></span>
+<span class="line"><span style="color:#E1E4E8">  oklch(36% 0</span><span style="color:#B392F0">.2</span><span style="color:#E1E4E8"> 12deg),</span></span>
+<span class="line"><span style="color:#E1E4E8">  oklch(90% 0</span><span style="color:#B392F0">.08</span><span style="color:#E1E4E8"> 12deg)</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span></code></pre>
+</li>
+</ol>
+<h3 id="corporate-vs-consumer-feel">Corporate vs. consumer feel</h3>
+<p>The large-surface radius tokens control how “rounded” the framework feels:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  :root</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    /* Corporate / enterprise: tighter corners */</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-radius-xl</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.5</span><span style="color:#F97583">rem</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#FFAB70">    --pl-radius-2xl</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.75</span><span style="color:#F97583">rem</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    /* Consumer / playful: more rounded */</span></span>
+<span class="line"><span style="color:#6A737D">    /* --pl-radius-xl: 1.5rem; */</span></span>
+<span class="line"><span style="color:#6A737D">    /* --pl-radius-2xl: 2rem; */</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>These drive card corners, dialog radius, table wrap radius, and toast radius.</p>
+<h2 id="density-modes">Density modes</h2>
+<p>Four density presets control component geometry:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tier</th><th>Control height</th><th>Best for</th></tr></thead><tbody><tr><td><code>compact</code></td><td>2rem (32px)</td><td>Admin panels, settings</td></tr><tr><td><code>comfortable</code></td><td>2.5rem (40px)</td><td>Default — most SaaS apps</td></tr><tr><td><code>touch</code></td><td>2.75rem (44px)</td><td>Mobile, tablets, kiosks</td></tr><tr><td><code>dense</code></td><td>1.75rem (28px)</td><td>SIEM, analytics, log viewers</td></tr></tbody></table>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;compact&quot;</span><span style="color:#E1E4E8">&gt;Tighter controls&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;comfortable&quot;</span><span style="color:#E1E4E8">&gt;Default&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;touch&quot;</span><span style="color:#E1E4E8">&gt;Larger touch targets&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;dense&quot;</span><span style="color:#E1E4E8">&gt;Maximum information density&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Set on any ancestor. <code>compact</code>, <code>comfortable</code>, and <code>touch</code> change only
+<code>--pl-control-block-size</code>, <code>--pl-control-padding-inline</code>, and
+<code>--pl-control-gap</code> — type, spacing, and radius are unchanged.</p>
+<p>The <code>dense</code> tier goes further: it also compresses the <code>--pl-space-*</code> scale
+(~30% reduction) and small text sizes (<code>--pl-text-sm</code>, <code>--pl-text-xs</code>) for
+maximum information density. See the
+<a href="/porchlight/components/app-dense">Data-dense mode</a> reference for details.</p>
+<h2 id="reduced-motion">Reduced motion</h2>
+<p>Porchlight respects <code>prefers-reduced-motion: reduce</code> automatically:</p>
+<ul>
+<li><code>--pl-motion-scale</code> drops to <code>0</code>, which zeroes all duration tokens</li>
+<li>A universal <code>transition-duration: 1ms !important</code> clamp fires on every
+element, guaranteeing no stray transitions outlast the preference</li>
+<li>Scroll behavior reverts to <code>auto</code></li>
+</ul>
+<p>You don’t need to do anything. This is one of the few places <code>!important</code>
+is used (it’s an accessibility guarantee).</p>
+<h2 id="contrast-preference">Contrast preference</h2>
+<p>When the browser reports <code>prefers-contrast: more</code>, Porchlight strengthens
+the structural tokens components already use:</p>
+<ul>
+<li><code>--pl-color-border</code> becomes more visible</li>
+<li><code>--pl-color-surface-2</code> separates stronger from the page background</li>
+<li><code>--pl-focus-size</code> increases to <code>3px</code></li>
+<li><code>--pl-focus-glow-opacity</code> makes field glow rings easier to see</li>
+</ul>
+<p>This is a token-level adjustment, not a separate component mode. Apps can
+still override these tokens in their own layer when a brand needs different
+contrast behavior.</p>
+<h2 id="forced-colors-high-contrast">Forced colors (High Contrast)</h2>
+<p>Under Windows High Contrast mode, all semantic tokens remap to system
+colors (<code>Canvas</code>, <code>CanvasText</code>, <code>ButtonBorder</code>, <code>Highlight</code>). The UI
+remains legible without any action from you.</p>
+<h2 id="component-level-theming">Component-level theming</h2>
+<p>Each component defines <code>--c-*</code> tokens inside its <code>@scope</code>. Override these
+to fine-tune a specific component without touching the global palette:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  .c-card</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">    --c-card-pad</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">var</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">--pl-space-6</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#FFAB70">    --c-card-radius</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">var</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">--pl-radius-xl</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="token-reference">Token reference</h2>
+<p>For the complete list of tokens with live values, see the
+<a href="../../tokens">token reference pages</a>.</p> </article>  </div> </div>  </main> <footer class="site-footer"> <p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p> </footer> </body></html> 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Porchlight">
+  <rect width="32" height="32" rx="7" fill="oklch(55% 0.2 255)" />
+  <rect x="12" y="5" width="8" height="7" rx="1.5" fill="oklch(28% 0.02 250)" />
+  <circle cx="16" cy="19" r="7" fill="oklch(95% 0.06 90)" />
+  <circle cx="16" cy="19" r="3.5" fill="oklch(78% 0.14 85)" />
+</svg>

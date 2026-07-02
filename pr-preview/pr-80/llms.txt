@@ -1,0 +1,54 @@
+# Porchlight LLM guide
+
+> Porchlight is a no-dependency, native-CSS framework for modern SaaS and admin interfaces. It uses real HTML semantics, CSS custom properties, native CSS layers/scopes, and framework-agnostic component classes.
+
+Use this short file to route quickly. Use /llms-full.txt when generating or refactoring full screens.
+
+## Primary docs
+
+- Getting started: /guides/getting-started
+- Composition recipes: /guides/composition-recipes
+- Layout primitives: /guides/layout
+- Utilities: /guides/utilities
+- Browser support: /guides/browser-support
+- Component reference: /components
+- Preview gallery: /preview
+- Full model pack: /llms-full.txt
+
+## Core composition rules
+
+- Use layout primitives for structure: l-app-shell, l-container, l-stack, l-grid, l-cluster, l-sidebar.
+- Use components for semantics and chrome: c-card, c-toolbar, c-page-header, c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs, c-badge.
+- Use utilities only for small adjustments: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0.
+- Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.
+- Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.
+- Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.
+
+## Avoid
+
+- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside c-table-wrap.
+- Do not put page headers inside c-toolbar. Use c-page-header inside padded content; use c-toolbar on data-region edges.
+- Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack, or sibling c-card elements.
+- Do not omit c-table-wrap around c-table.
+- Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and --pl-space-* tokens.
+- Do not use placeholders as the only labels. Use visible labels or u-sr-only labels.
+- Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.
+- Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.
+- Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.
+
+## Best first examples
+
+- /preview/app-dashboard: full app shell with KPI grid, data table, nav, and page actions
+- /preview/dashboard: compact dashboard composition proof
+- /preview/app-dense: dense admin/data-console layout
+- /preview/app-cases: case queue with filters and detail panel
+- /preview/form: forms, grids, input groups, choice groups, and validation states
+- /preview/field: native controls, messages, required markers, and framework-neutral validation
+
+## Agent routing
+
+- Building a full app screen: start with /guides/composition-recipes, then copy the closest /preview/app-* pattern.
+- Building a table workflow: use /components/data-table and /preview/data-table.
+- Building forms: use /components/form, /components/field, /preview/form, and /preview/field.
+- Building dense/admin UX: use /components/app-dense and /preview/app-dense.
+- Unsure which class exists: use /components first, then /preview for rendered composition.

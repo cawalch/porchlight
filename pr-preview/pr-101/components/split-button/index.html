@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/pr-preview/pr-101/favicon.svg" type="image/svg+xml"><title>Split button · Porchlight</title><meta name="description" content="A primary action button paired with a dropdown toggle for alternative actions. Composes two .c-button segments with a Popover API menu."><meta name="generator" content="Astro v5.18.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/pr-preview/pr-101/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><style>.prose{max-inline-size:none}.prose :where(h1){margin-block-end:var(--pl-space-5);font-size:var(--pl-text-xl);font-weight:700;line-height:var(--pl-leading-tight)}.prose :where(h2){margin-block:var(--pl-space-8) var(--pl-space-4);font-size:var(--pl-text-lg);font-weight:600;line-height:var(--pl-leading-tight)}.prose :where(h3){margin-block:var(--pl-space-6) var(--pl-space-3);font-size:var(--pl-text-md);font-weight:600}.prose :where(p){margin-block-end:var(--pl-space-4);line-height:1.7}.prose :where(ul,ol){margin-block-end:var(--pl-space-4);padding-inline-start:var(--pl-space-6);line-height:1.7}.prose :where(li){margin-block-end:var(--pl-space-2)}.prose :where(li)::marker{color:var(--pl-color-text-muted)}.prose :where(code){padding:.1em .25em;border-radius:var(--pl-radius-sm);background:var(--pl-color-surface-2);font-size:.85em;font-family:var(--pl-font-mono);overflow-wrap:break-word}.prose :where(pre){margin-block:var(--pl-space-5);padding:var(--pl-space-5);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);background:var(--pl-color-surface-2);overflow-x:auto;font-size:var(--pl-text-sm);line-height:1.6}.prose :where(pre) :where(code){padding:0;background:none;border:0;font-size:inherit;word-break:normal}.prose :where(table){inline-size:100%;border-collapse:collapse;margin-block:var(--pl-space-5)}.prose :where(th,td){padding:var(--pl-space-3) var(--pl-space-4);border-block-end:1px solid var(--pl-color-border);text-align:start;vertical-align:top}.prose :where(th){color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);font-weight:600}.prose :where(blockquote){margin-block:var(--pl-space-5);padding:var(--pl-space-4) var(--pl-space-5);border-inline-start:3px solid var(--pl-color-accent);background:var(--pl-color-surface-2);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted)}.prose :where(blockquote) :where(p:last-child){margin-block-end:0}.prose :where(a){color:var(--pl-color-accent);text-decoration:underline;text-underline-offset:.15em}.prose :where(a:hover){text-decoration-thickness:2px}.prose :where(hr){margin-block:var(--pl-space-8);border:0;border-block-start:1px solid var(--pl-color-border)}.prose :where(img){max-inline-size:100%;block-size:auto;border-radius:var(--pl-radius-lg)}
+</style>
+<link rel="stylesheet" href="/porchlight/pr-preview/pr-101/_astro/_slug_.CpMPWiQn.css">
+<style>.docs-shell[data-astro-cid-mw7aashj]{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--pl-space-6);align-items:start;max-inline-size:80rem;margin-inline:auto;padding-inline:var(--doc-pad)}.docs-sidebar[data-astro-cid-mw7aashj]{position:sticky;inset-block-start:calc(2.75rem + 1px + var(--pl-space-4));max-block-size:calc(100vh - 5rem);overflow-y:auto;padding-block-end:var(--pl-space-4)}.docs-nav__section[data-astro-cid-mw7aashj]+.docs-nav__section[data-astro-cid-mw7aashj]{margin-block-start:var(--pl-space-5)}.docs-nav__heading[data-astro-cid-mw7aashj]{margin-block-end:var(--pl-space-2);padding-inline-start:var(--pl-space-3);font-size:var(--pl-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--pl-color-text-muted)}.docs-nav[data-astro-cid-mw7aashj] ul[data-astro-cid-mw7aashj]{margin:0;padding:0;list-style:none}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]{display:block;padding:var(--pl-space-1) var(--pl-space-3);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);text-decoration:none;line-height:1.4}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]:hover{background:color-mix(in oklab,var(--pl-color-accent),transparent 92%);color:var(--pl-color-text)}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj][aria-current=page]{background:color-mix(in oklab,var(--pl-color-accent),transparent 88%);color:var(--pl-color-accent);font-weight:600}.docs-content[data-astro-cid-mw7aashj]{padding-block:var(--pl-space-6) var(--pl-space-10);min-inline-size:0;max-inline-size:52rem}main:has(.docs-shell){inline-size:100%;max-inline-size:none;margin-inline:0;padding-block-start:var(--pl-space-5)}@media(width<48rem){.docs-shell[data-astro-cid-mw7aashj]{grid-template-columns:1fr}.docs-sidebar[data-astro-cid-mw7aashj]{position:relative;inset-block-start:0;max-block-size:none;border-block-end:1px solid var(--pl-color-border);padding-block-end:var(--pl-space-4)}}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <a class="site-header__brand" href="/porchlight/pr-preview/pr-101/">Porchlight</a> <nav class="site-nav" aria-label="Primary"> <ul> <li> <a href="/porchlight/pr-preview/pr-101/guides/getting-started" aria-current="page">Docs</a> </li><li> <a href="/porchlight/pr-preview/pr-101/preview">Preview</a> </li><li> <a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a> </li> </ul> </nav> </header> <main id="main">  <div class="docs-shell" data-astro-cid-mw7aashj> <aside class="docs-sidebar" aria-label="Documentation navigation" data-astro-cid-mw7aashj> <nav class="docs-nav" data-astro-cid-mw7aashj> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Getting Started</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/getting-started" data-astro-cid-mw7aashj> Getting Started </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/theming" data-astro-cid-mw7aashj> Theming </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/browser-support" data-astro-cid-mw7aashj> Browser Support </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Foundations</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/architecture" data-astro-cid-mw7aashj> Architecture &amp; layer model </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/layout" data-astro-cid-mw7aashj> Layout &amp; Page Building </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/composition-recipes" data-astro-cid-mw7aashj> Composition Recipes </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/utilities" data-astro-cid-mw7aashj> Utilities </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/guides/enhancements" data-astro-cid-mw7aashj> Enhancements </a> </li> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/tokens" data-astro-cid-mw7aashj>Token reference</a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Components</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/accordion" data-astro-cid-mw7aashj> Accordion </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/alert" data-astro-cid-mw7aashj> Alert </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-process-builder" data-astro-cid-mw7aashj> App process builder </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/textarea-auto" data-astro-cid-mw7aashj> Auto-Growing Textarea </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/avatar" data-astro-cid-mw7aashj> Avatar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/badge" data-astro-cid-mw7aashj> Badge </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/breadcrumb" data-astro-cid-mw7aashj> Breadcrumb </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/button" data-astro-cid-mw7aashj> Button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/calendar" data-astro-cid-mw7aashj> Calendar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/card" data-astro-cid-mw7aashj> Card </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/chart" data-astro-cid-mw7aashj> Chart shell </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/chip" data-astro-cid-mw7aashj> Chip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/combobox" data-astro-cid-mw7aashj> Combobox </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/command-palette" data-astro-cid-mw7aashj> Command Palette </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-command-workspace" data-astro-cid-mw7aashj> Command-driven workspace </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/data-table" data-astro-cid-mw7aashj> Data table </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-dense" data-astro-cid-mw7aashj> Data-dense mode </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/description-list" data-astro-cid-mw7aashj> Description list </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/dialog" data-astro-cid-mw7aashj> Dialog </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/drawer" data-astro-cid-mw7aashj> Drawer </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/dropdown" data-astro-cid-mw7aashj> Dropdown </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/empty-state" data-astro-cid-mw7aashj> Empty state </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/field" data-astro-cid-mw7aashj> Field </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/file-upload" data-astro-cid-mw7aashj> File Upload </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/filter-builder" data-astro-cid-mw7aashj> Filter builder </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/form" data-astro-cid-mw7aashj> Form </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-list-detail" data-astro-cid-mw7aashj> List/detail workspace </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/nav" data-astro-cid-mw7aashj> Nav </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/page-header" data-astro-cid-mw7aashj> Page header </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/pagination" data-astro-cid-mw7aashj> Pagination </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/popover-menu" data-astro-cid-mw7aashj> Popover menu </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/progress" data-astro-cid-mw7aashj> Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-queue-triage" data-astro-cid-mw7aashj> Queue triage kit </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-reporting-dashboard" data-astro-cid-mw7aashj> Reporting dashboard </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/reveal" data-astro-cid-mw7aashj> Reveal </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/scroll-progress" data-astro-cid-mw7aashj> Scroll Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/segmented" data-astro-cid-mw7aashj> Segmented Control </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/app-settings-console" data-astro-cid-mw7aashj> Settings console </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/skeleton" data-astro-cid-mw7aashj> Skeleton </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/split-button" aria-current="page" data-astro-cid-mw7aashj> Split button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/split-pane" data-astro-cid-mw7aashj> Split pane </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/stat" data-astro-cid-mw7aashj> Stat </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/stepper" data-astro-cid-mw7aashj> Stepper </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/switch" data-astro-cid-mw7aashj> Switch </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/tabs" data-astro-cid-mw7aashj> Tabs </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/tag-input" data-astro-cid-mw7aashj> Tag Input </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/timeline" data-astro-cid-mw7aashj> Timeline </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/toast" data-astro-cid-mw7aashj> Toast </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/toolbar" data-astro-cid-mw7aashj> Toolbar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/tooltip" data-astro-cid-mw7aashj> Tooltip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/tree" data-astro-cid-mw7aashj> Tree view </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-101/components/workflow-board" data-astro-cid-mw7aashj> Workflow board </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Examples</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/dashboard" data-astro-cid-mw7aashj>Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/settings" data-astro-cid-mw7aashj>Settings</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-dashboard" data-astro-cid-mw7aashj>SaaS Portal</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-siem" data-astro-cid-mw7aashj>Security SIEM</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-cases" data-astro-cid-mw7aashj>Case Review</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-inbox" data-astro-cid-mw7aashj>Inbox</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-list-detail" data-astro-cid-mw7aashj>List/Detail</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-queue-triage" data-astro-cid-mw7aashj>Queue Triage</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-process-builder" data-astro-cid-mw7aashj>Process Builder</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-settings-console" data-astro-cid-mw7aashj>Settings Console</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-reporting-dashboard" data-astro-cid-mw7aashj>Reporting Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-command-workspace" data-astro-cid-mw7aashj>Command Workspace</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-marketing" data-astro-cid-mw7aashj>Marketing Page</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-101/preview/app-shell" data-astro-cid-mw7aashj>App Shell</a></li> </ul> </div> </nav> </aside> <div class="docs-content" data-astro-cid-mw7aashj>  <article class="prose"> <a href="/porchlight/pr-preview/pr-101/preview/split-button" class="c-button" data-variant="secondary" style="float: right; margin-block-start: 0.25rem;">View live preview</a> <h1 id="split-button">Split button</h1>
+<p>The <code>.c-split</code> is a composite action control: a primary button (the default
+action) fused with a dropdown toggle that opens a menu of alternative actions.
+The canonical “Save ▼” pattern - click the label to perform the default
+action, click the chevron to pick a variant.</p>
+<p>Both segments are <code>.c-button</code>, so every variant, state, and density tier
+inherited from the button component works without extra effort. The split
+button only adds the layout, the seam divider, and the Popover API menu.</p>
+<h2 id="semantic-html">Semantic HTML</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button c-split__primary&quot;</span><span style="color:#B392F0"> data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;primary&quot;</span><span style="color:#E1E4E8">&gt;Save&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">button</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button c-split__toggle&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;primary&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    popovertarget</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;sb-1&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-label</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;More save options&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__chevron&quot;</span><span style="color:#B392F0"> viewBox</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;0 0 24 24&quot;</span><span style="color:#B392F0"> ...</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> d</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;m6 9 6 6 6-6&quot;</span><span style="color:#E1E4E8"> /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> popover</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__menu&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;sb-1&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__option&quot;</span><span style="color:#E1E4E8">&gt;Save as PDF&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__option&quot;</span><span style="color:#E1E4E8">&gt;Save as draft&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">hr</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-menu__divider&quot;</span><span style="color:#E1E4E8"> /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__option&quot;</span><span style="color:#B392F0"> data-tone</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;danger&quot;</span><span style="color:#E1E4E8">&gt;Discard changes&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="class-contract">Class contract</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Selector</th><th>Role</th></tr></thead><tbody><tr><td><code>.c-split</code></td><td>Flex container that fuses the two segments.</td></tr><tr><td><code>.c-split__primary</code></td><td>The primary <code>.c-button</code> (default action). Trailing radius set to 0.</td></tr><tr><td><code>.c-split__toggle</code></td><td>The dropdown <code>.c-button</code> (opens the menu). Leading radius set to 0.</td></tr><tr><td><code>.c-split__chevron</code></td><td>Arrow icon inside the toggle (rotates 180° when open).</td></tr><tr><td><code>.c-split__menu</code></td><td>The popover menu (anchored to the toggle).</td></tr><tr><td><code>.c-split__option</code></td><td>A menu item (button or link).</td></tr><tr><td><code>[data-tone=&quot;danger&quot;]</code></td><td>Destructive item (discard, delete).</td></tr></tbody></table>
+<p>Both buttons <strong>must</strong> carry the same <code>data-variant</code> so the fill, text, and
+border match across the seam.</p>
+<blockquote>
+<p><strong>Multiple instances:</strong> each <code>.c-split</code> must set a unique <code>--c-split-anchor</code>
+(e.g. <code>style=&quot;--c-split-anchor: --sb-1;&quot;</code>) so popovers don’t all tether to
+the last toggle on the page. The default <code>--pl-split-anchor</code> works only for
+a single instance.</p>
+</blockquote>
+<h3 id="ssrcsp-safe-anchors">SSR/CSP-safe anchors</h3>
+<p>CSS Anchor Positioning requires <code>anchor-name</code> and <code>position-anchor</code> to resolve
+to a CSS custom identifier. Today that identifier cannot be read from an HTML
+attribute, so each simultaneously rendered split button still needs a unique
+CSS value as well as a unique <code>id</code> / <code>popovertarget</code> pair.</p>
+<p>If inline styles are awkward for a server-rendered or CSP-heavy app, generate a
+class and put the custom property in an app stylesheet or nonce-protected
+<code>&lt;style&gt;</code> block:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split request-actions-42&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button c-split__primary&quot;</span><span style="color:#B392F0"> data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;primary&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    Approve</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">button</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button c-split__toggle&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;primary&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    popovertarget</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;request-actions-42-menu&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-label</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;More request actions&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__chevron&quot;</span><span style="color:#B392F0"> viewBox</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;0 0 24 24&quot;</span><span style="color:#E1E4E8">&gt;...&lt;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> popover</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-split__menu&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;request-actions-42-menu&quot;</span><span style="color:#E1E4E8">&gt;...&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#B392F0">  .request-actions-42</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#FFAB70">    --c-split-anchor</span><span style="color:#E1E4E8">: --request-actions-42;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>For HTMX/server-rendered lists, a stable row/request id is a good suffix. If a
+page renders only one split button, you can omit the custom property and use the
+default anchor name.</p>
+<h2 id="tokens-exposed-component-local">Tokens exposed (component-local)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Token</th><th>Default</th><th>Purpose</th></tr></thead><tbody><tr><td><code>--c-split-anchor</code></td><td><code>--pl-split-anchor</code></td><td>CSS anchor name for the toggle (unique per instance).</td></tr><tr><td><code>--c-split-min-inline</code></td><td><code>10rem</code></td><td>Minimum menu width.</td></tr><tr><td><code>--c-split-max-block</code></td><td><code>20rem</code></td><td>Maximum menu height (scrolls if exceeded).</td></tr><tr><td><code>--c-split-divider</code></td><td><code>--pl-color-border</code></td><td>Divider color between segments (per-variant override).</td></tr></tbody></table>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li><strong>Keyboard:</strong> both segments are native <code>&lt;button&gt;</code> elements - Enter/Space
+activates them. The toggle uses <code>popovertarget</code> for zero-JS menu open. Menu
+items are buttons/links, so Tab/Shift+Tab navigates within the popover.</li>
+<li><strong>Toggle label:</strong> the toggle must carry an <code>aria-label</code> describing what the
+menu contains (e.g. <code>&quot;More save options&quot;</code>), since the icon alone is ambiguous.</li>
+<li><strong>Focus-visible:</strong> both segments inherit the base-layer focus outline; the
+primary variant also gets an accent glow.</li>
+<li><strong>Disabled:</strong> set <code>disabled</code> on both segments to disable the entire control.</li>
+<li><strong>Forced colors:</strong> falls back to <code>ButtonBorder</code> / <code>Highlight</code>.</li>
+</ul>
+<h2 id="theme-density-rtl-motion">Theme, density, RTL, motion</h2>
+<ul>
+<li><strong>Light/dark:</strong> segment fills resolve via <code>light-dark()</code>. The divider on
+filled variants uses a semi-transparent white rule (<code>oklch(100% 0 0deg / 20%)</code>)
+so it reads on both accent and dark fills.</li>
+<li><strong>Density:</strong> both segments inherit <code>--pl-control-block-size</code>; set
+<code>[data-density]</code> on an ancestor - no per-component work.</li>
+<li><strong>RTL:</strong> the flex container follows the writing mode; the divider and radius
+squaring flip automatically via logical properties (<code>border-inline-start</code>).</li>
+<li><strong>Reduced motion:</strong> the chevron rotation and menu transitions are zeroed by
+the themes layer’s motion guard (<code>--pl-motion-scale: 0</code>).</li>
+</ul> </article>  </div> </div>  </main> <footer class="site-footer"> <p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p> </footer> </body></html> 

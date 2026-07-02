@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/favicon.svg" type="image/svg+xml"><title>Browser Support · Porchlight</title><meta name="description" content="The feature matrix  -  what Porchlight requires, what degrades, and what is experimental."><meta name="generator" content="Astro v5.18.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><style>.prose{max-inline-size:none}.prose :where(h1){margin-block-end:var(--pl-space-5);font-size:var(--pl-text-xl);font-weight:700;line-height:var(--pl-leading-tight)}.prose :where(h2){margin-block:var(--pl-space-8) var(--pl-space-4);font-size:var(--pl-text-lg);font-weight:600;line-height:var(--pl-leading-tight)}.prose :where(h3){margin-block:var(--pl-space-6) var(--pl-space-3);font-size:var(--pl-text-md);font-weight:600}.prose :where(p){margin-block-end:var(--pl-space-4);line-height:1.7}.prose :where(ul,ol){margin-block-end:var(--pl-space-4);padding-inline-start:var(--pl-space-6);line-height:1.7}.prose :where(li){margin-block-end:var(--pl-space-2)}.prose :where(li)::marker{color:var(--pl-color-text-muted)}.prose :where(code){padding:.1em .25em;border-radius:var(--pl-radius-sm);background:var(--pl-color-surface-2);font-size:.85em;font-family:var(--pl-font-mono);overflow-wrap:break-word}.prose :where(pre){margin-block:var(--pl-space-5);padding:var(--pl-space-5);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);background:var(--pl-color-surface-2);overflow-x:auto;font-size:var(--pl-text-sm);line-height:1.6}.prose :where(pre) :where(code){padding:0;background:none;border:0;font-size:inherit;word-break:normal}.prose :where(table){inline-size:100%;border-collapse:collapse;margin-block:var(--pl-space-5)}.prose :where(th,td){padding:var(--pl-space-3) var(--pl-space-4);border-block-end:1px solid var(--pl-color-border);text-align:start;vertical-align:top}.prose :where(th){color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);font-weight:600}.prose :where(blockquote){margin-block:var(--pl-space-5);padding:var(--pl-space-4) var(--pl-space-5);border-inline-start:3px solid var(--pl-color-accent);background:var(--pl-color-surface-2);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted)}.prose :where(blockquote) :where(p:last-child){margin-block-end:0}.prose :where(a){color:var(--pl-color-accent);text-decoration:underline;text-underline-offset:.15em}.prose :where(a:hover){text-decoration-thickness:2px}.prose :where(hr){margin-block:var(--pl-space-8);border:0;border-block-start:1px solid var(--pl-color-border)}.prose :where(img){max-inline-size:100%;block-size:auto;border-radius:var(--pl-radius-lg)}
+</style>
+<link rel="stylesheet" href="/porchlight/_astro/_slug_.CpMPWiQn.css">
+<style>.docs-shell[data-astro-cid-mw7aashj]{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--pl-space-6);align-items:start;max-inline-size:80rem;margin-inline:auto;padding-inline:var(--doc-pad)}.docs-sidebar[data-astro-cid-mw7aashj]{position:sticky;inset-block-start:calc(2.75rem + 1px + var(--pl-space-4));max-block-size:calc(100vh - 5rem);overflow-y:auto;padding-block-end:var(--pl-space-4)}.docs-nav__section[data-astro-cid-mw7aashj]+.docs-nav__section[data-astro-cid-mw7aashj]{margin-block-start:var(--pl-space-5)}.docs-nav__heading[data-astro-cid-mw7aashj]{margin-block-end:var(--pl-space-2);padding-inline-start:var(--pl-space-3);font-size:var(--pl-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--pl-color-text-muted)}.docs-nav[data-astro-cid-mw7aashj] ul[data-astro-cid-mw7aashj]{margin:0;padding:0;list-style:none}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]{display:block;padding:var(--pl-space-1) var(--pl-space-3);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);text-decoration:none;line-height:1.4}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]:hover{background:color-mix(in oklab,var(--pl-color-accent),transparent 92%);color:var(--pl-color-text)}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj][aria-current=page]{background:color-mix(in oklab,var(--pl-color-accent),transparent 88%);color:var(--pl-color-accent);font-weight:600}.docs-content[data-astro-cid-mw7aashj]{padding-block:var(--pl-space-6) var(--pl-space-10);min-inline-size:0;max-inline-size:52rem}main:has(.docs-shell){inline-size:100%;max-inline-size:none;margin-inline:0;padding-block-start:var(--pl-space-5)}@media(width<48rem){.docs-shell[data-astro-cid-mw7aashj]{grid-template-columns:1fr}.docs-sidebar[data-astro-cid-mw7aashj]{position:relative;inset-block-start:0;max-block-size:none;border-block-end:1px solid var(--pl-color-border);padding-block-end:var(--pl-space-4)}}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <a class="site-header__brand" href="/porchlight/">Porchlight</a> <nav class="site-nav" aria-label="Primary"> <ul> <li> <a href="/porchlight/guides/getting-started" aria-current="page">Docs</a> </li><li> <a href="/porchlight/preview">Preview</a> </li><li> <a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a> </li> </ul> </nav> </header> <main id="main">  <div class="docs-shell" data-astro-cid-mw7aashj> <aside class="docs-sidebar" aria-label="Documentation navigation" data-astro-cid-mw7aashj> <nav class="docs-nav" data-astro-cid-mw7aashj> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Getting Started</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/guides/getting-started" data-astro-cid-mw7aashj> Getting Started </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/theming" data-astro-cid-mw7aashj> Theming </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/browser-support" aria-current="page" data-astro-cid-mw7aashj> Browser Support </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Foundations</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/guides/architecture" data-astro-cid-mw7aashj> Architecture &amp; layer model </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/layout" data-astro-cid-mw7aashj> Layout &amp; Page Building </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/composition-recipes" data-astro-cid-mw7aashj> Composition Recipes </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/utilities" data-astro-cid-mw7aashj> Utilities </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/guides/enhancements" data-astro-cid-mw7aashj> Enhancements </a> </li> <li data-astro-cid-mw7aashj> <a href="/porchlight/tokens" data-astro-cid-mw7aashj>Token reference</a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Components</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/components/accordion" data-astro-cid-mw7aashj> Accordion </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/alert" data-astro-cid-mw7aashj> Alert </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-process-builder" data-astro-cid-mw7aashj> App process builder </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/textarea-auto" data-astro-cid-mw7aashj> Auto-Growing Textarea </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/avatar" data-astro-cid-mw7aashj> Avatar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/badge" data-astro-cid-mw7aashj> Badge </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/breadcrumb" data-astro-cid-mw7aashj> Breadcrumb </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/button" data-astro-cid-mw7aashj> Button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/calendar" data-astro-cid-mw7aashj> Calendar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/card" data-astro-cid-mw7aashj> Card </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/chart" data-astro-cid-mw7aashj> Chart shell </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/chip" data-astro-cid-mw7aashj> Chip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/combobox" data-astro-cid-mw7aashj> Combobox </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/command-palette" data-astro-cid-mw7aashj> Command Palette </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-command-workspace" data-astro-cid-mw7aashj> Command-driven workspace </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/data-table" data-astro-cid-mw7aashj> Data table </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-dense" data-astro-cid-mw7aashj> Data-dense mode </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/description-list" data-astro-cid-mw7aashj> Description list </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/dialog" data-astro-cid-mw7aashj> Dialog </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/drawer" data-astro-cid-mw7aashj> Drawer </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/dropdown" data-astro-cid-mw7aashj> Dropdown </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/empty-state" data-astro-cid-mw7aashj> Empty state </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/field" data-astro-cid-mw7aashj> Field </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/file-upload" data-astro-cid-mw7aashj> File Upload </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/filter-builder" data-astro-cid-mw7aashj> Filter builder </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/form" data-astro-cid-mw7aashj> Form </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-list-detail" data-astro-cid-mw7aashj> List/detail workspace </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/nav" data-astro-cid-mw7aashj> Nav </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/page-header" data-astro-cid-mw7aashj> Page header </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/pagination" data-astro-cid-mw7aashj> Pagination </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/popover-menu" data-astro-cid-mw7aashj> Popover menu </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/progress" data-astro-cid-mw7aashj> Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-queue-triage" data-astro-cid-mw7aashj> Queue triage kit </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-reporting-dashboard" data-astro-cid-mw7aashj> Reporting dashboard </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/reveal" data-astro-cid-mw7aashj> Reveal </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/scroll-progress" data-astro-cid-mw7aashj> Scroll Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/segmented" data-astro-cid-mw7aashj> Segmented Control </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/app-settings-console" data-astro-cid-mw7aashj> Settings console </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/skeleton" data-astro-cid-mw7aashj> Skeleton </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/split-button" data-astro-cid-mw7aashj> Split button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/split-pane" data-astro-cid-mw7aashj> Split pane </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/stat" data-astro-cid-mw7aashj> Stat </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/stepper" data-astro-cid-mw7aashj> Stepper </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/switch" data-astro-cid-mw7aashj> Switch </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/tabs" data-astro-cid-mw7aashj> Tabs </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/tag-input" data-astro-cid-mw7aashj> Tag Input </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/timeline" data-astro-cid-mw7aashj> Timeline </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/toast" data-astro-cid-mw7aashj> Toast </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/toolbar" data-astro-cid-mw7aashj> Toolbar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/tooltip" data-astro-cid-mw7aashj> Tooltip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/tree" data-astro-cid-mw7aashj> Tree view </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/components/workflow-board" data-astro-cid-mw7aashj> Workflow board </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Examples</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/dashboard" data-astro-cid-mw7aashj>Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/settings" data-astro-cid-mw7aashj>Settings</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-dashboard" data-astro-cid-mw7aashj>SaaS Portal</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-siem" data-astro-cid-mw7aashj>Security SIEM</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-cases" data-astro-cid-mw7aashj>Case Review</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-inbox" data-astro-cid-mw7aashj>Inbox</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-list-detail" data-astro-cid-mw7aashj>List/Detail</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-queue-triage" data-astro-cid-mw7aashj>Queue Triage</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-process-builder" data-astro-cid-mw7aashj>Process Builder</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-settings-console" data-astro-cid-mw7aashj>Settings Console</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-reporting-dashboard" data-astro-cid-mw7aashj>Reporting Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-command-workspace" data-astro-cid-mw7aashj>Command Workspace</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-marketing" data-astro-cid-mw7aashj>Marketing Page</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/preview/app-shell" data-astro-cid-mw7aashj>App Shell</a></li> </ul> </div> </nav> </aside> <div class="docs-content" data-astro-cid-mw7aashj>  <article class="prose"> <h1 id="browser-support">Browser Support</h1>
+<p>Porchlight is a <strong>modern CSS-first framework</strong>. It does not polyfill old
+browsers. Instead, it uses a tiered strategy: required features for the
+core, progressive enhancement for newer capabilities, and <code>@supports</code>
+gating for experimental ones.</p>
+<h2 id="support-matrix">Support matrix</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tier</th><th>Meaning</th><th>Strategy</th></tr></thead><tbody><tr><td><strong>Required</strong></td><td>The framework assumes this works.</td><td>No fallback. Breaks gracefully if unsupported (styles won’t apply).</td></tr><tr><td><strong>Baseline-modern</strong></td><td>Safe in all current-generation browsers (Baseline 2025).</td><td>Used directly. Part of the framework’s baseline.</td></tr><tr><td><strong>Progressive enhancement</strong></td><td>Works without it, improves with it.</td><td><code>@supports</code>-gated. Component degrades to a simpler but fully functional state.</td></tr><tr><td><strong>Experimental</strong></td><td>Demo-quality, not production-ready everywhere.</td><td><code>@supports</code>-gated with obvious fallback (static layout).</td></tr></tbody></table>
+<h2 id="required-features">Required features</h2>
+<p>These are foundational CSS capabilities that are in the
+<a href="https://www.w3.org/TR/css-2026/">CSS Snapshot 2026</a> Official Definition.
+Any browser from 2024+ supports all of them:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>Baseline</th><th>CSS-2026</th><th>Used for</th></tr></thead><tbody><tr><td>Cascade layers (<code>@layer</code>)</td><td>2024</td><td>✅ <code>css-cascade-5</code></td><td>The entire framework architecture</td></tr><tr><td>Custom properties (<code>--var</code>)</td><td>2023</td><td>✅ <code>css-variables-1</code></td><td>All tokens</td></tr><tr><td><code>:has()</code>, <code>:is()</code>, <code>:where()</code></td><td>2024</td><td>✅ <code>selectors-4</code></td><td>Selectors throughout</td></tr><tr><td><code>oklch()</code> color</td><td>2023</td><td>✅ <code>css-color-4</code></td><td>All color tokens</td></tr><tr><td>Logical properties (<code>inline-size</code>, <code>block-start</code>, etc.)</td><td>2023</td><td>✅ <code>css-logical-1</code></td><td>RTL-aware layout</td></tr><tr><td>CSS nesting</td><td>2024</td><td>✅ <code>css-nesting-1</code></td><td>Source authoring</td></tr></tbody></table>
+<h2 id="baseline-modern-features">Baseline-modern features</h2>
+<p>These are safe to use in production as of mid-2026. All major browsers
+(Chrome, Edge, Firefox, Safari) support them:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>Baseline</th><th>CSS-2026</th><th>Used for</th></tr></thead><tbody><tr><td><code>@scope</code></td><td>2025</td><td>⚠️ <code>css-cascade-6</code> (pre-snapshot)</td><td>All components (scoped styles without BEM)</td></tr><tr><td><code>light-dark()</code></td><td>2024</td><td>✅ <code>css-color-adjust-1</code></td><td>Automatic light/dark color pairs</td></tr><tr><td><code>color-mix()</code></td><td>2024</td><td>✅ <code>css-color-5</code></td><td>Derived tints (alert backgrounds, hover states)</td></tr><tr><td>Popover API (<code>popover</code> attribute)</td><td>2024</td><td>HTML spec</td><td><code>c-menu</code> (popover-menu) component</td></tr><tr><td><code>@starting-style</code></td><td>2024</td><td>✅ <code>css-transitions-1</code></td><td>Dialog and popover enter animations</td></tr><tr><td><code>transition-behavior: allow-discrete</code></td><td>2024</td><td>✅ <code>css-transitions-1</code></td><td>Exit animations on <code>display: none</code> elements</td></tr><tr><td><code>:user-invalid</code> / <code>:user-valid</code></td><td>2024</td><td>✅ <code>selectors-4</code></td><td><code>c-field</code> validation states</td></tr><tr><td><code>text-wrap: balance</code> / <code>pretty</code></td><td>2024</td><td>✅ <code>css-text-4</code></td><td>Heading and paragraph typography</td></tr><tr><td>Container queries (<code>@container</code>)</td><td>2023</td><td>✅ <code>css-contain-2</code></td><td>Card, data-table responsive behavior</td></tr><tr><td><code>prefers-contrast</code></td><td>2022</td><td>✅ <code>mediaqueries-5</code></td><td>Stronger boundaries and focus affordances</td></tr><tr><td><code>@property</code> (Houdini)</td><td>2024</td><td>⚠️ pre-snapshot</td><td>Token type registration (<code>--pl-motion-scale</code>, etc.)</td></tr></tbody></table>
+<h2 id="progressive-enhancement-features">Progressive enhancement features</h2>
+<p>These features are gated behind <code>@supports</code>. The framework works perfectly
+without them; they add polish where supported:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>Baseline</th><th>CSS-2026</th><th>Enhancement</th><th>Fallback</th></tr></thead><tbody><tr><td>Anchor Positioning (<code>anchor-name</code>, <code>position-anchor</code>)</td><td>2025</td><td>⚠️ pre-snapshot</td><td><code>c-menu</code> popover is tethered to its trigger</td><td>Popover appears centered (UA default)</td></tr><tr><td>CSS Gap Decorations (<code>rule</code>, <code>rule-visibility-items</code>)</td><td>2026</td><td>⚠️ pre-snapshot</td><td>Grid dividers via <code>data-dividers</code></td><td>Normal grid gap (no divider line)</td></tr><tr><td><code>text-box: trim-both</code></td><td>2025</td><td>✅ <code>css-inline-3</code></td><td>Optically-centered button/badge labels</td><td>Standard half-leading (1px visual offset)</td></tr><tr><td>Typed <code>attr()</code> (<code>attr(data-x type(&lt;color&gt;))</code></td><td>2026</td><td>⚠️ pre-snapshot</td><td><code>c-swatch</code> reads color from <code>data-color</code></td><td>Inline <code>style</code> attribute</td></tr><tr><td>View Transitions</td><td>2025</td><td>✅ <code>css-view-transitions-1</code></td><td>Smooth cross-page fades on docs site</td><td>Hard page reload</td></tr></tbody></table>
+<h2 id="experimental-features">Experimental features</h2>
+<p>These are not yet Baseline across all browsers. They are <code>@supports</code>-gated
+and degrade to a static but functional state. Note that several are in the
+CSS-2026 Official Definition (their <em>specification</em> is stable) even though
+<em>implementation</em> is still rolling out:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>Chrome</th><th>CSS-2026</th><th>Enhancement</th><th>Fallback</th></tr></thead><tbody><tr><td><code>interpolate-size: allow-keywords</code></td><td>149</td><td>✅ <code>css-sizing-4</code></td><td>Smooth <code>height: auto</code> animations</td><td><code>grid-template-rows: 0fr -&gt; 1fr</code> technique</td></tr><tr><td>Scroll-driven animations (<code>animation-timeline: scroll()</code>)</td><td>149</td><td>⚠️ pre-snapshot</td><td>Scroll-progress bar fills as you scroll</td><td>Bar hidden (no false progress)</td></tr><tr><td>Scroll-driven animations (<code>animation-timeline: view()</code>)</td><td>149</td><td>⚠️ pre-snapshot</td><td>Elements fade in on scroll</td><td>Elements always visible</td></tr><tr><td><code>field-sizing: content</code></td><td>123</td><td>✅ <code>css-ui-4</code> / <code>css-sizing-4</code></td><td>Textarea grows to fit content</td><td>Fixed height</td></tr></tbody></table>
+<blockquote>
+<p><strong>Note on <code>@property</code>-registered <code>contrast-color()</code>:</strong> While
+<code>contrast-color()</code> became Baseline in April 2026, MDN warns that
+mid-tone backgrounds can produce unexpected results. Porchlight keeps
+explicit paired tokens (<code>--pl-color-accent</code> / <code>--pl-color-accent-text</code>)
+with WCAG-AA verified contrast, and validates them in the deterministic
+contrast test suite.</p>
+</blockquote>
+<h2 id="css-snapshot-2026-status">CSS Snapshot 2026 status</h2>
+<p>The <a href="https://www.w3.org/TR/css-2026/">CSS Snapshot 2026</a> defines what the
+CSS Working Group considers the “Official Definition” of CSS. Features
+marked ✅ above are in the snapshot; those marked ⚠️ are beyond it
+(pre-snapshot or in an earlier stability tier). This does not mean the
+⚠️ features are unstable — <code>@scope</code> and <code>@property</code> have shipped in all
+major browsers — just that their specifications haven’t reached the W3C
+Candidate Recommendation stage required for inclusion in the snapshot.</p>
+<p>Porchlight targets Chrome 149+ and is tested with Playwright, so it can
+use features that are stable in browsers even if their specs are still
+maturing through the W3C process.</p>
+<h2 id="how-degradation-works">How degradation works</h2>
+<p>Every <code>@supports</code> gate follows the same pattern:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#6A737D">/* Base: always applies */</span></span>
+<span class="line"><span style="color:#B392F0">.c-thing</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">  /* functional styles */</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/* Enhancement: only where supported */</span></span>
+<span class="line"><span style="color:#F97583">@supports</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">feature</span><span style="color:#E1E4E8">: value) {</span></span>
+<span class="line"><span style="color:#B392F0">  .c-thing</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    /* progressive polish */</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>The base styles are always sufficient. The <code>@supports</code> block adds a
+capability that improves the experience but is not required for
+functionality.</p>
+<h2 id="testing">Testing</h2>
+<p>Porchlight’s test suite includes:</p>
+<ul>
+<li><strong>213 Playwright tests</strong> across 17 spec files</li>
+<li><strong>Contrast tests</strong> that compute WCAG ratios from OKLCH values (not
+axe-core, which cannot parse OKLCH computed colors as of v4.12)</li>
+<li><strong>Accessibility-mode tests</strong> for RTL, forced-colors, prefers-contrast,
+reduced-motion, and 200% zoom</li>
+<li><strong>Smoke tests</strong> for every preview and docs page</li>
+</ul> </article>  </div> </div>  </main> <footer class="site-footer"> <p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p> </footer> </body></html> 

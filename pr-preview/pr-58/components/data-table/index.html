@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/pr-preview/pr-58/favicon.svg" type="image/svg+xml"><title>Data table · Porchlight</title><meta name="description" content="Enterprise data table with sortable headers, row selection, expandable rows, sticky column, density modes, and loading states."><meta name="generator" content="Astro v5.18.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/pr-preview/pr-58/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><style>.prose{max-inline-size:none}.prose :where(h1){margin-block-end:var(--pl-space-5);font-size:var(--pl-text-xl);font-weight:700;line-height:var(--pl-leading-tight)}.prose :where(h2){margin-block:var(--pl-space-8) var(--pl-space-4);font-size:var(--pl-text-lg);font-weight:600;line-height:var(--pl-leading-tight)}.prose :where(h3){margin-block:var(--pl-space-6) var(--pl-space-3);font-size:var(--pl-text-md);font-weight:600}.prose :where(p){margin-block-end:var(--pl-space-4);line-height:1.7}.prose :where(ul,ol){margin-block-end:var(--pl-space-4);padding-inline-start:var(--pl-space-6);line-height:1.7}.prose :where(li){margin-block-end:var(--pl-space-2)}.prose :where(li)::marker{color:var(--pl-color-text-muted)}.prose :where(code){padding:.1em .25em;border-radius:var(--pl-radius-sm);background:var(--pl-color-surface-2);font-size:.85em;font-family:var(--pl-font-mono);word-break:break-word}.prose :where(pre){margin-block:var(--pl-space-5);padding:var(--pl-space-5);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);background:var(--pl-color-surface-2);overflow-x:auto;font-size:var(--pl-text-sm);line-height:1.6}.prose :where(pre) :where(code){padding:0;background:none;border:0;font-size:inherit;word-break:normal}.prose :where(table){inline-size:100%;border-collapse:collapse;margin-block:var(--pl-space-5)}.prose :where(th,td){padding:var(--pl-space-3) var(--pl-space-4);border-block-end:1px solid var(--pl-color-border);text-align:start;vertical-align:top}.prose :where(th){color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);font-weight:600}.prose :where(blockquote){margin-block:var(--pl-space-5);padding:var(--pl-space-4) var(--pl-space-5);border-inline-start:3px solid var(--pl-color-accent);background:var(--pl-color-surface-2);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted)}.prose :where(blockquote) :where(p:last-child){margin-block-end:0}.prose :where(a){color:var(--pl-color-accent);text-decoration:underline;text-underline-offset:.15em}.prose :where(a:hover){text-decoration-thickness:2px}.prose :where(hr){margin-block:var(--pl-space-8);border:0;border-block-start:1px solid var(--pl-color-border)}.prose :where(img){max-inline-size:100%;block-size:auto;border-radius:var(--pl-radius-lg)}
+</style>
+<link rel="stylesheet" href="/porchlight/pr-preview/pr-58/_astro/_slug_.DO06jBT7.css">
+<style>.docs-shell[data-astro-cid-mw7aashj]{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--pl-space-6);align-items:start;max-inline-size:80rem;margin-inline:auto;padding-inline:var(--doc-pad)}.docs-sidebar[data-astro-cid-mw7aashj]{position:sticky;inset-block-start:calc(2.75rem + 1px + var(--pl-space-4));max-block-size:calc(100vh - 5rem);overflow-y:auto;padding-block-end:var(--pl-space-4)}.docs-nav__section[data-astro-cid-mw7aashj]+.docs-nav__section[data-astro-cid-mw7aashj]{margin-block-start:var(--pl-space-5)}.docs-nav__heading[data-astro-cid-mw7aashj]{margin-block-end:var(--pl-space-2);padding-inline-start:var(--pl-space-3);font-size:var(--pl-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--pl-color-text-muted)}.docs-nav[data-astro-cid-mw7aashj] ul[data-astro-cid-mw7aashj]{margin:0;padding:0;list-style:none}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]{display:block;padding:var(--pl-space-1) var(--pl-space-3);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);text-decoration:none;line-height:1.4}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]:hover{background:color-mix(in oklab,var(--pl-color-accent),transparent 92%);color:var(--pl-color-text)}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj][aria-current=page]{background:color-mix(in oklab,var(--pl-color-accent),transparent 88%);color:var(--pl-color-accent);font-weight:600}.docs-content[data-astro-cid-mw7aashj]{padding-block:var(--pl-space-6) var(--pl-space-10);min-inline-size:0;max-inline-size:52rem}main:has(.docs-shell){inline-size:100%;max-inline-size:none;margin-inline:0;padding-block-start:var(--pl-space-5)}@media(width<48rem){.docs-shell[data-astro-cid-mw7aashj]{grid-template-columns:1fr}.docs-sidebar[data-astro-cid-mw7aashj]{position:relative;inset-block-start:0;max-block-size:none;border-block-end:1px solid var(--pl-color-border);padding-block-end:var(--pl-space-4)}}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <a class="site-header__brand" href="/porchlight/pr-preview/pr-58/">Porchlight</a> <nav class="site-nav" aria-label="Primary"> <ul> <li> <a href="/porchlight/pr-preview/pr-58/guides/getting-started" aria-current="page">Docs</a> </li><li> <a href="/porchlight/pr-preview/pr-58/preview">Preview</a> </li><li> <a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a> </li> </ul> </nav> </header> <main id="main">  <div class="docs-shell" data-astro-cid-mw7aashj> <aside class="docs-sidebar" aria-label="Documentation navigation" data-astro-cid-mw7aashj> <nav class="docs-nav" data-astro-cid-mw7aashj> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Getting Started</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/getting-started" data-astro-cid-mw7aashj> Getting Started </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/theming" data-astro-cid-mw7aashj> Theming </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/browser-support" data-astro-cid-mw7aashj> Browser Support </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Foundations</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/architecture" data-astro-cid-mw7aashj> Architecture &amp; layer model </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/layout" data-astro-cid-mw7aashj> Layout &amp; Page Building </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/utilities" data-astro-cid-mw7aashj> Utilities </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/guides/enhancements" data-astro-cid-mw7aashj> Enhancements </a> </li> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/tokens" data-astro-cid-mw7aashj>Token reference</a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Components</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/accordion" data-astro-cid-mw7aashj> Accordion </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/alert" data-astro-cid-mw7aashj> Alert </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/textarea-auto" data-astro-cid-mw7aashj> Auto-Growing Textarea </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/avatar" data-astro-cid-mw7aashj> Avatar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/badge" data-astro-cid-mw7aashj> Badge </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/breadcrumb" data-astro-cid-mw7aashj> Breadcrumb </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/button" data-astro-cid-mw7aashj> Button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/card" data-astro-cid-mw7aashj> Card </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/chip" data-astro-cid-mw7aashj> Chip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/command-palette" data-astro-cid-mw7aashj> Command Palette </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/data-table" aria-current="page" data-astro-cid-mw7aashj> Data table </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/app-dense" data-astro-cid-mw7aashj> Data-dense mode </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/description-list" data-astro-cid-mw7aashj> Description list </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/dialog" data-astro-cid-mw7aashj> Dialog </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/drawer" data-astro-cid-mw7aashj> Drawer </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/dropdown" data-astro-cid-mw7aashj> Dropdown </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/empty-state" data-astro-cid-mw7aashj> Empty state </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/field" data-astro-cid-mw7aashj> Field </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/file-upload" data-astro-cid-mw7aashj> File Upload </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/nav" data-astro-cid-mw7aashj> Nav </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/page-header" data-astro-cid-mw7aashj> Page header </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/pagination" data-astro-cid-mw7aashj> Pagination </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/popover-menu" data-astro-cid-mw7aashj> Popover menu </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/progress" data-astro-cid-mw7aashj> Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/reveal" data-astro-cid-mw7aashj> Reveal </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/scroll-progress" data-astro-cid-mw7aashj> Scroll Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/segmented" data-astro-cid-mw7aashj> Segmented Control </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/skeleton" data-astro-cid-mw7aashj> Skeleton </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/split-button" data-astro-cid-mw7aashj> Split button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/stat" data-astro-cid-mw7aashj> Stat </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/stepper" data-astro-cid-mw7aashj> Stepper </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/switch" data-astro-cid-mw7aashj> Switch </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/tabs" data-astro-cid-mw7aashj> Tabs </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/tag-input" data-astro-cid-mw7aashj> Tag Input </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/timeline" data-astro-cid-mw7aashj> Timeline </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/toast" data-astro-cid-mw7aashj> Toast </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/toolbar" data-astro-cid-mw7aashj> Toolbar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-58/components/tooltip" data-astro-cid-mw7aashj> Tooltip </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Examples</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/dashboard" data-astro-cid-mw7aashj>Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/settings" data-astro-cid-mw7aashj>Settings</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-dashboard" data-astro-cid-mw7aashj>SaaS Portal</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-siem" data-astro-cid-mw7aashj>Security SIEM</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-cases" data-astro-cid-mw7aashj>Case Review</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-inbox" data-astro-cid-mw7aashj>Inbox</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-marketing" data-astro-cid-mw7aashj>Marketing Page</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-58/preview/app-shell" data-astro-cid-mw7aashj>App Shell</a></li> </ul> </div> </nav> </aside> <div class="docs-content" data-astro-cid-mw7aashj>  <article class="prose"> <a href="/porchlight/pr-preview/pr-58/preview/data-table" class="c-button" data-variant="secondary" style="float: right; margin-block-start: 0.25rem;">View live preview</a> <h1 id="data-table">Data table</h1>
+<p>The <code>.c-table-wrap</code> + <code>.c-table</code> pair is an enterprise data table: sticky
+headers, horizontal scroll with a stable scrollbar gutter, container-query
+padding, sortable columns, row selection, expandable detail rows, sticky
+first column, density modes, and loading states.</p>
+<h2 id="semantic-html">Semantic HTML</h2>
+<h3 id="basic-table">Basic table</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table-wrap&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">table</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">thead</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        &lt;</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;Account&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        &lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> data-align</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;end&quot;</span><span style="color:#E1E4E8">&gt;MRR&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">thead</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">tr</span><span style="color:#B392F0"> aria-selected</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;Acme Ops&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        &lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> data-align</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;end&quot;</span><span style="color:#E1E4E8">&gt;$2,400&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">table</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="sortable-headers">Sortable headers</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> data-sort</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;asc&quot;</span><span style="color:#E1E4E8">&gt;Name &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__sort-icon&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> data-sort</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;desc&quot;</span><span style="color:#E1E4E8">&gt;Created &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__sort-icon&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;Tags&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#6A737D">&lt;!-- no data-sort = unsortable --&gt;</span></span></code></pre>
+<p>Toggle <code>data-sort</code> between <code>&quot;asc&quot;</code> and <code>&quot;desc&quot;</code> via JS. CSS renders the arrow.</p>
+<h3 id="row-selection-checkbox-column">Row selection (checkbox column)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">thead</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__check&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">input</span><span style="color:#B392F0"> type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;checkbox&quot;</span><span style="color:#B392F0"> aria-label</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Select all&quot;</span><span style="color:#E1E4E8"> /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;Account&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">thead</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">tr</span><span style="color:#B392F0"> aria-selected</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__check&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">input</span><span style="color:#B392F0"> type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;checkbox&quot;</span><span style="color:#B392F0"> checked</span><span style="color:#B392F0"> aria-label</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Select row&quot;</span><span style="color:#E1E4E8"> /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;Acme Ops&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="expandable-detail-rows">Expandable detail rows</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;...&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__expand&quot;</span><span style="color:#B392F0"> aria-expanded</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;false&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> viewBox</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;0 0 24 24&quot;</span><span style="color:#E1E4E8">&gt;&lt;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> d</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;m6 9 6 6 6-6&quot;</span><span style="color:#E1E4E8"> /&gt;&lt;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">tr</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__detail&quot;</span><span style="color:#B392F0"> open</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> colspan</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;99&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__detail-inner&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__detail-content&quot;</span><span style="color:#E1E4E8">&gt;Detail content&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Toggle the <code>open</code> attribute on <code>.c-table__detail</code> and <code>aria-expanded</code> on the
+button via JS. CSS handles the animated expand/collapse.</p>
+<h3 id="sticky-first-column">Sticky first column</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__sticky-col&quot;</span><span style="color:#E1E4E8">&gt;Account&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">...</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table__sticky-col&quot;</span><span style="color:#E1E4E8">&gt;Acme Corp&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="density-modes">Density modes</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table-wrap&quot;</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;compact&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#6A737D">  &lt;!-- tighter row padding for high information density --&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="loading-state">Loading state</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">tbody</span><span style="color:#B392F0"> data-loading</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;&lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-skeleton&quot;</span><span style="color:#B392F0"> data-shape</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;text&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;&lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-skeleton&quot;</span><span style="color:#B392F0"> data-shape</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;text&quot;</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p><code>[data-loading]</code> on <code>&lt;tbody&gt;</code> suppresses hover effects.</p>
+<h2 id="density-and-row-height">Density and row height</h2>
+<p>Row height is <strong>derived</strong> from the global <code>--pl-control-block-size</code> token:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#E1E4E8">--c-table-row-min-block-size: calc(var(--pl-control-block-size) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> 0</span><span style="color:#B392F0">.5rem</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>This means setting <code>data-density=&quot;compact&quot;</code> on <code>&lt;body&gt;</code> (or any ancestor)
+automatically shrinks table rows, buttons, and inputs together. You no
+longer need to set density separately on each <code>.c-table-wrap</code>.</p>
+<p>For table-specific compact density (tighter cell padding + a smaller row
+height offset), set <code>data-density=&quot;compact&quot;</code> on <code>.c-table-wrap</code> directly:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-table-wrap&quot;</span><span style="color:#B392F0"> data-density</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;compact&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#6A737D">  &lt;!-- cell padding tightened + row height offset reduced to +0.25rem --&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="row-selection">Row selection</h2>
+<p>Apply <code>aria-selected=&quot;true&quot;</code> on <code>&lt;tr&gt;</code> for selected rows — Porchlight styles
+these with an accent-tinted background and a left accent bar. This is the
+semantically correct pattern for keyboard-navigable row selection:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">tr</span><span style="color:#B392F0"> aria-selected</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;…&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;…&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">tr</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">tbody</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>No custom <code>.is-selected</code> class is needed — <code>aria-selected</code> is built in.</p>
+<h2 id="responsive-columns">Responsive columns</h2>
+<p>When a table overflows on narrow containers, hide non-essential columns via
+a container query on the table wrapper (it is already a query container):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> app {</span></span>
+<span class="line"><span style="color:#F97583">  @container</span><span style="color:#E1E4E8"> c-table-wrap (inline-size &lt; 50rem) {</span></span>
+<span class="line"><span style="color:#B392F0">    .col-optional</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#79B8FF">      display</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">none</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">th</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;col-optional&quot;</span><span style="color:#E1E4E8">&gt;Last seen&lt;/</span><span style="color:#85E89D">th</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;col-optional&quot;</span><span style="color:#E1E4E8">&gt;2h ago&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>For cell content that should truncate instead of wrapping, apply the
+built-in <code>.u-truncate</code> utility class:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">td</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;u-truncate&quot;</span><span style="color:#B392F0"> style</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;max-inline-size: 12rem;&quot;</span><span style="color:#E1E4E8">&gt;Very long email address…&lt;/</span><span style="color:#85E89D">td</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="class-contract">Class contract</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Selector</th><th>Role</th></tr></thead><tbody><tr><td><code>.c-table-wrap</code></td><td>Scroll + query container (bordered, rounded).</td></tr><tr><td><code>.c-table</code></td><td>The native <code>&lt;table&gt;</code>.</td></tr><tr><td><code>th</code>, <code>td</code></td><td>Cells (styled via descendant selectors).</td></tr><tr><td><code>[data-align=&quot;end&quot;]</code></td><td>Right-align + <code>tabular-nums</code> for numeric columns.</td></tr><tr><td><code>[data-align=&quot;center&quot;]</code></td><td>Center-align.</td></tr><tr><td><code>tbody tr:hover</code></td><td>Row hover wash (scanning aid).</td></tr><tr><td><code>tbody tr[aria-selected=&quot;true&quot;]</code></td><td>Selected row (accent wash).</td></tr><tr><td><code>th[data-sort]</code></td><td>Sortable header (cursor + hover).</td></tr><tr><td><code>th[data-sort=&quot;asc&quot;|&quot;desc&quot;]</code></td><td>Shows up/down arrow via <code>.c-table__sort-icon</code>.</td></tr><tr><td><code>.c-table__sort-icon</code></td><td>Pure-CSS triangle arrow inside sortable <code>&lt;th&gt;</code>.</td></tr><tr><td><code>.c-table__check</code></td><td>Narrow centered cell for checkboxes.</td></tr><tr><td><code>.c-table__detail</code></td><td>Expandable detail row (collapsed by default).</td></tr><tr><td><code>.c-table__detail[open]</code></td><td>Expanded detail row.</td></tr><tr><td><code>.c-table__detail-inner</code></td><td>Animated wrapper (grid-rows technique).</td></tr><tr><td><code>.c-table__detail-content</code></td><td>Inner content (padding + overflow).</td></tr><tr><td><code>.c-table__expand</code></td><td>Expand/collapse toggle button (chevron).</td></tr><tr><td><code>.c-table__sticky-col</code></td><td>Sticky first column (pinned during scroll).</td></tr><tr><td><code>[data-density=&quot;compact&quot;]</code></td><td>Tighter row padding on <code>.c-table-wrap</code>.</td></tr><tr><td><code>tbody[data-loading]</code></td><td>Suppresses hover during loading state.</td></tr></tbody></table>
+<h2 id="tokens-exposed">Tokens exposed</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Token</th><th>Default</th><th>Purpose</th></tr></thead><tbody><tr><td><code>--c-table-min</code></td><td><code>48rem</code></td><td>Min table width (drives horizontal scroll).</td></tr><tr><td><code>--c-table-cell-pad</code></td><td><code>var(--pl-space-3) var(--pl-space-4)</code></td><td>Cell padding (overridden by density).</td></tr><tr><td><code>--c-table-row-min-block-size</code></td><td><code>calc(var(--pl-control-block-size) + 0.5rem)</code></td><td>Row height (derived from global control token).</td></tr><tr><td><code>--c-table-radius</code></td><td><code>var(--pl-radius-xl)</code></td><td>Corner radius (exposed for cell corner inheritance).</td></tr></tbody></table> </article>  </div> </div>  </main> <footer class="site-footer"> <p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p> </footer> </body></html> 

@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/pr-preview/pr-74/favicon.svg" type="image/svg+xml"><title>Button · Porchlight</title><meta name="description" content="The canonical action control  -  native button, token-driven, with primary/secondary/ghost variants."><meta name="generator" content="Astro v5.18.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/pr-preview/pr-74/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js"></script><style>.prose{max-inline-size:none}.prose :where(h1){margin-block-end:var(--pl-space-5);font-size:var(--pl-text-xl);font-weight:700;line-height:var(--pl-leading-tight)}.prose :where(h2){margin-block:var(--pl-space-8) var(--pl-space-4);font-size:var(--pl-text-lg);font-weight:600;line-height:var(--pl-leading-tight)}.prose :where(h3){margin-block:var(--pl-space-6) var(--pl-space-3);font-size:var(--pl-text-md);font-weight:600}.prose :where(p){margin-block-end:var(--pl-space-4);line-height:1.7}.prose :where(ul,ol){margin-block-end:var(--pl-space-4);padding-inline-start:var(--pl-space-6);line-height:1.7}.prose :where(li){margin-block-end:var(--pl-space-2)}.prose :where(li)::marker{color:var(--pl-color-text-muted)}.prose :where(code){padding:.1em .25em;border-radius:var(--pl-radius-sm);background:var(--pl-color-surface-2);font-size:.85em;font-family:var(--pl-font-mono);word-break:break-word}.prose :where(pre){margin-block:var(--pl-space-5);padding:var(--pl-space-5);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);background:var(--pl-color-surface-2);overflow-x:auto;font-size:var(--pl-text-sm);line-height:1.6}.prose :where(pre) :where(code){padding:0;background:none;border:0;font-size:inherit;word-break:normal}.prose :where(table){inline-size:100%;border-collapse:collapse;margin-block:var(--pl-space-5)}.prose :where(th,td){padding:var(--pl-space-3) var(--pl-space-4);border-block-end:1px solid var(--pl-color-border);text-align:start;vertical-align:top}.prose :where(th){color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);font-weight:600}.prose :where(blockquote){margin-block:var(--pl-space-5);padding:var(--pl-space-4) var(--pl-space-5);border-inline-start:3px solid var(--pl-color-accent);background:var(--pl-color-surface-2);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted)}.prose :where(blockquote) :where(p:last-child){margin-block-end:0}.prose :where(a){color:var(--pl-color-accent);text-decoration:underline;text-underline-offset:.15em}.prose :where(a:hover){text-decoration-thickness:2px}.prose :where(hr){margin-block:var(--pl-space-8);border:0;border-block-start:1px solid var(--pl-color-border)}.prose :where(img){max-inline-size:100%;block-size:auto;border-radius:var(--pl-radius-lg)}
+</style>
+<link rel="stylesheet" href="/porchlight/pr-preview/pr-74/_astro/_slug_.DnCX5PDu.css">
+<style>.docs-shell[data-astro-cid-mw7aashj]{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--pl-space-6);align-items:start;max-inline-size:80rem;margin-inline:auto;padding-inline:var(--doc-pad)}.docs-sidebar[data-astro-cid-mw7aashj]{position:sticky;inset-block-start:calc(2.75rem + 1px + var(--pl-space-4));max-block-size:calc(100vh - 5rem);overflow-y:auto;padding-block-end:var(--pl-space-4)}.docs-nav__section[data-astro-cid-mw7aashj]+.docs-nav__section[data-astro-cid-mw7aashj]{margin-block-start:var(--pl-space-5)}.docs-nav__heading[data-astro-cid-mw7aashj]{margin-block-end:var(--pl-space-2);padding-inline-start:var(--pl-space-3);font-size:var(--pl-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--pl-color-text-muted)}.docs-nav[data-astro-cid-mw7aashj] ul[data-astro-cid-mw7aashj]{margin:0;padding:0;list-style:none}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]{display:block;padding:var(--pl-space-1) var(--pl-space-3);border-radius:var(--pl-radius-md);color:var(--pl-color-text-muted);font-size:var(--pl-text-sm);text-decoration:none;line-height:1.4}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj]:hover{background:color-mix(in oklab,var(--pl-color-accent),transparent 92%);color:var(--pl-color-text)}.docs-nav[data-astro-cid-mw7aashj] a[data-astro-cid-mw7aashj][aria-current=page]{background:color-mix(in oklab,var(--pl-color-accent),transparent 88%);color:var(--pl-color-accent);font-weight:600}.docs-content[data-astro-cid-mw7aashj]{padding-block:var(--pl-space-6) var(--pl-space-10);min-inline-size:0;max-inline-size:52rem}main:has(.docs-shell){inline-size:100%;max-inline-size:none;margin-inline:0;padding-block-start:var(--pl-space-5)}@media(width<48rem){.docs-shell[data-astro-cid-mw7aashj]{grid-template-columns:1fr}.docs-sidebar[data-astro-cid-mw7aashj]{position:relative;inset-block-start:0;max-block-size:none;border-block-end:1px solid var(--pl-color-border);padding-block-end:var(--pl-space-4)}}
+</style><style>.demo[data-astro-cid-4ya5shnz]{padding:var(--pl-space-5);margin-block:var(--pl-space-4);background:var(--pl-color-surface);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg)}
+</style></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <a class="site-header__brand" href="/porchlight/pr-preview/pr-74/">Porchlight</a> <nav class="site-nav" aria-label="Primary"> <ul> <li> <a href="/porchlight/pr-preview/pr-74/guides/getting-started" aria-current="page">Docs</a> </li><li> <a href="/porchlight/pr-preview/pr-74/preview">Preview</a> </li><li> <a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a> </li> </ul> </nav> </header> <main id="main">  <div class="docs-shell" data-astro-cid-mw7aashj> <aside class="docs-sidebar" aria-label="Documentation navigation" data-astro-cid-mw7aashj> <nav class="docs-nav" data-astro-cid-mw7aashj> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Getting Started</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/getting-started" data-astro-cid-mw7aashj> Getting Started </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/theming" data-astro-cid-mw7aashj> Theming </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/browser-support" data-astro-cid-mw7aashj> Browser Support </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Foundations</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/architecture" data-astro-cid-mw7aashj> Architecture &amp; layer model </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/layout" data-astro-cid-mw7aashj> Layout &amp; Page Building </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/composition-recipes" data-astro-cid-mw7aashj> Composition Recipes </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/utilities" data-astro-cid-mw7aashj> Utilities </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/guides/enhancements" data-astro-cid-mw7aashj> Enhancements </a> </li> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/tokens" data-astro-cid-mw7aashj>Token reference</a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Components</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/accordion" data-astro-cid-mw7aashj> Accordion </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/alert" data-astro-cid-mw7aashj> Alert </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/textarea-auto" data-astro-cid-mw7aashj> Auto-Growing Textarea </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/avatar" data-astro-cid-mw7aashj> Avatar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/badge" data-astro-cid-mw7aashj> Badge </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/breadcrumb" data-astro-cid-mw7aashj> Breadcrumb </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/button" aria-current="page" data-astro-cid-mw7aashj> Button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/card" data-astro-cid-mw7aashj> Card </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/chip" data-astro-cid-mw7aashj> Chip </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/command-palette" data-astro-cid-mw7aashj> Command Palette </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/data-table" data-astro-cid-mw7aashj> Data table </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/app-dense" data-astro-cid-mw7aashj> Data-dense mode </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/description-list" data-astro-cid-mw7aashj> Description list </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/dialog" data-astro-cid-mw7aashj> Dialog </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/drawer" data-astro-cid-mw7aashj> Drawer </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/dropdown" data-astro-cid-mw7aashj> Dropdown </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/empty-state" data-astro-cid-mw7aashj> Empty state </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/field" data-astro-cid-mw7aashj> Field </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/file-upload" data-astro-cid-mw7aashj> File Upload </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/form" data-astro-cid-mw7aashj> Form </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/nav" data-astro-cid-mw7aashj> Nav </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/page-header" data-astro-cid-mw7aashj> Page header </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/pagination" data-astro-cid-mw7aashj> Pagination </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/popover-menu" data-astro-cid-mw7aashj> Popover menu </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/progress" data-astro-cid-mw7aashj> Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/reveal" data-astro-cid-mw7aashj> Reveal </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/scroll-progress" data-astro-cid-mw7aashj> Scroll Progress </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/segmented" data-astro-cid-mw7aashj> Segmented Control </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/skeleton" data-astro-cid-mw7aashj> Skeleton </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/split-button" data-astro-cid-mw7aashj> Split button </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/stat" data-astro-cid-mw7aashj> Stat </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/stepper" data-astro-cid-mw7aashj> Stepper </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/switch" data-astro-cid-mw7aashj> Switch </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/tabs" data-astro-cid-mw7aashj> Tabs </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/tag-input" data-astro-cid-mw7aashj> Tag Input </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/timeline" data-astro-cid-mw7aashj> Timeline </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/toast" data-astro-cid-mw7aashj> Toast </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/toolbar" data-astro-cid-mw7aashj> Toolbar </a> </li><li data-astro-cid-mw7aashj> <a href="/porchlight/pr-preview/pr-74/components/tooltip" data-astro-cid-mw7aashj> Tooltip </a> </li> </ul> </div> <div class="docs-nav__section" data-astro-cid-mw7aashj> <h2 class="docs-nav__heading" data-astro-cid-mw7aashj>Examples</h2> <ul data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/dashboard" data-astro-cid-mw7aashj>Dashboard</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/settings" data-astro-cid-mw7aashj>Settings</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-dashboard" data-astro-cid-mw7aashj>SaaS Portal</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-siem" data-astro-cid-mw7aashj>Security SIEM</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-cases" data-astro-cid-mw7aashj>Case Review</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-inbox" data-astro-cid-mw7aashj>Inbox</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-marketing" data-astro-cid-mw7aashj>Marketing Page</a></li> <li data-astro-cid-mw7aashj><a href="/porchlight/pr-preview/pr-74/preview/app-shell" data-astro-cid-mw7aashj>App Shell</a></li> </ul> </div> </nav> </aside> <div class="docs-content" data-astro-cid-mw7aashj>  <article class="prose"> <a href="/porchlight/pr-preview/pr-74/preview/button" class="c-button" data-variant="secondary" style="float: right; margin-block-start: 0.25rem;">View live preview</a> <h1 id="button">Button</h1>
+<p>The <code>.c-button</code> is the canonical action control. Use a native <code>&lt;button&gt;</code> (or an
+<code>&lt;a&gt;</code> only when it is genuinely navigation). All visuals flow through
+component-local <code>--c-button-*</code> aliases that default to framework semantic
+tokens, so you can theme one button or all of them without leaving the
+component.</p>
+<div class="l-cluster demo" data-astro-cid-4ya5shnz> <button type="button" class="c-button" data-astro-cid-4ya5shnz>default</button> <button type="button" class="c-button" data-variant="primary" data-astro-cid-4ya5shnz>primary</button> <button type="button" class="c-button" data-variant="secondary" data-astro-cid-4ya5shnz>secondary</button> <button type="button" class="c-button" data-variant="ghost" data-astro-cid-4ya5shnz>ghost</button> <button type="button" class="c-button" data-variant="primary" aria-pressed="true" data-astro-cid-4ya5shnz>pressed</button> <button type="button" class="c-button" data-variant="primary" disabled data-astro-cid-4ya5shnz>disabled</button> </div> 
+<h2 id="when-to-use-what">When to use what</h2>
+<ul>
+<li><strong>Primary</strong> - one per view; the main forward action (“Save”, “Create”).</li>
+<li><strong>Secondary</strong> - co-equal or alternative actions (“Cancel”, “Export”).</li>
+<li><strong>Ghost</strong> - low-emphasis actions in dense toolbars, or on colored surfaces.</li>
+</ul>
+<h2 id="semantic-html">Semantic HTML</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button&quot;</span><span style="color:#B392F0"> data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;primary&quot;</span><span style="color:#E1E4E8">&gt;Save changes&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button&quot;</span><span style="color:#B392F0"> data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;secondary&quot;</span><span style="color:#E1E4E8">&gt;Cancel&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">button</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;c-button&quot;</span><span style="color:#B392F0"> data-variant</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;ghost&quot;</span><span style="color:#B392F0"> aria-pressed</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  Preview</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="class-contract">Class contract</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Selector</th><th>Role</th></tr></thead><tbody><tr><td><code>.c-button</code></td><td>The component (native <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>).</td></tr><tr><td><code>[data-variant]</code></td><td><code>primary</code> | <code>secondary</code> | <code>ghost</code> (default = none, white surface with border).</td></tr></tbody></table>
+<h2 id="tokens-consumed">Tokens consumed</h2>
+<p><code>--pl-color-{accent,accent-text,accent-hover,surface,surface-2,text,border}</code>,
+<code>--pl-control-{block-size,padding-inline,gap,border-width,radius}</code>,
+<code>--pl-duration-1</code>, <code>--pl-ease-standard</code>.</p>
+<h2 id="tokens-exposed-component-local">Tokens exposed (component-local)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Token</th><th>Default</th><th>Purpose</th></tr></thead><tbody><tr><td><code>--c-button-bg</code></td><td><code>--pl-color-surface</code></td><td>Fill. Variants override.</td></tr><tr><td><code>--c-button-fg</code></td><td><code>--pl-color-text</code></td><td>Label color.</td></tr><tr><td><code>--c-button-border</code></td><td><code>--pl-color-border</code></td><td>Border color.</td></tr><tr><td><code>--c-button-highlight</code></td><td><code>transparent</code></td><td>Inset top-catch; <code>oklch(100% 0 0 / 12%)</code> on primary.</td></tr></tbody></table>
+<h2 id="states">States</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>State</th><th>How</th><th>Behavior</th></tr></thead><tbody><tr><td>default</td><td>-</td><td>variant fill</td></tr><tr><td>hover</td><td><code>:hover</code>, <code>[data-hover]</code></td><td><code>color-mix()</code> shade (theme-aware), pointer</td></tr><tr><td>active</td><td><code>:active</code></td><td><code>translateY(1px)</code> dip</td></tr><tr><td>pressed</td><td><code>[aria-pressed=&quot;true&quot;]</code></td><td>dip + (ghost/secondary) faint accent tint</td></tr><tr><td>focus-visible</td><td><code>:focus-visible</code></td><td>token outline (from base; never removed)</td></tr><tr><td>disabled</td><td><code>:disabled</code>, <code>[aria-disabled=&quot;true&quot;]</code></td><td>0.55 opacity, <code>not-allowed</code>, no highlight</td></tr></tbody></table>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li><strong>Keyboard:</strong> native <code>&lt;button&gt;</code> → Enter/Space activate; focus ring is the
+base-layer <code>:focus-visible</code> outline (token color/size/offset). Never removed.</li>
+<li><strong>Disabled vs aria-disabled:</strong> <code>disabled</code> removes the button from the
+activation path entirely; <code>aria-disabled=&quot;true&quot;</code> keeps it focusable (use when
+you want to announce “disabled” but still show a tooltip).</li>
+<li><strong>Icon-only:</strong> provide an <code>aria-label</code>.</li>
+<li><strong>Contrast:</strong> primary uses <code>--pl-color-accent</code> + <code>--pl-color-accent-text</code>
+(AA in both themes - see the contrast test).</li>
+</ul>
+<h2 id="theme-density-rtl-motion">Theme, density, RTL, motion</h2>
+<ul>
+<li><strong>Light/dark:</strong> tokens resolve via <code>light-dark()</code>. Hover shade is
+theme-aware by construction (<code>color-mix</code> with <code>--pl-color-text</code>).</li>
+<li><strong>Density:</strong> sizing comes from <code>--pl-control-block-size</code>; set
+<code>[data-density]</code> on an ancestor - no per-component work.</li>
+<li><strong>RTL:</strong> no physical properties; icon + label order follows the writing mode.</li>
+<li><strong>Reduced motion:</strong> the transform/box-shadow transitions are zeroed by the
+themes layer’s motion guard (<code>--pl-motion-scale: 0</code>).</li>
+<li><strong>Forced colors:</strong> falls back to <code>ButtonBorder</code> / <code>Highlight</code> / <code>HighlightText</code>.</li>
+</ul> </article>  </div> </div>  </main> <footer class="site-footer"> <p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p> </footer> </body></html> 
