@@ -93,11 +93,8 @@ const steps: ProcessLane[] = [
 
 <BaseLayout title="Process Builder · Porchlight">
   <div class="l-app-shell builder-shell">
-    <header
-      class="l-app-shell__topbar l-cluster"
-      style="--l-cluster-justify: space-between; --l-cluster-gap: var(--pl-space-4); padding-inline: var(--pl-space-4);"
-    >
-      <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-3);">
+    <header class="l-app-shell__topbar l-cluster builder-topbar">
+      <div class="l-cluster builder-topbar__brand">
         <button
           class="c-button"
           data-variant="ghost"
@@ -106,11 +103,11 @@ const steps: ProcessLane[] = [
           aria-label="Toggle admin navigation"
         >
           <svg
+            class="builder-topbar__menu-icon"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-            style="inline-size: 1.25rem; block-size: 1.25rem;"
             aria-hidden="true"
           >
             <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"></path>
@@ -119,7 +116,7 @@ const steps: ProcessLane[] = [
         <strong>Veyra Admin</strong>
         <span class="u-muted-sm">Process Studio</span>
       </div>
-      <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+      <div class="l-cluster builder-topbar__status">
         <span class="c-badge" data-tone="warning">1 warning</span>
         <span class="c-badge" data-tone="success">Autosaved</span>
         <div class="c-avatar" data-size="sm">CW</div>
@@ -499,7 +496,7 @@ const steps: ProcessLane[] = [
                   Select a step to edit details and validation.
                 </p>
               </div>
-              <div class="l-cluster" style="--l-cluster-gap: var(--pl-space-2);">
+              <div class="l-cluster builder-editor-status">
                 <span class="c-badge" data-tone="accent">5 steps</span>
                 <span class="c-badge" data-tone="warning">1 warning</span>
               </div>
@@ -805,6 +802,27 @@ const steps: ProcessLane[] = [
   .builder-shell > .l-app-shell__topbar {
     position: static;
     z-index: auto;
+  }
+
+  .builder-topbar {
+    --l-cluster-justify: space-between;
+    --l-cluster-gap: var(--pl-space-4);
+
+    padding-inline: var(--pl-space-4);
+  }
+
+  .builder-topbar__brand {
+    --l-cluster-gap: var(--pl-space-3);
+  }
+
+  .builder-topbar__status,
+  .builder-editor-status {
+    --l-cluster-gap: var(--pl-space-2);
+  }
+
+  .builder-topbar__menu-icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
   }
 
   .builder-workspace {
