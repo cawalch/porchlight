@@ -54,5 +54,33 @@
 
     "defensive-css/require-forced-colors-focus": true,
     "defensive-css/require-focus-visible": true
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "packages/porchlight/src/**/*.css",
+        "packages/porchlight/porchlight.css"
+      ],
+      "rules": {
+        "selector-class-pattern": [
+          "^(?:pl-(?:c|l|u)-[a-z0-9][a-z0-9_-]*|is-(?:active|disabled|dragging|drop-target|invalid|selected))$",
+          {
+            "message": "Porchlight package classes must use pl-c-, pl-l-, or pl-u- prefixes; is-* is reserved for documented compatibility aliases."
+          }
+        ],
+        "custom-property-pattern": [
+          "^_?pl-[a-z0-9][a-z0-9-]*$",
+          {
+            "message": "Porchlight package custom properties must use the --pl-* namespace."
+          }
+        ],
+        "keyframes-name-pattern": [
+          "^pl-[a-z0-9][a-z0-9-]*$",
+          {
+            "message": "Porchlight package keyframes must use the pl-* namespace."
+          }
+        ]
+      }
+    }
+  ]
 }

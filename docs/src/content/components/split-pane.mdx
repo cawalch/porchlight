@@ -7,7 +7,7 @@ since: 0.8.0
 
 # Split pane
 
-The `.c-split-pane` component gives enterprise app shells a first-class split
+The `.pl-c-split-pane` component gives enterprise app shells a first-class split
 layout: object explorer plus work surface, editor plus inspector, logs plus
 details, or process map plus configuration panel. It is CSS-only and
 dependency-free. Apps own resizing behavior, keyboard handling, saved sizes, and
@@ -21,16 +21,20 @@ non-focusable and omit the value attributes.
 ## Semantic HTML
 
 ```html
-<div class="c-split-pane" data-orientation="horizontal" data-collapse="stack">
-  <section class="c-split-pane__pane c-split-pane__pane--start">
-    <div class="c-split-pane__header">
-      <h2 class="c-split-pane__title">Process folders</h2>
+<div
+  class="pl-c-split-pane"
+  data-orientation="horizontal"
+  data-collapse="stack"
+>
+  <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start">
+    <div class="pl-c-split-pane__header">
+      <h2 class="pl-c-split-pane__title">Process folders</h2>
     </div>
-    <div class="c-split-pane__pane-inner">...</div>
+    <div class="pl-c-split-pane__pane-inner">...</div>
   </section>
 
   <div
-    class="c-split-pane__separator"
+    class="pl-c-split-pane__separator"
     role="separator"
     aria-orientation="vertical"
     aria-valuemin="20"
@@ -39,11 +43,11 @@ non-focusable and omit the value attributes.
     tabindex="0"
   ></div>
 
-  <section class="c-split-pane__pane c-split-pane__pane--end">
-    <div class="c-split-pane__header">
-      <h2 class="c-split-pane__title">Rule editor</h2>
+  <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end">
+    <div class="pl-c-split-pane__header">
+      <h2 class="pl-c-split-pane__title">Rule editor</h2>
     </div>
-    <div class="c-split-pane__pane-inner">...</div>
+    <div class="pl-c-split-pane__pane-inner">...</div>
   </section>
 </div>
 ```
@@ -56,13 +60,13 @@ vertical pane layouts, use `aria-orientation="horizontal"`.
 
 ```html
 <div
-  class="c-split-pane"
+  class="pl-c-split-pane"
   data-layout="fixed-start"
-  style="--c-split-pane-fixed-size: 18rem;"
+  style="--pl-c-split-pane-fixed-size: 18rem;"
 >
-  <aside class="c-split-pane__pane c-split-pane__pane--start">...</aside>
-  <div class="c-split-pane__separator" aria-hidden="true"></div>
-  <main class="c-split-pane__pane c-split-pane__pane--end">...</main>
+  <aside class="pl-c-split-pane__pane pl-c-split-pane__pane--start">...</aside>
+  <div class="pl-c-split-pane__separator" aria-hidden="true"></div>
+  <main class="pl-c-split-pane__pane pl-c-split-pane__pane--end">...</main>
 </div>
 ```
 
@@ -74,13 +78,15 @@ the divider is decorative, omit `role="separator"` and make it unfocusable.
 
 ```html
 <div
-  class="c-split-pane"
+  class="pl-c-split-pane"
   data-orientation="vertical"
-  style="--c-split-pane-start-size: minmax(12rem, 1fr);"
+  style="--pl-c-split-pane-start-size: minmax(12rem, 1fr);"
 >
-  <section class="c-split-pane__pane c-split-pane__pane--start">...</section>
+  <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start">
+    ...
+  </section>
   <div
-    class="c-split-pane__separator"
+    class="pl-c-split-pane__separator"
     role="separator"
     aria-orientation="horizontal"
     aria-valuemin="25"
@@ -88,7 +94,9 @@ the divider is decorative, omit `role="separator"` and make it unfocusable.
     aria-valuenow="45"
     tabindex="0"
   ></div>
-  <section class="c-split-pane__pane c-split-pane__pane--end">...</section>
+  <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end">
+    ...
+  </section>
 </div>
 ```
 
@@ -99,10 +107,10 @@ root element:
 
 ```html
 <div
-  class="c-split-pane"
+  class="pl-c-split-pane"
   style="
-    --c-split-pane-start-size: minmax(18rem, 34%);
-    --c-split-pane-end-size: minmax(0, 1fr);
+    --pl-c-split-pane-start-size: minmax(18rem, 34%);
+    --pl-c-split-pane-end-size: minmax(0, 1fr);
   "
 >
   ...
@@ -146,15 +154,15 @@ properties without changing the markup contract.
 
 | Selector                          | Role                                            |
 | --------------------------------- | ----------------------------------------------- |
-| `.c-split-pane`                   | Grid container for two panes and one separator. |
-| `.c-split-pane__pane`             | Scrollable pane.                                |
-| `.c-split-pane__pane--start`      | First pane.                                     |
-| `.c-split-pane__pane--end`        | Second pane.                                    |
-| `.c-split-pane__separator`        | Divider or interactive resize handle.           |
-| `.c-split-pane__pane-inner`       | Optional padded pane body.                      |
-| `.c-split-pane__header`           | Sticky pane header.                             |
-| `.c-split-pane__title`            | Header title.                                   |
-| `.c-split-pane__description`      | Secondary header text.                          |
+| `.pl-c-split-pane`                | Grid container for two panes and one separator. |
+| `.pl-c-split-pane__pane`          | Scrollable pane.                                |
+| `.pl-c-split-pane__pane--start`   | First pane.                                     |
+| `.pl-c-split-pane__pane--end`     | Second pane.                                    |
+| `.pl-c-split-pane__separator`     | Divider or interactive resize handle.           |
+| `.pl-c-split-pane__pane-inner`    | Optional padded pane body.                      |
+| `.pl-c-split-pane__header`        | Sticky pane header.                             |
+| `.pl-c-split-pane__title`         | Header title.                                   |
+| `.pl-c-split-pane__description`   | Secondary header text.                          |
 | `[data-orientation="horizontal"]` | Side-by-side panes.                             |
 | `[data-orientation="vertical"]`   | Stacked panes.                                  |
 | `[data-layout="fixed-start"]`     | Fixed first pane.                               |
@@ -164,12 +172,12 @@ properties without changing the markup contract.
 
 ## Tokens Exposed
 
-| Token                                | Default                 | Purpose                              |
-| ------------------------------------ | ----------------------- | ------------------------------------ |
-| `--c-split-pane-start-size`          | `minmax(16rem, 0.85fr)` | First pane grid size.                |
-| `--c-split-pane-end-size`            | `minmax(0, 1fr)`        | Second pane grid size.               |
-| `--c-split-pane-fixed-size`          | `18rem` or `22rem`      | Fixed pane size for layout variants. |
-| `--c-split-pane-separator-size`      | `0.75rem`               | Hit area for the separator.          |
-| `--c-split-pane-separator-line-size` | `1px`                   | Visible separator line.              |
-| `--c-split-pane-min-block-size`      | `24rem`                 | Minimum container height.            |
-| `--c-split-pane-pane-padding`        | `var(--pl-space-4)`     | Optional inner padding.              |
+| Token                                   | Default                 | Purpose                              |
+| --------------------------------------- | ----------------------- | ------------------------------------ |
+| `--pl-c-split-pane-start-size`          | `minmax(16rem, 0.85fr)` | First pane grid size.                |
+| `--pl-c-split-pane-end-size`            | `minmax(0, 1fr)`        | Second pane grid size.               |
+| `--pl-c-split-pane-fixed-size`          | `18rem` or `22rem`      | Fixed pane size for layout variants. |
+| `--pl-c-split-pane-separator-size`      | `0.75rem`               | Hit area for the separator.          |
+| `--pl-c-split-pane-separator-line-size` | `1px`                   | Visible separator line.              |
+| `--pl-c-split-pane-min-block-size`      | `24rem`                 | Minimum container height.            |
+| `--pl-c-split-pane-pane-padding`        | `var(--pl-space-4)`     | Optional inner padding.              |

@@ -7,18 +7,18 @@ since: 0.2.0
 
 # File Upload
 
-The `.c-file-upload` is a drag-and-drop zone wrapping a native
+The `.pl-c-file-upload` is a drag-and-drop zone wrapping a native
 `<input type="file">`. The input is visually hidden; the zone is the
 click target. Uses `:has()` for drag-over and disabled states.
 
 ## Semantic HTML
 
 ```html
-<label class="c-file-upload">
-  <input type="file" class="c-file-upload__input" multiple />
-  <span class="c-file-upload__zone">
-    <svg class="c-file-upload__icon">...</svg>
-    <span class="c-file-upload__text">
+<label class="pl-c-file-upload">
+  <input type="file" class="pl-c-file-upload__input" multiple />
+  <span class="pl-c-file-upload__zone">
+    <svg class="pl-c-file-upload__icon">...</svg>
+    <span class="pl-c-file-upload__text">
       <strong>Drag files here</strong> or click to browse
     </span>
   </span>
@@ -27,11 +27,11 @@ click target. Uses `:has()` for drag-over and disabled states.
 
 ## Class contract
 
-| Selector                | Role                          |
-| ----------------------- | ----------------------------- |
-| `.c-file-upload`        | Label wrapper (click target). |
-| `.c-file-upload__input` | Hidden native file input.     |
-| `.c-file-upload__zone`  | The visible drop zone.        |
-| `.c-file-upload__icon`  | Upload icon.                  |
-| `.c-file-upload__text`  | Instruction text.             |
-| `[data-dragging]`       | Drag-over state (set via JS). |
+| Selector                   | Role                          |
+| -------------------------- | ----------------------------- |
+| `.pl-c-file-upload`        | Label wrapper (click target). |
+| `.pl-c-file-upload__input` | Hidden native file input.     |
+| `.pl-c-file-upload__zone`  | The visible drop zone.        |
+| `.pl-c-file-upload__icon`  | Upload icon.                  |
+| `.pl-c-file-upload__text`  | Instruction text.             |
+| `[data-dragging]`          | Drag-over state (set via JS). |

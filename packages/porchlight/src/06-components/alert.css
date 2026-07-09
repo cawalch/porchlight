@@ -5,33 +5,33 @@
  * overlay like toast). Four tones via [data-tone]: info (default), success,
  * warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.
  *
- * Structure: .c-alert > .c-alert__icon (optional) + .c-alert__title +
- * .c-alert__body. A leading icon slot anchors the tone visually; the tone
+ * Structure: .pl-c-alert > .pl-c-alert__icon (optional) + .pl-c-alert__title +
+ * .pl-c-alert__body. A leading icon slot anchors the tone visually; the tone
  * color on the icon + a tinted background carry the semantic without relying
  * on color alone (the icon shape does the heavy lifting for colorblind users).
  *
- * Density-aware: [data-density] on an ancestor tightens the padding.
+ * Density-aware: [data-pl-density] on an ancestor tightens the padding.
  */
 @layer porchlight.components {
-  @scope (.c-alert) {
+  @scope (.pl-c-alert) {
     :scope {
-      --c-alert-tone: var(--pl-color-accent);
-      --c-alert-tone-bg: var(--pl-color-accent);
-      --c-alert-pad: var(--pl-space-4);
-      --c-alert-gap: var(--pl-space-3);
+      --pl-c-alert-tone: var(--pl-color-accent);
+      --pl-c-alert-tone-bg: var(--pl-color-accent);
+      --pl-c-alert-pad: var(--pl-space-4);
+      --pl-c-alert-gap: var(--pl-space-3);
 
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: var(--c-alert-gap);
-      padding: var(--c-alert-pad);
+      gap: var(--pl-c-alert-gap);
+      padding: var(--pl-c-alert-pad);
       padding-inline-start: calc(
-        var(--c-alert-pad) + var(--pl-accent-bar-width)
+        var(--pl-c-alert-pad) + var(--pl-accent-bar-width)
       );
       border: 1px solid var(--pl-color-border);
       border-radius: var(--pl-radius-xl);
       background: color-mix(
         in oklab,
-        var(--c-alert-tone-bg),
+        var(--pl-c-alert-tone-bg),
         var(--pl-color-surface) 92%
       );
       color: var(--pl-color-text);
@@ -44,57 +44,57 @@
       inset-block: 0;
       inset-inline-start: 0;
       inline-size: var(--pl-accent-bar-width);
-      background: var(--c-alert-tone);
+      background: var(--pl-c-alert-tone);
     }
 
-    .c-alert__icon {
+    .pl-c-alert__icon {
       display: flex;
       align-items: flex-start;
-      color: var(--c-alert-tone);
+      color: var(--pl-c-alert-tone);
       flex-shrink: 0;
     }
 
-    .c-alert__icon svg {
+    .pl-c-alert__icon svg {
       inline-size: 1.25rem;
       block-size: 1.25rem;
     }
 
-    .c-alert__content {
+    .pl-c-alert__content {
       display: flex;
       flex-direction: column;
       gap: var(--pl-space-1);
       min-inline-size: 0;
     }
 
-    .c-alert__title {
+    .pl-c-alert__title {
       font-weight: var(--pl-font-weight-semibold);
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text);
     }
 
-    .c-alert__body {
+    .pl-c-alert__body {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
     }
 
     /* Tone variants. */
     :scope[data-tone="success"] {
-      --c-alert-tone: var(--pl-color-success);
-      --c-alert-tone-bg: var(--pl-color-success-bg);
+      --pl-c-alert-tone: var(--pl-color-success);
+      --pl-c-alert-tone-bg: var(--pl-color-success-bg);
     }
 
     :scope[data-tone="warning"] {
-      --c-alert-tone: var(--pl-color-warning);
-      --c-alert-tone-bg: var(--pl-color-warning-bg);
+      --pl-c-alert-tone: var(--pl-color-warning);
+      --pl-c-alert-tone-bg: var(--pl-color-warning-bg);
     }
 
     :scope[data-tone="danger"] {
-      --c-alert-tone: var(--pl-color-danger);
-      --c-alert-tone-bg: var(--pl-color-danger-bg);
+      --pl-c-alert-tone: var(--pl-color-danger);
+      --pl-c-alert-tone-bg: var(--pl-color-danger-bg);
     }
 
     /* A dismiss button in the top-right corner. */
-    .c-alert__close {
+    .pl-c-alert__close {
       position: absolute;
       inset-block-start: var(--pl-space-2);
       inset-inline-end: var(--pl-space-2);
@@ -102,12 +102,12 @@
   }
 
   /* Make the alert position-relative so the close button can anchor. */
-  :where(.c-alert) {
+  :where(.pl-c-alert) {
     position: relative;
   }
 
   @media (forced-colors: active) {
-    :where(.c-alert) {
+    :where(.pl-c-alert) {
       border-color: CanvasText;
     }
   }

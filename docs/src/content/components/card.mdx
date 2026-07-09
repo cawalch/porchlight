@@ -7,7 +7,7 @@ since: 0.1.0
 
 # Card
 
-The `.c-card` is a raised surface for grouping related content - the workhorse
+The `.pl-c-card` is a raised surface for grouping related content - the workhorse
 of SaaS dashboards (KPI tiles, list items, settings sections, detail panels).
 
 Elevation comes from a soft shadow, not a heavy bg contrast - `surface` is
@@ -16,26 +16,26 @@ intentionally close to `bg`; the border + shadow define the card.
 ## Semantic HTML
 
 ```html
-<section class="c-card">
-  <header class="c-card__header">
-    <h2 class="c-card__title">Quarterly usage</h2>
-    <button class="c-button" data-variant="ghost">Export</button>
+<section class="pl-c-card">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Quarterly usage</h2>
+    <button class="pl-c-button" data-variant="ghost">Export</button>
   </header>
-  <div class="c-card__body">...</div>
+  <div class="pl-c-card__body">...</div>
 </section>
 ```
 
 ## Interactive (clickable) cards
 
-Add `data-interactive` or use an `<a class="c-card">` for a hover lift +
+Add `data-interactive` or use an `<a class="pl-c-card">` for a hover lift +
 focus ring - for navigation tiles and selectable list items.
 
 ```html
-<a class="c-card" href="/accounts/acme">
-  <header class="c-card__header">
-    <h2 class="c-card__title">Acme Ops</h2>
+<a class="pl-c-card" href="/accounts/acme">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Acme Ops</h2>
   </header>
-  <div class="c-card__body">Enterprise · $2,400/mo</div>
+  <div class="pl-c-card__body">Enterprise · $2,400/mo</div>
 </a>
 ```
 
@@ -47,11 +47,11 @@ uses the smaller large-surface radius so dashboard cards do not feel overly
 soft.
 
 ```html
-<section class="c-card" data-surface="app">
-  <header class="c-card__header">
-    <h2 class="c-card__title">Queue health</h2>
+<section class="pl-c-card" data-surface="app">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Queue health</h2>
   </header>
-  <div class="c-card__body">23 jobs waiting</div>
+  <div class="pl-c-card__body">23 jobs waiting</div>
 </section>
 ```
 
@@ -59,11 +59,11 @@ soft.
 
 | Selector                     | Role                                            |
 | ---------------------------- | ----------------------------------------------- |
-| `.c-card`                    | The card (`<section>` or `<a>` if interactive). |
-| `.c-card__header`            | Title + optional action row.                    |
-| `.c-card__title`             | The `<h2>` heading.                             |
-| `.c-card__body`              | Main content.                                   |
-| `.c-card__footer`            | Optional action row with a top divider.         |
+| `.pl-c-card`                 | The card (`<section>` or `<a>` if interactive). |
+| `.pl-c-card__header`         | Title + optional action row.                    |
+| `.pl-c-card__title`          | The `<h2>` heading.                             |
+| `.pl-c-card__body`           | Main content.                                   |
+| `.pl-c-card__footer`         | Optional action row with a top divider.         |
 | `[data-interactive]` / `<a>` | Enables hover lift + focus ring.                |
 | `[data-surface="app"]`       | Uses a tighter app-shell radius.                |
 
@@ -76,17 +76,17 @@ soft.
 
 ## Tokens exposed
 
-| Token              | Default              | Purpose            |
-| ------------------ | -------------------- | ------------------ |
-| `--c-card-padding` | `--pl-space-5`       | Inner padding.     |
-| `--c-card-bg`      | `--pl-color-surface` | Card fill.         |
-| `--c-card-border`  | `--pl-color-border`  | Border color.      |
-| `--c-card-shadow`  | `--pl-shadow-1`      | Default elevation. |
-| `--c-card-radius`  | `--pl-radius-xl`     | Corner radius.     |
+| Token                 | Default              | Purpose            |
+| --------------------- | -------------------- | ------------------ |
+| `--pl-c-card-padding` | `--pl-space-5`       | Inner padding.     |
+| `--pl-c-card-bg`      | `--pl-color-surface` | Card fill.         |
+| `--pl-c-card-border`  | `--pl-color-border`  | Border color.      |
+| `--pl-c-card-shadow`  | `--pl-shadow-1`      | Default elevation. |
+| `--pl-c-card-radius`  | `--pl-radius-xl`     | Corner radius.     |
 
 ## Container query
 
-The card establishes `container: c-card / inline-size`. The header collapses
+The card establishes `container: pl-c-card / inline-size`. The header collapses
 from a row to a column when the **card** is narrower than 28rem - not the
 viewport. A card in a narrow split pane stacks even on a wide screen.
 

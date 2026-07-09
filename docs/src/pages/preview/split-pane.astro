@@ -17,25 +17,25 @@ const ruleRows = [
   </p>
 
   <section
-    class="c-split-pane process-builder"
+    class="pl-c-split-pane process-builder"
     data-orientation="horizontal"
     data-collapse="stack"
-    style="--c-split-pane-start-size: minmax(17rem, 0.72fr); --c-split-pane-end-size: minmax(0, 1.4fr);"
+    style="--pl-c-split-pane-start-size: minmax(17rem, 0.72fr); --pl-c-split-pane-end-size: minmax(0, 1.4fr);"
     aria-label="Process builder split pane"
   >
     <aside
-      class="c-split-pane__pane c-split-pane__pane--start"
+      class="pl-c-split-pane__pane pl-c-split-pane__pane--start"
       aria-label="Process explorer pane"
       tabindex="0"
     >
-      <header class="c-split-pane__header">
+      <header class="pl-c-split-pane__header">
         <div>
-          <h2 class="c-split-pane__title">Process explorer</h2>
-          <p class="c-split-pane__description">Claims automation</p>
+          <h2 class="pl-c-split-pane__title">Process explorer</h2>
+          <p class="pl-c-split-pane__description">Claims automation</p>
         </div>
-        <span class="c-badge" data-tone="accent">18</span>
+        <span class="pl-c-badge" data-tone="accent">18</span>
       </header>
-      <div class="c-split-pane__pane-inner explorer-list">
+      <div class="pl-c-split-pane__pane-inner explorer-list">
         <a href="#" class="explorer-item" aria-current="page">
           <span class="explorer-item__icon">P</span>
           <span>
@@ -61,7 +61,7 @@ const ruleRows = [
     </aside>
 
     <div
-      class="c-split-pane__separator"
+      class="pl-c-split-pane__separator"
       role="separator"
       aria-orientation="vertical"
       aria-valuemin="24"
@@ -72,14 +72,14 @@ const ruleRows = [
     ></div>
 
     <main
-      class="c-split-pane__pane c-split-pane__pane--end builder-workspace"
+      class="pl-c-split-pane__pane pl-c-split-pane__pane--end builder-workspace"
       aria-label="Process builder workspace pane"
       tabindex="0"
     >
-      <header class="c-split-pane__header">
+      <header class="pl-c-split-pane__header">
         <div>
-          <h2 class="c-split-pane__title">FNOL triage</h2>
-          <p class="c-split-pane__description">Version 18, staged for production</p>
+          <h2 class="pl-c-split-pane__title">FNOL triage</h2>
+          <p class="pl-c-split-pane__description">Version 18, staged for production</p>
         </div>
         <div class="builder-actions">
           <button class="builder-button" type="button">Preview</button>
@@ -99,7 +99,7 @@ const ruleRows = [
         <aside class="inspector" aria-label="Inspector">
           <div class="inspector__header">
             <h3>Score urgency</h3>
-            <span class="c-badge" data-tone="warning">Review</span>
+            <span class="pl-c-badge" data-tone="warning">Review</span>
           </div>
           <dl class="inspector__list">
             <div>
@@ -122,25 +122,25 @@ const ruleRows = [
 
   <h2>Vertical log/details split</h2>
   <section
-    class="c-split-pane log-split"
+    class="pl-c-split-pane log-split"
     data-orientation="vertical"
-    style="--c-split-pane-start-size: minmax(15rem, 1fr); --c-split-pane-end-size: minmax(9rem, 0.6fr); --c-split-pane-min-block-size: 27rem; --c-split-pane-pane-padding: var(--pl-space-3);"
+    style="--pl-c-split-pane-start-size: minmax(15rem, 1fr); --pl-c-split-pane-end-size: minmax(9rem, 0.6fr); --pl-c-split-pane-min-block-size: 27rem; --pl-c-split-pane-pane-padding: var(--pl-space-3);"
     aria-label="Rule evaluation split pane"
   >
     <section
-      class="c-split-pane__pane c-split-pane__pane--start"
+      class="pl-c-split-pane__pane pl-c-split-pane__pane--start"
       aria-label="Rule evaluation results pane"
       tabindex="0"
     >
-      <header class="c-split-pane__header">
+      <header class="pl-c-split-pane__header">
         <div>
-          <h2 class="c-split-pane__title">Rule evaluation</h2>
-          <p class="c-split-pane__description">Latest simulation run</p>
+          <h2 class="pl-c-split-pane__title">Rule evaluation</h2>
+          <p class="pl-c-split-pane__description">Latest simulation run</p>
         </div>
       </header>
-      <div class="c-split-pane__pane-inner">
-        <div class="c-table-wrap" data-density="compact">
-          <table class="c-table" style="--c-table-min: 34rem;">
+      <div class="pl-c-split-pane__pane-inner">
+        <div class="pl-c-table-wrap" data-pl-density="compact">
+          <table class="pl-c-table" style="--pl-c-table-min: 34rem;">
             <thead>
               <tr>
                 <th>Rule</th>
@@ -163,7 +163,7 @@ const ruleRows = [
     </section>
 
     <div
-      class="c-split-pane__separator"
+      class="pl-c-split-pane__separator"
       role="separator"
       aria-orientation="horizontal"
       aria-valuemin="30"
@@ -174,17 +174,17 @@ const ruleRows = [
     ></div>
 
     <section
-      class="c-split-pane__pane c-split-pane__pane--end"
+      class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
       aria-label="Selected rule details pane"
       tabindex="0"
     >
-      <header class="c-split-pane__header">
+      <header class="pl-c-split-pane__header">
         <div>
-          <h2 class="c-split-pane__title">Selected rule details</h2>
-          <p class="c-split-pane__description">High-value loss</p>
+          <h2 class="pl-c-split-pane__title">Selected rule details</h2>
+          <p class="pl-c-split-pane__description">High-value loss</p>
         </div>
       </header>
-      <div class="c-split-pane__pane-inner detail-copy">
+      <div class="pl-c-split-pane__pane-inner detail-copy">
         <p>
           Claims over the authority threshold are routed to senior adjusters
           when coverage and jurisdiction signals are present.
@@ -204,8 +204,8 @@ const ruleRows = [
     margin-block-start: var(--pl-space-5);
   }
 
-  .log-split .c-table-wrap {
-    --c-table-radius: var(--pl-radius-lg);
+  .log-split .pl-c-table-wrap {
+    --pl-c-table-radius: var(--pl-radius-lg);
   }
 
   .explorer-list {

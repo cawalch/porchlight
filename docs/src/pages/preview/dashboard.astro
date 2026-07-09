@@ -35,15 +35,15 @@ const toneFor = (status: string) =>
   <!-- KPI row -->
   <section aria-labelledby="kpi-heading">
     <h2 id="kpi-heading" class="section-title">Key metrics</h2>
-    <div class="l-grid">
+    <div class="pl-l-grid">
       {stats.map((s) => (
-        <div class="c-card">
-          <div class="c-card__body">
-            <div class="c-stat">
-              <span class="c-stat__label">{s.label}</span>
-              <div class="c-stat__value">{s.value}<span class="c-stat__unit">{s.unit}</span></div>
-              <span class="c-stat__trend" data-direction={s.direction}>{s.trend}</span>
-              <div class="c-stat__spark">
+        <div class="pl-c-card">
+          <div class="pl-c-card__body">
+            <div class="pl-c-stat">
+              <span class="pl-c-stat__label">{s.label}</span>
+              <div class="pl-c-stat__value">{s.value}<span class="pl-c-stat__unit">{s.unit}</span></div>
+              <span class="pl-c-stat__trend" data-direction={s.direction}>{s.trend}</span>
+              <div class="pl-c-stat__spark">
                 <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
                   <path d={s.spark} fill="none" stroke={s.direction === 'up' ? 'var(--pl-color-success)' : s.direction === 'down' ? 'var(--pl-color-danger)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
                 </svg>
@@ -58,35 +58,35 @@ const toneFor = (status: string) =>
   <!-- Data table with toolbar + tabs -->
   <section aria-labelledby="table-heading" class="table-section">
     <h2 id="table-heading" class="section-title">Accounts</h2>
-    <div class="c-card">
+    <div class="pl-c-card">
       <!-- Toolbar above the table -->
-      <div class="c-toolbar">
-        <div class="c-toolbar__group">
-          <label class="c-field c-field--inline">
-            <span class="u-sr-only">Search accounts</span>
-            <input class="c-field__control" type="search" placeholder="Search accounts…" />
+      <div class="pl-c-toolbar">
+        <div class="pl-c-toolbar__group">
+          <label class="pl-c-field pl-c-field--inline">
+            <span class="pl-u-sr-only">Search accounts</span>
+            <input class="pl-c-field__control" type="search" placeholder="Search accounts…" />
           </label>
-          <button class="c-button" data-variant="ghost">Filter</button>
+          <button class="pl-c-button" data-variant="ghost">Filter</button>
         </div>
-        <div class="c-toolbar__group">
-          <button class="c-button" data-variant="ghost">Export</button>
-          <div class="c-toolbar__divider"></div>
-          <button class="c-button" data-variant="primary"><Icon name="plus" /> New account</button>
+        <div class="pl-c-toolbar__group">
+          <button class="pl-c-button" data-variant="ghost">Export</button>
+          <div class="pl-c-toolbar__divider"></div>
+          <button class="pl-c-button" data-variant="primary"><Icon name="plus" /> New account</button>
         </div>
       </div>
 
       <!-- Tabs for view switching -->
-      <div class="c-tabs dashboard-tabs">
-        <div class="c-tabs__list" role="tablist" aria-label="Account views">
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="true" id="dash-tab-all" aria-controls="dash-panel-all">All <span class="c-tabs__count">247</span></button>
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-active" aria-controls="dash-panel-active" tabindex="-1">Active <span class="c-tabs__count">198</span></button>
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-trial" aria-controls="dash-panel-trial" tabindex="-1">Trialing <span class="c-tabs__count">32</span></button>
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-past" aria-controls="dash-panel-past" tabindex="-1">Past due <span class="c-tabs__count">17</span></button>
+      <div class="pl-c-tabs dashboard-tabs">
+        <div class="pl-c-tabs__list" role="tablist" aria-label="Account views">
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="true" id="dash-tab-all" aria-controls="dash-panel-all">All <span class="pl-c-tabs__count">247</span></button>
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-active" aria-controls="dash-panel-active" tabindex="-1">Active <span class="pl-c-tabs__count">198</span></button>
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-trial" aria-controls="dash-panel-trial" tabindex="-1">Trialing <span class="pl-c-tabs__count">32</span></button>
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false" id="dash-tab-past" aria-controls="dash-panel-past" tabindex="-1">Past due <span class="pl-c-tabs__count">17</span></button>
         </div>
 
-        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-all" aria-labelledby="dash-tab-all">
-          <div class="c-table-wrap dashboard-table-wrap">
-            <table class="c-table">
+        <div class="pl-c-tabs__panel" role="tabpanel" id="dash-panel-all" aria-labelledby="dash-tab-all">
+          <div class="pl-c-table-wrap dashboard-table-wrap">
+            <table class="pl-c-table">
               <thead>
                 <tr>
                   <th>Account</th>
@@ -101,7 +101,7 @@ const toneFor = (status: string) =>
                   <tr aria-selected={i === 0 ? 'true' : undefined}>
                     <td>{name}</td>
                     <td>{plan}</td>
-                    <td><span class="c-badge" data-tone={toneFor(status)}>{status}</span></td>
+                    <td><span class="pl-c-badge" data-tone={toneFor(status)}>{status}</span></td>
                     <td data-align="end">{mrr}</td>
                     <td data-align="end">{seats}</td>
                   </tr>
@@ -110,25 +110,25 @@ const toneFor = (status: string) =>
             </table>
           </div>
         </div>
-        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-active" aria-labelledby="dash-tab-active" hidden><p class="panel-placeholder">Active accounts view.</p></div>
-        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-trial" aria-labelledby="dash-tab-trial" hidden><p class="panel-placeholder">Trialing accounts view.</p></div>
-        <div class="c-tabs__panel" role="tabpanel" id="dash-panel-past" aria-labelledby="dash-tab-past" hidden><p class="panel-placeholder">Past due accounts view.</p></div>
+        <div class="pl-c-tabs__panel" role="tabpanel" id="dash-panel-active" aria-labelledby="dash-tab-active" hidden><p class="panel-placeholder">Active accounts view.</p></div>
+        <div class="pl-c-tabs__panel" role="tabpanel" id="dash-panel-trial" aria-labelledby="dash-tab-trial" hidden><p class="panel-placeholder">Trialing accounts view.</p></div>
+        <div class="pl-c-tabs__panel" role="tabpanel" id="dash-panel-past" aria-labelledby="dash-tab-past" hidden><p class="panel-placeholder">Past due accounts view.</p></div>
       </div>
 
       <!-- Table footer with pagination -->
-      <div class="c-toolbar dashboard-footer">
-        <div class="c-toolbar__group">
-          <span class="u-muted dashboard-footer-count">Showing 1–7 of 247</span>
+      <div class="pl-c-toolbar dashboard-footer">
+        <div class="pl-c-toolbar__group">
+          <span class="pl-u-muted dashboard-footer-count">Showing 1–7 of 247</span>
         </div>
-        <div class="c-toolbar__group">
-          <nav class="c-pagination" aria-label="Table pagination" data-size="sm">
-            <button class="c-pagination__nav" disabled>‹</button>
-            <button class="c-pagination__page" aria-current="page">1</button>
-            <button class="c-pagination__page">2</button>
-            <button class="c-pagination__page">3</button>
-            <span class="c-pagination__ellipsis">…</span>
-            <button class="c-pagination__page">36</button>
-            <button class="c-pagination__nav">›</button>
+        <div class="pl-c-toolbar__group">
+          <nav class="pl-c-pagination" aria-label="Table pagination" data-size="sm">
+            <button class="pl-c-pagination__nav" disabled>‹</button>
+            <button class="pl-c-pagination__page" aria-current="page">1</button>
+            <button class="pl-c-pagination__page">2</button>
+            <button class="pl-c-pagination__page">3</button>
+            <span class="pl-c-pagination__ellipsis">…</span>
+            <button class="pl-c-pagination__page">36</button>
+            <button class="pl-c-pagination__nav">›</button>
           </nav>
         </div>
       </div>
@@ -138,44 +138,44 @@ const toneFor = (status: string) =>
   <!-- Side-by-side: recent activity + loading skeleton -->
   <section aria-labelledby="side-heading" class="side-section">
     <h2 id="side-heading" class="section-title">Activity &amp; loading states</h2>
-    <div class="l-grid">
-      <div class="c-card">
-        <div class="c-toolbar dashboard-card-toolbar">
-          <div class="c-toolbar__group"><strong>Recent activity</strong></div>
-          <div class="c-toolbar__group"><button class="c-button" data-variant="ghost">View all</button></div>
+    <div class="pl-l-grid">
+      <div class="pl-c-card">
+        <div class="pl-c-toolbar dashboard-card-toolbar">
+          <div class="pl-c-toolbar__group"><strong>Recent activity</strong></div>
+          <div class="pl-c-toolbar__group"><button class="pl-c-button" data-variant="ghost">View all</button></div>
         </div>
-        <div class="c-card__body">
-          <div class="l-stack">
+        <div class="pl-c-card__body">
+          <div class="pl-l-stack">
             <div class="activity-item">
-              <span class="c-badge" data-tone="success">created</span>
+              <span class="pl-c-badge" data-tone="success">created</span>
               <span>Umbrella account created</span>
-              <span class="u-muted">2m ago</span>
+              <span class="pl-u-muted">2m ago</span>
             </div>
             <div class="activity-item">
-              <span class="c-badge" data-tone="warning">updated</span>
+              <span class="pl-c-badge" data-tone="warning">updated</span>
               <span>Globex plan upgraded to Pro</span>
-              <span class="u-muted">1h ago</span>
+              <span class="pl-u-muted">1h ago</span>
             </div>
             <div class="activity-item">
-              <span class="c-badge" data-tone="danger">alert</span>
+              <span class="pl-c-badge" data-tone="danger">alert</span>
               <span>Initech payment past due</span>
-              <span class="u-muted">3h ago</span>
+              <span class="pl-u-muted">3h ago</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="c-card">
-        <div class="c-toolbar dashboard-card-toolbar">
-          <div class="c-toolbar__group"><strong>Loading report…</strong></div>
+      <div class="pl-c-card">
+        <div class="pl-c-toolbar dashboard-card-toolbar">
+          <div class="pl-c-toolbar__group"><strong>Loading report…</strong></div>
         </div>
-        <div class="c-card__body">
-          <div class="c-skeleton-group">
-            <div class="c-skeleton dashboard-skeleton-w-40" data-shape="text"></div>
-            <div class="c-skeleton" data-shape="text"></div>
-            <div class="c-skeleton dashboard-skeleton-w-85" data-shape="text"></div>
-            <div class="c-skeleton dashboard-skeleton-w-60" data-shape="text" data-line="sm"></div>
-            <div class="c-skeleton dashboard-skeleton-action" data-shape="rect"></div>
+        <div class="pl-c-card__body">
+          <div class="pl-c-skeleton-group">
+            <div class="pl-c-skeleton dashboard-skeleton-w-40" data-shape="text"></div>
+            <div class="pl-c-skeleton" data-shape="text"></div>
+            <div class="pl-c-skeleton dashboard-skeleton-w-85" data-shape="text"></div>
+            <div class="pl-c-skeleton dashboard-skeleton-w-60" data-shape="text" data-line="sm"></div>
+            <div class="pl-c-skeleton dashboard-skeleton-action" data-shape="rect"></div>
           </div>
         </div>
       </div>
@@ -186,7 +186,7 @@ const toneFor = (status: string) =>
 <script>
   // Docs-only tab switching.
   document.querySelectorAll('.dashboard-tabs').forEach((group) => {
-    const tabs = group.querySelectorAll('.c-tabs__tab');
+    const tabs = group.querySelectorAll('.pl-c-tabs__tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => {
@@ -221,7 +221,7 @@ const toneFor = (status: string) =>
   .dashboard-footer-count {
     font-size: var(--pl-text-sm);
   }
-  .dashboard-footer .c-toolbar__group:last-child { justify-content: flex-end; }
+  .dashboard-footer .pl-c-toolbar__group:last-child { justify-content: flex-end; }
   .dashboard-card-toolbar {
     border-block-end: 1px solid var(--pl-color-border);
   }
@@ -235,18 +235,18 @@ const toneFor = (status: string) =>
     gap: var(--pl-space-2);
     font-size: var(--pl-text-sm);
   }
-  .activity-item .u-muted { margin-inline-start: auto; white-space: nowrap; }
+  .activity-item .pl-u-muted { margin-inline-start: auto; white-space: nowrap; }
   .dashboard-skeleton-w-40 {
-    --c-skeleton-w: 40%;
+    --pl-c-skeleton-w: 40%;
   }
   .dashboard-skeleton-w-60 {
-    --c-skeleton-w: 60%;
+    --pl-c-skeleton-w: 60%;
   }
   .dashboard-skeleton-w-85 {
-    --c-skeleton-w: 85%;
+    --pl-c-skeleton-w: 85%;
   }
   .dashboard-skeleton-action {
-    --c-skeleton-w: 5rem;
+    --pl-c-skeleton-w: 5rem;
 
     margin-block-start: var(--pl-space-2);
   }

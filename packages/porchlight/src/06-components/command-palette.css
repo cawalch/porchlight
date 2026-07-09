@@ -8,18 +8,18 @@
  * The palette is centered in the viewport (not anchored to a trigger).
  *
  * Structure:
- *   <div popover class="c-command" id="cmdk">
- *     <input class="c-command__search" role="combobox" aria-controls="cmd-list" />
- *     <div class="c-command__body" id="cmd-list" role="listbox">
- *       <div class="c-command__group">
- *         <h3 class="c-command__heading">Actions</h3>
- *         <button class="c-command__item" role="option" aria-selected="true" data-selected>
- *           <svg class="c-command__icon">...</svg>
+ *   <div popover class="pl-c-command" id="cmdk">
+ *     <input class="pl-c-command__search" role="combobox" aria-controls="cmd-list" />
+ *     <div class="pl-c-command__body" id="cmd-list" role="listbox">
+ *       <div class="pl-c-command__group">
+ *         <h3 class="pl-c-command__heading">Actions</h3>
+ *         <button class="pl-c-command__item" role="option" aria-selected="true" data-selected>
+ *           <svg class="pl-c-command__icon">...</svg>
  *           <span>Create new project</span>
  *         </button>
  *       </div>
  *     </div>
- *     <footer class="c-command__footer">
+ *     <footer class="pl-c-command__footer">
  *       <span>↑↓ to navigate</span>
  *       <span>↵ to select</span>
  *       <span>esc to close</span>
@@ -29,15 +29,15 @@
  * Open via: <button popovertarget="cmdk">Cmd+K</button>
  */
 @layer porchlight.components {
-  @scope (.c-command) {
+  @scope (.pl-c-command) {
     :scope {
-      --c-command-inline: min(36rem, calc(100vi - 2 * var(--pl-space-4)));
-      --c-command-max-block: 28rem;
+      --pl-c-command-inline: min(36rem, calc(100vi - 2 * var(--pl-space-4)));
+      --pl-c-command-max-block: 28rem;
 
       margin: auto;
       padding: 0;
-      inline-size: var(--c-command-inline);
-      max-block-size: var(--c-command-max-block);
+      inline-size: var(--pl-c-command-inline);
+      max-block-size: var(--pl-c-command-max-block);
 
       /* Liquid Glass: no border; radius-2xl for centerstage prominence. */
       border: none;
@@ -76,7 +76,7 @@
       }
     }
 
-    .c-command__search {
+    .pl-c-command__search {
       inline-size: 100%;
       padding: var(--pl-space-4);
       border: 0;
@@ -91,21 +91,21 @@
       outline: none;
     }
 
-    .c-command__search::placeholder {
+    .pl-c-command__search::placeholder {
       color: var(--pl-color-text-muted);
     }
 
-    .c-command__body {
-      max-block-size: calc(var(--c-command-max-block) - 4rem);
+    .pl-c-command__body {
+      max-block-size: calc(var(--pl-c-command-max-block) - 4rem);
       overflow-y: auto;
       padding: var(--pl-space-2);
     }
 
-    .c-command__group + .c-command__group {
+    .pl-c-command__group + .pl-c-command__group {
       margin-block-start: var(--pl-space-2);
     }
 
-    .c-command__heading {
+    .pl-c-command__heading {
       margin-block: var(--pl-space-2) var(--pl-space-1);
       padding-inline: var(--pl-space-3);
       font-size: var(--pl-text-xs);
@@ -115,7 +115,7 @@
       color: var(--pl-color-text-muted);
     }
 
-    .c-command__item {
+    .pl-c-command__item {
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
@@ -131,29 +131,29 @@
       cursor: pointer;
     }
 
-    .c-command__item:hover,
-    .c-command__item:is([data-selected], [aria-selected="true"]) {
+    .pl-c-command__item:hover,
+    .pl-c-command__item:is([data-selected], [aria-selected="true"]) {
       background: var(--pl-color-surface-2);
     }
 
-    .c-command__item:is([data-selected], [aria-selected="true"]) {
+    .pl-c-command__item:is([data-selected], [aria-selected="true"]) {
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
       color: var(--pl-color-accent);
     }
 
-    .c-command__item:focus-visible {
+    .pl-c-command__item:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: calc(var(--pl-focus-offset) * -1);
     }
 
-    .c-command__icon {
+    .pl-c-command__icon {
       inline-size: 1rem;
       block-size: 1rem;
       color: var(--pl-color-text-muted);
       flex-shrink: 0;
     }
 
-    .c-command__shortcut {
+    .pl-c-command__shortcut {
       margin-inline-start: auto;
       padding: 0.125rem var(--pl-space-1);
       border-radius: var(--pl-radius-sm);
@@ -164,7 +164,7 @@
       font-family: var(--pl-font-mono);
     }
 
-    .c-command__footer {
+    .pl-c-command__footer {
       display: flex;
       gap: var(--pl-space-4);
       padding: var(--pl-space-2) var(--pl-space-4);
@@ -185,14 +185,14 @@
   }
 
   /* Backdrop scrim. Stronger tint + blur for contrast against Liquid Glass surface. */
-  :where(.c-command)::backdrop {
+  :where(.pl-c-command)::backdrop {
     background: var(--pl-color-scrim);
     backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
       saturate(var(--pl-backdrop-saturate-scrim));
   }
 
   @media (forced-colors: active) {
-    :where(.c-command__item:is([data-selected], [aria-selected="true"])) {
+    :where(.pl-c-command__item:is([data-selected], [aria-selected="true"])) {
       box-shadow: inset 2px 0 0 Highlight;
       color: Highlight;
     }

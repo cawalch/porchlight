@@ -7,7 +7,7 @@ since: 0.3.0
 
 # Description list
 
-The `.c-description` wraps a native `<dl>` as a two-column label + value grid.
+The `.pl-c-description` wraps a native `<dl>` as a two-column label + value grid.
 It is the workhorse of SaaS detail panels: account info, case metadata, user
 profiles, order summaries — anywhere you need to display structured key-value
 data read-only.
@@ -20,18 +20,18 @@ This component replaces all of that with a single semantic element.
 ### Basic grid
 
 ```html
-<dl class="c-description">
-  <div class="c-description__row">
-    <dt class="c-description__term">Account</dt>
-    <dd class="c-description__detail">Acme Corporation</dd>
+<dl class="pl-c-description">
+  <div class="pl-c-description__row">
+    <dt class="pl-c-description__term">Account</dt>
+    <dd class="pl-c-description__detail">Acme Corporation</dd>
   </div>
-  <div class="c-description__row">
-    <dt class="c-description__term">Status</dt>
-    <dd class="c-description__detail">Active</dd>
+  <div class="pl-c-description__row">
+    <dt class="pl-c-description__term">Status</dt>
+    <dd class="pl-c-description__detail">Active</dd>
   </div>
-  <div class="c-description__row">
-    <dt class="c-description__term">MRR</dt>
-    <dd class="c-description__detail">$2,400/mo</dd>
+  <div class="pl-c-description__row">
+    <dt class="pl-c-description__term">MRR</dt>
+    <dd class="pl-c-description__detail">$2,400/mo</dd>
   </div>
 </dl>
 ```
@@ -41,17 +41,17 @@ This component replaces all of that with a single semantic element.
 The detail slot accepts any content — badges, avatars, links:
 
 ```html
-<div class="c-description__row">
-  <dt class="c-description__term">Status</dt>
-  <dd class="c-description__detail">
-    <span class="c-badge" data-tone="success">Active</span>
+<div class="pl-c-description__row">
+  <dt class="pl-c-description__term">Status</dt>
+  <dd class="pl-c-description__detail">
+    <span class="pl-c-badge" data-tone="success">Active</span>
   </dd>
 </div>
 
-<div class="c-description__row">
-  <dt class="c-description__term">Owner</dt>
-  <dd class="c-description__detail">
-    <div class="c-avatar" data-size="sm">JS</div>
+<div class="pl-c-description__row">
+  <dt class="pl-c-description__term">Owner</dt>
+  <dd class="pl-c-description__detail">
+    <div class="pl-c-avatar" data-size="sm">JS</div>
     Jane Smith
   </dd>
 </div>
@@ -60,7 +60,7 @@ The detail slot accepts any content — badges, avatars, links:
 ### With dividers
 
 ```html
-<dl class="c-description" data-dividers>
+<dl class="pl-c-description" data-dividers>
   <!-- each row gets a hairline border -->
 </dl>
 ```
@@ -70,17 +70,17 @@ The detail slot accepts any content — badges, avatars, links:
 For narrow sidebars or long-form values, stack terms above details:
 
 ```html
-<dl class="c-description" data-layout="stacked">
+<dl class="pl-c-description" data-layout="stacked">
   <!-- term above, detail below -->
 </dl>
 ```
 
 ## Layout modes
 
-| Mode               | Class                                   | When to use                                                                                                                            |
-| ------------------ | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **Grid** (default) | `.c-description`                        | Detail panels, metadata grids. Two columns: label right-aligned, value on the right. Collapses to stacked below 32rem container width. |
-| **Stacked**        | `.c-description[data-layout="stacked"]` | Narrow sidebars, long-form values, mobile-first layouts. Term above, detail below.                                                     |
+| Mode               | Class                                      | When to use                                                                                                                            |
+| ------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Grid** (default) | `.pl-c-description`                        | Detail panels, metadata grids. Two columns: label right-aligned, value on the right. Collapses to stacked below 32rem container width. |
+| **Stacked**        | `.pl-c-description[data-layout="stacked"]` | Narrow sidebars, long-form values, mobile-first layouts. Term above, detail below.                                                     |
 
 ## Responsive behavior
 
@@ -90,24 +90,24 @@ panel stacks even on a wide-screen desktop — no viewport hack needed.
 
 ## Class contract
 
-| Selector                  | Role                                               |
-| ------------------------- | -------------------------------------------------- |
-| `.c-description`          | The `<dl>` container (grid + query container).     |
-| `.c-description__row`     | A wrapper `<div>` around each `<dt>`/`<dd>` pair.  |
-| `.c-description__term`    | The `<dt>` label (muted, semibold, right-aligned). |
-| `.c-description__detail`  | The `<dd>` value (accepts any content).            |
-| `[data-layout="stacked"]` | Single-column layout (term above detail).          |
-| `[data-dividers]`         | Hairline border between rows.                      |
+| Selector                    | Role                                               |
+| --------------------------- | -------------------------------------------------- |
+| `.pl-c-description`         | The `<dl>` container (grid + query container).     |
+| `.pl-c-description__row`    | A wrapper `<div>` around each `<dt>`/`<dd>` pair.  |
+| `.pl-c-description__term`   | The `<dt>` label (muted, semibold, right-aligned). |
+| `.pl-c-description__detail` | The `<dd>` value (accepts any content).            |
+| `[data-layout="stacked"]`   | Single-column layout (term above detail).          |
+| `[data-dividers]`           | Hairline border between rows.                      |
 
 ## Tokens exposed
 
-| Token                        | Default                      | Purpose                                                       |
-| ---------------------------- | ---------------------------- | ------------------------------------------------------------- |
-| `--c-description-term-w`     | `auto`                       | Term column width. Set to `12rem` for a uniform label gutter. |
-| `--c-description-row-gap`    | `var(--pl-space-3)`          | Vertical spacing between rows.                                |
-| `--c-description-col-gap`    | `var(--pl-space-4)`          | Horizontal spacing between term and detail.                   |
-| `--c-description-term-color` | `var(--pl-color-text-muted)` | Label text color.                                             |
-| `--c-description-term-size`  | `var(--pl-text-sm)`          | Label font size.                                              |
+| Token                           | Default                      | Purpose                                                       |
+| ------------------------------- | ---------------------------- | ------------------------------------------------------------- |
+| `--pl-c-description-term-w`     | `auto`                       | Term column width. Set to `12rem` for a uniform label gutter. |
+| `--pl-c-description-row-gap`    | `var(--pl-space-3)`          | Vertical spacing between rows.                                |
+| `--pl-c-description-col-gap`    | `var(--pl-space-4)`          | Horizontal spacing between term and detail.                   |
+| `--pl-c-description-term-color` | `var(--pl-color-text-muted)` | Label text color.                                             |
+| `--pl-c-description-term-size`  | `var(--pl-text-sm)`          | Label font size.                                              |
 
 ## Accessibility
 

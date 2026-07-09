@@ -8,163 +8,163 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <h1>Filter builder</h1>
         <p>Saved views, active query chips, and grouped filter rows for data-heavy SaaS work queues.</p>
       </div>
-      <button class="c-button" data-variant="primary">Save view</button>
+      <button class="pl-c-button" data-variant="primary">Save view</button>
     </header>
 
-    <nav class="c-saved-views" aria-label="Saved request views">
-      <span class="c-saved-views__label">Views</span>
-      <ul class="c-saved-views__list">
-        <li class="c-saved-views__item"><button class="c-saved-views__button" aria-current="true">My queue <span class="c-saved-views__count">18</span></button></li>
-        <li class="c-saved-views__item"><button class="c-saved-views__button">SLA risk <span class="c-saved-views__count">4</span></button></li>
-        <li class="c-saved-views__item"><button class="c-saved-views__button">Blocked <span class="c-saved-views__count">7</span></button></li>
-        <li class="c-saved-views__item"><button class="c-saved-views__button">Awaiting vendor <span class="c-saved-views__count">11</span></button></li>
+    <nav class="pl-c-saved-views" aria-label="Saved request views">
+      <span class="pl-c-saved-views__label">Views</span>
+      <ul class="pl-c-saved-views__list">
+        <li class="pl-c-saved-views__item"><button class="pl-c-saved-views__button" aria-current="true">My queue <span class="pl-c-saved-views__count">18</span></button></li>
+        <li class="pl-c-saved-views__item"><button class="pl-c-saved-views__button">SLA risk <span class="pl-c-saved-views__count">4</span></button></li>
+        <li class="pl-c-saved-views__item"><button class="pl-c-saved-views__button">Blocked <span class="pl-c-saved-views__count">7</span></button></li>
+        <li class="pl-c-saved-views__item"><button class="pl-c-saved-views__button">Awaiting vendor <span class="pl-c-saved-views__count">11</span></button></li>
       </ul>
     </nav>
 
-    <div class="c-query-bar" role="search" aria-label="Active filters">
-      <span class="c-query-bar__label">Active filters</span>
-      <div class="c-query-bar__chips">
-        <span class="c-query-chip">
-          <span class="c-query-chip__field">Status</span>
-          <span class="c-query-chip__operator">is</span>
-          <span class="c-query-chip__value">Blocked</span>
-          <button class="c-query-chip__remove" aria-label="Remove status filter">x</button>
+    <div class="pl-c-query-bar" role="search" aria-label="Active filters">
+      <span class="pl-c-query-bar__label">Active filters</span>
+      <div class="pl-c-query-bar__chips">
+        <span class="pl-c-query-chip">
+          <span class="pl-c-query-chip__field">Status</span>
+          <span class="pl-c-query-chip__operator">is</span>
+          <span class="pl-c-query-chip__value">Blocked</span>
+          <button class="pl-c-query-chip__remove" aria-label="Remove status filter">x</button>
         </span>
-        <span class="c-query-chip">
-          <span class="c-query-chip__field">SLA due</span>
-          <span class="c-query-chip__operator">before</span>
-          <span class="c-query-chip__value">Tomorrow</span>
-          <button class="c-query-chip__remove" aria-label="Remove SLA filter">x</button>
+        <span class="pl-c-query-chip">
+          <span class="pl-c-query-chip__field">SLA due</span>
+          <span class="pl-c-query-chip__operator">before</span>
+          <span class="pl-c-query-chip__value">Tomorrow</span>
+          <button class="pl-c-query-chip__remove" aria-label="Remove SLA filter">x</button>
         </span>
-        <span class="c-query-chip" aria-invalid="true">
-          <span class="c-query-chip__field">Owner</span>
-          <span class="c-query-chip__operator">is</span>
-          <span class="c-query-chip__value">Former teammate</span>
-          <button class="c-query-chip__remove" aria-label="Remove owner filter">x</button>
+        <span class="pl-c-query-chip" aria-invalid="true">
+          <span class="pl-c-query-chip__field">Owner</span>
+          <span class="pl-c-query-chip__operator">is</span>
+          <span class="pl-c-query-chip__value">Former teammate</span>
+          <button class="pl-c-query-chip__remove" aria-label="Remove owner filter">x</button>
         </span>
       </div>
-      <div class="c-query-bar__actions">
-        <button class="c-button" data-variant="ghost" data-size="sm">Clear</button>
-        <button class="c-button" data-variant="secondary" data-size="sm">Share</button>
+      <div class="pl-c-query-bar__actions">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm">Clear</button>
+        <button class="pl-c-button" data-variant="secondary" data-size="sm">Share</button>
       </div>
     </div>
 
-    <form class="c-filter-builder" aria-labelledby="builder-title">
-      <header class="c-filter-builder__header">
+    <form class="pl-c-filter-builder" aria-labelledby="builder-title">
+      <header class="pl-c-filter-builder__header">
         <div>
-          <h2 class="c-filter-builder__title" id="builder-title">Build request query</h2>
-          <p class="c-filter-builder__description">App code owns the query grammar; Porchlight handles layout and state styling.</p>
+          <h2 class="pl-c-filter-builder__title" id="builder-title">Build request query</h2>
+          <p class="pl-c-filter-builder__description">App code owns the query grammar; Porchlight handles layout and state styling.</p>
         </div>
-        <div class="c-filter-builder__actions">
-          <button class="c-button" data-variant="secondary" type="button">Add group</button>
-          <button class="c-button" data-variant="primary" type="submit">Apply filters</button>
+        <div class="pl-c-filter-builder__actions">
+          <button class="pl-c-button" data-variant="secondary" type="button">Add group</button>
+          <button class="pl-c-button" data-variant="primary" type="submit">Apply filters</button>
         </div>
       </header>
 
-      <div class="c-filter-builder__body">
-        <section class="c-filter-builder__group" data-operator="and" aria-labelledby="risk-group">
-          <header class="c-filter-builder__group-header">
-            <h3 class="c-filter-builder__group-title" id="risk-group"><span class="c-filter-builder__joiner">AND</span> Queue criteria</h3>
-            <span class="c-filter-builder__meta">3 active rows</span>
+      <div class="pl-c-filter-builder__body">
+        <section class="pl-c-filter-builder__group" data-operator="and" aria-labelledby="risk-group">
+          <header class="pl-c-filter-builder__group-header">
+            <h3 class="pl-c-filter-builder__group-title" id="risk-group"><span class="pl-c-filter-builder__joiner">AND</span> Queue criteria</h3>
+            <span class="pl-c-filter-builder__meta">3 active rows</span>
           </header>
-          <div class="c-filter-builder__rows">
-            <div class="c-filter-builder__row">
-              <div class="c-filter-builder__field">
-                <label class="u-sr-only" for="field-status">Field</label>
-                <select class="c-field__control c-filter-builder__control" id="field-status">
+          <div class="pl-c-filter-builder__rows">
+            <div class="pl-c-filter-builder__row">
+              <div class="pl-c-filter-builder__field">
+                <label class="pl-u-sr-only" for="field-status">Field</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="field-status">
                   <option>Status</option>
                 </select>
               </div>
-              <div class="c-filter-builder__operator">
-                <label class="u-sr-only" for="operator-status">Operator</label>
-                <select class="c-field__control c-filter-builder__control" id="operator-status">
+              <div class="pl-c-filter-builder__operator">
+                <label class="pl-u-sr-only" for="operator-status">Operator</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="operator-status">
                   <option>is</option>
                 </select>
               </div>
-              <div class="c-filter-builder__value">
-                <label class="u-sr-only" for="value-status">Value</label>
-                <input class="c-field__control c-filter-builder__control" id="value-status" value="Blocked" />
+              <div class="pl-c-filter-builder__value">
+                <label class="pl-u-sr-only" for="value-status">Value</label>
+                <input class="pl-c-field__control pl-c-filter-builder__control" id="value-status" value="Blocked" />
               </div>
-              <button class="c-button c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove status filter">x</button>
+              <button class="pl-c-button pl-c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove status filter">x</button>
             </div>
 
-            <div class="c-filter-builder__row">
-              <div class="c-filter-builder__field">
-                <label class="u-sr-only" for="field-sla">Field</label>
-                <select class="c-field__control c-filter-builder__control" id="field-sla">
+            <div class="pl-c-filter-builder__row">
+              <div class="pl-c-filter-builder__field">
+                <label class="pl-u-sr-only" for="field-sla">Field</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="field-sla">
                   <option>SLA due</option>
                 </select>
               </div>
-              <div class="c-filter-builder__operator">
-                <label class="u-sr-only" for="operator-sla">Operator</label>
-                <select class="c-field__control c-filter-builder__control" id="operator-sla">
+              <div class="pl-c-filter-builder__operator">
+                <label class="pl-u-sr-only" for="operator-sla">Operator</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="operator-sla">
                   <option>before</option>
                 </select>
               </div>
-              <div class="c-filter-builder__value">
-                <label class="u-sr-only" for="value-sla">Value</label>
-                <input class="c-field__control c-filter-builder__control" id="value-sla" value="Tomorrow" />
+              <div class="pl-c-filter-builder__value">
+                <label class="pl-u-sr-only" for="value-sla">Value</label>
+                <input class="pl-c-field__control pl-c-filter-builder__control" id="value-sla" value="Tomorrow" />
               </div>
-              <button class="c-button c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove SLA filter">x</button>
+              <button class="pl-c-button pl-c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove SLA filter">x</button>
             </div>
 
-            <div class="c-filter-builder__row" aria-invalid="true">
-              <div class="c-filter-builder__field">
-                <label class="u-sr-only" for="field-owner">Field</label>
-                <select class="c-field__control c-filter-builder__control" id="field-owner">
+            <div class="pl-c-filter-builder__row" aria-invalid="true">
+              <div class="pl-c-filter-builder__field">
+                <label class="pl-u-sr-only" for="field-owner">Field</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="field-owner">
                   <option>Owner</option>
                 </select>
               </div>
-              <div class="c-filter-builder__operator">
-                <label class="u-sr-only" for="operator-owner">Operator</label>
-                <select class="c-field__control c-filter-builder__control" id="operator-owner">
+              <div class="pl-c-filter-builder__operator">
+                <label class="pl-u-sr-only" for="operator-owner">Operator</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="operator-owner">
                   <option>is</option>
                 </select>
               </div>
-              <div class="c-filter-builder__value">
-                <label class="u-sr-only" for="value-owner">Value</label>
-                <input class="c-field__control c-filter-builder__control" id="value-owner" value="Former teammate" aria-describedby="owner-error" />
+              <div class="pl-c-filter-builder__value">
+                <label class="pl-u-sr-only" for="value-owner">Value</label>
+                <input class="pl-c-field__control pl-c-filter-builder__control" id="value-owner" value="Former teammate" aria-describedby="owner-error" />
               </div>
-              <button class="c-button c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove owner filter">x</button>
-              <p class="c-filter-builder__message" id="owner-error">Owner is no longer an active user. Choose a team or current teammate.</p>
+              <button class="pl-c-button pl-c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove owner filter">x</button>
+              <p class="pl-c-filter-builder__message" id="owner-error">Owner is no longer an active user. Choose a team or current teammate.</p>
             </div>
           </div>
         </section>
 
-        <section class="c-filter-builder__group" data-operator="or" aria-labelledby="channel-group">
-          <header class="c-filter-builder__group-header">
-            <h3 class="c-filter-builder__group-title" id="channel-group"><span class="c-filter-builder__joiner">OR</span> Intake channel</h3>
-            <span class="c-filter-builder__meta">Matches either channel</span>
+        <section class="pl-c-filter-builder__group" data-operator="or" aria-labelledby="channel-group">
+          <header class="pl-c-filter-builder__group-header">
+            <h3 class="pl-c-filter-builder__group-title" id="channel-group"><span class="pl-c-filter-builder__joiner">OR</span> Intake channel</h3>
+            <span class="pl-c-filter-builder__meta">Matches either channel</span>
           </header>
-          <div class="c-filter-builder__rows">
-            <div class="c-filter-builder__row">
-              <div class="c-filter-builder__field">
-                <label class="u-sr-only" for="field-channel">Field</label>
-                <select class="c-field__control c-filter-builder__control" id="field-channel">
+          <div class="pl-c-filter-builder__rows">
+            <div class="pl-c-filter-builder__row">
+              <div class="pl-c-filter-builder__field">
+                <label class="pl-u-sr-only" for="field-channel">Field</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="field-channel">
                   <option>Channel</option>
                 </select>
               </div>
-              <div class="c-filter-builder__operator">
-                <label class="u-sr-only" for="operator-channel">Operator</label>
-                <select class="c-field__control c-filter-builder__control" id="operator-channel">
+              <div class="pl-c-filter-builder__operator">
+                <label class="pl-u-sr-only" for="operator-channel">Operator</label>
+                <select class="pl-c-field__control pl-c-filter-builder__control" id="operator-channel">
                   <option>is one of</option>
                 </select>
               </div>
-              <div class="c-filter-builder__value">
-                <label class="u-sr-only" for="value-channel">Value</label>
-                <input class="c-field__control c-filter-builder__control" id="value-channel" value="Portal, API" />
+              <div class="pl-c-filter-builder__value">
+                <label class="pl-u-sr-only" for="value-channel">Value</label>
+                <input class="pl-c-field__control pl-c-filter-builder__control" id="value-channel" value="Portal, API" />
               </div>
-              <button class="c-button c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove channel filter">x</button>
+              <button class="pl-c-button pl-c-filter-builder__remove" data-variant="ghost" type="button" aria-label="Remove channel filter">x</button>
             </div>
           </div>
         </section>
       </div>
 
-      <footer class="c-filter-builder__footer">
-        <span class="c-filter-builder__hint">18 requests match this draft query.</span>
-        <div class="c-filter-builder__actions">
-          <button class="c-button" data-variant="ghost" type="button">Reset</button>
-          <button class="c-button" data-variant="secondary" type="button">Test query</button>
+      <footer class="pl-c-filter-builder__footer">
+        <span class="pl-c-filter-builder__hint">18 requests match this draft query.</span>
+        <div class="pl-c-filter-builder__actions">
+          <button class="pl-c-button" data-variant="ghost" type="button">Reset</button>
+          <button class="pl-c-button" data-variant="secondary" type="button">Test query</button>
         </div>
       </footer>
     </form>

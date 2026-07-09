@@ -28,7 +28,9 @@ async function expectDocumentScrollsOver(page: Page, selector: string) {
     });
 
     const directPanes = [
-      ...element.querySelectorAll<HTMLElement>(":scope > .c-split-pane__pane"),
+      ...element.querySelectorAll<HTMLElement>(
+        ":scope > .pl-c-split-pane__pane",
+      ),
     ];
     const candidateRects = [element, ...directPanes]
       .map((candidate) => candidate.getBoundingClientRect())
@@ -148,10 +150,10 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Themes & density" }),
     ).toBeVisible();
     const playground = page.locator(".playground");
-    await expect(playground).toHaveAttribute("data-density", "comfortable");
+    await expect(playground).toHaveAttribute("data-pl-density", "comfortable");
     // Switch to touch density; the attribute (and thus --pl-control-block-size) changes.
     await page.getByRole("button", { name: "touch" }).click();
-    await expect(playground).toHaveAttribute("data-density", "touch");
+    await expect(playground).toHaveAttribute("data-pl-density", "touch");
   });
 
   test("base page renders the fluid type scale", async ({ page }) => {
@@ -174,7 +176,7 @@ test.describe("docs scaffold", () => {
     // The dashboard grid renders its KPI widgets.
     await expect(page.getByText("Active seats")).toBeVisible();
     // The sidebar defaults to two columns at desktop width.
-    const sidebar = page.locator(".demo-panel .l-sidebar");
+    const sidebar = page.locator(".demo-panel .pl-l-sidebar");
     await expect(sidebar).toHaveCSS("grid-template-columns", /.+ .+/);
   });
 
@@ -186,11 +188,11 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "App shell", exact: true }),
     ).toBeVisible();
     // All three regions exist.
-    await expect(page.locator(".l-app-shell__topbar")).toBeVisible();
-    await expect(page.locator(".l-app-shell__sidebar")).toBeVisible();
-    await expect(page.locator(".l-app-shell__main")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell__topbar")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell__sidebar")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell__main")).toBeVisible();
     // The collapse toggle shrinks the sidebar via data-sidebar.
-    const rail = page.locator(".l-app-shell__sidebar");
+    const rail = page.locator(".pl-l-app-shell__sidebar");
     await expect(rail).toHaveAttribute("data-sidebar", "expanded");
     await page.getByRole("button", { name: /Collapse sidebar/ }).click();
     await expect(rail).toHaveAttribute("data-sidebar", "collapsed");
@@ -209,7 +211,7 @@ test.describe("docs scaffold", () => {
     }
     // The disabled primary is actually disabled.
     await expect(
-      page.locator(".c-button[data-variant='primary'][disabled]"),
+      page.locator(".pl-c-button[data-variant='primary'][disabled]"),
     ).toBeDisabled();
   });
 
@@ -281,10 +283,10 @@ test.describe("docs scaffold", () => {
       page.getByText("Use a name your team recognizes."),
     ).toBeVisible();
     // The control is a real required input.
-    const input = page.locator(".c-field__control").first();
+    const input = page.locator(".pl-c-field__control").first();
     await expect(input).toHaveAttribute("required", "");
-    await expect(page.locator(".c-field--inline").first()).toBeVisible();
-    await expect(page.locator(".c-input-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-field--inline").first()).toBeVisible();
+    await expect(page.locator(".pl-c-input-group").first()).toBeVisible();
   });
 
   test("form page renders SaaS form patterns", async ({ page }) => {
@@ -292,10 +294,10 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Form", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-form").first()).toBeVisible();
-    await expect(page.locator(".c-form__grid").first()).toBeVisible();
-    await expect(page.locator(".c-choice-group").first()).toBeVisible();
-    await expect(page.locator(".c-input-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-form").first()).toBeVisible();
+    await expect(page.locator(".pl-c-form__grid").first()).toBeVisible();
+    await expect(page.locator(".pl-c-choice-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-input-group").first()).toBeVisible();
   });
 
   test("card page renders cards with headers and bodies", async ({ page }) => {
@@ -306,7 +308,7 @@ test.describe("docs scaffold", () => {
     // The standard card has its title and body.
     await expect(page.getByText("Quarterly usage")).toBeVisible();
     // Interactive cards are real links.
-    const link = page.locator("a.c-card").first();
+    const link = page.locator("a.pl-c-card").first();
     await expect(link).toHaveAttribute("href", "#");
   });
 
@@ -317,10 +319,10 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     for (const tone of ["accent", "success", "warning", "danger"]) {
       await expect(
-        page.locator(`.c-badge[data-tone='${tone}']`).first(),
+        page.locator(`.pl-c-badge[data-tone='${tone}']`).first(),
       ).toBeVisible();
     }
-    await expect(page.locator(".c-badge-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-badge-group").first()).toBeVisible();
   });
 
   test("popover menu opens and closes", async ({ page }) => {
@@ -344,16 +346,16 @@ test.describe("docs scaffold", () => {
   test("popover menu examples use unique anchors", async ({ page }) => {
     await page.goto("./preview/popover-menu");
 
-    // Every menu instance sets a unique --c-menu-anchor so popovers do not
+    // Every menu instance sets a unique --pl-c-menu-anchor so popovers do not
     // tether to the last trigger sharing the default anchor name.
-    const menus = page.locator(".c-menu");
+    const menus = page.locator(".pl-c-menu");
     const count = await menus.count();
     expect(count).toBeGreaterThanOrEqual(2);
     const anchors = new Set<string>();
     for (let i = 0; i < count; i++) {
       const style = (await menus.nth(i).getAttribute("style")) || "";
-      const match = style.match(/--c-menu-anchor:\s*(--[^;]+)/);
-      expect(match, `instance ${i} must set --c-menu-anchor`).not.toBeNull();
+      const match = style.match(/--pl-c-menu-anchor:\s*(--[^;]+)/);
+      expect(match, `instance ${i} must set --pl-c-menu-anchor`).not.toBeNull();
       anchors.add(match![1].trim());
     }
     expect(anchors.size).toBe(count);
@@ -402,27 +404,27 @@ test.describe("docs scaffold", () => {
     // Sortable headers exist with arrows.
     await expect(page.locator("th[data-sort='asc']").first()).toBeVisible();
     await expect(page.locator("th[data-sort='desc']").first()).toBeVisible();
-    await expect(page.locator(".c-table__sort-icon").first()).toBeAttached();
+    await expect(page.locator(".pl-c-table__sort-icon").first()).toBeAttached();
     // Checkbox column cells exist.
     await expect(
-      page.locator(".c-table__check input[type='checkbox']").first(),
+      page.locator(".pl-c-table__check input[type='checkbox']").first(),
     ).toBeVisible();
     // Expand buttons exist.
-    await expect(page.locator(".c-table__expand").first()).toBeVisible();
+    await expect(page.locator(".pl-c-table__expand").first()).toBeVisible();
     // Detail rows exist, first one open by default.
-    const details = page.locator(".c-table__detail");
+    const details = page.locator(".pl-c-table__detail");
     expect(await details.count()).toBeGreaterThanOrEqual(3);
     await expect(details.first()).toHaveAttribute("data-open");
     // Sticky column exists.
-    await expect(page.locator(".c-table__sticky-col").first()).toBeVisible();
+    await expect(page.locator(".pl-c-table__sticky-col").first()).toBeVisible();
     // Compact density table exists.
     await expect(
-      page.locator(".c-table-wrap[data-density='compact']"),
+      page.locator(".pl-c-table-wrap[data-pl-density='compact']"),
     ).toBeVisible();
     // Loading state exists.
     await expect(page.locator("tbody[data-loading]")).toBeVisible();
     await expect(
-      page.locator("tbody[data-loading] .c-skeleton").first(),
+      page.locator("tbody[data-loading] .pl-c-skeleton").first(),
     ).toBeVisible();
   });
 
@@ -434,39 +436,39 @@ test.describe("docs scaffold", () => {
     // The screen-reader-only text exists in the DOM (even though it's not visible).
     await expect(page.getByText("Settings", { exact: true })).toBeAttached();
     // The truncate utility is applied.
-    await expect(page.locator(".u-truncate").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-truncate").first()).toHaveCSS(
       "text-overflow",
       "ellipsis",
     );
-    await expect(page.locator(".u-sr-only").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-sr-only").first()).toHaveCSS(
       "position",
       "absolute",
     );
-    const focusableHidden = page.locator(".u-focusable-sr-only").first();
+    const focusableHidden = page.locator(".pl-u-focusable-sr-only").first();
     await expect(focusableHidden).toHaveCSS("position", "absolute");
     await focusableHidden.focus();
     await expect(focusableHidden).toHaveCSS("position", "static");
-    await expect(page.locator(".u-min-0").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-min-0").first()).toHaveCSS(
       "min-inline-size",
       "0px",
     );
-    await expect(page.locator(".u-wrap-anywhere").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-wrap-anywhere").first()).toHaveCSS(
       "overflow-wrap",
       "anywhere",
     );
-    await expect(page.locator(".u-marginless").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-marginless").first()).toHaveCSS(
       "margin-top",
       "0px",
     );
     const mutedColor = await page
-      .locator(".u-muted")
+      .locator(".pl-u-muted")
       .first()
       .evaluate((el) => getComputedStyle(el).color);
-    await expect(page.locator(".u-muted-sm").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-muted-sm").first()).toHaveCSS(
       "color",
       mutedColor,
     );
-    await expect(page.locator(".u-icon-title").first()).toHaveCSS(
+    await expect(page.locator(".pl-u-icon-title").first()).toHaveCSS(
       "display",
       "inline-flex",
     );
@@ -481,21 +483,21 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // KPI stat tiles render.
     await expect(page.getByText("Monthly revenue").first()).toBeVisible();
-    await expect(page.locator(".c-stat").first()).toBeVisible();
+    await expect(page.locator(".pl-c-stat").first()).toBeVisible();
     // The data table inside the dashboard.
     await expect(
       page.getByRole("columnheader", { name: "Account" }).first(),
     ).toBeVisible();
     // The toolbar with search and primary action.
-    await expect(page.locator(".c-toolbar").first()).toBeVisible();
+    await expect(page.locator(".pl-c-toolbar").first()).toBeVisible();
     // Tabs with counts.
     await expect(
-      page.locator(".c-tabs__tab[aria-selected='true']").first(),
+      page.locator(".pl-c-tabs__tab[aria-selected='true']").first(),
     ).toBeVisible();
     // Pagination at the bottom.
-    await expect(page.locator(".c-pagination").first()).toBeVisible();
+    await expect(page.locator(".pl-c-pagination").first()).toBeVisible();
     // Skeleton loading state.
-    await expect(page.locator(".c-skeleton").first()).toBeVisible();
+    await expect(page.locator(".pl-c-skeleton").first()).toBeVisible();
   });
 
   test("tabs page renders tablist and panels", async ({ page }) => {
@@ -504,11 +506,13 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Tabs", exact: true }),
     ).toBeVisible();
     // The selected tab is visible.
-    const selected = page.locator(".c-tabs__tab[aria-selected='true']").first();
+    const selected = page
+      .locator(".pl-c-tabs__tab[aria-selected='true']")
+      .first();
     await expect(selected).toBeVisible();
     await expect(selected).toContainText("Overview");
     // A disabled tab exists.
-    await expect(page.locator(".c-tabs__tab[disabled]")).toBeDisabled();
+    await expect(page.locator(".pl-c-tabs__tab[disabled]")).toBeDisabled();
     // The active panel is visible (not hidden).
     await expect(page.locator("#panel-overview")).toBeVisible();
     // Inactive panels are hidden.
@@ -521,12 +525,12 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Toolbar", exact: true }),
     ).toBeVisible();
     // At least two groups (leading + trailing).
-    const groups = page.locator(".c-toolbar__group");
+    const groups = page.locator(".pl-c-toolbar__group");
     expect(await groups.count()).toBeGreaterThanOrEqual(2);
     // A divider exists.
-    await expect(page.locator(".c-toolbar__divider").first()).toBeVisible();
+    await expect(page.locator(".pl-c-toolbar__divider").first()).toBeVisible();
     const panelToolbar = page
-      .locator('.c-toolbar[data-surface="panel"]')
+      .locator('.pl-c-toolbar[data-surface="panel"]')
       .first();
     await expect(panelToolbar).toBeVisible();
     const panelSurface = await panelToolbar.evaluate((toolbar) => {
@@ -549,12 +553,14 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // The active page carries aria-current.
     await expect(
-      page.locator(".c-pagination__page[aria-current='page']").first(),
+      page.locator(".pl-c-pagination__page[aria-current='page']").first(),
     ).toBeVisible();
     // Prev is disabled on page 1.
-    await expect(page.locator(".c-pagination__nav").first()).toBeDisabled();
+    await expect(page.locator(".pl-c-pagination__nav").first()).toBeDisabled();
     // An ellipsis exists.
-    await expect(page.locator(".c-pagination__ellipsis").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-pagination__ellipsis").first(),
+    ).toBeVisible();
   });
 
   test("stat renders value, label, and trend", async ({ page }) => {
@@ -566,10 +572,10 @@ test.describe("docs scaffold", () => {
     await expect(page.getByText("Monthly revenue")).toBeVisible();
     await expect(page.getByText("$48,200").first()).toBeVisible();
     // Trend with direction.
-    const up = page.locator(".c-stat__trend[data-direction='up']").first();
+    const up = page.locator(".pl-c-stat__trend[data-direction='up']").first();
     await expect(up).toBeVisible();
     // A sparkline SVG exists.
-    await expect(page.locator(".c-stat__spark svg").first()).toBeVisible();
+    await expect(page.locator(".pl-c-stat__spark svg").first()).toBeVisible();
   });
 
   test("skeleton renders text, circle, and rect shapes", async ({ page }) => {
@@ -579,15 +585,15 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // Text shape (default).
     await expect(
-      page.locator(".c-skeleton[data-shape='text']").first(),
+      page.locator(".pl-c-skeleton[data-shape='text']").first(),
     ).toBeVisible();
     // Circle shape.
     await expect(
-      page.locator(".c-skeleton[data-shape='circle']").first(),
+      page.locator(".pl-c-skeleton[data-shape='circle']").first(),
     ).toBeVisible();
     // Rect shape.
     await expect(
-      page.locator(".c-skeleton[data-shape='rect']").first(),
+      page.locator(".pl-c-skeleton[data-shape='rect']").first(),
     ).toBeVisible();
   });
 
@@ -603,11 +609,11 @@ test.describe("docs scaffold", () => {
     // The actions row has a primary button.
     await expect(
       page
-        .locator(".c-empty__actions .c-button[data-variant='primary']")
+        .locator(".pl-c-empty__actions .pl-c-button[data-variant='primary']")
         .first(),
     ).toBeVisible();
     // The danger tone variant exists.
-    await expect(page.locator(".c-empty[data-tone='danger']")).toBeVisible();
+    await expect(page.locator(".pl-c-empty[data-tone='danger']")).toBeVisible();
   });
 
   test("alert renders every tone with title and body", async ({ page }) => {
@@ -617,13 +623,13 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     for (const tone of ["success", "warning", "danger"]) {
       await expect(
-        page.locator(`.c-alert[data-tone='${tone}']`).first(),
+        page.locator(`.pl-c-alert[data-tone='${tone}']`).first(),
       ).toBeVisible();
     }
     await expect(
-      page.locator(".c-alert:not([data-tone])").first(),
+      page.locator(".pl-c-alert:not([data-tone])").first(),
     ).toBeVisible();
-    await expect(page.locator(".c-alert__icon svg").first()).toBeVisible();
+    await expect(page.locator(".pl-c-alert__icon svg").first()).toBeVisible();
   });
 
   test("progress renders determinate and indeterminate", async ({ page }) => {
@@ -631,10 +637,14 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Progress", exact: true }),
     ).toBeVisible();
-    const bars = page.locator(".c-progress__bar");
+    const bars = page.locator(".pl-c-progress__bar");
     expect(await bars.count()).toBeGreaterThanOrEqual(2);
-    await expect(page.locator(".c-progress[data-indeterminate]")).toBeVisible();
-    await expect(page.locator(".c-progress[data-tone='danger']")).toBeVisible();
+    await expect(
+      page.locator(".pl-c-progress[data-indeterminate]"),
+    ).toBeVisible();
+    await expect(
+      page.locator(".pl-c-progress[data-tone='danger']"),
+    ).toBeVisible();
   });
 
   test("avatar renders initials, image, and group", async ({ page }) => {
@@ -643,14 +653,14 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Avatar", exact: true }),
     ).toBeVisible();
     await expect(
-      page.locator(".c-avatar[data-size='sm']").first(),
+      page.locator(".pl-c-avatar[data-size='sm']").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-avatar[data-size='lg']").first(),
+      page.locator(".pl-c-avatar[data-size='lg']").first(),
     ).toBeVisible();
-    await expect(page.locator(".c-avatar__img").first()).toBeVisible();
-    await expect(page.locator(".c-avatar-group").first()).toBeVisible();
-    await expect(page.locator(".c-avatar-group__more")).toBeVisible();
+    await expect(page.locator(".pl-c-avatar__img").first()).toBeVisible();
+    await expect(page.locator(".pl-c-avatar-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-avatar-group__more")).toBeVisible();
   });
 
   test("getting-started guide has install and layer instructions", async ({
@@ -675,7 +685,7 @@ test.describe("docs scaffold", () => {
     await expect(
       content.getByRole("heading", { name: "Theming", exact: true }),
     ).toBeVisible();
-    await expect(content.getByText("data-density").first()).toBeVisible();
+    await expect(content.getByText("data-pl-density").first()).toBeVisible();
     await expect(content.getByText("light-dark()").first()).toBeVisible();
   });
 
@@ -800,8 +810,8 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Tooltip", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-tooltip__trigger").first()).toBeVisible();
-    await expect(page.locator(".c-tooltip__body").first()).toHaveAttribute(
+    await expect(page.locator(".pl-c-tooltip__trigger").first()).toBeVisible();
+    await expect(page.locator(".pl-c-tooltip__body").first()).toHaveAttribute(
       "role",
       "tooltip",
     );
@@ -812,11 +822,11 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Accordion", exact: true }),
     ).toBeVisible();
-    const items = page.locator(".c-accordion__item");
+    const items = page.locator(".pl-c-accordion__item");
     expect(await items.count()).toBeGreaterThanOrEqual(3);
-    await expect(page.locator(".c-accordion__icon").first()).toBeVisible();
+    await expect(page.locator(".pl-c-accordion__icon").first()).toBeVisible();
     // The open-by-default item exists.
-    await expect(page.locator(".c-accordion__item[open]")).toBeVisible();
+    await expect(page.locator(".pl-c-accordion__item[open]")).toBeVisible();
   });
 
   test("switch renders tracks and thumbs", async ({ page }) => {
@@ -824,13 +834,13 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Switch", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-switch__track").first()).toBeVisible();
-    await expect(page.locator(".c-switch__thumb").first()).toBeVisible();
+    await expect(page.locator(".pl-c-switch__track").first()).toBeVisible();
+    await expect(page.locator(".pl-c-switch__thumb").first()).toBeVisible();
     await expect(
-      page.locator(".c-switch[data-size='sm']").first(),
+      page.locator(".pl-c-switch[data-size='sm']").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-switch[data-size='lg']").first(),
+      page.locator(".pl-c-switch[data-size='lg']").first(),
     ).toBeVisible();
   });
 
@@ -841,11 +851,11 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     for (const tone of ["success", "warning", "danger"]) {
       await expect(
-        page.locator(`.c-chip[data-tone='${tone}']`).first(),
+        page.locator(`.pl-c-chip[data-tone='${tone}']`).first(),
       ).toBeVisible();
     }
-    await expect(page.locator(".c-chip__remove").first()).toBeVisible();
-    await expect(page.locator(".c-chip-group").first()).toBeVisible();
+    await expect(page.locator(".pl-c-chip__remove").first()).toBeVisible();
+    await expect(page.locator(".pl-c-chip-group").first()).toBeVisible();
   });
 
   test("drawer renders with popover and side variants", async ({ page }) => {
@@ -854,13 +864,15 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Drawer", exact: true }),
     ).toBeVisible();
     // The drawer elements exist with popover attribute.
-    await expect(page.locator(".c-drawer[popover]").first()).toBeAttached();
+    await expect(page.locator(".pl-c-drawer[popover]").first()).toBeAttached();
     // Both side variants exist.
-    await expect(page.locator(".c-drawer[data-side='start']")).toBeAttached();
-    await expect(page.locator(".c-drawer[data-side='end']")).toBeAttached();
+    await expect(
+      page.locator(".pl-c-drawer[data-side='start']"),
+    ).toBeAttached();
+    await expect(page.locator(".pl-c-drawer[data-side='end']")).toBeAttached();
     // Drawer has header, body, footer.
-    await expect(page.locator(".c-drawer__header").first()).toBeAttached();
-    await expect(page.locator(".c-drawer__body").first()).toBeAttached();
+    await expect(page.locator(".pl-c-drawer__header").first()).toBeAttached();
+    await expect(page.locator(".pl-c-drawer__body").first()).toBeAttached();
   });
 
   test("toast renders tones and close buttons", async ({ page }) => {
@@ -869,17 +881,19 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Toast", exact: true }),
     ).toBeVisible();
     // Toast stack exists.
-    await expect(page.locator(".c-toast-stack").first()).toBeVisible();
+    await expect(page.locator(".pl-c-toast-stack").first()).toBeVisible();
     // All tones present.
     for (const tone of ["success", "warning", "danger"]) {
-      await expect(page.locator(`.c-toast[data-tone='${tone}']`)).toBeVisible();
+      await expect(
+        page.locator(`.pl-c-toast[data-tone='${tone}']`),
+      ).toBeVisible();
     }
     // Default (no tone) toast exists.
     await expect(
-      page.locator(".c-toast:not([data-tone])").first(),
+      page.locator(".pl-c-toast:not([data-tone])").first(),
     ).toBeVisible();
     // Close buttons exist.
-    await expect(page.locator(".c-toast__close").first()).toBeVisible();
+    await expect(page.locator(".pl-c-toast__close").first()).toBeVisible();
     for (const placement of [
       "bottom-end",
       "bottom-start",
@@ -887,7 +901,9 @@ test.describe("docs scaffold", () => {
       "top-start",
     ]) {
       await expect(
-        page.locator(`.c-toast-stack[data-placement='${placement}']`).first(),
+        page
+          .locator(`.pl-c-toast-stack[data-placement='${placement}']`)
+          .first(),
       ).toBeVisible();
     }
     const placements = await page.evaluate(() => {
@@ -895,7 +911,7 @@ test.describe("docs scaffold", () => {
       const out: Record<string, Record<string, string>> = {};
       for (const value of values) {
         const stack = document.createElement("div");
-        stack.className = "c-toast-stack";
+        stack.className = "pl-c-toast-stack";
         stack.dataset.placement = value;
         document.body.append(stack);
         const style = getComputedStyle(stack);
@@ -923,13 +939,13 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Scroll Progress", exact: true }),
     ).toBeVisible();
     // The progress bar element is attached.
-    await expect(page.locator(".c-scroll-progress")).toBeAttached();
+    await expect(page.locator(".pl-c-scroll-progress")).toBeAttached();
     // Reveal sections exist.
-    const reveals = page.locator(".c-reveal");
+    const reveals = page.locator(".pl-c-reveal");
     expect(await reveals.count()).toBeGreaterThanOrEqual(4);
     // Delay variants exist.
-    await expect(page.locator(".c-reveal[data-delay='1']")).toBeAttached();
-    await expect(page.locator(".c-reveal[data-delay='3']")).toBeAttached();
+    await expect(page.locator(".pl-c-reveal[data-delay='1']")).toBeAttached();
+    await expect(page.locator(".pl-c-reveal[data-delay='3']")).toBeAttached();
   });
 
   test("breadcrumb renders trail with current page", async ({ page }) => {
@@ -938,11 +954,13 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Breadcrumb", exact: true }),
     ).toBeVisible();
     // Links exist.
-    await expect(page.locator(".c-breadcrumb__link").first()).toBeVisible();
+    await expect(page.locator(".pl-c-breadcrumb__link").first()).toBeVisible();
     // Current page exists.
-    await expect(page.locator(".c-breadcrumb__current").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-breadcrumb__current").first(),
+    ).toBeVisible();
     // Multiple items (trail).
-    const items = page.locator(".c-breadcrumb__item");
+    const items = page.locator(".pl-c-breadcrumb__item");
     expect(await items.count()).toBeGreaterThanOrEqual(3);
   });
 
@@ -953,16 +971,16 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // All three states exist.
     await expect(
-      page.locator(".c-stepper__step[data-state='completed']").first(),
+      page.locator(".pl-c-stepper__step[data-state='completed']").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-stepper__step[data-state='current']").first(),
+      page.locator(".pl-c-stepper__step[data-state='current']").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-stepper__step[data-state='upcoming']").first(),
+      page.locator(".pl-c-stepper__step[data-state='upcoming']").first(),
     ).toBeVisible();
     // Markers exist.
-    await expect(page.locator(".c-stepper__marker").first()).toBeVisible();
+    await expect(page.locator(".pl-c-stepper__marker").first()).toBeVisible();
   });
 
   test("stepper collapses vertically in narrow containers", async ({
@@ -974,7 +992,7 @@ test.describe("docs scaffold", () => {
     const state = await page.evaluate(() => {
       const scrollRoot = document.scrollingElement;
       const steppers = [
-        ...document.querySelectorAll<HTMLElement>(".c-stepper"),
+        ...document.querySelectorAll<HTMLElement>(".pl-c-stepper"),
       ];
 
       return {
@@ -984,7 +1002,7 @@ test.describe("docs scaffold", () => {
         steppers: steppers.map((stepper) => {
           const rect = stepper.getBoundingClientRect();
           const steps = [
-            ...stepper.querySelectorAll<HTMLElement>(".c-stepper__step"),
+            ...stepper.querySelectorAll<HTMLElement>(".pl-c-stepper__step"),
           ].map((step) => {
             const stepRect = step.getBoundingClientRect();
             const style = getComputedStyle(step);
@@ -1030,13 +1048,13 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Timeline", exact: true }),
     ).toBeVisible();
-    const items = page.locator(".c-timeline__item");
+    const items = page.locator(".pl-c-timeline__item");
     expect(await items.count()).toBeGreaterThanOrEqual(3);
-    await expect(page.locator(".c-timeline__dot").first()).toBeVisible();
-    await expect(page.locator(".c-timeline__title").first()).toBeVisible();
+    await expect(page.locator(".pl-c-timeline__dot").first()).toBeVisible();
+    await expect(page.locator(".pl-c-timeline__title").first()).toBeVisible();
     // Tone variant exists.
     await expect(
-      page.locator(".c-timeline__item[data-tone='success']"),
+      page.locator(".pl-c-timeline__item[data-tone='success']"),
     ).toBeVisible();
   });
 
@@ -1045,9 +1063,9 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Auto-Growing Textarea", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-textarea-auto").first()).toBeVisible();
+    await expect(page.locator(".pl-c-textarea-auto").first()).toBeVisible();
     // Disabled variant exists.
-    await expect(page.locator(".c-textarea-auto[disabled]")).toBeVisible();
+    await expect(page.locator(".pl-c-textarea-auto[disabled]")).toBeVisible();
   });
 
   test("segmented control renders radio groups with checked state", async ({
@@ -1057,17 +1075,17 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Segmented control", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-segmented").first()).toBeVisible();
+    await expect(page.locator(".pl-c-segmented").first()).toBeVisible();
     // Multiple radiogroups.
     const groups = page.locator("[role='radiogroup']");
     expect(await groups.count()).toBeGreaterThanOrEqual(3);
     // Checked items exist.
     await expect(
-      page.locator(".c-segmented__item input:checked").first(),
+      page.locator(".pl-c-segmented__item input:checked").first(),
     ).toBeAttached();
     // Disabled item exists.
     await expect(
-      page.locator(".c-segmented__item input:disabled"),
+      page.locator(".pl-c-segmented__item input:disabled"),
     ).toBeAttached();
   });
 
@@ -1076,13 +1094,15 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Tag input", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-tag-input").first()).toBeVisible();
-    await expect(page.locator(".c-tag-input__field").first()).toBeVisible();
-    await expect(page.locator(".c-tag-input .c-chip").first()).toBeVisible();
-    await expect(page.locator(".c-chip__remove").first()).toBeVisible();
+    await expect(page.locator(".pl-c-tag-input").first()).toBeVisible();
+    await expect(page.locator(".pl-c-tag-input__field").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-tag-input .pl-c-chip").first(),
+    ).toBeVisible();
+    await expect(page.locator(".pl-c-chip__remove").first()).toBeVisible();
 
     const labelsWithButtons = await page
-      .locator("label.c-field:has(button)")
+      .locator("label.pl-c-field:has(button)")
       .count();
     expect(
       labelsWithButtons,
@@ -1096,21 +1116,23 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Description list", exact: true }),
     ).toBeVisible();
     // The dl element exists.
-    await expect(page.locator(".c-description").first()).toBeVisible();
+    await expect(page.locator(".pl-c-description").first()).toBeVisible();
     // Terms and details are present.
-    await expect(page.locator(".c-description__term").first()).toBeVisible();
-    await expect(page.locator(".c-description__detail").first()).toBeVisible();
+    await expect(page.locator(".pl-c-description__term").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-description__detail").first(),
+    ).toBeVisible();
     // Multiple rows exist.
     expect(
-      await page.locator(".c-description__row").count(),
+      await page.locator(".pl-c-description__row").count(),
     ).toBeGreaterThanOrEqual(3);
     // Dividers variant exists.
     await expect(
-      page.locator(".c-description[data-dividers]").first(),
+      page.locator(".pl-c-description[data-dividers]").first(),
     ).toBeAttached();
     // Stacked layout variant exists.
     await expect(
-      page.locator(".c-description[data-layout='stacked']").first(),
+      page.locator(".pl-c-description[data-layout='stacked']").first(),
     ).toBeAttached();
   });
 
@@ -1120,20 +1142,22 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Page header", exact: true }),
     ).toBeVisible();
     // The component exists.
-    await expect(page.locator(".c-page-header").first()).toBeVisible();
+    await expect(page.locator(".pl-c-page-header").first()).toBeVisible();
     // Title is present.
-    await expect(page.locator(".c-page-header__title").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-page-header__title").first(),
+    ).toBeVisible();
     // Actions contain real buttons.
     await expect(
-      page.locator(".c-page-header__actions .c-button").first(),
+      page.locator(".pl-c-page-header__actions .pl-c-button").first(),
     ).toBeVisible();
     // Subtitle variant exists.
     await expect(
-      page.locator(".c-page-header__subtitle").first(),
+      page.locator(".pl-c-page-header__subtitle").first(),
     ).toBeVisible();
     // Page header composes with a data table.
     await expect(
-      page.locator(".c-page-header ~ .c-table-wrap .c-table"),
+      page.locator(".pl-c-page-header ~ .pl-c-table-wrap .pl-c-table"),
     ).toBeVisible();
   });
 
@@ -1142,8 +1166,8 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Dropdown", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-dropdown__trigger").first()).toBeVisible();
-    await expect(page.locator(".c-dropdown__chevron").first()).toBeVisible();
+    await expect(page.locator(".pl-c-dropdown__trigger").first()).toBeVisible();
+    await expect(page.locator(".pl-c-dropdown__chevron").first()).toBeVisible();
     await expect(page.locator("#dd-trigger-1")).toHaveAttribute(
       "aria-haspopup",
       "menu",
@@ -1161,7 +1185,7 @@ test.describe("docs scaffold", () => {
     await expect(menu).toBeAttached();
     await expect(menu).toHaveAttribute("role", "menu");
     // Options exist.
-    await expect(page.locator(".c-dropdown__option").first()).toBeAttached();
+    await expect(page.locator(".pl-c-dropdown__option").first()).toBeAttached();
     await expect(
       menu.locator("[role='menuitemradio']").first(),
     ).toHaveAttribute("aria-checked", "true");
@@ -1188,34 +1212,34 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
 
     // Primary + toggle segments are present.
-    await expect(page.locator(".c-split__primary").first()).toBeVisible();
-    await expect(page.locator(".c-split__toggle").first()).toBeVisible();
-    await expect(page.locator(".c-split__chevron").first()).toBeVisible();
+    await expect(page.locator(".pl-c-split__primary").first()).toBeVisible();
+    await expect(page.locator(".pl-c-split__toggle").first()).toBeVisible();
+    await expect(page.locator(".pl-c-split__chevron").first()).toBeVisible();
 
     // Both segments of each instance share the same data-variant.
-    const firstSplit = page.locator(".c-split").first();
+    const firstSplit = page.locator(".pl-c-split").first();
     const primaryVariant = await firstSplit
-      .locator(".c-split__primary")
+      .locator(".pl-c-split__primary")
       .getAttribute("data-variant");
     const toggleVariant = await firstSplit
-      .locator(".c-split__toggle")
+      .locator(".pl-c-split__toggle")
       .getAttribute("data-variant");
     expect(primaryVariant).toBe(toggleVariant);
 
     // Menus exist with popover attr.
     await expect(
-      page.locator(".c-split__menu[popover]").first(),
+      page.locator(".pl-c-split__menu[popover]").first(),
     ).toBeAttached();
     // Options exist, including a danger item.
-    await expect(page.locator(".c-split__option").first()).toBeAttached();
+    await expect(page.locator(".pl-c-split__option").first()).toBeAttached();
     await expect(
-      page.locator(".c-split__option[data-tone='danger']").first(),
+      page.locator(".pl-c-split__option[data-tone='danger']").first(),
     ).toBeAttached();
 
     // Every menu-bearing instance has a unique split anchor so popovers don't
     // all tether to the last toggle on the page. The value may come from local
     // preview CSS rather than an inline style.
-    const splits = page.locator(".c-split:has(.c-split__menu)");
+    const splits = page.locator(".pl-c-split:has(.pl-c-split__menu)");
     const count = await splits.count();
     expect(count).toBeGreaterThanOrEqual(2);
     const anchors = new Set<string>();
@@ -1223,9 +1247,11 @@ test.describe("docs scaffold", () => {
       const anchor = await splits
         .nth(i)
         .evaluate((split) =>
-          getComputedStyle(split).getPropertyValue("--c-split-anchor").trim(),
+          getComputedStyle(split)
+            .getPropertyValue("--pl-c-split-anchor")
+            .trim(),
         );
-      expect(anchor, `instance ${i} must set --c-split-anchor`).toMatch(
+      expect(anchor, `instance ${i} must set --pl-c-split-anchor`).toMatch(
         /^--.+/,
       );
       anchors.add(anchor);
@@ -1245,7 +1271,7 @@ test.describe("docs scaffold", () => {
     await page.locator("[popovertarget='sb-1']").click();
     await expect(menu).toBeVisible();
     // Options are real buttons inside the open popover.
-    await expect(menu.locator(".c-split__option").first()).toBeVisible();
+    await expect(menu.locator(".pl-c-split__option").first()).toBeVisible();
     // Esc closes.
     await page.keyboard.press("Escape");
     await expect(menu).toBeHidden();
@@ -1256,14 +1282,13 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "File upload", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-file-upload__zone").first()).toBeVisible();
-    await expect(page.locator(".c-file-upload__input").first()).toHaveAttribute(
-      "type",
-      "file",
-    );
+    await expect(page.locator(".pl-c-file-upload__zone").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-file-upload__input").first(),
+    ).toHaveAttribute("type", "file");
     // Disabled variant exists.
     await expect(
-      page.locator(".c-file-upload__input[disabled]"),
+      page.locator(".pl-c-file-upload__input[disabled]"),
     ).toBeAttached();
   });
 
@@ -1274,23 +1299,23 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Command palette", exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".c-command[popover]")).toBeAttached();
-    await expect(page.locator(".c-command[popover]")).toHaveAttribute(
+    await expect(page.locator(".pl-c-command[popover]")).toBeAttached();
+    await expect(page.locator(".pl-c-command[popover]")).toHaveAttribute(
       "role",
       "dialog",
     );
     await expect(
       page.getByRole("button", { name: "Open command palette" }),
     ).toHaveAttribute("aria-expanded", "false");
-    await expect(page.locator(".c-command__search")).toBeAttached();
-    await expect(page.locator(".c-command__search")).toHaveAttribute(
+    await expect(page.locator(".pl-c-command__search")).toBeAttached();
+    await expect(page.locator(".pl-c-command__search")).toHaveAttribute(
       "role",
       "combobox",
     );
-    await expect(page.locator(".c-command__item").first()).toBeAttached();
-    await expect(page.locator(".c-command__heading").first()).toBeAttached();
+    await expect(page.locator(".pl-c-command__item").first()).toBeAttached();
+    await expect(page.locator(".pl-c-command__heading").first()).toBeAttached();
     // Footer exists (may be hidden since popover is closed).
-    await expect(page.locator(".c-command__footer")).toBeAttached();
+    await expect(page.locator(".pl-c-command__footer")).toBeAttached();
 
     await page.getByRole("button", { name: "Open command palette" }).click();
     await expect(page.locator("#cmdk")).toBeVisible();
@@ -1316,35 +1341,35 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Nav", exact: true }),
     ).toBeVisible();
     // Nav items exist.
-    await expect(page.locator(".c-nav__item").first()).toBeVisible();
-    await expect(page.locator(".c-nav__label").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__item").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__label").first()).toBeVisible();
     // Active item exists.
     await expect(
-      page.locator(".c-nav__item[aria-current='page']").first(),
+      page.locator(".pl-c-nav__item[aria-current='page']").first(),
     ).toBeVisible();
     // Icons exist.
-    await expect(page.locator(".c-nav__icon").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__icon").first()).toBeVisible();
     // Collapsible section exists and one is open.
-    await expect(page.locator(".c-nav__section").first()).toBeVisible();
-    await expect(page.locator(".c-nav__section[open]")).toBeVisible();
+    await expect(page.locator(".pl-c-nav__section").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__section[open]")).toBeVisible();
     // Chevron exists.
-    await expect(page.locator(".c-nav__chevron").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__chevron").first()).toBeVisible();
     // Icons-only variant exists.
-    await expect(page.locator(".c-nav[data-variant='icons']")).toBeVisible();
+    await expect(page.locator(".pl-c-nav[data-variant='icons']")).toBeVisible();
     // Child items exist.
-    await expect(page.locator(".c-nav__item--child").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__item--child").first()).toBeVisible();
     // Group labels, dividers, and nav-hosted menus exist.
-    await expect(page.locator(".c-nav__group-label").first()).toBeVisible();
-    await expect(page.locator(".c-nav__divider").first()).toBeAttached();
-    await expect(page.locator(".c-nav__menu").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__group-label").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__divider").first()).toBeAttached();
+    await expect(page.locator(".pl-c-nav__menu").first()).toBeVisible();
     await expect(
-      page.locator(".c-nav__menu .c-menu__trigger").first(),
+      page.locator(".pl-c-nav__menu .pl-c-menu__trigger").first(),
     ).toBeVisible();
     // Generic footer metadata and compact nav actions exist.
-    await expect(page.locator(".c-nav__meta").first()).toBeVisible();
-    await expect(page.locator(".c-nav__action").first()).toBeVisible();
-    await expect(page.locator("a.c-nav__action").first()).toBeVisible();
-    await expect(page.locator("button.c-nav__action").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__meta").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__action").first()).toBeVisible();
+    await expect(page.locator("a.pl-c-nav__action").first()).toBeVisible();
+    await expect(page.locator("button.pl-c-nav__action").first()).toBeVisible();
   });
 
   test("app-dashboard renders app shell with nav, stats, and table", async ({
@@ -1355,23 +1380,23 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Dashboard" }).first(),
     ).toBeVisible();
     // App shell layout.
-    await expect(page.locator(".l-app-shell")).toBeVisible();
-    await expect(page.locator(".l-app-shell__topbar")).toBeVisible();
-    await expect(page.locator(".l-app-shell__sidebar")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell__topbar")).toBeVisible();
+    await expect(page.locator(".pl-l-app-shell__sidebar")).toBeVisible();
     // Nav items exist.
-    await expect(page.locator(".c-nav__item").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav__item").first()).toBeVisible();
     // KPI stat cards.
-    const stats = page.locator(".c-stat");
+    const stats = page.locator(".pl-c-stat");
     expect(await stats.count()).toBeGreaterThanOrEqual(4);
     // Data table with toolbar.
-    await expect(page.locator(".c-table-wrap")).toBeVisible();
-    await expect(page.locator(".c-toolbar").first()).toBeVisible();
+    await expect(page.locator(".pl-c-table-wrap")).toBeVisible();
+    await expect(page.locator(".pl-c-toolbar").first()).toBeVisible();
     // Segmented view toggle.
-    await expect(page.locator(".c-segmented").first()).toBeVisible();
+    await expect(page.locator(".pl-c-segmented").first()).toBeVisible();
     // Pagination.
-    await expect(page.locator(".c-pagination")).toBeVisible();
+    await expect(page.locator(".pl-c-pagination")).toBeVisible();
     // Timeline.
-    await expect(page.locator(".c-timeline").first()).toBeVisible();
+    await expect(page.locator(".pl-c-timeline").first()).toBeVisible();
   });
 
   test("app-inbox renders master-detail with sidebar collapse", async ({
@@ -1382,9 +1407,9 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Responsive inbox", exact: true }),
     ).toBeVisible();
     // Folder nav exists.
-    await expect(page.locator(".c-nav").first()).toBeVisible();
+    await expect(page.locator(".pl-c-nav").first()).toBeVisible();
     // Master-detail sidebar layout.
-    await expect(page.locator(".l-sidebar")).toBeVisible();
+    await expect(page.locator(".pl-l-sidebar")).toBeVisible();
     // Message list items.
     const msgs = page.locator(".msg-item");
     expect(await msgs.count()).toBeGreaterThanOrEqual(5);
@@ -1405,20 +1430,20 @@ test.describe("docs scaffold", () => {
       }),
     ).toBeVisible();
     // Scroll progress bar.
-    await expect(page.locator(".c-scroll-progress")).toBeAttached();
+    await expect(page.locator(".pl-c-scroll-progress")).toBeAttached();
     // Feature cards in multi-column layout.
-    await expect(page.locator(".l-columns").first()).toBeVisible();
-    const cards = page.locator(".l-columns .c-card");
+    await expect(page.locator(".pl-l-columns").first()).toBeVisible();
+    const cards = page.locator(".pl-l-columns .pl-c-card");
     expect(await cards.count()).toBeGreaterThanOrEqual(5);
     // Reveal elements exist.
-    const reveals = page.locator(".c-reveal");
+    const reveals = page.locator(".pl-c-reveal");
     expect(await reveals.count()).toBeGreaterThanOrEqual(5);
     // Stat blocks.
     await expect(page.locator(".stat-block").first()).toBeVisible();
     // Container layout.
-    await expect(page.locator(".l-container").first()).toBeVisible();
+    await expect(page.locator(".pl-l-container").first()).toBeVisible();
     // Inset content inside full-bleed hero.
-    await expect(page.locator(".l-inset").first()).toBeVisible();
+    await expect(page.locator(".pl-l-inset").first()).toBeVisible();
   });
 
   // -----------------------------------------------------------------------
@@ -1435,23 +1460,23 @@ test.describe("docs scaffold", () => {
     const stats = page.locator(".siem-kpi");
     expect(await stats.count()).toBeGreaterThanOrEqual(4);
     // Alert data table with rows.
-    await expect(page.locator(".c-table")).toBeVisible();
-    const alertRows = page.locator(".c-table tbody tr");
+    await expect(page.locator(".pl-c-table")).toBeVisible();
+    const alertRows = page.locator(".pl-c-table tbody tr");
     expect(await alertRows.count()).toBeGreaterThanOrEqual(10);
     // Severity badges.
     expect(
-      await page.locator(".c-badge[data-tone='danger']").count(),
+      await page.locator(".pl-c-badge[data-tone='danger']").count(),
     ).toBeGreaterThanOrEqual(3);
     // Live event timeline.
-    await expect(page.locator(".c-timeline")).toBeVisible();
-    const events = page.locator(".c-timeline__item");
+    await expect(page.locator(".pl-c-timeline")).toBeVisible();
+    const events = page.locator(".pl-c-timeline__item");
     expect(await events.count()).toBeGreaterThanOrEqual(6);
     // Sidebar nav.
-    await expect(page.locator(".c-nav")).toBeVisible();
+    await expect(page.locator(".pl-c-nav")).toBeVisible();
     // Command palette exists.
     await expect(page.locator("#siem-cmdk")).toBeAttached();
     // Pagination.
-    await expect(page.locator(".c-pagination")).toBeVisible();
+    await expect(page.locator(".pl-c-pagination")).toBeVisible();
   });
 
   // -----------------------------------------------------------------------
@@ -1466,28 +1491,28 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // Filter chips.
     expect(
-      await page.locator(".cases-filters .c-chip").count(),
+      await page.locator(".cases-filters .pl-c-chip").count(),
     ).toBeGreaterThanOrEqual(2);
     // Case data table.
-    await expect(page.locator(".c-table")).toBeVisible();
-    const caseRows = page.locator(".c-table tbody tr");
+    await expect(page.locator(".pl-c-table")).toBeVisible();
+    const caseRows = page.locator(".pl-c-table tbody tr");
     expect(await caseRows.count()).toBeGreaterThanOrEqual(10);
     // Priority badges.
     expect(
-      await page.locator(".c-badge[data-tone='danger']").count(),
+      await page.locator(".pl-c-badge[data-tone='danger']").count(),
     ).toBeGreaterThanOrEqual(1);
     // Tag chips in table.
     expect(
-      await page.locator(".c-table .c-chip").count(),
+      await page.locator(".pl-c-table .pl-c-chip").count(),
     ).toBeGreaterThanOrEqual(5);
     // Avatar group in filter bar.
-    await expect(page.locator(".c-avatar-group")).toBeVisible();
+    await expect(page.locator(".pl-c-avatar-group")).toBeVisible();
     // Team workload sidebar.
     await expect(page.locator(".cases-workload")).toBeVisible();
     // Detail drawer exists (popover).
     await expect(page.locator("#case-detail")).toBeAttached();
     // Pagination.
-    await expect(page.locator(".c-pagination")).toBeVisible();
+    await expect(page.locator(".pl-c-pagination")).toBeVisible();
   });
 
   test("app-dense renders compact console with KPIs and event table", async ({
@@ -1496,7 +1521,7 @@ test.describe("docs scaffold", () => {
     await page.goto("./preview/app-dense");
     // The dense density tier is active on the container.
     await expect(
-      page.locator(".dense-app[data-density='dense']"),
+      page.locator(".dense-app[data-pl-density='dense']"),
     ).toBeVisible();
     // Topbar with brand and search.
     await expect(page.locator(".dense-brand")).toBeVisible();
@@ -1504,21 +1529,23 @@ test.describe("docs scaffold", () => {
     // KPI strip with 8 metrics.
     expect(await page.locator(".dense-kpi").count()).toBeGreaterThanOrEqual(8);
     // Event data table with rows.
-    await expect(page.locator(".dense-table .c-table")).toBeVisible();
+    await expect(page.locator(".dense-table .pl-c-table")).toBeVisible();
     const eventRows = page.locator(".dense-table tbody tr");
     expect(await eventRows.count()).toBeGreaterThanOrEqual(10);
     // Severity badges in table.
     expect(
-      await page.locator(".dense-table .c-badge").count(),
+      await page.locator(".dense-table .pl-c-badge").count(),
     ).toBeGreaterThanOrEqual(5);
     // Split button in toolbar.
-    await expect(page.locator(".dense-toolbar .c-split__toggle")).toBeVisible();
+    await expect(
+      page.locator(".dense-toolbar .pl-c-split__toggle"),
+    ).toBeVisible();
     // Sidebar nav sections.
     expect(
       await page.locator(".dense-nav-item").count(),
     ).toBeGreaterThanOrEqual(10);
     // Pagination.
-    await expect(page.locator(".dense-pager .c-pagination")).toBeVisible();
+    await expect(page.locator(".dense-pager .pl-c-pagination")).toBeVisible();
   });
 
   test("list detail preview keeps medium-width spacing and table overflow controlled", async ({
@@ -1533,16 +1560,16 @@ test.describe("docs scaffold", () => {
 
       const layout = await page.evaluate(() => {
         const shellTopbar = document.querySelector(
-          ".list-detail-shell > .l-app-shell__topbar",
+          ".list-detail-shell > .pl-l-app-shell__topbar",
         );
-        const sidebar = document.querySelector(".l-app-shell__sidebar");
+        const sidebar = document.querySelector(".pl-l-app-shell__sidebar");
         const workspace = document.querySelector(".list-detail-workspace");
         const split = document.querySelector(".list-detail-split");
         const startPane = document.querySelector(
-          ".list-detail-split > .c-split-pane__pane--start",
+          ".list-detail-split > .pl-c-split-pane__pane--start",
         );
         const endPane = document.querySelector(
-          ".list-detail-split > .c-split-pane__pane--end",
+          ".list-detail-split > .pl-c-split-pane__pane--end",
         );
         const tableWrap = document.querySelector(".list-detail-table");
         const listBody = document.querySelector(".list-detail-list-body");
@@ -1628,13 +1655,13 @@ test.describe("docs scaffold", () => {
     const desktopLayout = await page.evaluate(() => {
       const siteHeader = document.querySelector(".site-header");
       const appTopbar = document.querySelector(
-        ".builder-shell > .l-app-shell__topbar",
+        ".builder-shell > .pl-l-app-shell__topbar",
       );
       const map = document.querySelector(
-        ".builder-editor-split > .c-split-pane__pane--start",
+        ".builder-editor-split > .pl-c-split-pane__pane--start",
       );
       const inspector = document.querySelector(
-        ".builder-editor-split > .c-split-pane__pane--end",
+        ".builder-editor-split > .pl-c-split-pane__pane--end",
       );
       const editorSplit = document.querySelector(".builder-editor-split");
 
@@ -1684,7 +1711,7 @@ test.describe("docs scaffold", () => {
     await page.goto("./preview/app-process-builder");
 
     const clippedShells = await page.evaluate(() => {
-      const alert = document.querySelector(".c-alert[data-tone='warning']");
+      const alert = document.querySelector(".pl-c-alert[data-tone='warning']");
       const builderSplit = document.querySelector(".builder-split");
       const editorSplit = document.querySelector(".builder-editor-split");
 
@@ -1719,7 +1746,7 @@ test.describe("docs scaffold", () => {
       },
       {
         route: "./preview/app-queue-triage",
-        splitSelectors: [".l-app-shell__main > .c-split-pane"],
+        splitSelectors: [".pl-l-app-shell__main > .pl-c-split-pane"],
       },
       {
         route: "./preview/app-process-builder",
@@ -1727,7 +1754,7 @@ test.describe("docs scaffold", () => {
       },
       {
         route: "./preview/app-command-workspace",
-        splitSelectors: [".l-app-shell__main .c-split-pane"],
+        splitSelectors: [".pl-l-app-shell__main .pl-c-split-pane"],
       },
     ];
 
@@ -1742,7 +1769,7 @@ test.describe("docs scaffold", () => {
           const panes = split
             ? [
                 ...split.querySelectorAll<HTMLElement>(
-                  ":scope > .c-split-pane__pane",
+                  ":scope > .pl-c-split-pane__pane",
                 ),
               ]
             : [];
@@ -1763,7 +1790,7 @@ test.describe("docs scaffold", () => {
 
         const tableWraps = [
           ...document.querySelectorAll<HTMLElement>(
-            ".l-app-shell__main .c-table-wrap",
+            ".pl-l-app-shell__main .pl-c-table-wrap",
           ),
         ].map((wrap) => {
           const rect = wrap.getBoundingClientRect();
@@ -1814,7 +1841,7 @@ test.describe("docs scaffold", () => {
         expect(
           tableWrap.scrollDelta <= 1 ||
             ["auto", "scroll"].includes(tableWrap.overflowX),
-          `${example.route} overflowing tables should scroll inside .c-table-wrap`,
+          `${example.route} overflowing tables should scroll inside .pl-c-table-wrap`,
         ).toBe(true);
       }
 
@@ -1827,17 +1854,17 @@ test.describe("docs scaffold", () => {
       {
         route: "./preview/app-list-detail",
         heading: "Operator queue",
-        selector: ".c-split-pane",
+        selector: ".pl-c-split-pane",
       },
       {
         route: "./preview/app-queue-triage",
         heading: "Queue triage",
-        selector: ".c-workflow-board",
+        selector: ".pl-c-workflow-board",
       },
       {
         route: "./preview/app-process-builder",
         heading: "Vendor onboarding",
-        selector: ".c-tabs",
+        selector: ".pl-c-tabs",
       },
       {
         route: "./preview/app-settings-console",
@@ -1847,7 +1874,7 @@ test.describe("docs scaffold", () => {
       {
         route: "./preview/app-reporting-dashboard",
         heading: "Revenue performance",
-        selector: ".c-chart",
+        selector: ".pl-c-chart",
       },
       {
         route: "./preview/app-command-workspace",

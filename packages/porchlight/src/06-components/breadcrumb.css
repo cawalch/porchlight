@@ -8,23 +8,23 @@
  * where supported (@supports-gated), falls back to ::after on each item.
  *
  * Structure:
- *   <nav class="c-breadcrumb" aria-label="Breadcrumb">
- *     <ol class="c-breadcrumb__list">
- *       <li class="c-breadcrumb__item">
- *         <a class="c-breadcrumb__link" href="/">Home</a>
+ *   <nav class="pl-c-breadcrumb" aria-label="Breadcrumb">
+ *     <ol class="pl-c-breadcrumb__list">
+ *       <li class="pl-c-breadcrumb__item">
+ *         <a class="pl-c-breadcrumb__link" href="/">Home</a>
  *       </li>
- *       <li class="c-breadcrumb__item">
- *         <a class="c-breadcrumb__link" href="/projects">Projects</a>
+ *       <li class="pl-c-breadcrumb__item">
+ *         <a class="pl-c-breadcrumb__link" href="/projects">Projects</a>
  *       </li>
- *       <li class="c-breadcrumb__item">
- *         <span class="c-breadcrumb__current" aria-current="page">API Redesign</span>
+ *       <li class="pl-c-breadcrumb__item">
+ *         <span class="pl-c-breadcrumb__current" aria-current="page">API Redesign</span>
  *       </li>
  *     </ol>
  *   </nav>
  */
 @layer porchlight.components {
-  @scope (.c-breadcrumb) {
-    .c-breadcrumb__list {
+  @scope (.pl-c-breadcrumb) {
+    .pl-c-breadcrumb__list {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -34,7 +34,7 @@
       list-style: none;
     }
 
-    .c-breadcrumb__item {
+    .pl-c-breadcrumb__item {
       display: inline-flex;
       align-items: center;
       gap: var(--pl-space-1);
@@ -42,7 +42,7 @@
 
     /* Fallback separator: ::after on each item except the last.
        Hidden where gap decorations are supported (replaced by rule). */
-    .c-breadcrumb__item:not(:last-child)::after {
+    .pl-c-breadcrumb__item:not(:last-child)::after {
       content: "/";
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
@@ -50,33 +50,33 @@
       margin-inline-start: var(--pl-space-1);
     }
 
-    .c-breadcrumb__link {
+    .pl-c-breadcrumb__link {
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
       text-decoration: none;
       transition: color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-breadcrumb__link:hover {
+    .pl-c-breadcrumb__link:hover {
       color: var(--pl-color-accent);
       text-decoration: underline;
     }
 
-    .c-breadcrumb__link:focus-visible {
+    .pl-c-breadcrumb__link:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
       border-radius: var(--pl-radius-sm);
     }
 
-    .c-breadcrumb__current {
+    .pl-c-breadcrumb__current {
       color: var(--pl-color-text);
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-medium);
     }
 
     /* Long trail truncation: collapse middle items with ellipsis. */
-    .c-breadcrumb__item[data-truncate]
-      :is(.c-breadcrumb__link, .c-breadcrumb__current) {
+    .pl-c-breadcrumb__item[data-truncate]
+      :is(.pl-c-breadcrumb__link, .pl-c-breadcrumb__current) {
       display: inline-block;
       max-inline-size: 8rem;
       overflow: hidden;
@@ -88,23 +88,23 @@
 
   /* Gap decorations separator (progressive enhancement). */
   @supports (rule: 1px solid CanvasText) {
-    :where(.c-breadcrumb__list) {
+    :where(.pl-c-breadcrumb__list) {
       rule: 0 auto var(--pl-color-border);
       rule-visibility-items: between;
     }
 
     /* Hide the fallback ::after separator where gap decorations work. */
-    :where(.c-breadcrumb__item:not(:last-child))::after {
+    :where(.pl-c-breadcrumb__item:not(:last-child))::after {
       content: none;
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-breadcrumb__link) {
+    :where(.pl-c-breadcrumb__link) {
       color: LinkText;
     }
 
-    :where(.c-breadcrumb__current) {
+    :where(.pl-c-breadcrumb__current) {
       color: CanvasText;
     }
   }

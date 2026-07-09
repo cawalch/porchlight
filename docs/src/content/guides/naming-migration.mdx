@@ -1,0 +1,56 @@
+---
+title: Naming Migration
+description: Update pre-namespace Porchlight markup to the collision-safe public CSS API.
+order: 1.1
+---
+
+# Naming Migration
+
+Porchlight now prefixes public CSS hooks with `pl-` so framework classes and
+instance tokens can coexist with application CSS, third-party frameworks, and
+embedded widgets without accidental collisions.
+
+## Class names
+
+The role prefix is still visible; it now sits behind the Porchlight namespace.
+
+| Before           | After               |
+| ---------------- | ------------------- |
+| `.c-card`        | `.pl-c-card`        |
+| `.c-card__title` | `.pl-c-card__title` |
+| `.l-stack`       | `.pl-l-stack`       |
+| `.u-sr-only`     | `.pl-u-sr-only`     |
+
+Component import paths do not change. For example,
+`@cawalch/porchlight/components/card.css` still ships the card CSS.
+
+## Custom properties
+
+Global framework tokens already used `--pl-*` and do not change. Instance and
+component tokens now use the same namespace:
+
+| Before               | After                   |
+| -------------------- | ----------------------- |
+| `--c-card-padding`   | `--pl-c-card-padding`   |
+| `--l-stack-gap`      | `--pl-l-stack-gap`      |
+| `--u-flow-space`     | `--pl-u-flow-space`     |
+| `--app-sidebar-size` | `--pl-app-sidebar-size` |
+
+## Global attributes
+
+Framework-wide theme and density hooks are now namespaced:
+
+| Before                 | After                     |
+| ---------------------- | ------------------------- |
+| `data-theme="dark"`    | `data-pl-theme="dark"`    |
+| `data-density="dense"` | `data-pl-density="dense"` |
+
+Component-local attributes such as `data-tone`, `data-selected`,
+`data-placement`, and ARIA attributes keep their current names when they are
+used on a Porchlight component.
+
+## State aliases
+
+Legacy `.is-*` state aliases still render where they already existed, but new
+markup should prefer native, ARIA, or `data-*` hooks. For example, use
+`aria-invalid="true"` or `data-invalid` instead of `.is-invalid`.

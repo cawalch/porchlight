@@ -54,6 +54,21 @@ utilities, but leaves out `enhancements.css`.
 @import "@cawalch/porchlight/compat.css";
 ```
 
+## Public CSS API
+
+Porchlight public hooks use the `pl-` namespace to avoid collisions with
+application CSS and other frameworks:
+
+- Components: `.pl-c-button`, `.pl-c-card__title`
+- Layout primitives: `.pl-l-stack`, `.pl-l-cluster`
+- Utilities: `.pl-u-sr-only`, `.pl-u-flow`
+- Component and instance tokens: `--pl-c-card-padding`,
+  `--pl-l-stack-gap`
+- Framework-wide attributes: `data-pl-theme`, `data-pl-density`
+
+Component-local attributes such as `data-tone`, `data-selected`, and ARIA
+states stay unprefixed when scoped under a Porchlight component class.
+
 ## Static HTML
 
 For server-rendered apps or pipelines that copy assets directly, use the

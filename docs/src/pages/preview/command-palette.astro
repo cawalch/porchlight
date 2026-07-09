@@ -11,7 +11,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2>Open the palette</h2>
   <p>
     <button
-      class="c-button"
+      class="pl-c-button"
       data-variant="primary"
       popovertarget="cmdk"
       aria-haspopup="dialog"
@@ -21,12 +21,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       Open command palette
     </button>
   </p>
-  <p class="u-muted">Or press Cmd+K / Ctrl+K when focused on this page.</p>
+  <p class="pl-u-muted">Or press Cmd+K / Ctrl+K when focused on this page.</p>
 
-  <div popover class="c-command" id="cmdk" role="dialog" aria-labelledby="cmdk-title">
-    <h2 id="cmdk-title" class="u-sr-only">Command palette</h2>
+  <div popover class="pl-c-command" id="cmdk" role="dialog" aria-labelledby="cmdk-title">
+    <h2 id="cmdk-title" class="pl-u-sr-only">Command palette</h2>
     <input
-      class="c-command__search"
+      class="pl-c-command__search"
       role="combobox"
       aria-expanded="true"
       aria-controls="cmdk-list"
@@ -34,47 +34,47 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       aria-label="Search commands"
       placeholder="Type a command or search..."
     />
-    <div class="c-command__body" id="cmdk-list" role="listbox" aria-label="Commands">
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Actions</h3>
-        <button class="c-command__item" id="cmdk-create" type="button" role="option" aria-selected="true" data-selected>
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round" /></svg>
+    <div class="pl-c-command__body" id="cmdk-list" role="listbox" aria-label="Commands">
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Actions</h3>
+        <button class="pl-c-command__item" id="cmdk-create" type="button" role="option" aria-selected="true" data-selected>
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round" /></svg>
           <span>Create new project</span>
-          <span class="c-command__shortcut">C</span>
+          <span class="pl-c-command__shortcut">C</span>
         </button>
-        <button class="c-command__item" id="cmdk-import" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <button class="pl-c-command__item" id="cmdk-import" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round" /></svg>
           <span>Import data</span>
         </button>
-        <button class="c-command__item" id="cmdk-invite" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" stroke-linecap="round" /></svg>
+        <button class="pl-c-command__item" id="cmdk-invite" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" stroke-linecap="round" /></svg>
           <span>Invite team member</span>
         </button>
       </div>
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Navigate</h3>
-        <button class="c-command__item" id="cmdk-dashboard" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Navigate</h3>
+        <button class="pl-c-command__item" id="cmdk-dashboard" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke-linecap="round" stroke-linejoin="round" /></svg>
           <span>Go to dashboard</span>
         </button>
-        <button class="c-command__item" id="cmdk-settings" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
+        <button class="pl-c-command__item" id="cmdk-settings" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
           <span>Go to settings</span>
         </button>
       </div>
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Theme</h3>
-        <button class="c-command__item" id="cmdk-light" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2" stroke-linecap="round" /></svg>
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Theme</h3>
+        <button class="pl-c-command__item" id="cmdk-light" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2" stroke-linecap="round" /></svg>
           <span>Switch to light theme</span>
         </button>
-        <button class="c-command__item" id="cmdk-dark" type="button" role="option" aria-selected="false">
-          <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        <button class="pl-c-command__item" id="cmdk-dark" type="button" role="option" aria-selected="false">
+          <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-linecap="round" stroke-linejoin="round" /></svg>
           <span>Switch to dark theme</span>
         </button>
       </div>
     </div>
-    <footer class="c-command__footer">
+    <footer class="pl-c-command__footer">
       <span>↑↓ to navigate</span>
       <span>↵ to select</span>
       <span>esc to close</span>
@@ -83,10 +83,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <script>
     const palette = document.getElementById('cmdk');
-    const search = palette?.querySelector('.c-command__search');
+    const search = palette?.querySelector('.pl-c-command__search');
     const opener = document.querySelector('[popovertarget="cmdk"]');
     const items = (): HTMLElement[] =>
-      Array.from(palette?.querySelectorAll('.c-command__item') ?? []).filter(
+      Array.from(palette?.querySelectorAll('.pl-c-command__item') ?? []).filter(
         (item): item is HTMLElement => item instanceof HTMLElement,
       );
     let selectedIndex = 0;

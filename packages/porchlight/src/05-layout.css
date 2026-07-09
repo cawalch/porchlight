@@ -3,86 +3,86 @@
  * ===========================================================================
  * Small, composable layout helpers for the regions AROUND components  -  not
  * opinionated page designs. They are deliberately quiet: low specificity
- * (:where), token-driven gaps, and local --l-* config tokens every primitive
- * exposes for instance tuning (e.g. --l-stack-gap), each with a sensible
- * framework default.
+ * (:where), token-driven gaps, and local --pl-l-* config tokens every
+ * primitive exposes for instance tuning (e.g. --pl-l-stack-gap), each with a
+ * sensible framework default.
  *
  * Built for desktop SaaS / web-app surfaces: the default states assume
  * comfortable desktop density; container queries adapt a layout to its PANEL
  * width (a nested app region), not only to the viewport. Viewport media logic
  * is reserved for the app shell (05 app-shell block, next PR).
  *
- * Naming: .l-* primitives; --l-* are instance-config tokens consumed only by
- * the layout layer.
+ * Naming: .pl-l-* primitives; --pl-l-* are instance-config tokens consumed
+ * only by the layout layer.
  */
 @layer porchlight.layout {
   /* Vertical flow  -  forms, settings sections, stacked panels. */
-  :where(.l-stack) {
+  :where(.pl-l-stack) {
     display: flex;
     flex-direction: column;
-    gap: var(--l-stack-gap, var(--pl-space-4));
+    gap: var(--pl-l-stack-gap, var(--pl-space-4));
   }
 
   /* Horizontal wrapping group  -  action bars, button rows, toolbar items. */
-  :where(.l-cluster) {
+  :where(.pl-l-cluster) {
     display: flex;
     flex-wrap: wrap;
-    align-items: var(--l-cluster-align, center);
-    justify-content: var(--l-cluster-justify, flex-start);
-    gap: var(--l-cluster-gap, var(--pl-space-3));
+    align-items: var(--pl-l-cluster-align, center);
+    justify-content: var(--pl-l-cluster-justify, flex-start);
+    gap: var(--pl-l-cluster-gap, var(--pl-space-3));
   }
 
   /* Auto-fitting grid  -  dashboard widgets, KPI cards, result tiles. Each
-     track is at least --l-grid-min wide (clamped to 100% so a single item
+     track is at least --pl-l-grid-min wide (clamped to 100% so a single item
      never overflows) and grows to fill. */
-  :where(.l-grid) {
+  :where(.pl-l-grid) {
     display: grid;
-    gap: var(--l-grid-gap, var(--pl-space-4));
+    gap: var(--pl-l-grid-gap, var(--pl-space-4));
     grid-template-columns: repeat(
       auto-fit,
-      minmax(min(var(--l-grid-min, 16rem), 100%), 1fr)
+      minmax(min(var(--pl-l-grid-min, 16rem), 100%), 1fr)
     );
   }
 
   /* Sidebar + main  -  settings/filter panels, master-detail regions. The
      default is the desktop two-column layout. It collapses to a single
      column when its nearest ANCESTOR query container is narrower than 48rem
-     (an element cannot query its own size). Note: .l-sidebar does NOT declare
+     (an element cannot query its own size). Note: .pl-l-sidebar does NOT declare
      container-type itself  -  that would be misleading (self-querying is
      impossible) and adds containment side-effects. Wrap it in a
      container-type: inline-size element, or nest it inside
-     .l-app-shell__main (which is a container) to get the collapse. */
-  :where(.l-sidebar) {
+     .pl-l-app-shell__main (which is a container) to get the collapse. */
+  :where(.pl-l-sidebar) {
     display: grid;
-    gap: var(--l-sidebar-gap, var(--pl-space-4));
+    gap: var(--pl-l-sidebar-gap, var(--pl-space-4));
     grid-template-columns:
-      minmax(0, var(--l-sidebar-size, 16rem))
+      minmax(0, var(--pl-l-sidebar-size, 16rem))
       minmax(0, 1fr);
   }
 
   @media (width < 48rem) {
-    :where(.l-sidebar) {
+    :where(.pl-l-sidebar) {
       grid-template-columns: 1fr;
     }
   }
 
   @container (inline-size < 48rem) {
-    :where(.l-sidebar) {
+    :where(.pl-l-sidebar) {
       grid-template-columns: 1fr;
     }
   }
 
   /* Readable content column centered within a wide app surface. Default max
-     is generous (88rem) for dashboards; tighten via --l-page-max for prose. */
-  :where(.l-page) {
-    inline-size: min(100% - 2 * var(--pl-space-4), var(--l-page-max, 88rem));
+     is generous (88rem) for dashboards; tighten via --pl-l-page-max for prose. */
+  :where(.pl-l-page) {
+    inline-size: min(100% - 2 * var(--pl-space-4), var(--pl-l-page-max, 88rem));
     margin-inline: auto;
   }
 
   /* Independent scroll region  -  data panes, log viewers, long lists. Stable
      gutter prevents layout shift when scrollbars appear/disappear; contain
      stops scroll chaining to the page. */
-  :where(.l-scroll-area) {
+  :where(.pl-l-scroll-area) {
     overflow: auto;
     scrollbar-gutter: stable;
     overscroll-behavior: contain;
@@ -95,15 +95,15 @@
      main work area. Below 60rem (a phone or a narrow split pane) the sidebar
      drops out so the work surface stays usable.
 
-     .l-app-shell__main is a query container so any .l-sidebar nested inside
+     .pl-l-app-shell__main is a query container so any .pl-l-sidebar nested inside
      it collapses correctly at narrow app widths WITHOUT a manual wrapper
      (closes the container-ancestor story from the audit fix).
 
      block-size (not min-block-size): the grid's 1fr row needs a DEFINITE
      container height to resolve. min-block-size is not definite, so Firefox
-     and Safari treat the 1fr row as auto, making .l-app-shell__main overflow
+     and Safari treat the 1fr row as auto, making .pl-l-app-shell__main overflow
      unpredictable. block-size: 100dvb gives every browser a definite height. */
-  :where(.l-app-shell) {
+  :where(.pl-l-app-shell) {
     block-size: 100dvb;
     display: grid;
     grid-template:
@@ -112,7 +112,7 @@
       / auto minmax(0, 1fr);
   }
 
-  :where(.l-app-shell__topbar) {
+  :where(.pl-l-app-shell__topbar) {
     grid-area: topbar;
     position: sticky;
     inset-block-start: 0;
@@ -121,7 +121,7 @@
 
   /* Glass topbar  -  opt in via [data-glass]. Frosted backdrop replaces an
      opaque fill; a hairline border-bottom anchors the bar visually. */
-  :where(.l-app-shell__topbar[data-glass]) {
+  :where(.pl-l-app-shell__topbar[data-glass]) {
     background: color-mix(in oklab, var(--pl-color-surface), transparent 18%);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
@@ -129,27 +129,27 @@
       color-mix(in oklab, var(--pl-color-border), transparent 50%);
   }
 
-  :where(.l-app-shell__sidebar) {
+  :where(.pl-l-app-shell__sidebar) {
     grid-area: sidebar;
 
     /* Manual collapse: apps set data-sidebar="collapsed" to shrink the rail
        to an icon strip without hiding it (PLAN only hid on narrow viewports).
-       --app-sidebar-size tunes the expanded width; --app-sidebar-collapsed
+       --pl-app-sidebar-size tunes the expanded width; --pl-app-sidebar-collapsed
        the icon width. */
-    inline-size: var(--app-sidebar-size, 16rem);
+    inline-size: var(--pl-app-sidebar-size, 16rem);
     overflow-inline: clip;
     transition: inline-size var(--pl-duration-2) var(--pl-ease-standard);
   }
 
-  :where(.l-app-shell__sidebar[data-sidebar="collapsed"]) {
-    inline-size: var(--app-sidebar-collapsed, 3.5rem);
+  :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) {
+    inline-size: var(--pl-app-sidebar-collapsed, 3.5rem);
   }
 
-  :where(.l-app-shell__main) {
+  :where(.pl-l-app-shell__main) {
     grid-area: main;
     min-inline-size: 0;
 
-    /* Main is the container .l-sidebar collapses against (see header note). */
+    /* Main is the container .pl-l-sidebar collapses against (see header note). */
     container-type: inline-size;
     overflow: auto;
     scrollbar-gutter: stable;
@@ -160,14 +160,14 @@
      (the work surface takes priority). This is the ONLY viewport media query
      in the layout layer  -  components adapt via container queries. */
   @media (width < 60rem) {
-    :where(.l-app-shell) {
+    :where(.pl-l-app-shell) {
       grid-template:
         "topbar" auto
         "main" minmax(0, 1fr)
         / minmax(0, 1fr);
     }
 
-    :where(.l-app-shell__sidebar) {
+    :where(.pl-l-app-shell__sidebar) {
       display: none;
     }
   }
@@ -177,26 +177,26 @@
   /* Multi-column masonry  -  card walls, search results, image grids. Uses
      CSS multi-column layout (simpler than grid masonry and works in all
      browsers). Items break-inside avoid so cards don't split across
-     columns. Tune column count via --l-columns-count or let it auto. */
-  :where(.l-columns) {
-    --l-columns-width: 16rem;
+     columns. Tune column count via --pl-l-columns-count or let it auto. */
+  :where(.pl-l-columns) {
+    --pl-l-columns-width: 16rem;
 
-    columns: var(--l-columns-width) var(--l-columns-count, auto);
-    column-gap: var(--l-columns-gap, var(--pl-space-4));
+    columns: var(--pl-l-columns-width) var(--pl-l-columns-count, auto);
+    column-gap: var(--pl-l-columns-gap, var(--pl-space-4));
   }
 
-  :where(.l-columns > *) {
+  :where(.pl-l-columns > *) {
     break-inside: avoid;
-    margin-block-end: var(--l-columns-gap, var(--pl-space-4));
+    margin-block-end: var(--pl-l-columns-gap, var(--pl-space-4));
   }
 
   /* Centered max-width container  -  general-purpose wrapper for app
-     surfaces. Distinct from .l-page (which targets prose at 88rem).
+     surfaces. Distinct from .pl-l-page (which targets prose at 88rem).
      Use for dashboards, settings, lists. */
-  :where(.l-container) {
+  :where(.pl-l-container) {
     inline-size: min(
-      100% - 2 * var(--l-container-pad, var(--pl-space-4)),
-      var(--l-container-max, 80rem)
+      100% - 2 * var(--pl-l-container-pad, var(--pl-space-4)),
+      var(--pl-l-container-max, 80rem)
     );
     margin-inline: auto;
   }
@@ -204,8 +204,8 @@
   /* Inset  -  constrained content inside a full-bleed parent. For captions,
      forms, or text within a full-width hero/banner. Centers and constrains
      without adding its own vertical rhythm. */
-  :where(.l-inset) {
-    inline-size: min(100%, var(--l-inset-max, 48rem));
+  :where(.pl-l-inset) {
+    inline-size: min(100%, var(--pl-l-inset-max, 48rem));
     margin-inline: auto;
   }
 }

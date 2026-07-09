@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * Audit probe: does toggling [data-theme] on a NESTED element actually flip
+ * Audit probe: does toggling [data-pl-theme] on a NESTED element actually flip
  * the --pl-* semantic colors? The tokens are defined on :root with light-dark();
- * the themes playground sets data-theme on a nested .playground div. This
+ * the themes playground sets data-pl-theme on a nested .playground div. This
  * verifies light-dark() resolves per-element (not frozen at :root).
  */
-test("nested [data-theme] flips the semantic color tokens", async ({
+test("nested [data-pl-theme] flips the semantic color tokens", async ({
   page,
 }) => {
   await page.goto("./preview/themes");

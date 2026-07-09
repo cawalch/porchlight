@@ -102,7 +102,7 @@ test.describe("modern desktop app polish", () => {
       await page.goto(appPage.path);
       await reach(page, appPage.heading);
 
-      const cards = page.locator(".l-app-shell .c-card");
+      const cards = page.locator(".pl-l-app-shell .pl-c-card");
       expect(
         await cards.count(),
         "app preview should render cards",
@@ -166,7 +166,7 @@ test.describe("open top-layer surfaces", () => {
           await page.goto(overlayPage.path);
           await reach(page, overlayPage.heading);
           await page.evaluate((nextTheme) => {
-            document.documentElement.setAttribute("data-theme", nextTheme);
+            document.documentElement.setAttribute("data-pl-theme", nextTheme);
           }, theme);
 
           const trigger = page.getByRole("button", {

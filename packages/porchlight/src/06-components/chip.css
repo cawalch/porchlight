@@ -8,34 +8,36 @@
  * Sizes via [data-size]: default, sm.
  *
  * Structure:
- *   <span class="c-chip">Label</span>
- *   <span class="c-chip" data-tone="success">
+ *   <span class="pl-c-chip">Label</span>
+ *   <span class="pl-c-chip" data-tone="success">
  *     Active
- *     <button class="c-chip__remove" aria-label="Remove">x</button>
+ *     <button class="pl-c-chip__remove" aria-label="Remove">x</button>
  *   </span>
  *
  * Group wrapping:
- *   <div class="c-chip-group">
- *     <span class="c-chip">...</span>
- *     <span class="c-chip">...</span>
+ *   <div class="pl-c-chip-group">
+ *     <span class="pl-c-chip">...</span>
+ *     <span class="pl-c-chip">...</span>
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-chip) {
+  @scope (.pl-c-chip) {
     :scope {
       /* Default tone: derived accent tint via relative color syntax. */
-      --c-chip-bg: oklch(from var(--pl-color-accent) calc(l + 0.35) c h / 10%);
-      --c-chip-text: var(--pl-color-accent);
-      --c-chip-pad: var(--pl-space-1) var(--pl-space-2);
-      --c-chip-gap: var(--pl-space-1);
+      --pl-c-chip-bg: oklch(
+        from var(--pl-color-accent) calc(l + 0.35) c h / 10%
+      );
+      --pl-c-chip-text: var(--pl-color-accent);
+      --pl-c-chip-pad: var(--pl-space-1) var(--pl-space-2);
+      --pl-c-chip-gap: var(--pl-space-1);
 
       display: inline-flex;
       align-items: center;
-      gap: var(--c-chip-gap);
-      padding: var(--c-chip-pad);
+      gap: var(--pl-c-chip-gap);
+      padding: var(--pl-c-chip-pad);
       border-radius: var(--pl-radius-pill);
-      background: var(--c-chip-bg);
-      color: var(--c-chip-text);
+      background: var(--pl-c-chip-bg);
+      color: var(--pl-c-chip-text);
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-medium);
       line-height: var(--pl-leading-snug);
@@ -45,7 +47,7 @@
     /* Fallback bg when relative color syntax is not supported. */
     @supports not (background: oklch(from red l c h)) {
       :scope {
-        --c-chip-bg: color-mix(
+        --pl-c-chip-bg: color-mix(
           in oklab,
           var(--pl-color-accent),
           transparent 88%
@@ -55,11 +57,13 @@
 
     /* Tone variants. */
     :scope[data-tone="success"] {
-      --c-chip-bg: oklch(from var(--pl-color-success) calc(l + 0.35) c h / 12%);
-      --c-chip-text: var(--pl-color-success-text);
+      --pl-c-chip-bg: oklch(
+        from var(--pl-color-success) calc(l + 0.35) c h / 12%
+      );
+      --pl-c-chip-text: var(--pl-color-success-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(
+        --pl-c-chip-bg: color-mix(
           in oklab,
           var(--pl-color-success),
           transparent 86%
@@ -68,11 +72,13 @@
     }
 
     :scope[data-tone="warning"] {
-      --c-chip-bg: oklch(from var(--pl-color-warning) calc(l + 0.35) c h / 14%);
-      --c-chip-text: var(--pl-color-warning-text);
+      --pl-c-chip-bg: oklch(
+        from var(--pl-color-warning) calc(l + 0.35) c h / 14%
+      );
+      --pl-c-chip-text: var(--pl-color-warning-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(
+        --pl-c-chip-bg: color-mix(
           in oklab,
           var(--pl-color-warning),
           transparent 84%
@@ -81,11 +87,13 @@
     }
 
     :scope[data-tone="danger"] {
-      --c-chip-bg: oklch(from var(--pl-color-danger) calc(l + 0.35) c h / 12%);
-      --c-chip-text: var(--pl-color-danger-text);
+      --pl-c-chip-bg: oklch(
+        from var(--pl-color-danger) calc(l + 0.35) c h / 12%
+      );
+      --pl-c-chip-text: var(--pl-color-danger-text);
 
       @supports not (background: oklch(from red l c h)) {
-        --c-chip-bg: color-mix(
+        --pl-c-chip-bg: color-mix(
           in oklab,
           var(--pl-color-danger),
           transparent 86%
@@ -95,13 +103,13 @@
 
     /* Size variant. */
     :scope[data-size="sm"] {
-      --c-chip-pad: 0.125rem var(--pl-space-2);
+      --pl-c-chip-pad: 0.125rem var(--pl-space-2);
 
       font-size: 0.6875rem;
     }
 
     /* Remove button. */
-    .c-chip__remove {
+    .pl-c-chip__remove {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -120,8 +128,8 @@
       transition: opacity var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-chip__remove::before,
-    .c-chip__remove::after {
+    .pl-c-chip__remove::before,
+    .pl-c-chip__remove::after {
       content: "";
       position: absolute;
       inset-block-start: 50%;
@@ -133,23 +141,23 @@
       transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    .c-chip__remove::after {
+    .pl-c-chip__remove::after {
       transform: translate(-50%, -50%) rotate(-45deg);
     }
 
-    .c-chip__remove:hover:not(:disabled) {
+    .pl-c-chip__remove:hover:not(:disabled) {
       opacity: 1;
       background: oklch(from currentColor l c h / 12%);
     }
 
-    .c-chip__remove:focus-visible {
+    .pl-c-chip__remove:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: calc(var(--pl-focus-offset) / 2);
     }
   }
 
   /* Chip group: wrapping flex container. */
-  :where(.c-chip-group) {
+  :where(.pl-c-chip-group) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--pl-space-2);
@@ -157,7 +165,7 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-chip) {
+    :where(.pl-c-chip) {
       border: 1px solid ButtonBorder;
     }
   }

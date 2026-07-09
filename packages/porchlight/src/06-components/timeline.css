@@ -6,27 +6,27 @@
  * to the side.
  *
  * Structure:
- *   <ol class="c-timeline">
- *     <li class="c-timeline__item">
- *       <span class="c-timeline__dot"></span>
- *       <div class="c-timeline__content">
- *         <div class="c-timeline__header">
- *           <span class="c-timeline__title">Event title</span>
- *           <time class="c-timeline__time">2 hours ago</time>
+ *   <ol class="pl-c-timeline">
+ *     <li class="pl-c-timeline__item">
+ *       <span class="pl-c-timeline__dot"></span>
+ *       <div class="pl-c-timeline__content">
+ *         <div class="pl-c-timeline__header">
+ *           <span class="pl-c-timeline__title">Event title</span>
+ *           <time class="pl-c-timeline__time">2 hours ago</time>
  *         </div>
- *         <p class="c-timeline__body">Description</p>
+ *         <p class="pl-c-timeline__body">Description</p>
  *       </div>
  *     </li>
  *   </ol>
  *
- * Tone variants on the dot: [data-tone] on .c-timeline__item.
+ * Tone variants on the dot: [data-tone] on .pl-c-timeline__item.
  */
 @layer porchlight.components {
-  @scope (.c-timeline) {
+  @scope (.pl-c-timeline) {
     :scope {
-      --c-timeline-dot-size: 0.75rem;
-      --c-timeline-line-color: var(--pl-color-border);
-      --c-timeline-gap: var(--pl-space-4);
+      --pl-c-timeline-dot-size: 0.75rem;
+      --pl-c-timeline-line-color: var(--pl-color-border);
+      --pl-c-timeline-gap: var(--pl-space-4);
 
       display: flex;
       flex-direction: column;
@@ -40,28 +40,28 @@
       list-style: none;
     }
 
-    .c-timeline__item {
+    .pl-c-timeline__item {
       display: grid;
-      grid-template-columns: var(--c-timeline-dot-size) 1fr;
-      gap: var(--c-timeline-gap);
+      grid-template-columns: var(--pl-c-timeline-dot-size) 1fr;
+      gap: var(--pl-c-timeline-gap);
       padding-block-end: var(--pl-space-5);
       position: relative;
     }
 
     /* Vertical connector line: drawn on the dot column. */
-    .c-timeline__item:not(:last-child)::before {
+    .pl-c-timeline__item:not(:last-child)::before {
       content: "";
       position: absolute;
-      inset-block: var(--c-timeline-dot-size) 0;
-      inset-inline-start: calc(var(--c-timeline-dot-size) / 2);
+      inset-block: var(--pl-c-timeline-dot-size) 0;
+      inset-inline-start: calc(var(--pl-c-timeline-dot-size) / 2);
       inline-size: 2px;
-      background: var(--c-timeline-line-color);
+      background: var(--pl-c-timeline-line-color);
       transform: translateX(-50%);
     }
 
-    .c-timeline__dot {
-      inline-size: var(--c-timeline-dot-size);
-      block-size: var(--c-timeline-dot-size);
+    .pl-c-timeline__dot {
+      inline-size: var(--pl-c-timeline-dot-size);
+      block-size: var(--pl-c-timeline-dot-size);
       border-radius: 50%;
       background: var(--pl-color-accent);
       border: 2px solid var(--pl-color-surface);
@@ -71,26 +71,26 @@
     }
 
     /* Tone variants on the dot. */
-    .c-timeline__item[data-tone="success"] .c-timeline__dot {
+    .pl-c-timeline__item[data-tone="success"] .pl-c-timeline__dot {
       background: var(--pl-color-success);
       box-shadow: 0 0 0 2px var(--pl-color-success);
     }
 
-    .c-timeline__item[data-tone="warning"] .c-timeline__dot {
+    .pl-c-timeline__item[data-tone="warning"] .pl-c-timeline__dot {
       background: var(--pl-color-warning);
       box-shadow: 0 0 0 2px var(--pl-color-warning);
     }
 
-    .c-timeline__item[data-tone="danger"] .c-timeline__dot {
+    .pl-c-timeline__item[data-tone="danger"] .pl-c-timeline__dot {
       background: var(--pl-color-danger);
       box-shadow: 0 0 0 2px var(--pl-color-danger);
     }
 
-    .c-timeline__content {
+    .pl-c-timeline__content {
       min-inline-size: 0;
     }
 
-    .c-timeline__header {
+    .pl-c-timeline__header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -98,18 +98,18 @@
       margin-block-end: var(--pl-space-1);
     }
 
-    .c-timeline__title {
+    .pl-c-timeline__title {
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-semibold);
     }
 
-    .c-timeline__time {
+    .pl-c-timeline__time {
       font-size: var(--pl-text-xs);
       color: var(--pl-color-text-muted);
       white-space: nowrap;
     }
 
-    .c-timeline__body {
+    .pl-c-timeline__body {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
       line-height: var(--pl-leading-normal);
@@ -117,12 +117,12 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-timeline__dot) {
+    :where(.pl-c-timeline__dot) {
       background: Highlight;
       box-shadow: 0 0 0 2px Highlight;
     }
 
-    :where(.c-timeline__item:not(:last-child))::before {
+    :where(.pl-c-timeline__item:not(:last-child))::before {
       background: ButtonBorder;
     }
   }

@@ -11,28 +11,28 @@
  * selected rows can use aria-selected or aria-checked.
  *
  * Structure:
- *   <div class="c-dropdown">
- *     <button class="c-dropdown__trigger" popovertarget="dd-1">
- *       Choose... <svg class="c-dropdown__chevron">...</svg>
+ *   <div class="pl-c-dropdown">
+ *     <button class="pl-c-dropdown__trigger" popovertarget="dd-1">
+ *       Choose... <svg class="pl-c-dropdown__chevron">...</svg>
  *     </button>
- *     <div popover class="c-dropdown__menu" id="dd-1">
- *       <button class="c-dropdown__option" role="menuitemradio" aria-checked="true">Option A</button>
- *       <button class="c-dropdown__option" role="menuitemradio" aria-checked="false">Option B</button>
+ *     <div popover class="pl-c-dropdown__menu" id="dd-1">
+ *       <button class="pl-c-dropdown__option" role="menuitemradio" aria-checked="true">Option A</button>
+ *       <button class="pl-c-dropdown__option" role="menuitemradio" aria-checked="false">Option B</button>
  *     </div>
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-dropdown) {
+  @scope (.pl-c-dropdown) {
     :scope {
-      --c-dropdown-anchor: --pl-dropdown-anchor;
-      --c-dropdown-min-inline: 12rem;
-      --c-dropdown-max-block: 20rem;
+      --pl-c-dropdown-anchor: --pl-dropdown-anchor;
+      --pl-c-dropdown-min-inline: 12rem;
+      --pl-c-dropdown-max-block: 20rem;
 
       display: inline-block;
       position: relative;
     }
 
-    .c-dropdown__trigger {
+    .pl-c-dropdown__trigger {
       display: inline-flex;
       align-items: center;
       gap: var(--pl-space-2);
@@ -47,20 +47,20 @@
       font-size: var(--pl-text-sm);
       text-align: start;
       cursor: pointer;
-      anchor-name: var(--c-dropdown-anchor);
+      anchor-name: var(--pl-c-dropdown-anchor);
       transition: border-color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-dropdown__trigger:hover {
+    .pl-c-dropdown__trigger:hover {
       border-color: var(--pl-color-accent);
     }
 
-    .c-dropdown__trigger:focus-visible {
+    .pl-c-dropdown__trigger:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
-    .c-dropdown__chevron {
+    .pl-c-dropdown__chevron {
       inline-size: 1rem;
       block-size: 1rem;
       margin-inline-start: auto;
@@ -69,16 +69,16 @@
       transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
     }
 
-    .c-dropdown__trigger:has(~ .c-dropdown__menu:popover-open)
-      .c-dropdown__chevron {
+    .pl-c-dropdown__trigger:has(~ .pl-c-dropdown__menu:popover-open)
+      .pl-c-dropdown__chevron {
       rotate: 180deg;
     }
 
-    .c-dropdown__menu {
+    .pl-c-dropdown__menu {
       margin: 0;
       padding: var(--pl-space-2);
-      min-inline-size: var(--c-dropdown-min-inline);
-      max-block-size: var(--c-dropdown-max-block);
+      min-inline-size: var(--pl-c-dropdown-min-inline);
+      max-block-size: var(--pl-c-dropdown-max-block);
       overflow-y: auto;
 
       /* Floating surface: softened border + Liquid Glass. */
@@ -103,23 +103,23 @@
     }
 
     @supports (position-anchor: --x) {
-      .c-dropdown__menu {
+      .pl-c-dropdown__menu {
         inset: auto;
         position: absolute;
-        position-anchor: var(--c-dropdown-anchor);
+        position-anchor: var(--pl-c-dropdown-anchor);
         position-area: block-end span-inline-end;
         position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-1);
       }
     }
 
-    .c-dropdown__menu:popover-open {
+    .pl-c-dropdown__menu:popover-open {
       opacity: 1;
       transform: translateY(0);
     }
 
     @starting-style {
-      .c-dropdown__menu:popover-open {
+      .pl-c-dropdown__menu:popover-open {
         opacity: 0;
         transform: translateY(-4px);
       }
@@ -127,7 +127,7 @@
   }
 
   /* Dropdown options  -  OUTSIDE @scope (live-state pseudos). */
-  :where(.c-dropdown__menu)
+  :where(.pl-c-dropdown__menu)
     > :is(a, button, [role="option"], [role^="menuitem"]) {
     display: flex;
     align-items: center;
@@ -146,7 +146,7 @@
     cursor: pointer;
   }
 
-  :where(.c-dropdown__menu)
+  :where(.pl-c-dropdown__menu)
     > :is(a, button, [role="option"], [role^="menuitem"]):is(
       :hover,
       :focus-visible
@@ -154,14 +154,14 @@
     background: var(--pl-menu-row-hover-bg);
   }
 
-  :where(.c-dropdown__menu)
+  :where(.pl-c-dropdown__menu)
     > :is(a, button, [role="option"], [role^="menuitem"]):focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
     outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   /* Selected option: accent color + subtle tint background for clarity. */
-  :where(.c-dropdown__menu)
+  :where(.pl-c-dropdown__menu)
     > :is([aria-selected="true"], [aria-checked="true"]) {
     color: var(--pl-color-accent);
     font-weight: var(--pl-font-weight-semibold);
@@ -169,15 +169,15 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-dropdown__trigger) {
+    :where(.pl-c-dropdown__trigger) {
       border-color: ButtonBorder;
     }
 
-    :where(.c-dropdown__menu) {
+    :where(.pl-c-dropdown__menu) {
       border-color: ButtonBorder;
     }
 
-    :where(.c-dropdown__menu) > :is(a, button):focus-visible {
+    :where(.pl-c-dropdown__menu) > :is(a, button):focus-visible {
       outline-color: Highlight;
     }
   }

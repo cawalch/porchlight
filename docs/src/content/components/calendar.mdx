@@ -7,7 +7,7 @@ since: 0.8.0
 
 # Calendar
 
-The `.c-calendar` contract styles date grids, date picker popovers, date-range
+The `.pl-c-calendar` contract styles date grids, date picker popovers, date-range
 fields, and time options without owning date logic. Porchlight provides the
 surface, spacing, focus treatment, and visual state mapping; the application
 owns date math, locale labels, roving tabindex, keyboard behavior, validation,
@@ -19,18 +19,18 @@ calendar shell but must keep business rules in the app layer.
 ## Semantic HTML
 
 ```html
-<section class="c-calendar" aria-labelledby="due-date-month">
-  <header class="c-calendar__header">
+<section class="pl-c-calendar" aria-labelledby="due-date-month">
+  <header class="pl-c-calendar__header">
     <button
-      class="c-calendar__nav-button"
+      class="pl-c-calendar__nav-button"
       type="button"
       aria-label="Previous month"
     >
       ‹
     </button>
-    <h2 class="c-calendar__heading" id="due-date-month">June 2026</h2>
+    <h2 class="pl-c-calendar__heading" id="due-date-month">June 2026</h2>
     <button
-      class="c-calendar__nav-button"
+      class="pl-c-calendar__nav-button"
       type="button"
       aria-label="Next month"
     >
@@ -38,41 +38,41 @@ calendar shell but must keep business rules in the app layer.
     </button>
   </header>
 
-  <div class="c-calendar__weekdays" aria-hidden="true">
-    <span class="c-calendar__weekday">Mon</span>
-    <span class="c-calendar__weekday">Tue</span>
-    <span class="c-calendar__weekday">Wed</span>
-    <span class="c-calendar__weekday">Thu</span>
-    <span class="c-calendar__weekday">Fri</span>
-    <span class="c-calendar__weekday">Sat</span>
-    <span class="c-calendar__weekday">Sun</span>
+  <div class="pl-c-calendar__weekdays" aria-hidden="true">
+    <span class="pl-c-calendar__weekday">Mon</span>
+    <span class="pl-c-calendar__weekday">Tue</span>
+    <span class="pl-c-calendar__weekday">Wed</span>
+    <span class="pl-c-calendar__weekday">Thu</span>
+    <span class="pl-c-calendar__weekday">Fri</span>
+    <span class="pl-c-calendar__weekday">Sat</span>
+    <span class="pl-c-calendar__weekday">Sun</span>
   </div>
 
-  <div class="c-calendar__grid" role="grid" aria-labelledby="due-date-month">
-    <div class="c-calendar__row" role="row">
+  <div class="pl-c-calendar__grid" role="grid" aria-labelledby="due-date-month">
+    <div class="pl-c-calendar__row" role="row">
       <button
-        class="c-calendar__day"
+        class="pl-c-calendar__day"
         type="button"
         role="gridcell"
         data-outside-month
       >
-        <span class="c-calendar__day-label">29</span>
+        <span class="pl-c-calendar__day-label">29</span>
       </button>
       <button
-        class="c-calendar__day"
+        class="pl-c-calendar__day"
         type="button"
         role="gridcell"
         aria-current="date"
       >
-        <span class="c-calendar__day-label">1</span>
+        <span class="pl-c-calendar__day-label">1</span>
       </button>
       <button
-        class="c-calendar__day"
+        class="pl-c-calendar__day"
         type="button"
         role="gridcell"
         aria-selected="true"
       >
-        <span class="c-calendar__day-label">2</span>
+        <span class="pl-c-calendar__day-label">2</span>
       </button>
     </div>
   </div>
@@ -84,21 +84,21 @@ Applications may use `role="grid"` with `role="gridcell"` and roving
 `tabindex`; when using grid roles, wrap each week in `role="row"`. Apps may
 also use a simpler button group when their accessibility model calls for it.
 Porchlight does not enforce either pattern in CSS. The
-`.c-calendar__day-label` wrapper is optional, but recommended for range
+`.pl-c-calendar__day-label` wrapper is optional, but recommended for range
 calendars because it lets the range track paint behind selected start/end days.
 
 ## Date Picker Field
 
-Pair the calendar with `.c-field` and the native Popover API for dependency-free
+Pair the calendar with `.pl-c-field` and the native Popover API for dependency-free
 field disclosure. The visible field may be a native date input, a text input
 with an ISO value, or a read-only display input backed by hidden form data.
 
 ```html
-<div class="c-field c-date-picker">
-  <label class="c-field__label" for="case-due-date">Due date</label>
-  <div class="c-date-picker__field">
+<div class="pl-c-field pl-c-date-picker">
+  <label class="pl-c-field__label" for="case-due-date">Due date</label>
+  <div class="pl-c-date-picker__field">
     <input
-      class="c-field__control c-date-picker__control"
+      class="pl-c-field__control pl-c-date-picker__control"
       id="case-due-date"
       name="due_date"
       inputmode="numeric"
@@ -107,7 +107,7 @@ with an ISO value, or a read-only display input backed by hidden form data.
       aria-describedby="case-due-date-help"
     />
     <button
-      class="c-button c-date-picker__trigger"
+      class="pl-c-button pl-c-date-picker__trigger"
       type="button"
       popovertarget="case-due-calendar"
       aria-label="Choose due date"
@@ -115,67 +115,69 @@ with an ISO value, or a read-only display input backed by hidden form data.
       Calendar
     </button>
   </div>
-  <span class="c-field__hint" id="case-due-date-help"
+  <span class="pl-c-field__hint" id="case-due-date-help"
     >Local SLA timezone: America/Chicago.</span
   >
-  <div class="c-date-picker__popover" id="case-due-calendar" popover>
-    <section class="c-calendar" aria-labelledby="case-due-month">...</section>
+  <div class="pl-c-date-picker__popover" id="case-due-calendar" popover>
+    <section class="pl-c-calendar" aria-labelledby="case-due-month">
+      ...
+    </section>
   </div>
 </div>
 ```
 
-Set `--c-date-picker-anchor` per instance when multiple picker popovers appear
+Set `--pl-c-date-picker-anchor` per instance when multiple picker popovers appear
 on one page. The default anchor is fine for a single picker. The picker popover
 uses the native top layer and an overlay z-index; it keeps a full month visible
 on ordinary desktop viewports, then scrolls only when the viewport is too short.
 
 ## Date Range
 
-Use `.c-date-range` around two explicit fields when the app needs a start/end
+Use `.pl-c-date-range` around two explicit fields when the app needs a start/end
 contract. A range calendar can mark start, end, and in-range days with
 `data-range-start`, `data-range-end`, and `data-in-range`.
 
 ```html
-<div class="c-date-range">
-  <div class="c-date-range__fields">
-    <label class="c-field">
-      <span class="c-field__label">SLA starts</span>
-      <input class="c-field__control" name="sla_start" value="2026-06-16" />
+<div class="pl-c-date-range">
+  <div class="pl-c-date-range__fields">
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">SLA starts</span>
+      <input class="pl-c-field__control" name="sla_start" value="2026-06-16" />
     </label>
-    <label class="c-field">
-      <span class="c-field__label">SLA ends</span>
-      <input class="c-field__control" name="sla_end" value="2026-06-20" />
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">SLA ends</span>
+      <input class="pl-c-field__control" name="sla_end" value="2026-06-20" />
     </label>
   </div>
-  <section class="c-calendar" aria-labelledby="sla-month">
-    <h2 class="c-calendar__heading" id="sla-month">June 2026</h2>
-    <div class="c-calendar__grid" role="grid" aria-labelledby="sla-month">
-      <div class="c-calendar__row" role="row">
+  <section class="pl-c-calendar" aria-labelledby="sla-month">
+    <h2 class="pl-c-calendar__heading" id="sla-month">June 2026</h2>
+    <div class="pl-c-calendar__grid" role="grid" aria-labelledby="sla-month">
+      <div class="pl-c-calendar__row" role="row">
         <button
-          class="c-calendar__day"
+          class="pl-c-calendar__day"
           type="button"
           role="gridcell"
           data-range-start
           aria-selected="true"
         >
-          <span class="c-calendar__day-label">16</span>
+          <span class="pl-c-calendar__day-label">16</span>
         </button>
         <button
-          class="c-calendar__day"
+          class="pl-c-calendar__day"
           type="button"
           role="gridcell"
           data-in-range
         >
-          <span class="c-calendar__day-label">17</span>
+          <span class="pl-c-calendar__day-label">17</span>
         </button>
         <button
-          class="c-calendar__day"
+          class="pl-c-calendar__day"
           type="button"
           role="gridcell"
           data-range-end
           aria-selected="true"
         >
-          <span class="c-calendar__day-label">20</span>
+          <span class="pl-c-calendar__day-label">20</span>
         </button>
       </div>
     </div>
@@ -185,24 +187,29 @@ contract. A range calendar can mark start, end, and in-range days with
 
 ## Time Options
 
-`.c-time-picker` styles discrete time choices. Use real buttons, or radio inputs
+`.pl-c-time-picker` styles discrete time choices. Use real buttons, or radio inputs
 with labels if your app needs native form selection semantics.
 
 ```html
-<div class="c-time-picker" role="listbox" aria-label="Reminder time">
-  <div class="c-time-picker__grid">
-    <button class="c-time-picker__option" type="button" role="option">
+<div class="pl-c-time-picker" role="listbox" aria-label="Reminder time">
+  <div class="pl-c-time-picker__grid">
+    <button class="pl-c-time-picker__option" type="button" role="option">
       08:30
     </button>
     <button
-      class="c-time-picker__option"
+      class="pl-c-time-picker__option"
       type="button"
       role="option"
       aria-selected="true"
     >
       09:00
     </button>
-    <button class="c-time-picker__option" type="button" role="option" disabled>
+    <button
+      class="pl-c-time-picker__option"
+      type="button"
+      role="option"
+      disabled
+    >
       09:30
     </button>
   </div>
@@ -211,31 +218,31 @@ with labels if your app needs native form selection semantics.
 
 ## Class Contract
 
-| Selector                     | Role                                              |
-| ---------------------------- | ------------------------------------------------- |
-| `.c-calendar`                | Calendar surface wrapper.                         |
-| `.c-calendar__header`        | Month heading and navigation row.                 |
-| `.c-calendar__heading`       | Current month/range title.                        |
-| `.c-calendar__nav`           | Optional wrapper for previous/next controls.      |
-| `.c-calendar__nav-button`    | Month navigation button.                          |
-| `.c-calendar__weekdays`      | Seven-column weekday label row.                   |
-| `.c-calendar__weekday`       | Weekday label, usually `aria-hidden`.             |
-| `.c-calendar__grid`          | Seven-column date grid.                           |
-| `.c-calendar__row`           | Optional ARIA row wrapper for one calendar week.  |
-| `.c-calendar__day`           | Individual date button or gridcell.               |
-| `.c-calendar__day-label`     | Optional day number layer for selected/range art. |
-| `.c-calendar__footer`        | Optional shortcut/status/action row.              |
-| `.c-calendar__shortcut-list` | Optional list of quick date commands.             |
-| `.c-date-picker`             | Field + popover picker wrapper.                   |
-| `.c-date-picker__field`      | Input and trigger row.                            |
-| `.c-date-picker__control`    | Native field control inside the picker row.       |
-| `.c-date-picker__trigger`    | Button that opens the calendar popover.           |
-| `.c-date-picker__popover`    | Native `popover` element containing the calendar. |
-| `.c-date-range`              | Start/end field and calendar wrapper.             |
-| `.c-date-range__fields`      | Responsive two-field date range grid.             |
-| `.c-time-picker`             | Time option surface.                              |
-| `.c-time-picker__grid`       | Responsive time option grid.                      |
-| `.c-time-picker__option`     | Selectable time button.                           |
+| Selector                        | Role                                              |
+| ------------------------------- | ------------------------------------------------- |
+| `.pl-c-calendar`                | Calendar surface wrapper.                         |
+| `.pl-c-calendar__header`        | Month heading and navigation row.                 |
+| `.pl-c-calendar__heading`       | Current month/range title.                        |
+| `.pl-c-calendar__nav`           | Optional wrapper for previous/next controls.      |
+| `.pl-c-calendar__nav-button`    | Month navigation button.                          |
+| `.pl-c-calendar__weekdays`      | Seven-column weekday label row.                   |
+| `.pl-c-calendar__weekday`       | Weekday label, usually `aria-hidden`.             |
+| `.pl-c-calendar__grid`          | Seven-column date grid.                           |
+| `.pl-c-calendar__row`           | Optional ARIA row wrapper for one calendar week.  |
+| `.pl-c-calendar__day`           | Individual date button or gridcell.               |
+| `.pl-c-calendar__day-label`     | Optional day number layer for selected/range art. |
+| `.pl-c-calendar__footer`        | Optional shortcut/status/action row.              |
+| `.pl-c-calendar__shortcut-list` | Optional list of quick date commands.             |
+| `.pl-c-date-picker`             | Field + popover picker wrapper.                   |
+| `.pl-c-date-picker__field`      | Input and trigger row.                            |
+| `.pl-c-date-picker__control`    | Native field control inside the picker row.       |
+| `.pl-c-date-picker__trigger`    | Button that opens the calendar popover.           |
+| `.pl-c-date-picker__popover`    | Native `popover` element containing the calendar. |
+| `.pl-c-date-range`              | Start/end field and calendar wrapper.             |
+| `.pl-c-date-range__fields`      | Responsive two-field date range grid.             |
+| `.pl-c-time-picker`             | Time option surface.                              |
+| `.pl-c-time-picker__grid`       | Responsive time option grid.                      |
+| `.pl-c-time-picker__option`     | Selectable time button.                           |
 
 ## State Contract
 
@@ -249,7 +256,7 @@ with labels if your app needs native form selection semantics.
 | range end     | `data-range-end`                                       | Usually paired with `aria-selected="true"`.                       |
 | in range      | `data-in-range`                                        | Applies the connecting range fill.                                |
 | invalid field | `aria-invalid="true"` on a nested field control        | Field hint inherits the danger tone unless explicitly toned.      |
-| selected time | `aria-selected="true"` or `data-selected`              | Works on `.c-time-picker__option`.                                |
+| selected time | `aria-selected="true"` or `data-selected`              | Works on `.pl-c-time-picker__option`.                             |
 
 ## Accessibility Contract
 
@@ -266,8 +273,8 @@ should provide:
 - Time zone and cutoff rules for SLA, due-date, and business-calendar logic.
 
 For purely native browser behavior, use `<input type="date">`,
-`<input type="datetime-local">`, or `<input type="time">` inside `.c-field`
-instead. Reach for `.c-calendar` when the product needs a custom grid or range
+`<input type="datetime-local">`, or `<input type="time">` inside `.pl-c-field`
+instead. Reach for `.pl-c-calendar` when the product needs a custom grid or range
 surface.
 
 ## SSR, Hypermedia, And Frameworks
@@ -294,13 +301,13 @@ date library.
 
 ## Tokens Exposed
 
-| Token                               | Default                           | Purpose                           |
-| ----------------------------------- | --------------------------------- | --------------------------------- |
-| `--c-calendar-cell-size`            | `2.5rem`                          | Minimum day-cell block size.      |
-| `--c-calendar-gap`                  | `--pl-space-1`                    | Gap between grid cells.           |
-| `--c-calendar-radius`               | `--pl-radius-lg`                  | Day-cell radius.                  |
-| `--c-calendar-range-bg`             | accent tint                       | Fill behind in-range days.        |
-| `--c-calendar-range-hover-bg`       | stronger accent tint              | Hover fill for in-range days.     |
-| `--c-date-picker-anchor`            | `--pl-date-picker-anchor`         | Anchor name for a picker popover. |
-| `--c-date-picker-popover-size`      | `min(100vi - 2rem, 23rem)`        | Popover inline size.              |
-| `--c-date-picker-popover-max-block` | `min(34rem, calc(100dvb - 2rem))` | Popover max block size.           |
+| Token                                  | Default                           | Purpose                           |
+| -------------------------------------- | --------------------------------- | --------------------------------- |
+| `--pl-c-calendar-cell-size`            | `2.5rem`                          | Minimum day-cell block size.      |
+| `--pl-c-calendar-gap`                  | `--pl-space-1`                    | Gap between grid cells.           |
+| `--pl-c-calendar-radius`               | `--pl-radius-lg`                  | Day-cell radius.                  |
+| `--pl-c-calendar-range-bg`             | accent tint                       | Fill behind in-range days.        |
+| `--pl-c-calendar-range-hover-bg`       | stronger accent tint              | Hover fill for in-range days.     |
+| `--pl-c-date-picker-anchor`            | `--pl-date-picker-anchor`         | Anchor name for a picker popover. |
+| `--pl-c-date-picker-popover-size`      | `min(100vi - 2rem, 23rem)`        | Popover inline size.              |
+| `--pl-c-date-picker-popover-max-block` | `min(34rem, calc(100dvb - 2rem))` | Popover max block size.           |

@@ -167,7 +167,7 @@ test("reduced motion zeroes the motion scale and clamps transitions", async ({
 
   const state = await page.evaluate(() => {
     const root = getComputedStyle(document.documentElement);
-    const btn = document.querySelector(".c-button") as HTMLElement;
+    const btn = document.querySelector(".pl-c-button") as HTMLElement;
     return {
       scale: parseFloat(root.getPropertyValue("--pl-motion-scale")),
       // transition-duration is itself not a transitioned property, so it reads

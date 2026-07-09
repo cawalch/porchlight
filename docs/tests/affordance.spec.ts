@@ -36,7 +36,7 @@ async function probe(page: import("@playwright/test").Page): Promise<Probe[]> {
       const out = variants.map((variant) => {
         const mk = (attrs: Record<string, string>) => {
           const b = document.createElement("button");
-          b.className = "c-button";
+          b.className = "pl-c-button";
           b.dataset.variant = variant;
           b.textContent = variant;
           for (const [k, v] of Object.entries(attrs)) b.setAttribute(k, v);
@@ -121,21 +121,21 @@ test("switch checked state is visually distinct from unchecked", async ({
     shell.append(wrap);
 
     const unchecked = document.createElement("label");
-    unchecked.className = "c-switch";
+    unchecked.className = "pl-c-switch";
     unchecked.innerHTML =
-      '<input type="checkbox" class="c-switch__input"><span class="c-switch__track"><span class="c-switch__thumb"></span></span>';
+      '<input type="checkbox" class="pl-c-switch__input"><span class="pl-c-switch__track"><span class="pl-c-switch__thumb"></span></span>';
 
     const checked = document.createElement("label");
-    checked.className = "c-switch";
+    checked.className = "pl-c-switch";
     checked.innerHTML =
-      '<input type="checkbox" class="c-switch__input" checked><span class="c-switch__track"><span class="c-switch__thumb"></span></span>';
+      '<input type="checkbox" class="pl-c-switch__input" checked><span class="pl-c-switch__track"><span class="pl-c-switch__thumb"></span></span>';
 
     wrap.append(unchecked, checked);
     const uTrack = getComputedStyle(
-      unchecked.querySelector(".c-switch__track")!,
+      unchecked.querySelector(".pl-c-switch__track")!,
     ).backgroundColor;
     const cTrack = getComputedStyle(
-      checked.querySelector(".c-switch__track")!,
+      checked.querySelector(".pl-c-switch__track")!,
     ).backgroundColor;
     wrap.remove();
     return { unchecked: uTrack, checked: cTrack };
@@ -159,10 +159,10 @@ test("accordion open icon is rotated from closed", async ({ page }) => {
 
   const rotations = await page.evaluate(() => {
     const closed = document.querySelector(
-      ".c-accordion__item:not([open]) .c-accordion__icon",
+      ".pl-c-accordion__item:not([open]) .pl-c-accordion__icon",
     ) as HTMLElement;
     const open = document.querySelector(
-      ".c-accordion__item[open] .c-accordion__icon",
+      ".pl-c-accordion__item[open] .pl-c-accordion__icon",
     ) as HTMLElement;
     if (!closed || !open) return null;
     return {
@@ -194,7 +194,7 @@ test("chip tones are visually distinct", async ({ page }) => {
     shell.append(wrap);
     for (const tone of tones) {
       const chip = document.createElement("span");
-      chip.className = "c-chip";
+      chip.className = "pl-c-chip";
       if (tone) chip.dataset.tone = tone;
       chip.textContent = tone || "default";
       wrap.append(chip);
@@ -228,19 +228,19 @@ test("menu row hover applies to first, middle, and last options", async ({
       path: "./preview/split-button",
       trigger: "[popovertarget='sb-2']",
       menu: "#sb-2",
-      rows: "#sb-2 .c-split__option",
+      rows: "#sb-2 .pl-c-split__option",
     },
     {
       path: "./preview/dropdown",
       trigger: "[popovertarget='dd-2']",
       menu: "#dd-2",
-      rows: "#dd-2 .c-dropdown__option",
+      rows: "#dd-2 .pl-c-dropdown__option",
     },
     {
       path: "./preview/popover-menu",
       trigger: "[popovertarget='row-menu']",
       menu: "#row-menu",
-      rows: "#row-menu .c-menu__item",
+      rows: "#row-menu .pl-c-menu__item",
     },
   ] as const;
 
@@ -307,8 +307,8 @@ test("data table sort arrows differ between asc and desc", async ({ page }) => {
       };
     };
     return {
-      asc: getIconInfo("th[data-sort='asc'] .c-table__sort-icon"),
-      desc: getIconInfo("th[data-sort='desc'] .c-table__sort-icon"),
+      asc: getIconInfo("th[data-sort='asc'] .pl-c-table__sort-icon"),
+      desc: getIconInfo("th[data-sort='desc'] .pl-c-table__sort-icon"),
     };
   });
 
@@ -333,7 +333,7 @@ test("nav active item is visually distinct from inactive", async ({ page }) => {
   await page.goto("./preview/nav");
 
   const states = await page.evaluate(() => {
-    const items = document.querySelectorAll(".c-nav__item");
+    const items = document.querySelectorAll(".pl-c-nav__item");
     const active = items[0] as HTMLElement;
     const inactive = items[1] as HTMLElement;
     if (!active || !inactive) return null;
@@ -360,15 +360,19 @@ test("nav footer metadata actions stay compact and icon-aligned", async ({
     const meta = document.querySelector(
       "[data-preview-nav-meta]",
     ) as HTMLElement;
-    const metaLabel = meta?.querySelector(".c-nav__meta-label") as HTMLElement;
+    const metaLabel = meta?.querySelector(
+      ".pl-c-nav__meta-label",
+    ) as HTMLElement;
     const actions = [...document.querySelectorAll("[data-preview-nav-action]")];
     const collapsedActions = document.querySelector(
-      '.c-nav[data-variant="icons"] .c-nav__actions',
+      '.pl-c-nav[data-variant="icons"] .pl-c-nav__actions',
     ) as HTMLElement;
     const collapsedAction = collapsedActions?.querySelector(
-      ".c-nav__action",
+      ".pl-c-nav__action",
     ) as HTMLElement;
-    const icon = document.querySelector(".c-nav__action-icon") as HTMLElement;
+    const icon = document.querySelector(
+      ".pl-c-nav__action-icon",
+    ) as HTMLElement;
     if (
       !meta ||
       !metaLabel ||
@@ -427,16 +431,16 @@ test("nav menu flyouts compose with menu rows and icon rail triggers", async ({
       "[data-preview-nav-menu]",
     ) as HTMLElement;
     const current = menu?.querySelector(
-      ".c-menu__item[aria-current='page']",
+      ".pl-c-menu__item[aria-current='page']",
     ) as HTMLElement;
     const description = menu?.querySelector(
-      ".c-menu__item-description",
+      ".pl-c-menu__item-description",
     ) as HTMLElement;
     const shortcut = menu?.querySelector(
-      ".c-menu__item-shortcut",
+      ".pl-c-menu__item-shortcut",
     ) as HTMLElement;
     const railTrigger = document.querySelector(
-      '.c-nav[data-variant="icons"] .c-nav__menu .c-menu__trigger',
+      '.pl-c-nav[data-variant="icons"] .pl-c-nav__menu .pl-c-menu__trigger',
     ) as HTMLElement;
     if (
       !trigger ||
@@ -486,10 +490,10 @@ test("segmented checked is visually distinct from unchecked", async ({
 
   const states = await page.evaluate(() => {
     const checked = document.querySelector(
-      ".c-segmented__item:has(input:checked) span",
+      ".pl-c-segmented__item:has(input:checked) span",
     ) as HTMLElement;
     const unchecked = document.querySelector(
-      ".c-segmented__item:not(:has(input:checked)) span",
+      ".pl-c-segmented__item:not(:has(input:checked)) span",
     ) as HTMLElement;
     if (!checked || !unchecked) return null;
     return {

@@ -7,7 +7,7 @@ since: 0.8.0
 
 # Chart shell
 
-`.c-chart` is a dependency-free chart frame, not a charting engine. It gives
+`.pl-c-chart` is a dependency-free chart frame, not a charting engine. It gives
 apps a consistent shell for SVG, Canvas, server-rendered images, metric headers,
 legends, loading states, empty states, errors, captions, and table fallback
 content.
@@ -16,28 +16,28 @@ content.
 
 ```html
 <section
-  class="c-chart"
+  class="pl-c-chart"
   aria-labelledby="pipeline-title"
   aria-describedby="pipeline-desc"
 >
-  <header class="c-chart__header">
+  <header class="pl-c-chart__header">
     <div>
-      <h2 class="c-chart__title" id="pipeline-title">Pipeline throughput</h2>
-      <p class="c-chart__description" id="pipeline-desc">
+      <h2 class="pl-c-chart__title" id="pipeline-title">Pipeline throughput</h2>
+      <p class="pl-c-chart__description" id="pipeline-desc">
         Completed workflow items by day.
       </p>
     </div>
-    <div class="c-chart__metrics" aria-label="Summary metrics">
-      <div class="c-chart__metric">
-        <span class="c-chart__metric-label">Completed</span>
-        <strong class="c-chart__metric-value">1,284</strong>
-        <span class="c-chart__metric-delta" data-direction="up">+8.2%</span>
+    <div class="pl-c-chart__metrics" aria-label="Summary metrics">
+      <div class="pl-c-chart__metric">
+        <span class="pl-c-chart__metric-label">Completed</span>
+        <strong class="pl-c-chart__metric-value">1,284</strong>
+        <span class="pl-c-chart__metric-delta" data-direction="up">+8.2%</span>
       </div>
     </div>
   </header>
 
   <div
-    class="c-chart__plot"
+    class="pl-c-chart__plot"
     role="img"
     aria-label="Line chart of completed items"
   >
@@ -46,19 +46,19 @@ content.
     </svg>
   </div>
 
-  <ul class="c-chart__legend" aria-label="Series">
-    <li class="c-chart__legend-item">
+  <ul class="pl-c-chart__legend" aria-label="Series">
+    <li class="pl-c-chart__legend-item">
       <span
-        class="c-chart__swatch"
-        style="--c-chart-series-color: var(--pl-color-accent);"
+        class="pl-c-chart__swatch"
+        style="--pl-c-chart-series-color: var(--pl-color-accent);"
       ></span>
       Completed
     </li>
   </ul>
 
-  <p class="c-chart__caption">Data refreshed 2 minutes ago.</p>
-  <div class="c-chart__table" hidden>
-    <table class="c-table">
+  <p class="pl-c-chart__caption">Data refreshed 2 minutes ago.</p>
+  <div class="pl-c-chart__table" hidden>
+    <table class="pl-c-table">
       ...
     </table>
   </div>
@@ -68,36 +68,36 @@ content.
 ## States
 
 ```html
-<section class="c-chart" data-state="loading" aria-busy="true">
-  <div class="c-chart__plot">
-    <div class="c-chart__overlay">
-      <div class="c-chart__state">
-        <p class="c-chart__state-title">Loading chart</p>
+<section class="pl-c-chart" data-state="loading" aria-busy="true">
+  <div class="pl-c-chart__plot">
+    <div class="pl-c-chart__overlay">
+      <div class="pl-c-chart__state">
+        <p class="pl-c-chart__state-title">Loading chart</p>
         <p>Fetching the latest run history.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="c-chart" data-state="empty">...</section>
-<section class="c-chart" data-state="error" role="alert">...</section>
+<section class="pl-c-chart" data-state="empty">...</section>
+<section class="pl-c-chart" data-state="error" role="alert">...</section>
 ```
 
-`data-state="loading"`, `"empty"`, or `"error"` may be placed on `.c-chart`
-or `.c-chart__plot`. Loading animation respects `prefers-reduced-motion`.
+`data-state="loading"`, `"empty"`, or `"error"` may be placed on `.pl-c-chart`
+or `.pl-c-chart__plot`. Loading animation respects `prefers-reduced-motion`.
 
 ## Class contract
 
-| Selector                                | Role                                                           |
-| --------------------------------------- | -------------------------------------------------------------- |
-| `.c-chart`                              | Chart region shell and container query root.                   |
-| `.c-chart__header`                      | Title, description, and metric strip.                          |
-| `.c-chart__metrics`, `.c-chart__metric` | Summary KPIs above or beside the plot.                         |
-| `.c-chart__plot`                        | Slot for app-owned SVG, Canvas, image, or custom chart markup. |
-| `.c-chart__overlay`, `.c-chart__state`  | Centered loading, empty, or error message.                     |
-| `.c-chart__legend`                      | Accessible series legend.                                      |
-| `.c-chart__swatch`                      | Legend color swatch; set `--c-chart-series-color` per item.    |
-| `.c-chart__table`                       | Optional table fallback or source data slot.                   |
+| Selector                                      | Role                                                           |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| `.pl-c-chart`                                 | Chart region shell and container query root.                   |
+| `.pl-c-chart__header`                         | Title, description, and metric strip.                          |
+| `.pl-c-chart__metrics`, `.pl-c-chart__metric` | Summary KPIs above or beside the plot.                         |
+| `.pl-c-chart__plot`                           | Slot for app-owned SVG, Canvas, image, or custom chart markup. |
+| `.pl-c-chart__overlay`, `.pl-c-chart__state`  | Centered loading, empty, or error message.                     |
+| `.pl-c-chart__legend`                         | Accessible series legend.                                      |
+| `.pl-c-chart__swatch`                         | Legend color swatch; set `--pl-c-chart-series-color` per item. |
+| `.pl-c-chart__table`                          | Optional table fallback or source data slot.                   |
 
 ## Accessibility responsibilities
 
@@ -111,7 +111,7 @@ an app-owned live region.
 ## SSR, hypermedia, and frameworks
 
 The shell accepts ordinary HTML. SSR can emit a static SVG plus fallback table.
-Hypermedia updates can replace only `.c-chart__plot`, `.c-chart__metrics`, or
+Hypermedia updates can replace only `.pl-c-chart__plot`, `.pl-c-chart__metrics`, or
 the fallback table. Component frameworks can render Canvas or SVG inside the
 plot slot without Porchlight depending on that framework.
 

@@ -7,55 +7,55 @@
  *
  * Tone variants via [data-tone]: default (accent), success, warning, danger.
  * For multi-segment progress (e.g. storage usage), nest multiple
- * .c-progress__bar elements with different tones.
+ * .pl-c-progress__bar elements with different tones.
  *
  * The track is a 4px-high rounded bar; the fill animates width via
  * transition (respects reduced-motion). The indeterminate animation uses
  * a keyframe sweep that stops under reduced-motion (themes layer clamp).
  */
 @layer porchlight.components {
-  @scope (.c-progress) {
+  @scope (.pl-c-progress) {
     :scope {
-      --c-progress-tone: var(--pl-color-accent);
-      --c-progress-height: 0.375rem;
+      --pl-c-progress-tone: var(--pl-color-accent);
+      --pl-c-progress-height: 0.375rem;
 
       position: relative;
       overflow: hidden;
-      block-size: var(--c-progress-height);
+      block-size: var(--pl-c-progress-height);
       border-radius: var(--pl-radius-pill);
       background: var(--pl-color-surface-2);
     }
 
-    .c-progress__bar {
+    .pl-c-progress__bar {
       block-size: 100%;
       border-radius: var(--pl-radius-pill);
-      background: var(--c-progress-tone);
+      background: var(--pl-c-progress-tone);
       transition: inline-size var(--pl-duration-3) var(--pl-ease-standard);
     }
 
     /* Tone variants. */
     :scope[data-tone="success"] {
-      --c-progress-tone: var(--pl-color-success);
+      --pl-c-progress-tone: var(--pl-color-success);
     }
 
     :scope[data-tone="warning"] {
-      --c-progress-tone: var(--pl-color-warning);
+      --pl-c-progress-tone: var(--pl-color-warning);
     }
 
     :scope[data-tone="danger"] {
-      --c-progress-tone: var(--pl-color-danger);
+      --pl-c-progress-tone: var(--pl-color-danger);
     }
 
     /* Indeterminate  -  an animated sweep that loops. */
-    :scope[data-indeterminate] .c-progress__bar {
+    :scope[data-indeterminate] .pl-c-progress__bar {
       position: absolute;
       inset-block: 0;
       inline-size: 40%;
-      animation: c-progress-sweep 1.4s var(--pl-ease-standard) infinite;
+      animation: pl-c-progress-sweep 1.4s var(--pl-ease-standard) infinite;
     }
   }
 
-  @keyframes c-progress-sweep {
+  @keyframes pl-c-progress-sweep {
     0% {
       inset-inline-start: -40%;
     }
@@ -66,11 +66,11 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-progress) {
+    :where(.pl-c-progress) {
       background: CanvasText;
     }
 
-    :where(.c-progress__bar) {
+    :where(.pl-c-progress__bar) {
       background: Highlight;
     }
   }

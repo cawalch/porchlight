@@ -2,25 +2,25 @@
  * Porchlight  -  page header component
  * ===========================================================================
  * A title + actions row for the top of a page or panel section inside a
- * container. Unlike .c-toolbar (which is a shell-level bar designed to sit
+ * container. Unlike .pl-c-toolbar (which is a shell-level bar designed to sit
  * flush against an edge with padding, border, and a surface background),
- * .c-page-header is intentionally bare: no background, no border, no padding.
+ * .pl-c-page-header is intentionally bare: no background, no border, no padding.
  *
- * It is designed for use inside .l-container (which provides its own padding),
- * where .c-toolbar would create ~65px of dead space above the content.
+ * It is designed for use inside .pl-l-container (which provides its own padding),
+ * where .pl-c-toolbar would create ~65px of dead space above the content.
  *
  * Structure:
- *   <div class="c-page-header">
- *     <h1 class="c-page-header__title">Queue</h1>
- *     <div class="c-page-header__actions">
- *       <button class="c-button">…</button>
+ *   <div class="pl-c-page-header">
+ *     <h1 class="pl-c-page-header__title">Queue</h1>
+ *     <div class="pl-c-page-header__actions">
+ *       <button class="pl-c-button">…</button>
  *     </div>
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-page-header) {
+  @scope (.pl-c-page-header) {
     :scope {
-      container: c-page-header / inline-size;
+      container: pl-c-page-header / inline-size;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -29,7 +29,7 @@
       margin-block-end: var(--pl-space-5);
     }
 
-    .c-page-header__title {
+    .pl-c-page-header__title {
       margin: 0;
       font-size: var(--pl-text-2xl);
       font-weight: var(--pl-font-weight-bold);
@@ -38,15 +38,15 @@
     }
 
     /* Truncate title to a single line. Opt in via [data-truncate] on
-       .c-page-header or .c-page-header__title. */
-    :scope[data-truncate] .c-page-header__title,
-    .c-page-header__title[data-truncate] {
+       .pl-c-page-header or .pl-c-page-header__title. */
+    :scope[data-truncate] .pl-c-page-header__title,
+    .pl-c-page-header__title[data-truncate] {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .c-page-header__subtitle {
+    .pl-c-page-header__subtitle {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
       margin-block-start: var(--pl-space-1);
@@ -54,13 +54,13 @@
 
     /* Wrap the title + optional subtitle so they stack and the actions
        cluster stays on the opposite side. */
-    .c-page-header__heading {
+    .pl-c-page-header__heading {
       display: flex;
       flex-direction: column;
       min-inline-size: 0;
     }
 
-    .c-page-header__actions {
+    .pl-c-page-header__actions {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -72,13 +72,13 @@
        sidebar). An element can't query its own container, so instead of
        changing the parent's flex-direction we force each child to take a
        full line — flex-basis: 100% wraps the actions onto a new row. */
-    @container c-page-header (inline-size <= 48rem) {
-      .c-page-header__heading,
-      .c-page-header__actions {
+    @container pl-c-page-header (inline-size <= 48rem) {
+      .pl-c-page-header__heading,
+      .pl-c-page-header__actions {
         flex: 1 0 100%;
       }
 
-      .c-page-header__actions {
+      .pl-c-page-header__actions {
         justify-content: flex-start;
       }
     }

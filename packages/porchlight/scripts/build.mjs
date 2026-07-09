@@ -42,9 +42,79 @@ const moduleEntries = {
   utilities: [layerOrder, "src/07-utilities.css"],
   enhancements: [layerOrder, "src/08-enhancements.css"],
 };
+const namespaceChecks = [
+  {
+    name: "unprefixed public class",
+    pattern: /(?<!pl-)\.[clu]-[a-z0-9][A-Za-z0-9_-]*/g,
+  },
+  {
+    name: "unprefixed class token",
+    pattern: /(?<!pl-)\b[clu]-[a-z0-9][A-Za-z0-9_-]*/g,
+  },
+  {
+    name: "unprefixed public custom property",
+    pattern: /--(?:c|l|u|app)-[A-Za-z0-9_-]+/g,
+  },
+  {
+    name: "unprefixed global data attribute",
+    pattern: /\bdata-(?:theme|density)\b/g,
+  },
+];
 
 function compact(value) {
   return value.replace(/\s+/g, " ").trim();
+}
+
+async function collectFiles(path) {
+  const absolute = resolve(root, path);
+  const entries = await readdir(absolute, { withFileTypes: true }).catch(
+    () => null,
+  );
+  if (!entries) {
+    return [path];
+  }
+
+  const files = [];
+  for (const entry of entries) {
+    const next = `${path}/${entry.name}`;
+    if (entry.isDirectory()) {
+      files.push(...(await collectFiles(next)));
+    } else if (entry.name.endsWith(".css")) {
+      files.push(next);
+    }
+  }
+  return files;
+}
+
+function lineAndColumn(source, index) {
+  const before = source.slice(0, index);
+  const lines = before.split("\n");
+  return {
+    line: lines.length,
+    column: lines.at(-1).length + 1,
+  };
+}
+
+async function assertNamespaceClean(label, files) {
+  const violations = [];
+
+  for (const file of files) {
+    const source = await readFile(resolve(root, file), "utf8");
+    for (const check of namespaceChecks) {
+      check.pattern.lastIndex = 0;
+      let match;
+      while ((match = check.pattern.exec(source)) !== null) {
+        const { line, column } = lineAndColumn(source, match.index);
+        violations.push(`${file}:${line}:${column} ${check.name}: ${match[0]}`);
+      }
+    }
+  }
+
+  if (violations.length > 0) {
+    throw new Error(
+      `Porchlight namespace check failed in ${label}:\n${violations.join("\n")}`,
+    );
+  }
 }
 
 function parseTokens(css) {
@@ -234,9 +304,6 @@ async function emitManifest(componentNames) {
   return manifest;
 }
 
-await rm(outDir, { recursive: true, force: true });
-await mkdir(entriesDir, { recursive: true });
-
 const componentFiles = (await readdir(componentsDir))
   .filter((file) => file.endsWith(".css"))
   .sort();
@@ -244,6 +311,14 @@ const componentNames = componentFiles.map((file) => file.replace(/\.css$/, ""));
 const componentModules = componentFiles.map(
   (file) => `src/06-components/${file}`,
 );
+
+await assertNamespaceClean("package source", [
+  "README.md",
+  "porchlight.css",
+  ...(await collectFiles("src")),
+]);
+await rm(outDir, { recursive: true, force: true });
+await mkdir(entriesDir, { recursive: true });
 
 const emitted = [];
 emitted.push({
@@ -310,6 +385,7 @@ await copyFile(
   resolve(root, "CHANGELOG.md"),
 );
 await rm(entriesDir, { recursive: true, force: true });
+await assertNamespaceClean("generated dist CSS", await collectFiles("dist"));
 
 console.log(
   `✓ built ${emitted.length} CSS artifacts, ${Object.keys(tokenDoc.tokens).length} tokens, and ${componentNames.length} component entries`,

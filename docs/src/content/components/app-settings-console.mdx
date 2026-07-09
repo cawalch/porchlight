@@ -20,13 +20,13 @@ area. Keep the section names stable so people can scan and deep-link to the
 right task.
 
 ```html
-<div class="l-app-shell">
-  <header class="l-app-shell__topbar c-toolbar">...</header>
-  <aside class="l-app-shell__sidebar">
-    <nav class="c-nav" aria-label="Settings">...</nav>
+<div class="pl-l-app-shell">
+  <header class="pl-l-app-shell__topbar pl-c-toolbar">...</header>
+  <aside class="pl-l-app-shell__sidebar">
+    <nav class="pl-c-nav" aria-label="Settings">...</nav>
   </aside>
-  <main class="l-app-shell__main">
-    <form class="c-form">...</form>
+  <main class="pl-l-app-shell__main">
+    <form class="pl-c-form">...</form>
   </main>
 </div>
 ```
@@ -34,21 +34,21 @@ right task.
 ## Form sections
 
 Each settings area should be a native form section with a heading and concise
-help text. Use `.c-form__grid` for editable fields and `.c-description` for
+help text. Use `.pl-c-form__grid` for editable fields and `.pl-c-description` for
 read-only account state.
 
 ```html
-<section class="c-form__section" aria-labelledby="settings-account">
-  <div class="c-form__header">
+<section class="pl-c-form__section" aria-labelledby="settings-account">
+  <div class="pl-c-form__header">
     <h2 id="settings-account">Account</h2>
     <p>Workspace identity and regional defaults.</p>
   </div>
-  <div class="c-form__body">
-    <div class="c-form__grid">
-      <label class="c-field">
-        <span class="c-field__label">Workspace name</span>
+  <div class="pl-c-form__body">
+    <div class="pl-c-form__grid">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Workspace name</span>
         <input
-          class="c-field__control"
+          class="pl-c-field__control"
           name="workspace"
           value="Northstar Labs"
         />
@@ -64,10 +64,12 @@ Render switches as native checkboxes with `role="switch"`. Keep the label next
 to the control and put policy details in nearby helper copy.
 
 ```html
-<label class="c-switch">
-  <input class="c-switch__input" type="checkbox" role="switch" checked />
-  <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
-  <span class="c-switch__label">Require single sign-on</span>
+<label class="pl-c-switch">
+  <input class="pl-c-switch__input" type="checkbox" role="switch" checked />
+  <span class="pl-c-switch__track"
+    ><span class="pl-c-switch__thumb"></span
+  ></span>
+  <span class="pl-c-switch__label">Require single sign-on</span>
 </label>
 ```
 

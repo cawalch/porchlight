@@ -145,198 +145,198 @@ const selectedItem = queueItems[0];
 ---
 
 <BaseLayout title="Queue triage · Porchlight">
-  <div class="l-app-shell" data-density="compact">
-    <header class="l-app-shell__topbar">
-      <div class="c-toolbar">
-        <div class="c-toolbar__group">
-          <button class="c-button c-button--icon" data-variant="ghost" aria-label="Toggle queue navigation">
+  <div class="pl-l-app-shell" data-pl-density="compact">
+    <header class="pl-l-app-shell__topbar">
+      <div class="pl-c-toolbar">
+        <div class="pl-c-toolbar__group">
+          <button class="pl-c-button pl-c-button--icon" data-variant="ghost" aria-label="Toggle queue navigation">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
             </svg>
           </button>
           <strong>Ops queue</strong>
-          <span class="c-badge" data-tone="danger">3 breached</span>
-          <span class="c-badge" data-tone="warning">7 SLA risk</span>
+          <span class="pl-c-badge" data-tone="danger">3 breached</span>
+          <span class="pl-c-badge" data-tone="warning">7 SLA risk</span>
         </div>
-        <div class="c-toolbar__group">
-          <label class="c-field c-field--inline">
-            <span class="u-sr-only">Search queue</span>
-            <input class="c-field__control" type="search" value="priority:P0 OR sla:<30m" />
+        <div class="pl-c-toolbar__group">
+          <label class="pl-c-field pl-c-field--inline">
+            <span class="pl-u-sr-only">Search queue</span>
+            <input class="pl-c-field__control" type="search" value="priority:P0 OR sla:<30m" />
           </label>
-          <button class="c-button" data-variant="secondary">Refresh</button>
-          <button class="c-button" data-variant="primary">Assign next</button>
+          <button class="pl-c-button" data-variant="secondary">Refresh</button>
+          <button class="pl-c-button" data-variant="primary">Assign next</button>
         </div>
       </div>
     </header>
 
-    <aside class="l-app-shell__sidebar">
-      <nav class="c-nav" aria-label="Queue navigation">
-        <a href="#" class="c-nav__item" aria-current="page">
-          <svg class="c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <aside class="pl-l-app-shell__sidebar">
+      <nav class="pl-c-nav" aria-label="Queue navigation">
+        <a href="#" class="pl-c-nav__item" aria-current="page">
+          <svg class="pl-c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 12h-6l-2 3h-4l-2-3H2"></path>
             <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
           </svg>
-          <span class="c-nav__label">Triage</span>
-          <span class="c-badge c-nav__badge" data-tone="danger">18</span>
+          <span class="pl-c-nav__label">Triage</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="danger">18</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
-          <span class="c-nav__label">Assigned to me</span>
-          <span class="c-badge c-nav__badge">6</span>
+          <span class="pl-c-nav__label">Assigned to me</span>
+          <span class="pl-c-badge pl-c-nav__badge">6</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
             <path d="M12 9v4M12 17h.01"></path>
           </svg>
-          <span class="c-nav__label">Escalations</span>
-          <span class="c-badge c-nav__badge" data-tone="warning">4</span>
+          <span class="pl-c-nav__label">Escalations</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="warning">4</span>
         </a>
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 3v18h18"></path>
               <rect x="7" y="13" width="3" height="5"></rect>
               <rect x="12" y="9" width="3" height="9"></rect>
               <rect x="17" y="5" width="3" height="13"></rect>
             </svg>
             <span>Channels</span>
-            <svg class="c-nav__chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="pl-c-nav__chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Treasury</span>
-            <span class="c-badge c-nav__badge" data-tone="danger">3</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Treasury</span>
+            <span class="pl-c-badge pl-c-nav__badge" data-tone="danger">3</span>
           </a>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Data ops</span>
-            <span class="c-badge c-nav__badge">5</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Data ops</span>
+            <span class="pl-c-badge pl-c-nav__badge">5</span>
           </a>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Payments</span>
-            <span class="c-badge c-nav__badge">8</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Payments</span>
+            <span class="pl-c-badge pl-c-nav__badge">8</span>
           </a>
         </details>
       </nav>
     </aside>
 
-    <main class="l-app-shell__main" aria-labelledby="queue-title">
+    <main class="pl-l-app-shell__main" aria-labelledby="queue-title">
       <div
-        class="c-split-pane"
+        class="pl-c-split-pane"
         data-layout="fixed-end"
         data-collapse="stack"
-        style="--c-split-pane-fixed-size: 28rem;"
+        style="--pl-c-split-pane-fixed-size: 28rem;"
       >
-        <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="queue-title">
-          <div class="c-split-pane__header">
+        <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start" aria-labelledby="queue-title">
+          <div class="pl-c-split-pane__header">
             <div>
-              <h1 class="c-split-pane__title" id="queue-title">Queue triage</h1>
-              <p class="c-split-pane__description">43 open items · 12 unassigned · median wait 31m</p>
+              <h1 class="pl-c-split-pane__title" id="queue-title">Queue triage</h1>
+              <p class="pl-c-split-pane__description">43 open items · 12 unassigned · median wait 31m</p>
             </div>
           </div>
-          <div class="c-split-pane__pane-inner">
-            <nav class="c-saved-views" aria-label="Saved queue views">
-              <span class="c-saved-views__label">Views</span>
-              <ul class="c-saved-views__list">
+          <div class="pl-c-split-pane__pane-inner">
+            <nav class="pl-c-saved-views" aria-label="Saved queue views">
+              <span class="pl-c-saved-views__label">Views</span>
+              <ul class="pl-c-saved-views__list">
                 {views.map((view) => (
-                  <li class="c-saved-views__item">
-                    <button class="c-saved-views__button" aria-current={view.current ? 'true' : undefined}>
-                      {view.label} <span class="c-saved-views__count">{view.count}</span>
+                  <li class="pl-c-saved-views__item">
+                    <button class="pl-c-saved-views__button" aria-current={view.current ? 'true' : undefined}>
+                      {view.label} <span class="pl-c-saved-views__count">{view.count}</span>
                     </button>
                   </li>
                 ))}
               </ul>
             </nav>
 
-            <div class="c-query-bar" role="search" aria-label="Active queue filters">
-              <span class="c-query-bar__label">Filters</span>
-              <div class="c-query-bar__chips">
-                <span class="c-query-chip">
-                  <span class="c-query-chip__field">Priority</span>
-                  <span class="c-query-chip__operator">is</span>
-                  <span class="c-query-chip__value">P0-P2</span>
-                  <button class="c-query-chip__remove" aria-label="Remove priority filter">x</button>
+            <div class="pl-c-query-bar" role="search" aria-label="Active queue filters">
+              <span class="pl-c-query-bar__label">Filters</span>
+              <div class="pl-c-query-bar__chips">
+                <span class="pl-c-query-chip">
+                  <span class="pl-c-query-chip__field">Priority</span>
+                  <span class="pl-c-query-chip__operator">is</span>
+                  <span class="pl-c-query-chip__value">P0-P2</span>
+                  <button class="pl-c-query-chip__remove" aria-label="Remove priority filter">x</button>
                 </span>
-                <span class="c-query-chip">
-                  <span class="c-query-chip__field">SLA</span>
-                  <span class="c-query-chip__operator">under</span>
-                  <span class="c-query-chip__value">30m</span>
-                  <button class="c-query-chip__remove" aria-label="Remove SLA filter">x</button>
+                <span class="pl-c-query-chip">
+                  <span class="pl-c-query-chip__field">SLA</span>
+                  <span class="pl-c-query-chip__operator">under</span>
+                  <span class="pl-c-query-chip__value">30m</span>
+                  <button class="pl-c-query-chip__remove" aria-label="Remove SLA filter">x</button>
                 </span>
-                <span class="c-query-chip">
-                  <span class="c-query-chip__field">Status</span>
-                  <span class="c-query-chip__operator">not</span>
-                  <span class="c-query-chip__value">Done</span>
-                  <button class="c-query-chip__remove" aria-label="Remove status filter">x</button>
+                <span class="pl-c-query-chip">
+                  <span class="pl-c-query-chip__field">Status</span>
+                  <span class="pl-c-query-chip__operator">not</span>
+                  <span class="pl-c-query-chip__value">Done</span>
+                  <button class="pl-c-query-chip__remove" aria-label="Remove status filter">x</button>
                 </span>
               </div>
-              <div class="c-query-bar__actions">
-                <button class="c-button" data-variant="ghost">Save view</button>
-                <button class="c-button" data-variant="secondary">Add filter</button>
+              <div class="pl-c-query-bar__actions">
+                <button class="pl-c-button" data-variant="ghost">Save view</button>
+                <button class="pl-c-button" data-variant="secondary">Add filter</button>
               </div>
             </div>
 
-            <div class="c-toolbar" data-surface="panel">
-              <div class="c-toolbar__group">
-                <button class="c-button" data-variant="ghost" aria-pressed="true">All</button>
-                <button class="c-button" data-variant="ghost">P0</button>
-                <button class="c-button" data-variant="ghost">Breached</button>
-                <button class="c-button" data-variant="ghost">Unowned</button>
+            <div class="pl-c-toolbar" data-surface="panel">
+              <div class="pl-c-toolbar__group">
+                <button class="pl-c-button" data-variant="ghost" aria-pressed="true">All</button>
+                <button class="pl-c-button" data-variant="ghost">P0</button>
+                <button class="pl-c-button" data-variant="ghost">Breached</button>
+                <button class="pl-c-button" data-variant="ghost">Unowned</button>
               </div>
-              <div class="c-toolbar__group">
-                <div class="c-toolbar__divider"></div>
-                <button class="c-button" data-variant="secondary">Bulk assign</button>
-                <button class="c-button" data-variant="secondary">Snooze</button>
-                <button class="c-button" data-variant="primary">Start triage</button>
+              <div class="pl-c-toolbar__group">
+                <div class="pl-c-toolbar__divider"></div>
+                <button class="pl-c-button" data-variant="secondary">Bulk assign</button>
+                <button class="pl-c-button" data-variant="secondary">Snooze</button>
+                <button class="pl-c-button" data-variant="primary">Start triage</button>
               </div>
             </div>
 
-            <section class="c-workflow-board" aria-labelledby="lanes-title">
-              <div class="c-workflow-board__header">
+            <section class="pl-c-workflow-board" aria-labelledby="lanes-title">
+              <div class="pl-c-workflow-board__header">
                 <div>
-                  <h2 class="c-workflow-board__title" id="lanes-title">SLA swimlanes</h2>
-                  <p class="c-workflow-board__meta">Drag state is app-owned; Porchlight supplies the lane and card contract.</p>
+                  <h2 class="pl-c-workflow-board__title" id="lanes-title">SLA swimlanes</h2>
+                  <p class="pl-c-workflow-board__meta">Drag state is app-owned; Porchlight supplies the lane and card contract.</p>
                 </div>
-                <div class="c-workflow-board__tools">
-                  <span class="c-badge" data-tone="danger">1 P0 selected</span>
-                  <span class="c-badge" data-tone="warning">2 nearing breach</span>
+                <div class="pl-c-workflow-board__tools">
+                  <span class="pl-c-badge" data-tone="danger">1 P0 selected</span>
+                  <span class="pl-c-badge" data-tone="warning">2 nearing breach</span>
                 </div>
               </div>
 
-              <section class="c-workflow-board__swimlane" aria-labelledby="today-swimlane">
-                <div class="c-workflow-board__swimlane-header">
-                  <h3 class="c-workflow-board__swimlane-title" id="today-swimlane">Today</h3>
-                  <span class="c-workflow-board__swimlane-meta">Operational queue by current handling state</span>
+              <section class="pl-c-workflow-board__swimlane" aria-labelledby="today-swimlane">
+                <div class="pl-c-workflow-board__swimlane-header">
+                  <h3 class="pl-c-workflow-board__swimlane-title" id="today-swimlane">Today</h3>
+                  <span class="pl-c-workflow-board__swimlane-meta">Operational queue by current handling state</span>
                 </div>
-                <div class="c-workflow-board__lanes" data-scroll="inline">
+                <div class="pl-c-workflow-board__lanes" data-scroll="inline">
                   {lanes.map((lane) => (
-                    <section class="c-workflow-lane" aria-labelledby={`lane-${lane.title.toLowerCase()}`}>
-                      <header class="c-workflow-lane__header">
-                        <div class="c-workflow-lane__heading">
-                          <h4 class="c-workflow-lane__title" id={`lane-${lane.title.toLowerCase()}`}>{lane.title}</h4>
-                          <span class="c-workflow-lane__count">{lane.count}</span>
+                    <section class="pl-c-workflow-lane" aria-labelledby={`lane-${lane.title.toLowerCase()}`}>
+                      <header class="pl-c-workflow-lane__header">
+                        <div class="pl-c-workflow-lane__heading">
+                          <h4 class="pl-c-workflow-lane__title" id={`lane-${lane.title.toLowerCase()}`}>{lane.title}</h4>
+                          <span class="pl-c-workflow-lane__count">{lane.count}</span>
                         </div>
-                        <span class="c-workflow-lane__wip" data-state={lane.state}>WIP {lane.wip}</span>
+                        <span class="pl-c-workflow-lane__wip" data-state={lane.state}>WIP {lane.wip}</span>
                       </header>
-                      <div class="c-workflow-lane__body">
+                      <div class="pl-c-workflow-lane__body">
                         {lane.cards.map((item) => (
-                          <article class="c-workflow-card" data-selected={item.selected ? '' : undefined} data-priority={item.priority === 'P0' ? 'high' : undefined}>
-                            <div class="c-workflow-card__header">
-                              <h5 class="c-workflow-card__title">{item.title}</h5>
-                              <span class="c-badge" data-tone={item.slaTone}>{item.sla}</span>
+                          <article class="pl-c-workflow-card" data-selected={item.selected ? '' : undefined} data-priority={item.priority === 'P0' ? 'high' : undefined}>
+                            <div class="pl-c-workflow-card__header">
+                              <h5 class="pl-c-workflow-card__title">{item.title}</h5>
+                              <span class="pl-c-badge" data-tone={item.slaTone}>{item.sla}</span>
                             </div>
-                            <p class="c-workflow-card__body">{item.account} · {item.channel}</p>
-                            <div class="c-workflow-card__footer">
-                              <div class="c-workflow-card__meta">
+                            <p class="pl-c-workflow-card__body">{item.account} · {item.channel}</p>
+                            <div class="pl-c-workflow-card__footer">
+                              <div class="pl-c-workflow-card__meta">
                                 <span>{item.id}</span>
                                 <time datetime="2026-06-29T14:17:00-05:00">{item.wait} wait</time>
                               </div>
-                              <div class="c-workflow-card__assignees" aria-label="Assignee">
-                                <span class="c-avatar" data-size="sm">{item.owner}</span>
+                              <div class="pl-c-workflow-card__assignees" aria-label="Assignee">
+                                <span class="pl-c-avatar" data-size="sm">{item.owner}</span>
                               </div>
                             </div>
                           </article>
@@ -348,18 +348,18 @@ const selectedItem = queueItems[0];
               </section>
             </section>
 
-            <section class="c-card" data-surface="app" aria-labelledby="queue-list-title">
-              <header class="c-card__header">
-                <h2 class="c-card__title" id="queue-list-title">Priority list</h2>
-                <span class="c-badge" data-tone="accent">{queueItems.length} shown</span>
+            <section class="pl-c-card" data-surface="app" aria-labelledby="queue-list-title">
+              <header class="pl-c-card__header">
+                <h2 class="pl-c-card__title" id="queue-list-title">Priority list</h2>
+                <span class="pl-c-badge" data-tone="accent">{queueItems.length} shown</span>
               </header>
-              <div class="c-card__body">
-                <div class="c-table-wrap" data-density="compact" data-overflow="truncate">
-                  <table class="c-table">
+              <div class="pl-c-card__body">
+                <div class="pl-c-table-wrap" data-pl-density="compact" data-overflow="truncate">
+                  <table class="pl-c-table">
                     <thead>
                       <tr>
-                        <th class="c-table__check"><input type="checkbox" aria-label="Select all queue items" /></th>
-                        <th class="c-table__sticky-col" data-sort="asc">Item <span class="c-table__sort-icon"></span></th>
+                        <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all queue items" /></th>
+                        <th class="pl-c-table__sticky-col" data-sort="asc">Item <span class="pl-c-table__sort-icon"></span></th>
                         <th>Account</th>
                         <th>Priority</th>
                         <th>SLA</th>
@@ -370,14 +370,14 @@ const selectedItem = queueItems[0];
                     <tbody>
                       {queueItems.map((item) => (
                         <tr aria-selected={item.selected ? 'true' : undefined}>
-                          <td class="c-table__check"><input type="checkbox" checked={item.selected} aria-label={`Select ${item.id}`} /></td>
-                          <td class="c-table__sticky-col">
+                          <td class="pl-c-table__check"><input type="checkbox" checked={item.selected} aria-label={`Select ${item.id}`} /></td>
+                          <td class="pl-c-table__sticky-col">
                             <a href="#selected-item">{item.id}</a>
                           </td>
                           <td>{item.account}</td>
-                          <td><span class="c-badge" data-tone={item.priorityTone}>{item.priority}</span></td>
-                          <td><span class="c-badge" data-tone={item.slaTone}>{item.sla}</span></td>
-                          <td><span class="c-badge" data-tone={item.statusTone}>{item.status}</span></td>
+                          <td><span class="pl-c-badge" data-tone={item.priorityTone}>{item.priority}</span></td>
+                          <td><span class="pl-c-badge" data-tone={item.slaTone}>{item.sla}</span></td>
+                          <td><span class="pl-c-badge" data-tone={item.statusTone}>{item.status}</span></td>
                           <td data-align="end">{item.wait}</td>
                         </tr>
                       ))}
@@ -389,78 +389,78 @@ const selectedItem = queueItems[0];
           </div>
         </section>
 
-        <div class="c-split-pane__separator" aria-hidden="true"></div>
+        <div class="pl-c-split-pane__separator" aria-hidden="true"></div>
 
-        <aside class="c-split-pane__pane c-split-pane__pane--end" aria-labelledby="selected-item">
-          <div class="c-split-pane__header">
+        <aside class="pl-c-split-pane__pane pl-c-split-pane__pane--end" aria-labelledby="selected-item">
+          <div class="pl-c-split-pane__header">
             <div>
-              <h2 class="c-split-pane__title" id="selected-item">{selectedItem.id}</h2>
-              <p class="c-split-pane__description">{selectedItem.account}</p>
+              <h2 class="pl-c-split-pane__title" id="selected-item">{selectedItem.id}</h2>
+              <p class="pl-c-split-pane__description">{selectedItem.account}</p>
             </div>
           </div>
-          <div class="c-split-pane__pane-inner">
-            <article class="c-card" data-surface="app">
-              <header class="c-card__header">
-                <h3 class="c-card__title">{selectedItem.title}</h3>
+          <div class="pl-c-split-pane__pane-inner">
+            <article class="pl-c-card" data-surface="app">
+              <header class="pl-c-card__header">
+                <h3 class="pl-c-card__title">{selectedItem.title}</h3>
               </header>
-              <div class="c-card__body">
-                <div class="c-badge-group" aria-label="Selected item urgency">
-                  <span class="c-badge" data-tone={selectedItem.priorityTone}>{selectedItem.priority}</span>
-                  <span class="c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span>
+              <div class="pl-c-card__body">
+                <div class="pl-c-badge-group" aria-label="Selected item urgency">
+                  <span class="pl-c-badge" data-tone={selectedItem.priorityTone}>{selectedItem.priority}</span>
+                  <span class="pl-c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span>
                 </div>
-                <dl class="l-grid">
+                <dl class="pl-l-grid">
                   <div>
-                    <dt class="u-muted-sm">SLA</dt>
-                    <dd><span class="c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span></dd>
+                    <dt class="pl-u-muted-sm">SLA</dt>
+                    <dd><span class="pl-c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span></dd>
                   </div>
                   <div>
-                    <dt class="u-muted-sm">Status</dt>
-                    <dd><span class="c-badge" data-tone={selectedItem.statusTone}>{selectedItem.status}</span></dd>
+                    <dt class="pl-u-muted-sm">Status</dt>
+                    <dd><span class="pl-c-badge" data-tone={selectedItem.statusTone}>{selectedItem.status}</span></dd>
                   </div>
                   <div>
-                    <dt class="u-muted-sm">Channel</dt>
+                    <dt class="pl-u-muted-sm">Channel</dt>
                     <dd>{selectedItem.channel}</dd>
                   </div>
                   <div>
-                    <dt class="u-muted-sm">Owner</dt>
-                    <dd><span class="c-avatar" data-size="sm">{selectedItem.owner}</span></dd>
+                    <dt class="pl-u-muted-sm">Owner</dt>
+                    <dd><span class="pl-c-avatar" data-size="sm">{selectedItem.owner}</span></dd>
                   </div>
                 </dl>
               </div>
-              <footer class="c-card__footer l-cluster">
-                <button class="c-button" data-variant="secondary">Reassign</button>
-                <button class="c-button" data-variant="secondary">Escalate</button>
-                <button class="c-button" data-variant="primary">Approve</button>
+              <footer class="pl-c-card__footer pl-l-cluster">
+                <button class="pl-c-button" data-variant="secondary">Reassign</button>
+                <button class="pl-c-button" data-variant="secondary">Escalate</button>
+                <button class="pl-c-button" data-variant="primary">Approve</button>
               </footer>
             </article>
 
-            <form class="c-filter-builder" data-density="compact" aria-labelledby="decision-title">
-              <header class="c-filter-builder__header">
+            <form class="pl-c-filter-builder" data-pl-density="compact" aria-labelledby="decision-title">
+              <header class="pl-c-filter-builder__header">
                 <div>
-                  <h3 class="c-filter-builder__title" id="decision-title">Decision fields</h3>
-                  <p class="c-filter-builder__description">Capture the minimum disposition before closing.</p>
+                  <h3 class="pl-c-filter-builder__title" id="decision-title">Decision fields</h3>
+                  <p class="pl-c-filter-builder__description">Capture the minimum disposition before closing.</p>
                 </div>
               </header>
-              <div class="c-filter-builder__body">
-                <section class="c-filter-builder__group" data-operator="and" aria-labelledby="decision-group">
-                  <header class="c-filter-builder__group-header">
-                    <h4 class="c-filter-builder__group-title" id="decision-group">
-                      <span class="c-filter-builder__joiner">AND</span>
+              <div class="pl-c-filter-builder__body">
+                <section class="pl-c-filter-builder__group" data-operator="and" aria-labelledby="decision-group">
+                  <header class="pl-c-filter-builder__group-header">
+                    <h4 class="pl-c-filter-builder__group-title" id="decision-group">
+                      <span class="pl-c-filter-builder__joiner">AND</span>
                       Required checks
                     </h4>
                   </header>
-                  <div class="c-filter-builder__rows">
-                    <div class="c-filter-builder__row">
-                      <div class="c-filter-builder__field">
-                        <label class="u-sr-only" for="decision-outcome">Outcome</label>
-                        <select class="c-field__control c-filter-builder__control" id="decision-outcome">
+                  <div class="pl-c-filter-builder__rows">
+                    <div class="pl-c-filter-builder__row">
+                      <div class="pl-c-filter-builder__field">
+                        <label class="pl-u-sr-only" for="decision-outcome">Outcome</label>
+                        <select class="pl-c-field__control pl-c-filter-builder__control" id="decision-outcome">
                           <option>Needs compliance approval</option>
                           <option>Clear to release</option>
                         </select>
                       </div>
-                      <div class="c-filter-builder__value">
-                        <label class="u-sr-only" for="decision-note">Note</label>
-                        <input class="c-field__control c-filter-builder__control" id="decision-note" value="Partial match requires secondary review" />
+                      <div class="pl-c-filter-builder__value">
+                        <label class="pl-u-sr-only" for="decision-note">Note</label>
+                        <input class="pl-c-field__control pl-c-filter-builder__control" id="decision-note" value="Partial match requires secondary review" />
                       </div>
                     </div>
                   </div>
@@ -468,21 +468,21 @@ const selectedItem = queueItems[0];
               </div>
             </form>
 
-            <section class="c-card" data-surface="app" aria-labelledby="activity-title">
-              <header class="c-card__header">
-                <h3 class="c-card__title" id="activity-title">Activity</h3>
+            <section class="pl-c-card" data-surface="app" aria-labelledby="activity-title">
+              <header class="pl-c-card__header">
+                <h3 class="pl-c-card__title" id="activity-title">Activity</h3>
               </header>
-              <div class="c-card__body">
-                <ol class="c-timeline">
+              <div class="pl-c-card__body">
+                <ol class="pl-c-timeline">
                   {timeline.map((event) => (
-                    <li class="c-timeline__item" data-tone={event.tone || undefined}>
-                      <span class="c-timeline__dot"></span>
-                      <div class="c-timeline__content">
-                        <div class="c-timeline__header">
-                          <span class="c-timeline__title">{event.title}</span>
-                          <time class="c-timeline__time">{event.time}</time>
+                    <li class="pl-c-timeline__item" data-tone={event.tone || undefined}>
+                      <span class="pl-c-timeline__dot"></span>
+                      <div class="pl-c-timeline__content">
+                        <div class="pl-c-timeline__header">
+                          <span class="pl-c-timeline__title">{event.title}</span>
+                          <time class="pl-c-timeline__time">{event.time}</time>
                         </div>
-                        <p class="c-timeline__body">{event.body}</p>
+                        <p class="pl-c-timeline__body">{event.body}</p>
                       </div>
                     </li>
                   ))}
@@ -497,11 +497,11 @@ const selectedItem = queueItems[0];
 </BaseLayout>
 
 <style>
-  .l-app-shell__main > .c-split-pane {
+  .pl-l-app-shell__main > .pl-c-split-pane {
     overflow: visible;
   }
 
-  .l-app-shell__main > .c-split-pane > .c-split-pane__pane {
+  .pl-l-app-shell__main > .pl-c-split-pane > .pl-c-split-pane__pane {
     overflow: visible;
     overscroll-behavior: auto;
     scrollbar-gutter: auto;

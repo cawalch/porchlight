@@ -7,7 +7,7 @@ since: 0.1.0
 
 # Data table
 
-The `.c-table-wrap` + `.c-table` pair is an enterprise data table: sticky
+The `.pl-c-table-wrap` + `.pl-c-table` pair is an enterprise data table: sticky
 headers, horizontal scroll with a stable scrollbar gutter, container-query
 padding, sortable columns, row selection, expandable detail rows, sticky
 first column, density modes, and loading states.
@@ -17,8 +17,8 @@ first column, density modes, and loading states.
 ### Basic table
 
 ```html
-<div class="c-table-wrap">
-  <table class="c-table">
+<div class="pl-c-table-wrap">
+  <table class="pl-c-table">
     <thead>
       <tr>
         <th>Account</th>
@@ -38,8 +38,8 @@ first column, density modes, and loading states.
 ### Sortable headers
 
 ```html
-<th data-sort="asc">Name <span class="c-table__sort-icon"></span></th>
-<th data-sort="desc">Created <span class="c-table__sort-icon"></span></th>
+<th data-sort="asc">Name <span class="pl-c-table__sort-icon"></span></th>
+<th data-sort="desc">Created <span class="pl-c-table__sort-icon"></span></th>
 <th>Tags</th>
 <!-- no data-sort = unsortable -->
 ```
@@ -51,7 +51,7 @@ Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
 ```html
 <thead>
   <tr>
-    <th class="c-table__check">
+    <th class="pl-c-table__check">
       <input type="checkbox" aria-label="Select all" />
     </th>
     <th>Account</th>
@@ -59,7 +59,7 @@ Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
 </thead>
 <tbody>
   <tr aria-selected="true">
-    <td class="c-table__check">
+    <td class="pl-c-table__check">
       <input type="checkbox" checked aria-label="Select row" />
     </td>
     <td>Acme Ops</td>
@@ -73,21 +73,21 @@ Toggle `data-sort` between `"asc"` and `"desc"` via JS. CSS renders the arrow.
 <tr>
   <td>...</td>
   <td>
-    <button class="c-table__expand" aria-expanded="false">
+    <button class="pl-c-table__expand" aria-expanded="false">
       <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
     </button>
   </td>
 </tr>
-<tr class="c-table__detail" open>
+<tr class="pl-c-table__detail" open>
   <td colspan="99">
-    <div class="c-table__detail-inner">
-      <div class="c-table__detail-content">Detail content</div>
+    <div class="pl-c-table__detail-inner">
+      <div class="pl-c-table__detail-content">Detail content</div>
     </div>
   </td>
 </tr>
 ```
 
-Toggle the `open` attribute on `.c-table__detail` and `aria-expanded` on the
+Toggle the `open` attribute on `.pl-c-table__detail` and `aria-expanded` on the
 button via JS. CSS handles the animated expand/collapse.
 
 ### Clickable rows + independent details
@@ -96,9 +96,9 @@ For workflow/admin tables, keep row activation and detail disclosure as two
 separate controls:
 
 - Put a real link or button in the primary cell for the row's main action.
-- Use `.c-table__expand` only for the detail row. It should not navigate.
+- Use `.pl-c-table__expand` only for the detail row. It should not navigate.
 - Keep `aria-expanded` on the expand button in sync with `[open]` or
-  `[data-open]` on the following `.c-table__detail` row.
+  `[data-open]` on the following `.pl-c-table__detail` row.
 - If clicking the whole row is required, add app JavaScript that ignores clicks
   originating from interactive descendants (`a`, `button`, `input`, `select`,
   `textarea`, `[role="button"]`) so the disclosure button remains independent.
@@ -111,7 +111,7 @@ separate controls:
   <td>Approval needed</td>
   <td data-align="end">
     <button
-      class="c-table__expand"
+      class="pl-c-table__expand"
       aria-expanded="false"
       aria-controls="request-REQ-42-detail"
     >
@@ -119,10 +119,10 @@ separate controls:
     </button>
   </td>
 </tr>
-<tr class="c-table__detail" id="request-REQ-42-detail">
+<tr class="pl-c-table__detail" id="request-REQ-42-detail">
   <td colspan="99">
-    <div class="c-table__detail-inner">
-      <div class="c-table__detail-content">Detail content</div>
+    <div class="pl-c-table__detail-inner">
+      <div class="pl-c-table__detail-content">Detail content</div>
     </div>
   </td>
 </tr>
@@ -135,15 +135,15 @@ button toggles `aria-expanded` and the detail row.
 ### Sticky first column
 
 ```html
-<th class="c-table__sticky-col">Account</th>
+<th class="pl-c-table__sticky-col">Account</th>
 ...
-<td class="c-table__sticky-col">Acme Corp</td>
+<td class="pl-c-table__sticky-col">Acme Corp</td>
 ```
 
 ### Density modes
 
 ```html
-<div class="c-table-wrap" data-density="compact">
+<div class="pl-c-table-wrap" data-pl-density="compact">
   <!-- tighter row padding for high information density -->
 </div>
 ```
@@ -153,8 +153,8 @@ button toggles `aria-expanded` and the detail row.
 ```html
 <tbody data-loading>
   <tr>
-    <td><span class="c-skeleton" data-shape="text"></span></td>
-    <td><span class="c-skeleton" data-shape="text"></span></td>
+    <td><span class="pl-c-skeleton" data-shape="text"></span></td>
+    <td><span class="pl-c-skeleton" data-shape="text"></span></td>
   </tr>
 </tbody>
 ```
@@ -166,18 +166,18 @@ button toggles `aria-expanded` and the detail row.
 Row height is **derived** from the global `--pl-control-block-size` token:
 
 ```css
---c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.5rem);
+--pl-c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.5rem);
 ```
 
-This means setting `data-density="compact"` on `<body>` (or any ancestor)
+This means setting `data-pl-density="compact"` on `<body>` (or any ancestor)
 automatically shrinks table rows, buttons, and inputs together. You no
-longer need to set density separately on each `.c-table-wrap`.
+longer need to set density separately on each `.pl-c-table-wrap`.
 
 For table-specific compact density (tighter cell padding + a smaller row
-height offset), set `data-density="compact"` on `.c-table-wrap` directly:
+height offset), set `data-pl-density="compact"` on `.pl-c-table-wrap` directly:
 
 ```html
-<div class="c-table-wrap" data-density="compact">
+<div class="pl-c-table-wrap" data-pl-density="compact">
   <!-- cell padding tightened + row height offset reduced to +0.25rem -->
 </div>
 ```
@@ -208,7 +208,7 @@ a container query on the table wrapper (it is already a query container):
 
 ```css
 @layer app {
-  @container c-table-wrap (inline-size < 50rem) {
+  @container pl-c-table-wrap (inline-size < 50rem) {
     .col-optional {
       display: none;
     }
@@ -222,10 +222,10 @@ a container query on the table wrapper (it is already a query container):
 ```
 
 For cell content that should truncate instead of wrapping, apply the
-built-in `.u-truncate` utility class:
+built-in `.pl-u-truncate` utility class:
 
 ```html
-<td class="u-truncate" style="max-inline-size: 12rem;">
+<td class="pl-u-truncate" style="max-inline-size: 12rem;">
   Very long email address…
 </td>
 ```
@@ -234,31 +234,31 @@ built-in `.u-truncate` utility class:
 
 | Selector                         | Role                                              |
 | -------------------------------- | ------------------------------------------------- |
-| `.c-table-wrap`                  | Scroll + query container (bordered, rounded).     |
-| `.c-table`                       | The native `<table>`.                             |
+| `.pl-c-table-wrap`               | Scroll + query container (bordered, rounded).     |
+| `.pl-c-table`                    | The native `<table>`.                             |
 | `th`, `td`                       | Cells (styled via descendant selectors).          |
 | `[data-align="end"]`             | Right-align + `tabular-nums` for numeric columns. |
 | `[data-align="center"]`          | Center-align.                                     |
 | `tbody tr:hover`                 | Row hover wash (scanning aid).                    |
 | `tbody tr[aria-selected="true"]` | Selected row (accent wash).                       |
 | `th[data-sort]`                  | Sortable header (cursor + hover).                 |
-| `th[data-sort="asc"\|"desc"]`    | Shows up/down arrow via `.c-table__sort-icon`.    |
-| `.c-table__sort-icon`            | Pure-CSS triangle arrow inside sortable `<th>`.   |
-| `.c-table__check`                | Narrow centered cell for checkboxes.              |
-| `.c-table__detail`               | Expandable detail row (collapsed by default).     |
-| `.c-table__detail[open]`         | Expanded detail row.                              |
-| `.c-table__detail-inner`         | Animated wrapper (grid-rows technique).           |
-| `.c-table__detail-content`       | Inner content (padding + overflow).               |
-| `.c-table__expand`               | Expand/collapse toggle button (chevron).          |
-| `.c-table__sticky-col`           | Sticky first column (pinned during scroll).       |
-| `[data-density="compact"]`       | Tighter row padding on `.c-table-wrap`.           |
+| `th[data-sort="asc"\|"desc"]`    | Shows up/down arrow via `.pl-c-table__sort-icon`. |
+| `.pl-c-table__sort-icon`         | Pure-CSS triangle arrow inside sortable `<th>`.   |
+| `.pl-c-table__check`             | Narrow centered cell for checkboxes.              |
+| `.pl-c-table__detail`            | Expandable detail row (collapsed by default).     |
+| `.pl-c-table__detail[open]`      | Expanded detail row.                              |
+| `.pl-c-table__detail-inner`      | Animated wrapper (grid-rows technique).           |
+| `.pl-c-table__detail-content`    | Inner content (padding + overflow).               |
+| `.pl-c-table__expand`            | Expand/collapse toggle button (chevron).          |
+| `.pl-c-table__sticky-col`        | Sticky first column (pinned during scroll).       |
+| `[data-pl-density="compact"]`    | Tighter row padding on `.pl-c-table-wrap`.        |
 | `tbody[data-loading]`            | Suppresses hover during loading state.            |
 
 ## Tokens exposed
 
-| Token                          | Default                                       | Purpose                                              |
-| ------------------------------ | --------------------------------------------- | ---------------------------------------------------- |
-| `--c-table-min`                | `48rem`                                       | Min table width (drives horizontal scroll).          |
-| `--c-table-cell-pad`           | `var(--pl-space-3) var(--pl-space-4)`         | Cell padding (overridden by density).                |
-| `--c-table-row-min-block-size` | `calc(var(--pl-control-block-size) + 0.5rem)` | Row height (derived from global control token).      |
-| `--c-table-radius`             | `var(--pl-radius-xl)`                         | Corner radius (exposed for cell corner inheritance). |
+| Token                             | Default                                       | Purpose                                              |
+| --------------------------------- | --------------------------------------------- | ---------------------------------------------------- |
+| `--pl-c-table-min`                | `48rem`                                       | Min table width (drives horizontal scroll).          |
+| `--pl-c-table-cell-pad`           | `var(--pl-space-3) var(--pl-space-4)`         | Cell padding (overridden by density).                |
+| `--pl-c-table-row-min-block-size` | `calc(var(--pl-control-block-size) + 0.5rem)` | Row height (derived from global control token).      |
+| `--pl-c-table-radius`             | `var(--pl-radius-xl)`                         | Corner radius (exposed for cell corner inheritance). |

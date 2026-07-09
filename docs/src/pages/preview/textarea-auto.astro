@@ -10,21 +10,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Basic</h2>
-  <label class="c-field">
-    <span class="c-field__label">Comment</span>
-    <textarea class="c-textarea-auto" rows="2" placeholder="Type here... the textarea grows as you type."></textarea>
-    <span class="c-field__hint">Grows automatically with content (Chrome 123+).</span>
+  <label class="pl-c-field">
+    <span class="pl-c-field__label">Comment</span>
+    <textarea class="pl-c-textarea-auto" rows="2" placeholder="Type here... the textarea grows as you type."></textarea>
+    <span class="pl-c-field__hint">Grows automatically with content (Chrome 123+).</span>
   </label>
 
   <h2>With max height</h2>
-  <label class="c-field">
-    <span class="c-field__label">Description</span>
-    <textarea class="c-textarea-auto" rows="3" style="--c-textarea-max-block: 8rem;" placeholder="Grows up to 8rem, then scrolls."></textarea>
+  <label class="pl-c-field">
+    <span class="pl-c-field__label">Description</span>
+    <textarea class="pl-c-textarea-auto" rows="3" style="--pl-c-textarea-max-block: 8rem;" placeholder="Grows up to 8rem, then scrolls."></textarea>
   </label>
 
   <h2>Disabled</h2>
-  <label class="c-field">
-    <span class="c-field__label">Read-only notes</span>
-    <textarea class="c-textarea-auto" rows="2" disabled>This textarea is disabled.</textarea>
+  <label class="pl-c-field">
+    <span class="pl-c-field__label">Read-only notes</span>
+    <textarea class="pl-c-textarea-auto" rows="2" disabled>This textarea is disabled.</textarea>
   </label>
 </BaseLayout>

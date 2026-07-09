@@ -13,13 +13,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="demo-grid" aria-label="Combobox examples">
     <div class="demo-panel">
       <h2>Assignee lookup</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="assignee-lookup">Assignee</label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="assignee-lookup">Assignee</label>
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="assignee-lookup"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               name="assignee_label"
               role="combobox"
               type="search"
@@ -31,45 +31,45 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               aria-describedby="assignee-help"
               value="Nia"
             />
-            <svg class="c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="pl-c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <div class="c-combobox__popup" id="assignee-list" role="listbox" aria-label="Assignee suggestions">
-            <button class="c-combobox__option" id="assignee-nia" type="button" role="option" aria-selected="true">
-              <span class="c-combobox__label">Nia Gomez</span>
-              <span class="c-combobox__meta">Ops</span>
-              <span class="c-combobox__description">Process owner - 14 open cases</span>
+          <div class="pl-c-combobox__popup" id="assignee-list" role="listbox" aria-label="Assignee suggestions">
+            <button class="pl-c-combobox__option" id="assignee-nia" type="button" role="option" aria-selected="true">
+              <span class="pl-c-combobox__label">Nia Gomez</span>
+              <span class="pl-c-combobox__meta">Ops</span>
+              <span class="pl-c-combobox__description">Process owner - 14 open cases</span>
             </button>
-            <button class="c-combobox__option" id="assignee-lee" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Lee Chen</span>
-              <span class="c-combobox__meta">Finance</span>
-              <span class="c-combobox__description">Invoice exception specialist</span>
+            <button class="pl-c-combobox__option" id="assignee-lee" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Lee Chen</span>
+              <span class="pl-c-combobox__meta">Finance</span>
+              <span class="pl-c-combobox__description">Invoice exception specialist</span>
             </button>
-            <button class="c-combobox__option" id="assignee-queue" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Shared AP queue</span>
-              <span class="c-combobox__meta">Queue</span>
-              <span class="c-combobox__description">Round-robin assignment</span>
+            <button class="pl-c-combobox__option" id="assignee-queue" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Shared AP queue</span>
+              <span class="pl-c-combobox__meta">Queue</span>
+              <span class="pl-c-combobox__description">Round-robin assignment</span>
             </button>
           </div>
           <input type="hidden" name="assignee_id" value="usr_124" />
         </div>
-        <span class="c-field__hint" id="assignee-help">Search users, groups, and queues.</span>
+        <span class="pl-c-field__hint" id="assignee-help">Search users, groups, and queues.</span>
       </div>
     </div>
 
     <div class="demo-panel">
       <h2>Process lookup</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="process-lookup">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="process-lookup">
           Process
-          <span class="c-field__required" aria-hidden="true">*</span>
+          <span class="pl-c-field__required" aria-hidden="true">*</span>
         </label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="process-lookup"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               name="process_label"
               role="combobox"
               type="search"
@@ -82,35 +82,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               aria-describedby="process-help"
               value="onboard"
             />
-            <svg class="c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="pl-c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <div class="c-combobox__popup" id="process-list" role="listbox" aria-label="Process suggestions">
-            <button class="c-combobox__option" id="process-onboard" type="button" role="option" aria-selected="true">
-              <span class="c-combobox__label">Vendor onboarding</span>
-              <span class="c-combobox__meta">v12</span>
-              <span class="c-combobox__description">Procurement intake, risk review, approval</span>
+          <div class="pl-c-combobox__popup" id="process-list" role="listbox" aria-label="Process suggestions">
+            <button class="pl-c-combobox__option" id="process-onboard" type="button" role="option" aria-selected="true">
+              <span class="pl-c-combobox__label">Vendor onboarding</span>
+              <span class="pl-c-combobox__meta">v12</span>
+              <span class="pl-c-combobox__description">Procurement intake, risk review, approval</span>
             </button>
-            <button class="c-combobox__option" id="process-change" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Customer change request</span>
-              <span class="c-combobox__meta">v4</span>
-              <span class="c-combobox__description">Routes pricing and legal exceptions</span>
+            <button class="pl-c-combobox__option" id="process-change" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Customer change request</span>
+              <span class="pl-c-combobox__meta">v4</span>
+              <span class="pl-c-combobox__description">Routes pricing and legal exceptions</span>
             </button>
           </div>
           <input type="hidden" name="process_id" value="proc_vendor_onboarding" />
         </div>
-        <span class="c-field__hint" id="process-help">Required before the case can be routed.</span>
+        <span class="pl-c-field__hint" id="process-help">Required before the case can be routed.</span>
       </div>
     </div>
 
     <div class="demo-panel">
       <h2>Status trigger</h2>
-      <div class="c-field">
-        <span class="c-field__label" id="status-label">Status</span>
-        <div class="c-combobox">
+      <div class="pl-c-field">
+        <span class="pl-c-field__label" id="status-label">Status</span>
+        <div class="pl-c-combobox">
           <button
-            class="c-combobox__control"
+            class="pl-c-combobox__control"
             type="button"
             role="combobox"
             aria-labelledby="status-label"
@@ -118,26 +118,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             aria-controls="status-list"
             aria-activedescendant="status-review"
           >
-            <span class="c-combobox__value">
-              <span class="c-combobox__label">Needs review</span>
-              <span class="c-combobox__description">Paused before approval</span>
+            <span class="pl-c-combobox__value">
+              <span class="pl-c-combobox__label">Needs review</span>
+              <span class="pl-c-combobox__description">Paused before approval</span>
             </span>
-            <svg class="c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="pl-c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <div class="c-combobox__popup" id="status-list" role="listbox" aria-labelledby="status-label">
-            <button class="c-combobox__option" id="status-new" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">New</span>
-              <span class="c-combobox__meta">SLA starts</span>
+          <div class="pl-c-combobox__popup" id="status-list" role="listbox" aria-labelledby="status-label">
+            <button class="pl-c-combobox__option" id="status-new" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">New</span>
+              <span class="pl-c-combobox__meta">SLA starts</span>
             </button>
-            <button class="c-combobox__option" id="status-review" type="button" role="option" aria-selected="true">
-              <span class="c-combobox__label">Needs review</span>
-              <span class="c-combobox__meta">Manager</span>
+            <button class="pl-c-combobox__option" id="status-review" type="button" role="option" aria-selected="true">
+              <span class="pl-c-combobox__label">Needs review</span>
+              <span class="pl-c-combobox__meta">Manager</span>
             </button>
-            <button class="c-combobox__option" id="status-blocked" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Blocked</span>
-              <span class="c-combobox__meta">External</span>
+            <button class="pl-c-combobox__option" id="status-blocked" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Blocked</span>
+              <span class="pl-c-combobox__meta">External</span>
             </button>
           </div>
           <input type="hidden" name="status" value="needs_review" />
@@ -147,13 +147,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="demo-panel">
       <h2>Async vendor search</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="vendor-lookup">Vendor</label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="vendor-lookup">Vendor</label>
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="vendor-lookup"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               name="vendor_label"
               role="combobox"
               type="search"
@@ -165,8 +165,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               value="North"
             />
           </div>
-          <div class="c-combobox__popup" id="vendor-list" role="listbox" aria-label="Vendor suggestions">
-            <div class="c-combobox__status" data-loading role="option" aria-disabled="true">Searching vendors...</div>
+          <div class="pl-c-combobox__popup" id="vendor-list" role="listbox" aria-label="Vendor suggestions">
+            <div class="pl-c-combobox__status" data-loading role="option" aria-disabled="true">Searching vendors...</div>
           </div>
         </div>
       </div>
@@ -174,13 +174,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="demo-panel">
       <h2>Empty customer result</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="customer-lookup">Customer</label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="customer-lookup">Customer</label>
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="customer-lookup"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               name="customer_label"
               role="combobox"
               type="search"
@@ -191,8 +191,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               value="Zedco"
             />
           </div>
-          <div class="c-combobox__popup" id="customer-list" role="listbox" aria-label="Customer suggestions">
-            <div class="c-combobox__status" role="option" aria-disabled="true">No matching customers or vendors.</div>
+          <div class="pl-c-combobox__popup" id="customer-list" role="listbox" aria-label="Customer suggestions">
+            <div class="pl-c-combobox__status" role="option" aria-disabled="true">No matching customers or vendors.</div>
           </div>
         </div>
       </div>
@@ -200,16 +200,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <div class="demo-panel">
       <h2>Invalid required state</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="required-owner">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="required-owner">
           Case owner
-          <span class="c-field__required" aria-hidden="true">*</span>
+          <span class="pl-c-field__required" aria-hidden="true">*</span>
         </label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="required-owner"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               name="owner_label"
               role="combobox"
               type="search"
@@ -220,21 +220,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               aria-describedby="owner-error"
             />
           </div>
-          <div class="c-combobox__popup" id="owner-list" role="listbox" hidden></div>
+          <div class="pl-c-combobox__popup" id="owner-list" role="listbox" hidden></div>
         </div>
-        <span class="c-field__hint" id="owner-error" data-tone="danger" role="alert">Choose an owner before saving.</span>
+        <span class="pl-c-field__hint" id="owner-error" data-tone="danger" role="alert">Choose an owner before saving.</span>
       </div>
     </div>
 
     <div class="demo-panel">
       <h2>Disabled lookup</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="locked-customer">Customer</label>
-        <div class="c-combobox">
-          <div class="c-combobox__control">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="locked-customer">Customer</label>
+        <div class="pl-c-combobox">
+          <div class="pl-c-combobox__control">
             <input
               id="locked-customer"
-              class="c-combobox__input"
+              class="pl-c-combobox__input"
               role="combobox"
               type="search"
               aria-expanded="false"
@@ -243,30 +243,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               disabled
             />
           </div>
-          <div class="c-combobox__popup" id="locked-customer-list" role="listbox" hidden></div>
+          <div class="pl-c-combobox__popup" id="locked-customer-list" role="listbox" hidden></div>
         </div>
-        <span class="c-field__hint">Locked by the imported contract.</span>
+        <span class="pl-c-field__hint">Locked by the imported contract.</span>
       </div>
     </div>
 
     <div class="demo-panel demo-panel--wide">
       <h2>Multi-select routing teams</h2>
-      <div class="c-field">
-        <label class="c-field__label" for="team-lookup">Routing teams</label>
-        <div class="c-combobox c-combobox--multi">
-          <div class="c-combobox__control">
-            <div class="c-combobox__chips">
-              <span class="c-chip">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="team-lookup">Routing teams</label>
+        <div class="pl-c-combobox pl-c-combobox--multi">
+          <div class="pl-c-combobox__control">
+            <div class="pl-c-combobox__chips">
+              <span class="pl-c-chip">
                 Legal
-                <button class="c-chip__remove" type="button" aria-label="Remove Legal">x</button>
+                <button class="pl-c-chip__remove" type="button" aria-label="Remove Legal">x</button>
               </span>
-              <span class="c-chip" data-tone="success">
+              <span class="pl-c-chip" data-tone="success">
                 Finance
-                <button class="c-chip__remove" type="button" aria-label="Remove Finance">x</button>
+                <button class="pl-c-chip__remove" type="button" aria-label="Remove Finance">x</button>
               </span>
               <input
                 id="team-lookup"
-                class="c-combobox__input"
+                class="pl-c-combobox__input"
                 role="combobox"
                 type="search"
                 autocomplete="off"
@@ -278,20 +278,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               />
             </div>
           </div>
-          <div class="c-combobox__popup" id="team-list" role="listbox" aria-label="Routing team suggestions">
-            <button class="c-combobox__option" id="team-risk" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Risk review</span>
-              <span class="c-combobox__meta">6 members</span>
+          <div class="pl-c-combobox__popup" id="team-list" role="listbox" aria-label="Routing team suggestions">
+            <button class="pl-c-combobox__option" id="team-risk" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Risk review</span>
+              <span class="pl-c-combobox__meta">6 members</span>
             </button>
-            <button class="c-combobox__option" id="team-procurement" type="button" role="option" aria-selected="false">
-              <span class="c-combobox__label">Procurement</span>
-              <span class="c-combobox__meta">12 members</span>
+            <button class="pl-c-combobox__option" id="team-procurement" type="button" role="option" aria-selected="false">
+              <span class="pl-c-combobox__label">Procurement</span>
+              <span class="pl-c-combobox__meta">12 members</span>
             </button>
           </div>
           <input type="hidden" name="team_ids[]" value="team_legal" />
           <input type="hidden" name="team_ids[]" value="team_finance" />
         </div>
-        <span class="c-field__hint">Selected chips are visual; hidden inputs carry submitted values.</span>
+        <span class="pl-c-field__hint">Selected chips are visual; hidden inputs carry submitted values.</span>
       </div>
     </div>
   </section>
@@ -315,7 +315,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: var(--pl-color-surface);
   }
 
-  .demo-panel:has(.c-combobox__popup:not([hidden])) {
+  .demo-panel:has(.pl-c-combobox__popup:not([hidden])) {
     padding-block-end: calc(var(--pl-space-5) + 18rem);
   }
 

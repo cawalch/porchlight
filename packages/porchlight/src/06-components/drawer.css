@@ -7,9 +7,9 @@
  * and popover-menu pattern).
  *
  * The drawer element MUST have the `popover` attribute in HTML:
- *   <div popover class="c-drawer" id="my-drawer" data-side="end">
- *     <header class="c-drawer__header">...</header>
- *     <div class="c-drawer__body">...</div>
+ *   <div popover class="pl-c-drawer" id="my-drawer" data-side="end">
+ *     <header class="pl-c-drawer__header">...</header>
+ *     <div class="pl-c-drawer__body">...</div>
  *   </div>
  * The trigger uses `popovertarget="my-drawer"` to open it declaratively.
  *
@@ -20,12 +20,12 @@
  * A backdrop scrim is created via ::backdrop pseudo-element on the popover.
  */
 @layer porchlight.components {
-  @scope (.c-drawer) {
+  @scope (.pl-c-drawer) {
     :scope {
-      --c-drawer-inline: min(24rem, 100vi);
-      --c-drawer-block: 100vb;
-      --c-drawer-pad: var(--pl-space-4);
-      --c-drawer-gap: var(--pl-space-3);
+      --pl-c-drawer-inline: min(24rem, 100vi);
+      --pl-c-drawer-block: 100vb;
+      --pl-c-drawer-pad: var(--pl-space-4);
+      --pl-c-drawer-gap: var(--pl-space-3);
 
       /* Position: stretch from the side edge. */
       inset-inline: auto 0;
@@ -35,8 +35,8 @@
       border: 0;
 
       /* No hard side border  -  shadow-3 defines the edge cleanly. */
-      inline-size: var(--c-drawer-inline);
-      block-size: var(--c-drawer-block);
+      inline-size: var(--pl-c-drawer-inline);
+      block-size: var(--pl-c-drawer-block);
 
       /* Liquid Glass: translucent surface with blur. */
       background: light-dark(
@@ -92,32 +92,32 @@
     }
 
     /* Layout inside the drawer. */
-    .c-drawer__header {
+    .pl-c-drawer__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--c-drawer-gap);
-      padding: var(--c-drawer-pad);
+      gap: var(--pl-c-drawer-gap);
+      padding: var(--pl-c-drawer-pad);
 
       /* Softer divider  -  the Liquid Glass surface is already visually separated. */
       border-block-end: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
 
-    .c-drawer__title {
+    .pl-c-drawer__title {
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-semibold);
     }
 
-    .c-drawer__body {
-      padding: var(--c-drawer-pad);
+    .pl-c-drawer__body {
+      padding: var(--pl-c-drawer-pad);
       overflow-y: auto;
     }
 
-    .c-drawer__footer {
+    .pl-c-drawer__footer {
       display: flex;
-      gap: var(--c-drawer-gap);
-      padding: var(--c-drawer-pad);
+      gap: var(--pl-c-drawer-gap);
+      padding: var(--pl-c-drawer-pad);
 
       /* Softer divider. */
       border-block-start: 1px solid

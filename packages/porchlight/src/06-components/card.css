@@ -11,55 +11,55 @@
  * to bg (a ~2% step); the border + a soft shadow define the card. This is the
  * modern approach (subtle depth over heavy fill differences).
  *
- * Interactive variant: add [data-interactive] (or use an <a.c-card>) to get a
- * hover lift + focus ring  -  for clickable cards (recent items, navigation
- * tiles). Motion respects --pl-motion-scale.
+ * Interactive variant: add [data-interactive] (or use
+ * <a class="pl-c-card">) to get a hover lift + focus ring - for clickable
+ * cards (recent items, navigation tiles). Motion respects --pl-motion-scale.
  *
- * Token-driven via --c-card-* aliases. Density comes from --pl-space-*.
+ * Token-driven via --pl-c-card-* aliases. Density comes from --pl-space-*.
  */
 @layer porchlight.components {
-  @scope (.c-card) {
+  @scope (.pl-c-card) {
     :scope {
-      --c-card-padding: var(--pl-space-5);
-      --c-card-bg: var(--pl-color-surface);
-      --c-card-border: var(--pl-color-border);
-      --c-card-shadow: var(--pl-shadow-1);
-      --c-card-radius: var(--pl-radius-2xl);
+      --pl-c-card-padding: var(--pl-space-5);
+      --pl-c-card-bg: var(--pl-color-surface);
+      --pl-c-card-border: var(--pl-color-border);
+      --pl-c-card-shadow: var(--pl-shadow-1);
+      --pl-c-card-radius: var(--pl-radius-2xl);
 
-      container: c-card / inline-size;
+      container: pl-c-card / inline-size;
       display: grid;
       gap: var(--pl-space-4);
 
-      /* When cards sit in an .l-grid (equal-height rows via align-items:
+      /* When cards sit in an .pl-l-grid (equal-height rows via align-items:
          stretch), a shorter card gets stretched to match its tallest sibling.
          Without this, the card's grid rows absorb the extra height  - 
          inflating the header row and pushing the title down inconsistently. */
       align-content: start;
-      padding: var(--c-card-padding);
-      border: 1px solid var(--c-card-border);
-      border-radius: var(--c-card-radius);
-      background: var(--c-card-bg);
-      box-shadow: var(--c-card-shadow);
+      padding: var(--pl-c-card-padding);
+      border: 1px solid var(--pl-c-card-border);
+      border-radius: var(--pl-c-card-radius);
+      background: var(--pl-c-card-bg);
+      box-shadow: var(--pl-c-card-shadow);
     }
 
     /* Elevated variant  -  no border; shadow-2 + top-highlight do the lifting.
        Use when the card floats over a busy background or in a hero context. */
     :scope[data-elevated] {
-      --c-card-border: transparent;
-      --c-card-shadow: var(--pl-shadow-2);
+      --pl-c-card-border: transparent;
+      --pl-c-card-shadow: var(--pl-shadow-2);
     }
 
     /* App surface  -  tighter corners for dense desktop products where a 24px
        radius reads too soft. Keeps the default elevation and can combine with
        status-driven rings or accent cards. */
     :scope[data-surface="app"] {
-      --c-card-radius: var(--pl-radius-lg);
+      --pl-c-card-radius: var(--pl-radius-lg);
     }
 
     /* Accent variant  -  left-edge brand bar + barely-there tinted surface.
        Use for featured KPI tiles, selected states, upgrade CTAs. */
     :scope[data-variant="accent"] {
-      --c-card-border: color-mix(
+      --pl-c-card-border: color-mix(
         in oklab,
         var(--pl-color-accent),
         transparent 70%
@@ -78,9 +78,9 @@
     /* :has() semantic rings  -  automatic state rings driven by child content.
        A card containing a danger badge or [data-status="error"] element gets a
        danger-hued ring; no extra wrapper attribute needed. */
-    :scope:has(.c-badge[data-variant="danger"]),
+    :scope:has(.pl-c-badge[data-variant="danger"]),
     :scope:has([data-status="error"]) {
-      --c-card-border: color-mix(
+      --pl-c-card-border: color-mix(
         in oklab,
         var(--pl-color-danger),
         transparent 55%
@@ -91,9 +91,9 @@
         var(--pl-shadow-1);
     }
 
-    :scope:has(.c-badge[data-variant="success"]),
+    :scope:has(.pl-c-badge[data-variant="success"]),
     :scope:has([data-status="success"]) {
-      --c-card-border: color-mix(
+      --pl-c-card-border: color-mix(
         in oklab,
         var(--pl-color-success),
         transparent 55%
@@ -104,14 +104,14 @@
         var(--pl-shadow-1);
     }
 
-    .c-card__header {
+    .pl-c-card__header {
       display: flex;
       align-items: start;
       justify-content: space-between;
       gap: var(--pl-space-3);
     }
 
-    .c-card__title {
+    .pl-c-card__title {
       margin: 0;
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-bold);
@@ -120,17 +120,17 @@
     }
 
     /* Truncate title to a single line with ellipsis. Opt in via
-       [data-truncate] on .c-card or directly on .c-card__title. Without
+       [data-truncate] on .pl-c-card or directly on .pl-c-card__title. Without
        it, the title wraps freely (with balance). */
-    :scope[data-truncate] .c-card__title,
-    .c-card__title[data-truncate] {
+    :scope[data-truncate] .pl-c-card__title,
+    .pl-c-card__title[data-truncate] {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       min-inline-size: 0;
     }
 
-    .c-card__body {
+    .pl-c-card__body {
       color: var(--pl-color-text-muted);
 
       /* Prevent orphans in card descriptions / body text. Degrades
@@ -138,7 +138,7 @@
       text-wrap: pretty;
     }
 
-    .c-card__footer {
+    .pl-c-card__footer {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -149,12 +149,12 @@
       /* Hairline divider  -  whitespace does most of the work; the border is
          a hint, not a structural element. */
       border-block-start: 1px solid
-        color-mix(in oklab, var(--c-card-border), transparent 45%);
+        color-mix(in oklab, var(--pl-c-card-border), transparent 45%);
     }
 
     /* Header collapses to a stack when the CARD is narrow (container query). */
-    @container c-card (inline-size < 28rem) {
-      .c-card__header {
+    @container pl-c-card (inline-size < 28rem) {
+      .pl-c-card__header {
         align-items: stretch;
         flex-direction: column;
       }
@@ -162,9 +162,9 @@
 
     /* Generous interior spacing on large tiles (wide dashboard cards,
        hero panels). More padding at comfortable desktop widths. */
-    @container c-card (inline-size > 40rem) {
+    @container pl-c-card (inline-size > 40rem) {
       :scope {
-        --c-card-padding: var(--pl-space-6);
+        --pl-c-card-padding: var(--pl-space-6);
       }
     }
 
@@ -207,7 +207,7 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-card) {
+    :where(.pl-c-card) {
       border-color: ButtonBorder;
     }
   }

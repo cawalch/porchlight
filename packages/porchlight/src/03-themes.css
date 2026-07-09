@@ -4,8 +4,8 @@
  * Theme, density, and accessibility-media overrides. These do NOT redefine the
  * palette  -  they steer it:
  *
- *   - [data-theme]      sets color-scheme, which drives light-dark() in tokens.
- *   - [data-density]    resizes controls via the control tokens.
+ *   - [data-pl-theme]      sets color-scheme, which drives light-dark() in tokens.
+ *   - [data-pl-density]    resizes controls via the control tokens.
  *   - prefers-reduced-motion  zeroes the motion scale (and any transitions).
  *   - prefers-contrast  strengthens boundaries and focus affordances.
  *   - forced-colors     remaps semantic tokens to Windows system colors so the
@@ -18,11 +18,11 @@
  */
 @layer porchlight.themes {
   /* Explicit theme. Omit the attribute to inherit the system color-scheme. */
-  :where([data-theme="light"]) {
+  :where([data-pl-theme="light"]) {
     color-scheme: light;
   }
 
-  :where([data-theme="dark"]) {
+  :where([data-pl-theme="dark"]) {
     color-scheme: dark;
   }
 
@@ -39,16 +39,16 @@
    *
    * The dense tier overrides the --pl-space-* scale so that gaps between
    * cards, toolbar padding, and layout cluster spacing all tighten together.
-   * This is intentionally aggressive: set data-density="dense" on a specific
+   * This is intentionally aggressive: set data-pl-density="dense" on a specific
    * container or page, not the whole app unless the entire app is data-dense.
    */
-  :where([data-density="compact"]) {
+  :where([data-pl-density="compact"]) {
     --pl-control-block-size: 2rem;
     --pl-control-padding-inline: var(--pl-space-3);
     --pl-control-gap: var(--pl-space-1);
   }
 
-  :where([data-density="dense"]) {
+  :where([data-pl-density="dense"]) {
     /* Control geometry: tighter than compact. */
     --pl-control-block-size: 1.75rem;
     --pl-control-padding-inline: var(--pl-space-2);
@@ -69,11 +69,11 @@
     --pl-text-xs: 0.6875rem;
   }
 
-  :where([data-density="comfortable"]) {
+  :where([data-pl-density="comfortable"]) {
     --pl-control-block-size: 2.5rem;
   }
 
-  :where([data-density="touch"]) {
+  :where([data-pl-density="touch"]) {
     --pl-control-block-size: 2.75rem;
     --pl-control-padding-inline: var(--pl-space-5);
   }

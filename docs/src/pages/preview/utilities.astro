@@ -10,91 +10,91 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     need.
   </p>
 
-  <h2><code>.u-sr-only</code> and <code>.u-focusable-sr-only</code></h2>
+  <h2><code>.pl-u-sr-only</code> and <code>.pl-u-focusable-sr-only</code></h2>
   <p>
     Hide content from sighted users while keeping it for assistive tech. Use
-    <code>.u-sr-only</code> when the element should stay hidden on focus, and
-    <code>.u-focusable-sr-only</code> for skip links that reveal themselves.
+    <code>.pl-u-sr-only</code> when the element should stay hidden on focus, and
+    <code>.pl-u-focusable-sr-only</code> for skip links that reveal themselves.
   </p>
   <div class="demo">
-    <button class="c-button" data-variant="ghost" aria-label="Settings">
-      ⚙ <span class="u-sr-only">Settings</span>
+    <button class="pl-c-button" data-variant="ghost" aria-label="Settings">
+      ⚙ <span class="pl-u-sr-only">Settings</span>
     </button>
-    <a class="u-focusable-sr-only" href="#utility-focus-target">Focusable skip target</a>
+    <a class="pl-u-focusable-sr-only" href="#utility-focus-target">Focusable skip target</a>
     <span id="utility-focus-target" aria-hidden="true">← hidden text stays available to AT</span>
   </div>
 
-  <h2><code>.u-truncate</code></h2>
+  <h2><code>.pl-u-truncate</code></h2>
   <p>One-line truncation with an ellipsis. Use for table cells, breadcrumbs, file names.</p>
   <div class="demo">
     <div class="truncate-box">
-      <span class="u-truncate">a-very-long-account-name-that-should-truncate-with-an-ellipsis.webp</span>
+      <span class="pl-u-truncate">a-very-long-account-name-that-should-truncate-with-an-ellipsis.webp</span>
     </div>
   </div>
 
-  <h2><code>.u-min-0</code> and <code>.u-wrap-anywhere</code></h2>
+  <h2><code>.pl-u-min-0</code> and <code>.pl-u-wrap-anywhere</code></h2>
   <p>Helpers for flex/grid truncation and very long generated tokens.</p>
   <div class="demo utility-row">
     <span>Fixed label</span>
-    <span class="u-min-0 u-truncate">a-flex-child-that-can-shrink-and-truncate-cleanly</span>
+    <span class="pl-u-min-0 pl-u-truncate">a-flex-child-that-can-shrink-and-truncate-cleanly</span>
   </div>
   <div class="demo token-box">
-    <code class="u-wrap-anywhere">request_01JZ8Y7Q3Y1QYJH9D8A2WMV6YV_extremely_long_generated_identifier</code>
+    <code class="pl-u-wrap-anywhere">request_01JZ8Y7Q3Y1QYJH9D8A2WMV6YV_extremely_long_generated_identifier</code>
   </div>
 
-  <h2><code>.u-flow</code></h2>
+  <h2><code>.pl-u-flow</code></h2>
   <p>Vertical rhythm for a prose block: space between children, not before/after.</p>
   <div class="demo">
-    <div class="u-flow">
+    <div class="pl-u-flow">
       <p>First paragraph: no top margin.</p>
       <p>Second paragraph: spaced from the first via the sibling selector.</p>
       <p>Third paragraph: consistent rhythm throughout.</p>
     </div>
   </div>
 
-  <h2><code>.u-marginless</code></h2>
+  <h2><code>.pl-u-marginless</code></h2>
   <p>Remove default block margins from a single text element inside dense app chrome.</p>
   <div class="demo">
-    <p class="u-marginless">A marginless paragraph inside a compact row.</p>
+    <p class="pl-u-marginless">A marginless paragraph inside a compact row.</p>
   </div>
 
-  <h2><code>.u-surface</code></h2>
-  <p>Panel styling for ad-hoc grouping (when you don't need a full <code>.c-card</code>): bg, text, border, radius.</p>
+  <h2><code>.pl-u-surface</code></h2>
+  <p>Panel styling for ad-hoc grouping (when you don't need a full <code>.pl-c-card</code>): bg, text, border, radius.</p>
   <div class="demo">
-    <div class="u-surface utility-surface">
+    <div class="pl-u-surface utility-surface">
       An ad-hoc surface: useful for inline callouts that don't deserve a component.
     </div>
   </div>
 
-  <h2><code>.u-muted</code></h2>
+  <h2><code>.pl-u-muted</code></h2>
   <p>Secondary/caption text color.</p>
   <div class="demo">
-    <p>Primary text. <span class="u-muted">Secondary, muted text.</span></p>
-    <p><span class="u-muted-sm">Small muted metadata text.</span></p>
+    <p>Primary text. <span class="pl-u-muted">Secondary, muted text.</span></p>
+    <p><span class="pl-u-muted-sm">Small muted metadata text.</span></p>
   </div>
 
-  <h2><code>.u-icon-title</code></h2>
+  <h2><code>.pl-u-icon-title</code></h2>
   <p>Leading icon + title pattern that keeps the icon attached to the title line.</p>
   <div class="demo title-box">
-    <span class="u-icon-title">
+    <span class="pl-u-icon-title">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12h16M12 4v16" stroke-linecap="round" /></svg>
-      <span class="u-min-0 u-truncate">Extremely long workflow title that truncates beside its icon</span>
+      <span class="pl-u-min-0 pl-u-truncate">Extremely long workflow title that truncates beside its icon</span>
     </span>
   </div>
 
   <h2>Badge/chip group</h2>
-  <p>Use <code>.l-cluster</code> with a smaller gap for wrapping groups of compact labels.</p>
-  <div class="demo l-cluster utility-chip-cluster">
-    <span class="c-badge">Queued</span>
-    <span class="c-badge" data-tone="success">Ready</span>
-    <span class="c-chip">Finance</span>
-    <span class="c-chip" data-tone="warning">Needs review</span>
+  <p>Use <code>.pl-l-cluster</code> with a smaller gap for wrapping groups of compact labels.</p>
+  <div class="demo pl-l-cluster utility-chip-cluster">
+    <span class="pl-c-badge">Queued</span>
+    <span class="pl-c-badge" data-tone="success">Ready</span>
+    <span class="pl-c-chip">Finance</span>
+    <span class="pl-c-chip" data-tone="warning">Needs review</span>
   </div>
 
-  <h2><code>.u-full-bleed</code></h2>
+  <h2><code>.pl-u-full-bleed</code></h2>
   <p>Break an element out to the viewport edges inside a constrained container (a wide table or image in a prose column).</p>
   <div class="demo narrow">
-    <div class="u-surface u-full-bleed utility-full-bleed">
+    <div class="pl-u-surface pl-u-full-bleed utility-full-bleed">
       This breaks out beyond the narrow demo container to the viewport edges.
     </div>
   </div>
@@ -110,7 +110,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border-radius: var(--pl-radius-md);
     padding: var(--pl-space-2);
   }
-  .truncate-box .u-truncate {
+  .truncate-box .pl-u-truncate {
     display: block;
   }
   .utility-row {
@@ -128,7 +128,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border: 1px dashed var(--pl-color-border);
     border-radius: var(--pl-radius-md);
   }
-  .u-icon-title svg {
+  .pl-u-icon-title svg {
     inline-size: 1rem;
     block-size: 1rem;
   }
@@ -136,7 +136,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding: var(--pl-space-4);
   }
   .utility-chip-cluster {
-    --l-cluster-gap: var(--pl-space-2);
+    --pl-l-cluster-gap: var(--pl-space-2);
   }
   .utility-full-bleed {
     padding: var(--pl-space-3);

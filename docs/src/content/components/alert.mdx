@@ -7,30 +7,30 @@ since: 0.2.0
 
 # Alert
 
-The `.c-alert` renders an inline notification within the page flow. Four tones
+The `.pl-c-alert` renders an inline notification within the page flow. Four tones
 via `[data-tone]`: info (default), success, warning, danger. A leading icon
 anchors the tone visually.
 
 ## Semantic HTML
 
 ```html
-<div class="c-alert" data-tone="warning">
-  <div class="c-alert__icon"><svg>…</svg></div>
-  <div class="c-alert__content">
-    <div class="c-alert__title">Approaching limit</div>
-    <div class="c-alert__body">You have used 58 of 60 seats.</div>
+<div class="pl-c-alert" data-tone="warning">
+  <div class="pl-c-alert__icon"><svg>…</svg></div>
+  <div class="pl-c-alert__content">
+    <div class="pl-c-alert__title">Approaching limit</div>
+    <div class="pl-c-alert__body">You have used 58 of 60 seats.</div>
   </div>
 </div>
 ```
 
 ## Class contract
 
-| Selector            | Role                                              |
-| ------------------- | ------------------------------------------------- |
-| `.c-alert`          | The container (grid: icon + content).             |
-| `.c-alert__icon`    | Leading icon slot (tone-colored).                 |
-| `.c-alert__content` | Title + body wrapper.                             |
-| `.c-alert__title`   | Bold heading.                                     |
-| `.c-alert__body`    | Supporting text (muted).                          |
-| `.c-alert__close`   | Optional dismiss button (top-right).              |
-| `[data-tone]`       | `info` (default), `success`, `warning`, `danger`. |
+| Selector               | Role                                              |
+| ---------------------- | ------------------------------------------------- |
+| `.pl-c-alert`          | The container (grid: icon + content).             |
+| `.pl-c-alert__icon`    | Leading icon slot (tone-colored).                 |
+| `.pl-c-alert__content` | Title + body wrapper.                             |
+| `.pl-c-alert__title`   | Bold heading.                                     |
+| `.pl-c-alert__body`    | Supporting text (muted).                          |
+| `.pl-c-alert__close`   | Optional dismiss button (top-right).              |
+| `[data-tone]`          | `info` (default), `success`, `warning`, `danger`. |

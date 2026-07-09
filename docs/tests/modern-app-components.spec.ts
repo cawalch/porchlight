@@ -3,25 +3,25 @@ import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 
 const newComponentPages = [
-  { path: "./preview/calendar", heading: "Calendar", root: ".c-date-range" },
-  { path: "./preview/combobox", heading: "Combobox", root: ".c-combobox" },
-  { path: "./preview/tree", heading: "Tree view", root: ".c-tree" },
+  { path: "./preview/calendar", heading: "Calendar", root: ".pl-c-date-range" },
+  { path: "./preview/combobox", heading: "Combobox", root: ".pl-c-combobox" },
+  { path: "./preview/tree", heading: "Tree view", root: ".pl-c-tree" },
   {
     path: "./preview/split-pane",
     heading: "Split pane",
-    root: ".c-split-pane",
+    root: ".pl-c-split-pane",
   },
   {
     path: "./preview/filter-builder",
     heading: "Filter builder",
-    root: ".c-filter-builder",
+    root: ".pl-c-filter-builder",
   },
   {
     path: "./preview/workflow-board",
     heading: "Workflow board",
-    root: ".c-workflow-board",
+    root: ".pl-c-workflow-board",
   },
-  { path: "./preview/chart", heading: "Chart shell", root: ".c-chart" },
+  { path: "./preview/chart", heading: "Chart shell", root: ".pl-c-chart" },
 ] as const;
 
 const frameworkSpecificSelectorPattern =
@@ -78,23 +78,25 @@ test.describe("modern app component contracts", () => {
     await page.setViewportSize({ width: 1024, height: 820 });
     await page.goto("./preview/calendar");
 
-    await expect(page.locator(".c-calendar__grid[role='grid']")).toHaveCount(2);
+    await expect(page.locator(".pl-c-calendar__grid[role='grid']")).toHaveCount(
+      2,
+    );
     await expect(
-      page.locator(".c-date-range .c-calendar__day[aria-current='date']"),
+      page.locator(".pl-c-date-range .pl-c-calendar__day[aria-current='date']"),
     ).toBeVisible();
     await expect(
       page
-        .locator(".c-date-range .c-calendar__day[aria-selected='true']")
+        .locator(".pl-c-date-range .pl-c-calendar__day[aria-selected='true']")
         .first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-date-range .c-calendar__day[data-in-range]"),
+      page.locator(".pl-c-date-range .pl-c-calendar__day[data-in-range]"),
     ).toHaveCount(3);
     await page
-      .locator(".c-date-range .c-calendar__grid")
+      .locator(".pl-c-date-range .pl-c-calendar__grid")
       .scrollIntoViewIfNeeded();
     const rangeGapSamples = await page
-      .locator(".c-date-range .c-calendar__grid")
+      .locator(".pl-c-date-range .pl-c-calendar__grid")
       .evaluate((grid) => {
         const start = grid
           .querySelector<HTMLElement>("[data-range-start]")
@@ -134,10 +136,10 @@ test.describe("modern app component contracts", () => {
     expect(pixelDistance(leftBridge, innerTrack)).toBeLessThanOrEqual(4);
     expect(pixelDistance(rightBridge, innerTrack)).toBeLessThanOrEqual(4);
     await expect(
-      page.locator(".c-date-range .c-calendar__day:disabled").first(),
+      page.locator(".pl-c-date-range .pl-c-calendar__day:disabled").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-field__control[aria-invalid='true']").first(),
+      page.locator(".pl-c-field__control[aria-invalid='true']").first(),
     ).toBeVisible();
 
     const popover = page.locator("#case-due-calendar");
@@ -186,7 +188,9 @@ test.describe("modern app component contracts", () => {
   }) => {
     await page.goto("./preview/combobox");
 
-    const input = page.locator(".c-combobox__input[role='combobox']").first();
+    const input = page
+      .locator(".pl-c-combobox__input[role='combobox']")
+      .first();
     await expect(input).toHaveAttribute("aria-expanded", "true");
     await expect(input).toHaveAttribute("aria-controls", "assignee-list");
     await expect(input).toHaveAttribute(
@@ -194,41 +198,43 @@ test.describe("modern app component contracts", () => {
       "assignee-nia",
     );
     await expect(
-      page.locator(".c-combobox__popup[role='listbox']").first(),
+      page.locator(".pl-c-combobox__popup[role='listbox']").first(),
     ).toBeVisible();
     await expect(
       page
-        .locator(".c-combobox__option[role='option'][aria-selected='true']")
+        .locator(".pl-c-combobox__option[role='option'][aria-selected='true']")
         .first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-combobox__status[data-loading]"),
+      page.locator(".pl-c-combobox__status[data-loading]"),
     ).toBeVisible();
     await expect(
-      page.locator(".c-combobox__input[aria-invalid='true']"),
+      page.locator(".pl-c-combobox__input[aria-invalid='true']"),
     ).toBeVisible();
-    await expect(page.locator(".c-combobox--multi .c-chip")).toHaveCount(2);
+    await expect(page.locator(".pl-c-combobox--multi .pl-c-chip")).toHaveCount(
+      2,
+    );
   });
 
   test("tree and split panes expose APG-aligned state hooks", async ({
     page,
   }) => {
     await page.goto("./preview/tree");
-    await expect(page.locator(".c-tree[role='tree']")).toBeVisible();
+    await expect(page.locator(".pl-c-tree[role='tree']")).toBeVisible();
     await expect(
       page
-        .locator(".c-tree__item[role='treeitem'][aria-expanded='true']")
+        .locator(".pl-c-tree__item[role='treeitem'][aria-expanded='true']")
         .first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-tree__item[aria-selected='true']").first(),
+      page.locator(".pl-c-tree__item[aria-selected='true']").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".c-tree__group[role='group']").first(),
+      page.locator(".pl-c-tree__group[role='group']").first(),
     ).toBeVisible();
 
     const treeRhythm = await page.evaluate(() => {
-      const rows = [...document.querySelectorAll(".c-tree__item-row")];
+      const rows = [...document.querySelectorAll(".pl-c-tree__item-row")];
       const rowRects = rows
         .slice(0, 7)
         .map((row) => row.getBoundingClientRect());
@@ -237,9 +243,9 @@ test.describe("modern app component contracts", () => {
         .map((rect, index) => rect.top - rowRects[index].bottom)
         .filter((gap) => gap >= 0);
       const collapsedItem = document.querySelector(
-        '.c-tree__item[aria-expanded="false"]',
+        '.pl-c-tree__item[aria-expanded="false"]',
       );
-      const collapsedRow = collapsedItem?.querySelector(".c-tree__item-row");
+      const collapsedRow = collapsedItem?.querySelector(".pl-c-tree__item-row");
       return {
         maxGap: Math.max(...gaps),
         collapsedItemHeight: collapsedItem?.getBoundingClientRect().height ?? 0,
@@ -254,17 +260,17 @@ test.describe("modern app component contracts", () => {
 
     await page.goto("./preview/split-pane");
     const separator = page
-      .locator(".c-split-pane__separator[role='separator']")
+      .locator(".pl-c-split-pane__separator[role='separator']")
       .first();
     await expect(separator).toBeVisible();
     await expect(separator).toHaveAttribute("aria-orientation", "vertical");
     await expect(separator).toHaveAttribute("aria-valuenow");
     await expect(
-      page.locator(".c-split-pane[data-orientation='vertical']"),
+      page.locator(".pl-c-split-pane[data-orientation='vertical']"),
     ).toBeVisible();
 
     const logSplitContainment = await page
-      .locator(".log-split .c-split-pane__pane--start")
+      .locator(".log-split .pl-c-split-pane__pane--start")
       .evaluate((pane) => ({
         verticalOverflow: pane.scrollHeight - pane.clientHeight,
         horizontalOverflow: pane.scrollWidth - pane.clientWidth,
@@ -280,33 +286,39 @@ test.describe("modern app component contracts", () => {
   }) => {
     await page.goto("./preview/workflow-board");
     await expect(
-      page.locator(".c-workflow-board__lanes[data-scroll='inline']"),
+      page.locator(".pl-c-workflow-board__lanes[data-scroll='inline']"),
     ).toBeVisible();
     await expect(
-      page.locator(".c-workflow-lane[data-drop-target]"),
+      page.locator(".pl-c-workflow-lane[data-drop-target]"),
     ).toBeVisible();
-    await expect(page.locator(".c-workflow-card[data-dragging]")).toBeVisible();
-    await expect(page.locator(".c-workflow-card[data-selected]")).toBeVisible();
+    await expect(
+      page.locator(".pl-c-workflow-card[data-dragging]"),
+    ).toBeVisible();
+    await expect(
+      page.locator(".pl-c-workflow-card[data-selected]"),
+    ).toBeVisible();
 
     await page.goto("./preview/chart");
-    await expect(page.locator(".c-chart__plot[role='img']")).toBeVisible();
-    await expect(page.locator(".c-chart[data-state='loading']")).toBeVisible();
-    await expect(page.locator(".c-chart[data-state='empty']")).toBeVisible();
-    await expect(page.locator(".c-chart[data-state='error']")).toBeVisible();
-    await expect(page.locator(".c-chart__table .c-table")).toBeVisible();
+    await expect(page.locator(".pl-c-chart__plot[role='img']")).toBeVisible();
+    await expect(
+      page.locator(".pl-c-chart[data-state='loading']"),
+    ).toBeVisible();
+    await expect(page.locator(".pl-c-chart[data-state='empty']")).toBeVisible();
+    await expect(page.locator(".pl-c-chart[data-state='error']")).toBeVisible();
+    await expect(page.locator(".pl-c-chart__table .pl-c-table")).toBeVisible();
 
     await page.goto("./preview/filter-builder");
     await expect(
-      page.locator(".c-saved-views__button[aria-current='true']"),
+      page.locator(".pl-c-saved-views__button[aria-current='true']"),
     ).toBeVisible();
     await expect(
-      page.locator(".c-query-chip[aria-invalid='true']"),
+      page.locator(".pl-c-query-chip[aria-invalid='true']"),
     ).toBeVisible();
     await expect(
-      page.locator(".c-filter-builder__group[data-operator='or']"),
+      page.locator(".pl-c-filter-builder__group[data-operator='or']"),
     ).toBeVisible();
     await expect(
-      page.locator(".c-filter-builder__row[aria-invalid='true']"),
+      page.locator(".pl-c-filter-builder__row[aria-invalid='true']"),
     ).toBeVisible();
   });
 

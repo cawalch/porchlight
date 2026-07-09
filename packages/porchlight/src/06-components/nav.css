@@ -4,33 +4,33 @@
  * A vertical navigation list for sidebars. Icon + label items with active
  * state via aria-current="page". Collapsible sub-sections via native
  * <details> for zero-JS expand/collapse. Designed to compose with
- * .l-app-shell__sidebar.
+ * .pl-l-app-shell__sidebar.
  *
  * Structure:
- *   <nav class="c-nav" aria-label="Main">
- *     <a class="c-nav__item" aria-current="page">
- *       <svg class="c-nav__icon">...</svg>
- *       <span class="c-nav__label">Dashboard</span>
+ *   <nav class="pl-c-nav" aria-label="Main">
+ *     <a class="pl-c-nav__item" aria-current="page">
+ *       <svg class="pl-c-nav__icon">...</svg>
+ *       <span class="pl-c-nav__label">Dashboard</span>
  *     </a>
- *     <div class="c-nav__group">
- *       <span class="c-nav__group-label">Workspace</span>
+ *     <div class="pl-c-nav__group">
+ *       <span class="pl-c-nav__group-label">Workspace</span>
  *     </div>
- *     <div class="c-menu c-nav__menu" data-placement="inline-end">
- *       <button class="c-menu__trigger" popovertarget="nav-reports">
- *         <svg class="c-nav__icon">...</svg>
- *         <span class="c-nav__label">Reports</span>
- *         <svg class="c-nav__chevron">...</svg>
+ *     <div class="pl-c-menu pl-c-nav__menu" data-placement="inline-end">
+ *       <button class="pl-c-menu__trigger" popovertarget="nav-reports">
+ *         <svg class="pl-c-nav__icon">...</svg>
+ *         <span class="pl-c-nav__label">Reports</span>
+ *         <svg class="pl-c-nav__chevron">...</svg>
  *       </button>
- *       <div popover class="c-menu__popover" id="nav-reports">...</div>
+ *       <div popover class="pl-c-menu__popover" id="nav-reports">...</div>
  *     </div>
- *     <details class="c-nav__section">
- *       <summary class="c-nav__section-trigger">
- *         <svg class="c-nav__icon">...</svg>
+ *     <details class="pl-c-nav__section">
+ *       <summary class="pl-c-nav__section-trigger">
+ *         <svg class="pl-c-nav__icon">...</svg>
  *         <span>Projects</span>
- *         <svg class="c-nav__chevron">...</svg>
+ *         <svg class="pl-c-nav__chevron">...</svg>
  *       </summary>
- *       <a class="c-nav__item c-nav__item--child">Active</a>
- *       <a class="c-nav__item c-nav__item--child">Archived</a>
+ *       <a class="pl-c-nav__item pl-c-nav__item--child">Active</a>
+ *       <a class="pl-c-nav__item pl-c-nav__item--child">Archived</a>
  *     </details>
  *   </nav>
  *
@@ -38,37 +38,37 @@
  * [data-variant="icons"] hides labels and centers icons.
  *
  * Sidebar footer metadata and compact actions:
- *   <div class="c-nav__footer">
- *     <div class="c-nav__meta">
- *       <svg class="c-nav__meta-icon">...</svg>
- *       <span class="c-nav__meta-body">
- *         <span class="c-nav__meta-label">user@example.com</span>
- *         <span class="c-nav__meta-description">Admin</span>
+ *   <div class="pl-c-nav__footer">
+ *     <div class="pl-c-nav__meta">
+ *       <svg class="pl-c-nav__meta-icon">...</svg>
+ *       <span class="pl-c-nav__meta-body">
+ *         <span class="pl-c-nav__meta-label">user@example.com</span>
+ *         <span class="pl-c-nav__meta-description">Admin</span>
  *       </span>
  *     </div>
- *     <div class="c-nav__actions">
- *       <button class="c-nav__action">
- *         <svg class="c-nav__action-icon">...</svg>
- *         <span class="c-nav__action-label">Sign out</span>
+ *     <div class="pl-c-nav__actions">
+ *       <button class="pl-c-nav__action">
+ *         <svg class="pl-c-nav__action-icon">...</svg>
+ *         <span class="pl-c-nav__action-label">Sign out</span>
  *       </button>
  *     </div>
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-nav) {
+  @scope (.pl-c-nav) {
     :scope {
-      --c-nav-gap: var(--pl-space-1);
-      --c-nav-pad: var(--pl-space-2);
-      --c-nav-meta-icon-size: 2rem;
-      --c-nav-action-block-size: 2rem;
+      --pl-c-nav-gap: var(--pl-space-1);
+      --pl-c-nav-pad: var(--pl-space-2);
+      --pl-c-nav-meta-icon-size: 2rem;
+      --pl-c-nav-action-block-size: 2rem;
 
       display: flex;
       flex-direction: column;
-      gap: var(--c-nav-gap);
-      padding: var(--c-nav-pad);
+      gap: var(--pl-c-nav-gap);
+      padding: var(--pl-c-nav-pad);
     }
 
-    .c-nav__item {
+    .pl-c-nav__item {
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
@@ -85,12 +85,12 @@
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-nav__item:hover {
+    .pl-c-nav__item:hover {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-nav__item:focus-visible {
+    .pl-c-nav__item:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
@@ -98,7 +98,7 @@
     /* Active item  -  left-bar accent pattern: a 3px inset shadow on the
        leading edge reads as a rail marker, strongly signalling "you are here".
        Asymmetric border-radius (0 on start side) anchors the bar to the edge. */
-    .c-nav__item[aria-current]:not([aria-current="false"]) {
+    .pl-c-nav__item[aria-current]:not([aria-current="false"]) {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
@@ -107,21 +107,21 @@
     }
 
     /* Nested item (inside a section). */
-    .c-nav__item--child {
+    .pl-c-nav__item--child {
       padding-inline-start: calc(
         var(--pl-space-3) + 1.25rem + var(--pl-space-3)
       );
       font-size: var(--pl-text-sm);
     }
 
-    .c-nav__icon {
+    .pl-c-nav__icon {
       inline-size: 1.25rem;
       block-size: 1.25rem;
       flex-shrink: 0;
       color: inherit;
     }
 
-    .c-nav__label {
+    .pl-c-nav__label {
       flex: 1;
       min-inline-size: 0;
       overflow: hidden;
@@ -130,17 +130,17 @@
     }
 
     /* Badge in a nav item (e.g. unread count). */
-    .c-nav__badge {
+    .pl-c-nav__badge {
       margin-inline-start: auto;
     }
 
-    .c-nav__group {
+    .pl-c-nav__group {
       display: grid;
       gap: var(--pl-space-1);
       margin-block-start: var(--pl-space-2);
     }
 
-    .c-nav__group-label {
+    .pl-c-nav__group-label {
       padding: var(--pl-space-2) var(--pl-space-3) var(--pl-space-1);
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-xs);
@@ -150,18 +150,18 @@
       text-transform: uppercase;
     }
 
-    .c-nav__divider {
+    .pl-c-nav__divider {
       margin-block: var(--pl-space-2);
       border: 0;
       border-block-start: 1px solid var(--pl-color-border);
     }
 
-    .c-nav__menu {
+    .pl-c-nav__menu {
       display: block;
       min-inline-size: 0;
     }
 
-    .c-nav__menu .c-menu__trigger {
+    .pl-c-nav__menu .pl-c-menu__trigger {
       appearance: none;
       display: flex;
       align-items: center;
@@ -184,18 +184,20 @@
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-nav__menu .c-menu__trigger:is(:hover, :focus-visible),
-    .c-nav__menu .c-menu__trigger:has(~ .c-menu__popover:popover-open) {
+    .pl-c-nav__menu .pl-c-menu__trigger:is(:hover, :focus-visible),
+    .pl-c-nav__menu
+      .pl-c-menu__trigger:has(~ .pl-c-menu__popover:popover-open) {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-nav__menu .c-menu__trigger:focus-visible {
+    .pl-c-nav__menu .pl-c-menu__trigger:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
-    .c-nav__menu .c-menu__trigger[aria-current]:not([aria-current="false"]) {
+    .pl-c-nav__menu
+      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]) {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
@@ -203,19 +205,19 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
-    .c-nav__menu
-      .c-menu__trigger:has(~ .c-menu__popover:popover-open)
-      .c-nav__chevron {
+    .pl-c-nav__menu
+      .pl-c-menu__trigger:has(~ .pl-c-menu__popover:popover-open)
+      .pl-c-nav__chevron {
       rotate: 90deg;
     }
 
-    .c-nav__menu .c-menu__popover {
+    .pl-c-nav__menu .pl-c-menu__popover {
       inline-size: max-content;
       min-inline-size: 14rem;
       max-inline-size: min(22rem, calc(100vi - 2rem));
     }
 
-    .c-nav__footer {
+    .pl-c-nav__footer {
       display: grid;
       gap: var(--pl-space-2);
       margin-block-start: auto;
@@ -224,7 +226,7 @@
       min-inline-size: 0;
     }
 
-    .c-nav__meta {
+    .pl-c-nav__meta {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
@@ -242,9 +244,9 @@
       color: var(--pl-color-text);
     }
 
-    .c-nav__meta-icon {
-      inline-size: var(--c-nav-meta-icon-size);
-      block-size: var(--c-nav-meta-icon-size);
+    .pl-c-nav__meta-icon {
+      inline-size: var(--pl-c-nav-meta-icon-size);
+      block-size: var(--pl-c-nav-meta-icon-size);
       display: inline-grid;
       place-items: center;
       flex-shrink: 0;
@@ -253,24 +255,24 @@
       color: var(--pl-color-accent);
     }
 
-    .c-nav__meta-icon :where(svg),
-    svg.c-nav__meta-icon {
-      inline-size: var(--c-nav-meta-icon-size);
-      block-size: var(--c-nav-meta-icon-size);
+    .pl-c-nav__meta-icon :where(svg),
+    svg.pl-c-nav__meta-icon {
+      inline-size: var(--pl-c-nav-meta-icon-size);
+      block-size: var(--pl-c-nav-meta-icon-size);
     }
 
-    .c-nav__meta-icon :where(svg) {
+    .pl-c-nav__meta-icon :where(svg) {
       inline-size: 1rem;
       block-size: 1rem;
     }
 
-    .c-nav__meta-body {
+    .pl-c-nav__meta-body {
       display: grid;
       gap: 0.125rem;
       min-inline-size: 0;
     }
 
-    .c-nav__meta-label {
+    .pl-c-nav__meta-label {
       min-inline-size: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -280,7 +282,7 @@
       color: var(--pl-color-text);
     }
 
-    .c-nav__meta-description {
+    .pl-c-nav__meta-description {
       display: flex;
       align-items: center;
       gap: var(--pl-space-1);
@@ -289,19 +291,19 @@
       font-size: var(--pl-text-xs);
     }
 
-    .c-nav__actions {
+    .pl-c-nav__actions {
       display: grid;
       gap: var(--pl-space-1);
     }
 
-    .c-nav__action {
+    .pl-c-nav__action {
       appearance: none;
       display: flex;
       align-items: center;
       justify-content: flex-start;
       gap: var(--pl-space-2);
       inline-size: 100%;
-      min-block-size: var(--c-nav-action-block-size);
+      min-block-size: var(--pl-c-nav-action-block-size);
       padding: var(--pl-space-1) var(--pl-space-2);
       border: 0;
       border-radius: var(--pl-radius-md);
@@ -319,24 +321,24 @@
         color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-nav__action:hover {
+    .pl-c-nav__action:hover {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-nav__action:focus-visible {
+    .pl-c-nav__action:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
-    .c-nav__action-icon {
+    .pl-c-nav__action-icon {
       inline-size: 1rem;
       block-size: 1rem;
       flex-shrink: 0;
       color: inherit;
     }
 
-    .c-nav__action-label {
+    .pl-c-nav__action-label {
       min-inline-size: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -344,13 +346,13 @@
     }
 
     /* Collapsible section. */
-    .c-nav__section {
+    .pl-c-nav__section {
       display: flex;
       flex-direction: column;
       gap: var(--pl-space-1);
     }
 
-    .c-nav__section-trigger {
+    .pl-c-nav__section-trigger {
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
@@ -373,17 +375,17 @@
       }
     }
 
-    .c-nav__section-trigger:hover {
+    .pl-c-nav__section-trigger:hover {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-nav__section-trigger:focus-visible {
+    .pl-c-nav__section-trigger:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
-    .c-nav__chevron {
+    .pl-c-nav__chevron {
       margin-inline-start: auto;
       inline-size: 1rem;
       block-size: 1rem;
@@ -392,29 +394,29 @@
       transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
     }
 
-    .c-nav__section[open] .c-nav__chevron {
+    .pl-c-nav__section[open] .pl-c-nav__chevron {
       rotate: 90deg;
     }
 
     /* Icons-only variant (collapsed sidebar). */
-    :scope[data-variant="icons"] .c-nav__label,
-    :scope[data-variant="icons"] .c-nav__action-label,
-    :scope[data-variant="icons"] .c-nav__meta-body,
-    :scope[data-variant="icons"] .c-nav__group-label,
-    :scope[data-variant="icons"] .c-nav__chevron,
-    :scope[data-variant="icons"] .c-nav__badge {
+    :scope[data-variant="icons"] .pl-c-nav__label,
+    :scope[data-variant="icons"] .pl-c-nav__action-label,
+    :scope[data-variant="icons"] .pl-c-nav__meta-body,
+    :scope[data-variant="icons"] .pl-c-nav__group-label,
+    :scope[data-variant="icons"] .pl-c-nav__chevron,
+    :scope[data-variant="icons"] .pl-c-nav__badge {
       display: none;
     }
 
-    :scope[data-variant="icons"] .c-nav__item,
-    :scope[data-variant="icons"] .c-nav__section-trigger,
-    :scope[data-variant="icons"] .c-nav__menu .c-menu__trigger,
-    :scope[data-variant="icons"] .c-nav__action {
+    :scope[data-variant="icons"] .pl-c-nav__item,
+    :scope[data-variant="icons"] .pl-c-nav__section-trigger,
+    :scope[data-variant="icons"] .pl-c-nav__menu .pl-c-menu__trigger,
+    :scope[data-variant="icons"] .pl-c-nav__action {
       justify-content: center;
       padding: var(--pl-space-2);
     }
 
-    :scope[data-variant="icons"] .c-nav__meta {
+    :scope[data-variant="icons"] .pl-c-nav__meta {
       grid-template-columns: 1fr;
       justify-items: center;
       padding: var(--pl-space-1);
@@ -422,16 +424,16 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-nav__item[aria-current]:not([aria-current="false"])) {
+    :where(.pl-c-nav__item[aria-current]:not([aria-current="false"])) {
       background: Highlight;
       color: HighlightText;
     }
 
     :where(
-      .c-nav__item:focus-visible,
-      .c-nav__section-trigger:focus-visible,
-      .c-nav__menu .c-menu__trigger:focus-visible,
-      .c-nav__action:focus-visible
+      .pl-c-nav__item:focus-visible,
+      .pl-c-nav__section-trigger:focus-visible,
+      .pl-c-nav__menu .pl-c-menu__trigger:focus-visible,
+      .pl-c-nav__action:focus-visible
     ) {
       outline-color: Highlight;
     }

@@ -8,36 +8,40 @@ type PreviewPage = {
 };
 
 const corePreviews: PreviewPage[] = [
-  { path: "./preview/button", heading: "Button", root: ".c-button" },
-  { path: "./preview/field", heading: "Field", root: ".c-field__control" },
-  { path: "./preview/form", heading: "Form", root: ".c-form" },
+  { path: "./preview/button", heading: "Button", root: ".pl-c-button" },
+  { path: "./preview/field", heading: "Field", root: ".pl-c-field__control" },
+  { path: "./preview/form", heading: "Form", root: ".pl-c-form" },
   {
     path: "./preview/data-table",
     heading: "Data table",
-    root: ".c-table-wrap",
+    root: ".pl-c-table-wrap",
   },
-  { path: "./preview/tabs", heading: "Tabs", root: ".c-tabs" },
-  { path: "./preview/toolbar", heading: "Toolbar", root: ".c-toolbar" },
+  { path: "./preview/tabs", heading: "Tabs", root: ".pl-c-tabs" },
+  { path: "./preview/toolbar", heading: "Toolbar", root: ".pl-c-toolbar" },
   {
     path: "./preview/pagination",
     heading: "Pagination",
-    root: ".c-pagination",
+    root: ".pl-c-pagination",
   },
-  { path: "./preview/split-button", heading: "Split button", root: ".c-split" },
-  { path: "./preview/dropdown", heading: "Dropdown", root: ".c-dropdown" },
-  { path: "./preview/combobox", heading: "Combobox", root: ".c-combobox" },
-  { path: "./preview/tree", heading: "Tree view", root: ".c-tree" },
+  {
+    path: "./preview/split-button",
+    heading: "Split button",
+    root: ".pl-c-split",
+  },
+  { path: "./preview/dropdown", heading: "Dropdown", root: ".pl-c-dropdown" },
+  { path: "./preview/combobox", heading: "Combobox", root: ".pl-c-combobox" },
+  { path: "./preview/tree", heading: "Tree view", root: ".pl-c-tree" },
   {
     path: "./preview/filter-builder",
     heading: "Filter builder",
-    root: ".c-filter-builder",
+    root: ".pl-c-filter-builder",
   },
   {
     path: "./preview/workflow-board",
     heading: "Workflow board",
-    root: ".c-workflow-board",
+    root: ".pl-c-workflow-board",
   },
-  { path: "./preview/chart", heading: "Chart shell", root: ".c-chart" },
+  { path: "./preview/chart", heading: "Chart shell", root: ".pl-c-chart" },
 ];
 
 const appPreviews: PreviewPage[] = [
@@ -50,7 +54,7 @@ const appPreviews: PreviewPage[] = [
   {
     path: "./preview/app-queue-triage",
     heading: "Queue triage",
-    root: ".c-workflow-board",
+    root: ".pl-c-workflow-board",
   },
   {
     path: "./preview/app-process-builder",
@@ -65,7 +69,7 @@ const appPreviews: PreviewPage[] = [
   {
     path: "./preview/app-reporting-dashboard",
     heading: "Revenue performance",
-    root: ".c-chart",
+    root: ".pl-c-chart",
   },
   {
     path: "./preview/app-command-workspace",
@@ -92,7 +96,7 @@ async function reach(page: Page, preview: PreviewPage) {
 
 async function setDensity(page: Page, density: (typeof densities)[number]) {
   await page.evaluate((nextDensity) => {
-    document.body.setAttribute("data-density", nextDensity);
+    document.body.setAttribute("data-pl-density", nextDensity);
   }, density);
 }
 
@@ -167,7 +171,7 @@ test.describe("compact and dense browser coverage", () => {
 
     const measures = await page.evaluate(() => {
       const button = document.querySelector<HTMLElement>(
-        ".c-button[data-variant='primary']:not([disabled])",
+        ".pl-c-button[data-variant='primary']:not([disabled])",
       );
 
       if (!button) {
@@ -175,7 +179,7 @@ test.describe("compact and dense browser coverage", () => {
       }
 
       return ["comfortable", "compact", "dense", "touch"].map((density) => {
-        document.body.setAttribute("data-density", density);
+        document.body.setAttribute("data-pl-density", density);
         const bodyStyle = getComputedStyle(document.body);
         return {
           density,
@@ -220,18 +224,18 @@ test.describe("compact and dense browser coverage", () => {
             const interactive = [
               ...document.querySelectorAll<HTMLElement>(
                 [
-                  ".c-button",
-                  ".c-field__control",
-                  ".c-tabs__tab",
-                  ".c-segmented__item",
-                  ".c-pagination a",
-                  ".c-pagination button",
-                  ".c-split__primary",
-                  ".c-split__toggle",
-                  ".c-combobox__input",
-                  ".c-tree__item-row",
-                  ".c-filter-builder button",
-                  ".c-filter-builder select",
+                  ".pl-c-button",
+                  ".pl-c-field__control",
+                  ".pl-c-tabs__tab",
+                  ".pl-c-segmented__item",
+                  ".pl-c-pagination a",
+                  ".pl-c-pagination button",
+                  ".pl-c-split__primary",
+                  ".pl-c-split__toggle",
+                  ".pl-c-combobox__input",
+                  ".pl-c-tree__item-row",
+                  ".pl-c-filter-builder button",
+                  ".pl-c-filter-builder select",
                 ].join(", "),
               ),
             ]
@@ -314,7 +318,7 @@ test.describe("compact and dense browser coverage", () => {
             const de = document.documentElement;
             const root = document.querySelector<HTMLElement>(rootSelector);
             const tableWraps = [
-              ...document.querySelectorAll<HTMLElement>(".c-table-wrap"),
+              ...document.querySelectorAll<HTMLElement>(".pl-c-table-wrap"),
             ].map((wrap) => {
               const rect = wrap.getBoundingClientRect();
               const style = getComputedStyle(wrap);
@@ -366,17 +370,17 @@ test.describe("compact and dense browser coverage", () => {
     page,
   }) => {
     const samples: PreviewPage[] = [
-      { path: "./preview/button", heading: "Button", root: ".c-button" },
-      { path: "./preview/field", heading: "Field", root: ".c-field" },
+      { path: "./preview/button", heading: "Button", root: ".pl-c-button" },
+      { path: "./preview/field", heading: "Field", root: ".pl-c-field" },
       {
         path: "./preview/data-table",
         heading: "Data table",
-        root: ".c-table-wrap",
+        root: ".pl-c-table-wrap",
       },
       {
         path: "./preview/workflow-board",
         heading: "Workflow board",
-        root: ".c-workflow-board",
+        root: ".pl-c-workflow-board",
       },
       {
         path: "./preview/app-process-builder",
@@ -391,7 +395,7 @@ test.describe("compact and dense browser coverage", () => {
     for (const preview of samples) {
       await reach(page, preview);
       await page.evaluate(() => {
-        document.body.setAttribute("data-theme", "dark");
+        document.body.setAttribute("data-pl-theme", "dark");
       });
       await setDensity(page, "dense");
 

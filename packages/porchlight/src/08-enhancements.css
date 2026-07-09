@@ -9,13 +9,13 @@
  *   1. interpolate-size: allow-keywords on :root, so height/width can animate
  *      to/from auto and content-keyword sizes (Baseline 2026; enables
  *      disclosure/collapsible animations without measuring JS).
- *   2. scroll-state container queries: a .c-sticky-shell that gains a shadow
+ *   2. scroll-state container queries: a .pl-c-sticky-shell that gains a shadow
  *      when it becomes stuck (the "app-bar shadow on scroll" pattern, no JS).
  *   3. text-box: trim-both cap alphabetic on buttons/badges, removing the
  *      cap-height half-leading for optically-centered labels.
  *   4. rule (CSS Gap Decorations): dividers between grid/flex items via
- *      [data-dividers] on .l-grid, purely visual (no layout impact).
- *   5. Advanced typed attr(): a .c-swatch that reads its color from a
+ *      [data-dividers] on .pl-l-grid, purely visual (no layout impact).
+ *   5. Advanced typed attr(): a .pl-c-swatch that reads its color from a
  *      data-color attribute, type-checked as <color>.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
@@ -36,11 +36,11 @@
      sticky child is "stuck to top", the inner bar gains an elevation shadow.
      Replaces the JS scroll-listener pattern entirely. */
   @supports (container-type: scroll-state) {
-    .c-sticky-shell {
+    .pl-c-sticky-shell {
       container-type: scroll-state;
     }
 
-    .c-sticky-shell__bar {
+    .pl-c-sticky-shell__bar {
       position: sticky;
       inset-block-start: 0;
       z-index: var(--pl-z-sticky);
@@ -51,7 +51,7 @@
     }
 
     @container scroll-state(stuck: top) {
-      .c-sticky-shell__bar {
+      .pl-c-sticky-shell__bar {
         box-shadow: var(--pl-shadow-2);
         background: color-mix(
           in oklab,
@@ -70,17 +70,17 @@
      single-line label sits visually centered without the inline-box overshoot
      that makes controls look 1px off. */
   @supports (text-box: trim-both cap alphabetic) {
-    :where(.c-button, .c-badge, .c-dialog__close) {
+    :where(.pl-c-button, .pl-c-badge, .pl-c-dialog__close) {
       text-box: trim-both cap alphabetic;
     }
   }
 
   /* 4. CSS Gap Decorations: vertical dividers between grid items, purely
      visual (the gap stays, a rule is drawn in it). Opt in via
-     [data-dividers="true"] on .l-grid. The `rule` properties are behind
+     [data-dividers="true"] on .pl-l-grid. The `rule` properties are behind
      @supports so unsupported browsers just show the normal gap. */
   @supports (rule: 1px solid CanvasText) {
-    :where(.l-grid[data-dividers="true"]) {
+    :where(.pl-l-grid[data-dividers="true"]) {
       rule: 1px solid var(--pl-color-border);
       rule-visibility-items: between;
     }
@@ -90,7 +90,7 @@
      data-color attribute, type-checked as <color> (with a token fallback).
      Removes the need for inline style="" for static color chips. */
   @supports (background: attr(data-color type(<color>))) {
-    .c-swatch {
+    .pl-c-swatch {
       background: attr(data-color type(<color>), var(--pl-color-border));
     }
   }

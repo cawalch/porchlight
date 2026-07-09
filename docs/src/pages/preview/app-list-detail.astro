@@ -60,35 +60,35 @@ const selected = requests[0];
 ---
 
 <BaseLayout title="List/detail workspace · Porchlight">
-  <div class="l-app-shell list-detail-shell">
-    <header class="l-app-shell__topbar c-toolbar" data-surface="panel">
-      <div class="c-toolbar__group">
-        <button class="c-button" data-variant="ghost" data-size="sm" type="button" aria-label="Toggle navigation">
+  <div class="pl-l-app-shell list-detail-shell">
+    <header class="pl-l-app-shell__topbar pl-c-toolbar" data-surface="panel">
+      <div class="pl-c-toolbar__group">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button" aria-label="Toggle navigation">
           <svg class="list-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"></path>
           </svg>
         </button>
         <strong>Porchlight Ops</strong>
-        <span class="c-badge" data-tone="success">Live</span>
+        <span class="pl-c-badge" data-tone="success">Live</span>
       </div>
-      <div class="c-toolbar__group">
-        <button class="c-button" data-variant="ghost" data-size="sm" type="button" popovertarget="workspace-command" aria-label="Open command palette">
+      <div class="pl-c-toolbar__group">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button" popovertarget="workspace-command" aria-label="Open command palette">
           <svg class="list-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
-          <span class="u-muted">Cmd+K</span>
+          <span class="pl-u-muted">Cmd+K</span>
         </button>
-        <div class="c-avatar" data-size="sm">MS</div>
+        <div class="pl-c-avatar" data-size="sm">MS</div>
       </div>
     </header>
 
-    <aside class="l-app-shell__sidebar">
-      <nav class="c-nav" aria-label="Primary">
-        <div class="c-nav__group">
-          <span class="c-nav__group-label">Operations</span>
-          <a href="#" class="c-nav__item" aria-current="page">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <aside class="pl-l-app-shell__sidebar">
+      <nav class="pl-c-nav" aria-label="Primary">
+        <div class="pl-c-nav__group">
+          <span class="pl-c-nav__group-label">Operations</span>
+          <a href="#" class="pl-c-nav__item" aria-current="page">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M8 6h13"></path>
               <path d="M8 12h13"></path>
               <path d="M8 18h13"></path>
@@ -96,98 +96,98 @@ const selected = requests[0];
               <path d="M3 12h.01"></path>
               <path d="M3 18h.01"></path>
             </svg>
-            <span class="c-nav__label">Queue</span>
-            <span class="c-badge c-nav__badge" data-tone="accent">18</span>
+            <span class="pl-c-nav__label">Queue</span>
+            <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">18</span>
           </a>
-          <a href="#" class="c-nav__item">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <a href="#" class="pl-c-nav__item">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M3 3v18h18"></path>
               <path d="m7 14 4-4 4 4 5-6"></path>
             </svg>
-            <span class="c-nav__label">Reports</span>
+            <span class="pl-c-nav__label">Reports</span>
           </a>
-          <a href="#" class="c-nav__item">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <a href="#" class="pl-c-nav__item">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M12 20h9"></path>
               <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
             </svg>
-            <span class="c-nav__label">Drafts</span>
+            <span class="pl-c-nav__label">Drafts</span>
           </a>
         </div>
-        <hr class="c-nav__divider" />
-        <div class="c-nav__footer">
-          <div class="c-nav__meta">
-            <span class="c-nav__meta-icon">PL</span>
-            <span class="c-nav__meta-body">
-              <span class="c-nav__meta-label">porchlight-ops@example.test</span>
-              <span class="c-nav__meta-description">Admin workspace</span>
+        <hr class="pl-c-nav__divider" />
+        <div class="pl-c-nav__footer">
+          <div class="pl-c-nav__meta">
+            <span class="pl-c-nav__meta-icon">PL</span>
+            <span class="pl-c-nav__meta-body">
+              <span class="pl-c-nav__meta-label">porchlight-ops@example.test</span>
+              <span class="pl-c-nav__meta-description">Admin workspace</span>
             </span>
           </div>
         </div>
       </nav>
     </aside>
 
-    <main class="l-app-shell__main">
-      <div class="l-container l-stack list-detail-workspace">
-        <div class="c-page-header">
-          <div class="c-page-header__heading">
-            <h1 class="c-page-header__title">Operator queue</h1>
-            <span class="c-page-header__subtitle">Triage active requests without leaving the list.</span>
+    <main class="pl-l-app-shell__main">
+      <div class="pl-l-container pl-l-stack list-detail-workspace">
+        <div class="pl-c-page-header">
+          <div class="pl-c-page-header__heading">
+            <h1 class="pl-c-page-header__title">Operator queue</h1>
+            <span class="pl-c-page-header__subtitle">Triage active requests without leaving the list.</span>
           </div>
-          <div class="c-page-header__actions">
-            <button class="c-button" data-variant="secondary" type="button" popovertarget="queue-filters">Filters</button>
-            <button class="c-button" data-variant="primary" type="button">Assign next</button>
+          <div class="pl-c-page-header__actions">
+            <button class="pl-c-button" data-variant="secondary" type="button" popovertarget="queue-filters">Filters</button>
+            <button class="pl-c-button" data-variant="primary" type="button">Assign next</button>
           </div>
         </div>
 
         <section
-          class="c-split-pane list-detail-split"
+          class="pl-c-split-pane list-detail-split"
           data-orientation="horizontal"
           data-collapse="stack"
           aria-label="Request list and selected detail"
         >
-          <section class="c-split-pane__pane c-split-pane__pane--start" aria-label="Request queue">
-            <header class="c-split-pane__header">
+          <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start" aria-label="Request queue">
+            <header class="pl-c-split-pane__header">
               <div>
-                <h2 class="c-split-pane__title">Requests</h2>
-                <p class="c-split-pane__description" data-result-count>{requests.length} open requests</p>
+                <h2 class="pl-c-split-pane__title">Requests</h2>
+                <p class="pl-c-split-pane__description" data-result-count>{requests.length} open requests</p>
               </div>
-              <span class="c-badge" data-tone="warning">3 SLA risks</span>
+              <span class="pl-c-badge" data-tone="warning">3 SLA risks</span>
             </header>
 
-            <div class="c-split-pane__pane-inner list-detail-list-body">
-              <div class="c-toolbar" data-surface="flush">
-                <div class="c-toolbar__group">
-                  <label class="c-field">
-                    <span class="u-sr-only">Search requests</span>
-                    <input class="c-field__control" type="search" placeholder="Search requests" data-request-search />
+            <div class="pl-c-split-pane__pane-inner list-detail-list-body">
+              <div class="pl-c-toolbar" data-surface="flush">
+                <div class="pl-c-toolbar__group">
+                  <label class="pl-c-field">
+                    <span class="pl-u-sr-only">Search requests</span>
+                    <input class="pl-c-field__control" type="search" placeholder="Search requests" data-request-search />
                   </label>
-                  <select class="c-field__control" aria-label="Priority filter">
+                  <select class="pl-c-field__control" aria-label="Priority filter">
                     <option>All priorities</option>
                     <option>Critical</option>
                     <option>High</option>
                     <option>Normal</option>
                   </select>
                 </div>
-                <div class="c-toolbar__group">
-                  <div class="c-toolbar__divider"></div>
-                  <button class="c-button" data-variant="ghost" data-size="sm" type="button">Export</button>
-                  <button class="c-button" data-variant="secondary" data-size="sm" type="button">Bulk edit</button>
+                <div class="pl-c-toolbar__group">
+                  <div class="pl-c-toolbar__divider"></div>
+                  <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Export</button>
+                  <button class="pl-c-button" data-variant="secondary" data-size="sm" type="button">Bulk edit</button>
                 </div>
               </div>
 
-              <div class="c-table-wrap list-detail-table" data-density="compact" data-overflow="truncate">
-                <table class="c-table">
+              <div class="pl-c-table-wrap list-detail-table" data-pl-density="compact" data-overflow="truncate">
+                <table class="pl-c-table">
                   <thead>
                     <tr>
-                      <th class="c-table__check">
+                      <th class="pl-c-table__check">
                         <input type="checkbox" aria-label="Select all requests" />
                       </th>
-                      <th class="c-table__sticky-col" data-sort="asc">Request <span class="c-table__sort-icon"></span></th>
+                      <th class="pl-c-table__sticky-col" data-sort="asc">Request <span class="pl-c-table__sort-icon"></span></th>
                       <th>Owner</th>
                       <th>Status</th>
                       <th>Priority</th>
-                      <th data-align="end" data-sort>Due <span class="c-table__sort-icon"></span></th>
+                      <th data-align="end" data-sort>Due <span class="pl-c-table__sort-icon"></span></th>
                     </tr>
                   </thead>
                   <tbody data-request-rows>
@@ -207,36 +207,36 @@ const selected = requests[0];
                         data-request-summary={request.summary}
                         data-request-next={request.next}
                       >
-                        <td class="c-table__check">
+                        <td class="pl-c-table__check">
                           <input type="checkbox" checked={index === 0} aria-label={`Select ${request.id}`} />
                         </td>
-                        <td class="c-table__sticky-col">
-                          <button class="c-button" data-variant="ghost" data-size="sm" type="button" data-select-request>
+                        <td class="pl-c-table__sticky-col">
+                          <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button" data-select-request>
                             {request.id}
                           </button>
-                          <span class="u-muted-sm u-truncate">{request.title}</span>
+                          <span class="pl-u-muted-sm pl-u-truncate">{request.title}</span>
                         </td>
                         <td>{request.owner}</td>
-                        <td><span class="c-badge" data-tone={request.tone}>{request.status}</span></td>
+                        <td><span class="pl-c-badge" data-tone={request.tone}>{request.status}</span></td>
                         <td>{request.priority}</td>
                         <td data-align="end">{request.due}</td>
                       </tr>
                     ))}
                     <tr data-empty-row hidden>
                       <td colspan="6">
-                        <div class="c-empty">
-                          <h3 class="c-empty__title">No matching requests</h3>
-                          <p class="c-empty__description">Clear search or adjust filters to bring the queue back.</p>
+                        <div class="pl-c-empty">
+                          <h3 class="pl-c-empty__title">No matching requests</h3>
+                          <p class="pl-c-empty__description">Clear search or adjust filters to bring the queue back.</p>
                         </div>
                       </td>
                     </tr>
                     <tr data-loading>
-                      <td class="c-table__check"><span class="c-skeleton list-detail-skeleton-check" data-shape="circle"></span></td>
-                      <td class="c-table__sticky-col"><span class="c-skeleton list-detail-skeleton-request" data-shape="text"></span></td>
-                      <td><span class="c-skeleton list-detail-skeleton-owner" data-shape="text"></span></td>
-                      <td><span class="c-skeleton list-detail-skeleton-status" data-shape="text"></span></td>
-                      <td><span class="c-skeleton list-detail-skeleton-priority" data-shape="text"></span></td>
-                      <td data-align="end"><span class="c-skeleton list-detail-skeleton-due" data-shape="text"></span></td>
+                      <td class="pl-c-table__check"><span class="pl-c-skeleton list-detail-skeleton-check" data-shape="circle"></span></td>
+                      <td class="pl-c-table__sticky-col"><span class="pl-c-skeleton list-detail-skeleton-request" data-shape="text"></span></td>
+                      <td><span class="pl-c-skeleton list-detail-skeleton-owner" data-shape="text"></span></td>
+                      <td><span class="pl-c-skeleton list-detail-skeleton-status" data-shape="text"></span></td>
+                      <td><span class="pl-c-skeleton list-detail-skeleton-priority" data-shape="text"></span></td>
+                      <td data-align="end"><span class="pl-c-skeleton list-detail-skeleton-due" data-shape="text"></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -245,7 +245,7 @@ const selected = requests[0];
           </section>
 
           <div
-            class="c-split-pane__separator"
+            class="pl-c-split-pane__separator"
             role="separator"
             aria-orientation="vertical"
             aria-valuemin="42"
@@ -255,75 +255,75 @@ const selected = requests[0];
             tabindex="0"
           ></div>
 
-          <aside class="c-split-pane__pane c-split-pane__pane--end" aria-label="Selected request detail" tabindex="0">
-            <header class="c-split-pane__header">
+          <aside class="pl-c-split-pane__pane pl-c-split-pane__pane--end" aria-label="Selected request detail" tabindex="0">
+            <header class="pl-c-split-pane__header">
               <div>
-                <h2 class="c-split-pane__title" data-detail-title>{selected.id}</h2>
-                <p class="c-split-pane__description" data-detail-subtitle>{selected.title}</p>
+                <h2 class="pl-c-split-pane__title" data-detail-title>{selected.id}</h2>
+                <p class="pl-c-split-pane__description" data-detail-subtitle>{selected.title}</p>
               </div>
-              <span class="c-badge" data-tone={selected.tone} data-detail-status>{selected.status}</span>
+              <span class="pl-c-badge" data-tone={selected.tone} data-detail-status>{selected.status}</span>
             </header>
 
-            <div class="c-split-pane__pane-inner l-stack list-detail-content-stack" data-detail-content>
-              <section class="c-card" data-surface="app">
-                <div class="c-card__header">
-                  <h3 class="c-card__title">Summary</h3>
-                  <span class="c-badge" data-detail-priority>{selected.priority}</span>
+            <div class="pl-c-split-pane__pane-inner pl-l-stack list-detail-content-stack" data-detail-content>
+              <section class="pl-c-card" data-surface="app">
+                <div class="pl-c-card__header">
+                  <h3 class="pl-c-card__title">Summary</h3>
+                  <span class="pl-c-badge" data-detail-priority>{selected.priority}</span>
                 </div>
-                <div class="c-card__body">
-                  <p class="u-marginless" data-detail-summary>{selected.summary}</p>
+                <div class="pl-c-card__body">
+                  <p class="pl-u-marginless" data-detail-summary>{selected.summary}</p>
                 </div>
               </section>
 
-              <dl class="c-description" data-layout="stacked" data-dividers>
-                <div class="c-description__row">
-                  <dt class="c-description__term">Owner</dt>
-                  <dd class="c-description__detail" data-detail-owner>{selected.owner}</dd>
+              <dl class="pl-c-description" data-layout="stacked" data-dividers>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Owner</dt>
+                  <dd class="pl-c-description__detail" data-detail-owner>{selected.owner}</dd>
                 </div>
-                <div class="c-description__row">
-                  <dt class="c-description__term">Team</dt>
-                  <dd class="c-description__detail" data-detail-team>{selected.team}</dd>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Team</dt>
+                  <dd class="pl-c-description__detail" data-detail-team>{selected.team}</dd>
                 </div>
-                <div class="c-description__row">
-                  <dt class="c-description__term">Due</dt>
-                  <dd class="c-description__detail" data-detail-due>{selected.due}</dd>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Due</dt>
+                  <dd class="pl-c-description__detail" data-detail-due>{selected.due}</dd>
                 </div>
-                <div class="c-description__row">
-                  <dt class="c-description__term">Age</dt>
-                  <dd class="c-description__detail" data-detail-age>{selected.age}</dd>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Age</dt>
+                  <dd class="pl-c-description__detail" data-detail-age>{selected.age}</dd>
                 </div>
               </dl>
 
-              <section class="c-card" data-surface="app">
-                <div class="c-card__header">
-                  <h3 class="c-card__title">Next step</h3>
-                  <span class="c-badge" data-tone="accent">Suggested</span>
+              <section class="pl-c-card" data-surface="app">
+                <div class="pl-c-card__header">
+                  <h3 class="pl-c-card__title">Next step</h3>
+                  <span class="pl-c-badge" data-tone="accent">Suggested</span>
                 </div>
-                <div class="c-card__body">
-                  <p class="u-marginless" data-detail-next>{selected.next}</p>
+                <div class="pl-c-card__body">
+                  <p class="pl-u-marginless" data-detail-next>{selected.next}</p>
                 </div>
-                <div class="c-card__footer">
-                  <button class="c-button" data-variant="ghost" type="button">Snooze</button>
-                  <button class="c-button" data-variant="primary" type="button">Assign</button>
+                <div class="pl-c-card__footer">
+                  <button class="pl-c-button" data-variant="ghost" type="button">Snooze</button>
+                  <button class="pl-c-button" data-variant="primary" type="button">Assign</button>
                 </div>
               </section>
 
-              <section class="c-card" data-surface="app" aria-label="Enrichment loading">
-                <div class="c-card__header">
-                  <h3 class="c-card__title">Evidence sync</h3>
-                  <span class="c-badge">Loading</span>
+              <section class="pl-c-card" data-surface="app" aria-label="Enrichment loading">
+                <div class="pl-c-card__header">
+                  <h3 class="pl-c-card__title">Evidence sync</h3>
+                  <span class="pl-c-badge">Loading</span>
                 </div>
-                <div class="c-card__body c-skeleton-group" data-lines="3">
-                  <span class="c-skeleton" data-shape="text"></span>
-                  <span class="c-skeleton" data-shape="text"></span>
-                  <span class="c-skeleton" data-shape="text"></span>
+                <div class="pl-c-card__body pl-c-skeleton-group" data-lines="3">
+                  <span class="pl-c-skeleton" data-shape="text"></span>
+                  <span class="pl-c-skeleton" data-shape="text"></span>
+                  <span class="pl-c-skeleton" data-shape="text"></span>
                 </div>
               </section>
             </div>
 
-            <div class="c-split-pane__pane-inner" data-detail-empty hidden>
-              <div class="c-empty">
-                <div class="c-empty__media" aria-hidden="true">
+            <div class="pl-c-split-pane__pane-inner" data-detail-empty hidden>
+              <div class="pl-c-empty">
+                <div class="pl-c-empty__media" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M8 6h13"></path>
                     <path d="M8 12h13"></path>
@@ -333,8 +333,8 @@ const selected = requests[0];
                     <path d="M3 18h.01"></path>
                   </svg>
                 </div>
-                <h3 class="c-empty__title">Select a request</h3>
-                <p class="c-empty__description">Choose a row to inspect ownership, status, and recommended actions.</p>
+                <h3 class="pl-c-empty__title">Select a request</h3>
+                <p class="pl-c-empty__description">Choose a row to inspect ownership, status, and recommended actions.</p>
               </div>
             </div>
           </aside>
@@ -343,32 +343,32 @@ const selected = requests[0];
     </main>
   </div>
 
-  <div popover class="c-drawer" id="queue-filters" data-side="end">
-    <div class="c-drawer__header">
-      <h2 class="c-drawer__title">Queue filters</h2>
-      <button class="c-button" data-variant="ghost" data-size="sm" type="button" popovertarget="queue-filters" aria-label="Close filters">Close</button>
+  <div popover class="pl-c-drawer" id="queue-filters" data-side="end">
+    <div class="pl-c-drawer__header">
+      <h2 class="pl-c-drawer__title">Queue filters</h2>
+      <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button" popovertarget="queue-filters" aria-label="Close filters">Close</button>
     </div>
-    <div class="c-drawer__body l-stack">
-      <label class="c-field">
-        <span class="c-field__label">Team</span>
-        <select class="c-field__control">
+    <div class="pl-c-drawer__body pl-l-stack">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Team</span>
+        <select class="pl-c-field__control">
           <option>All teams</option>
           <option>Finance</option>
           <option>IT Ops</option>
           <option>Legal</option>
         </select>
       </label>
-      <label class="c-field">
-        <span class="c-field__label">Due window</span>
-        <select class="c-field__control">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Due window</span>
+        <select class="pl-c-field__control">
           <option>Any time</option>
           <option>Today</option>
           <option>This week</option>
         </select>
       </label>
-      <label class="c-field">
-        <span class="c-field__label">Status</span>
-        <select class="c-field__control">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Status</span>
+        <select class="pl-c-field__control">
           <option>Any status</option>
           <option>Active</option>
           <option>Blocked</option>
@@ -376,23 +376,23 @@ const selected = requests[0];
         </select>
       </label>
     </div>
-    <div class="c-drawer__footer">
-      <button class="c-button" data-variant="ghost" type="button" popovertarget="queue-filters">Reset</button>
-      <button class="c-button" data-variant="primary" type="button" popovertarget="queue-filters">Apply</button>
+    <div class="pl-c-drawer__footer">
+      <button class="pl-c-button" data-variant="ghost" type="button" popovertarget="queue-filters">Reset</button>
+      <button class="pl-c-button" data-variant="primary" type="button" popovertarget="queue-filters">Apply</button>
     </div>
   </div>
 
-  <div popover class="c-command" id="workspace-command" role="dialog" aria-label="Command palette">
-    <input class="c-command__search" placeholder="Search commands" aria-label="Search commands" />
-    <div class="c-command__body" role="listbox">
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Queue</h3>
-        <button class="c-command__item" type="button" data-selected><span>Assign selected request</span><kbd class="c-command__shortcut">A</kbd></button>
-        <button class="c-command__item" type="button"><span>Open filters</span><kbd class="c-command__shortcut">F</kbd></button>
-        <button class="c-command__item" type="button"><span>Create request</span><kbd class="c-command__shortcut">N</kbd></button>
+  <div popover class="pl-c-command" id="workspace-command" role="dialog" aria-label="Command palette">
+    <input class="pl-c-command__search" placeholder="Search commands" aria-label="Search commands" />
+    <div class="pl-c-command__body" role="listbox">
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Queue</h3>
+        <button class="pl-c-command__item" type="button" data-selected><span>Assign selected request</span><kbd class="pl-c-command__shortcut">A</kbd></button>
+        <button class="pl-c-command__item" type="button"><span>Open filters</span><kbd class="pl-c-command__shortcut">F</kbd></button>
+        <button class="pl-c-command__item" type="button"><span>Create request</span><kbd class="pl-c-command__shortcut">N</kbd></button>
       </div>
     </div>
-    <footer class="c-command__footer"><span>Esc closes</span><span>Enter runs</span></footer>
+    <footer class="pl-c-command__footer"><span>Esc closes</span><span>Enter runs</span></footer>
   </div>
 
   <script>
@@ -484,15 +484,15 @@ const selected = requests[0];
 </BaseLayout>
 
 <style>
-  .list-detail-shell > .l-app-shell__topbar {
+  .list-detail-shell > .pl-l-app-shell__topbar {
     position: static;
     z-index: auto;
   }
 
   .list-detail-workspace {
-    --l-container-max: 104rem;
-    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
-    --l-stack-gap: var(--pl-space-5);
+    --pl-l-container-max: 104rem;
+    --pl-l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --pl-l-stack-gap: var(--pl-space-5);
 
     padding-block: var(--pl-space-5);
   }
@@ -503,13 +503,13 @@ const selected = requests[0];
   }
 
   .list-detail-split {
-    --c-split-pane-start-size: minmax(38rem, 1.45fr);
-    --c-split-pane-end-size: minmax(20rem, 0.8fr);
-    --c-split-pane-min-block-size: 38rem;
-    --c-split-pane-pane-padding: var(--pl-space-5);
+    --pl-c-split-pane-start-size: minmax(38rem, 1.45fr);
+    --pl-c-split-pane-end-size: minmax(20rem, 0.8fr);
+    --pl-c-split-pane-min-block-size: 38rem;
+    --pl-c-split-pane-pane-padding: var(--pl-space-5);
   }
 
-  .list-detail-split > .c-split-pane__pane {
+  .list-detail-split > .pl-c-split-pane__pane {
     overflow: visible;
     overscroll-behavior: auto;
     scrollbar-gutter: auto;
@@ -520,16 +520,16 @@ const selected = requests[0];
     gap: var(--pl-space-3);
   }
 
-  .list-detail-list-body > .c-toolbar {
+  .list-detail-list-body > .pl-c-toolbar {
     padding: 0;
   }
 
   .list-detail-table {
-    --c-table-min: 40rem;
+    --pl-c-table-min: 40rem;
   }
 
   .list-detail-content-stack {
-    --l-stack-gap: var(--pl-space-4);
+    --pl-l-stack-gap: var(--pl-space-4);
   }
 
   .list-detail-skeleton-check {
@@ -557,8 +557,8 @@ const selected = requests[0];
     inline-size: 3rem;
   }
 
-  @container c-table-wrap (inline-size < 48rem) {
-    .list-detail-table .c-table :where(th, td):nth-child(6) {
+  @container pl-c-table-wrap (inline-size < 48rem) {
+    .list-detail-table .pl-c-table :where(th, td):nth-child(6) {
       display: none;
     }
   }
@@ -568,30 +568,30 @@ const selected = requests[0];
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows:
         minmax(16rem, auto)
-        var(--c-split-pane-separator-size)
+        var(--pl-c-split-pane-separator-size)
         minmax(20rem, 1fr);
       overflow: visible;
     }
 
-    .list-detail-split > .c-split-pane__pane--start {
+    .list-detail-split > .pl-c-split-pane__pane--start {
       grid-area: 1 / 1;
     }
 
-    .list-detail-split > .c-split-pane__pane--end {
+    .list-detail-split > .pl-c-split-pane__pane--end {
       grid-area: 3 / 1;
     }
 
-    .list-detail-split > .c-split-pane__separator {
+    .list-detail-split > .pl-c-split-pane__separator {
       grid-area: 2 / 1;
       cursor: row-resize;
     }
 
-    .list-detail-split > .c-split-pane__separator::before {
+    .list-detail-split > .pl-c-split-pane__separator::before {
       inline-size: 100%;
-      block-size: var(--c-split-pane-separator-line-size);
+      block-size: var(--pl-c-split-pane-separator-line-size);
     }
 
-    .list-detail-split > .c-split-pane__separator::after {
+    .list-detail-split > .pl-c-split-pane__separator::after {
       inline-size: 2rem;
       block-size: 0.1875rem;
     }
@@ -599,19 +599,19 @@ const selected = requests[0];
 
   @media (width < 42rem) {
     .list-detail-workspace {
-      --l-container-pad: var(--pl-space-3);
-      --l-stack-gap: var(--pl-space-4);
+      --pl-l-container-pad: var(--pl-space-3);
+      --pl-l-stack-gap: var(--pl-space-4);
 
       padding-block: var(--pl-space-3);
     }
 
     .list-detail-split {
-      --c-split-pane-min-block-size: 0;
-      --c-split-pane-pane-padding: var(--pl-space-4);
+      --pl-c-split-pane-min-block-size: 0;
+      --pl-c-split-pane-pane-padding: var(--pl-space-4);
     }
 
     .list-detail-table {
-      --c-table-min: 100%;
+      --pl-c-table-min: 100%;
     }
   }
 </style>

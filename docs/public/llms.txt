@@ -17,21 +17,21 @@ Use this short file to route quickly. Use /llms-full.txt when generating or refa
 
 ## Core composition rules
 
-- Use layout primitives for structure: l-app-shell, l-container, l-stack, l-grid, l-cluster, l-sidebar.
-- Use components for semantics and chrome: c-card, c-toolbar, c-page-header, c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs, c-badge.
-- Use utilities only for small adjustments: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0.
+- Use layout primitives for structure: pl-l-app-shell, pl-l-container, pl-l-stack, pl-l-grid, pl-l-cluster, pl-l-sidebar.
+- Use components for semantics and chrome: pl-c-card, pl-c-toolbar, pl-c-page-header, pl-c-form, pl-c-field, pl-c-table-wrap, pl-c-table, pl-c-pagination, pl-c-nav, pl-c-stat, pl-c-tabs, pl-c-badge.
+- Use utilities only for small adjustments: pl-u-muted, pl-u-muted-sm, pl-u-truncate, pl-u-sr-only, pl-u-min-0.
 - Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.
 - Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.
 - Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.
 
 ## Avoid
 
-- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside c-table-wrap.
-- Do not put page headers inside c-toolbar. Use c-page-header inside padded content; use c-toolbar on data-region edges.
-- Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack, or sibling c-card elements.
-- Do not omit c-table-wrap around c-table.
-- Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and --pl-space-* tokens.
-- Do not use placeholders as the only labels. Use visible labels or u-sr-only labels.
+- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside pl-c-table-wrap.
+- Do not put page headers inside pl-c-toolbar. Use pl-c-page-header inside padded content; use pl-c-toolbar on data-region edges.
+- Do not nest cards inside cards for layout. Use pl-l-grid, pl-l-sidebar, pl-l-stack, or sibling pl-c-card elements.
+- Do not omit pl-c-table-wrap around pl-c-table.
+- Do not invent new spacing scales. Use pl-l-stack, pl-l-grid, pl-l-cluster, and --pl-space-* tokens.
+- Do not use placeholders as the only labels. Use visible labels or pl-u-sr-only labels.
 - Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.
 - Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.
 - Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.

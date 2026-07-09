@@ -16,25 +16,25 @@ import Icon from '../../components/Icon.astro';
   <h2>Account menu</h2>
   <p>The canonical SaaS pattern: avatar → account/settings/sign-out.</p>
   <div class="demo-row">
-    <div class="c-menu" style="--c-menu-anchor: --account-menu-anchor;">
-      <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="account-menu">
+    <div class="pl-c-menu" style="--pl-c-menu-anchor: --account-menu-anchor;">
+      <button class="pl-c-button pl-c-menu__trigger" data-variant="ghost" popovertarget="account-menu">
         <Icon name="gear" /> Account
       </button>
-      <div class="c-menu__popover" id="account-menu" popover>
-        <a class="c-menu__item" href="#" aria-current="page">
+      <div class="pl-c-menu__popover" id="account-menu" popover>
+        <a class="pl-c-menu__item" href="#" aria-current="page">
           <Icon name="gear" />
-          <span class="c-menu__item-body">
-            <span class="c-menu__item-label">Profile</span>
-            <span class="c-menu__item-description">Personal settings</span>
+          <span class="pl-c-menu__item-body">
+            <span class="pl-c-menu__item-label">Profile</span>
+            <span class="pl-c-menu__item-description">Personal settings</span>
           </span>
-          <kbd class="c-menu__item-shortcut">P</kbd>
+          <kbd class="pl-c-menu__item-shortcut">P</kbd>
         </a>
-        <a class="c-menu__item" href="#">
-          <span class="c-menu__item-label">Settings</span>
+        <a class="pl-c-menu__item" href="#">
+          <span class="pl-c-menu__item-label">Settings</span>
         </a>
-        <a class="c-menu__item" href="#">Billing</a>
-        <hr class="c-menu__divider" />
-        <button class="c-menu__item" type="button" data-tone="danger">Sign out</button>
+        <a class="pl-c-menu__item" href="#">Billing</a>
+        <hr class="pl-c-menu__divider" />
+        <button class="pl-c-menu__item" type="button" data-tone="danger">Sign out</button>
       </div>
     </div>
   </div>
@@ -42,35 +42,35 @@ import Icon from '../../components/Icon.astro';
   <h2>Action menu</h2>
   <p>A compact actions menu — row-level actions in a data table.</p>
   <div class="demo-row">
-    <div class="c-menu" style="--c-menu-anchor: --row-menu-anchor;">
-      <button class="c-button c-menu__trigger" data-variant="ghost" popovertarget="row-menu" aria-label="Row actions">
+    <div class="pl-c-menu" style="--pl-c-menu-anchor: --row-menu-anchor;">
+      <button class="pl-c-button pl-c-menu__trigger" data-variant="ghost" popovertarget="row-menu" aria-label="Row actions">
         <Icon name="gear" />
       </button>
-      <div class="c-menu__popover" id="row-menu" popover>
-        <button class="c-menu__item" type="button">Edit</button>
-        <button class="c-menu__item" type="button">Duplicate</button>
-        <button class="c-menu__item" type="button">Export</button>
-        <hr class="c-menu__divider" />
-        <button class="c-menu__item" type="button" data-tone="danger">Delete</button>
+      <div class="pl-c-menu__popover" id="row-menu" popover>
+        <button class="pl-c-menu__item" type="button">Edit</button>
+        <button class="pl-c-menu__item" type="button">Duplicate</button>
+        <button class="pl-c-menu__item" type="button">Export</button>
+        <hr class="pl-c-menu__divider" />
+        <button class="pl-c-menu__item" type="button" data-tone="danger">Delete</button>
       </div>
     </div>
   </div>
 
   <h2>Multiple menus</h2>
-  <p>Each menu needs a unique anchor name — set <code>--c-menu-anchor</code> per instance.</p>
+  <p>Each menu needs a unique anchor name — set <code>--pl-c-menu-anchor</code> per instance.</p>
   <div class="demo-row">
-    <div class="c-menu" style="--c-menu-anchor: --menu-a;">
-      <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-a">Menu A</button>
-      <div class="c-menu__popover" id="menu-a" popover>
-        <button class="c-menu__item" type="button">Item A1</button>
-        <button class="c-menu__item" type="button">Item A2</button>
+    <div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-a;">
+      <button class="pl-c-button pl-c-menu__trigger" data-variant="secondary" popovertarget="menu-a">Menu A</button>
+      <div class="pl-c-menu__popover" id="menu-a" popover>
+        <button class="pl-c-menu__item" type="button">Item A1</button>
+        <button class="pl-c-menu__item" type="button">Item A2</button>
       </div>
     </div>
-    <div class="c-menu" style="--c-menu-anchor: --menu-b;">
-      <button class="c-button c-menu__trigger" data-variant="secondary" popovertarget="menu-b">Menu B</button>
-      <div class="c-menu__popover" id="menu-b" popover>
-        <button class="c-menu__item" type="button">Item B1</button>
-        <button class="c-menu__item" type="button">Item B2</button>
+    <div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-b;">
+      <button class="pl-c-button pl-c-menu__trigger" data-variant="secondary" popovertarget="menu-b">Menu B</button>
+      <div class="pl-c-menu__popover" id="menu-b" popover>
+        <button class="pl-c-menu__item" type="button">Item B1</button>
+        <button class="pl-c-menu__item" type="button">Item B2</button>
       </div>
     </div>
   </div>

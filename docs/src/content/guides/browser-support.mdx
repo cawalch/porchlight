@@ -45,10 +45,10 @@ These are safe to use in production as of mid-2026. All major browsers
 | `@scope`                              | 2025     | ⚠️ `css-cascade-6` (pre-snapshot) | All components (scoped styles without BEM)          |
 | `light-dark()`                        | 2024     | ✅ `css-color-adjust-1`           | Automatic light/dark color pairs                    |
 | `color-mix()`                         | 2024     | ✅ `css-color-5`                  | Derived tints (alert backgrounds, hover states)     |
-| Popover API (`popover` attribute)     | 2024     | HTML spec                         | `c-menu` (popover-menu) component                   |
+| Popover API (`popover` attribute)     | 2024     | HTML spec                         | `pl-c-menu` (popover-menu) component                |
 | `@starting-style`                     | 2024     | ✅ `css-transitions-1`            | Dialog and popover enter animations                 |
 | `transition-behavior: allow-discrete` | 2024     | ✅ `css-transitions-1`            | Exit animations on `display: none` elements         |
-| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4`                  | `c-field` validation states                         |
+| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4`                  | `pl-c-field` validation states                      |
 | `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4`                   | Heading and paragraph typography                    |
 | Container queries (`@container`)      | 2023     | ✅ `css-contain-2`                | Card, data-table responsive behavior                |
 | `prefers-contrast`                    | 2022     | ✅ `mediaqueries-5`               | Stronger boundaries and focus affordances           |
@@ -59,13 +59,13 @@ These are safe to use in production as of mid-2026. All major browsers
 These features are gated behind `@supports`. The framework works perfectly
 without them; they add polish where supported:
 
-| Feature                                               | Baseline | CSS-2026                    | Enhancement                                 | Fallback                                  |
-| ----------------------------------------------------- | -------- | --------------------------- | ------------------------------------------- | ----------------------------------------- |
-| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot             | `c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
-| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot             | Grid dividers via `data-dividers`           | Normal grid gap (no divider line)         |
-| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3`           | Optically-centered button/badge labels      | Standard half-leading (1px visual offset) |
-| Typed `attr()` (`attr(data-x type(<color>))`          | 2026     | ⚠️ pre-snapshot             | `c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
-| View Transitions                                      | 2025     | ✅ `css-view-transitions-1` | Smooth cross-page fades on docs site        | Hard page reload                          |
+| Feature                                               | Baseline | CSS-2026                    | Enhancement                                    | Fallback                                  |
+| ----------------------------------------------------- | -------- | --------------------------- | ---------------------------------------------- | ----------------------------------------- |
+| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot             | `pl-c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
+| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot             | Grid dividers via `data-dividers`              | Normal grid gap (no divider line)         |
+| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3`           | Optically-centered button/badge labels         | Standard half-leading (1px visual offset) |
+| Typed `attr()` (`attr(data-x type(<color>))`          | 2026     | ⚠️ pre-snapshot             | `pl-c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
+| View Transitions                                      | 2025     | ✅ `css-view-transitions-1` | Smooth cross-page fades on docs site           | Hard page reload                          |
 
 ## Experimental features
 
@@ -108,13 +108,13 @@ Every `@supports` gate follows the same pattern:
 
 ```css
 /* Base: always applies */
-.c-thing {
+.pl-c-thing {
   /* functional styles */
 }
 
 /* Enhancement: only where supported */
 @supports (feature: value) {
-  .c-thing {
+  .pl-c-thing {
     /* progressive polish */
   }
 }

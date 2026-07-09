@@ -14,7 +14,8 @@
  * property on :root. All values use rem/em/logical units (no px for text or
  * spacing); OKLCH for color.
  *
- * Token prefix: --pl-* (global framework). Component-local tokens are --c-*.
+ * Token prefix: --pl-* (global framework). Component-local tokens are
+ * --pl-c-*.
  */
 @layer porchlight.tokens {
   @property --pl-motion-scale {

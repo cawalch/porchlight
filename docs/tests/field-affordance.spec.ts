@@ -28,7 +28,7 @@ test("field focus draws a visible accent ring", async ({ page }) => {
   const surface = await page.evaluate(
     () => getComputedStyle(document.body).backgroundColor,
   );
-  const input = page.locator(".c-field__control").first();
+  const input = page.locator(".pl-c-field__control").first();
 
   // Default: no ring.
   const defRing = await input.evaluate((el) => getComputedStyle(el).boxShadow);
@@ -67,7 +67,7 @@ test("field invalid draws a visible danger ring", async ({ page }) => {
   );
   // The page's URL field is type=url + required. Type invalid text and blur —
   // :user-invalid fires on real interaction (checkValidity() alone won't set it).
-  const urlField = page.locator(".c-field__control[type='url']");
+  const urlField = page.locator(".pl-c-field__control[type='url']");
   await urlField.fill("not-a-url");
   await urlField.blur();
   await page.waitForTimeout(300);
@@ -92,8 +92,10 @@ test("aria-invalid draws the same visible danger treatment", async ({
   const surface = await page.evaluate(
     () => getComputedStyle(document.body).backgroundColor,
   );
-  const control = page.locator("[data-preview-aria-invalid] .c-field__control");
-  const hint = page.locator("[data-preview-aria-invalid] .c-field__hint");
+  const control = page.locator(
+    "[data-preview-aria-invalid] .pl-c-field__control",
+  );
+  const hint = page.locator("[data-preview-aria-invalid] .pl-c-field__hint");
 
   const ring = await control.evaluate((el) => getComputedStyle(el).boxShadow);
   const color = ringColor(ring);
@@ -106,7 +108,7 @@ test("aria-invalid draws the same visible danger treatment", async ({
 
   const hintColor = await hint.evaluate((el) => getComputedStyle(el).color);
   const mutedColor = await page
-    .locator(".c-field__hint")
+    .locator(".pl-c-field__hint")
     .first()
     .evaluate((el) => getComputedStyle(el).color);
   expect(hintColor).not.toBe(mutedColor);
@@ -118,10 +120,10 @@ for (const theme of ["light", "dark"] as const) {
   }) => {
     await page.goto("./preview/field");
     await page.evaluate((value) => {
-      document.documentElement.setAttribute("data-theme", value);
+      document.documentElement.setAttribute("data-pl-theme", value);
     }, theme);
 
-    const normal = page.locator(".c-field__control").first();
+    const normal = page.locator(".pl-c-field__control").first();
     await normal.focus();
     await page.keyboard.press("Tab");
     await page.keyboard.press("Shift+Tab");
@@ -132,7 +134,7 @@ for (const theme of ["light", "dark"] as const) {
     expect(focusColor, "baseline focus ring must resolve").not.toBeNull();
 
     const invalid = page.locator(
-      "[data-preview-aria-invalid] .c-field__control",
+      "[data-preview-aria-invalid] .pl-c-field__control",
     );
     await invalid.focus();
     await page.keyboard.press("Tab");

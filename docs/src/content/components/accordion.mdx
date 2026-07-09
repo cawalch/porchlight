@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Accordion
 
-The `.c-accordion` wraps `<details>/<summary>` elements for a collapsible
+The `.pl-c-accordion` wraps `<details>/<summary>` elements for a collapsible
 disclosure UI. Animates open/close to/from `height: auto` using
 `interpolate-size: allow-keywords` where supported, with a universal
 `grid-template-rows: 0fr to 1fr` fallback.
@@ -15,14 +15,14 @@ disclosure UI. Animates open/close to/from `height: auto` using
 ## Semantic HTML
 
 ```html
-<div class="c-accordion">
-  <details class="c-accordion__item">
-    <summary class="c-accordion__header">
+<div class="pl-c-accordion">
+  <details class="pl-c-accordion__item">
+    <summary class="pl-c-accordion__header">
       <span>Section title</span>
-      <svg class="c-accordion__icon">...</svg>
+      <svg class="pl-c-accordion__icon">...</svg>
     </summary>
-    <div class="c-accordion__panel">
-      <div class="c-accordion__content">Content goes here.</div>
+    <div class="pl-c-accordion__panel">
+      <div class="pl-c-accordion__content">Content goes here.</div>
     </div>
   </details>
 </div>
@@ -39,11 +39,11 @@ Two techniques are used, layered:
 
 ## Class contract
 
-| Selector                | Role                                 |
-| ----------------------- | ------------------------------------ |
-| `.c-accordion`          | Container for items.                 |
-| `.c-accordion__item`    | A `<details>` element.               |
-| `.c-accordion__header`  | The `<summary>` (click target).      |
-| `.c-accordion__icon`    | Chevron icon (rotates on open).      |
-| `.c-accordion__panel`   | Animated wrapper (grid/auto-height). |
-| `.c-accordion__content` | Inner content (padding + overflow).  |
+| Selector                   | Role                                 |
+| -------------------------- | ------------------------------------ |
+| `.pl-c-accordion`          | Container for items.                 |
+| `.pl-c-accordion__item`    | A `<details>` element.               |
+| `.pl-c-accordion__header`  | The `<summary>` (click target).      |
+| `.pl-c-accordion__icon`    | Chevron icon (rotates on open).      |
+| `.pl-c-accordion__panel`   | Animated wrapper (grid/auto-height). |
+| `.pl-c-accordion__content` | Inner content (padding + overflow).  |

@@ -5,13 +5,13 @@
  * [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/
  * danger) that were already made WCAG-AA, plus an accent and a neutral default.
  *
- * Density is fixed (badges shouldn't scale with [data-density]  -  they label,
+ * Density is fixed (badges shouldn't scale with [data-pl-density]  -  they label,
  * not actuate). Contrast is guaranteed by the token pairs, so the affordance
  * check is covered by contrast.spec.ts; this adds a badge-specific check that
  * each tone's label clears AA against its own bg.
  */
 @layer porchlight.components {
-  @scope (.c-badge) {
+  @scope (.pl-c-badge) {
     :scope {
       display: inline-flex;
       align-items: center;
@@ -55,7 +55,7 @@
     }
 
     /* Optional leading dot  -  a status indicator pip. */
-    .c-badge__dot {
+    .pl-c-badge__dot {
       inline-size: 0.375rem;
       block-size: 0.375rem;
       border-radius: var(--pl-radius-pill);
@@ -72,7 +72,7 @@
   }
 
   /* Badge group: wrapping flex container for multiple compact labels. */
-  :where(.c-badge-group) {
+  :where(.pl-c-badge-group) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--pl-space-2);

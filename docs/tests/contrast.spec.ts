@@ -60,7 +60,7 @@ async function resolve(page: import("@playwright/test").Page, theme: string) {
   return page.evaluate(
     ([pairs, theme]) => {
       const root = document.querySelector(".playground") as HTMLElement;
-      root.setAttribute("data-theme", theme);
+      root.setAttribute("data-pl-theme", theme);
       return pairs.map((p) => {
         const host = document.createElement("div");
         host.style.background = p.bg;

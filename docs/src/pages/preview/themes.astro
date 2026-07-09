@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Semantic palette shown as live swatches. Each chip's background is the token
-// itself, so it reacts to the playground's data-theme / color-scheme.
+// itself, so it reacts to the playground's data-pl-theme / color-scheme.
 const palette = [
   ['--pl-color-bg', 'bg'],
   ['--pl-color-surface', 'surface'],
@@ -23,9 +23,9 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
   <h1>Themes &amp; density</h1>
   <p>
     The playground below is a single container with
-    <code>data-theme</code> and <code>data-density</code> attributes. Setting
-    <code>data-theme</code> flips <code>color-scheme</code>, which drives the
-    <code>light-dark()</code> tokens; <code>data-density</code> resizes controls
+    <code>data-pl-theme</code> and <code>data-pl-density</code> attributes. Setting
+    <code>data-pl-theme</code> flips <code>color-scheme</code>, which drives the
+    <code>light-dark()</code> tokens; <code>data-pl-density</code> resizes controls
     via the control tokens. No JavaScript is needed in the framework — the
     toggles here just change two attributes.
   </p>
@@ -44,7 +44,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     ))}
   </fieldset>
 
-  <section class="playground" data-theme="light" data-density="comfortable">
+  <section class="playground" data-pl-theme="light" data-pl-density="comfortable">
     <h2>Live preview</h2>
     <p>
       This whole panel uses <code>--pl-color-bg</code>,
@@ -78,7 +78,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
 </BaseLayout>
 
 <script>
-  // Tiny, dependency-free toggle: sets data-theme / data-density on the
+  // Tiny, dependency-free toggle: sets data-pl-theme / data-pl-density on the
   // playground container and marks the active button.
   const root = document.querySelector('.playground');
   document.querySelectorAll('[data-toggle]').forEach((btn) => {
@@ -86,8 +86,13 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
       const kind = btn.getAttribute('data-toggle');
       const value = btn.getAttribute('data-value') ?? '';
       if (!root || !kind) return;
-      if (value === '') root.removeAttribute(`data-${kind}`);
-      else root.setAttribute(`data-${kind}`, value);
+      const attribute =
+        kind === 'theme' || kind === 'density'
+          ? `data-pl-${kind}`
+          : `data-${kind}`;
+      root.removeAttribute(`data-${kind}`);
+      if (value === '') root.removeAttribute(attribute);
+      else root.setAttribute(attribute, value);
       document
         .querySelectorAll(`[data-toggle="${kind}"]`)
         .forEach((b) => b.removeAttribute('aria-pressed'));

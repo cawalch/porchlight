@@ -25,11 +25,12 @@
   },
   "scripts": {
     "dev": "pnpm --filter ./docs dev",
-    "build": "pnpm --filter @cawalch/porchlight build && pnpm --filter ./docs build",
+    "build": "pnpm namespace:check && pnpm --filter @cawalch/porchlight build && pnpm --filter ./docs build",
     "test": "pnpm --filter ./docs test",
+    "namespace:check": "node scripts/check-namespace.mjs",
     "lint": "stylelint \"**/*.css\" --allow-empty-input",
     "lint:js": "biome lint .",
-    "lint:all": "pnpm lint && pnpm lint:js",
+    "lint:all": "pnpm lint && pnpm lint:js && pnpm namespace:check",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

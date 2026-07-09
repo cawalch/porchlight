@@ -6,44 +6,44 @@
  * a description, and an optional call-to-action. The psychological anchor that
  * turns a blank screen into an invitation.
  *
- * Structure: .c-empty > .c-empty__media (icon/illustration) + .c-empty__title
- * + .c-empty__description + .c-empty__actions. All slots except the title are
+ * Structure: .pl-c-empty > .pl-c-empty__media (icon/illustration) + .pl-c-empty__title
+ * + .pl-c-empty__description + .pl-c-empty__actions. All slots except the title are
  * optional. Token-driven; centered via grid for robust vertical centering.
  *
  * Tone variants via [data-tone]: default (neutral), "danger" (error states),
  * "success" (completed/empty-by-design). The media gets the tone color.
  */
 @layer porchlight.components {
-  @scope (.c-empty) {
+  @scope (.pl-c-empty) {
     :scope {
-      --c-empty-pad: var(--pl-space-8);
-      --c-empty-tone: var(--pl-color-text-muted);
+      --pl-c-empty-pad: var(--pl-space-8);
+      --pl-c-empty-tone: var(--pl-color-text-muted);
 
       display: grid;
       justify-items: center;
       gap: var(--pl-space-3);
-      padding: var(--c-empty-pad);
+      padding: var(--pl-c-empty-pad);
       text-align: center;
       color: var(--pl-color-text-muted);
     }
 
-    .c-empty__media {
+    .pl-c-empty__media {
       display: flex;
       align-items: center;
       justify-content: center;
-      inline-size: var(--c-empty-media-size, 3rem);
-      block-size: var(--c-empty-media-size, 3rem);
-      color: var(--c-empty-tone);
+      inline-size: var(--pl-c-empty-media-size, 3rem);
+      block-size: var(--pl-c-empty-media-size, 3rem);
+      color: var(--pl-c-empty-tone);
       opacity: 0.6;
     }
 
-    .c-empty__media svg,
-    .c-empty__media img {
+    .pl-c-empty__media svg,
+    .pl-c-empty__media img {
       inline-size: 100%;
       block-size: 100%;
     }
 
-    .c-empty__title {
+    .pl-c-empty__title {
       margin: 0;
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-semibold);
@@ -51,14 +51,14 @@
       text-wrap: balance;
     }
 
-    .c-empty__description {
+    .pl-c-empty__description {
       max-inline-size: 36ch;
       margin: 0;
       font-size: var(--pl-text-sm);
       text-wrap: pretty;
     }
 
-    .c-empty__actions {
+    .pl-c-empty__actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -69,16 +69,16 @@
 
     /* Tone variants  -  recolor the media. */
     :scope[data-tone="danger"] {
-      --c-empty-tone: var(--pl-color-danger);
+      --pl-c-empty-tone: var(--pl-color-danger);
     }
 
     :scope[data-tone="success"] {
-      --c-empty-tone: var(--pl-color-success);
+      --pl-c-empty-tone: var(--pl-color-success);
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-empty__media) {
+    :where(.pl-c-empty__media) {
       color: CanvasText;
     }
   }

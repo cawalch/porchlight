@@ -10,52 +10,52 @@
  * anchor-name/position-anchor. Without anchor positioning support
  * (@supports gate), the tooltip is hidden (no misleading placement).
  *
- * Structure: .c-tooltip wraps a trigger element. The tooltip body is a child
+ * Structure: .pl-c-tooltip wraps a trigger element. The tooltip body is a child
  * with role="tooltip" and an id referenced by aria-describedby on the trigger.
  *
- *   <span class="c-tooltip">
- *     <span class="c-tooltip__trigger">
+ *   <span class="pl-c-tooltip">
+ *     <span class="pl-c-tooltip__trigger">
  *       <button aria-describedby="tip-1">Help</button>
  *     </span>
- *     <span class="c-tooltip__body" role="tooltip" id="tip-1">Tooltip text</span>
+ *     <span class="pl-c-tooltip__body" role="tooltip" id="tip-1">Tooltip text</span>
  *   </span>
  *
- * Each instance needs a unique anchor name  -  set --c-tooltip-anchor.
+ * Each instance needs a unique anchor name  -  set --pl-c-tooltip-anchor.
  */
 @layer porchlight.components {
-  @scope (.c-tooltip) {
+  @scope (.pl-c-tooltip) {
     :scope {
-      --c-tooltip-anchor: --pl-tooltip-anchor;
-      --c-tooltip-bg: var(--pl-color-text);
-      --c-tooltip-text: var(--pl-color-bg);
-      --c-tooltip-pad: var(--pl-space-2) var(--pl-space-3);
-      --c-tooltip-radius: var(--pl-radius-lg);
-      --c-tooltip-font-size: var(--pl-text-sm);
-      --c-tooltip-max-inline: 20rem;
+      --pl-c-tooltip-anchor: --pl-tooltip-anchor;
+      --pl-c-tooltip-bg: var(--pl-color-text);
+      --pl-c-tooltip-text: var(--pl-color-bg);
+      --pl-c-tooltip-pad: var(--pl-space-2) var(--pl-space-3);
+      --pl-c-tooltip-radius: var(--pl-radius-lg);
+      --pl-c-tooltip-font-size: var(--pl-text-sm);
+      --pl-c-tooltip-max-inline: 20rem;
 
       display: inline-flex;
       position: relative;
     }
 
-    .c-tooltip__trigger {
-      anchor-name: var(--c-tooltip-anchor);
+    .pl-c-tooltip__trigger {
+      anchor-name: var(--pl-c-tooltip-anchor);
       display: inline-flex;
     }
 
-    .c-tooltip__body {
+    .pl-c-tooltip__body {
       display: none;
       opacity: 0;
       pointer-events: none;
       position: absolute;
-      padding: var(--c-tooltip-pad);
-      border-radius: var(--c-tooltip-radius);
-      background: var(--c-tooltip-bg);
-      color: var(--c-tooltip-text);
-      font-size: var(--c-tooltip-font-size);
+      padding: var(--pl-c-tooltip-pad);
+      border-radius: var(--pl-c-tooltip-radius);
+      background: var(--pl-c-tooltip-bg);
+      color: var(--pl-c-tooltip-text);
+      font-size: var(--pl-c-tooltip-font-size);
       line-height: var(--pl-leading-tight);
       inline-size: max-content;
       max-inline-size: min(
-        var(--c-tooltip-max-inline),
+        var(--pl-c-tooltip-max-inline),
         calc(100vw - var(--pl-space-8))
       );
       overflow-wrap: break-word;
@@ -69,9 +69,9 @@
 
     /* Anchor positioning: tether above the trigger, try flipping below. */
     @supports (position-anchor: --x) {
-      .c-tooltip__body {
+      .pl-c-tooltip__body {
         position: fixed;
-        position-anchor: var(--c-tooltip-anchor);
+        position-anchor: var(--pl-c-tooltip-anchor);
         position-area: block-start;
         margin-block-end: var(--pl-space-2);
         margin-inline: var(--pl-space-2);
@@ -80,18 +80,18 @@
     }
 
     /* Show on trigger hover or keyboard focus within the trigger wrapper. */
-    :scope:has(.c-tooltip__trigger:hover) .c-tooltip__body,
-    :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body,
-    :scope:has(.c-tooltip__trigger :focus-visible) .c-tooltip__body {
+    :scope:has(.pl-c-tooltip__trigger:hover) .pl-c-tooltip__body,
+    :scope:has(.pl-c-tooltip__trigger:focus-visible) .pl-c-tooltip__body,
+    :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body {
       opacity: 1;
       display: block;
     }
 
     /* Enter animation. */
     @starting-style {
-      :scope:has(.c-tooltip__trigger:hover) .c-tooltip__body,
-      :scope:has(.c-tooltip__trigger:focus-visible) .c-tooltip__body,
-      :scope:has(.c-tooltip__trigger :focus-visible) .c-tooltip__body {
+      :scope:has(.pl-c-tooltip__trigger:hover) .pl-c-tooltip__body,
+      :scope:has(.pl-c-tooltip__trigger:focus-visible) .pl-c-tooltip__body,
+      :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body {
         opacity: 0;
       }
     }
@@ -99,13 +99,13 @@
 
   /* Without anchor positioning support, hide the tooltip body entirely. */
   @supports not (position-anchor: --x) {
-    :where(.c-tooltip__body) {
+    :where(.pl-c-tooltip__body) {
       display: none;
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-tooltip__body) {
+    :where(.pl-c-tooltip__body) {
       background: CanvasText;
       color: Canvas;
       border: 1px solid CanvasText;

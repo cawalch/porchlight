@@ -23,16 +23,16 @@
  * reliably apply to scoped descendants.
  */
 @layer porchlight.components {
-  @scope (.c-tabs) {
+  @scope (.pl-c-tabs) {
     :scope {
-      --c-tabs-gap: var(--pl-space-4);
-      --c-tabs-indicator: 3px;
+      --pl-c-tabs-gap: var(--pl-space-4);
+      --pl-c-tabs-indicator: 3px;
 
       display: grid;
-      gap: var(--c-tabs-gap);
+      gap: var(--pl-c-tabs-gap);
     }
 
-    .c-tabs__list {
+    .pl-c-tabs__list {
       display: flex;
       gap: var(--pl-space-1);
       padding: 0;
@@ -49,15 +49,15 @@
       }
     }
 
-    .c-tabs__tab {
-      --c-tabs-tab-padding: var(--pl-space-3);
+    .pl-c-tabs__tab {
+      --pl-c-tabs-tab-padding: var(--pl-space-3);
 
       appearance: none;
       display: inline-flex;
       align-items: center;
       flex-shrink: 0;
       gap: var(--pl-space-2);
-      padding: var(--pl-space-2) var(--c-tabs-tab-padding);
+      padding: var(--pl-space-2) var(--pl-c-tabs-tab-padding);
       border: 0;
       background: transparent;
       color: var(--pl-color-text-muted);
@@ -66,38 +66,38 @@
       white-space: nowrap;
       cursor: pointer;
 
-      /* Per-tab max width: set --c-tabs-tab-max (e.g. 12rem) to cap label
+      /* Per-tab max width: set --pl-c-tabs-tab-max (e.g. 12rem) to cap label
          width. When set, long labels truncate with an ellipsis instead of
          stretching the tab list. Default is none (no truncation). */
-      max-inline-size: var(--c-tabs-tab-max, none);
+      max-inline-size: var(--pl-c-tabs-tab-max, none);
       overflow: hidden;
       text-overflow: ellipsis;
 
       /* The selected indicator: a block-end accent line drawn INSIDE the tab.
          Transparent unless selected; box-shadow (not border) so selecting a
          tab never shifts layout. Sits flush over the tablist border. */
-      box-shadow: inset 0 calc(var(--c-tabs-indicator) * -1) 0 0 transparent;
+      box-shadow: inset 0 calc(var(--pl-c-tabs-indicator) * -1) 0 0 transparent;
       transition:
         color var(--pl-duration-1) var(--pl-ease-standard),
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
     /* Selected: accent text, bolder, and the accent indicator line. */
-    .c-tabs__tab[aria-selected="true"] {
+    .pl-c-tabs__tab[aria-selected="true"] {
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
-      box-shadow: inset 0 calc(var(--c-tabs-indicator) * -1) 0 0
+      box-shadow: inset 0 calc(var(--pl-c-tabs-indicator) * -1) 0 0
         var(--pl-color-accent);
     }
 
-    .c-tabs__tab:disabled,
-    .c-tabs__tab[aria-disabled="true"] {
+    .pl-c-tabs__tab:disabled,
+    .pl-c-tabs__tab[aria-disabled="true"] {
       color: var(--pl-color-text-muted);
       opacity: var(--pl-opacity-disabled);
     }
 
     /* A trailing count (unread, total) inside a tab  -  a muted chip. */
-    .c-tabs__tab .c-tabs__count {
+    .pl-c-tabs__tab .pl-c-tabs__count {
       padding-inline: var(--pl-space-2);
       border-radius: var(--pl-radius-pill);
       background: var(--pl-color-surface-2);
@@ -107,22 +107,22 @@
       line-height: var(--pl-leading-snug);
     }
 
-    .c-tabs__tab[aria-selected="true"] .c-tabs__count {
+    .pl-c-tabs__tab[aria-selected="true"] .pl-c-tabs__count {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 82%);
       color: var(--pl-color-accent);
     }
 
     /* Panels: block by default; an inactive one is [hidden] in HTML. */
-    .c-tabs__panel {
-      animation: c-tabs-reveal var(--pl-duration-2) var(--pl-ease-standard);
+    .pl-c-tabs__panel {
+      animation: pl-c-tabs-reveal var(--pl-duration-2) var(--pl-ease-standard);
     }
   }
 
   /* Live-state rules OUTSIDE @scope (:hover/:focus-visible on the tab don't
      reliably apply inside @scope). A subtle surface-2 wash on hover aids
      discoverability without competing with the selected indicator. */
-  :where(.c-tabs__list)
-    .c-tabs__tab:is(:hover, :focus-visible):not(
+  :where(.pl-c-tabs__list)
+    .pl-c-tabs__tab:is(:hover, :focus-visible):not(
       :disabled,
       [aria-disabled="true"]
     ) {
@@ -133,19 +133,19 @@
   /* Hover should NOT fake the accent indicator on an unselected tab  -  only the
      selected tab carries the line. Restore muted text on hover so colour still
      flips for affordance without implying selection. */
-  :where(.c-tabs__list)
-    .c-tabs__tab:hover:not(:disabled, [aria-disabled="true"]) {
+  :where(.pl-c-tabs__list)
+    .pl-c-tabs__tab:hover:not(:disabled, [aria-disabled="true"]) {
     color: var(--pl-color-text);
   }
 
-  :where(.c-tabs__list) .c-tabs__tab:focus-visible {
+  :where(.pl-c-tabs__list) .pl-c-tabs__tab:focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
     outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   /* Reveal animation for a newly-shown panel. Disabled under reduced motion by
      the themes layer's universal 1ms clamp, so it degrades to an instant cut. */
-  @keyframes c-tabs-reveal {
+  @keyframes pl-c-tabs-reveal {
     from {
       opacity: 0;
       transform: translateY(2px);
@@ -153,16 +153,16 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-tabs__list) {
+    :where(.pl-c-tabs__list) {
       border-block-end-color: CanvasText;
     }
 
-    :where(.c-tabs__tab)[aria-selected="true"] {
+    :where(.pl-c-tabs__tab)[aria-selected="true"] {
       color: Highlight;
-      box-shadow: inset 0 calc(var(--c-tabs-indicator) * -1) 0 0 Highlight;
+      box-shadow: inset 0 calc(var(--pl-c-tabs-indicator) * -1) 0 0 Highlight;
     }
 
-    :where(.c-tabs__tab):focus-visible {
+    :where(.pl-c-tabs__tab):focus-visible {
       outline-color: Highlight;
     }
   }

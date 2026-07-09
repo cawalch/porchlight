@@ -2,17 +2,17 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 
-// Shared chevron SVG — matches .c-dropdown's chevron so the visual language is
+// Shared chevron SVG — matches .pl-c-dropdown's chevron so the visual language is
 // consistent across all Porchlight menu-bearing components.
 const chevron =
-  '<svg class="c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>';
+  '<svg class="pl-c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>';
 ---
 <BaseLayout title="Split button · Porchlight">
   <h1>Split button</h1>
   <p>
     A composite action control: a primary <code>&lt;button&gt;</code> paired with a
     dropdown toggle that opens a menu of alternative actions. Both segments are
-    <code>.c-button</code>, so every variant, state, and density tier works out of the
+    <code>.pl-c-button</code>, so every variant, state, and density tier works out of the
     box. This component adds only the layout glue, the seam divider, and the
     Popover API menu.
   </p>
@@ -22,86 +22,86 @@ const chevron =
     Set the same <code>data-variant</code> on both buttons so the fill matches
     across the seam.
   </p>
-  <div class="l-cluster row">
-    <div class="c-split split-anchor-1">
-      <button type="button" class="c-button c-split__primary" data-variant="primary">
+  <div class="pl-l-cluster row">
+    <div class="pl-c-split split-anchor-1">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">
         <Icon name="plus" /> New report
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="primary"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary"
               popovertarget="sb-1" aria-label="More new options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-1">
-        <button class="c-split__option">New from template</button>
-        <button class="c-split__option">New blank report</button>
-        <hr class="c-menu__divider" />
-        <button class="c-split__option" data-tone="danger">Clear drafts</button>
+      <div popover class="pl-c-split__menu" id="sb-1">
+        <button class="pl-c-split__option">New from template</button>
+        <button class="pl-c-split__option">New blank report</button>
+        <hr class="pl-c-menu__divider" />
+        <button class="pl-c-split__option" data-tone="danger">Clear drafts</button>
       </div>
     </div>
 
-    <div class="c-split split-anchor-2">
-      <button type="button" class="c-button c-split__primary" data-variant="secondary">
+    <div class="pl-c-split split-anchor-2">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="secondary">
         Export
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="secondary"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="secondary"
               popovertarget="sb-2" aria-label="More export options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-2">
-        <button class="c-split__option">Export as CSV</button>
-        <button class="c-split__option">Export as JSON</button>
-        <button class="c-split__option">Export as PDF</button>
+      <div popover class="pl-c-split__menu" id="sb-2">
+        <button class="pl-c-split__option">Export as CSV</button>
+        <button class="pl-c-split__option">Export as JSON</button>
+        <button class="pl-c-split__option">Export as PDF</button>
       </div>
     </div>
 
-    <div class="c-split split-anchor-3">
-      <button type="button" class="c-button c-split__primary" data-variant="ghost">
+    <div class="pl-c-split split-anchor-3">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="ghost">
         Filter
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="ghost"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="ghost"
               popovertarget="sb-3" aria-label="More filter options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-3">
-        <button class="c-split__option">All records</button>
-        <button class="c-split__option">Active only</button>
-        <button class="c-split__option">Archived</button>
+      <div popover class="pl-c-split__menu" id="sb-3">
+        <button class="pl-c-split__option">All records</button>
+        <button class="pl-c-split__option">Active only</button>
+        <button class="pl-c-split__option">Archived</button>
       </div>
     </div>
 
-    <div class="c-split split-anchor-4">
-      <button type="button" class="c-button c-split__primary">
+    <div class="pl-c-split split-anchor-4">
+      <button type="button" class="pl-c-button pl-c-split__primary">
         Save
       </button>
-      <button type="button" class="c-button c-split__toggle"
+      <button type="button" class="pl-c-button pl-c-split__toggle"
               popovertarget="sb-4" aria-label="More save options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-4">
-        <button class="c-split__option">Save as draft</button>
-        <button class="c-split__option">Save and duplicate</button>
-        <hr class="c-menu__divider" />
-        <button class="c-split__option" data-tone="danger">Discard changes</button>
+      <div popover class="pl-c-split__menu" id="sb-4">
+        <button class="pl-c-split__option">Save as draft</button>
+        <button class="pl-c-split__option">Save and duplicate</button>
+        <hr class="pl-c-menu__divider" />
+        <button class="pl-c-split__option" data-tone="danger">Discard changes</button>
       </div>
     </div>
   </div>
 
   <h2>With icons</h2>
-  <div class="l-cluster row">
-    <div class="c-split split-anchor-5">
-      <button type="button" class="c-button c-split__primary" data-variant="primary">
+  <div class="pl-l-cluster row">
+    <div class="pl-c-split split-anchor-5">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">
         <Icon name="download" /> Download
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="primary"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary"
               popovertarget="sb-5" aria-label="More download options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-5">
-        <button class="c-split__option">
+      <div popover class="pl-c-split__menu" id="sb-5">
+        <button class="pl-c-split__option">
           <svg class="split-option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
           PDF
         </button>
-        <button class="c-split__option">
+        <button class="pl-c-split__option">
           <svg class="split-option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" stroke-linecap="round" stroke-linejoin="round" /></svg>
           Spreadsheet
         </button>
@@ -110,12 +110,12 @@ const chevron =
   </div>
 
   <h2>States</h2>
-  <div class="l-cluster row">
-    <div class="c-split">
-      <button type="button" class="c-button c-split__primary" data-variant="primary" disabled>
+  <div class="pl-l-cluster row">
+    <div class="pl-c-split">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary" disabled>
         Publish
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="primary" disabled
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary" disabled
               aria-label="More publish options">
         <Fragment set:html={chevron} />
       </button>
@@ -123,34 +123,34 @@ const chevron =
   </div>
 
   <h2>Density</h2>
-  <p>Sizing is driven by <code>--pl-control-block-size</code> on an ancestor's <code>[data-density]</code>.</p>
-  <div class="l-cluster row" data-density="compact">
-    <div class="c-split split-anchor-6">
-      <button type="button" class="c-button c-split__primary" data-variant="secondary">
+  <p>Sizing is driven by <code>--pl-control-block-size</code> on an ancestor's <code>[data-pl-density]</code>.</p>
+  <div class="pl-l-cluster row" data-pl-density="compact">
+    <div class="pl-c-split split-anchor-6">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="secondary">
         compact
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="secondary"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="secondary"
               popovertarget="sb-6" aria-label="More options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-6">
-        <button class="c-split__option">Option A</button>
-        <button class="c-split__option">Option B</button>
+      <div popover class="pl-c-split__menu" id="sb-6">
+        <button class="pl-c-split__option">Option A</button>
+        <button class="pl-c-split__option">Option B</button>
       </div>
     </div>
   </div>
-  <div class="l-cluster row" data-density="touch">
-    <div class="c-split split-anchor-7">
-      <button type="button" class="c-button c-split__primary" data-variant="primary">
+  <div class="pl-l-cluster row" data-pl-density="touch">
+    <div class="pl-c-split split-anchor-7">
+      <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">
         touch
       </button>
-      <button type="button" class="c-button c-split__toggle" data-variant="primary"
+      <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary"
               popovertarget="sb-7" aria-label="More options">
         <Fragment set:html={chevron} />
       </button>
-      <div popover class="c-split__menu" id="sb-7">
-        <button class="c-split__option">Option A</button>
-        <button class="c-split__option">Option B</button>
+      <div popover class="pl-c-split__menu" id="sb-7">
+        <button class="pl-c-split__option">Option A</button>
+        <button class="pl-c-split__option">Option B</button>
       </div>
     </div>
   </div>
@@ -162,31 +162,31 @@ const chevron =
   }
 
   .split-anchor-1 {
-    --c-split-anchor: --sb-1;
+    --pl-c-split-anchor: --sb-1;
   }
 
   .split-anchor-2 {
-    --c-split-anchor: --sb-2;
+    --pl-c-split-anchor: --sb-2;
   }
 
   .split-anchor-3 {
-    --c-split-anchor: --sb-3;
+    --pl-c-split-anchor: --sb-3;
   }
 
   .split-anchor-4 {
-    --c-split-anchor: --sb-4;
+    --pl-c-split-anchor: --sb-4;
   }
 
   .split-anchor-5 {
-    --c-split-anchor: --sb-5;
+    --pl-c-split-anchor: --sb-5;
   }
 
   .split-anchor-6 {
-    --c-split-anchor: --sb-6;
+    --pl-c-split-anchor: --sb-6;
   }
 
   .split-anchor-7 {
-    --c-split-anchor: --sb-7;
+    --pl-c-split-anchor: --sb-7;
   }
 
   .split-option-icon {

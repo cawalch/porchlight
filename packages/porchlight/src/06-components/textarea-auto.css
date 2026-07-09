@@ -9,15 +9,15 @@
  * height).
  *
  * Usage:
- *   <textarea class="c-textarea-auto" rows="3"></textarea>
+ *   <textarea class="pl-c-textarea-auto" rows="3"></textarea>
  *
  * Set [data-max-rows] to cap the growth (CSS can't count rows, so this is
- * a max-height via the --c-textarea-max-block token).
+ * a max-height via the --pl-c-textarea-max-block token).
  */
 @layer porchlight.components {
-  @scope (.c-textarea-auto) {
+  @scope (.pl-c-textarea-auto) {
     :scope {
-      --c-textarea-max-block: 24rem;
+      --pl-c-textarea-max-block: 24rem;
 
       inline-size: 100%;
       padding: var(--pl-space-3);
@@ -66,19 +66,19 @@
 
         /* Cap the growth so very long text scrolls instead of growing
            indefinitely. */
-        max-block-size: var(--c-textarea-max-block);
+        max-block-size: var(--pl-c-textarea-max-block);
         overflow-y: auto;
       }
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-textarea-auto) {
+    :where(.pl-c-textarea-auto) {
       border-color: ButtonBorder;
       background: Canvas;
     }
 
-    :where(.c-textarea-auto:focus-visible) {
+    :where(.pl-c-textarea-auto:focus-visible) {
       outline-color: Highlight;
     }
   }

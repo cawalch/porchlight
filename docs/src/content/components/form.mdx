@@ -7,7 +7,7 @@ since: 0.5.0
 
 # Form
 
-The `.c-form` kit composes native fields into real application forms: settings
+The `.pl-c-form` kit composes native fields into real application forms: settings
 sections, billing forms, filter bars, modal create/edit flows, dense admin
 metadata, choice groups, and prefix/suffix input groups. It is CSS-only and
 keeps native form controls in the DOM.
@@ -21,92 +21,101 @@ HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
 ## Form Layout
 
 ```html
-<form class="c-form">
-  <section class="c-form__section">
-    <div class="c-form__header">
+<form class="pl-c-form">
+  <section class="pl-c-form__section">
+    <div class="pl-c-form__header">
       <h2>Workspace</h2>
       <p>Names, URLs, and defaults used across the account.</p>
     </div>
-    <div class="c-form__body">
-      <div class="c-form__grid">
-        <label class="c-field">
-          <span class="c-field__label">Workspace name</span>
-          <input class="c-field__control" value="Acme Ops" />
+    <div class="pl-c-form__body">
+      <div class="pl-c-form__grid">
+        <label class="pl-c-field">
+          <span class="pl-c-field__label">Workspace name</span>
+          <input class="pl-c-field__control" value="Acme Ops" />
         </label>
-        <label class="c-field">
-          <span class="c-field__label">Timezone</span>
-          <select class="c-field__control">
+        <label class="pl-c-field">
+          <span class="pl-c-field__label">Timezone</span>
+          <select class="pl-c-field__control">
             <option>America/Chicago</option>
           </select>
         </label>
       </div>
     </div>
   </section>
-  <div class="c-form__actions">
-    <button class="c-button" type="button" data-variant="ghost">Cancel</button>
-    <button class="c-button" type="submit" data-variant="primary">Save</button>
+  <div class="pl-c-form__actions">
+    <button class="pl-c-button" type="button" data-variant="ghost">
+      Cancel
+    </button>
+    <button class="pl-c-button" type="submit" data-variant="primary">
+      Save
+    </button>
   </div>
 </form>
 ```
 
 ## Class Contract
 
-| Selector                 | Role                                                 |
-| ------------------------ | ---------------------------------------------------- |
-| `.c-form`                | Form root with vertical section rhythm.              |
-| `.c-form__section`       | A logical form section.                              |
-| `.c-form__header`        | Section heading and summary copy.                    |
-| `.c-form__body`          | Field stack inside a section.                        |
-| `.c-form__grid`          | Responsive field grid.                               |
-| `.c-form__row`           | Wrapping row for filters and short fields.           |
-| `.c-form__actions`       | Submit/cancel action row.                            |
-| `.c-choice-group`        | Fieldset wrapper for checkbox/radio choices.         |
-| `.c-choice-group__hint`  | Helper, warning, success, or error text for choices. |
-| `.c-choice-list`         | Stacked or inline list of choices.                   |
-| `.c-choice`              | Native checkbox/radio label row.                     |
-| `.c-choice__input`       | Native checkbox/radio input.                         |
-| `.c-choice__label`       | Primary choice text.                                 |
-| `.c-choice__description` | Optional secondary choice text.                      |
-| `.c-input-group`         | Prefix/suffix/action wrapper around a native field.  |
-| `.c-input-group__addon`  | Non-interactive prefix or suffix.                    |
-| `.c-input-group__action` | Button aligned inside the group.                     |
+| Selector                    | Role                                                 |
+| --------------------------- | ---------------------------------------------------- |
+| `.pl-c-form`                | Form root with vertical section rhythm.              |
+| `.pl-c-form__section`       | A logical form section.                              |
+| `.pl-c-form__header`        | Section heading and summary copy.                    |
+| `.pl-c-form__body`          | Field stack inside a section.                        |
+| `.pl-c-form__grid`          | Responsive field grid.                               |
+| `.pl-c-form__row`           | Wrapping row for filters and short fields.           |
+| `.pl-c-form__actions`       | Submit/cancel action row.                            |
+| `.pl-c-choice-group`        | Fieldset wrapper for checkbox/radio choices.         |
+| `.pl-c-choice-group__hint`  | Helper, warning, success, or error text for choices. |
+| `.pl-c-choice-list`         | Stacked or inline list of choices.                   |
+| `.pl-c-choice`              | Native checkbox/radio label row.                     |
+| `.pl-c-choice__input`       | Native checkbox/radio input.                         |
+| `.pl-c-choice__label`       | Primary choice text.                                 |
+| `.pl-c-choice__description` | Optional secondary choice text.                      |
+| `.pl-c-input-group`         | Prefix/suffix/action wrapper around a native field.  |
+| `.pl-c-input-group__addon`  | Non-interactive prefix or suffix.                    |
+| `.pl-c-input-group__action` | Button aligned inside the group.                     |
 
 ## Choice Groups
 
 Use real `fieldset` and `legend` for groups of related checkboxes or radios.
 
 ```html
-<fieldset class="c-choice-group">
-  <legend class="c-choice-group__legend">Notifications</legend>
-  <div class="c-choice-list">
-    <label class="c-choice">
-      <input class="c-choice__input" type="checkbox" checked />
+<fieldset class="pl-c-choice-group">
+  <legend class="pl-c-choice-group__legend">Notifications</legend>
+  <div class="pl-c-choice-list">
+    <label class="pl-c-choice">
+      <input class="pl-c-choice__input" type="checkbox" checked />
       <span>
-        <span class="c-choice__label">Weekly summary</span>
-        <span class="c-choice__description">Send every Monday morning.</span>
+        <span class="pl-c-choice__label">Weekly summary</span>
+        <span class="pl-c-choice__description">Send every Monday morning.</span>
       </span>
     </label>
   </div>
-  <span class="c-choice-group__hint" data-tone="warning">
+  <span class="pl-c-choice-group__hint" data-tone="warning">
     Security alerts stay enabled for account owners.
   </span>
 </fieldset>
 ```
 
-Set `data-layout="inline"` on `.c-choice-list` for compact radio groups such as
+Set `data-layout="inline"` on `.pl-c-choice-list` for compact radio groups such as
 billing cadence or plan type.
 
 ## Input Groups
 
-Input groups keep a native `.c-field__control` while adding a prefix, suffix, or
+Input groups keep a native `.pl-c-field__control` while adding a prefix, suffix, or
 action. Use explicit labels when an action button sits beside the input.
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="seat-count">Seats</label>
-  <div class="c-input-group">
-    <input id="seat-count" class="c-field__control" type="number" value="24" />
-    <span class="c-input-group__addon">users</span>
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="seat-count">Seats</label>
+  <div class="pl-c-input-group">
+    <input
+      id="seat-count"
+      class="pl-c-field__control"
+      type="number"
+      value="24"
+    />
+    <span class="pl-c-input-group__addon">users</span>
   </div>
 </div>
 ```
@@ -121,19 +130,19 @@ attributes, or framework-owned classes.
 ### Server or HATEOAS fragment
 
 ```html
-<form class="c-form" action="/settings" method="post">
-  <div class="c-field">
-    <label class="c-field__label" for="team-slug">Team slug</label>
+<form class="pl-c-form" action="/settings" method="post">
+  <div class="pl-c-field">
+    <label class="pl-c-field__label" for="team-slug">Team slug</label>
     <input
       id="team-slug"
-      class="c-field__control"
+      class="pl-c-field__control"
       name="slug"
       required
       pattern="[a-z0-9-]+"
       aria-invalid="true"
       aria-describedby="team-slug-error"
     />
-    <span class="c-field__hint" id="team-slug-error" role="alert">
+    <span class="pl-c-field__hint" id="team-slug-error" role="alert">
       Use lowercase letters, numbers, and hyphens.
     </span>
   </div>
@@ -148,16 +157,16 @@ HTML.
 ### Reactive attributes
 
 ```html
-<div x-data="{ error: '' }" class="c-field">
-  <label class="c-field__label" for="budget-limit">Budget limit</label>
+<div x-data="{ error: '' }" class="pl-c-field">
+  <label class="pl-c-field__label" for="budget-limit">Budget limit</label>
   <input
     id="budget-limit"
-    class="c-field__control"
+    class="pl-c-field__control"
     type="number"
     :aria-invalid="error ? 'true' : 'false'"
     aria-describedby="budget-limit-error"
   />
-  <span class="c-field__hint" id="budget-limit-error" x-text="error"></span>
+  <span class="pl-c-field__hint" id="budget-limit-error" x-text="error"></span>
 </div>
 ```
 
@@ -166,17 +175,17 @@ other component systems should render the same final DOM rather than needing a
 Porchlight adapter:
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="quota">Quota</label>
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="quota">Quota</label>
   <input
     id="quota"
-    class="c-field__control"
+    class="pl-c-field__control"
     name="quota"
     type="number"
     aria-invalid="false"
     aria-describedby="quota-help"
   />
-  <span class="c-field__hint" id="quota-help" data-tone="success">
+  <span class="pl-c-field__hint" id="quota-help" data-tone="success">
     Current quota is valid.
   </span>
 </div>
@@ -184,25 +193,25 @@ Porchlight adapter:
 
 ## Tokens
 
-| Token                        | Default                   | Purpose                              |
-| ---------------------------- | ------------------------- | ------------------------------------ |
-| `--c-form-gap`               | `--pl-space-5`            | Space between form sections.         |
-| `--c-form-section-gap`       | `--pl-space-4`            | Space inside each section.           |
-| `--c-form-grid-min`          | `16rem`                   | Minimum column size before wrapping. |
-| `--c-form-actions-gap`       | `--pl-space-2`            | Gap between action buttons.          |
-| `--c-choice-gap`             | `--pl-space-2`            | Gap between choices.                 |
-| `--c-input-group-addon-size` | `--pl-control-block-size` | Minimum prefix/suffix width.         |
+| Token                           | Default                   | Purpose                              |
+| ------------------------------- | ------------------------- | ------------------------------------ |
+| `--pl-c-form-gap`               | `--pl-space-5`            | Space between form sections.         |
+| `--pl-c-form-section-gap`       | `--pl-space-4`            | Space inside each section.           |
+| `--pl-c-form-grid-min`          | `16rem`                   | Minimum column size before wrapping. |
+| `--pl-c-form-actions-gap`       | `--pl-space-2`            | Gap between action buttons.          |
+| `--pl-c-choice-gap`             | `--pl-space-2`            | Gap between choices.                 |
+| `--pl-c-input-group-addon-size` | `--pl-control-block-size` | Minimum prefix/suffix width.         |
 
 ## Accessibility
 
 - Use real `form`, `fieldset`, `legend`, and `label` elements.
 - Keep labels visible unless the surrounding UI already names the control; if
-  hidden, use `.u-sr-only`.
+  hidden, use `.pl-u-sr-only`.
 - Connect hints or error text with `aria-describedby` when the message is needed
   by assistive technology.
 - Use `aria-invalid="true"` for server-side errors or framework-managed errors;
   native HTML5 validation continues to use `:user-invalid`.
-- Use `.c-choice-group__hint` with `aria-describedby` on the `fieldset` for
+- Use `.pl-c-choice-group__hint` with `aria-describedby` on the `fieldset` for
   grouped checkbox/radio help, warnings, or errors.
 - Do not put buttons inside wrapper labels. Use `for`/`id` for input groups with
   actions.

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Kitchen-sink for .c-tabs: every state, with counts, disabled, and density.
+// Kitchen-sink for .pl-c-tabs: every state, with counts, disabled, and density.
 const tabs = [
   { label: 'Overview', selected: true, count: null },
   { label: 'Accounts', selected: false, count: 24 },
@@ -20,12 +20,12 @@ const tabs = [
     on the tab and <code>[hidden]</code> on inactive panels.
   </p>
 
-  <div class="c-tabs">
-    <div class="c-tabs__list" role="tablist" aria-label="Account sections">
+  <div class="pl-c-tabs">
+    <div class="pl-c-tabs__list" role="tablist" aria-label="Account sections">
       {tabs.map((t) => (
         <button
           type="button"
-          class="c-tabs__tab"
+          class="pl-c-tabs__tab"
           role="tab"
           aria-selected={t.selected ? 'true' : 'false'}
           disabled={'disabled' in t ? t.disabled : undefined}
@@ -34,17 +34,17 @@ const tabs = [
           tabindex={t.selected ? 0 : -1}
         >
           {t.label}
-          {t.count && <span class="c-tabs__count">{t.count}</span>}
+          {t.count && <span class="pl-c-tabs__count">{t.count}</span>}
         </button>
       ))}
     </div>
 
-    <div class="c-tabs__panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
-      <div class="l-stack">
+    <div class="pl-c-tabs__panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+      <div class="pl-l-stack">
         <h2>Overview</h2>
         <p>This panel is visible because its tab has <code>aria-selected="true"</code>. The others carry <code>[hidden]</code>.</p>
-        <div class="c-table-wrap">
-          <table class="c-table">
+        <div class="pl-c-table-wrap">
+          <table class="pl-c-table">
             <thead><tr><th>Metric</th><th data-align="end">Value</th></tr></thead>
             <tbody>
               <tr><td>Active accounts</td><td data-align="end">24</td></tr>
@@ -55,39 +55,39 @@ const tabs = [
       </div>
     </div>
 
-    <div class="c-tabs__panel" role="tabpanel" id="panel-accounts" aria-labelledby="tab-accounts" hidden>
+    <div class="pl-c-tabs__panel" role="tabpanel" id="panel-accounts" aria-labelledby="tab-accounts" hidden>
       <h2>Accounts</h2>
       <p>Account list would go here.</p>
     </div>
-    <div class="c-tabs__panel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" hidden>
+    <div class="pl-c-tabs__panel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" hidden>
       <h2>Billing</h2>
       <p>Billing details would go here.</p>
     </div>
-    <div class="c-tabs__panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" hidden>
+    <div class="pl-c-tabs__panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" hidden>
       <h2>Activity</h2>
       <p>Recent activity feed.</p>
     </div>
-    <div class="c-tabs__panel" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" hidden>
+    <div class="pl-c-tabs__panel" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" hidden>
       <h2>Settings</h2>
       <p>Settings panel (the tab is disabled above).</p>
     </div>
   </div>
 
   <h2>Density</h2>
-  <p>Sizing is driven by <code>--pl-control-*</code> on an ancestor's <code>[data-density]</code>.</p>
-  <div class="c-tabs" data-density="compact">
-    <div class="c-tabs__list" role="tablist">
-      <button type="button" class="c-tabs__tab" role="tab" aria-selected="true">compact tab</button>
-      <button type="button" class="c-tabs__tab" role="tab" aria-selected="false">another</button>
+  <p>Sizing is driven by <code>--pl-control-*</code> on an ancestor's <code>[data-pl-density]</code>.</p>
+  <div class="pl-c-tabs" data-pl-density="compact">
+    <div class="pl-c-tabs__list" role="tablist">
+      <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="true">compact tab</button>
+      <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false">another</button>
     </div>
-    <div class="c-tabs__panel" role="tabpanel"><p>Compact content.</p></div>
+    <div class="pl-c-tabs__panel" role="tabpanel"><p>Compact content.</p></div>
   </div>
 </BaseLayout>
 
 <script>
   // Docs-only tab switching. In a real app, this is your state handler.
-  document.querySelectorAll('.c-tabs').forEach((group) => {
-    const tabs = group.querySelectorAll('.c-tabs__tab');
+  document.querySelectorAll('.pl-c-tabs').forEach((group) => {
+    const tabs = group.querySelectorAll('.pl-c-tabs__tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => {

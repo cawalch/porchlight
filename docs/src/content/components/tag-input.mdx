@@ -7,23 +7,23 @@ since: 0.2.0
 
 # Tag Input
 
-The `.c-tag-input` wraps chips and an inline text input. JS handles
+The `.pl-c-tag-input` wraps chips and an inline text input. JS handles
 tokenization (Enter/comma to add, backspace to remove); CSS handles the
 layout. Auto-grows via `field-sizing: content` where supported.
 
 ## Semantic HTML
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="tags">Tags</label>
-  <div class="c-tag-input">
-    <span class="c-chip">
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="tags">Tags</label>
+  <div class="pl-c-tag-input">
+    <span class="pl-c-chip">
       React
-      <button class="c-chip__remove" type="button" aria-label="Remove React">
+      <button class="pl-c-chip__remove" type="button" aria-label="Remove React">
         x
       </button>
     </span>
-    <input id="tags" class="c-tag-input__field" placeholder="Add tag..." />
+    <input id="tags" class="pl-c-tag-input__field" placeholder="Add tag..." />
   </div>
 </div>
 ```
@@ -33,7 +33,7 @@ Do not wrap chip remove buttons inside a `<label>`.
 
 ## Class contract
 
-| Selector              | Role                             |
-| --------------------- | -------------------------------- |
-| `.c-tag-input`        | Container (flex-wrap, bordered). |
-| `.c-tag-input__field` | The inline text input.           |
+| Selector                 | Role                             |
+| ------------------------ | -------------------------------- |
+| `.pl-c-tag-input`        | Container (flex-wrap, bordered). |
+| `.pl-c-tag-input__field` | The inline text input.           |

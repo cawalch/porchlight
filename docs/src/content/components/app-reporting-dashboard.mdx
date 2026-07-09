@@ -13,61 +13,61 @@ without adding dashboard-specific CSS.
 
 ## Structure
 
-- `.c-page-header` for report title, date range, refresh, and export actions.
-- `.c-saved-views` and `.c-query-bar` for saved report views and active
+- `.pl-c-page-header` for report title, date range, refresh, and export actions.
+- `.pl-c-saved-views` and `.pl-c-query-bar` for saved report views and active
   filters.
-- `.c-tabs` for summary, acquisition, retention, or forecast views.
-- `.l-grid` with `.c-card[data-surface="app"]` and `.c-stat` for KPI tiles.
-- `.c-chart` for app-owned SVG, Canvas, or image charts with legends and
+- `.pl-c-tabs` for summary, acquisition, retention, or forecast views.
+- `.pl-l-grid` with `.pl-c-card[data-surface="app"]` and `.pl-c-stat` for KPI tiles.
+- `.pl-c-chart` for app-owned SVG, Canvas, or image charts with legends and
   fallback data.
-- `.c-table-wrap` and `.c-table` for channel, segment, or cohort breakdowns.
-- `.c-empty` for insight, no-data, loading, or restricted-report states.
+- `.pl-c-table-wrap` and `.pl-c-table` for channel, segment, or cohort breakdowns.
+- `.pl-c-empty` for insight, no-data, loading, or restricted-report states.
 
 ## Semantic HTML
 
 ```html
 <section aria-labelledby="revenue-report-title">
-  <div class="c-page-header">
-    <div class="c-page-header__heading">
-      <h1 class="c-page-header__title" id="revenue-report-title">
+  <div class="pl-c-page-header">
+    <div class="pl-c-page-header__heading">
+      <h1 class="pl-c-page-header__title" id="revenue-report-title">
         Revenue performance
       </h1>
-      <span class="c-page-header__subtitle">May 1-31, 2026</span>
+      <span class="pl-c-page-header__subtitle">May 1-31, 2026</span>
     </div>
-    <div class="c-page-header__actions">
-      <label class="c-field">
-        <span class="u-sr-only">Start date</span>
-        <input class="c-field__control" type="date" value="2026-05-01" />
+    <div class="pl-c-page-header__actions">
+      <label class="pl-c-field">
+        <span class="pl-u-sr-only">Start date</span>
+        <input class="pl-c-field__control" type="date" value="2026-05-01" />
       </label>
-      <button class="c-button" data-variant="secondary">Export CSV</button>
+      <button class="pl-c-button" data-variant="secondary">Export CSV</button>
     </div>
   </div>
 
-  <nav class="c-saved-views" aria-label="Saved report views">
-    <span class="c-saved-views__label">Views</span>
-    <ul class="c-saved-views__list">
-      <li class="c-saved-views__item">
-        <button class="c-saved-views__button" aria-current="true">
-          Executive <span class="c-saved-views__count">12</span>
+  <nav class="pl-c-saved-views" aria-label="Saved report views">
+    <span class="pl-c-saved-views__label">Views</span>
+    <ul class="pl-c-saved-views__list">
+      <li class="pl-c-saved-views__item">
+        <button class="pl-c-saved-views__button" aria-current="true">
+          Executive <span class="pl-c-saved-views__count">12</span>
         </button>
       </li>
     </ul>
   </nav>
 
   <section
-    class="c-chart"
+    class="pl-c-chart"
     aria-labelledby="trend-title"
     aria-describedby="trend-description"
   >
-    <header class="c-chart__header">
+    <header class="pl-c-chart__header">
       <div>
-        <h2 class="c-chart__title" id="trend-title">Revenue trend</h2>
-        <p class="c-chart__description" id="trend-description">
+        <h2 class="pl-c-chart__title" id="trend-title">Revenue trend</h2>
+        <p class="pl-c-chart__description" id="trend-description">
           Recurring revenue and forecast by week.
         </p>
       </div>
     </header>
-    <div class="c-chart__plot" role="img" aria-label="Revenue trend chart">
+    <div class="pl-c-chart__plot" role="img" aria-label="Revenue trend chart">
       <!-- App-owned SVG, Canvas, or image. -->
     </div>
   </section>
@@ -83,7 +83,7 @@ legend, and table fallback for source data. Use `<time>` for generated-at and
 range labels, and align numeric table cells with `data-align="end"`.
 
 For loading, empty, and error cases, keep the region in place and swap the
-chart plot or insight panel to a `.c-empty` or `.c-chart[data-state]` state.
+chart plot or insight panel to a `.pl-c-empty` or `.pl-c-chart[data-state]` state.
 Announce result-count changes from app code with an `aria-live` region.
 
 ## Preview

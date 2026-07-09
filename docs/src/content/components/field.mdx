@@ -9,7 +9,7 @@ import FieldPreview from "../../components/FieldPreview.astro";
 
 # Field
 
-The `.c-field` is a labeled form control. It pairs a visible label with a
+The `.pl-c-field` is a labeled form control. It pairs a visible label with a
 **native** `<input>`, `<select>`, or `<textarea>` so you inherit constraint
 validation, autofill, IME, spellcheck, and platform conventions.
 
@@ -23,18 +23,18 @@ contains grouped chrome or an action button.
 ## Semantic HTML
 
 ```html
-<label class="c-field">
-  <span class="c-field__label">
+<label class="pl-c-field">
+  <span class="pl-c-field__label">
     Workspace name
-    <span class="c-field__required" aria-hidden="true">*</span>
+    <span class="pl-c-field__required" aria-hidden="true">*</span>
   </span>
   <input
-    class="c-field__control"
+    class="pl-c-field__control"
     required
     placeholder="Acme Ops"
     aria-describedby="workspace-name-help"
   />
-  <span class="c-field__hint" id="workspace-name-help"
+  <span class="pl-c-field__hint" id="workspace-name-help"
     >Use a name your team recognizes.</span
   >
 </label>
@@ -43,17 +43,17 @@ contains grouped chrome or an action button.
 Use an explicit label when the field contains an input group:
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="workspace-slug">Workspace URL</label>
-  <div class="c-input-group">
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="workspace-slug">Workspace URL</label>
+  <div class="pl-c-input-group">
     <input
       id="workspace-slug"
-      class="c-field__control"
+      class="pl-c-field__control"
       placeholder="acme-ops"
     />
-    <span class="c-input-group__addon">.porchlight.app</span>
+    <span class="pl-c-input-group__addon">.porchlight.app</span>
   </div>
-  <span class="c-field__hint"
+  <span class="pl-c-field__hint"
     >Use lowercase letters, numbers, and hyphens.</span
   >
 </div>
@@ -61,15 +61,15 @@ Use an explicit label when the field contains an input group:
 
 ## Class contract
 
-| Selector             | Role                                                                |
-| -------------------- | ------------------------------------------------------------------- |
-| `.c-field`           | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
-| `.c-field--inline`   | Two-column label/control layout that stacks on narrow viewports.    |
-| `.c-field__label`    | The visible label text.                                             |
-| `.c-field__control`  | The native input/select/textarea.                                   |
-| `.c-field__required` | Optional visual required marker inside the label.                   |
-| `.c-field__hint`     | Helper, warning, success, or error text below the control.          |
-| `.c-field__messages` | Optional stack for multiple `.c-field__hint` messages.              |
+| Selector                | Role                                                                |
+| ----------------------- | ------------------------------------------------------------------- |
+| `.pl-c-field`           | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
+| `.pl-c-field--inline`   | Two-column label/control layout that stacks on narrow viewports.    |
+| `.pl-c-field__label`    | The visible label text.                                             |
+| `.pl-c-field__control`  | The native input/select/textarea.                                   |
+| `.pl-c-field__required` | Optional visual required marker inside the label.                   |
+| `.pl-c-field__hint`     | Helper, warning, success, or error text below the control.          |
+| `.pl-c-field__messages` | Optional stack for multiple `.pl-c-field__hint` messages.           |
 
 ## Common Patterns
 
@@ -79,26 +79,30 @@ Use the default stacked layout for most create/edit forms, settings pages, and
 dialog forms.
 
 ```html
-<label class="c-field">
-  <span class="c-field__label">Billing email</span>
-  <input class="c-field__control" type="email" placeholder="ops@example.com" />
-  <span class="c-field__hint">Invoices and receipts are sent here.</span>
+<label class="pl-c-field">
+  <span class="pl-c-field__label">Billing email</span>
+  <input
+    class="pl-c-field__control"
+    type="email"
+    placeholder="ops@example.com"
+  />
+  <span class="pl-c-field__hint">Invoices and receipts are sent here.</span>
 </label>
 ```
 
 ### Inline field
 
-Use `.c-field--inline` when labels should scan in a vertical gutter, such as
+Use `.pl-c-field--inline` when labels should scan in a vertical gutter, such as
 admin metadata forms or dense settings panels.
 
 ```html
-<label class="c-field c-field--inline">
-  <span class="c-field__label">Region</span>
-  <select class="c-field__control">
+<label class="pl-c-field pl-c-field--inline">
+  <span class="pl-c-field__label">Region</span>
+  <select class="pl-c-field__control">
     <option>US Central</option>
     <option>EU West</option>
   </select>
-  <span class="c-field__hint">Controls default data residency.</span>
+  <span class="pl-c-field__hint">Controls default data residency.</span>
 </label>
 ```
 
@@ -108,10 +112,10 @@ Search boxes in toolbars still need a label. Keep it visually hidden and use the
 native `type="search"`.
 
 ```html
-<label class="c-field c-field--inline">
-  <span class="u-sr-only">Search accounts</span>
+<label class="pl-c-field pl-c-field--inline">
+  <span class="pl-u-sr-only">Search accounts</span>
   <input
-    class="c-field__control"
+    class="pl-c-field__control"
     type="search"
     placeholder="Search accounts..."
   />
@@ -125,51 +129,56 @@ Use native constraints first: `required`, `type`, `minlength`, `pattern`,
 show as invalid until the browser considers the user to have interacted.
 
 ```html
-<label class="c-field">
-  <span class="c-field__label">Workspace URL</span>
-  <input class="c-field__control" type="url" required placeholder="https://" />
-  <span class="c-field__hint">Must be a valid URL.</span>
+<label class="pl-c-field">
+  <span class="pl-c-field__label">Workspace URL</span>
+  <input
+    class="pl-c-field__control"
+    type="url"
+    required
+    placeholder="https://"
+  />
+  <span class="pl-c-field__hint">Must be a valid URL.</span>
 </label>
 ```
 
 ### Required marker
 
-Use `.c-field__required` for a visible marker when the product needs one. The
+Use `.pl-c-field__required` for a visible marker when the product needs one. The
 native `required` attribute stays the semantic source of truth.
 
 ```html
-<label class="c-field">
-  <span class="c-field__label">
+<label class="pl-c-field">
+  <span class="pl-c-field__label">
     Workspace name
-    <span class="c-field__required" aria-hidden="true">*</span>
+    <span class="pl-c-field__required" aria-hidden="true">*</span>
   </span>
-  <input class="c-field__control" required />
+  <input class="pl-c-field__control" required />
 </label>
 ```
 
 ### Message tones
 
-Use `.c-field__hint` for one message, or `.c-field__messages` when helper,
+Use `.pl-c-field__hint` for one message, or `.pl-c-field__messages` when helper,
 warning, success, and error messages need to stack. Add
 `data-tone="warning"`, `data-tone="danger"`, or `data-tone="success"` for an
 explicit visual tone.
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="workspace-slug">Workspace slug</label>
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="workspace-slug">Workspace slug</label>
   <input
     id="workspace-slug"
-    class="c-field__control"
+    class="pl-c-field__control"
     required
     aria-invalid="true"
     aria-describedby="workspace-slug-help workspace-slug-error"
   />
-  <span class="c-field__messages">
-    <span class="c-field__hint" id="workspace-slug-help"
+  <span class="pl-c-field__messages">
+    <span class="pl-c-field__hint" id="workspace-slug-help"
       >Use lowercase letters, numbers, and hyphens.</span
     >
     <span
-      class="c-field__hint"
+      class="pl-c-field__hint"
       id="workspace-slug-error"
       data-tone="danger"
       role="alert"
@@ -188,17 +197,17 @@ message with `aria-describedby`. Porchlight treats that state the same as
 server state.
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="invite-email">Invite email</label>
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="invite-email">Invite email</label>
   <input
     id="invite-email"
-    class="c-field__control"
+    class="pl-c-field__control"
     type="email"
     value="already-used@example.com"
     aria-invalid="true"
     aria-describedby="invite-email-error"
   />
-  <span class="c-field__hint" id="invite-email-error" role="alert">
+  <span class="pl-c-field__hint" id="invite-email-error" role="alert">
     That email is already invited.
   </span>
 </div>
@@ -212,18 +221,23 @@ bindings, Vue, React, and heavier app frameworks should all emit the same
 native HTML contract:
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="email">Email</label>
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="email">Email</label>
   <input
     id="email"
-    class="c-field__control"
+    class="pl-c-field__control"
     name="email"
     type="email"
     required
     aria-invalid="true"
     aria-describedby="email-error"
   />
-  <span class="c-field__hint" id="email-error" data-tone="danger" role="alert">
+  <span
+    class="pl-c-field__hint"
+    id="email-error"
+    data-tone="danger"
+    role="alert"
+  >
     Enter a valid email address.
   </span>
 </div>
@@ -242,12 +256,12 @@ DOM updates; Porchlight only styles the resulting semantic HTML.
 
 ## Tokens exposed (component-local)
 
-| Token                         | Default              | Purpose                                      |
-| ----------------------------- | -------------------- | -------------------------------------------- |
-| `--c-field-border`            | `--pl-color-border`  | Control border; overridden on focus/invalid. |
-| `--c-field-bg`                | `--pl-color-surface` | Control fill.                                |
-| `--c-field-fg`                | `--pl-color-text`    | Control text.                                |
-| `--c-field-inline-label-size` | `10rem`              | Label column size for `.c-field--inline`.    |
+| Token                            | Default              | Purpose                                      |
+| -------------------------------- | -------------------- | -------------------------------------------- |
+| `--pl-c-field-border`            | `--pl-color-border`  | Control border; overridden on focus/invalid. |
+| `--pl-c-field-bg`                | `--pl-color-surface` | Control fill.                                |
+| `--pl-c-field-fg`                | `--pl-color-text`    | Control text.                                |
+| `--pl-c-field-inline-label-size` | `10rem`              | Label column size for `.pl-c-field--inline`. |
 
 ## States
 
@@ -258,14 +272,14 @@ DOM updates; Porchlight only styles the resulting semantic HTML.
 | focused invalid | invalid + `:focus-visible`               | danger border/hint + standard focus glow        |
 | disabled        | `:disabled` (control)                    | field muted (0.55 opacity), not-allowed         |
 | placeholder     | `::placeholder`                          | text-muted                                      |
-| message tone    | `.c-field__hint[data-tone]`              | success, warning, or danger message color       |
+| message tone    | `.pl-c-field__hint[data-tone]`           | success, warning, or danger message color       |
 
 ## Accessibility
 
 - **Label association:** the wrapper is a `<label>`, so clicking the label
   focuses the control. When the field contains an action button or multiple
   focusable elements, use `<label for>` and a matching control `id` instead.
-- **Required marker:** `.c-field__required` is visual only and should be
+- **Required marker:** `.pl-c-field__required` is visual only and should be
   `aria-hidden`; the native `required` attribute is what browsers and assistive
   technology use.
 - **Focus:** the control draws a **crisp 2px accent ring with a soft blurred
@@ -292,7 +306,7 @@ DOM updates; Porchlight only styles the resulting semantic HTML.
 ## Theme, density, RTL, motion
 
 - **Light/dark:** all colors via tokens (`light-dark()`).
-- **Density:** sizing from `--pl-control-block-size`; `[data-density]` on an
+- **Density:** sizing from `--pl-control-block-size`; `[data-pl-density]` on an
   ancestor.
 - **RTL:** logical properties throughout (`padding-inline`, `inline-size`,
   `min-block-size`).

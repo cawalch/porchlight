@@ -22,7 +22,7 @@ Import the full built stylesheet:
 
 @layer app {
   .billing-panel {
-    --c-card-padding: var(--pl-space-6);
+    --pl-c-card-padding: var(--pl-space-6);
   }
 }
 ```
@@ -49,27 +49,27 @@ Porchlight components are HTML/CSS contracts. Bring your own rendering layer:
 server templates, Astro, React, Vue, htmx, plain HTML, or something else.
 
 ```html
-<section class="c-card billing-panel" data-surface="app">
-  <header class="c-card__header">
-    <h2 class="c-card__title">Billing contact</h2>
-    <button class="c-button" data-variant="ghost" type="button">Edit</button>
+<section class="pl-c-card billing-panel" data-surface="app">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Billing contact</h2>
+    <button class="pl-c-button" data-variant="ghost" type="button">Edit</button>
   </header>
-  <div class="c-card__body">
-    <label class="c-field">
-      <span class="c-field__label">Email</span>
+  <div class="pl-c-card__body">
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Email</span>
       <input
-        class="c-field__control"
+        class="pl-c-field__control"
         type="email"
         value="finance@example.com"
       />
-      <span class="c-field__hint">Invoices and receipts are sent here.</span>
+      <span class="pl-c-field__hint">Invoices and receipts are sent here.</span>
     </label>
   </div>
-  <footer class="c-card__footer">
-    <button class="c-button" data-variant="secondary" type="button">
+  <footer class="pl-c-card__footer">
+    <button class="pl-c-button" data-variant="secondary" type="button">
       Cancel
     </button>
-    <button class="c-button" data-variant="primary" type="submit">
+    <button class="pl-c-button" data-variant="primary" type="submit">
       Save changes
     </button>
   </footer>
@@ -79,17 +79,17 @@ server templates, Astro, React, Vue, htmx, plain HTML, or something else.
 Layout primitives use the same pattern:
 
 ```html
-<div class="l-sidebar account-layout">
-  <nav class="c-nav" aria-label="Account sections">...</nav>
-  <main class="l-stack">...</main>
+<div class="pl-l-sidebar account-layout">
+  <nav class="pl-c-nav" aria-label="Account sections">...</nav>
+  <main class="pl-l-stack">...</main>
 </div>
 ```
 
 ```css
 @layer app {
   .account-layout {
-    --l-sidebar-size: 18rem;
-    --l-sidebar-gap: var(--pl-space-5);
+    --pl-l-sidebar-size: 18rem;
+    --pl-l-sidebar-gap: var(--pl-space-5);
   }
 }
 ```
@@ -101,10 +101,10 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight`                  | Full prebuilt CSS bundle            |
 | `@cawalch/porchlight/compat.css`       | Core, layout, components, utilities |
 | `@cawalch/porchlight/core.css`         | Layers, reset, tokens, themes, base |
-| `@cawalch/porchlight/layout.css`       | `.l-*` layout primitives            |
-| `@cawalch/porchlight/components.css`   | All `.c-*` component CSS            |
+| `@cawalch/porchlight/layout.css`       | `.pl-l-*` layout primitives         |
+| `@cawalch/porchlight/components.css`   | All `.pl-c-*` component CSS         |
 | `@cawalch/porchlight/components/*.css` | One component CSS file              |
-| `@cawalch/porchlight/utilities.css`    | `.u-*` helpers                      |
+| `@cawalch/porchlight/utilities.css`    | `.pl-u-*` helpers                   |
 | `@cawalch/porchlight/tokens`           | Typed token metadata                |
 | `@cawalch/porchlight/tokens.json`      | Token metadata JSON                 |
 | `@cawalch/porchlight/manifest.json`    | Static-copy manifest                |

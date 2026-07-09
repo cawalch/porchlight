@@ -12,13 +12,14 @@
  * from sighted users while keeping it for AT is an a11y guarantee that can't
  * be accidentally overridden.
  *
- * Naming: .u-* (utility); --u-* are instance-config tokens (e.g. --u-flow-space).
+ * Naming: .pl-u-* (utility); --pl-u-* are instance-config tokens
+ * (e.g. --pl-u-flow-space).
  */
 @layer porchlight.utilities {
   /* Screen-reader-only: always visually hidden while remaining available to
      assistive tech. Use for native inputs/labels that should NOT reappear on
      focus because a styled control receives the visible focus treatment. */
-  :where(.u-sr-only, .u-focusable-sr-only, .u-visually-hidden) {
+  :where(.pl-u-sr-only, .pl-u-focusable-sr-only, .pl-u-visually-hidden) {
     position: absolute !important;
     inline-size: 1px !important;
     block-size: 1px !important;
@@ -31,13 +32,13 @@
   }
 
   /* Focusable sr-only: use for skip links and other keyboard targets that must
-     become visible when focused. .u-visually-hidden is kept as a compatibility
+     become visible when focused. .pl-u-visually-hidden is kept as a compatibility
      alias for the original focus-reveal behavior. */
   :where(
-    .u-focusable-sr-only:focus,
-    .u-focusable-sr-only:active,
-    .u-visually-hidden:focus,
-    .u-visually-hidden:active
+    .pl-u-focusable-sr-only:focus,
+    .pl-u-focusable-sr-only:active,
+    .pl-u-visually-hidden:focus,
+    .pl-u-visually-hidden:active
   ) {
     position: static !important;
     inline-size: auto !important;
@@ -48,7 +49,7 @@
   }
 
   /* One-line truncation: table cells, breadcrumb items, file names. */
-  :where(.u-truncate) {
+  :where(.pl-u-truncate) {
     min-inline-size: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -56,45 +57,45 @@
   }
 
   /* Allow flex/grid children to shrink below their intrinsic content width.
-     Pair with .u-truncate when the truncating element is itself a flex/grid
+     Pair with .pl-u-truncate when the truncating element is itself a flex/grid
      child. */
-  :where(.u-min-0) {
+  :where(.pl-u-min-0) {
     min-inline-size: 0;
   }
 
   /* Break long tokens such as UUIDs, paths, URLs, or generated names before
      they force a card/table/panel wider than its container. */
-  :where(.u-wrap-anywhere) {
+  :where(.pl-u-wrap-anywhere) {
     overflow-wrap: anywhere;
   }
 
   /* Multi-line truncation: clamp to N lines with an ellipsis. Use
-     --u-line-clamp to set the line count (default: 2). Common SaaS need
+     --pl-u-line-clamp to set the line count (default: 2). Common SaaS need
      for card titles, notification previews, comment snippets. */
-  :where(.u-line-clamp) {
+  :where(.pl-u-line-clamp) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--u-line-clamp, 2);
-    line-clamp: var(--u-line-clamp, 2);
+    -webkit-line-clamp: var(--pl-u-line-clamp, 2);
+    line-clamp: var(--pl-u-line-clamp, 2);
     overflow: hidden;
   }
 
   /* Vertical rhythm for prose blocks. The sibling selector adds space
      between top-level children, not before the first / after the last. Tune
-     via --u-flow-space. */
-  :where(.u-flow) > * + * {
-    margin-block-start: var(--u-flow-space, var(--pl-space-4));
+     via --pl-u-flow-space. */
+  :where(.pl-u-flow) > * + * {
+    margin-block-start: var(--pl-u-flow-space, var(--pl-space-4));
   }
 
   /* Remove default block margins from a single text element when placing prose
      inside dense component chrome or app-specific flex/grid rows. */
-  :where(.u-marginless) {
+  :where(.pl-u-marginless) {
     margin-block: 0;
   }
 
-  /* A surface treatment for ad-hoc grouping (not a full .c-card): bg, text,
+  /* A surface treatment for ad-hoc grouping (not a full .pl-c-card): bg, text,
      border, radius. For when you need panel styling without a component. */
-  :where(.u-surface) {
+  :where(.pl-u-surface) {
     background: var(--pl-color-surface);
     color: var(--pl-color-text);
     border: 1px solid var(--pl-color-border);
@@ -102,12 +103,12 @@
   }
 
   /* Muted text: secondary/caption copy. */
-  :where(.u-muted) {
+  :where(.pl-u-muted) {
     color: var(--pl-color-text-muted);
   }
 
   /* Small muted metadata/caption text. */
-  :where(.u-muted-sm) {
+  :where(.pl-u-muted-sm) {
     color: var(--pl-color-text-muted);
     font-size: var(--pl-text-sm);
     line-height: var(--pl-leading-snug);
@@ -115,7 +116,7 @@
 
   /* Leading icon + title pattern. Keeps the icon with the first line while
      allowing the text node to wrap or truncate inside flex/grid parents. */
-  :where(.u-icon-title) {
+  :where(.pl-u-icon-title) {
     display: inline-flex;
     align-items: center;
     gap: var(--pl-space-2);
@@ -123,17 +124,17 @@
     min-inline-size: 0;
   }
 
-  :where(.u-icon-title > svg, .u-icon-title > .c-badge__dot) {
+  :where(.pl-u-icon-title > svg, .pl-u-icon-title > .pl-c-badge__dot) {
     flex: 0 0 auto;
   }
 
-  :where(.u-icon-title > :not(svg, .c-badge__dot)) {
+  :where(.pl-u-icon-title > :not(svg, .pl-c-badge__dot)) {
     min-inline-size: 0;
   }
 
   /* Full-bleed: break an element out to the viewport edges inside a
      constrained container (e.g. a wide table or image in a prose column). */
-  :where(.u-full-bleed) {
+  :where(.pl-u-full-bleed) {
     inline-size: 100vi;
     margin-inline: calc(50% - 50vi);
   }

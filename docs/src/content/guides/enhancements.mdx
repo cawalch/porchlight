@@ -29,14 +29,14 @@ when the child is stuck to the top. Replaces the JavaScript scroll-listener
 pattern entirely.
 
 ```html
-<div class="c-sticky-shell">
-  <header class="c-sticky-shell__bar">Sticky bar</header>
+<div class="pl-c-sticky-shell">
+  <header class="pl-c-sticky-shell__bar">Sticky bar</header>
   <!-- scrolling content -->
 </div>
 ```
 
-Wrap any scroll region in `.c-sticky-shell` and place the sticky element in
-`.c-sticky-shell__bar`. When the bar becomes stuck, it gains `box-shadow-2`
+Wrap any scroll region in `.pl-c-sticky-shell` and place the sticky element in
+`.pl-c-sticky-shell__bar`. When the bar becomes stuck, it gains `box-shadow-2`
 plus a translucent `backdrop-filter: blur` background.
 
 ## `text-box` optical alignment
@@ -53,10 +53,10 @@ components where supported.
 
 Draw vertical dividers between grid items, rendered purely within the gap
 (the gap width is preserved). Enable with `data-dividers="true"` on any
-`.l-grid`:
+`.pl-l-grid`:
 
 ```html
-<div class="l-grid" data-dividers="true">
+<div class="pl-l-grid" data-dividers="true">
   <div>Item 1</div>
   <div>Item 2</div>
   <div>Item 3</div>
@@ -73,7 +73,7 @@ attribute, type-checked as `<color>`. Eliminates the need for inline
 `style="background: ..."` on static color chips:
 
 ```html
-<span class="c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
+<span class="pl-c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
 ```
 
 Falls back to the border color token when `data-color` is absent or the

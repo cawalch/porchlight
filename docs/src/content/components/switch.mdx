@@ -7,19 +7,19 @@ since: 0.2.0
 
 # Switch
 
-The `.c-switch` is a toggle switch built on a native checkbox. The thumb
+The `.pl-c-switch` is a toggle switch built on a native checkbox. The thumb
 slides via CSS transition on `inset-inline-start`. The `:checked` state
 drives the on/off styling. No JavaScript required for the toggle itself.
 
 ## Semantic HTML
 
 ```html
-<label class="c-switch">
-  <input type="checkbox" role="switch" class="c-switch__input" />
-  <span class="c-switch__track">
-    <span class="c-switch__thumb"></span>
+<label class="pl-c-switch">
+  <input type="checkbox" role="switch" class="pl-c-switch__input" />
+  <span class="pl-c-switch__track">
+    <span class="pl-c-switch__thumb"></span>
   </span>
-  <span class="c-switch__label">Enable feature</span>
+  <span class="pl-c-switch__label">Enable feature</span>
 </label>
 ```
 
@@ -36,11 +36,11 @@ uses `inset-inline-start` (not `left`), which flips under `dir="rtl"`.
 
 ## Class contract
 
-| Selector           | Role                        |
-| ------------------ | --------------------------- |
-| `.c-switch`        | Container label (flex row). |
-| `.c-switch__input` | Visually hidden checkbox.   |
-| `.c-switch__track` | The pill background.        |
-| `.c-switch__thumb` | The sliding circle.         |
-| `.c-switch__label` | Text label.                 |
-| `[data-size]`      | `sm`, default, `lg`.        |
+| Selector              | Role                        |
+| --------------------- | --------------------------- |
+| `.pl-c-switch`        | Container label (flex row). |
+| `.pl-c-switch__input` | Visually hidden checkbox.   |
+| `.pl-c-switch__track` | The pill background.        |
+| `.pl-c-switch__thumb` | The sliding circle.         |
+| `.pl-c-switch__label` | Text label.                 |
+| `[data-size]`         | `sm`, default, `lg`.        |

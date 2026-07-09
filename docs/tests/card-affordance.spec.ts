@@ -13,7 +13,7 @@ import { test, expect } from "@playwright/test";
 
 test("card has visible elevation (non-trivial shadow)", async ({ page }) => {
   await page.goto("./preview/card");
-  const card = page.locator(".c-card").first();
+  const card = page.locator(".pl-c-card").first();
   const shadow = await card.evaluate((el) => getComputedStyle(el).boxShadow);
   console.log(`[card] box-shadow=${shadow}`);
   // "none" means no elevation — the card is invisible against the bg.
@@ -22,7 +22,7 @@ test("card has visible elevation (non-trivial shadow)", async ({ page }) => {
 
 test("interactive card lifts on hover", async ({ page }) => {
   await page.goto("./preview/card");
-  const card = page.locator("a.c-card").first();
+  const card = page.locator("a.pl-c-card").first();
 
   const defTransform = await card.evaluate(
     (el) => getComputedStyle(el).transform,

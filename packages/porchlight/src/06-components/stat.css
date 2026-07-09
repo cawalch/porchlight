@@ -3,36 +3,36 @@
  * ===========================================================================
  * A KPI / metric tile  -  the workhorse of SaaS dashboards. Displays a single
  * number with a label, an optional unit, a trend indicator (up/down/flat), and
- * an optional sparkline slot. Designed to sit inside .l-grid (auto-fitting
- * dashboard widgets) or inside .c-card bodies.
+ * an optional sparkline slot. Designed to sit inside .pl-l-grid (auto-fitting
+ * dashboard widgets) or inside .pl-c-card bodies.
  *
- * Structure: .c-stat > .c-stat__label + .c-stat__value (+ .c-stat__unit) +
- * .c-stat__trend + .c-stat__spark. The value uses tabular-nums so numbers
+ * Structure: .pl-c-stat > .pl-c-stat__label + .pl-c-stat__value (+ .pl-c-stat__unit) +
+ * .pl-c-stat__trend + .pl-c-stat__spark. The value uses tabular-nums so numbers
  * don't jitter when they update. The trend uses semantic colors + an arrow
  * glyph, not just color (colorblind-safe).
  *
- * This is a display component  -  no interactive states. It composes with .c-card
- * when you need elevation: place .c-stat inside a .c-card for a raised tile.
+ * This is a display component  -  no interactive states. It composes with .pl-c-card
+ * when you need elevation: place .pl-c-stat inside a .pl-c-card for a raised tile.
  */
 @layer porchlight.components {
-  @scope (.c-stat) {
+  @scope (.pl-c-stat) {
     :scope {
-      --c-stat-gap: var(--pl-space-1);
+      --pl-c-stat-gap: var(--pl-space-1);
 
       display: flex;
       flex-direction: column;
       gap: var(--pl-space-2);
-      container: c-stat / inline-size;
+      container: pl-c-stat / inline-size;
     }
 
-    .c-stat__label {
+    .pl-c-stat__label {
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-semibold);
       color: var(--pl-color-text-muted);
       line-height: 1;
     }
 
-    .c-stat__value {
+    .pl-c-stat__value {
       display: flex;
       align-items: baseline;
       gap: var(--pl-space-2);
@@ -47,40 +47,40 @@
     /* Scale the value by container width, not viewport width. A stat in a
        dense 3-up grid needs a smaller number than the same stat in a full-
        width hero tile, even at the same viewport size. */
-    @container c-stat (inline-size < 16rem) {
-      .c-stat__value {
+    @container pl-c-stat (inline-size < 16rem) {
+      .pl-c-stat__value {
         font-size: 1.5rem;
       }
     }
 
-    @container c-stat (inline-size > 32rem) {
-      .c-stat__value {
+    @container pl-c-stat (inline-size > 32rem) {
+      .pl-c-stat__value {
         font-size: clamp(2.25rem, 2rem + 1vi, 2.75rem);
       }
     }
 
-    /* Tone variants on the value  -  consistent with c-badge, c-alert,
-       c-toast. Apply data-tone directly on .c-stat__value to colour just the
+    /* Tone variants on the value  -  consistent with pl-c-badge, pl-c-alert,
+       pl-c-toast. Apply data-tone directly on .pl-c-stat__value to colour just the
        number (e.g. danger for overdue counts). */
-    .c-stat__value[data-tone="success"] {
+    .pl-c-stat__value[data-tone="success"] {
       color: var(--pl-color-success-text);
     }
 
-    .c-stat__value[data-tone="warning"] {
+    .pl-c-stat__value[data-tone="warning"] {
       color: var(--pl-color-warning-text);
     }
 
-    .c-stat__value[data-tone="danger"] {
+    .pl-c-stat__value[data-tone="danger"] {
       color: var(--pl-color-danger-text);
     }
 
-    .c-stat__unit {
+    .pl-c-stat__unit {
       font-size: var(--pl-text-md);
       font-weight: var(--pl-font-weight-medium);
       color: var(--pl-color-text-muted);
     }
 
-    .c-stat__trend {
+    .pl-c-stat__trend {
       display: inline-flex;
       align-items: center;
       gap: var(--pl-space-1);
@@ -92,46 +92,46 @@
 
     /* Trend directions  -  semantic colors. The arrow glyph is always present
        so color is not the sole signal (colorblind-safe). */
-    .c-stat__trend[data-direction="up"] {
+    .pl-c-stat__trend[data-direction="up"] {
       color: var(--pl-color-success-text);
     }
 
-    .c-stat__trend[data-direction="down"] {
+    .pl-c-stat__trend[data-direction="down"] {
       color: var(--pl-color-danger-text);
     }
 
     /* The arrow lives in a ::before so app HTML doesn't need a glyph icon. */
-    .c-stat__trend::before {
+    .pl-c-stat__trend::before {
       display: inline-block;
       font-size: 0.7em;
       line-height: 1;
     }
 
-    .c-stat__trend[data-direction="up"]::before {
+    .pl-c-stat__trend[data-direction="up"]::before {
       content: "▲";
     }
 
-    .c-stat__trend[data-direction="down"]::before {
+    .pl-c-stat__trend[data-direction="down"]::before {
       content: "▼";
     }
 
-    .c-stat__trend[data-direction="flat"]::before {
+    .pl-c-stat__trend[data-direction="flat"]::before {
       content: "▶";
       transform: rotate(-90deg);
     }
 
     /* Optional sparkline slot  -  an inline SVG or canvas. */
-    .c-stat__spark {
+    .pl-c-stat__spark {
       margin-block-start: var(--pl-space-1);
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-stat__trend)[data-direction="up"] {
+    :where(.pl-c-stat__trend)[data-direction="up"] {
       color: CanvasText;
     }
 
-    :where(.c-stat__trend)[data-direction="down"] {
+    :where(.pl-c-stat__trend)[data-direction="down"] {
       color: CanvasText;
     }
   }
