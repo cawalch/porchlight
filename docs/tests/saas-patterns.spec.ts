@@ -1,5 +1,21 @@
 import { expect, test } from "@playwright/test";
 
+test("desktop documentation atlas presents peer sections at one height", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 2048, height: 900 });
+  await page.goto("./components/data-table");
+
+  const sections = page.locator(".docs-atlas__section");
+  await expect(sections).toHaveCount(5);
+
+  const heights = await sections.evaluateAll((items) =>
+    items.map((item) => item.getBoundingClientRect().height),
+  );
+
+  expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
+});
+
 test("preview index separates CSS components from application patterns", async ({
   page,
 }) => {
