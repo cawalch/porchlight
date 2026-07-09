@@ -666,16 +666,19 @@ const commandSections = [
       minmax(0, 1.15fr)
       minmax(0, 0.95fr);
     gap: var(--pl-space-3);
-    align-items: stretch;
+    align-items: start;
     padding-block: var(--pl-space-4);
     border-block-end: 1px solid var(--docs-line);
   }
 
   .docs-atlas__section {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto minmax(0, 1fr);
     gap: var(--pl-space-3);
+    box-sizing: border-box;
+    block-size: 18rem;
     min-inline-size: 0;
+    overflow: hidden;
     padding: var(--pl-space-3);
     border: 1px solid var(--docs-line);
     border-radius: var(--pl-radius-md);
@@ -702,9 +705,8 @@ const commandSections = [
     list-style: none;
   }
 
-  .docs-atlas__section[data-atlas-section='components'] ul,
-  .docs-atlas__section[data-atlas-section='patterns'] ul,
-  .docs-atlas__section[data-atlas-section='screens'] ul {
+  .docs-atlas__section ul {
+    min-block-size: 0;
     padding-inline-end: var(--pl-space-1);
     overflow-x: hidden;
     overflow-y: auto;
@@ -1383,6 +1385,11 @@ const commandSections = [
     .docs-atlas__section[data-atlas-section='components'],
     .docs-atlas__section[data-atlas-section='patterns'] {
       grid-column: 1 / -1;
+    }
+
+    .docs-atlas__section {
+      block-size: auto;
+      overflow: visible;
     }
 
     .docs-shell {
