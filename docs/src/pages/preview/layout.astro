@@ -144,24 +144,26 @@ const rows = [
     </div>
   </div>
 
-  <h2>Full layout index</h2>
-  <table class="layout-table">
-    <thead>
-      <tr><th>Primitive</th><th>Purpose</th><th>Tunable token</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>.pl-l-stack</code></td><td>Vertical flow (forms, sections)</td><td><code>--pl-l-stack-gap</code></td></tr>
-      <tr><td><code>.pl-l-cluster</code></td><td>Horizontal wrapping group (buttons, filters)</td><td><code>--pl-l-cluster-gap</code></td></tr>
-      <tr><td><code>.pl-l-grid</code></td><td>Auto-fitting card grid</td><td><code>--pl-l-grid-min</code></td></tr>
-      <tr><td><code>.pl-l-sidebar</code></td><td>Two-column with container-query collapse</td><td><code>--pl-l-sidebar-size</code></td></tr>
-      <tr><td><code>.pl-l-page</code></td><td>Centered prose column (88rem)</td><td><code>--pl-l-page-max</code></td></tr>
-      <tr><td><code>.pl-l-scroll-area</code></td><td>Independent scroll region</td><td>—</td></tr>
-      <tr><td><code>.pl-l-app-shell</code></td><td>Full SaaS shell (topbar + sidebar + main)</td><td><code>--pl-app-sidebar-size</code></td></tr>
-      <tr><td><code>.pl-l-container</code></td><td>Centered app wrapper (80rem)</td><td><code>--pl-l-container-max</code></td></tr>
-      <tr><td><code>.pl-l-columns</code></td><td>Multi-column masonry</td><td><code>--pl-l-columns-count</code></td></tr>
-      <tr><td><code>.pl-l-inset</code></td><td>Constrained content in full-bleed</td><td><code>--pl-l-inset-max</code></td></tr>
-    </tbody>
-  </table>
+  <h2 id="layout-index-heading">Full layout index</h2>
+  <div class="pl-l-scroll-area layout-table-wrap" tabindex="0" aria-labelledby="layout-index-heading">
+    <table class="layout-table">
+      <thead>
+        <tr><th>Primitive</th><th>Purpose</th><th>Tunable token</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.pl-l-stack</code></td><td>Vertical flow (forms, sections)</td><td><code>--pl-l-stack-gap</code></td></tr>
+        <tr><td><code>.pl-l-cluster</code></td><td>Horizontal wrapping group (buttons, filters)</td><td><code>--pl-l-cluster-gap</code></td></tr>
+        <tr><td><code>.pl-l-grid</code></td><td>Auto-fitting card grid</td><td><code>--pl-l-grid-min</code></td></tr>
+        <tr><td><code>.pl-l-sidebar</code></td><td>Two-column with container-query collapse</td><td><code>--pl-l-sidebar-size</code></td></tr>
+        <tr><td><code>.pl-l-page</code></td><td>Centered prose column (88rem)</td><td><code>--pl-l-page-max</code></td></tr>
+        <tr><td><code>.pl-l-scroll-area</code></td><td>Independent scroll region</td><td>—</td></tr>
+        <tr><td><code>.pl-l-app-shell</code></td><td>Full SaaS shell (topbar + sidebar + main)</td><td><code>--pl-app-sidebar-size</code></td></tr>
+        <tr><td><code>.pl-l-container</code></td><td>Centered app wrapper (80rem)</td><td><code>--pl-l-container-max</code></td></tr>
+        <tr><td><code>.pl-l-columns</code></td><td>Multi-column masonry</td><td><code>--pl-l-columns-count</code></td></tr>
+        <tr><td><code>.pl-l-inset</code></td><td>Constrained content in full-bleed</td><td><code>--pl-l-inset-max</code></td></tr>
+      </tbody>
+    </table>
+  </div>
 </BaseLayout>
 
 <script>
@@ -187,7 +189,7 @@ const rows = [
   .container-demo,
   .columns-demo,
   .bleed-demo,
-  .layout-table {
+  .layout-table-wrap {
     margin-block-end: var(--pl-space-8);
   }
 
@@ -374,10 +376,14 @@ const rows = [
     font-size: var(--pl-text-sm);
   }
 
+  .layout-table-wrap {
+    margin-block-start: var(--pl-space-4);
+  }
+
   .layout-table {
     inline-size: 100%;
+    min-inline-size: 34rem;
     border-collapse: collapse;
-    margin-block: var(--pl-space-4);
   }
 
   .layout-table th,
