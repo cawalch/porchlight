@@ -16,15 +16,12 @@ test.describe("representative visual baselines", () => {
       await page.setViewportSize({ width: 1280, height: 900 });
       await page.goto(path);
       await expect(page.locator("#main")).toBeVisible();
-      await expect(page.locator("#main")).toHaveScreenshot(
-        `${name}-desktop.png`,
-        {
-          animations: "disabled",
-          // Font rasterization differs between local macOS baselines and the
-          // Linux CI runner by up to 8%; layout regressions exceed this bound.
-          maxDiffPixelRatio: 0.09,
-        },
-      );
+      await expect(page).toHaveScreenshot(`${name}-desktop.png`, {
+        animations: "disabled",
+        // Font rasterization differs between local macOS baselines and the
+        // Linux CI runner by up to 8%; layout regressions exceed this bound.
+        maxDiffPixelRatio: 0.09,
+      });
     });
   }
 
@@ -35,13 +32,10 @@ test.describe("representative visual baselines", () => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(path);
       await expect(page.locator("#main")).toBeVisible();
-      await expect(page.locator("#main")).toHaveScreenshot(
-        `${name}-mobile.png`,
-        {
-          animations: "disabled",
-          maxDiffPixelRatio: 0.09,
-        },
-      );
+      await expect(page).toHaveScreenshot(`${name}-mobile.png`, {
+        animations: "disabled",
+        maxDiffPixelRatio: 0.09,
+      });
     });
   }
 });
