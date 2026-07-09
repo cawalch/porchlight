@@ -60,19 +60,22 @@ jobs:
       - name: Check LLM docs
         run: node docs/scripts/generate-llms.mjs --check
 
+      - name: Type-check docs
+        run: pnpm --filter ./docs astro:check
+
       - name: Build framework (single-file dist)
         run: pnpm --filter @cawalch/porchlight build
 
       - name: Build docs
         run: pnpm --filter ./docs build
 
-      - name: Install Playwright browser
+      - name: Install Playwright browsers
         if: steps.cache-playwright.outputs.cache-hit != 'true'
-        run: pnpm --filter ./docs exec playwright install --with-deps chromium
+        run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit
 
       - name: Install Playwright system dependencies
         if: steps.cache-playwright.outputs.cache-hit == 'true'
-        run: pnpm --filter ./docs exec playwright install-deps chromium
+        run: pnpm --filter ./docs exec playwright install-deps chromium firefox webkit
 
       - name: Run tests
         run: pnpm --filter ./docs test

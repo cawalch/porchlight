@@ -16,8 +16,8 @@
  *       Choose... <svg class="pl-c-dropdown__chevron">...</svg>
  *     </button>
  *     <div popover class="pl-c-dropdown__menu" id="dd-1">
- *       <button class="pl-c-dropdown__option" role="menuitemradio" aria-checked="true">Option A</button>
- *       <button class="pl-c-dropdown__option" role="menuitemradio" aria-checked="false">Option B</button>
+ *       <button class="pl-c-dropdown__option" role="menuitemradio" tabindex="-1" aria-checked="true">Option A</button>
+ *       <button class="pl-c-dropdown__option" role="menuitemradio" tabindex="-1" aria-checked="false">Option B</button>
  *     </div>
  *   </div>
  */

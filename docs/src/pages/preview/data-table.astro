@@ -21,6 +21,16 @@ const toneFor = (s: string) =>
   </p>
 
   <h2>Full-featured table</h2>
+  <div class="pl-c-toolbar table-selection-toolbar" role="region" aria-label="Selected account actions">
+    <div class="pl-c-toolbar__group">
+      <strong aria-live="polite">1 account selected</strong>
+      <button class="pl-c-button" data-variant="ghost" type="button">Clear selection</button>
+    </div>
+    <div class="pl-c-toolbar__group">
+      <button class="pl-c-button" data-variant="secondary" type="button">Export selected</button>
+      <button class="pl-c-button" data-variant="primary" type="button">Assign owner</button>
+    </div>
+  </div>
   <div class="pl-c-table-wrap" data-pl-density="comfortable">
     <table class="pl-c-table">
       <thead>
@@ -105,6 +115,42 @@ const toneFor = (s: string) =>
     </table>
   </div>
 
+  <h2>Inline edit composition</h2>
+  <p>
+    A read view and a real form share one app-owned state boundary. This is a
+    composition recipe, not a JavaScript dependency or new field variant.
+  </p>
+  <section class="pl-c-card table-inline-edit" data-surface="app" aria-labelledby="inline-edit-title">
+    <div class="pl-c-card__body" data-inline-edit>
+      <div class="table-inline-edit__read" data-inline-edit-read>
+        <div>
+          <span class="pl-u-muted-sm">Workspace name</span>
+          <strong id="inline-edit-title" data-inline-edit-value>Acme Operations</strong>
+        </div>
+        <button
+          class="pl-c-button"
+          data-variant="ghost"
+          type="button"
+          aria-controls="workspace-name-form"
+          data-inline-edit-open
+        >
+          Edit
+        </button>
+      </div>
+      <form id="workspace-name-form" class="pl-c-form" data-inline-edit-form hidden>
+        <label class="pl-c-field">
+          <span class="pl-c-field__label">Workspace name</span>
+          <input class="pl-c-field__control" name="workspace" value="Acme Operations" />
+        </label>
+        <div class="pl-c-form__actions">
+          <button class="pl-c-button" data-variant="ghost" type="button" data-inline-edit-cancel>Cancel</button>
+          <button class="pl-c-button" data-variant="primary" type="submit">Save</button>
+        </div>
+      </form>
+      <span class="pl-u-sr-only" role="status" data-inline-edit-status></span>
+    </div>
+  </section>
+
   <h2>Compact density</h2>
   <p>Same data with <code>data-pl-density="compact"</code> for tighter rows.</p>
   <div class="pl-c-table-wrap" data-pl-density="compact">
@@ -171,9 +217,69 @@ const toneFor = (s: string) =>
       }
     });
   });
+
+  const inlineEdit = document.querySelector('[data-inline-edit]');
+  if (inlineEdit instanceof HTMLElement) {
+    const read = inlineEdit.querySelector('[data-inline-edit-read]');
+    const form = inlineEdit.querySelector('[data-inline-edit-form]');
+    const open = inlineEdit.querySelector('[data-inline-edit-open]');
+    const cancel = inlineEdit.querySelector('[data-inline-edit-cancel]');
+    const input = form?.querySelector('input');
+    const value = inlineEdit.querySelector('[data-inline-edit-value]');
+    const status = inlineEdit.querySelector('[data-inline-edit-status]');
+    const originalValue = input instanceof HTMLInputElement ? input.value : '';
+
+    const showRead = () => {
+      if (read instanceof HTMLElement) read.hidden = false;
+      if (form instanceof HTMLFormElement) form.hidden = true;
+      if (open instanceof HTMLButtonElement) open.focus();
+    };
+
+    open?.addEventListener('click', () => {
+      if (read instanceof HTMLElement) read.hidden = true;
+      if (form instanceof HTMLFormElement) form.hidden = false;
+      if (input instanceof HTMLInputElement) input.focus();
+    });
+
+    cancel?.addEventListener('click', () => {
+      if (input instanceof HTMLInputElement) input.value = originalValue;
+      showRead();
+    });
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (input instanceof HTMLInputElement && value instanceof HTMLElement) {
+        value.textContent = input.value;
+      }
+      if (status instanceof HTMLElement) status.textContent = 'Workspace name saved.';
+      showRead();
+    });
+  }
 </script>
 
 <style>
+  .table-selection-toolbar {
+    margin-block-end: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+  }
+
+  .table-inline-edit {
+    max-inline-size: 36rem;
+  }
+
+  .table-inline-edit__read {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-4);
+  }
+
+  .table-inline-edit__read > div {
+    display: grid;
+    gap: var(--pl-space-1);
+  }
+
   .table-detail-grid {
     --pl-l-grid-min: 12rem;
   }

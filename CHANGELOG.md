@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a framework-neutral inline loading spinner and width-stable busy-button
+  contract using native `aria-busy` and `disabled` semantics, with reduced-motion
+  and forced-colors fallbacks.
+- Added framework-neutral bulk-selection toolbar and inline-edit recipes with a
+  working data-table preview and focus-management coverage.
+
+### Changed
+
+- Separated CSS component contracts from composed SaaS patterns in docs counts,
+  navigation, search, preview grouping, and generated model guidance.
+- Clarified that popover menus are non-modal disclosures, while dropdowns that
+  opt into ARIA menu roles must provide the full menu-button keyboard and focus
+  contract. Command palettes now document their grouped combobox/listbox model.
+
+### Tooling
+
+- Generated accessibility coverage from preview routes, added docs type-checking
+  to CI, introduced targeted visual baselines, and added narrow Firefox/WebKit
+  smoke coverage for representative application surfaces.
+
 ## [0.10.0] - 2026-06-30
 
 ### Added

@@ -11,10 +11,12 @@ const previewSlugs = Object.keys(previewModules)
   .sort((a, z) => a.localeCompare(z));
 const previewSlugSet = new Set(previewSlugs);
 
-const components = (await getCollection('components')).sort((a, z) =>
+const documentedEntries = (await getCollection('components')).sort((a, z) =>
   a.data.title.localeCompare(z.data.title),
 );
-const componentSlugSet = new Set(components.map((component) => component.id));
+const components = documentedEntries.filter((entry) => entry.data.kind === 'component');
+const patterns = documentedEntries.filter((entry) => entry.data.kind === 'pattern');
+const documentedSlugSet = new Set(documentedEntries.map((entry) => entry.id));
 
 const foundations = [
   {
@@ -55,13 +57,13 @@ const foundations = [
 ].filter((item) => previewSlugSet.has(item.slug));
 const foundationSlugSet = new Set(foundations.map((item) => item.slug));
 
-const missingComponentPreviews = components
-  .filter((component) => !previewSlugSet.has(component.id))
-  .map((component) => component.id);
+const missingDocumentedPreviews = documentedEntries
+  .filter((entry) => !previewSlugSet.has(entry.id))
+  .map((entry) => entry.id);
 
-if (missingComponentPreviews.length > 0) {
+if (missingDocumentedPreviews.length > 0) {
   throw new Error(
-    `Missing preview pages for component docs: ${missingComponentPreviews.join(', ')}`,
+    `Missing preview pages for documented components or patterns: ${missingDocumentedPreviews.join(', ')}`,
   );
 }
 
@@ -107,7 +109,7 @@ const standalonePreviewMeta: Record<string, { title: string; description: string
 };
 
 const standalonePreviews = previewSlugs
-  .filter((slug) => !componentSlugSet.has(slug) && !foundationSlugSet.has(slug))
+  .filter((slug) => !documentedSlugSet.has(slug) && !foundationSlugSet.has(slug))
   .map((slug) => ({
     slug,
     title: standalonePreviewMeta[slug]?.title ?? titleize(slug),
@@ -115,7 +117,7 @@ const standalonePreviews = previewSlugs
   }))
   .sort((a, z) => a.title.localeCompare(z.title));
 
-const previewTotal = foundations.length + components.length + standalonePreviews.length;
+const previewTotal = foundations.length + documentedEntries.length + standalonePreviews.length;
 const stableCount = components.filter((component) => component.data.status === 'stable').length;
 const experimentalCount = components.filter((component) => component.data.status === 'experimental').length;
 const plannedCount = components.filter((component) => component.data.status === 'planned').length;
@@ -127,8 +129,8 @@ const plannedCount = components.filter((component) => component.data.status === 
       <h1 id="preview-title">Preview index</h1>
       <p>
         Searchable live pages for component QA, CSS regression checks, and composed app
-        fixtures. Component entries are generated from the docs collection, so missing
-        previews fail the build.
+        fixtures. Component and pattern entries are generated from the docs collection,
+        so missing previews fail the build.
       </p>
     </div>
 
@@ -152,8 +154,8 @@ const plannedCount = components.filter((component) => component.data.status === 
           <dd>{components.length}</dd>
         </div>
         <div>
-          <dt>Apps</dt>
-          <dd>{standalonePreviews.length}</dd>
+          <dt>Patterns</dt>
+          <dd>{patterns.length}</dd>
         </div>
       </dl>
     </aside>
@@ -211,6 +213,38 @@ const plannedCount = components.filter((component) => component.data.status === 
               <span class="preview-card__links">
                 <a href={`${b}preview/${component.id}`}>Preview</a>
                 <a href={`${b}components/${component.id}`}>Docs</a>
+              </span>
+            </p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="preview-section" aria-labelledby="preview-patterns" data-preview-section>
+    <header class="preview-section__header">
+      <div>
+        <p class="preview-eyebrow">Application recipes</p>
+        <h2 id="preview-patterns">SaaS patterns</h2>
+      </div>
+      <span>{patterns.length} documented patterns</span>
+    </header>
+    <ul class="preview-grid">
+      {patterns.map((pattern) => (
+        <li
+          data-preview-card
+          data-preview-search={`${pattern.data.title} ${pattern.data.description ?? ''} ${pattern.data.status} pattern ${pattern.id}`}
+        >
+          <article class="preview-card">
+            <a class="preview-card__main" href={`${b}preview/${pattern.id}`}>
+              <strong>{pattern.data.title}</strong>
+              <span>{pattern.data.description ?? 'Application composition pattern.'}</span>
+            </a>
+            <p class="preview-card__meta">
+              <span class="preview-card__status" data-status={pattern.data.status}>{pattern.data.status}</span>
+              <span class="preview-card__links">
+                <a href={`${b}preview/${pattern.id}`}>Preview</a>
+                <a href={`${b}components/${pattern.id}`}>Docs</a>
               </span>
             </p>
           </article>

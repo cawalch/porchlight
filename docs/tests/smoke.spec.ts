@@ -336,6 +336,7 @@ test.describe("docs scaffold", () => {
     // Click the trigger to open.
     await page.locator("[popovertarget='account-menu']").click();
     await expect(popover).toBeVisible();
+    await expect(popover).not.toHaveAttribute("role", "menu");
     // Items are real links/buttons.
     await expect(page.locator("#account-menu a").first()).toBeVisible();
     // Esc closes.
@@ -1196,11 +1197,41 @@ test.describe("docs scaffold", () => {
       "aria-expanded",
       "true",
     );
+    await expect(
+      page.getByRole("menuitemradio", { name: "Project Alpha" }),
+    ).toBeFocused();
+    await page.keyboard.press("ArrowDown");
+    await expect(
+      page.getByRole("menuitemradio", { name: "Project Beta" }),
+    ).toBeFocused();
+    await page.keyboard.press("End");
+    await expect(
+      page.getByRole("menuitem", { name: "Delete project" }),
+    ).toBeFocused();
+    await page.keyboard.press("Home");
+    await expect(
+      page.getByRole("menuitemradio", { name: "Project Alpha" }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(menu).toBeHidden();
+    await expect(page.locator("#dd-trigger-1")).toBeFocused();
+
+    await page.locator("#dd-trigger-1").press("ArrowUp");
+    await expect(menu).toBeVisible();
+    await expect(
+      page.getByRole("menuitem", { name: "Delete project" }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+
+    await page.locator("#dd-trigger-1").press("ArrowDown");
+    await expect(menu).toBeVisible();
     await page.getByRole("menuitemradio", { name: "Project Beta" }).click();
     await expect(page.locator("#dd-trigger-1")).toContainText("Project Beta");
     await expect(
       page.getByRole("menuitemradio", { name: "Project Beta" }),
     ).toHaveAttribute("aria-checked", "true");
+    await expect(menu).toBeHidden();
+    await expect(page.locator("#dd-trigger-1")).toBeFocused();
   });
 
   test("split button renders segments, menu, and unique anchors", async ({

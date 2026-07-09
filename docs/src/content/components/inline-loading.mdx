@@ -1,0 +1,61 @@
+---
+title: Inline loading
+description: Local indeterminate progress and a width-stable busy-button pattern.
+status: stable
+since: 0.11.0
+---
+
+# Inline loading
+
+Use `.pl-c-inline-loading` for short, local waits such as refreshing a table or
+loading options. It is not a page-loading replacement; use a skeleton when the
+shape of incoming content is known and progress when completion is measurable.
+
+```html
+<div class="pl-c-inline-loading" role="status">
+  <span class="pl-c-spinner" aria-hidden="true"></span>
+  <span>Refreshing invoices…</span>
+</div>
+```
+
+The spinner is decorative. Keep the readable message inside a `role="status"`
+container so assistive technology receives the update without moving focus.
+
+## Busy actions
+
+```html
+<button
+  class="pl-c-button"
+  data-variant="primary"
+  type="submit"
+  aria-busy="true"
+  disabled
+>
+  <span class="pl-c-button__label">Save changes</span>
+  <span class="pl-c-spinner" aria-hidden="true"></span>
+</button>
+```
+
+Set both `aria-busy="true"` and native `disabled` while submitting. The former
+announces state; the latter prevents duplicate activation. Preserve the original
+label in `.pl-c-button__label`: Porchlight hides it visually but keeps it in flow,
+so the button does not change width. When the request settles, remove `disabled`
+and set `aria-busy="false"` (or remove it). Application code owns that state;
+the CSS contract does not depend on a client framework.
+
+Do not use `aria-disabled` alone for a submitting action: it does not suppress
+clicks. If a workflow must keep the control focusable, application code must
+also prevent repeat activation.
+
+## Contract and tokens
+
+| Selector                         | Role                                      |
+| -------------------------------- | ----------------------------------------- |
+| `.pl-c-inline-loading`           | Inline layout and muted status treatment. |
+| `.pl-c-spinner`                  | Decorative indeterminate indicator.       |
+| `.pl-c-button__label`            | Width-preserving label for a busy button. |
+| `.pl-c-button[aria-busy="true"]` | Centers its spinner and hides its label.  |
+
+Override `--pl-c-inline-loading-size` and `--pl-c-inline-loading-color` locally.
+Animation stops under reduced-motion preferences, and system colors remain
+visible in forced-colors mode.

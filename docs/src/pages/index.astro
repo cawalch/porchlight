@@ -4,9 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const b = import.meta.env.BASE_URL;
 
-const components = (await getCollection('components')).sort((a, z) =>
+const documentedEntries = (await getCollection('components')).sort((a, z) =>
   a.data.title.localeCompare(z.data.title),
 );
+const components = documentedEntries.filter((entry) => entry.data.kind === 'component');
+const patterns = documentedEntries.filter((entry) => entry.data.kind === 'pattern');
 const guides = (await getCollection('guides')).sort((a, z) =>
   (a.data.order ?? 0) - (z.data.order ?? 0),
 );
@@ -15,7 +17,6 @@ const previewModules = import.meta.glob('./preview/*.astro');
 const previewCount = Object.keys(previewModules).filter((path) => !path.endsWith('/index.astro')).length;
 
 const stableCount = components.filter((component) => component.data.status === 'stable').length;
-const experimentalCount = components.filter((component) => component.data.status === 'experimental').length;
 
 const startLinks = [
   {
@@ -55,7 +56,7 @@ const guideGroups = [
   },
 ];
 
-const componentHighlights = [
+const entryHighlights = [
   'button',
   'field',
   'data-table',
@@ -63,7 +64,7 @@ const componentHighlights = [
   'dialog',
   'app-process-builder',
 ]
-  .map((id) => components.find((component) => component.id === id))
+  .map((id) => documentedEntries.find((entry) => entry.id === id))
   .filter(Boolean);
 ---
 <BaseLayout>
@@ -88,12 +89,12 @@ const componentHighlights = [
           <dd>{components.length}</dd>
         </div>
         <div>
-          <dt>Stable</dt>
-          <dd>{stableCount}</dd>
+          <dt>Patterns</dt>
+          <dd>{patterns.length}</dd>
         </div>
         <div>
-          <dt>Experimental</dt>
-          <dd>{experimentalCount}</dd>
+          <dt>Stable components</dt>
+          <dd>{stableCount}</dd>
         </div>
         <div>
           <dt>Previews</dt>
@@ -142,8 +143,8 @@ const componentHighlights = [
       <p class="home-eyebrow">Live QA</p>
       <h2>Preview before you ship</h2>
       <p>
-        The preview directory is generated from source pages and component docs, so
-        missing component previews fail the build instead of drifting quietly.
+        The preview directory is generated from source pages, component docs, and
+        pattern docs, so missing previews fail the build instead of drifting quietly.
       </p>
       <pre><code>pnpm --filter ./docs test</code></pre>
       <a class="home-inline-link" href={`${b}preview`}>Search previews</a>
@@ -153,13 +154,13 @@ const componentHighlights = [
   <section class="home-panel" aria-labelledby="home-components">
     <div class="home-section-header">
       <div>
-        <p class="home-eyebrow">Components</p>
+        <p class="home-eyebrow">Components and patterns</p>
         <h2 id="home-components">Common entry points</h2>
       </div>
       <a class="home-inline-link" href={`${b}components/button`}>Open component docs</a>
     </div>
     <ul class="home-components">
-      {componentHighlights.map((component) => (
+      {entryHighlights.map((component) => (
         <li>
           <a href={`${b}components/${component!.id}`}>
             <span>{component!.data.title}</span>

@@ -312,7 +312,7 @@ const selectedItem = queueItems[0];
                   <h3 class="pl-c-workflow-board__swimlane-title" id="today-swimlane">Today</h3>
                   <span class="pl-c-workflow-board__swimlane-meta">Operational queue by current handling state</span>
                 </div>
-                <div class="pl-c-workflow-board__lanes" data-scroll="inline">
+                <div class="pl-c-workflow-board__lanes" data-scroll="inline" tabindex="0" aria-label="SLA queue lanes">
                   {lanes.map((lane) => (
                     <section class="pl-c-workflow-lane" aria-labelledby={`lane-${lane.title.toLowerCase()}`}>
                       <header class="pl-c-workflow-lane__header">

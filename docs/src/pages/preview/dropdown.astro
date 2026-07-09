@@ -17,11 +17,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
       <div popover class="pl-c-dropdown__menu" id="dd-1" role="menu" aria-labelledby="dd-trigger-1">
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Project Alpha">Project Alpha</button>
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Beta">Project Beta</button>
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Gamma">Project Gamma</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="true" data-label="Project Alpha">Project Alpha</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Project Beta">Project Beta</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Project Gamma">Project Gamma</button>
         <hr class="pl-c-menu__divider" />
-        <button class="pl-c-dropdown__option" type="button" role="menuitem" data-tone="danger">Delete project</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitem" tabindex="-1" data-tone="danger">Delete project</button>
       </div>
     </div>
   </div>
@@ -34,15 +34,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
       <div popover class="pl-c-dropdown__menu" id="dd-2" role="menu" aria-labelledby="dd-trigger-2">
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Sort by: Name">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="true" data-label="Sort by: Name">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h12M3 18h6" stroke-linecap="round" /></svg>
           Name (A-Z)
         </button>
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Date created">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Sort by: Date created">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18V6M9 6l6-3 6 3M3 18h12" stroke-linecap="round" /></svg>
           Date created
         </button>
-        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Last modified">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Sort by: Last modified">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" stroke-linecap="round" /></svg>
           Last modified
         </button>
@@ -56,23 +56,72 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const label = dropdown.querySelector('.pl-c-dropdown__label');
       const menu = dropdown.querySelector('.pl-c-dropdown__menu');
       if (!(trigger instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) continue;
+      let requestedInitialFocus: number | undefined;
+
+      const items = () => Array.from(menu.querySelectorAll<HTMLElement>('[role^="menuitem"]'))
+        .filter((item) => !item.hasAttribute('disabled'));
+
+      const focusItem = (index: number) => {
+        const available = items();
+        if (available.length === 0) return;
+        available[(index + available.length) % available.length].focus();
+      };
 
       menu.addEventListener('toggle', () => {
-        trigger.setAttribute('aria-expanded', String(menu.matches(':popover-open')));
+        const open = menu.matches(':popover-open');
+        trigger.setAttribute('aria-expanded', String(open));
+        if (open) {
+          if (requestedInitialFocus !== undefined) {
+            focusItem(requestedInitialFocus);
+            requestedInitialFocus = undefined;
+          } else {
+            const checked = menu.querySelector<HTMLElement>('[role="menuitemradio"][aria-checked="true"]');
+            (checked ?? items()[0])?.focus();
+          }
+        }
+      });
+
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+        event.preventDefault();
+        requestedInitialFocus = event.key === 'ArrowDown' ? 0 : -1;
+        menu.showPopover();
+      });
+
+      menu.addEventListener('keydown', (event) => {
+        const available = items();
+        const current = event.target instanceof HTMLElement ? available.indexOf(event.target) : -1;
+        let next: number | undefined;
+        if (event.key === 'ArrowDown') next = current + 1;
+        else if (event.key === 'ArrowUp') next = current - 1;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = -1;
+        else if (event.key === 'Escape') {
+          event.preventDefault();
+          menu.hidePopover();
+          trigger.focus();
+          return;
+        }
+        if (next === undefined) return;
+        event.preventDefault();
+        focusItem(next);
       });
 
       menu.addEventListener('click', (event) => {
         const option = event.target instanceof Element
-          ? event.target.closest('.pl-c-dropdown__option[role="menuitemradio"]')
+          ? event.target.closest('.pl-c-dropdown__option[role^="menuitem"]')
           : null;
         if (!(option instanceof HTMLButtonElement)) return;
 
-        for (const item of menu.querySelectorAll('.pl-c-dropdown__option[role="menuitemradio"]')) {
-          item.setAttribute('aria-checked', String(item === option));
-        }
+        if (option.getAttribute('role') === 'menuitemradio') {
+          for (const item of menu.querySelectorAll('.pl-c-dropdown__option[role="menuitemradio"]')) {
+            item.setAttribute('aria-checked', String(item === option));
+          }
 
-        if (label) label.textContent = option.dataset.label || option.textContent?.trim() || '';
+          if (label) label.textContent = option.dataset.label || option.textContent?.trim() || '';
+        }
         menu.hidePopover();
+        trigger.focus();
       });
     }
   </script>
