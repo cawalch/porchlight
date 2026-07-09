@@ -10,7 +10,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Determinate</h2>
-  <div class="l-stack progress-demo-stack">
+  <div class="pl-l-stack progress-demo-stack">
     {[
       { label: 'Profile completeness', value: 85, tone: undefined },
       { label: 'Storage used', value: 64, tone: 'warning' },
@@ -20,10 +20,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div>
         <div class="progress-label">
           <span>{p.label}</span>
-          <span class="u-muted">{p.value}%</span>
+          <span class="pl-u-muted">{p.value}%</span>
         </div>
-        <div class="c-progress" data-tone={p.tone}>
-          <div class="c-progress__bar" style={`inline-size: ${p.value}%;`}></div>
+        <div class="pl-c-progress" data-tone={p.tone}>
+          <div class="pl-c-progress__bar" style={`inline-size: ${p.value}%;`}></div>
         </div>
       </div>
     ))}
@@ -31,20 +31,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Indeterminate</h2>
   <p>Use when the task duration is unknown.</p>
-  <div class="c-progress" data-indeterminate>
-    <div class="c-progress__bar"></div>
+  <div class="pl-c-progress" data-indeterminate>
+    <div class="pl-c-progress__bar"></div>
   </div>
 
   <h2>Sizes</h2>
-  <div class="l-stack progress-size-stack">
-    <div class="c-progress progress-height-sm">
-      <div class="c-progress__bar progress-value-60"></div>
+  <div class="pl-l-stack progress-size-stack">
+    <div class="pl-c-progress progress-height-sm">
+      <div class="pl-c-progress__bar progress-value-60"></div>
     </div>
-    <div class="c-progress">
-      <div class="c-progress__bar progress-value-60"></div>
+    <div class="pl-c-progress">
+      <div class="pl-c-progress__bar progress-value-60"></div>
     </div>
-    <div class="c-progress progress-height-lg">
-      <div class="c-progress__bar progress-value-60"></div>
+    <div class="pl-c-progress progress-height-lg">
+      <div class="pl-c-progress__bar progress-value-60"></div>
     </div>
   </div>
 </BaseLayout>
@@ -58,19 +58,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .progress-demo-stack {
-    --l-stack-gap: var(--pl-space-4);
+    --pl-l-stack-gap: var(--pl-space-4);
   }
 
   .progress-size-stack {
-    --l-stack-gap: var(--pl-space-3);
+    --pl-l-stack-gap: var(--pl-space-3);
   }
 
   .progress-height-sm {
-    --c-progress-height: 0.25rem;
+    --pl-c-progress-height: 0.25rem;
   }
 
   .progress-height-lg {
-    --c-progress-height: 0.625rem;
+    --pl-c-progress-height: 0.625rem;
   }
 
   .progress-value-60 {

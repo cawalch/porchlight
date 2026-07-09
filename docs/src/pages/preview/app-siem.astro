@@ -62,82 +62,82 @@ const eventFeed = [
 ---
 
 <BaseLayout title="SIEM Console · Porchlight">
-  <div class="l-app-shell">
+  <div class="pl-l-app-shell">
     <!-- Topbar -->
-    <header class="l-app-shell__topbar siem-topbar">
+    <header class="pl-l-app-shell__topbar siem-topbar">
       <div class="siem-topbar__left">
-        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
           <svg class="siem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <svg class="siem-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z" stroke-linejoin="round"/><path d="M12 7v7" stroke-linecap="round"/><path d="M12 17h.01" stroke-linecap="round"/></svg>
         <strong>Lumigate</strong>
-        <span class="c-badge" data-tone="danger">{severityCount('critical')} critical</span>
+        <span class="pl-c-badge" data-tone="danger">{severityCount('critical')} critical</span>
       </div>
       <div class="siem-topbar__right">
-        <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk" aria-label="Search">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk" aria-label="Search">
           <svg class="siem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="u-muted siem-search-label">Search alerts…</span>
+          <span class="pl-u-muted siem-search-label">Search alerts…</span>
           <kbd class="siem-kbd">⌘K</kbd>
         </button>
-        <span class="u-muted siem-role-label">SOC Analyst</span>
-        <div class="c-avatar siem-avatar" data-size="sm">AR</div>
+        <span class="pl-u-muted siem-role-label">SOC Analyst</span>
+        <div class="pl-c-avatar siem-avatar" data-size="sm">AR</div>
       </div>
     </header>
 
     <!-- Sidebar -->
-    <aside class="l-app-shell__sidebar" id="siem-sidebar">
-      <nav class="c-nav" aria-label="SIEM navigation">
-        <a href="#" class="c-nav__item" aria-current="page">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/></svg>
-          <span class="c-nav__label">Dashboard</span>
+    <aside class="pl-l-app-shell__sidebar" id="siem-sidebar">
+      <nav class="pl-c-nav" aria-label="SIEM navigation">
+        <a href="#" class="pl-c-nav__item" aria-current="page">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/></svg>
+          <span class="pl-c-nav__label">Dashboard</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M12 7v6"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
-          <span class="c-nav__label">Alerts</span>
-          <span class="c-badge c-nav__badge" data-tone="danger">{alerts.filter(a => a.status === 'Open').length}</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M12 7v6"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+          <span class="pl-c-nav__label">Alerts</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="danger">{alerts.filter(a => a.status === 'Open').length}</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
-          <span class="c-nav__label">Events</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+          <span class="pl-c-nav__label">Events</span>
         </a>
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             <span>Rules</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Detection</span></a>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Correlation</span></a>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Custom</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Detection</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Correlation</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Custom</span></a>
         </details>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>
-          <span class="c-nav__label">Assets</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg>
+          <span class="pl-c-nav__label">Assets</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 16l4-4 4 4 8-8"/></svg>
-          <span class="c-nav__label">Reports</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 16l4-4 4 4 8-8"/></svg>
+          <span class="pl-c-nav__label">Reports</span>
         </a>
       </nav>
     </aside>
 
     <!-- Main -->
-    <main class="l-app-shell__main">
+    <main class="pl-l-app-shell__main">
       <div class="siem-main">
         <!-- Heading -->
         <div class="siem-header">
           <div>
             <h1>Security Operations</h1>
-            <p class="u-muted">Real-time threat monitoring · Last 24 hours</p>
+            <p class="pl-u-muted">Real-time threat monitoring · Last 24 hours</p>
           </div>
-          <div class="l-cluster">
-            <div class="c-segmented" role="radiogroup" aria-label="Time window">
-              <label class="c-segmented__item"><input type="radio" name="window"/><span>1h</span></label>
-              <label class="c-segmented__item"><input type="radio" name="window"/><span>6h</span></label>
-              <label class="c-segmented__item"><input type="radio" name="window" checked/><span>24h</span></label>
-              <label class="c-segmented__item"><input type="radio" name="window"/><span>7d</span></label>
+          <div class="pl-l-cluster">
+            <div class="pl-c-segmented" role="radiogroup" aria-label="Time window">
+              <label class="pl-c-segmented__item"><input type="radio" name="window"/><span>1h</span></label>
+              <label class="pl-c-segmented__item"><input type="radio" name="window"/><span>6h</span></label>
+              <label class="pl-c-segmented__item"><input type="radio" name="window" checked/><span>24h</span></label>
+              <label class="pl-c-segmented__item"><input type="radio" name="window"/><span>7d</span></label>
             </div>
-            <button class="c-button" data-variant="primary" data-size="sm">
+            <button class="pl-c-button" data-variant="primary" data-size="sm">
               <svg class="siem-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Export Report
             </button>
@@ -166,20 +166,20 @@ const eventFeed = [
         <div class="siem-content-grid">
           <!-- Alert Queue -->
           <div class="siem-alert-panel">
-            <div class="c-card siem-alert-card" data-surface="app">
+            <div class="pl-c-card siem-alert-card" data-surface="app">
               <!-- Filter toolbar -->
-              <div class="c-toolbar">
-                <div class="c-toolbar__group">
-                  <span class="c-chip" data-tone="danger">{severityCount('critical')} critical</span>
-                  <span class="c-chip" data-tone="warning">{severityCount('high')} high</span>
-                  <span class="c-chip" data-tone="accent">{severityCount('medium')} medium</span>
-                  <span class="c-chip">{severityCount('low')} low</span>
+              <div class="pl-c-toolbar">
+                <div class="pl-c-toolbar__group">
+                  <span class="pl-c-chip" data-tone="danger">{severityCount('critical')} critical</span>
+                  <span class="pl-c-chip" data-tone="warning">{severityCount('high')} high</span>
+                  <span class="pl-c-chip" data-tone="accent">{severityCount('medium')} medium</span>
+                  <span class="pl-c-chip">{severityCount('low')} low</span>
                 </div>
-                <div class="c-toolbar__group">
-                  <div class="c-field siem-filter-field">
-                    <input type="search" class="c-field__control siem-filter-input" placeholder="Filter by IP, rule…" aria-label="Filter alerts"/>
+                <div class="pl-c-toolbar__group">
+                  <div class="pl-c-field siem-filter-field">
+                    <input type="search" class="pl-c-field__control siem-filter-input" placeholder="Filter by IP, rule…" aria-label="Filter alerts"/>
                   </div>
-                  <button class="c-button" data-variant="secondary" data-size="sm">
+                  <button class="pl-c-button" data-variant="secondary" data-size="sm">
                     <svg class="siem-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
                     Filter
                   </button>
@@ -187,38 +187,38 @@ const eventFeed = [
               </div>
 
               <!-- Data table -->
-              <div class="c-table-wrap siem-alert-table">
-                <table class="c-table">
+              <div class="pl-c-table-wrap siem-alert-table">
+                <table class="pl-c-table">
                   <thead>
                     <tr>
-                      <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
-                      <th class="c-table__sticky-col" data-sort="asc">ID <span class="c-table__sort-icon"></span></th>
+                      <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all"/></th>
+                      <th class="pl-c-table__sticky-col" data-sort="asc">ID <span class="pl-c-table__sort-icon"></span></th>
                       <th>Severity</th>
-                      <th data-sort>Rule <span class="c-table__sort-icon"></span></th>
+                      <th data-sort>Rule <span class="pl-c-table__sort-icon"></span></th>
                       <th>Source IP</th>
                       <th>Destination</th>
                       <th>Status</th>
-                      <th data-align="end" data-sort>Time <span class="c-table__sort-icon"></span></th>
+                      <th data-align="end" data-sort>Time <span class="pl-c-table__sort-icon"></span></th>
                     </tr>
                   </thead>
                   <tbody>
                     {alerts.map((a, i) => (
                       <tr aria-selected={i === 0 ? 'true' : undefined}>
-                        <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.id}`}/></td>
-                        <td class="c-table__sticky-col"><code class="siem-code">{a.id}</code></td>
+                        <td class="pl-c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.id}`}/></td>
+                        <td class="pl-c-table__sticky-col"><code class="siem-code">{a.id}</code></td>
                         <td>
-                          <span class="c-badge siem-severity" data-tone={severityTone(a.severity)}>{a.severity}</span>
+                          <span class="pl-c-badge siem-severity" data-tone={severityTone(a.severity)}>{a.severity}</span>
                         </td>
                         <td>{a.rule}</td>
                         <td><code class="siem-code">{a.sourceIp}</code></td>
                         <td><span class="siem-destination">{a.dest}</span></td>
                         <td>
-                          {a.status === 'Open' && <span class="c-badge" data-tone="danger">{a.status}</span>}
-                          {a.status === 'Investigating' && <span class="c-badge" data-tone="warning">{a.status}</span>}
-                          {a.status === 'Contained' && <span class="c-badge" data-tone="accent">{a.status}</span>}
-                          {a.status === 'Resolved' && <span class="c-badge" data-tone="success">{a.status}</span>}
+                          {a.status === 'Open' && <span class="pl-c-badge" data-tone="danger">{a.status}</span>}
+                          {a.status === 'Investigating' && <span class="pl-c-badge" data-tone="warning">{a.status}</span>}
+                          {a.status === 'Contained' && <span class="pl-c-badge" data-tone="accent">{a.status}</span>}
+                          {a.status === 'Resolved' && <span class="pl-c-badge" data-tone="success">{a.status}</span>}
                         </td>
-                        <td data-align="end"><span class="u-muted siem-time">{a.time}</span></td>
+                        <td data-align="end"><span class="pl-u-muted siem-time">{a.time}</span></td>
                       </tr>
                     ))}
                   </tbody>
@@ -226,17 +226,17 @@ const eventFeed = [
               </div>
 
               <!-- Pagination toolbar -->
-              <div class="c-toolbar siem-pagination-toolbar">
-                <div class="c-toolbar__group">
-                  <span class="u-muted siem-alert-count">{alerts.length} of {1247} alerts</span>
+              <div class="pl-c-toolbar siem-pagination-toolbar">
+                <div class="pl-c-toolbar__group">
+                  <span class="pl-u-muted siem-alert-count">{alerts.length} of {1247} alerts</span>
                 </div>
-                <div class="c-toolbar__group">
-                  <nav class="c-pagination" aria-label="Alert pagination">
-                    <button class="c-pagination__nav" disabled>Prev</button>
-                    <button class="c-pagination__page" aria-current="page">1</button>
-                    <button class="c-pagination__page">2</button>
-                    <button class="c-pagination__page">3</button>
-                    <button class="c-pagination__nav">Next</button>
+                <div class="pl-c-toolbar__group">
+                  <nav class="pl-c-pagination" aria-label="Alert pagination">
+                    <button class="pl-c-pagination__nav" disabled>Prev</button>
+                    <button class="pl-c-pagination__page" aria-current="page">1</button>
+                    <button class="pl-c-pagination__page">2</button>
+                    <button class="pl-c-pagination__page">3</button>
+                    <button class="pl-c-pagination__nav">Next</button>
                   </nav>
                 </div>
               </div>
@@ -245,24 +245,24 @@ const eventFeed = [
 
           <!-- Live Event Stream -->
           <div class="siem-event-panel">
-            <div class="c-card" data-surface="app">
-              <div class="c-card__header">
-                <h2 class="c-card__title">Live Event Stream</h2>
-                <span class="c-badge" data-tone="success">
+            <div class="pl-c-card" data-surface="app">
+              <div class="pl-c-card__header">
+                <h2 class="pl-c-card__title">Live Event Stream</h2>
+                <span class="pl-c-badge" data-tone="success">
                   <span class="siem-live-dot"></span> Live
                 </span>
               </div>
-              <div class="c-card__body siem-event-body">
-                <ol class="c-timeline siem-timeline" tabindex="0" aria-label="Security event feed">
+              <div class="pl-c-card__body siem-event-body">
+                <ol class="pl-c-timeline siem-timeline" tabindex="0" aria-label="Security event feed">
                   {eventFeed.map((e) => (
-                    <li class="c-timeline__item" data-tone={e.tone}>
-                      <span class="c-timeline__dot"></span>
-                      <div class="c-timeline__content">
-                        <div class="c-timeline__header">
-                          <span class="c-timeline__title">{e.title}</span>
-                          <time class="c-timeline__time siem-event-time">{e.time}</time>
+                    <li class="pl-c-timeline__item" data-tone={e.tone}>
+                      <span class="pl-c-timeline__dot"></span>
+                      <div class="pl-c-timeline__content">
+                        <div class="pl-c-timeline__header">
+                          <span class="pl-c-timeline__title">{e.title}</span>
+                          <time class="pl-c-timeline__time siem-event-time">{e.time}</time>
                         </div>
-                        <p class="c-timeline__body siem-event-copy">{e.body}</p>
+                        <p class="pl-c-timeline__body siem-event-copy">{e.body}</p>
                       </div>
                     </li>
                   ))}
@@ -276,23 +276,23 @@ const eventFeed = [
   </div>
 
   <!-- Command Palette -->
-  <div popover class="c-command" id="siem-cmdk">
-    <input class="c-command__search" placeholder="Search alerts, IPs, rules…" aria-label="Search"/>
-    <div class="c-command__body">
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Quick Actions</h3>
-        <button class="c-command__item" data-selected><span>View Critical Alerts</span></button>
-        <button class="c-command__item"><span>Search by IP Address</span></button>
-        <button class="c-command__item"><span>Create Detection Rule</span></button>
+  <div popover class="pl-c-command" id="siem-cmdk">
+    <input class="pl-c-command__search" placeholder="Search alerts, IPs, rules…" aria-label="Search"/>
+    <div class="pl-c-command__body">
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Quick Actions</h3>
+        <button class="pl-c-command__item" data-selected><span>View Critical Alerts</span></button>
+        <button class="pl-c-command__item"><span>Search by IP Address</span></button>
+        <button class="pl-c-command__item"><span>Create Detection Rule</span></button>
       </div>
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Navigate</h3>
-        <button class="c-command__item"><span>Go to Events</span></button>
-        <button class="c-command__item"><span>Go to Assets</span></button>
-        <button class="c-command__item"><span>Go to Reports</span></button>
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Navigate</h3>
+        <button class="pl-c-command__item"><span>Go to Events</span></button>
+        <button class="pl-c-command__item"><span>Go to Assets</span></button>
+        <button class="pl-c-command__item"><span>Go to Reports</span></button>
       </div>
     </div>
-    <footer class="c-command__footer"><span>esc to close</span></footer>
+    <footer class="pl-c-command__footer"><span>esc to close</span></footer>
   </div>
 
   <script>
@@ -465,7 +465,7 @@ const eventFeed = [
       max-inline-size: 100%;
     }
     .siem-alert-table {
-      --c-table-min: 48rem;
+      --pl-c-table-min: 48rem;
       border: 0;
       border-radius: 0;
       contain: paint;
@@ -497,7 +497,7 @@ const eventFeed = [
       max-block-size: 26rem;
       overflow-y: auto;
     }
-    .siem-timeline .c-timeline__item { padding-block-end: var(--pl-space-3); }
+    .siem-timeline .pl-c-timeline__item { padding-block-end: var(--pl-space-3); }
     .siem-event-time { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); }
 
     .siem-live-dot {

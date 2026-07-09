@@ -18,7 +18,7 @@ async function resolveBadge(
 ): Promise<[string, string]> {
   return page.evaluate((tone) => {
     const el = document.querySelector(
-      `.c-badge[data-tone='${tone}']`,
+      `.pl-c-badge[data-tone='${tone}']`,
     ) as HTMLElement;
     const cs = getComputedStyle(el);
     return [cs.backgroundColor, cs.color];
@@ -27,10 +27,10 @@ async function resolveBadge(
 
 for (const theme of ["light", "dark"] as const) {
   test(`badge tones meet WCAG AA in ${theme}`, async ({ page }) => {
-    // The themes playground sets data-theme; badges live on the badge page.
+    // The themes playground sets data-pl-theme; badges live on the badge page.
     // Set the theme on <html> directly so it applies app-wide.
     await page.addInitScript((theme) => {
-      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.setAttribute("data-pl-theme", theme);
     }, theme);
     await page.goto("./preview/badge");
     for (const tone of TONES) {

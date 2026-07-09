@@ -6,30 +6,30 @@
  * drag-over state (set [data-dragging] via JS) and disabled state.
  *
  * Structure:
- *   <label class="c-file-upload">
- *     <input type="file" class="c-file-upload__input" multiple />
- *     <span class="c-file-upload__zone">
- *       <svg class="c-file-upload__icon">...</svg>
- *       <span class="c-file-upload__text">
+ *   <label class="pl-c-file-upload">
+ *     <input type="file" class="pl-c-file-upload__input" multiple />
+ *     <span class="pl-c-file-upload__zone">
+ *       <svg class="pl-c-file-upload__icon">...</svg>
+ *       <span class="pl-c-file-upload__text">
  *         <strong>Drag files here</strong> or click to browse
  *       </span>
  *     </span>
  *   </label>
  */
 @layer porchlight.components {
-  @scope (.c-file-upload) {
+  @scope (.pl-c-file-upload) {
     :scope {
-      --c-upload-pad: var(--pl-space-6);
-      --c-upload-gap: var(--pl-space-3);
-      --c-upload-border: 2px dashed var(--pl-color-border);
-      --c-upload-radius: var(--pl-radius-lg);
+      --pl-c-upload-pad: var(--pl-space-6);
+      --pl-c-upload-gap: var(--pl-space-3);
+      --pl-c-upload-border: 2px dashed var(--pl-color-border);
+      --pl-c-upload-radius: var(--pl-radius-lg);
 
       display: block;
       cursor: pointer;
     }
 
     /* Visually hide the native input. */
-    .c-file-upload__input {
+    .pl-c-file-upload__input {
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
@@ -41,15 +41,15 @@
       border: 0;
     }
 
-    .c-file-upload__zone {
+    .pl-c-file-upload__zone {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: var(--c-upload-gap);
-      padding: var(--c-upload-pad);
-      border: var(--c-upload-border);
-      border-radius: var(--c-upload-radius);
+      gap: var(--pl-c-upload-gap);
+      padding: var(--pl-c-upload-pad);
+      border: var(--pl-c-upload-border);
+      border-radius: var(--pl-c-upload-radius);
       background: var(--pl-color-surface-2);
       text-align: center;
       transition:
@@ -58,14 +58,14 @@
     }
 
     /* Hover/drag-over: accent border + subtle tint. */
-    :scope:hover .c-file-upload__zone,
-    :scope[data-dragging] .c-file-upload__zone {
+    :scope:hover .pl-c-file-upload__zone,
+    :scope[data-dragging] .pl-c-file-upload__zone {
       border-color: var(--pl-color-accent);
       background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
     }
 
     /* Focus ring (when the hidden input is focused). */
-    :scope:has(input:focus-visible) .c-file-upload__zone {
+    :scope:has(input:focus-visible) .pl-c-file-upload__zone {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
@@ -74,29 +74,29 @@
     :scope:has(input:disabled) {
       cursor: not-allowed;
 
-      & .c-file-upload__zone {
+      & .pl-c-file-upload__zone {
         opacity: var(--pl-opacity-disabled);
       }
     }
 
-    .c-file-upload__icon {
+    .pl-c-file-upload__icon {
       inline-size: 2rem;
       block-size: 2rem;
       color: var(--pl-color-text-muted);
     }
 
-    .c-file-upload__text {
+    .pl-c-file-upload__text {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
     }
 
-    .c-file-upload__text strong {
+    .pl-c-file-upload__text strong {
       color: var(--pl-color-text);
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-file-upload__zone) {
+    :where(.pl-c-file-upload__zone) {
       border-color: ButtonBorder;
       background: Canvas;
     }

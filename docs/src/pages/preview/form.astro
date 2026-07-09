@@ -11,126 +11,126 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Account settings</h2>
-  <form class="c-form demo-form" data-preview-form-grid>
-    <section class="c-form__section">
-      <div class="c-form__header">
+  <form class="pl-c-form demo-form" data-preview-form-grid>
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__header">
         <h3>Workspace</h3>
         <p>Identity, URL, and regional defaults for this account.</p>
       </div>
-      <div class="c-form__body">
-        <div class="c-form__grid">
-          <label class="c-field">
-            <span class="c-field__label">Workspace name</span>
-            <input class="c-field__control" value="Acme Ops" />
-            <span class="c-field__hint">Visible to everyone in the workspace.</span>
+      <div class="pl-c-form__body">
+        <div class="pl-c-form__grid">
+          <label class="pl-c-field">
+            <span class="pl-c-field__label">Workspace name</span>
+            <input class="pl-c-field__control" value="Acme Ops" />
+            <span class="pl-c-field__hint">Visible to everyone in the workspace.</span>
           </label>
 
-          <div class="c-field">
-            <label class="c-field__label" for="settings-slug">Workspace URL</label>
-            <div class="c-input-group">
-              <input id="settings-slug" class="c-field__control" value="acme-ops" />
-              <span class="c-input-group__addon">.porchlight.app</span>
+          <div class="pl-c-field">
+            <label class="pl-c-field__label" for="settings-slug">Workspace URL</label>
+            <div class="pl-c-input-group">
+              <input id="settings-slug" class="pl-c-field__control" value="acme-ops" />
+              <span class="pl-c-input-group__addon">.porchlight.app</span>
             </div>
-            <span class="c-field__hint">Used in invite links and bookmarks.</span>
+            <span class="pl-c-field__hint">Used in invite links and bookmarks.</span>
           </div>
 
-          <label class="c-field">
-            <span class="c-field__label">Default timezone</span>
-            <select class="c-field__control">
+          <label class="pl-c-field">
+            <span class="pl-c-field__label">Default timezone</span>
+            <select class="pl-c-field__control">
               <option>America/Chicago</option>
               <option>America/New_York</option>
               <option>Europe/London</option>
             </select>
           </label>
 
-          <label class="c-field">
-            <span class="c-field__label">Support email</span>
-            <input class="c-field__control" type="email" value="support@acme.example" />
+          <label class="pl-c-field">
+            <span class="pl-c-field__label">Support email</span>
+            <input class="pl-c-field__control" type="email" value="support@acme.example" />
           </label>
         </div>
       </div>
     </section>
 
-    <section class="c-form__section">
-      <div class="c-form__header">
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__header">
         <h3>Notifications</h3>
         <p>Native checkboxes with descriptions and disabled states.</p>
       </div>
-      <div class="c-form__body">
-        <fieldset class="c-choice-group" data-preview-choice-group aria-describedby="email-updates-help">
-          <legend class="c-choice-group__legend">Email updates</legend>
-          <div class="c-choice-list">
-            <label class="c-choice">
-              <input class="c-choice__input" type="checkbox" checked />
+      <div class="pl-c-form__body">
+        <fieldset class="pl-c-choice-group" data-preview-choice-group aria-describedby="email-updates-help">
+          <legend class="pl-c-choice-group__legend">Email updates</legend>
+          <div class="pl-c-choice-list">
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="checkbox" checked />
               <span>
-                <span class="c-choice__label">Weekly summary</span>
-                <span class="c-choice__description">Usage, billing, and team activity every Monday.</span>
+                <span class="pl-c-choice__label">Weekly summary</span>
+                <span class="pl-c-choice__description">Usage, billing, and team activity every Monday.</span>
               </span>
             </label>
-            <label class="c-choice">
-              <input class="c-choice__input" type="checkbox" checked />
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="checkbox" checked />
               <span>
-                <span class="c-choice__label">Security alerts</span>
-                <span class="c-choice__description">Immediate notifications for risky account events.</span>
+                <span class="pl-c-choice__label">Security alerts</span>
+                <span class="pl-c-choice__description">Immediate notifications for risky account events.</span>
               </span>
             </label>
-            <label class="c-choice">
-              <input class="c-choice__input" type="checkbox" disabled />
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="checkbox" disabled />
               <span>
-                <span class="c-choice__label">Enterprise digest</span>
-                <span class="c-choice__description">Available on Enterprise plans.</span>
+                <span class="pl-c-choice__label">Enterprise digest</span>
+                <span class="pl-c-choice__description">Available on Enterprise plans.</span>
               </span>
             </label>
           </div>
-          <span class="c-choice-group__hint" id="email-updates-help" data-tone="warning">
+          <span class="pl-c-choice-group__hint" id="email-updates-help" data-tone="warning">
             Security alerts stay enabled for account owners.
           </span>
         </fieldset>
       </div>
     </section>
 
-    <div class="c-form__actions">
-      <button class="c-button" type="button" data-variant="ghost">Cancel</button>
-      <button class="c-button" type="submit" data-variant="primary">Save changes</button>
+    <div class="pl-c-form__actions">
+      <button class="pl-c-button" type="button" data-variant="ghost">Cancel</button>
+      <button class="pl-c-button" type="submit" data-variant="primary">Save changes</button>
     </div>
   </form>
 
   <h2>Billing setup</h2>
-  <form class="c-form demo-form">
-    <section class="c-form__section">
-      <div class="c-form__body">
-        <div class="c-form__grid">
-          <div class="c-field">
-            <label class="c-field__label" for="monthly-budget">Monthly budget</label>
-            <div class="c-input-group">
-              <span class="c-input-group__addon">$</span>
-              <input id="monthly-budget" class="c-field__control" type="number" value="2400" />
-              <span class="c-input-group__addon">USD</span>
+  <form class="pl-c-form demo-form">
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__body">
+        <div class="pl-c-form__grid">
+          <div class="pl-c-field">
+            <label class="pl-c-field__label" for="monthly-budget">Monthly budget</label>
+            <div class="pl-c-input-group">
+              <span class="pl-c-input-group__addon">$</span>
+              <input id="monthly-budget" class="pl-c-field__control" type="number" value="2400" />
+              <span class="pl-c-input-group__addon">USD</span>
             </div>
           </div>
 
-          <div class="c-field">
-            <label class="c-field__label" for="seats">Seats</label>
-            <div class="c-input-group">
-              <input id="seats" class="c-field__control" type="number" value="48" />
-              <span class="c-input-group__addon">users</span>
+          <div class="pl-c-field">
+            <label class="pl-c-field__label" for="seats">Seats</label>
+            <div class="pl-c-input-group">
+              <input id="seats" class="pl-c-field__control" type="number" value="48" />
+              <span class="pl-c-input-group__addon">users</span>
             </div>
           </div>
         </div>
 
-        <fieldset class="c-choice-group" aria-describedby="billing-cadence-help">
-          <legend class="c-choice-group__legend">Billing cadence</legend>
-          <div class="c-choice-list" data-layout="inline">
-            <label class="c-choice">
-              <input class="c-choice__input" type="radio" name="cadence" />
-              <span class="c-choice__label">Monthly</span>
+        <fieldset class="pl-c-choice-group" aria-describedby="billing-cadence-help">
+          <legend class="pl-c-choice-group__legend">Billing cadence</legend>
+          <div class="pl-c-choice-list" data-layout="inline">
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="radio" name="cadence" />
+              <span class="pl-c-choice__label">Monthly</span>
             </label>
-            <label class="c-choice">
-              <input class="c-choice__input" type="radio" name="cadence" checked />
-              <span class="c-choice__label">Annual</span>
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="radio" name="cadence" checked />
+              <span class="pl-c-choice__label">Annual</span>
             </label>
           </div>
-          <span class="c-choice-group__hint" id="billing-cadence-help" data-tone="success">
+          <span class="pl-c-choice-group__hint" id="billing-cadence-help" data-tone="success">
             Annual billing is active for this workspace.
           </span>
         </fieldset>
@@ -139,27 +139,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </form>
 
   <h2>Choice validation</h2>
-  <form class="c-form demo-form">
-    <section class="c-form__section">
-      <div class="c-form__body">
+  <form class="pl-c-form demo-form">
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__body">
         <fieldset
-          class="c-choice-group"
+          class="pl-c-choice-group"
           data-preview-choice-invalid
           aria-invalid="true"
           aria-describedby="review-routing-error"
         >
-          <legend class="c-choice-group__legend">Review routing</legend>
-          <div class="c-choice-list">
-            <label class="c-choice">
-              <input class="c-choice__input" type="radio" name="routing" />
-              <span class="c-choice__label">Any available reviewer</span>
+          <legend class="pl-c-choice-group__legend">Review routing</legend>
+          <div class="pl-c-choice-list">
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="radio" name="routing" />
+              <span class="pl-c-choice__label">Any available reviewer</span>
             </label>
-            <label class="c-choice">
-              <input class="c-choice__input" type="radio" name="routing" />
-              <span class="c-choice__label">Assigned team only</span>
+            <label class="pl-c-choice">
+              <input class="pl-c-choice__input" type="radio" name="routing" />
+              <span class="pl-c-choice__label">Assigned team only</span>
             </label>
           </div>
-          <span class="c-choice-group__hint" id="review-routing-error" data-tone="danger" role="alert">
+          <span class="pl-c-choice-group__hint" id="review-routing-error" data-tone="danger" role="alert">
             Select a routing policy before saving.
           </span>
         </fieldset>
@@ -168,51 +168,51 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </form>
 
   <h2>Filter row</h2>
-  <form class="c-form demo-form" data-density="compact">
-    <div class="c-form__row">
-      <label class="c-field">
-        <span class="u-sr-only">Search cases</span>
-        <input class="c-field__control" type="search" placeholder="Search cases..." />
+  <form class="pl-c-form demo-form" data-pl-density="compact">
+    <div class="pl-c-form__row">
+      <label class="pl-c-field">
+        <span class="pl-u-sr-only">Search cases</span>
+        <input class="pl-c-field__control" type="search" placeholder="Search cases..." />
       </label>
-      <label class="c-field">
-        <span class="c-field__label">Status</span>
-        <select class="c-field__control">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Status</span>
+        <select class="pl-c-field__control">
           <option>Open</option>
           <option>Escalated</option>
           <option>Closed</option>
         </select>
       </label>
-      <label class="c-field">
-        <span class="c-field__label">Owner</span>
-        <select class="c-field__control">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Owner</span>
+        <select class="pl-c-field__control">
           <option>Any owner</option>
           <option>Mine</option>
         </select>
       </label>
-      <button class="c-button" type="button" data-variant="primary">Apply</button>
+      <button class="pl-c-button" type="button" data-variant="primary">Apply</button>
     </div>
   </form>
 
   <h2>Dense admin metadata</h2>
-  <form class="c-form demo-form dense-form" data-density="compact">
-    <section class="c-form__section">
-      <div class="c-form__body">
-        <label class="c-field c-field--inline">
-          <span class="c-field__label">Customer ID</span>
-          <input class="c-field__control" value="cus_9N3K42" readonly />
-          <span class="c-field__hint">Read-only identifiers stay selectable.</span>
+  <form class="pl-c-form demo-form dense-form" data-pl-density="compact">
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__body">
+        <label class="pl-c-field pl-c-field--inline">
+          <span class="pl-c-field__label">Customer ID</span>
+          <input class="pl-c-field__control" value="cus_9N3K42" readonly />
+          <span class="pl-c-field__hint">Read-only identifiers stay selectable.</span>
         </label>
-        <label class="c-field c-field--inline">
-          <span class="c-field__label">Data region</span>
-          <select class="c-field__control">
+        <label class="pl-c-field pl-c-field--inline">
+          <span class="pl-c-field__label">Data region</span>
+          <select class="pl-c-field__control">
             <option>US Central</option>
             <option>EU West</option>
           </select>
         </label>
-        <label class="c-field c-field--inline">
-          <span class="c-field__label">Risk threshold</span>
-          <input class="c-field__control" type="number" value="72" />
-          <span class="c-field__hint">Higher values reduce review volume.</span>
+        <label class="pl-c-field pl-c-field--inline">
+          <span class="pl-c-field__label">Risk threshold</span>
+          <input class="pl-c-field__control" type="number" value="72" />
+          <span class="pl-c-field__hint">Higher values reduce review volume.</span>
         </label>
       </div>
     </section>

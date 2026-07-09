@@ -29,8 +29,8 @@ async function tooltipMetrics(page: Page, id: string): Promise<TooltipMetrics> {
   return page.evaluate((id) => {
     const body = document.getElementById(id);
     const trigger = body
-      ?.closest(".c-tooltip")
-      ?.querySelector(".c-tooltip__trigger");
+      ?.closest(".pl-c-tooltip")
+      ?.querySelector(".pl-c-tooltip__trigger");
     if (!body || !trigger) {
       throw new Error(`Tooltip ${id} is missing its trigger or body`);
     }
@@ -140,35 +140,35 @@ async function installEdgeFixtures(page: Page): Promise<void> {
       "position: absolute; inset: 0; z-index: 2147483647;";
     fixtures.innerHTML = `
       <div style="position: absolute; inset-block-start: 8px; inset-inline-start: ${centerX}px;">
-        <span class="c-tooltip" style="--c-tooltip-anchor: --edge-top;">
-          <span class="c-tooltip__trigger">
-            <button class="c-button" aria-describedby="edge-top-tip">Top edge</button>
+        <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --edge-top;">
+          <span class="pl-c-tooltip__trigger">
+            <button class="pl-c-button" aria-describedby="edge-top-tip">Top edge</button>
           </span>
-          <span class="c-tooltip__body" role="tooltip" id="edge-top-tip">Tooltip near the top edge</span>
+          <span class="pl-c-tooltip__body" role="tooltip" id="edge-top-tip">Tooltip near the top edge</span>
         </span>
       </div>
       <div style="position: absolute; inset-block-start: ${bottomY}px; inset-inline-start: ${centerX}px;">
-        <span class="c-tooltip" style="--c-tooltip-anchor: --edge-bottom;">
-          <span class="c-tooltip__trigger">
-            <button class="c-button" aria-describedby="edge-bottom-tip">Bottom edge</button>
+        <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --edge-bottom;">
+          <span class="pl-c-tooltip__trigger">
+            <button class="pl-c-button" aria-describedby="edge-bottom-tip">Bottom edge</button>
           </span>
-          <span class="c-tooltip__body" role="tooltip" id="edge-bottom-tip">Tooltip near the bottom edge</span>
+          <span class="pl-c-tooltip__body" role="tooltip" id="edge-bottom-tip">Tooltip near the bottom edge</span>
         </span>
       </div>
       <div style="position: absolute; inset-block-start: ${centerY}px; inset-inline-start: 8px;">
-        <span class="c-tooltip" style="--c-tooltip-anchor: --edge-left;">
-          <span class="c-tooltip__trigger">
-            <button class="c-button" aria-describedby="edge-left-tip">Left edge</button>
+        <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --edge-left;">
+          <span class="pl-c-tooltip__trigger">
+            <button class="pl-c-button" aria-describedby="edge-left-tip">Left edge</button>
           </span>
-          <span class="c-tooltip__body" role="tooltip" id="edge-left-tip">Tooltip near the left edge</span>
+          <span class="pl-c-tooltip__body" role="tooltip" id="edge-left-tip">Tooltip near the left edge</span>
         </span>
       </div>
       <div style="position: absolute; inset-block-start: ${centerY}px; inset-inline-start: ${rightX}px;">
-        <span class="c-tooltip" style="--c-tooltip-anchor: --edge-right;">
-          <span class="c-tooltip__trigger">
-            <button class="c-button" aria-describedby="edge-right-tip">Right edge</button>
+        <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --edge-right;">
+          <span class="pl-c-tooltip__trigger">
+            <button class="pl-c-button" aria-describedby="edge-right-tip">Right edge</button>
           </span>
-          <span class="c-tooltip__body" role="tooltip" id="edge-right-tip">Tooltip near the right edge</span>
+          <span class="pl-c-tooltip__body" role="tooltip" id="edge-right-tip">Tooltip near the right edge</span>
         </span>
       </div>
     `;
@@ -197,11 +197,11 @@ async function installNestedFixtures(page: Page): Promise<void> {
         "
       >
         <div style="padding: 8px 12px;">
-          <span class="c-tooltip" style="--c-tooltip-anchor: --nested-clipped;">
-            <span class="c-tooltip__trigger">
-              <button class="c-button" aria-describedby="nested-clipped-tip">Nested clipped</button>
+          <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --nested-clipped;">
+            <span class="pl-c-tooltip__trigger">
+              <button class="pl-c-button" aria-describedby="nested-clipped-tip">Nested clipped</button>
             </span>
-            <span class="c-tooltip__body" role="tooltip" id="nested-clipped-tip">Tooltip escapes clipped panel</span>
+            <span class="pl-c-tooltip__body" role="tooltip" id="nested-clipped-tip">Tooltip escapes clipped panel</span>
           </span>
         </div>
       </div>

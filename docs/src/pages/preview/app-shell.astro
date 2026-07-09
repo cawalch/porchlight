@@ -21,31 +21,31 @@ const nav = [
     work area — in <code>@layer porchlight.layout</code>. This is the one place
     the framework uses a viewport media query: below 60rem the sidebar drops
     out so the work surface stays usable. The main region is also a query
-    container, so any <code>.l-sidebar</code> nested inside it collapses at
+    container, so any <code>.pl-l-sidebar</code> nested inside it collapses at
     narrow app widths without a manual wrapper.
   </p>
 
   <div class="toggles">
-    <button type="button" class="c-button" data-variant="secondary" data-size="sm" data-toggle="collapse" aria-pressed="false">Collapse sidebar</button>
+    <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm" data-toggle="collapse" aria-pressed="false">Collapse sidebar</button>
     <span class="toggles__hint">or narrow the window below 60rem to auto-hide it</span>
   </div>
 
   <!--
-    Full-height demo. The .shell fills the section; .l-app-shell provides the
+    Full-height demo. The .shell fills the section; .pl-l-app-shell provides the
     grid + topbar/sidebar/main areas. Inline styles stand in for real components.
   -->
   <section class="shell">
-    <div class="l-app-shell" data-app-shell>
-      <header class="l-app-shell__topbar topbar">
+    <div class="pl-l-app-shell" data-app-shell>
+      <header class="pl-l-app-shell__topbar topbar">
         <div class="topbar__brand">Acme Console</div>
-        <div class="l-cluster topbar__actions">
+        <div class="pl-l-cluster topbar__actions">
           <button type="button" class="ghost-btn">Search</button>
           <button type="button" class="ghost-btn">Notifications</button>
           <button type="button" class="ghost-btn ghost-btn--avatar">JD</button>
         </div>
       </header>
 
-      <aside class="l-app-shell__sidebar sidebar" data-sidebar="expanded">
+      <aside class="pl-l-app-shell__sidebar sidebar" data-sidebar="expanded">
         <nav class="sidebar__nav" aria-label="Primary">
           {nav.map(([label], i) => (
             <a class="nav-item" href="#" aria-current={i === 0 ? 'page' : undefined}>
@@ -56,16 +56,16 @@ const nav = [
         </nav>
       </aside>
 
-      <main class="l-app-shell__main main">
-        <div class="l-stack" style="--l-stack-gap: var(--pl-space-5);">
+      <main class="pl-l-app-shell__main main">
+        <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-5);">
           <div class="main__header">
             <h2>Dashboard</h2>
             <button type="button" class="primary-btn">New report</button>
           </div>
 
-          <!-- A nested .l-sidebar inside .main collapses correctly because
-               .l-app-shell__main is a container (the audit-fix payoff). -->
-          <div class="l-sidebar" style="--l-sidebar-size: 10rem;">
+          <!-- A nested .pl-l-sidebar inside .main collapses correctly because
+               .pl-l-app-shell__main is a container (the audit-fix payoff). -->
+          <div class="pl-l-sidebar" style="--pl-l-sidebar-size: 10rem;">
             <div class="filters">
               <h3>Filters</h3>
               <ul>
@@ -87,7 +87,7 @@ const nav = [
 <script>
   // Docs-only: flip data-sidebar on the rail. The framework does the rest.
   const shell = document.querySelector('[data-app-shell]');
-  const sidebar = shell?.querySelector('.l-app-shell__sidebar');
+  const sidebar = shell?.querySelector('.pl-l-app-shell__sidebar');
   document.querySelector('[data-toggle="collapse"]')?.addEventListener('click', (e) => {
     if (!sidebar) return;
     const collapsed = sidebar.getAttribute('data-sidebar') === 'collapsed';

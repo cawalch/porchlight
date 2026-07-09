@@ -7,13 +7,13 @@ since: 0.2.0
 
 # Auto-Growing Textarea
 
-The `.c-textarea-auto` grows to fit its content using
+The `.pl-c-textarea-auto` grows to fit its content using
 `field-sizing: content` (Chrome 123+). No JavaScript auto-resize.
 
 ## Semantic HTML
 
 ```html
-<textarea class="c-textarea-auto" rows="2"></textarea>
+<textarea class="pl-c-textarea-auto" rows="2"></textarea>
 ```
 
 ## Progressive enhancement
@@ -23,12 +23,12 @@ Where `field-sizing: content` is not supported, the textarea retains its
 
 ## Max height cap
 
-Cap the growth with `--c-textarea-max-block`:
+Cap the growth with `--pl-c-textarea-max-block`:
 
 ```html
 <textarea
-  class="c-textarea-auto"
-  style="--c-textarea-max-block: 8rem;"
+  class="pl-c-textarea-auto"
+  style="--pl-c-textarea-max-block: 8rem;"
 ></textarea>
 ```
 

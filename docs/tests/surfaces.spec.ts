@@ -28,7 +28,7 @@ async function resolveSurfaces(
   return page.evaluate(
     ([surfaces, theme]) => {
       const root = document.querySelector(".playground") as HTMLElement;
-      root.setAttribute("data-theme", theme);
+      root.setAttribute("data-pl-theme", theme);
       const out = surfaces.map((token) => {
         const el = document.createElement("div");
         el.style.background = token;

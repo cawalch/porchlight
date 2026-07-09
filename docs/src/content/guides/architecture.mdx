@@ -29,7 +29,7 @@ always beats a component - and nothing needs `!important`.
 | `themes`       | Theme, brand, density, contrast, and mode overrides. |
 | `base`         | HTML element defaults.                               |
 | `layout`       | Layout primitives and page/app shells.               |
-| `components`   | Component classes (`.c-button`, `.c-card`, …).       |
+| `components`   | Component classes (`.pl-c-button`, `.pl-c-card`, …). |
 | `utilities`    | Small single-purpose helpers.                        |
 | `enhancements` | Progressive `@supports`-gated features.              |
 | `print`        | Print behavior.                                      |
@@ -64,9 +64,9 @@ outside `porchlight` (or unlayered). One wrap, one mental model.
 
 ## Overriding component tokens
 
-Each component defines `--c-*` tokens inside a `@scope` block (e.g.
-`@scope (.c-card) { … }`). These scoped rules look higher-specificity than a
-flat `.c-card { … }` rule in your app layer, but **layer order takes
+Each component defines `--pl-c-*` tokens inside a `@scope` block (e.g.
+`@scope (.pl-c-card) { … }`). These scoped rules look higher-specificity than a
+flat `.pl-c-card { … }` rule in your app layer, but **layer order takes
 precedence over `@scope` proximity** in the cascade.
 
 This means you can override component tokens from plain selectors in
@@ -74,9 +74,9 @@ This means you can override component tokens from plain selectors in
 
 ```css
 @layer app {
-  /* This wins over @scope (.c-card) because layer order beats scope. */
-  .c-card {
-    --c-card-pad: var(--pl-space-6);
+  /* This wins over @scope (.pl-c-card) because layer order beats scope. */
+  .pl-c-card {
+    --pl-c-card-padding: var(--pl-space-6);
   }
 }
 ```

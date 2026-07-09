@@ -20,9 +20,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     its container. The whole pattern is CSS: no JS scroll listener, no
     IntersectionObserver. Scroll the panel below to see the bar activate.
   </p>
-  <div class="c-sticky-shell sticky-demo" tabindex="0" role="region" aria-label="Sticky-shell scroll demo">
-    <header class="c-sticky-shell__bar">
-      <strong>Sticky bar</strong> <span class="u-muted">shadow appears when stuck</span>
+  <div class="pl-c-sticky-shell sticky-demo" tabindex="0" role="region" aria-label="Sticky-shell scroll demo">
+    <header class="pl-c-sticky-shell__bar">
+      <strong>Sticky bar</strong> <span class="pl-u-muted">shadow appears when stuck</span>
     </header>
     <div class="sticky-demo__content">
       {Array.from({ length: 12 }).map((_, i) => (
@@ -34,9 +34,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2>Grid dividers</h2>
   <p>
     Vertical dividers between grid items, drawn purely in the gap (the gap
-    stays). Opt in with <code>data-dividers="true"</code> on <code>.l-grid</code>.
+    stays). Opt in with <code>data-dividers="true"</code> on <code>.pl-l-grid</code>.
   </p>
-  <div class="l-grid" data-dividers="true" style="--l-grid-min: 12rem;">
+  <div class="pl-l-grid" data-dividers="true" style="--pl-l-grid-min: 12rem;">
     {['Widget A', 'Widget B', 'Widget C', 'Widget D'].map((label) => (
       <div class="grid-item">{label}</div>
     ))}
@@ -48,11 +48,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     type-checked as <code>&lt;color&gt;</code>. No inline <code>style=""</code>
     needed for static color chips.
   </p>
-  <div class="l-cluster">
-    <span class="c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
-    <span class="c-swatch" data-color="oklch(56% 0.16 150deg)"></span>
-    <span class="c-swatch" data-color="oklch(58% 0.17 80deg)"></span>
-    <span class="c-swatch" data-color="oklch(58% 0.2 25deg)"></span>
+  <div class="pl-l-cluster">
+    <span class="pl-c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
+    <span class="pl-c-swatch" data-color="oklch(56% 0.16 150deg)"></span>
+    <span class="pl-c-swatch" data-color="oklch(58% 0.17 80deg)"></span>
+    <span class="pl-c-swatch" data-color="oklch(58% 0.2 25deg)"></span>
   </div>
 
   <h2>text-box optical alignment</h2>
@@ -61,9 +61,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     sit visually centered without the inline-box overshoot that makes controls
     look ~1px off. (The effect is subtle; toggle the layer off to compare.)
   </p>
-  <div class="l-cluster">
-    <button class="c-button" data-variant="primary">Primary</button>
-    <span class="c-badge" data-tone="accent">New</span>
+  <div class="pl-l-cluster">
+    <button class="pl-c-button" data-variant="primary">Primary</button>
+    <span class="pl-c-badge" data-tone="accent">New</span>
   </div>
 
   <h2>interpolate-size</h2>
@@ -84,7 +84,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: var(--pl-color-surface);
   }
   .sticky-demo__bar,
-  .c-sticky-shell__bar {
+  .pl-c-sticky-shell__bar {
     padding: var(--pl-space-3) var(--pl-space-4);
     border-block-end: 1px solid var(--pl-color-border);
   }
@@ -101,7 +101,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-md);
   }
-  .c-swatch {
+  .pl-c-swatch {
     inline-size: 3rem;
     block-size: 3rem;
     border-radius: var(--pl-radius-md);

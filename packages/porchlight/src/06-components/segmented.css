@@ -9,33 +9,33 @@
  * The control is a pill-shaped container with segments as flex children.
  *
  * Structure:
- *   <div class="c-segmented" role="radiogroup" aria-label="View mode">
- *     <label class="c-segmented__item">
+ *   <div class="pl-c-segmented" role="radiogroup" aria-label="View mode">
+ *     <label class="pl-c-segmented__item">
  *       <input type="radio" name="view" checked />
  *       <span>List</span>
  *     </label>
- *     <label class="c-segmented__item">
+ *     <label class="pl-c-segmented__item">
  *       <input type="radio" name="view" />
  *       <span>Grid</span>
  *     </label>
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-segmented) {
+  @scope (.pl-c-segmented) {
     :scope {
-      --c-segmented-pad: 0.125rem;
-      --c-segmented-gap: var(--pl-space-1);
-      --c-segmented-radius: var(--pl-radius-pill);
+      --pl-c-segmented-pad: 0.125rem;
+      --pl-c-segmented-gap: var(--pl-space-1);
+      --pl-c-segmented-radius: var(--pl-radius-pill);
 
       display: inline-flex;
-      gap: var(--c-segmented-gap);
-      padding: var(--c-segmented-pad);
+      gap: var(--pl-c-segmented-gap);
+      padding: var(--pl-c-segmented-pad);
       border: 1px solid var(--pl-color-border);
-      border-radius: var(--c-segmented-radius);
+      border-radius: var(--pl-c-segmented-radius);
       background: var(--pl-color-surface-2);
     }
 
-    .c-segmented__item {
+    .pl-c-segmented__item {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -43,7 +43,7 @@
     }
 
     /* Visually hide the native radio. */
-    .c-segmented__item input {
+    .pl-c-segmented__item input {
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
@@ -56,12 +56,12 @@
     }
 
     /* The visible label/pill. */
-    .c-segmented__item span {
+    .pl-c-segmented__item span {
       display: inline-flex;
       align-items: center;
       gap: var(--pl-space-1);
       padding: var(--pl-space-1) var(--pl-space-3);
-      border-radius: var(--c-segmented-radius);
+      border-radius: var(--pl-c-segmented-radius);
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-medium);
@@ -74,7 +74,7 @@
     }
 
     /* Active segment: accent fill. */
-    .c-segmented__item:has(input:checked) span {
+    .pl-c-segmented__item:has(input:checked) span {
       background: var(--pl-color-surface);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
@@ -82,30 +82,30 @@
     }
 
     /* Hover on non-checked. */
-    .c-segmented__item:not(:has(input:checked), :has(input:disabled))
+    .pl-c-segmented__item:not(:has(input:checked), :has(input:disabled))
       span:hover {
       color: var(--pl-color-text);
     }
 
     /* Focus ring. */
-    .c-segmented__item:has(input:focus-visible) span {
+    .pl-c-segmented__item:has(input:focus-visible) span {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
     /* Disabled. */
-    .c-segmented__item:has(input:disabled) span {
+    .pl-c-segmented__item:has(input:disabled) span {
       opacity: var(--pl-opacity-disabled);
       cursor: not-allowed;
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-segmented) {
+    :where(.pl-c-segmented) {
       border-color: ButtonBorder;
     }
 
-    :where(.c-segmented__item:has(input:checked) span) {
+    :where(.pl-c-segmented__item:has(input:checked) span) {
       background: Highlight;
       color: HighlightText;
     }

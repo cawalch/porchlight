@@ -7,14 +7,14 @@ since: 0.2.0
 
 # Scroll Progress
 
-The `.c-scroll-progress` renders a fixed bar at the viewport top that fills
+The `.pl-c-scroll-progress` renders a fixed bar at the viewport top that fills
 proportionally as the user scrolls the page. Uses scroll-driven animations
 (`animation-timeline: scroll(root)`) with zero JavaScript.
 
 ## Semantic HTML
 
 ```html
-<div class="c-scroll-progress"></div>
+<div class="pl-c-scroll-progress"></div>
 <!-- Place at the top of <body> -->
 ```
 
@@ -32,7 +32,7 @@ To track a scroll container instead of the root, override
 .my-scroll-area {
   scroll-timeline-name: --my-scroll;
 }
-.my-scroll-area .c-scroll-progress {
+.my-scroll-area .pl-c-scroll-progress {
   animation-timeline: --my-scroll;
 }
 ```

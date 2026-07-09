@@ -66,23 +66,23 @@ const navSections = [
 ];
 ---
 <BaseLayout title="Data-dense app · Porchlight">
-  <div data-density="dense" class="dense-app">
+  <div data-pl-density="dense" class="dense-app">
     <header class="dense-topbar">
       <div class="dense-topbar__left">
-        <button class="c-button c-button--icon" data-variant="ghost" aria-label="Toggle sidebar">
+        <button class="pl-c-button pl-c-button--icon" data-variant="ghost" aria-label="Toggle sidebar">
           <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <strong class="dense-brand">SENTRY<span>OPS</span></strong>
-        <span class="c-badge" data-tone="success">● live</span>
+        <span class="pl-c-badge" data-tone="success">● live</span>
       </div>
       <div class="dense-search">
-        <input class="c-field__control" placeholder="Search events, IPs, hosts…" aria-label="Search" />
+        <input class="pl-c-field__control" placeholder="Search events, IPs, hosts…" aria-label="Search" />
         <kbd class="dense-kbd">⌘K</kbd>
       </div>
       <div class="dense-topbar__right">
-        <span class="c-badge" data-tone="danger">4 crit</span>
-        <span class="c-badge" data-tone="warning">7 high</span>
-        <button class="c-button" data-variant="ghost" aria-label="Notifications">
+        <span class="pl-c-badge" data-tone="danger">4 crit</span>
+        <span class="pl-c-badge" data-tone="warning">7 high</span>
+        <button class="pl-c-button" data-variant="ghost" aria-label="Notifications">
           <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -96,8 +96,8 @@ const navSections = [
             {section.items.map((item) => (
               <a class="dense-nav-item" class:list={[{ 'is-active': item === 'Events' }]} href="#">
                 <span>{item}</span>
-                {item === 'Alerts' && <span class="c-badge c-badge--mini" data-tone="danger">11</span>}
-                {item === 'Cases' && <span class="c-badge c-badge--mini" data-tone="accent">3</span>}
+                {item === 'Alerts' && <span class="pl-c-badge pl-c-badge--mini" data-tone="danger">11</span>}
+                {item === 'Cases' && <span class="pl-c-badge pl-c-badge--mini" data-tone="accent">3</span>}
               </a>
             ))}
           </div>
@@ -119,38 +119,38 @@ const navSections = [
         <!-- Toolbar -->
         <div class="dense-toolbar">
           <div class="dense-toolbar__left">
-            <button class="c-button" data-variant="ghost" data-size="sm">All</button>
-            <button class="c-button" data-variant="ghost" data-size="sm">Critical</button>
-            <button class="c-button" data-variant="ghost" data-size="sm">High</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">All</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">Critical</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">High</button>
             <span class="dense-toolbar__count">15 events · last 15 min</span>
           </div>
           <div class="dense-toolbar__right">
-            <button class="c-button" data-variant="secondary">
+            <button class="pl-c-button" data-variant="secondary">
               <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2" stroke-linecap="round"/></svg>
               Filter
             </button>
-            <button class="c-button" data-variant="secondary">
+            <button class="pl-c-button" data-variant="secondary">
               <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Export
             </button>
-            <div class="c-split" style="--c-split-anchor: --dsb-1;">
-              <button type="button" class="c-button c-split__primary" data-variant="primary">Ack all</button>
-              <button type="button" class="c-button c-split__toggle" data-variant="primary" popovertarget="dsb-1" aria-label="More actions">
-                <svg class="c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div class="pl-c-split" style="--pl-c-split-anchor: --dsb-1;">
+              <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">Ack all</button>
+              <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary" popovertarget="dsb-1" aria-label="More actions">
+                <svg class="pl-c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </button>
-              <div popover class="c-split__menu" id="dsb-1">
-                <button class="c-split__option">Resolve all</button>
-                <button class="c-split__option">Assign to me</button>
-                <hr class="c-menu__divider" />
-                <button class="c-split__option" data-tone="danger">Suppress (24h)</button>
+              <div popover class="pl-c-split__menu" id="dsb-1">
+                <button class="pl-c-split__option">Resolve all</button>
+                <button class="pl-c-split__option">Assign to me</button>
+                <hr class="pl-c-menu__divider" />
+                <button class="pl-c-split__option" data-tone="danger">Suppress (24h)</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Event table -->
-        <div class="c-table-wrap dense-table" data-density="dense">
-          <table class="c-table">
+        <div class="pl-c-table-wrap dense-table" data-pl-density="dense">
+          <table class="pl-c-table">
             <thead>
               <tr>
                 <th data-sort="asc">Time</th>
@@ -165,7 +165,7 @@ const navSections = [
               {events.map((e) => (
                 <tr>
                   <td class="dense-mono">{e.ts}</td>
-                  <td><span class="c-badge" data-tone={sevTone[e.sev]}>{sevLabel[e.sev]}</span></td>
+                  <td><span class="pl-c-badge" data-tone={sevTone[e.sev]}>{sevLabel[e.sev]}</span></td>
                   <td class="dense-mono">{e.source}</td>
                   <td class="dense-mono">{e.host}</td>
                   <td class="dense-msg">{e.msg}</td>
@@ -181,14 +181,14 @@ const navSections = [
         <!-- Pagination -->
         <div class="dense-pager">
           <span class="dense-toolbar__count">Showing 1–15 of 2,847</span>
-          <nav class="c-pagination">
-            <button class="c-button" data-variant="ghost" aria-label="Previous">‹</button>
-            <button class="c-button" data-variant="ghost" aria-pressed="true">1</button>
-            <button class="c-button" data-variant="ghost">2</button>
-            <button class="c-button" data-variant="ghost">3</button>
+          <nav class="pl-c-pagination">
+            <button class="pl-c-button" data-variant="ghost" aria-label="Previous">‹</button>
+            <button class="pl-c-button" data-variant="ghost" aria-pressed="true">1</button>
+            <button class="pl-c-button" data-variant="ghost">2</button>
+            <button class="pl-c-button" data-variant="ghost">3</button>
             <span class="dense-pager__ellipsis">…</span>
-            <button class="c-button" data-variant="ghost">190</button>
-            <button class="c-button" data-variant="ghost" aria-label="Next">›</button>
+            <button class="pl-c-button" data-variant="ghost">190</button>
+            <button class="pl-c-button" data-variant="ghost" aria-label="Next">›</button>
           </nav>
         </div>
       </main>
@@ -326,7 +326,7 @@ const navSections = [
   }
 
   /* Mini badge for nav counts */
-  .c-badge--mini {
+  .pl-c-badge--mini {
     font-size: var(--pl-text-xs);
     padding-inline: var(--pl-space-1);
     min-block-size: 1rem;
@@ -405,8 +405,8 @@ const navSections = [
   }
 
   /* Dense table overrides */
-  .dense-table .c-table td,
-  .dense-table .c-table th {
+  .dense-table .pl-c-table td,
+  .dense-table .pl-c-table th {
     font-size: var(--pl-text-sm);
   }
   .dense-table {
@@ -499,7 +499,7 @@ const navSections = [
 
     .dense-toolbar__left,
     .dense-toolbar__right,
-    .dense-pager .c-pagination {
+    .dense-pager .pl-c-pagination {
       overflow-x: auto;
       max-inline-size: 100%;
       scrollbar-width: thin;

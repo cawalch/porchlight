@@ -7,32 +7,32 @@ since: 0.2.0
 
 # Empty state
 
-The `.c-empty` component displays a centered "no data" placeholder: media
+The `.pl-c-empty` component displays a centered "no data" placeholder: media
 (icon/illustration), title, description, and an optional call-to-action. Tone
 variants via `[data-tone]`.
 
 ## Semantic HTML
 
 ```html
-<div class="c-empty">
-  <div class="c-empty__media"><svg>…</svg></div>
-  <h2 class="c-empty__title">No accounts yet</h2>
-  <p class="c-empty__description">
+<div class="pl-c-empty">
+  <div class="pl-c-empty__media"><svg>…</svg></div>
+  <h2 class="pl-c-empty__title">No accounts yet</h2>
+  <p class="pl-c-empty__description">
     Get started by creating your first account.
   </p>
-  <div class="c-empty__actions">
-    <button class="c-button" data-variant="primary">New account</button>
+  <div class="pl-c-empty__actions">
+    <button class="pl-c-button" data-variant="primary">New account</button>
   </div>
 </div>
 ```
 
 ## Class contract
 
-| Selector                | Role                                     |
-| ----------------------- | ---------------------------------------- |
-| `.c-empty`              | The container (centered grid).           |
-| `.c-empty__media`       | Icon or illustration slot.               |
-| `.c-empty__title`       | Heading.                                 |
-| `.c-empty__description` | Supporting text (max 36ch).              |
-| `.c-empty__actions`     | CTA button row.                          |
-| `[data-tone]`           | `danger` (error), `success` (completed). |
+| Selector                   | Role                                     |
+| -------------------------- | ---------------------------------------- |
+| `.pl-c-empty`              | The container (centered grid).           |
+| `.pl-c-empty__media`       | Icon or illustration slot.               |
+| `.pl-c-empty__title`       | Heading.                                 |
+| `.pl-c-empty__description` | Supporting text (max 36ch).              |
+| `.pl-c-empty__actions`     | CTA button row.                          |
+| `[data-tone]`              | `danger` (error), `success` (completed). |

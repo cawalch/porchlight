@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Chip
 
-The `.c-chip` is a compact tag/pill with an optional remove button. Default
+The `.pl-c-chip` is a compact tag/pill with an optional remove button. Default
 tone uses relative color syntax (`oklch(from var(--pl-color-accent) ...)`)
 to derive a tinted background from the accent token. Falls back to
 `color-mix()` where relative color syntax is unsupported.
@@ -16,27 +16,27 @@ to derive a tinted background from the accent token. Falls back to
 
 ```html
 <!-- Static chip -->
-<span class="c-chip">Label</span>
+<span class="pl-c-chip">Label</span>
 
 <!-- Removable chip -->
-<span class="c-chip" data-tone="success">
+<span class="pl-c-chip" data-tone="success">
   Active
-  <button class="c-chip__remove" aria-label="Remove">x</button>
+  <button class="pl-c-chip__remove" aria-label="Remove">x</button>
 </span>
 
 <!-- Group -->
-<div class="c-chip-group">
-  <span class="c-chip">Tag 1</span>
-  <span class="c-chip">Tag 2</span>
+<div class="pl-c-chip-group">
+  <span class="pl-c-chip">Tag 1</span>
+  <span class="pl-c-chip">Tag 2</span>
 </div>
 ```
 
 ## Class contract
 
-| Selector          | Role                                               |
-| ----------------- | -------------------------------------------------- |
-| `.c-chip`         | The pill (inline-flex).                            |
-| `.c-chip__remove` | Optional remove button.                            |
-| `.c-chip-group`   | Wrapping flex container.                           |
-| `[data-tone]`     | `success`, `warning`, `danger` (default = accent). |
-| `[data-size]`     | `sm` (default = normal).                           |
+| Selector             | Role                                               |
+| -------------------- | -------------------------------------------------- |
+| `.pl-c-chip`         | The pill (inline-flex).                            |
+| `.pl-c-chip__remove` | Optional remove button.                            |
+| `.pl-c-chip-group`   | Wrapping flex container.                           |
+| `[data-tone]`        | `success`, `warning`, `danger` (default = accent). |
+| `[data-size]`        | `sm` (default = normal).                           |

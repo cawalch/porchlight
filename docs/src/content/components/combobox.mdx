@@ -7,7 +7,7 @@ since: 0.8.0
 
 # Combobox
 
-The `.c-combobox` component styles a WAI-ARIA-style combobox/listbox contract
+The `.pl-c-combobox` component styles a WAI-ARIA-style combobox/listbox contract
 for modern app lookup fields: assignees, customers, process definitions,
 vendors, statuses, and other remote entities. Porchlight provides the control,
 popup, option rows, loading/empty states, invalid state, disabled state, and
@@ -21,13 +21,13 @@ native `<select>` for short static choices.
 ## Semantic HTML
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="assignee-lookup">Assignee</label>
-  <div class="c-combobox">
-    <div class="c-combobox__control">
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="assignee-lookup">Assignee</label>
+  <div class="pl-c-combobox">
+    <div class="pl-c-combobox__control">
       <input
         id="assignee-lookup"
-        class="c-combobox__input"
+        class="pl-c-combobox__input"
         name="assignee_label"
         role="combobox"
         type="search"
@@ -39,41 +39,41 @@ native `<select>` for short static choices.
         aria-describedby="assignee-help"
         value="Nia"
       />
-      <svg class="c-combobox__chevron" aria-hidden="true">...</svg>
+      <svg class="pl-c-combobox__chevron" aria-hidden="true">...</svg>
     </div>
     <div
-      class="c-combobox__popup"
+      class="pl-c-combobox__popup"
       id="assignee-list"
       role="listbox"
       aria-label="Assignee suggestions"
     >
       <button
-        class="c-combobox__option"
+        class="pl-c-combobox__option"
         id="assignee-nia"
         type="button"
         role="option"
         aria-selected="true"
       >
-        <span class="c-combobox__label">Nia Gomez</span>
-        <span class="c-combobox__meta">Ops</span>
-        <span class="c-combobox__description"
+        <span class="pl-c-combobox__label">Nia Gomez</span>
+        <span class="pl-c-combobox__meta">Ops</span>
+        <span class="pl-c-combobox__description"
           >Process owner - 14 open cases</span
         >
       </button>
       <button
-        class="c-combobox__option"
+        class="pl-c-combobox__option"
         id="assignee-lee"
         type="button"
         role="option"
         aria-selected="false"
       >
-        <span class="c-combobox__label">Lee Chen</span>
-        <span class="c-combobox__meta">Finance</span>
+        <span class="pl-c-combobox__label">Lee Chen</span>
+        <span class="pl-c-combobox__meta">Finance</span>
       </button>
     </div>
     <input type="hidden" name="assignee_id" value="usr_124" />
   </div>
-  <span class="c-field__hint" id="assignee-help"
+  <span class="pl-c-field__hint" id="assignee-help"
     >Type to search users, groups, and queues.</span
   >
 </div>
@@ -87,26 +87,26 @@ or in application state.
 
 ## Class contract
 
-| Selector                   | Role                                                         |
-| -------------------------- | ------------------------------------------------------------ |
-| `.c-combobox`              | Relative wrapper for the control and popup.                  |
-| `.c-combobox--multi`       | Multi-select layout with wrapping chips.                     |
-| `.c-combobox__control`     | Bordered control shell, or a trigger with `role="combobox"`. |
-| `.c-combobox__input`       | Text/search input with `role="combobox"`.                    |
-| `.c-combobox__value`       | Label stack for button-triggered select-only comboboxes.     |
-| `.c-combobox__chevron`     | Optional trailing disclosure icon.                           |
-| `.c-combobox__popup`       | Positioned popup containing the listbox.                     |
-| `.c-combobox__list`        | Optional list wrapper when options are grouped in a list.    |
-| `.c-combobox__option`      | Selectable row with `role="option"`.                         |
-| `.c-combobox__label`       | Primary option text.                                         |
-| `.c-combobox__description` | Secondary option detail.                                     |
-| `.c-combobox__meta`        | Right-aligned option metadata.                               |
-| `.c-combobox__status`      | Loading, empty, or helper row inside the popup.              |
-| `.c-combobox__chips`       | Wrapping selected-value chips for multi-select.              |
-| `[data-active]`            | Optional active descendant styling hook.                     |
-| `[data-loading]`           | Loading indicator on `.c-combobox__status`.                  |
-| `[aria-selected="true"]`   | Selected or active option styling.                           |
-| `[aria-invalid="true"]`    | Server/framework invalid state on the input or trigger.      |
+| Selector                      | Role                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| `.pl-c-combobox`              | Relative wrapper for the control and popup.                  |
+| `.pl-c-combobox--multi`       | Multi-select layout with wrapping chips.                     |
+| `.pl-c-combobox__control`     | Bordered control shell, or a trigger with `role="combobox"`. |
+| `.pl-c-combobox__input`       | Text/search input with `role="combobox"`.                    |
+| `.pl-c-combobox__value`       | Label stack for button-triggered select-only comboboxes.     |
+| `.pl-c-combobox__chevron`     | Optional trailing disclosure icon.                           |
+| `.pl-c-combobox__popup`       | Positioned popup containing the listbox.                     |
+| `.pl-c-combobox__list`        | Optional list wrapper when options are grouped in a list.    |
+| `.pl-c-combobox__option`      | Selectable row with `role="option"`.                         |
+| `.pl-c-combobox__label`       | Primary option text.                                         |
+| `.pl-c-combobox__description` | Secondary option detail.                                     |
+| `.pl-c-combobox__meta`        | Right-aligned option metadata.                               |
+| `.pl-c-combobox__status`      | Loading, empty, or helper row inside the popup.              |
+| `.pl-c-combobox__chips`       | Wrapping selected-value chips for multi-select.              |
+| `[data-active]`               | Optional active descendant styling hook.                     |
+| `[data-loading]`              | Loading indicator on `.pl-c-combobox__status`.               |
+| `[aria-selected="true"]`      | Selected or active option styling.                           |
+| `[aria-invalid="true"]`       | Server/framework invalid state on the input or trigger.      |
 
 ## Common patterns
 
@@ -115,10 +115,10 @@ or in application state.
 Use an editable input when the user filters a large or remote set.
 
 ```html
-<div class="c-combobox">
-  <div class="c-combobox__control">
+<div class="pl-c-combobox">
+  <div class="pl-c-combobox__control">
     <input
-      class="c-combobox__input"
+      class="pl-c-combobox__input"
       role="combobox"
       type="search"
       aria-autocomplete="list"
@@ -128,17 +128,17 @@ Use an editable input when the user filters a large or remote set.
       value="Acme"
     />
   </div>
-  <div class="c-combobox__popup" id="customer-list" role="listbox">
+  <div class="pl-c-combobox__popup" id="customer-list" role="listbox">
     <button
-      class="c-combobox__option"
+      class="pl-c-combobox__option"
       id="customer-acme"
       type="button"
       role="option"
       aria-selected="true"
     >
-      <span class="c-combobox__label">Acme Operations</span>
-      <span class="c-combobox__meta">Customer</span>
-      <span class="c-combobox__description">Tier 1 account - Net 30</span>
+      <span class="pl-c-combobox__label">Acme Operations</span>
+      <span class="pl-c-combobox__meta">Customer</span>
+      <span class="pl-c-combobox__description">Tier 1 account - Net 30</span>
     </button>
   </div>
 </div>
@@ -151,10 +151,10 @@ row. The app should also expose loading state through live regions or other
 product-appropriate announcements when the async timing matters.
 
 ```html
-<div class="c-combobox">
-  <div class="c-combobox__control">
+<div class="pl-c-combobox">
+  <div class="pl-c-combobox__control">
     <input
-      class="c-combobox__input"
+      class="pl-c-combobox__input"
       role="combobox"
       type="search"
       aria-autocomplete="list"
@@ -164,9 +164,9 @@ product-appropriate announcements when the async timing matters.
       value="North"
     />
   </div>
-  <div class="c-combobox__popup" id="vendor-list" role="listbox">
+  <div class="pl-c-combobox__popup" id="vendor-list" role="listbox">
     <div
-      class="c-combobox__status"
+      class="pl-c-combobox__status"
       data-loading
       role="option"
       aria-disabled="true"
@@ -183,10 +183,10 @@ When there are no selectable options, keep the listbox present and render a
 status row. Do not leave `aria-activedescendant` pointing at a missing option.
 
 ```html
-<div class="c-combobox">
-  <div class="c-combobox__control">
+<div class="pl-c-combobox">
+  <div class="pl-c-combobox__control">
     <input
-      class="c-combobox__input"
+      class="pl-c-combobox__input"
       role="combobox"
       type="search"
       aria-autocomplete="list"
@@ -195,8 +195,8 @@ status row. Do not leave `aria-activedescendant` pointing at a missing option.
       value="offboard"
     />
   </div>
-  <div class="c-combobox__popup" id="process-list" role="listbox">
-    <div class="c-combobox__status" role="option" aria-disabled="true">
+  <div class="pl-c-combobox__popup" id="process-list" role="listbox">
+    <div class="pl-c-combobox__status" role="option" aria-disabled="true">
       No matching processes.
     </div>
   </div>
@@ -210,30 +210,30 @@ trigger. It still uses `role="combobox"`, `aria-expanded`, `aria-controls`, and
 `aria-activedescendant`.
 
 ```html
-<div class="c-combobox">
+<div class="pl-c-combobox">
   <button
-    class="c-combobox__control"
+    class="pl-c-combobox__control"
     type="button"
     role="combobox"
     aria-expanded="true"
     aria-controls="status-list"
     aria-activedescendant="status-review"
   >
-    <span class="c-combobox__value">
-      <span class="c-combobox__label">Needs review</span>
-      <span class="c-combobox__description">Paused before approval</span>
+    <span class="pl-c-combobox__value">
+      <span class="pl-c-combobox__label">Needs review</span>
+      <span class="pl-c-combobox__description">Paused before approval</span>
     </span>
-    <svg class="c-combobox__chevron" aria-hidden="true">...</svg>
+    <svg class="pl-c-combobox__chevron" aria-hidden="true">...</svg>
   </button>
-  <div class="c-combobox__popup" id="status-list" role="listbox">
+  <div class="pl-c-combobox__popup" id="status-list" role="listbox">
     <button
-      class="c-combobox__option"
+      class="pl-c-combobox__option"
       id="status-review"
       type="button"
       role="option"
       aria-selected="true"
     >
-      <span class="c-combobox__label">Needs review</span>
+      <span class="pl-c-combobox__label">Needs review</span>
     </button>
   </div>
 </div>
@@ -248,16 +248,16 @@ select-only triggers use `aria-disabled="true"` plus app logic that prevents
 opening.
 
 ```html
-<div class="c-field">
-  <label class="c-field__label" for="required-process">
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="required-process">
     Process
-    <span class="c-field__required" aria-hidden="true">*</span>
+    <span class="pl-c-field__required" aria-hidden="true">*</span>
   </label>
-  <div class="c-combobox">
-    <div class="c-combobox__control">
+  <div class="pl-c-combobox">
+    <div class="pl-c-combobox__control">
       <input
         id="required-process"
-        class="c-combobox__input"
+        class="pl-c-combobox__input"
         role="combobox"
         required
         aria-expanded="false"
@@ -267,14 +267,14 @@ opening.
       />
     </div>
     <div
-      class="c-combobox__popup"
+      class="pl-c-combobox__popup"
       id="required-process-list"
       role="listbox"
       hidden
     ></div>
   </div>
   <span
-    class="c-field__hint"
+    class="pl-c-field__hint"
     id="required-process-error"
     data-tone="danger"
     role="alert"
@@ -290,17 +290,21 @@ and keep an input for filtering. The app owns chip removal, duplicate
 prevention, hidden submitted values, and active descendant state.
 
 ```html
-<div class="c-combobox c-combobox--multi">
-  <div class="c-combobox__control">
-    <div class="c-combobox__chips">
-      <span class="c-chip">
+<div class="pl-c-combobox pl-c-combobox--multi">
+  <div class="pl-c-combobox__control">
+    <div class="pl-c-combobox__chips">
+      <span class="pl-c-chip">
         Legal
-        <button class="c-chip__remove" type="button" aria-label="Remove Legal">
+        <button
+          class="pl-c-chip__remove"
+          type="button"
+          aria-label="Remove Legal"
+        >
           x
         </button>
       </span>
       <input
-        class="c-combobox__input"
+        class="pl-c-combobox__input"
         role="combobox"
         type="search"
         aria-autocomplete="list"
@@ -311,15 +315,15 @@ prevention, hidden submitted values, and active descendant state.
       />
     </div>
   </div>
-  <div class="c-combobox__popup" id="team-list" role="listbox">
+  <div class="pl-c-combobox__popup" id="team-list" role="listbox">
     <button
-      class="c-combobox__option"
+      class="pl-c-combobox__option"
       id="team-finance"
       type="button"
       role="option"
       aria-selected="false"
     >
-      <span class="c-combobox__label">Finance</span>
+      <span class="pl-c-combobox__label">Finance</span>
     </button>
   </div>
   <input type="hidden" name="team_ids[]" value="team_legal" />
@@ -333,10 +337,10 @@ HATEOAS responses, htmx-like fragment replacement, Alpine-like state bindings,
 Vue, React, and other app frameworks should all emit the same HTML contract:
 
 ```html
-<div class="c-combobox">
-  <div class="c-combobox__control">
+<div class="pl-c-combobox">
+  <div class="pl-c-combobox__control">
     <input
-      class="c-combobox__input"
+      class="pl-c-combobox__input"
       role="combobox"
       type="search"
       autocomplete="off"
@@ -346,15 +350,15 @@ Vue, React, and other app frameworks should all emit the same HTML contract:
       aria-activedescendant="entity-1"
     />
   </div>
-  <div class="c-combobox__popup" id="entity-list" role="listbox">
+  <div class="pl-c-combobox__popup" id="entity-list" role="listbox">
     <button
-      class="c-combobox__option"
+      class="pl-c-combobox__option"
       id="entity-1"
       type="button"
       role="option"
       aria-selected="true"
     >
-      <span class="c-combobox__label">Rendered entity</span>
+      <span class="pl-c-combobox__label">Rendered entity</span>
     </button>
   </div>
 </div>
@@ -396,18 +400,18 @@ plain HTML, not a Porchlight-specific adapter API.
 
 ## Tokens exposed (component-local)
 
-| Token                          | Default             | Purpose                            |
-| ------------------------------ | ------------------- | ---------------------------------- |
-| `--c-combobox-min-inline`      | `16rem`             | Minimum desired popup inline size. |
-| `--c-combobox-popup-max-block` | `min(18rem, 50dvb)` | Popup scroll limit.                |
-| `--c-combobox-popup-offset`    | `--pl-space-1`      | Gap between control and popup.     |
-| `--c-combobox-option-gap`      | `--pl-space-1`      | Gap between option rows.           |
+| Token                             | Default             | Purpose                            |
+| --------------------------------- | ------------------- | ---------------------------------- |
+| `--pl-c-combobox-min-inline`      | `16rem`             | Minimum desired popup inline size. |
+| `--pl-c-combobox-popup-max-block` | `min(18rem, 50dvb)` | Popup scroll limit.                |
+| `--pl-c-combobox-popup-offset`    | `--pl-space-1`      | Gap between control and popup.     |
+| `--pl-c-combobox-option-gap`      | `--pl-space-1`      | Gap between option rows.           |
 
 ## Theme, density, RTL, motion
 
 - Light/dark: all colors resolve through framework tokens.
 - Density: control and option sizing follow `--pl-control-*` and
-  `--pl-menu-row-*`, so ancestor `[data-density]` settings apply.
+  `--pl-menu-row-*`, so ancestor `[data-pl-density]` settings apply.
 - RTL: logical properties are used throughout.
 - Motion: only border, focus, and chevron transitions are present.
 - Forced colors: control and popup borders fall back to system colors.

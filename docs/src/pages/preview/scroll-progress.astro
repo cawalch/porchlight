@@ -9,7 +9,7 @@ const sections = Array.from({ length: 6 }, (_, i) => ({
 ---
 <BaseLayout title="Scroll Progress · Porchlight">
   <!-- Fixed progress bar at the viewport top -->
-  <div class="c-scroll-progress"></div>
+  <div class="pl-c-scroll-progress"></div>
 
   <h1>Scroll Progress</h1>
   <p>
@@ -18,17 +18,17 @@ const sections = Array.from({ length: 6 }, (_, i) => ({
     Zero JavaScript. Where unsupported, the bar is hidden (no false progress).
   </p>
 
-  <p class="u-muted">Scroll down to see the bar fill.</p>
+  <p class="pl-u-muted">Scroll down to see the bar fill.</p>
 
   {sections.map((s) => (
-    <section class="c-reveal" style="margin-block: var(--pl-space-8); padding: var(--pl-space-6); border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-lg); background: var(--pl-color-surface);">
+    <section class="pl-c-reveal" style="margin-block: var(--pl-space-8); padding: var(--pl-space-6); border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-lg); background: var(--pl-color-surface);">
       <h2>{s.title}</h2>
       <p>
-        This section also uses <code>.c-reveal</code> to fade and slide in as
+        This section also uses <code>.pl-c-reveal</code> to fade and slide in as
         it enters the viewport via <code>animation-timeline: view()</code>.
         Scroll slowly to see the effect.
       </p>
-      <p class="u-muted">
+      <p class="pl-u-muted">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
@@ -39,29 +39,29 @@ const sections = Array.from({ length: 6 }, (_, i) => ({
 
   <section style="margin-block: var(--pl-space-8);">
     <h2>Reveal with delay</h2>
-    <div class="l-grid" style="--l-grid-min: 14rem;">
-      <div class="c-card c-reveal">
-        <div class="c-card__body">
+    <div class="pl-l-grid" style="--pl-l-grid-min: 14rem;">
+      <div class="pl-c-card pl-c-reveal">
+        <div class="pl-c-card__body">
           <strong>No delay</strong>
-          <p class="u-muted">Enters immediately.</p>
+          <p class="pl-u-muted">Enters immediately.</p>
         </div>
       </div>
-      <div class="c-card c-reveal" data-delay="1">
-        <div class="c-card__body">
+      <div class="pl-c-card pl-c-reveal" data-delay="1">
+        <div class="pl-c-card__body">
           <strong>Delay 1</strong>
-          <p class="u-muted">Enters slightly later.</p>
+          <p class="pl-u-muted">Enters slightly later.</p>
         </div>
       </div>
-      <div class="c-card c-reveal" data-delay="2">
-        <div class="c-card__body">
+      <div class="pl-c-card pl-c-reveal" data-delay="2">
+        <div class="pl-c-card__body">
           <strong>Delay 2</strong>
-          <p class="u-muted">Enters with more delay.</p>
+          <p class="pl-u-muted">Enters with more delay.</p>
         </div>
       </div>
-      <div class="c-card c-reveal" data-delay="3">
-        <div class="c-card__body">
+      <div class="pl-c-card pl-c-reveal" data-delay="3">
+        <div class="pl-c-card__body">
           <strong>Delay 3</strong>
-          <p class="u-muted">Enters last.</p>
+          <p class="pl-u-muted">Enters last.</p>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     a fixed-position container at the bottom corner. z-index
     (<code>--pl-z-toast: 1100</code>) sits above dialogs and popovers.
   </p>
-  <p class="u-muted">
+  <p class="pl-u-muted">
     In production, JS adds/removes toasts with a timer. This preview
     demonstrates the visual states statically.
   </p>
@@ -17,55 +17,55 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2>Static demo</h2>
   <p>Toasts below are shown in their settled state. Toggle the checkbox to animate them.</p>
 
-  <label class="c-switch" style="margin-block: var(--pl-space-3);">
-    <input type="checkbox" role="switch" id="toast-toggle" class="c-switch__input" checked />
-    <span class="c-switch__track"><span class="c-switch__thumb"></span></span>
-    <span class="c-switch__label">Show toasts</span>
+  <label class="pl-c-switch" style="margin-block: var(--pl-space-3);">
+    <input type="checkbox" role="switch" id="toast-toggle" class="pl-c-switch__input" checked />
+    <span class="pl-c-switch__track"><span class="pl-c-switch__thumb"></span></span>
+    <span class="pl-c-switch__label">Show toasts</span>
   </label>
 
-  <div class="c-toast-stack" style="position: static; inset: auto; inline-size: min(24rem, 100%); margin-block-start: var(--pl-space-4);">
-    <div class="c-toast" data-tone="success" data-visible role="status" data-toast="demo">
-      <span class="c-toast__icon">
+  <div class="pl-c-toast-stack" style="position: static; inset: auto; inline-size: min(24rem, 100%); margin-block-start: var(--pl-space-4);">
+    <div class="pl-c-toast" data-tone="success" data-visible role="status" data-toast="demo">
+      <span class="pl-c-toast__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </span>
-      <div class="c-toast__content">
-        <span class="c-toast__title">Changes saved</span>
-        <span class="c-toast__body">Your profile was updated successfully.</span>
+      <div class="pl-c-toast__content">
+        <span class="pl-c-toast__title">Changes saved</span>
+        <span class="pl-c-toast__body">Your profile was updated successfully.</span>
       </div>
-      <button class="c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
+      <button class="pl-c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
     </div>
 
-    <div class="c-toast" data-tone="warning" data-visible role="status" data-toast="demo">
-      <span class="c-toast__icon">
+    <div class="pl-c-toast" data-tone="warning" data-visible role="status" data-toast="demo">
+      <span class="pl-c-toast__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
       </span>
-      <div class="c-toast__content">
-        <span class="c-toast__title">Storage almost full</span>
-        <span class="c-toast__body">You have used 92% of your storage.</span>
+      <div class="pl-c-toast__content">
+        <span class="pl-c-toast__title">Storage almost full</span>
+        <span class="pl-c-toast__body">You have used 92% of your storage.</span>
       </div>
-      <button class="c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
+      <button class="pl-c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
     </div>
 
-    <div class="c-toast" data-tone="danger" data-visible role="alert" data-toast="demo">
-      <span class="c-toast__icon">
+    <div class="pl-c-toast" data-tone="danger" data-visible role="alert" data-toast="demo">
+      <span class="pl-c-toast__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" stroke-linecap="round" /></svg>
       </span>
-      <div class="c-toast__content">
-        <span class="c-toast__title">Connection lost</span>
-        <span class="c-toast__body">Reconnecting in 5 seconds.</span>
+      <div class="pl-c-toast__content">
+        <span class="pl-c-toast__title">Connection lost</span>
+        <span class="pl-c-toast__body">Reconnecting in 5 seconds.</span>
       </div>
-      <button class="c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
+      <button class="pl-c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
     </div>
 
-    <div class="c-toast" data-visible role="status" data-toast="demo">
-      <span class="c-toast__icon">
+    <div class="pl-c-toast" data-visible role="status" data-toast="demo">
+      <span class="pl-c-toast__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" stroke-linecap="round" /></svg>
       </span>
-      <div class="c-toast__content">
-        <span class="c-toast__title">New update available</span>
-        <span class="c-toast__body">Version 2.4 is ready to install.</span>
+      <div class="pl-c-toast__content">
+        <span class="pl-c-toast__title">New update available</span>
+        <span class="pl-c-toast__body">Version 2.4 is ready to install.</span>
       </div>
-      <button class="c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
+      <button class="pl-c-toast__close" aria-label="Dismiss" data-toast-dismiss>x</button>
     </div>
   </div>
 
@@ -73,16 +73,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <p>Use <code>data-placement</code> on the fixed stack to choose a corner.</p>
   <div class="placement-grid" aria-label="Toast placement options">
     {['bottom-end', 'bottom-start', 'top-end', 'top-start'].map((placement) => (
-      <div class="u-surface placement-card">
+      <div class="pl-u-surface placement-card">
         <code>{placement}</code>
         <div
-          class="c-toast-stack"
+          class="pl-c-toast-stack"
           data-placement={placement}
           style="position: static; inset: auto; inline-size: 100%; margin-block-start: var(--pl-space-2);"
         >
-          <div class="c-toast" data-visible role="status">
-            <span class="c-toast__content">
-              <span class="c-toast__title">Preview</span>
+          <div class="pl-c-toast" data-visible role="status">
+            <span class="pl-c-toast__content">
+              <span class="pl-c-toast__title">Preview</span>
             </span>
           </div>
         </div>
@@ -103,7 +103,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     // Dismiss buttons remove the visible state.
     document.querySelectorAll('[data-toast-dismiss]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        btn.closest('.c-toast')?.removeAttribute('data-visible');
+        btn.closest('.pl-c-toast')?.removeAttribute('data-visible');
       });
     });
   </script>

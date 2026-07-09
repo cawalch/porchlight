@@ -6,37 +6,37 @@
  * indeterminate wait). Used in cards, lists, and tables while data fetches.
  *
  * Three shapes via [data-shape]: "text" (a line, default), "circle" (an
- * avatar), and "rect" (a block). Width is controlled by --c-skeleton-w for
+ * avatar), and "rect" (a block). Width is controlled by --pl-c-skeleton-w for
  * inline sizing; text rows default to 100%.
  *
  * The shimmer is a CSS-only animation (opacity pulse). Under reduced motion
  * the themes layer's universal 1ms clamp stops it; the skeleton remains as a
  * static grey block (still legible as a placeholder).
  *
- * A [data-lines] attribute on a container with .c-skeleton children generates
+ * A [data-lines] attribute on a container with .pl-c-skeleton children generates
  * staggered widths for prose-like placeholder stacks  -  see the preview page.
  */
 @layer porchlight.components {
-  @scope (.c-skeleton) {
+  @scope (.pl-c-skeleton) {
     :scope {
-      --c-skeleton-w: 100%;
+      --pl-c-skeleton-w: 100%;
 
       display: block;
-      inline-size: var(--c-skeleton-w);
+      inline-size: var(--pl-c-skeleton-w);
       block-size: var(--pl-text-md);
       border-radius: var(--pl-radius-sm);
       background: var(--pl-color-surface-2);
-      animation: c-skeleton-pulse 1.8s var(--pl-ease-standard) infinite;
+      animation: pl-c-skeleton-pulse 1.8s var(--pl-ease-standard) infinite;
     }
 
     :scope[data-shape="circle"] {
-      inline-size: var(--c-skeleton-w, 2.5rem);
-      block-size: var(--c-skeleton-w, 2.5rem);
+      inline-size: var(--pl-c-skeleton-w, 2.5rem);
+      block-size: var(--pl-c-skeleton-w, 2.5rem);
       border-radius: var(--pl-radius-pill);
     }
 
     :scope[data-shape="rect"] {
-      block-size: var(--c-skeleton-w, 6rem);
+      block-size: var(--pl-c-skeleton-w, 6rem);
       inline-size: 100%;
       border-radius: var(--pl-radius-md);
     }
@@ -47,13 +47,13 @@
   }
 
   /* A skeleton group  -  staggered text lines for prose-like placeholders. */
-  :where(.c-skeleton-group) {
+  :where(.pl-c-skeleton-group) {
     display: flex;
     flex-direction: column;
     gap: var(--pl-space-2);
   }
 
-  @keyframes c-skeleton-pulse {
+  @keyframes pl-c-skeleton-pulse {
     0%,
     100% {
       opacity: 1;
@@ -65,7 +65,7 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-skeleton) {
+    :where(.pl-c-skeleton) {
       background: CanvasText;
       opacity: 0.3;
     }

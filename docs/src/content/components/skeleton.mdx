@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Skeleton
 
-The `.c-skeleton` component renders a loading placeholder that mimics the shape
+The `.pl-c-skeleton` component renders a loading placeholder that mimics the shape
 of real content. A CSS-only opacity pulse communicates "loading." Three shapes
 via `[data-shape]`: `text` (default), `circle` (avatar), and `rect` (block).
 
@@ -15,19 +15,23 @@ via `[data-shape]`: `text` (default), `circle` (avatar), and `rect` (block).
 
 ```html
 <!-- Text lines -->
-<div class="c-skeleton-group">
-  <div class="c-skeleton" style="--c-skeleton-w: 40%;"></div>
-  <div class="c-skeleton"></div>
-  <div class="c-skeleton" style="--c-skeleton-w: 80%;"></div>
+<div class="pl-c-skeleton-group">
+  <div class="pl-c-skeleton" style="--pl-c-skeleton-w: 40%;"></div>
+  <div class="pl-c-skeleton"></div>
+  <div class="pl-c-skeleton" style="--pl-c-skeleton-w: 80%;"></div>
 </div>
 
 <!-- Avatar + rect -->
 <div
-  class="c-skeleton"
+  class="pl-c-skeleton"
   data-shape="circle"
-  style="--c-skeleton-w: 2.5rem;"
+  style="--pl-c-skeleton-w: 2.5rem;"
 ></div>
-<div class="c-skeleton" data-shape="rect" style="--c-skeleton-w: 6rem;"></div>
+<div
+  class="pl-c-skeleton"
+  data-shape="rect"
+  style="--pl-c-skeleton-w: 6rem;"
+></div>
 ```
 
 ## Reduced motion

@@ -92,11 +92,11 @@ const steps: ProcessLane[] = [
 ---
 
 <BaseLayout title="Process Builder · Porchlight">
-  <div class="l-app-shell builder-shell">
-    <header class="l-app-shell__topbar l-cluster builder-topbar">
-      <div class="l-cluster builder-topbar__brand">
+  <div class="pl-l-app-shell builder-shell">
+    <header class="pl-l-app-shell__topbar pl-l-cluster builder-topbar">
+      <div class="pl-l-cluster builder-topbar__brand">
         <button
-          class="c-button"
+          class="pl-c-button"
           data-variant="ghost"
           data-size="sm"
           type="button"
@@ -114,20 +114,20 @@ const steps: ProcessLane[] = [
           </svg>
         </button>
         <strong>Veyra Admin</strong>
-        <span class="u-muted-sm">Process Studio</span>
+        <span class="pl-u-muted-sm">Process Studio</span>
       </div>
-      <div class="l-cluster builder-topbar__status">
-        <span class="c-badge" data-tone="warning">1 warning</span>
-        <span class="c-badge" data-tone="success">Autosaved</span>
-        <div class="c-avatar" data-size="sm">CW</div>
+      <div class="pl-l-cluster builder-topbar__status">
+        <span class="pl-c-badge" data-tone="warning">1 warning</span>
+        <span class="pl-c-badge" data-tone="success">Autosaved</span>
+        <div class="pl-c-avatar" data-size="sm">CW</div>
       </div>
     </header>
 
-    <aside class="l-app-shell__sidebar">
-      <nav class="c-nav" aria-label="Admin navigation">
-        <a href="#" class="c-nav__item">
+    <aside class="pl-l-app-shell__sidebar">
+      <nav class="pl-c-nav" aria-label="Admin navigation">
+        <a href="#" class="pl-c-nav__item">
           <svg
-            class="c-nav__icon"
+            class="pl-c-nav__icon"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -139,11 +139,11 @@ const steps: ProcessLane[] = [
             <rect x="14" y="12" width="7" height="9" rx="1"></rect>
             <rect x="3" y="16" width="7" height="5" rx="1"></rect>
           </svg>
-          <span class="c-nav__label">Overview</span>
+          <span class="pl-c-nav__label">Overview</span>
         </a>
-        <a href="#" class="c-nav__item" aria-current="page">
+        <a href="#" class="pl-c-nav__item" aria-current="page">
           <svg
-            class="c-nav__icon"
+            class="pl-c-nav__icon"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -156,12 +156,12 @@ const steps: ProcessLane[] = [
             <rect x="3" y="15" width="7" height="6" rx="1.5"></rect>
             <rect x="14" y="15" width="7" height="6" rx="1.5"></rect>
           </svg>
-          <span class="c-nav__label">Processes</span>
-          <span class="c-badge c-nav__badge" data-tone="accent">12</span>
+          <span class="pl-c-nav__label">Processes</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">12</span>
         </a>
-        <a href="#" class="c-nav__item">
+        <a href="#" class="pl-c-nav__item">
           <svg
-            class="c-nav__icon"
+            class="pl-c-nav__icon"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -175,12 +175,12 @@ const steps: ProcessLane[] = [
             <path d="m3 12 1 1 2-2"></path>
             <path d="m3 18 1 1 2-2"></path>
           </svg>
-          <span class="c-nav__label">Rules</span>
+          <span class="pl-c-nav__label">Rules</span>
         </a>
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
             <svg
-              class="c-nav__icon"
+              class="pl-c-nav__icon"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -195,7 +195,7 @@ const steps: ProcessLane[] = [
             </svg>
             <span>Teams</span>
             <svg
-              class="c-nav__chevron"
+              class="pl-c-nav__chevron"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -208,76 +208,76 @@ const steps: ProcessLane[] = [
                 stroke-linejoin="round"></path>
             </svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Procurement</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Procurement</span>
           </a>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Security</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Security</span>
           </a>
         </details>
       </nav>
     </aside>
 
-    <main class="l-app-shell__main">
+    <main class="pl-l-app-shell__main">
       <div
-        class="l-container l-stack builder-workspace"
+        class="pl-l-container pl-l-stack builder-workspace"
       >
-        <div class="c-page-header">
-          <div class="c-page-header__heading">
-            <h1 class="c-page-header__title">Vendor onboarding</h1>
-            <span class="c-page-header__subtitle">
+        <div class="pl-c-page-header">
+          <div class="pl-c-page-header__heading">
+            <h1 class="pl-c-page-header__title">Vendor onboarding</h1>
+            <span class="pl-c-page-header__subtitle">
               Draft v12, staged for Procurement Ops
             </span>
           </div>
-          <div class="c-page-header__actions">
-            <button class="c-button" data-variant="secondary" type="button">
+          <div class="pl-c-page-header__actions">
+            <button class="pl-c-button" data-variant="secondary" type="button">
               Preview
             </button>
-            <button class="c-button" data-variant="primary" type="button">
+            <button class="pl-c-button" data-variant="primary" type="button">
               Publish
             </button>
           </div>
         </div>
 
-        <div class="c-toolbar" data-surface="panel" aria-label="Draft actions">
-          <div class="c-toolbar__group">
-            <div class="c-segmented" role="radiogroup" aria-label="Builder mode">
-              <label class="c-segmented__item">
+        <div class="pl-c-toolbar" data-surface="panel" aria-label="Draft actions">
+          <div class="pl-c-toolbar__group">
+            <div class="pl-c-segmented" role="radiogroup" aria-label="Builder mode">
+              <label class="pl-c-segmented__item">
                 <input type="radio" name="mode" checked />
                 <span>Map</span>
               </label>
-              <label class="c-segmented__item">
+              <label class="pl-c-segmented__item">
                 <input type="radio" name="mode" />
                 <span>Rules</span>
               </label>
-              <label class="c-segmented__item">
+              <label class="pl-c-segmented__item">
                 <input type="radio" name="mode" />
                 <span>Test</span>
               </label>
             </div>
-            <label class="c-field c-field--inline">
-              <span class="u-sr-only">Search process</span>
+            <label class="pl-c-field pl-c-field--inline">
+              <span class="pl-u-sr-only">Search process</span>
               <input
-                class="c-field__control"
+                class="pl-c-field__control"
                 type="search"
                 placeholder="Search steps..."
               />
             </label>
           </div>
-          <div class="c-toolbar__group">
-            <span class="u-muted-sm">Saved 2 minutes ago</span>
-            <div class="c-toolbar__divider"></div>
-            <button class="c-button" data-variant="ghost" type="button">
+          <div class="pl-c-toolbar__group">
+            <span class="pl-u-muted-sm">Saved 2 minutes ago</span>
+            <div class="pl-c-toolbar__divider"></div>
+            <button class="pl-c-button" data-variant="ghost" type="button">
               History
             </button>
-            <button class="c-button" data-variant="secondary" type="button">
+            <button class="pl-c-button" data-variant="secondary" type="button">
               Save draft
             </button>
           </div>
         </div>
 
-        <section class="c-alert" data-tone="warning" role="status">
-          <div class="c-alert__icon" aria-hidden="true">
+        <section class="pl-c-alert" data-tone="warning" role="status">
+          <div class="pl-c-alert__icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -289,9 +289,9 @@ const steps: ProcessLane[] = [
               <path d="M12 17h.01"></path>
             </svg>
           </div>
-          <div class="c-alert__content">
-            <div class="c-alert__title">Publish check needs attention</div>
-            <div class="c-alert__body">
+          <div class="pl-c-alert__content">
+            <div class="pl-c-alert__title">Publish check needs attention</div>
+            <div class="pl-c-alert__body">
               Finance approval is missing an owner. The draft can still be
               saved.
             </div>
@@ -299,23 +299,23 @@ const steps: ProcessLane[] = [
         </section>
 
         <section
-          class="c-split-pane builder-split"
+          class="pl-c-split-pane builder-split"
           data-orientation="horizontal"
           data-collapse="stack"
           aria-label="Process builder workspace"
         >
           <aside
-            class="c-split-pane__pane c-split-pane__pane--start"
+            class="pl-c-split-pane__pane pl-c-split-pane__pane--start"
             aria-label="Process library"
             tabindex="0"
           >
-            <header class="c-split-pane__header">
+            <header class="pl-c-split-pane__header">
               <div>
-                <h2 class="c-split-pane__title">Library</h2>
-                <p class="c-split-pane__description">Processes and rule sets</p>
+                <h2 class="pl-c-split-pane__title">Library</h2>
+                <p class="pl-c-split-pane__description">Processes and rule sets</p>
               </div>
               <button
-                class="c-button"
+                class="pl-c-button"
                 data-variant="ghost"
                 data-size="sm"
                 type="button"
@@ -323,22 +323,22 @@ const steps: ProcessLane[] = [
                 New
               </button>
             </header>
-            <div class="c-split-pane__pane-inner">
+            <div class="pl-c-split-pane__pane-inner">
               <div
-                class="c-tree"
+                class="pl-c-tree"
                 role="tree"
                 aria-label="Process library"
                 data-actions="persistent"
-                data-density="compact"
+                data-pl-density="compact"
               >
                 <div
-                  class="c-tree__item"
+                  class="pl-c-tree__item"
                   role="treeitem"
                   aria-expanded="true"
                   tabindex="0"
                 >
-                  <div class="c-tree__item-row">
-                    <span class="c-tree__expander" aria-hidden="true">
+                  <div class="pl-c-tree__item-row">
+                    <span class="pl-c-tree__expander" aria-hidden="true">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -347,7 +347,7 @@ const steps: ProcessLane[] = [
                         set:html={chevron}
                       />
                     </span>
-                    <span class="c-tree__icon" aria-hidden="true">
+                    <span class="pl-c-tree__icon" aria-hidden="true">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -356,20 +356,20 @@ const steps: ProcessLane[] = [
                         set:html={folderIcon}
                       />
                     </span>
-                    <span class="c-tree__label">Procurement</span>
-                    <span class="c-tree__badge">4</span>
+                    <span class="pl-c-tree__label">Procurement</span>
+                    <span class="pl-c-tree__badge">4</span>
                   </div>
-                  <div class="c-tree__group" role="group">
+                  <div class="pl-c-tree__group" role="group">
                     <div
-                      class="c-tree__item"
+                      class="pl-c-tree__item"
                       role="treeitem"
                       aria-current="page"
                       aria-selected="true"
                       tabindex="-1"
                     >
-                      <div class="c-tree__item-row">
-                        <span class="c-tree__expander" aria-hidden="true"></span>
-                        <span class="c-tree__icon" aria-hidden="true">
+                      <div class="pl-c-tree__item-row">
+                        <span class="pl-c-tree__expander" aria-hidden="true"></span>
+                        <span class="pl-c-tree__icon" aria-hidden="true">
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -378,14 +378,14 @@ const steps: ProcessLane[] = [
                             set:html={processIcon}
                           />
                         </span>
-                        <span class="c-tree__label">Vendor onboarding</span>
-                        <span class="c-tree__meta">v12</span>
+                        <span class="pl-c-tree__label">Vendor onboarding</span>
+                        <span class="pl-c-tree__meta">v12</span>
                       </div>
                     </div>
-                    <div class="c-tree__item" role="treeitem" tabindex="-1">
-                      <div class="c-tree__item-row">
-                        <span class="c-tree__expander" aria-hidden="true"></span>
-                        <span class="c-tree__icon" aria-hidden="true">
+                    <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
+                      <div class="pl-c-tree__item-row">
+                        <span class="pl-c-tree__expander" aria-hidden="true"></span>
+                        <span class="pl-c-tree__icon" aria-hidden="true">
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -394,21 +394,21 @@ const steps: ProcessLane[] = [
                             set:html={processIcon}
                           />
                         </span>
-                        <span class="c-tree__label">Purchase request</span>
-                        <span class="c-tree__meta">draft</span>
+                        <span class="pl-c-tree__label">Purchase request</span>
+                        <span class="pl-c-tree__meta">draft</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div
-                  class="c-tree__item"
+                  class="pl-c-tree__item"
                   role="treeitem"
                   aria-expanded="true"
                   tabindex="-1"
                 >
-                  <div class="c-tree__item-row">
-                    <span class="c-tree__expander" aria-hidden="true">
+                  <div class="pl-c-tree__item-row">
+                    <span class="pl-c-tree__expander" aria-hidden="true">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -417,7 +417,7 @@ const steps: ProcessLane[] = [
                         set:html={chevron}
                       />
                     </span>
-                    <span class="c-tree__icon" aria-hidden="true">
+                    <span class="pl-c-tree__icon" aria-hidden="true">
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -426,14 +426,14 @@ const steps: ProcessLane[] = [
                         set:html={folderIcon}
                       />
                     </span>
-                    <span class="c-tree__label">Shared rules</span>
-                    <span class="c-tree__badge">18</span>
+                    <span class="pl-c-tree__label">Shared rules</span>
+                    <span class="pl-c-tree__badge">18</span>
                   </div>
-                  <div class="c-tree__group" role="group">
-                    <div class="c-tree__item" role="treeitem" tabindex="-1">
-                      <div class="c-tree__item-row">
-                        <span class="c-tree__expander" aria-hidden="true"></span>
-                        <span class="c-tree__icon" aria-hidden="true">
+                  <div class="pl-c-tree__group" role="group">
+                    <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
+                      <div class="pl-c-tree__item-row">
+                        <span class="pl-c-tree__expander" aria-hidden="true"></span>
+                        <span class="pl-c-tree__icon" aria-hidden="true">
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -442,19 +442,19 @@ const steps: ProcessLane[] = [
                             set:html={ruleIcon}
                           />
                         </span>
-                        <span class="c-tree__label">Spend threshold</span>
-                        <span class="c-tree__meta">3 used</span>
+                        <span class="pl-c-tree__label">Spend threshold</span>
+                        <span class="pl-c-tree__meta">3 used</span>
                       </div>
                     </div>
                     <div
-                      class="c-tree__item"
+                      class="pl-c-tree__item"
                       role="treeitem"
                       aria-disabled="true"
                       tabindex="-1"
                     >
-                      <div class="c-tree__item-row">
-                        <span class="c-tree__expander" aria-hidden="true"></span>
-                        <span class="c-tree__icon" aria-hidden="true">
+                      <div class="pl-c-tree__item-row">
+                        <span class="pl-c-tree__expander" aria-hidden="true"></span>
+                        <span class="pl-c-tree__icon" aria-hidden="true">
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -463,8 +463,8 @@ const steps: ProcessLane[] = [
                             set:html={ruleIcon}
                           />
                         </span>
-                        <span class="c-tree__label">Compliance hold</span>
-                        <span class="c-tree__meta">locked</span>
+                        <span class="pl-c-tree__label">Compliance hold</span>
+                        <span class="pl-c-tree__meta">locked</span>
                       </div>
                     </div>
                   </div>
@@ -474,7 +474,7 @@ const steps: ProcessLane[] = [
           </aside>
 
           <div
-            class="c-split-pane__separator"
+            class="pl-c-split-pane__separator"
             role="separator"
             aria-orientation="vertical"
             aria-valuemin="20"
@@ -485,55 +485,55 @@ const steps: ProcessLane[] = [
           ></div>
 
           <section
-            class="c-split-pane__pane c-split-pane__pane--end"
+            class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
             aria-label="Process editor"
             tabindex="0"
           >
-            <header class="c-split-pane__header">
+            <header class="pl-c-split-pane__header">
               <div>
-                <h2 class="c-split-pane__title">Draft map</h2>
-                <p class="c-split-pane__description">
+                <h2 class="pl-c-split-pane__title">Draft map</h2>
+                <p class="pl-c-split-pane__description">
                   Select a step to edit details and validation.
                 </p>
               </div>
-              <div class="l-cluster builder-editor-status">
-                <span class="c-badge" data-tone="accent">5 steps</span>
-                <span class="c-badge" data-tone="warning">1 warning</span>
+              <div class="pl-l-cluster builder-editor-status">
+                <span class="pl-c-badge" data-tone="accent">5 steps</span>
+                <span class="pl-c-badge" data-tone="warning">1 warning</span>
               </div>
             </header>
-            <div class="c-split-pane__pane-inner">
+            <div class="pl-c-split-pane__pane-inner">
               <div
-                class="c-split-pane builder-editor-split"
+                class="pl-c-split-pane builder-editor-split"
                 data-orientation="horizontal"
                 data-layout="fixed-end"
                 data-collapse="stack"
                 aria-label="Process map and inspector"
               >
                 <section
-                  class="c-split-pane__pane c-split-pane__pane--start builder-map-pane"
+                  class="pl-c-split-pane__pane pl-c-split-pane__pane--start builder-map-pane"
                   aria-label="Process map"
                   tabindex="0"
                 >
-                  <div class="c-split-pane__pane-inner builder-map-pane__inner">
+                  <div class="pl-c-split-pane__pane-inner builder-map-pane__inner">
                     <section
-                      class="c-workflow-board"
+                      class="pl-c-workflow-board"
                       aria-labelledby="vendor-map-title"
                     >
-                      <div class="c-workflow-board__header">
+                      <div class="pl-c-workflow-board__header">
                         <div>
                           <h3
-                            class="c-workflow-board__title"
+                            class="pl-c-workflow-board__title"
                             id="vendor-map-title"
                           >
                             Vendor onboarding
                           </h3>
-                          <p class="c-workflow-board__meta">
+                          <p class="pl-c-workflow-board__meta">
                             Sequence view for the current draft.
                           </p>
                         </div>
-                        <div class="c-workflow-board__tools">
+                        <div class="pl-c-workflow-board__tools">
                           <button
-                            class="c-button"
+                            class="pl-c-button"
                             data-variant="secondary"
                             data-size="sm"
                             type="button"
@@ -544,50 +544,50 @@ const steps: ProcessLane[] = [
                       </div>
 
                       <section
-                        class="c-workflow-board__swimlane"
+                        class="pl-c-workflow-board__swimlane"
                         aria-labelledby="draft-path"
                       >
-                        <div class="c-workflow-board__swimlane-header">
+                        <div class="pl-c-workflow-board__swimlane-header">
                           <h4
-                            class="c-workflow-board__swimlane-title"
+                            class="pl-c-workflow-board__swimlane-title"
                             id="draft-path"
                           >
                             Approval path
                           </h4>
-                          <span class="c-workflow-board__swimlane-meta">
+                          <span class="pl-c-workflow-board__swimlane-meta">
                             Low-code map with app-owned ordering
                           </span>
                         </div>
-                        <div class="c-workflow-board__lanes">
+                        <div class="pl-c-workflow-board__lanes">
                           {
                             steps.map((lane) => (
                               <section
-                                class="c-workflow-lane"
+                                class="pl-c-workflow-lane"
                                 aria-labelledby={`lane-${lane.title.toLowerCase()}`}
                               >
-                                <header class="c-workflow-lane__header">
-                                  <div class="c-workflow-lane__heading">
+                                <header class="pl-c-workflow-lane__header">
+                                  <div class="pl-c-workflow-lane__heading">
                                     <h5
-                                      class="c-workflow-lane__title"
+                                      class="pl-c-workflow-lane__title"
                                       id={`lane-${lane.title.toLowerCase()}`}
                                     >
                                       {lane.title}
                                     </h5>
-                                    <span class="c-workflow-lane__count">
+                                    <span class="pl-c-workflow-lane__count">
                                       {lane.count}
                                     </span>
                                   </div>
                                   <span
-                                    class="c-workflow-lane__wip"
+                                    class="pl-c-workflow-lane__wip"
                                     data-state={lane.state}
                                   >
                                     {lane.wip}
                                   </span>
                                 </header>
-                                <div class="c-workflow-lane__body">
+                                <div class="pl-c-workflow-lane__body">
                                   {lane.cards.map((card) => (
                                     <article
-                                      class="c-workflow-card"
+                                      class="pl-c-workflow-card"
                                       data-selected={
                                         card.selected ? '' : undefined
                                       }
@@ -595,21 +595,21 @@ const steps: ProcessLane[] = [
                                         card.high ? 'high' : undefined
                                       }
                                     >
-                                      <div class="c-workflow-card__header">
-                                        <h6 class="c-workflow-card__title">
+                                      <div class="pl-c-workflow-card__header">
+                                        <h6 class="pl-c-workflow-card__title">
                                           {card.title}
                                         </h6>
                                         <span
-                                          class="c-badge"
+                                          class="pl-c-badge"
                                           data-tone={card.tone}
                                         >
                                           {card.badge}
                                         </span>
                                       </div>
-                                      <p class="c-workflow-card__body">
+                                      <p class="pl-c-workflow-card__body">
                                         {card.body}
                                       </p>
-                                      <div class="c-workflow-card__meta">
+                                      <div class="pl-c-workflow-card__meta">
                                         <span>{card.id}</span>
                                         <span>2 fields</span>
                                       </div>
@@ -626,7 +626,7 @@ const steps: ProcessLane[] = [
                 </section>
 
                 <div
-                  class="c-split-pane__separator"
+                  class="pl-c-split-pane__separator"
                   role="separator"
                   aria-orientation="vertical"
                   aria-valuemin="62"
@@ -637,30 +637,30 @@ const steps: ProcessLane[] = [
                 ></div>
 
                 <aside
-                  class="c-split-pane__pane c-split-pane__pane--end"
+                  class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
                   aria-label="Selected step inspector"
                   tabindex="0"
                 >
-                  <header class="c-split-pane__header">
+                  <header class="pl-c-split-pane__header">
                     <div>
-                      <h3 class="c-split-pane__title" id="inspector-title">
+                      <h3 class="pl-c-split-pane__title" id="inspector-title">
                         Security review
                       </h3>
-                      <p class="c-split-pane__description">
+                      <p class="pl-c-split-pane__description">
                         STEP-03, selected step
                       </p>
                     </div>
-                    <span class="c-badge" data-tone="warning">Needs owner</span>
+                    <span class="pl-c-badge" data-tone="warning">Needs owner</span>
                   </header>
-                  <div class="c-split-pane__pane-inner">
-                    <div class="c-tabs">
+                  <div class="pl-c-split-pane__pane-inner">
+                    <div class="pl-c-tabs">
                       <div
-                        class="c-tabs__list"
+                        class="pl-c-tabs__list"
                         role="tablist"
                         aria-label="Inspector panels"
                       >
                         <button
-                          class="c-tabs__tab"
+                          class="pl-c-tabs__tab"
                           role="tab"
                           aria-selected="true"
                           id="tab-settings"
@@ -670,7 +670,7 @@ const steps: ProcessLane[] = [
                           Settings
                         </button>
                         <button
-                          class="c-tabs__tab"
+                          class="pl-c-tabs__tab"
                           role="tab"
                           aria-selected="false"
                           id="tab-validation"
@@ -678,39 +678,39 @@ const steps: ProcessLane[] = [
                           tabindex="-1"
                         >
                           Validation
-                          <span class="c-tabs__count">1</span>
+                          <span class="pl-c-tabs__count">1</span>
                         </button>
                       </div>
                       <div
-                        class="c-tabs__panel"
+                        class="pl-c-tabs__panel"
                         role="tabpanel"
                         id="panel-settings"
                         aria-labelledby="tab-settings"
                       >
                         <form
-                          class="c-form"
+                          class="pl-c-form"
                           aria-labelledby="inspector-title"
                           action="#"
                         >
-                          <section class="c-form__section">
-                            <div class="c-form__header">
+                          <section class="pl-c-form__section">
+                            <div class="pl-c-form__header">
                               <h4>Step details</h4>
                               <p>Keep required metadata close to the map.</p>
                             </div>
-                            <div class="c-form__body">
-                              <label class="c-field">
-                                <span class="c-field__label">Step label</span>
+                            <div class="pl-c-form__body">
+                              <label class="pl-c-field">
+                                <span class="pl-c-field__label">Step label</span>
                                 <input
-                                  class="c-field__control"
+                                  class="pl-c-field__control"
                                   name="label"
                                   value="Security review"
                                 />
                               </label>
-                              <div class="c-form__grid">
-                                <label class="c-field">
-                                  <span class="c-field__label">Owner</span>
+                              <div class="pl-c-form__grid">
+                                <label class="pl-c-field">
+                                  <span class="pl-c-field__label">Owner</span>
                                   <select
-                                    class="c-field__control"
+                                    class="pl-c-field__control"
                                     name="owner"
                                     aria-invalid="true"
                                     aria-describedby="owner-warning"
@@ -720,7 +720,7 @@ const steps: ProcessLane[] = [
                                     <option>Procurement Ops</option>
                                   </select>
                                   <span
-                                    class="c-field__hint"
+                                    class="pl-c-field__hint"
                                     id="owner-warning"
                                     data-tone="warning"
                                     role="alert"
@@ -728,35 +728,35 @@ const steps: ProcessLane[] = [
                                     Required before publish.
                                   </span>
                                 </label>
-                                <label class="c-field">
-                                  <span class="c-field__label">SLA</span>
-                                  <select class="c-field__control" name="sla">
+                                <label class="pl-c-field">
+                                  <span class="pl-c-field__label">SLA</span>
+                                  <select class="pl-c-field__control" name="sla">
                                     <option>2 business days</option>
                                     <option>4 business hours</option>
                                     <option>1 week</option>
                                   </select>
                                 </label>
                               </div>
-                              <label class="c-field">
-                                <span class="c-field__label">Instructions</span>
+                              <label class="pl-c-field">
+                                <span class="pl-c-field__label">Instructions</span>
                                 <textarea
-                                  class="c-field__control"
+                                  class="pl-c-field__control"
                                   name="instructions"
                                   rows="4"
                                 >Review SOC 2 packet and data handling scope before finance approval.</textarea>
                               </label>
                             </div>
                           </section>
-                          <div class="c-form__actions">
+                          <div class="pl-c-form__actions">
                             <button
-                              class="c-button"
+                              class="pl-c-button"
                               data-variant="ghost"
                               type="button"
                             >
                               Revert
                             </button>
                             <button
-                              class="c-button"
+                              class="pl-c-button"
                               data-variant="primary"
                               type="submit"
                             >
@@ -766,16 +766,16 @@ const steps: ProcessLane[] = [
                         </form>
                       </div>
                       <div
-                        class="c-tabs__panel"
+                        class="pl-c-tabs__panel"
                         role="tabpanel"
                         id="panel-validation"
                         aria-labelledby="tab-validation"
                         hidden
                       >
-                        <div class="c-alert" data-tone="warning">
-                          <div class="c-alert__content">
-                            <div class="c-alert__title">Owner required</div>
-                            <div class="c-alert__body">
+                        <div class="pl-c-alert" data-tone="warning">
+                          <div class="pl-c-alert__content">
+                            <div class="pl-c-alert__title">Owner required</div>
+                            <div class="pl-c-alert__body">
                               Assign Security Ops or another team before
                               publishing this draft.
                             </div>
@@ -796,28 +796,28 @@ const steps: ProcessLane[] = [
 
 <style>
   .builder-shell {
-    --app-sidebar-size: 18rem;
+    --pl-app-sidebar-size: 18rem;
   }
 
-  .builder-shell > .l-app-shell__topbar {
+  .builder-shell > .pl-l-app-shell__topbar {
     position: static;
     z-index: auto;
   }
 
   .builder-topbar {
-    --l-cluster-justify: space-between;
-    --l-cluster-gap: var(--pl-space-4);
+    --pl-l-cluster-justify: space-between;
+    --pl-l-cluster-gap: var(--pl-space-4);
 
     padding-inline: var(--pl-space-4);
   }
 
   .builder-topbar__brand {
-    --l-cluster-gap: var(--pl-space-3);
+    --pl-l-cluster-gap: var(--pl-space-3);
   }
 
   .builder-topbar__status,
   .builder-editor-status {
-    --l-cluster-gap: var(--pl-space-2);
+    --pl-l-cluster-gap: var(--pl-space-2);
   }
 
   .builder-topbar__menu-icon {
@@ -826,24 +826,24 @@ const steps: ProcessLane[] = [
   }
 
   .builder-workspace {
-    --l-container-max: 112rem;
-    --l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
-    --l-stack-gap: var(--pl-space-5);
+    --pl-l-container-max: 112rem;
+    --pl-l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    --pl-l-stack-gap: var(--pl-space-5);
 
     padding-block: var(--pl-space-5);
   }
 
   .builder-split {
-    --c-split-pane-start-size: minmax(18rem, 0.42fr);
-    --c-split-pane-end-size: minmax(0, 1.72fr);
-    --c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
-    --c-split-pane-pane-padding: var(--pl-space-4);
+    --pl-c-split-pane-start-size: minmax(18rem, 0.42fr);
+    --pl-c-split-pane-end-size: minmax(0, 1.72fr);
+    --pl-c-split-pane-min-block-size: min(42rem, calc(100dvb - 10rem));
+    --pl-c-split-pane-pane-padding: var(--pl-space-4);
   }
 
   .builder-editor-split {
-    --c-split-pane-fixed-size: clamp(20rem, 22vi, 28rem);
-    --c-split-pane-min-block-size: 38rem;
-    --c-split-pane-pane-padding: var(--pl-space-4);
+    --pl-c-split-pane-fixed-size: clamp(20rem, 22vi, 28rem);
+    --pl-c-split-pane-min-block-size: 38rem;
+    --pl-c-split-pane-pane-padding: var(--pl-space-4);
   }
 
   .builder-split,
@@ -863,13 +863,13 @@ const steps: ProcessLane[] = [
     border-radius: inherit;
   }
 
-  .builder-split .c-split-pane__header {
+  .builder-split .pl-c-split-pane__header {
     position: static;
     z-index: auto;
   }
 
-  .builder-split > .c-split-pane__pane,
-  .builder-editor-split > .c-split-pane__pane {
+  .builder-split > .pl-c-split-pane__pane,
+  .builder-editor-split > .pl-c-split-pane__pane {
     overflow: visible;
     overscroll-behavior: auto;
     scrollbar-gutter: auto;
@@ -879,11 +879,11 @@ const steps: ProcessLane[] = [
     min-block-size: 100%;
   }
 
-  .builder-map-pane .c-workflow-board {
+  .builder-map-pane .pl-c-workflow-board {
     min-inline-size: 0;
   }
 
-  .builder-map-pane .c-workflow-board__lanes {
+  .builder-map-pane .pl-c-workflow-board__lanes {
     grid-auto-columns: auto;
     grid-auto-flow: row;
     grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
@@ -892,7 +892,7 @@ const steps: ProcessLane[] = [
     scroll-snap-type: none;
   }
 
-  .builder-map-pane .c-workflow-lane {
+  .builder-map-pane .pl-c-workflow-lane {
     scroll-snap-align: none;
   }
 
@@ -901,30 +901,30 @@ const steps: ProcessLane[] = [
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows:
         minmax(20rem, auto)
-        var(--c-split-pane-separator-size)
+        var(--pl-c-split-pane-separator-size)
         minmax(20rem, 1fr);
       overflow: hidden;
     }
 
-    .builder-editor-split > .c-split-pane__pane--start {
+    .builder-editor-split > .pl-c-split-pane__pane--start {
       grid-area: 1 / 1;
     }
 
-    .builder-editor-split > .c-split-pane__pane--end {
+    .builder-editor-split > .pl-c-split-pane__pane--end {
       grid-area: 3 / 1;
     }
 
-    .builder-editor-split > .c-split-pane__separator {
+    .builder-editor-split > .pl-c-split-pane__separator {
       grid-area: 2 / 1;
       cursor: row-resize;
     }
 
-    .builder-editor-split > .c-split-pane__separator::before {
+    .builder-editor-split > .pl-c-split-pane__separator::before {
       inline-size: 100%;
-      block-size: var(--c-split-pane-separator-line-size);
+      block-size: var(--pl-c-split-pane-separator-line-size);
     }
 
-    .builder-editor-split > .c-split-pane__separator::after {
+    .builder-editor-split > .pl-c-split-pane__separator::after {
       inline-size: 2rem;
       block-size: 0.1875rem;
     }
@@ -935,30 +935,30 @@ const steps: ProcessLane[] = [
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows:
         minmax(12rem, auto)
-        var(--c-split-pane-separator-size)
+        var(--pl-c-split-pane-separator-size)
         minmax(20rem, 1fr);
       overflow: hidden;
     }
 
-    .builder-split > .c-split-pane__pane--start {
+    .builder-split > .pl-c-split-pane__pane--start {
       grid-area: 1 / 1;
     }
 
-    .builder-split > .c-split-pane__pane--end {
+    .builder-split > .pl-c-split-pane__pane--end {
       grid-area: 3 / 1;
     }
 
-    .builder-split > .c-split-pane__separator {
+    .builder-split > .pl-c-split-pane__separator {
       grid-area: 2 / 1;
       cursor: row-resize;
     }
 
-    .builder-split > .c-split-pane__separator::before {
+    .builder-split > .pl-c-split-pane__separator::before {
       inline-size: 100%;
-      block-size: var(--c-split-pane-separator-line-size);
+      block-size: var(--pl-c-split-pane-separator-line-size);
     }
 
-    .builder-split > .c-split-pane__separator::after {
+    .builder-split > .pl-c-split-pane__separator::after {
       inline-size: 2rem;
       block-size: 0.1875rem;
     }
@@ -966,16 +966,16 @@ const steps: ProcessLane[] = [
 
   @media (width < 42rem) {
     .builder-workspace {
-      --l-container-pad: var(--pl-space-3);
-      --l-stack-gap: var(--pl-space-4);
+      --pl-l-container-pad: var(--pl-space-3);
+      --pl-l-stack-gap: var(--pl-space-4);
 
       padding-block: var(--pl-space-3);
     }
 
     .builder-split,
     .builder-editor-split {
-      --c-split-pane-min-block-size: 0;
-      --c-split-pane-pane-padding: var(--pl-space-4);
+      --pl-c-split-pane-min-block-size: 0;
+      --pl-c-split-pane-pane-padding: var(--pl-space-4);
     }
   }
 </style>

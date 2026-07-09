@@ -10,14 +10,14 @@
  * [data-placement] options for other corners.
  *
  * Structure:
- *   <div class="c-toast-stack" role="region" aria-label="Notifications">
- *     <div class="c-toast" data-tone="success" role="status">
- *       <span class="c-toast__icon">...</span>
- *       <div class="c-toast__content">
- *         <span class="c-toast__title">Saved</span>
- *         <span class="c-toast__body">Changes were saved.</span>
+ *   <div class="pl-c-toast-stack" role="region" aria-label="Notifications">
+ *     <div class="pl-c-toast" data-tone="success" role="status">
+ *       <span class="pl-c-toast__icon">...</span>
+ *       <div class="pl-c-toast__content">
+ *         <span class="pl-c-toast__title">Saved</span>
+ *         <span class="pl-c-toast__body">Changes were saved.</span>
  *       </div>
- *       <button class="c-toast__close" aria-label="Dismiss">x</button>
+ *       <button class="pl-c-toast__close" aria-label="Dismiss">x</button>
  *     </div>
  *   </div>
  *
@@ -28,7 +28,7 @@
   /* Toast stack: fixed positioning, bottom-corner. isolation: isolate
      contains the stacking context so toasts never bleed z-index to page
      content  -  cleaner than an opacity hack. */
-  :where(.c-toast-stack) {
+  :where(.pl-c-toast-stack) {
     position: fixed;
     inset: auto;
     inset-block-end: var(--pl-space-4);
@@ -44,37 +44,38 @@
     pointer-events: none;
   }
 
-  :where(.c-toast-stack[data-placement="bottom-start"]) {
+  :where(.pl-c-toast-stack[data-placement="bottom-start"]) {
     inset-inline: var(--pl-space-4) auto;
   }
 
-  :where(.c-toast-stack[data-placement="top-end"]) {
+  :where(.pl-c-toast-stack[data-placement="top-end"]) {
     inset-block: var(--pl-space-4) auto;
   }
 
-  :where(.c-toast-stack[data-placement="top-start"]) {
+  :where(.pl-c-toast-stack[data-placement="top-start"]) {
     inset-block: var(--pl-space-4) auto;
     inset-inline: var(--pl-space-4) auto;
   }
 
-  @scope (.c-toast) {
+  @scope (.pl-c-toast) {
     :scope {
-      --c-toast-tone: var(--pl-color-accent);
-      --c-toast-pad: var(--pl-space-3) var(--pl-space-4);
-      --c-toast-radius: var(--pl-radius-xl);
-      --c-toast-gap: var(--pl-space-3);
+      --pl-c-toast-tone: var(--pl-color-accent);
+      --pl-c-toast-pad: var(--pl-space-3) var(--pl-space-4);
+      --pl-c-toast-radius: var(--pl-radius-xl);
+      --pl-c-toast-gap: var(--pl-space-3);
 
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: var(--c-toast-gap);
+      gap: var(--pl-c-toast-gap);
       align-items: start;
-      padding: var(--c-toast-pad);
+      padding: var(--pl-c-toast-pad);
 
       /* Floating surface: softened border + Liquid Glass. */
       border: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 25%);
-      border-inline-start: var(--pl-accent-bar-width) solid var(--c-toast-tone);
-      border-radius: var(--c-toast-radius);
+      border-inline-start: var(--pl-accent-bar-width) solid
+        var(--pl-c-toast-tone);
+      border-radius: var(--pl-c-toast-radius);
       background: light-dark(
         oklch(100% 0 0deg / 96%),
         oklch(17% 0.04 250deg / 94%)
@@ -113,47 +114,47 @@
 
     /* Tone variants. */
     :scope[data-tone="success"] {
-      --c-toast-tone: var(--pl-color-success);
+      --pl-c-toast-tone: var(--pl-color-success);
     }
 
     :scope[data-tone="warning"] {
-      --c-toast-tone: var(--pl-color-warning);
+      --pl-c-toast-tone: var(--pl-color-warning);
     }
 
     :scope[data-tone="danger"] {
-      --c-toast-tone: var(--pl-color-danger);
+      --pl-c-toast-tone: var(--pl-color-danger);
     }
 
-    .c-toast__icon {
+    .pl-c-toast__icon {
       display: flex;
       align-items: flex-start;
-      color: var(--c-toast-tone);
+      color: var(--pl-c-toast-tone);
       flex-shrink: 0;
     }
 
-    .c-toast__icon svg {
+    .pl-c-toast__icon svg {
       inline-size: 1.25rem;
       block-size: 1.25rem;
     }
 
-    .c-toast__content {
+    .pl-c-toast__content {
       display: flex;
       flex-direction: column;
       gap: var(--pl-space-1);
       min-inline-size: 0;
     }
 
-    .c-toast__title {
+    .pl-c-toast__title {
       font-weight: var(--pl-font-weight-semibold);
       font-size: var(--pl-text-sm);
     }
 
-    .c-toast__body {
+    .pl-c-toast__body {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
     }
 
-    .c-toast__close {
+    .pl-c-toast__close {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -171,8 +172,8 @@
       transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-toast__close::before,
-    .c-toast__close::after {
+    .pl-c-toast__close::before,
+    .pl-c-toast__close::after {
       content: "";
       position: absolute;
       inset-block-start: 50%;
@@ -184,27 +185,27 @@
       transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    .c-toast__close::after {
+    .pl-c-toast__close::after {
       transform: translate(-50%, -50%) rotate(-45deg);
     }
 
-    .c-toast__close:hover {
+    .pl-c-toast__close:hover {
       background: var(--pl-color-surface-2);
     }
 
-    .c-toast__close:focus-visible {
+    .pl-c-toast__close:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-toast) {
+    :where(.pl-c-toast) {
       border-color: ButtonBorder;
       background: Canvas;
     }
 
-    :where(.c-toast__close:focus-visible) {
+    :where(.pl-c-toast__close:focus-visible) {
       outline-color: Highlight;
     }
   }

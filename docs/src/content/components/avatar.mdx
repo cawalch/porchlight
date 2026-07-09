@@ -7,33 +7,35 @@ since: 0.2.0
 
 # Avatar
 
-The `.c-avatar` renders a circular user identity chip. Three sizes via
-`[data-size]`. For images, use `<img class="c-avatar__img">`. Group stacking
-via `.c-avatar-group`.
+The `.pl-c-avatar` renders a circular user identity chip. Three sizes via
+`[data-size]`. For images, use `<img class="pl-c-avatar__img">`. Group stacking
+via `.pl-c-avatar-group`.
 
 ## Semantic HTML
 
 ```html
 <!-- Initials -->
-<div class="c-avatar">JD</div>
+<div class="pl-c-avatar">JD</div>
 
 <!-- Image -->
-<div class="c-avatar"><img class="c-avatar__img" src="…" alt="Jane Doe" /></div>
+<div class="pl-c-avatar">
+  <img class="pl-c-avatar__img" src="…" alt="Jane Doe" />
+</div>
 
 <!-- Group -->
-<div class="c-avatar-group">
-  <div class="c-avatar" data-size="sm">JD</div>
-  <div class="c-avatar" data-size="sm">AB</div>
-  <div class="c-avatar-group__more">+8</div>
+<div class="pl-c-avatar-group">
+  <div class="pl-c-avatar" data-size="sm">JD</div>
+  <div class="pl-c-avatar" data-size="sm">AB</div>
+  <div class="pl-c-avatar-group__more">+8</div>
 </div>
 ```
 
 ## Class contract
 
-| Selector                | Role                            |
-| ----------------------- | ------------------------------- |
-| `.c-avatar`             | The circle (flex center).       |
-| `.c-avatar__img`        | Image fill (object-fit: cover). |
-| `[data-size]`           | `sm`, default, `lg`.            |
-| `.c-avatar-group`       | Overlapping stack container.    |
-| `.c-avatar-group__more` | Overflow count chip.            |
+| Selector                   | Role                            |
+| -------------------------- | ------------------------------- |
+| `.pl-c-avatar`             | The circle (flex center).       |
+| `.pl-c-avatar__img`        | Image fill (object-fit: cover). |
+| `[data-size]`              | `sm`, default, `lg`.            |
+| `.pl-c-avatar-group`       | Overlapping stack container.    |
+| `.pl-c-avatar-group__more` | Overflow count chip.            |

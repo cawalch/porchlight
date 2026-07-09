@@ -9,24 +9,24 @@
  * Falls back to a fixed-width input.
  *
  * Structure:
- *   <div class="c-tag-input">
- *     <span class="c-chip">React <button class="c-chip__remove">x</button></span>
- *     <input class="c-tag-input__field" placeholder="Add tag..." />
+ *   <div class="pl-c-tag-input">
+ *     <span class="pl-c-chip">React <button class="pl-c-chip__remove">x</button></span>
+ *     <input class="pl-c-tag-input__field" placeholder="Add tag..." />
  *   </div>
  */
 @layer porchlight.components {
-  @scope (.c-tag-input) {
+  @scope (.pl-c-tag-input) {
     :scope {
-      --c-tag-input-pad: var(--pl-space-2);
-      --c-tag-input-gap: var(--pl-space-2);
-      --c-tag-input-min-h: calc(var(--pl-control-block-size) - 2px);
+      --pl-c-tag-input-pad: var(--pl-space-2);
+      --pl-c-tag-input-gap: var(--pl-space-2);
+      --pl-c-tag-input-min-h: calc(var(--pl-control-block-size) - 2px);
 
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: var(--c-tag-input-gap);
-      min-block-size: var(--c-tag-input-min-h);
-      padding: var(--c-tag-input-pad);
+      gap: var(--pl-c-tag-input-gap);
+      min-block-size: var(--pl-c-tag-input-min-h);
+      padding: var(--pl-c-tag-input-pad);
       border: 1px solid var(--pl-color-border);
       border-radius: var(--pl-radius-md);
       background: var(--pl-color-surface);
@@ -47,7 +47,7 @@
         );
     }
 
-    .c-tag-input__field {
+    .pl-c-tag-input__field {
       flex: 1;
       min-inline-size: 6rem;
       padding: 0;
@@ -59,13 +59,13 @@
       outline: none;
     }
 
-    .c-tag-input__field::placeholder {
+    .pl-c-tag-input__field::placeholder {
       color: var(--pl-color-text-muted);
     }
 
     /* Auto-grow where supported. */
     @supports (field-sizing: content) {
-      .c-tag-input__field {
+      .pl-c-tag-input__field {
         field-sizing: content;
         min-inline-size: 4rem;
       }
@@ -73,7 +73,7 @@
   }
 
   @media (forced-colors: active) {
-    :where(.c-tag-input) {
+    :where(.pl-c-tag-input) {
       border-color: ButtonBorder;
       background: Canvas;
     }

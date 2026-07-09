@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Drawer
 
-The `.c-drawer` is an off-canvas panel that slides in from a viewport edge.
+The `.pl-c-drawer` is an off-canvas panel that slides in from a viewport edge.
 It uses the native Popover API for top-layer rendering and light-dismiss,
 combined with `@starting-style` for a smooth enter/exit animation.
 
@@ -16,15 +16,15 @@ combined with `@starting-style` for a smooth enter/exit animation.
 ```html
 <button popovertarget="my-drawer">Open</button>
 
-<div popover class="c-drawer" id="my-drawer" data-side="end">
-  <div class="c-drawer__header">
-    <h2 class="c-drawer__title">Title</h2>
+<div popover class="pl-c-drawer" id="my-drawer" data-side="end">
+  <div class="pl-c-drawer__header">
+    <h2 class="pl-c-drawer__title">Title</h2>
     <button popovertarget="my-drawer" aria-label="Close">x</button>
   </div>
-  <div class="c-drawer__body">Content</div>
-  <div class="c-drawer__footer">
-    <button class="c-button" data-variant="ghost">Cancel</button>
-    <button class="c-button" data-variant="primary">Save</button>
+  <div class="pl-c-drawer__body">Content</div>
+  <div class="pl-c-drawer__footer">
+    <button class="pl-c-button" data-variant="ghost">Cancel</button>
+    <button class="pl-c-button" data-variant="primary">Save</button>
   </div>
 </div>
 ```
@@ -38,10 +38,10 @@ combined with `@starting-style` for a smooth enter/exit animation.
 
 ## Class contract
 
-| Selector            | Role                                |
-| ------------------- | ----------------------------------- |
-| `.c-drawer`         | The panel (popover, fixed to edge). |
-| `.c-drawer__header` | Sticky header with title + close.   |
-| `.c-drawer__title`  | Panel heading.                      |
-| `.c-drawer__body`   | Scrollable content area.            |
-| `.c-drawer__footer` | Bottom action bar.                  |
+| Selector               | Role                                |
+| ---------------------- | ----------------------------------- |
+| `.pl-c-drawer`         | The panel (popover, fixed to edge). |
+| `.pl-c-drawer__header` | Sticky header with title + close.   |
+| `.pl-c-drawer__title`  | Panel heading.                      |
+| `.pl-c-drawer__body`   | Scrollable content area.            |
+| `.pl-c-drawer__footer` | Bottom action bar.                  |

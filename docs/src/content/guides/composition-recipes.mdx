@@ -13,12 +13,12 @@ it.
 
 ## Model checklist
 
-- Use `.l-*` layout primitives for page structure: `.l-app-shell`,
-  `.l-container`, `.l-stack`, `.l-grid`, `.l-cluster`, `.l-sidebar`.
-- Use `.c-*` components for UI semantics and component chrome: cards, forms,
+- Use `.pl-l-*` layout primitives for page structure: `.pl-l-app-shell`,
+  `.pl-l-container`, `.pl-l-stack`, `.pl-l-grid`, `.pl-l-cluster`, `.pl-l-sidebar`.
+- Use `.pl-c-*` components for UI semantics and component chrome: cards, forms,
   tables, toolbars, tabs, pagination, badges, nav, stats.
-- Use `.u-*` utilities for small text and overflow adjustments:
-  `.u-muted`, `.u-muted-sm`, `.u-truncate`, `.u-sr-only`, `.u-min-0`.
+- Use `.pl-u-*` utilities for small text and overflow adjustments:
+  `.pl-u-muted`, `.pl-u-muted-sm`, `.pl-u-truncate`, `.pl-u-sr-only`, `.pl-u-min-0`.
 - Use app CSS only for glue: page-specific widths, a one-off split, or a local
   alignment fix. Prefer tokens such as `--pl-space-4` over new spacing values.
 - Keep native HTML semantics: real tables, forms, headings, labels, nav,
@@ -26,46 +26,49 @@ it.
 
 ## Avoid these mistakes
 
-- Do not make div-based tables. Use `<table>` inside `.c-table-wrap`.
-- Do not put page headers inside `.c-toolbar`; use `.c-page-header` inside
-  padded content and `.c-toolbar` on data-region edges.
-- Do not nest cards inside cards for layout. Use `.l-grid`, `.l-sidebar`,
-  `.l-stack`, or sibling `.c-card` elements instead.
-- Do not omit `.c-table-wrap`; it provides scroll, borders, sticky context, and
-  container-query behavior for `.c-table`.
-- Do not invent spacing systems. Use `.l-stack`, `.l-grid`, `.l-cluster`, and
+- Do not make div-based tables. Use `<table>` inside `.pl-c-table-wrap`.
+- Do not put page headers inside `.pl-c-toolbar`; use `.pl-c-page-header` inside
+  padded content and `.pl-c-toolbar` on data-region edges.
+- Do not nest cards inside cards for layout. Use `.pl-l-grid`, `.pl-l-sidebar`,
+  `.pl-l-stack`, or sibling `.pl-c-card` elements instead.
+- Do not omit `.pl-c-table-wrap`; it provides scroll, borders, sticky context, and
+  container-query behavior for `.pl-c-table`.
+- Do not invent spacing systems. Use `.pl-l-stack`, `.pl-l-grid`, `.pl-l-cluster`, and
   `--pl-space-*` tokens.
 - Do not use visible labels as placeholders only. Use real visible labels or
-  `.u-sr-only` for compact controls.
+  `.pl-u-sr-only` for compact controls.
 
 ## App Shell Recipe
 
 Use this for SaaS workspaces, dashboards, inboxes, consoles, and admin tools.
 The shell owns the topbar/sidebar/main regions; the page content goes inside
-`.l-app-shell__main`.
+`.pl-l-app-shell__main`.
 
 ```html
-<div class="l-app-shell">
-  <header class="l-app-shell__topbar">
-    <div class="l-cluster" style="--l-cluster-justify: space-between;">
+<div class="pl-l-app-shell">
+  <header class="pl-l-app-shell__topbar">
+    <div class="pl-l-cluster" style="--pl-l-cluster-justify: space-between;">
       <strong>Acme</strong>
-      <button class="c-button" data-variant="ghost">Search</button>
+      <button class="pl-c-button" data-variant="ghost">Search</button>
     </div>
   </header>
 
-  <aside class="l-app-shell__sidebar">
-    <nav class="c-nav" aria-label="Main navigation">
-      <a class="c-nav__item" href="/dashboard" aria-current="page">
-        <span class="c-nav__label">Dashboard</span>
+  <aside class="pl-l-app-shell__sidebar">
+    <nav class="pl-c-nav" aria-label="Main navigation">
+      <a class="pl-c-nav__item" href="/dashboard" aria-current="page">
+        <span class="pl-c-nav__label">Dashboard</span>
       </a>
-      <a class="c-nav__item" href="/accounts">
-        <span class="c-nav__label">Accounts</span>
+      <a class="pl-c-nav__item" href="/accounts">
+        <span class="pl-c-nav__label">Accounts</span>
       </a>
     </nav>
   </aside>
 
-  <main class="l-app-shell__main">
-    <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-6);">
+  <main class="pl-l-app-shell__main">
+    <div
+      class="pl-l-container pl-l-stack"
+      style="--pl-l-stack-gap: var(--pl-space-6);"
+    >
       <!-- page sections -->
     </div>
   </main>
@@ -74,31 +77,36 @@ The shell owns the topbar/sidebar/main regions; the page content goes inside
 
 ## Dashboard Recipe
 
-Use `.c-page-header` for the page title and actions, `.l-grid` for responsive
-metric cards, and `.c-card[data-surface="app"]` around each KPI.
+Use `.pl-c-page-header` for the page title and actions, `.pl-l-grid` for responsive
+metric cards, and `.pl-c-card[data-surface="app"]` around each KPI.
 
 ```html
-<div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-6);">
-  <div class="c-page-header">
-    <div class="c-page-header__heading">
-      <h1 class="c-page-header__title">Dashboard</h1>
-      <span class="c-page-header__subtitle">Overview of workspace health</span>
+<div
+  class="pl-l-container pl-l-stack"
+  style="--pl-l-stack-gap: var(--pl-space-6);"
+>
+  <div class="pl-c-page-header">
+    <div class="pl-c-page-header__heading">
+      <h1 class="pl-c-page-header__title">Dashboard</h1>
+      <span class="pl-c-page-header__subtitle"
+        >Overview of workspace health</span
+      >
     </div>
-    <div class="c-page-header__actions">
-      <button class="c-button" data-variant="secondary">Export</button>
-      <button class="c-button" data-variant="primary">New report</button>
+    <div class="pl-c-page-header__actions">
+      <button class="pl-c-button" data-variant="secondary">Export</button>
+      <button class="pl-c-button" data-variant="primary">New report</button>
     </div>
   </div>
 
-  <div class="l-grid" style="--l-grid-min: 14rem;">
-    <section class="c-card" data-surface="app">
-      <div class="c-card__body">
-        <div class="c-stat">
-          <span class="c-stat__label">Monthly revenue</span>
-          <div class="c-stat__value">
-            $48,200<span class="c-stat__unit">/mo</span>
+  <div class="pl-l-grid" style="--pl-l-grid-min: 14rem;">
+    <section class="pl-c-card" data-surface="app">
+      <div class="pl-c-card__body">
+        <div class="pl-c-stat">
+          <span class="pl-c-stat__label">Monthly revenue</span>
+          <div class="pl-c-stat__value">
+            $48,200<span class="pl-c-stat__unit">/mo</span>
           </div>
-          <span class="c-stat__trend" data-direction="up">12.4%</span>
+          <span class="pl-c-stat__trend" data-direction="up">12.4%</span>
         </div>
       </div>
     </section>
@@ -110,52 +118,52 @@ metric cards, and `.c-card[data-surface="app"]` around each KPI.
 
 Use this for tables with headers, filters, actions, selected rows, and
 pagination. The card frames the region; toolbars sit at the top and bottom;
-the table must stay inside `.c-table-wrap`.
+the table must stay inside `.pl-c-table-wrap`.
 
 ```html
-<section class="c-card" data-surface="app">
-  <div class="c-toolbar">
-    <div class="c-toolbar__group">
-      <label class="c-field">
-        <span class="u-sr-only">Search accounts</span>
+<section class="pl-c-card" data-surface="app">
+  <div class="pl-c-toolbar">
+    <div class="pl-c-toolbar__group">
+      <label class="pl-c-field">
+        <span class="pl-u-sr-only">Search accounts</span>
         <input
-          class="c-field__control"
+          class="pl-c-field__control"
           type="search"
           placeholder="Search accounts..."
         />
       </label>
-      <button class="c-button" data-variant="ghost">Filter</button>
+      <button class="pl-c-button" data-variant="ghost">Filter</button>
     </div>
-    <div class="c-toolbar__group">
-      <button class="c-button" data-variant="secondary">Export</button>
-      <button class="c-button" data-variant="primary">New account</button>
+    <div class="pl-c-toolbar__group">
+      <button class="pl-c-button" data-variant="secondary">Export</button>
+      <button class="pl-c-button" data-variant="primary">New account</button>
     </div>
   </div>
 
-  <div class="c-table-wrap" style="border-inline: 0; border-radius: 0;">
-    <table class="c-table" style="--c-table-min: 42rem;">
+  <div class="pl-c-table-wrap" style="border-inline: 0; border-radius: 0;">
+    <table class="pl-c-table" style="--pl-c-table-min: 42rem;">
       <thead>
         <tr>
-          <th class="c-table__check">
+          <th class="pl-c-table__check">
             <input type="checkbox" aria-label="Select all" />
           </th>
-          <th class="c-table__sticky-col" data-sort="asc">
-            Account <span class="c-table__sort-icon"></span>
+          <th class="pl-c-table__sticky-col" data-sort="asc">
+            Account <span class="pl-c-table__sort-icon"></span>
           </th>
           <th>Status</th>
           <th data-align="end">Seats</th>
           <th data-align="end" data-sort="desc">
-            MRR <span class="c-table__sort-icon"></span>
+            MRR <span class="pl-c-table__sort-icon"></span>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr aria-selected="true">
-          <td class="c-table__check">
+          <td class="pl-c-table__check">
             <input type="checkbox" checked aria-label="Select Acme" />
           </td>
-          <td class="c-table__sticky-col">Acme Ops</td>
-          <td><span class="c-badge" data-tone="success">Active</span></td>
+          <td class="pl-c-table__sticky-col">Acme Ops</td>
+          <td><span class="pl-c-badge" data-tone="success">Active</span></td>
           <td data-align="end">48</td>
           <td data-align="end">$2,400</td>
         </tr>
@@ -164,18 +172,18 @@ the table must stay inside `.c-table-wrap`.
   </div>
 
   <div
-    class="c-toolbar"
+    class="pl-c-toolbar"
     style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border);"
   >
-    <div class="c-toolbar__group">
-      <span class="u-muted-sm">Showing 1-10 of 247</span>
+    <div class="pl-c-toolbar__group">
+      <span class="pl-u-muted-sm">Showing 1-10 of 247</span>
     </div>
-    <div class="c-toolbar__group">
-      <nav class="c-pagination" aria-label="Accounts pagination">
-        <button class="c-pagination__nav" disabled>Prev</button>
-        <button class="c-pagination__page" aria-current="page">1</button>
-        <button class="c-pagination__page">2</button>
-        <button class="c-pagination__nav">Next</button>
+    <div class="pl-c-toolbar__group">
+      <nav class="pl-c-pagination" aria-label="Accounts pagination">
+        <button class="pl-c-pagination__nav" disabled>Prev</button>
+        <button class="pl-c-pagination__page" aria-current="page">1</button>
+        <button class="pl-c-pagination__page">2</button>
+        <button class="pl-c-pagination__nav">Next</button>
       </nav>
     </div>
   </div>
@@ -184,30 +192,34 @@ the table must stay inside `.c-table-wrap`.
 
 ## Settings Page Recipe
 
-Use `.l-sidebar` for local navigation plus a flexible settings panel. Use tabs
-for major sections and `.c-form` for real form layout.
+Use `.pl-l-sidebar` for local navigation plus a flexible settings panel. Use tabs
+for major sections and `.pl-c-form` for real form layout.
 
 ```html
-<div class="l-container">
-  <div class="l-sidebar" style="--l-sidebar-size: 14rem;">
-    <nav class="c-nav" aria-label="Settings sections">
-      <a class="c-nav__item" href="#profile" aria-current="page">
-        <span class="c-nav__label">Profile</span>
+<div class="pl-l-container">
+  <div class="pl-l-sidebar" style="--pl-l-sidebar-size: 14rem;">
+    <nav class="pl-c-nav" aria-label="Settings sections">
+      <a class="pl-c-nav__item" href="#profile" aria-current="page">
+        <span class="pl-c-nav__label">Profile</span>
       </a>
-      <a class="c-nav__item" href="#billing">
-        <span class="c-nav__label">Billing</span>
+      <a class="pl-c-nav__item" href="#billing">
+        <span class="pl-c-nav__label">Billing</span>
       </a>
     </nav>
 
-    <section class="c-card">
-      <div class="c-card__body">
-        <div class="c-tabs">
-          <div class="c-tabs__list" role="tablist" aria-label="Settings tabs">
-            <button class="c-tabs__tab" role="tab" aria-selected="true">
+    <section class="pl-c-card">
+      <div class="pl-c-card__body">
+        <div class="pl-c-tabs">
+          <div
+            class="pl-c-tabs__list"
+            role="tablist"
+            aria-label="Settings tabs"
+          >
+            <button class="pl-c-tabs__tab" role="tab" aria-selected="true">
               General
             </button>
             <button
-              class="c-tabs__tab"
+              class="pl-c-tabs__tab"
               role="tab"
               aria-selected="false"
               tabindex="-1"
@@ -215,24 +227,24 @@ for major sections and `.c-form` for real form layout.
               Security
             </button>
           </div>
-          <div class="c-tabs__panel" role="tabpanel">
-            <form class="c-form">
-              <div class="c-form__grid">
-                <label class="c-field">
-                  <span class="c-field__label">Workspace name</span>
-                  <input class="c-field__control" value="Acme Ops" />
+          <div class="pl-c-tabs__panel" role="tabpanel">
+            <form class="pl-c-form">
+              <div class="pl-c-form__grid">
+                <label class="pl-c-field">
+                  <span class="pl-c-field__label">Workspace name</span>
+                  <input class="pl-c-field__control" value="Acme Ops" />
                 </label>
-                <div class="c-field">
-                  <label class="c-field__label" for="workspace-slug"
+                <div class="pl-c-field">
+                  <label class="pl-c-field__label" for="workspace-slug"
                     >Workspace URL</label
                   >
-                  <div class="c-input-group">
+                  <div class="pl-c-input-group">
                     <input
                       id="workspace-slug"
-                      class="c-field__control"
+                      class="pl-c-field__control"
                       value="acme-ops"
                     />
-                    <span class="c-input-group__addon">.porchlight.app</span>
+                    <span class="pl-c-input-group__addon">.porchlight.app</span>
                   </div>
                 </div>
               </div>
@@ -247,38 +259,45 @@ for major sections and `.c-form` for real form layout.
 
 ## Dense Admin View Recipe
 
-Use `data-density="dense"` for screens where scan speed matters more than
+Use `data-pl-density="dense"` for screens where scan speed matters more than
 breathing room. Pair it with compact copy, truncation, numeric alignment, and
 real table semantics.
 
 ```html
-<main class="l-app-shell__main" data-density="dense">
-  <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-4);">
-    <div class="c-page-header">
-      <div class="c-page-header__heading">
-        <h1 class="c-page-header__title">Event queue</h1>
-        <span class="c-page-header__subtitle">1,248 events, 36 critical</span>
+<main class="pl-l-app-shell__main" data-pl-density="dense">
+  <div
+    class="pl-l-container pl-l-stack"
+    style="--pl-l-stack-gap: var(--pl-space-4);"
+  >
+    <div class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Event queue</h1>
+        <span class="pl-c-page-header__subtitle"
+          >1,248 events, 36 critical</span
+        >
       </div>
-      <div class="c-page-header__actions">
-        <button class="c-button" data-variant="secondary">Acknowledge</button>
+      <div class="pl-c-page-header__actions">
+        <button class="pl-c-button" data-variant="secondary">
+          Acknowledge
+        </button>
       </div>
     </div>
 
-    <section class="c-card" data-surface="app">
-      <div class="c-toolbar">
-        <div class="c-toolbar__group">
-          <span class="u-muted-sm">Filtered to production</span>
+    <section class="pl-c-card" data-surface="app">
+      <div class="pl-c-toolbar">
+        <div class="pl-c-toolbar__group">
+          <span class="pl-u-muted-sm">Filtered to production</span>
         </div>
-        <div class="c-toolbar__group">
-          <button class="c-button" data-variant="ghost">Refresh</button>
+        <div class="pl-c-toolbar__group">
+          <button class="pl-c-button" data-variant="ghost">Refresh</button>
         </div>
       </div>
       <div
-        class="c-table-wrap"
-        data-density="dense"
+        class="pl-c-table-wrap"
+        data-pl-density="dense"
         style="border-inline: 0; border-radius: 0;"
       >
-        <table class="c-table" style="--c-table-min: 54rem;">
+        <table class="pl-c-table" style="--pl-c-table-min: 54rem;">
           <thead>
             <tr>
               <th>Time</th>
@@ -291,7 +310,7 @@ real table semantics.
             <tr>
               <td><time>10:42:18</time></td>
               <td><code>api-04</code></td>
-              <td class="u-truncate" style="max-inline-size: 22rem;">
+              <td class="pl-u-truncate" style="max-inline-size: 22rem;">
                 Unexpected auth spike from edge region
               </td>
               <td data-align="end">98</td>

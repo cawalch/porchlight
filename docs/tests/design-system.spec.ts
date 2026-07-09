@@ -171,7 +171,7 @@ test("interactive controls meet the WCAG AA touch-target minimum (24px)", async 
 }) => {
   await page.goto("./preview/button");
   const sizes = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll(".c-button")).map((el) => {
+    return Array.from(document.querySelectorAll(".pl-c-button")).map((el) => {
       const r = el.getBoundingClientRect();
       return { w: Math.round(r.width), h: Math.round(r.height) };
     });
@@ -196,7 +196,7 @@ test("field controls meet the WCAG AA touch-target minimum", async ({
 }) => {
   await page.goto("./preview/field");
   const minDim = await page.evaluate(() => {
-    const el = document.querySelector(".c-field__control") as HTMLElement;
+    const el = document.querySelector(".pl-c-field__control") as HTMLElement;
     const r = el.getBoundingClientRect();
     return Math.round(Math.min(r.width, r.height));
   });
@@ -210,7 +210,7 @@ test("field controls meet the WCAG AA touch-target minimum", async ({
 test("control radius token resolves to rounded controls", async ({ page }) => {
   await page.goto("./preview/button");
   const radii = await page.evaluate(() => {
-    const button = document.querySelector(".c-button") as HTMLElement;
+    const button = document.querySelector(".pl-c-button") as HTMLElement;
     const root = document.documentElement;
     return {
       token: getComputedStyle(root).getPropertyValue("--pl-radius-control"),

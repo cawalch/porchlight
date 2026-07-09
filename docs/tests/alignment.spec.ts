@@ -18,10 +18,10 @@ test("all buttons in the button variants row share one height", async ({
   page,
 }) => {
   await page.goto("./preview/button");
-  // The first .l-cluster row holds primary/secondary/ghost/default.
+  // The first .pl-l-cluster row holds primary/secondary/ghost/default.
   const heights = await page.evaluate(() => {
-    const row = document.querySelector(".l-cluster")!;
-    return Array.from(row.querySelectorAll(".c-button")).map((b) =>
+    const row = document.querySelector(".pl-l-cluster")!;
+    return Array.from(row.querySelectorAll(".pl-c-button")).map((b) =>
       Math.round(b.getBoundingClientRect().height),
     );
   });
@@ -36,8 +36,8 @@ test("all buttons in the button variants row share one height", async ({
 test("card titles in a grid row align at the same Y", async ({ page }) => {
   await page.goto("./preview/card");
   const tops = await page.evaluate(() => {
-    const grid = document.querySelector(".l-grid")!;
-    return Array.from(grid.querySelectorAll(".c-card__title")).map((t) =>
+    const grid = document.querySelector(".pl-l-grid")!;
+    return Array.from(grid.querySelectorAll(".pl-c-card__title")).map((t) =>
       Math.round(t.getBoundingClientRect().top),
     );
   });
@@ -56,8 +56,8 @@ test("button icon + label are vertically centered (within 1px)", async ({
   await page.goto("./preview/button");
   // The "New report" primary button has an icon + label.
   const center = await page.evaluate(() => {
-    const btn = Array.from(document.querySelectorAll(".c-button")).find((b) =>
-      b.textContent?.includes("New report"),
+    const btn = Array.from(document.querySelectorAll(".pl-c-button")).find(
+      (b) => b.textContent?.includes("New report"),
     ) as HTMLElement | undefined;
     if (!btn) return null;
     const icon = btn.querySelector("svg")!;
@@ -84,7 +84,7 @@ test("table numeric columns are right-aligned and use tabular-nums", async ({
   await page.goto("./preview/data-table");
   const data = await page.evaluate(() => {
     const cell = document.querySelector(
-      '.c-table td[data-align="end"]',
+      '.pl-c-table td[data-align="end"]',
     ) as HTMLElement;
     if (!cell) return null;
     const cs = getComputedStyle(cell);
@@ -102,9 +102,9 @@ test("split button segments share one height", async ({ page }) => {
   await page.goto("./preview/split-button");
   // Measure primary vs toggle height in the first instance.
   const heights = await page.evaluate(() => {
-    const split = document.querySelector(".c-split")!;
-    const primary = split.querySelector(".c-split__primary")!;
-    const toggle = split.querySelector(".c-split__toggle")!;
+    const split = document.querySelector(".pl-c-split")!;
+    const primary = split.querySelector(".pl-c-split__primary")!;
+    const toggle = split.querySelector(".pl-c-split__toggle")!;
     return {
       primary: Math.round(primary.getBoundingClientRect().height),
       toggle: Math.round(toggle.getBoundingClientRect().height),
@@ -124,9 +124,9 @@ test("split button segments fuse into one control", async ({ page }) => {
   // The trailing edge of primary and leading edge of toggle must meet as one
   // segmented control. A 1px overlap collapses the shared border into a seam.
   const metrics = await page.evaluate(() => {
-    const split = document.querySelector(".c-split")!;
-    const primary = split.querySelector<HTMLElement>(".c-split__primary")!;
-    const toggle = split.querySelector<HTMLElement>(".c-split__toggle")!;
+    const split = document.querySelector(".pl-c-split")!;
+    const primary = split.querySelector<HTMLElement>(".pl-c-split__primary")!;
+    const toggle = split.querySelector<HTMLElement>(".pl-c-split__toggle")!;
     const pRect = primary.getBoundingClientRect();
     const tRect = toggle.getBoundingClientRect();
     const primaryStyle = getComputedStyle(primary);
@@ -166,17 +166,17 @@ test("split button stays fused inside common app containers", async ({
 
   const metrics = await page.evaluate(() => {
     const fixture = document.createElement("div");
-    fixture.className = "c-card";
+    fixture.className = "pl-c-card";
     fixture.innerHTML = `
-      <div class="c-card__body">
-        <form class="c-form">
-          <div class="c-split" style="--c-split-anchor: --app-split;">
-            <button type="button" class="c-button c-split__primary" data-variant="primary">Approve</button>
-            <button type="button" class="c-button c-split__toggle" data-variant="primary" popovertarget="app-split-menu" aria-label="More actions">
-              <span class="c-split__chevron">⌄</span>
+      <div class="pl-c-card__body">
+        <form class="pl-c-form">
+          <div class="pl-c-split" style="--pl-c-split-anchor: --pl-app-split;">
+            <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">Approve</button>
+            <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary" popovertarget="app-split-menu" aria-label="More actions">
+              <span class="pl-c-split__chevron">⌄</span>
             </button>
-            <div popover class="c-split__menu" id="app-split-menu">
-              <button class="c-split__option">Approve and notify</button>
+            <div popover class="pl-c-split__menu" id="app-split-menu">
+              <button class="pl-c-split__option">Approve and notify</button>
             </div>
           </div>
         </form>
@@ -184,9 +184,9 @@ test("split button stays fused inside common app containers", async ({
     `;
     document.querySelector("main")!.append(fixture);
 
-    const split = fixture.querySelector(".c-split")!;
-    const primary = split.querySelector<HTMLElement>(".c-split__primary")!;
-    const toggle = split.querySelector<HTMLElement>(".c-split__toggle")!;
+    const split = fixture.querySelector(".pl-c-split")!;
+    const primary = split.querySelector<HTMLElement>(".pl-c-split__primary")!;
+    const toggle = split.querySelector<HTMLElement>(".pl-c-split__toggle")!;
     const pRect = primary.getBoundingClientRect();
     const tRect = toggle.getBoundingClientRect();
     const primaryStyle = getComputedStyle(primary);
@@ -217,7 +217,7 @@ test("split button stays fused inside common app containers", async ({
 
 test("split button chevron rotates when menu opens", async ({ page }) => {
   await page.goto("./preview/split-button");
-  const chevron = page.locator(".c-split__chevron").first();
+  const chevron = page.locator(".pl-c-split__chevron").first();
   const toggle = page.locator("[popovertarget='sb-1']");
 
   // Closed: rotation is 0deg (or none).

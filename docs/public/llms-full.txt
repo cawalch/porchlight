@@ -12,9 +12,9 @@ Base docs URL: https://cawalch.github.io/porchlight/
 
 Porchlight has three composition layers:
 
-- Use layout primitives for structure: l-app-shell, l-container, l-stack, l-grid, l-cluster, l-sidebar.
-- Use components for semantics and chrome: c-card, c-toolbar, c-page-header, c-form, c-field, c-table-wrap, c-table, c-pagination, c-nav, c-stat, c-tabs, c-badge.
-- Use utilities only for small adjustments: u-muted, u-muted-sm, u-truncate, u-sr-only, u-min-0.
+- Use layout primitives for structure: pl-l-app-shell, pl-l-container, pl-l-stack, pl-l-grid, pl-l-cluster, pl-l-sidebar.
+- Use components for semantics and chrome: pl-c-card, pl-c-toolbar, pl-c-page-header, pl-c-form, pl-c-field, pl-c-table-wrap, pl-c-table, pl-c-pagination, pl-c-nav, pl-c-stat, pl-c-tabs, pl-c-badge.
+- Use utilities only for small adjustments: pl-u-muted, pl-u-muted-sm, pl-u-truncate, pl-u-sr-only, pl-u-min-0.
 - Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.
 - Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.
 - Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.
@@ -29,12 +29,12 @@ Porchlight has three composition layers:
 
 ## Avoid
 
-- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside c-table-wrap.
-- Do not put page headers inside c-toolbar. Use c-page-header inside padded content; use c-toolbar on data-region edges.
-- Do not nest cards inside cards for layout. Use l-grid, l-sidebar, l-stack, or sibling c-card elements.
-- Do not omit c-table-wrap around c-table.
-- Do not invent new spacing scales. Use l-stack, l-grid, l-cluster, and --pl-space-* tokens.
-- Do not use placeholders as the only labels. Use visible labels or u-sr-only labels.
+- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside pl-c-table-wrap.
+- Do not put page headers inside pl-c-toolbar. Use pl-c-page-header inside padded content; use pl-c-toolbar on data-region edges.
+- Do not nest cards inside cards for layout. Use pl-l-grid, pl-l-sidebar, pl-l-stack, or sibling pl-c-card elements.
+- Do not omit pl-c-table-wrap around pl-c-table.
+- Do not invent new spacing scales. Use pl-l-stack, pl-l-grid, pl-l-cluster, and --pl-space-* tokens.
+- Do not use placeholders as the only labels. Use visible labels or pl-u-sr-only labels.
 - Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.
 - Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.
 - Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.
@@ -48,31 +48,31 @@ Porchlight has three composition layers:
 - Settings console: Use local navigation, grouped native forms, alerts, and explicit destructive-action framing.
 - Reporting dashboard: Use filter controls, KPI stats, chart shells, insight queues, and source tables for repeat reporting.
 - Command-driven workspace: Use command palette semantics plus visible result/detail surfaces when commands are the primary app control.
-- Dashboard: Use c-page-header, l-grid KPI cards, and app-surface cards.
-- Data region: Use c-card, c-toolbar, c-table-wrap, c-table, and pagination.
-- Settings page: Use l-sidebar for local nav and c-form/c-field for real controls.
+- Dashboard: Use pl-c-page-header, pl-l-grid KPI cards, and app-surface cards.
+- Data region: Use pl-c-card, pl-c-toolbar, pl-c-table-wrap, pl-c-table, and pagination.
+- Settings page: Use pl-l-sidebar for local nav and pl-c-form/pl-c-field for real controls.
 - Dense admin: Use density, truncation, numeric alignment, and real table semantics.
 - Validation form: Use native constraints, aria-invalid, aria-describedby, and data-tone messages.
 
 ## App shell skeleton
 
 ```html
-<div class="l-app-shell">
-  <header class="l-app-shell__topbar">
-    <div class="l-cluster" style="--l-cluster-justify: space-between;">
+<div class="pl-l-app-shell">
+  <header class="pl-l-app-shell__topbar">
+    <div class="pl-l-cluster" style="--pl-l-cluster-justify: space-between;">
       <strong>Acme</strong>
-      <button class="c-button" data-variant="ghost">Search</button>
+      <button class="pl-c-button" data-variant="ghost">Search</button>
     </div>
   </header>
-  <aside class="l-app-shell__sidebar">
-    <nav class="c-nav" aria-label="Main navigation">
-      <a class="c-nav__item" href="/dashboard" aria-current="page">
-        <span class="c-nav__label">Dashboard</span>
+  <aside class="pl-l-app-shell__sidebar">
+    <nav class="pl-c-nav" aria-label="Main navigation">
+      <a class="pl-c-nav__item" href="/dashboard" aria-current="page">
+        <span class="pl-c-nav__label">Dashboard</span>
       </a>
     </nav>
   </aside>
-  <main class="l-app-shell__main">
-    <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-6);">
+  <main class="pl-l-app-shell__main">
+    <div class="pl-l-container pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-6);">
       <!-- page sections -->
     </div>
   </main>
@@ -82,24 +82,24 @@ Porchlight has three composition layers:
 ## Dashboard skeleton
 
 ```html
-<div class="c-page-header">
-  <div class="c-page-header__heading">
-    <h1 class="c-page-header__title">Dashboard</h1>
-    <span class="c-page-header__subtitle">Overview of workspace health</span>
+<div class="pl-c-page-header">
+  <div class="pl-c-page-header__heading">
+    <h1 class="pl-c-page-header__title">Dashboard</h1>
+    <span class="pl-c-page-header__subtitle">Overview of workspace health</span>
   </div>
-  <div class="c-page-header__actions">
-    <button class="c-button" data-variant="secondary">Export</button>
-    <button class="c-button" data-variant="primary">New report</button>
+  <div class="pl-c-page-header__actions">
+    <button class="pl-c-button" data-variant="secondary">Export</button>
+    <button class="pl-c-button" data-variant="primary">New report</button>
   </div>
 </div>
 
-<div class="l-grid" style="--l-grid-min: 14rem;">
-  <section class="c-card" data-surface="app">
-    <div class="c-card__body">
-      <div class="c-stat">
-        <span class="c-stat__label">Monthly revenue</span>
-        <div class="c-stat__value">$48,200<span class="c-stat__unit">/mo</span></div>
-        <span class="c-stat__trend" data-direction="up">12.4%</span>
+<div class="pl-l-grid" style="--pl-l-grid-min: 14rem;">
+  <section class="pl-c-card" data-surface="app">
+    <div class="pl-c-card__body">
+      <div class="pl-c-stat">
+        <span class="pl-c-stat__label">Monthly revenue</span>
+        <div class="pl-c-stat__value">$48,200<span class="pl-c-stat__unit">/mo</span></div>
+        <span class="pl-c-stat__trend" data-direction="up">12.4%</span>
       </div>
     </div>
   </section>
@@ -109,46 +109,46 @@ Porchlight has three composition layers:
 ## Data table region skeleton
 
 ```html
-<section class="c-card" data-surface="app">
-  <div class="c-toolbar">
-    <div class="c-toolbar__group">
-      <label class="c-field">
-        <span class="u-sr-only">Search accounts</span>
-        <input class="c-field__control" type="search" placeholder="Search accounts..." />
+<section class="pl-c-card" data-surface="app">
+  <div class="pl-c-toolbar">
+    <div class="pl-c-toolbar__group">
+      <label class="pl-c-field">
+        <span class="pl-u-sr-only">Search accounts</span>
+        <input class="pl-c-field__control" type="search" placeholder="Search accounts..." />
       </label>
-      <button class="c-button" data-variant="ghost">Filter</button>
+      <button class="pl-c-button" data-variant="ghost">Filter</button>
     </div>
-    <div class="c-toolbar__group">
-      <button class="c-button" data-variant="primary">New account</button>
+    <div class="pl-c-toolbar__group">
+      <button class="pl-c-button" data-variant="primary">New account</button>
     </div>
   </div>
-  <div class="c-table-wrap" style="border-inline: 0; border-radius: 0;">
-    <table class="c-table" style="--c-table-min: 42rem;">
+  <div class="pl-c-table-wrap" style="border-inline: 0; border-radius: 0;">
+    <table class="pl-c-table" style="--pl-c-table-min: 42rem;">
       <thead>
         <tr>
-          <th class="c-table__check"><input type="checkbox" aria-label="Select all" /></th>
-          <th class="c-table__sticky-col" data-sort="asc">Account <span class="c-table__sort-icon"></span></th>
+          <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all" /></th>
+          <th class="pl-c-table__sticky-col" data-sort="asc">Account <span class="pl-c-table__sort-icon"></span></th>
           <th>Status</th>
           <th data-align="end">MRR</th>
         </tr>
       </thead>
       <tbody>
         <tr aria-selected="true">
-          <td class="c-table__check"><input type="checkbox" checked aria-label="Select Acme" /></td>
-          <td class="c-table__sticky-col">Acme Ops</td>
-          <td><span class="c-badge" data-tone="success">Active</span></td>
+          <td class="pl-c-table__check"><input type="checkbox" checked aria-label="Select Acme" /></td>
+          <td class="pl-c-table__sticky-col">Acme Ops</td>
+          <td><span class="pl-c-badge" data-tone="success">Active</span></td>
           <td data-align="end">$2,400</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border);">
-    <div class="c-toolbar__group"><span class="u-muted-sm">Showing 1-10 of 247</span></div>
-    <div class="c-toolbar__group">
-      <nav class="c-pagination" aria-label="Accounts pagination">
-        <button class="c-pagination__nav" disabled>Prev</button>
-        <button class="c-pagination__page" aria-current="page">1</button>
-        <button class="c-pagination__nav">Next</button>
+  <div class="pl-c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border);">
+    <div class="pl-c-toolbar__group"><span class="pl-u-muted-sm">Showing 1-10 of 247</span></div>
+    <div class="pl-c-toolbar__group">
+      <nav class="pl-c-pagination" aria-label="Accounts pagination">
+        <button class="pl-c-pagination__nav" disabled>Prev</button>
+        <button class="pl-c-pagination__page" aria-current="page">1</button>
+        <button class="pl-c-pagination__nav">Next</button>
       </nav>
     </div>
   </div>
@@ -158,25 +158,25 @@ Porchlight has three composition layers:
 ## Settings page skeleton
 
 ```html
-<div class="l-sidebar" style="--l-sidebar-size: 14rem;">
-  <nav class="c-nav" aria-label="Settings sections">
-    <a class="c-nav__item" href="#profile" aria-current="page">
-      <span class="c-nav__label">Profile</span>
+<div class="pl-l-sidebar" style="--pl-l-sidebar-size: 14rem;">
+  <nav class="pl-c-nav" aria-label="Settings sections">
+    <a class="pl-c-nav__item" href="#profile" aria-current="page">
+      <span class="pl-c-nav__label">Profile</span>
     </a>
   </nav>
-  <section class="c-card">
-    <div class="c-card__body">
-      <form class="c-form">
-        <div class="c-form__grid">
-          <label class="c-field">
-            <span class="c-field__label">Workspace name</span>
-            <input class="c-field__control" value="Acme Ops" />
+  <section class="pl-c-card">
+    <div class="pl-c-card__body">
+      <form class="pl-c-form">
+        <div class="pl-c-form__grid">
+          <label class="pl-c-field">
+            <span class="pl-c-field__label">Workspace name</span>
+            <input class="pl-c-field__control" value="Acme Ops" />
           </label>
-          <div class="c-field">
-            <label class="c-field__label" for="workspace-slug">Workspace URL</label>
-            <div class="c-input-group">
-              <input id="workspace-slug" class="c-field__control" value="acme-ops" />
-              <span class="c-input-group__addon">.porchlight.app</span>
+          <div class="pl-c-field">
+            <label class="pl-c-field__label" for="workspace-slug">Workspace URL</label>
+            <div class="pl-c-input-group">
+              <input id="workspace-slug" class="pl-c-field__control" value="acme-ops" />
+              <span class="pl-c-input-group__addon">.porchlight.app</span>
             </div>
           </div>
         </div>
@@ -189,20 +189,20 @@ Porchlight has three composition layers:
 ## Dense admin skeleton
 
 ```html
-<main class="l-app-shell__main" data-density="dense">
-  <div class="l-container l-stack" style="--l-stack-gap: var(--pl-space-4);">
-    <div class="c-page-header">
-      <div class="c-page-header__heading">
-        <h1 class="c-page-header__title">Event queue</h1>
-        <span class="c-page-header__subtitle">1,248 events, 36 critical</span>
+<main class="pl-l-app-shell__main" data-pl-density="dense">
+  <div class="pl-l-container pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-4);">
+    <div class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Event queue</h1>
+        <span class="pl-c-page-header__subtitle">1,248 events, 36 critical</span>
       </div>
     </div>
-    <section class="c-card" data-surface="app">
-      <div class="c-toolbar">
-        <div class="c-toolbar__group"><span class="u-muted-sm">Filtered to production</span></div>
+    <section class="pl-c-card" data-surface="app">
+      <div class="pl-c-toolbar">
+        <div class="pl-c-toolbar__group"><span class="pl-u-muted-sm">Filtered to production</span></div>
       </div>
-      <div class="c-table-wrap" data-density="dense" style="border-inline: 0; border-radius: 0;">
-        <table class="c-table" style="--c-table-min: 54rem;">
+      <div class="pl-c-table-wrap" data-pl-density="dense" style="border-inline: 0; border-radius: 0;">
+        <table class="pl-c-table" style="--pl-c-table-min: 54rem;">
           <thead>
             <tr><th>Time</th><th>Host</th><th>Message</th><th data-align="end">Score</th></tr>
           </thead>
@@ -210,7 +210,7 @@ Porchlight has three composition layers:
             <tr>
               <td><time>10:42:18</time></td>
               <td><code>api-04</code></td>
-              <td class="u-truncate" style="max-inline-size: 22rem;">Unexpected auth spike from edge region</td>
+              <td class="pl-u-truncate" style="max-inline-size: 22rem;">Unexpected auth spike from edge region</td>
               <td data-align="end">98</td>
             </tr>
           </tbody>
@@ -224,32 +224,32 @@ Porchlight has three composition layers:
 ## Validation form skeleton
 
 ```html
-<form class="c-form">
-  <div class="c-form__grid">
-    <label class="c-field">
-      <span class="c-field__label">
+<form class="pl-c-form">
+  <div class="pl-c-form__grid">
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">
         Workspace name
-        <span class="c-field__required" aria-hidden="true">*</span>
+        <span class="pl-c-field__required" aria-hidden="true">*</span>
       </span>
-      <input class="c-field__control" required aria-describedby="workspace-name-help" />
-      <span class="c-field__hint" id="workspace-name-help">Use a name your team recognizes.</span>
+      <input class="pl-c-field__control" required aria-describedby="workspace-name-help" />
+      <span class="pl-c-field__hint" id="workspace-name-help">Use a name your team recognizes.</span>
     </label>
 
-    <div class="c-field">
-      <label class="c-field__label" for="workspace-url">Workspace URL</label>
-      <div class="c-input-group">
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="workspace-url">Workspace URL</label>
+      <div class="pl-c-input-group">
         <input
           id="workspace-url"
-          class="c-field__control"
+          class="pl-c-field__control"
           value="acme ops"
           aria-invalid="true"
           aria-describedby="workspace-url-help workspace-url-error"
         />
-        <span class="c-input-group__addon">.porchlight.app</span>
+        <span class="pl-c-input-group__addon">.porchlight.app</span>
       </div>
-      <span class="c-field__messages">
-        <span class="c-field__hint" id="workspace-url-help">Use lowercase letters, numbers, and hyphens.</span>
-        <span class="c-field__hint" id="workspace-url-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
+      <span class="pl-c-field__messages">
+        <span class="pl-c-field__hint" id="workspace-url-help">Use lowercase letters, numbers, and hyphens.</span>
+        <span class="pl-c-field__hint" id="workspace-url-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
       </span>
     </div>
   </div>
@@ -261,56 +261,56 @@ Porchlight has three composition layers:
 ### Forms and fields
 
 - Use real form, label, input, select, textarea, fieldset, and legend elements.
-- Use .c-form for section rhythm, .c-form__grid for responsive fields, .c-form__row for filter rows, and .c-form__actions for submit/cancel actions.
-- Use .c-field for one labeled native control.
-- Use .c-field__required only as a visual marker; native required is the semantic source of truth.
+- Use .pl-c-form for section rhythm, .pl-c-form__grid for responsive fields, .pl-c-form__row for filter rows, and .pl-c-form__actions for submit/cancel actions.
+- Use .pl-c-field for one labeled native control.
+- Use .pl-c-field__required only as a visual marker; native required is the semantic source of truth.
 - Use aria-describedby to connect hints and errors to controls.
 - Use aria-invalid="true" for server/framework validation errors and remove it or set "false" for valid server state.
-- Use .c-field__hint[data-tone="warning|danger|success"] for message tone.
-- Use .c-field__messages when helper, warning, and error messages stack.
-- Use .c-input-group for prefix/suffix/action chrome around a native .c-field__control.
-- Use .c-choice-group and .c-choice-group__hint for checkbox/radio groups.
+- Use .pl-c-field__hint[data-tone="warning|danger|success"] for message tone.
+- Use .pl-c-field__messages when helper, warning, and error messages stack.
+- Use .pl-c-input-group for prefix/suffix/action chrome around a native .pl-c-field__control.
+- Use .pl-c-choice-group and .pl-c-choice-group__hint for checkbox/radio groups.
 
 ### Tables
 
-- Always wrap .c-table in .c-table-wrap.
+- Always wrap .pl-c-table in .pl-c-table-wrap.
 - Keep real table semantics: thead, tbody, tr, th, td.
 - Use data-align="end" for numeric columns.
-- Use data-sort="asc|desc" plus .c-table__sort-icon for sortable headers.
+- Use data-sort="asc|desc" plus .pl-c-table__sort-icon for sortable headers.
 - Use aria-selected="true" on selected rows.
-- Use .c-table__check for checkbox columns.
-- Use .c-table__sticky-col for sticky first columns.
+- Use .pl-c-table__check for checkbox columns.
+- Use .pl-c-table__sticky-col for sticky first columns.
 - For row actions, keep row navigation and detail disclosure as separate real links/buttons.
 
 ### Toolbars and page headers
 
-- Use .c-page-header for title/action rows inside padded page content.
-- Use .c-toolbar on the edge of data regions, cards, and table headers/footers.
-- Group controls with .c-toolbar__group. Use .c-toolbar__divider sparingly.
+- Use .pl-c-page-header for title/action rows inside padded page content.
+- Use .pl-c-toolbar on the edge of data regions, cards, and table headers/footers.
+- Group controls with .pl-c-toolbar__group. Use .pl-c-toolbar__divider sparingly.
 
 ### Cards and surfaces
 
-- Use c-card for repeated items, panels, and framed data regions.
+- Use pl-c-card for repeated items, panels, and framed data regions.
 - Use data-surface="app" for operational app surfaces where the preview examples use it.
 - Do not nest cards inside cards for layout.
 
 ### Navigation
 
 - Use nav with aria-label.
-- Use .c-nav__item for links and aria-current="page" for the current item.
+- Use .pl-c-nav__item for links and aria-current="page" for the current item.
 - Keep collapsed/icon variants accessible with labels.
 
 ### Status and feedback
 
-- Use .c-badge[data-tone] for compact status labels.
-- Use .c-alert[data-tone] for inline feedback blocks.
-- Use .c-toast[data-tone] for transient feedback.
+- Use .pl-c-badge[data-tone] for compact status labels.
+- Use .pl-c-alert[data-tone] for inline feedback blocks.
+- Use .pl-c-toast[data-tone] for transient feedback.
 - Valid tones are success, warning, and danger for most feedback components; accent/default is component-specific.
 
 ## Accessibility defaults
 
 - Every interactive control needs an accessible name.
-- Hidden labels should use .u-sr-only, not placeholder-only naming.
+- Hidden labels should use .pl-u-sr-only, not placeholder-only naming.
 - Keep focus indicators visible; do not remove outlines/rings in app CSS.
 - Use aria-expanded with expandable controls and keep it synchronized with visibility.
 - Use aria-controls when a control owns a specific panel/detail region.

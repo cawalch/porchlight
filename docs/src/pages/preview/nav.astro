@@ -19,94 +19,94 @@ const navItems = [
   <div class="nav-demo">
     <!-- Full nav in a sidebar-like container -->
     <div class="nav-sidebar">
-      <nav class="c-nav" aria-label="Main navigation">
-        <div class="c-nav__group">
-          <span class="c-nav__group-label">Workspace</span>
+      <nav class="pl-c-nav" aria-label="Main navigation">
+        <div class="pl-c-nav__group">
+          <span class="pl-c-nav__group-label">Workspace</span>
         </div>
         {navItems.map((item) => (
-          <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined}>
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
-            <span class="c-nav__label">{item.label}</span>
-            {item.badge && <span class="c-badge c-nav__badge" data-tone="accent">{item.badge}</span>}
+          <a href="#" class="pl-c-nav__item" aria-current={item.active ? 'page' : undefined}>
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+            <span class="pl-c-nav__label">{item.label}</span>
+            {item.badge && <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">{item.badge}</span>}
           </a>
         ))}
 
-        <div class="c-menu c-nav__menu" data-placement="inline-end" style="--c-menu-anchor: --nav-reports-menu;">
-          <button class="c-menu__trigger" type="button" popovertarget="nav-reports-menu" aria-haspopup="menu" data-preview-nav-menu-trigger>
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
-            <span class="c-nav__label">Reports</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="pl-c-menu pl-c-nav__menu" data-placement="inline-end" style="--pl-c-menu-anchor: --nav-reports-menu;">
+          <button class="pl-c-menu__trigger" type="button" popovertarget="nav-reports-menu" aria-haspopup="menu" data-preview-nav-menu-trigger>
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
+            <span class="pl-c-nav__label">Reports</span>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <div class="c-menu__popover" id="nav-reports-menu" popover data-preview-nav-menu>
-            <a class="c-menu__item" href="#" aria-current="page">
-              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
-              <span class="c-menu__item-body">
-                <span class="c-menu__item-label">Overview</span>
-                <span class="c-menu__item-description">Executive KPI rollup</span>
+          <div class="pl-c-menu__popover" id="nav-reports-menu" popover data-preview-nav-menu>
+            <a class="pl-c-menu__item" href="#" aria-current="page">
+              <svg class="pl-c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+              <span class="pl-c-menu__item-body">
+                <span class="pl-c-menu__item-label">Overview</span>
+                <span class="pl-c-menu__item-description">Executive KPI rollup</span>
               </span>
-              <kbd class="c-menu__item-shortcut">R</kbd>
+              <kbd class="pl-c-menu__item-shortcut">R</kbd>
             </a>
-            <a class="c-menu__item" href="#">
-              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M8 19V9"/><path d="M12 19V7"/><path d="M16 19v-4"/><path d="M20 19V11"/></svg>
-              <span class="c-menu__item-body">
-                <span class="c-menu__item-label">Pipeline</span>
-                <span class="c-menu__item-description">Forecast and trend detail</span>
+            <a class="pl-c-menu__item" href="#">
+              <svg class="pl-c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V5"/><path d="M8 19V9"/><path d="M12 19V7"/><path d="M16 19v-4"/><path d="M20 19V11"/></svg>
+              <span class="pl-c-menu__item-body">
+                <span class="pl-c-menu__item-label">Pipeline</span>
+                <span class="pl-c-menu__item-description">Forecast and trend detail</span>
               </span>
             </a>
-            <hr class="c-menu__divider" />
-            <button class="c-menu__item" type="button">
-              <svg class="c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-              <span class="c-menu__item-label">Export CSV</span>
+            <hr class="pl-c-menu__divider" />
+            <button class="pl-c-menu__item" type="button">
+              <svg class="pl-c-menu__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              <span class="pl-c-menu__item-label">Export CSV</span>
             </button>
           </div>
         </div>
 
-        <hr class="c-nav__divider" />
+        <hr class="pl-c-nav__divider" />
 
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
             <span>Projects</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Active</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Active</span>
           </a>
-          <a href="#" class="c-nav__item c-nav__item--child">
-            <span class="c-nav__label">Archived</span>
-            <span class="c-badge c-nav__badge">12</span>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child">
+            <span class="pl-c-nav__label">Archived</span>
+            <span class="pl-c-badge pl-c-nav__badge">12</span>
           </a>
         </details>
 
-        <details class="c-nav__section">
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <details class="pl-c-nav__section">
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <span>Settings</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
         </details>
 
-        <div class="c-nav__footer">
-          <div class="c-nav__meta" data-preview-nav-meta>
-            <span class="c-nav__meta-icon">
+        <div class="pl-c-nav__footer">
+          <div class="pl-c-nav__meta" data-preview-nav-meta>
+            <span class="pl-c-nav__meta-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
             </span>
-            <span class="c-nav__meta-body">
-              <span class="c-nav__meta-label">avery.long.account.email@example-company.test</span>
-              <span class="c-nav__meta-description">
-                <span class="c-badge" data-tone="success">Admin</span>
+            <span class="pl-c-nav__meta-body">
+              <span class="pl-c-nav__meta-label">avery.long.account.email@example-company.test</span>
+              <span class="pl-c-nav__meta-description">
+                <span class="pl-c-badge" data-tone="success">Admin</span>
                 Online
               </span>
             </span>
           </div>
-          <div class="c-nav__actions">
-            <a class="c-nav__action" href="#" data-preview-nav-action>
-              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 3h5v5"/><path d="M21 3 10 14"/><path d="M15 21H5a2 2 0 0 1-2-2V9"/></svg>
-              <span class="c-nav__action-label">Switch user</span>
+          <div class="pl-c-nav__actions">
+            <a class="pl-c-nav__action" href="#" data-preview-nav-action>
+              <svg class="pl-c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 3h5v5"/><path d="M21 3 10 14"/><path d="M15 21H5a2 2 0 0 1-2-2V9"/></svg>
+              <span class="pl-c-nav__action-label">Switch user</span>
             </a>
-            <button class="c-nav__action" type="button" data-preview-nav-action>
-              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-              <span class="c-nav__action-label">Sign out</span>
+            <button class="pl-c-nav__action" type="button" data-preview-nav-action>
+              <svg class="pl-c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              <span class="pl-c-nav__action-label">Sign out</span>
             </button>
           </div>
         </div>
@@ -115,42 +115,42 @@ const navItems = [
 
     <!-- Icons-only variant -->
     <div class="nav-sidebar nav-sidebar--collapsed">
-      <nav class="c-nav" aria-label="Quick nav" data-variant="icons">
-        <div class="c-nav__group">
-          <span class="c-nav__group-label">Workspace</span>
+      <nav class="pl-c-nav" aria-label="Quick nav" data-variant="icons">
+        <div class="pl-c-nav__group">
+          <span class="pl-c-nav__group-label">Workspace</span>
         </div>
         {navItems.map((item) => (
-          <a href="#" class="c-nav__item" aria-current={item.active ? 'page' : undefined} aria-label={item.label}>
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
+          <a href="#" class="pl-c-nav__item" aria-current={item.active ? 'page' : undefined} aria-label={item.label}>
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={item.icon} />
           </a>
         ))}
-        <div class="c-menu c-nav__menu" data-placement="inline-end" style="--c-menu-anchor: --nav-rail-reports-menu;">
-          <button class="c-menu__trigger" type="button" popovertarget="nav-rail-reports-menu" aria-haspopup="menu" aria-label="Reports">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
-            <span class="c-nav__label">Reports</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="pl-c-menu pl-c-nav__menu" data-placement="inline-end" style="--pl-c-menu-anchor: --nav-rail-reports-menu;">
+          <button class="pl-c-menu__trigger" type="button" popovertarget="nav-rail-reports-menu" aria-haspopup="menu" aria-label="Reports">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-7"/></svg>
+            <span class="pl-c-nav__label">Reports</span>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <div class="c-menu__popover" id="nav-rail-reports-menu" popover>
-            <a class="c-menu__item" href="#" aria-current="page">Overview</a>
-            <a class="c-menu__item" href="#">Pipeline</a>
-            <button class="c-menu__item" type="button">Export CSV</button>
+          <div class="pl-c-menu__popover" id="nav-rail-reports-menu" popover>
+            <a class="pl-c-menu__item" href="#" aria-current="page">Overview</a>
+            <a class="pl-c-menu__item" href="#">Pipeline</a>
+            <button class="pl-c-menu__item" type="button">Export CSV</button>
           </div>
         </div>
-        <hr class="c-nav__divider" />
-        <div class="c-nav__footer">
-          <div class="c-nav__meta" title="avery.long.account.email@example-company.test">
-            <span class="c-nav__meta-icon">
+        <hr class="pl-c-nav__divider" />
+        <div class="pl-c-nav__footer">
+          <div class="pl-c-nav__meta" title="avery.long.account.email@example-company.test">
+            <span class="pl-c-nav__meta-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
             </span>
-            <span class="c-nav__meta-body">
-              <span class="c-nav__meta-label">avery.long.account.email@example-company.test</span>
-              <span class="c-nav__meta-description">Admin</span>
+            <span class="pl-c-nav__meta-body">
+              <span class="pl-c-nav__meta-label">avery.long.account.email@example-company.test</span>
+              <span class="pl-c-nav__meta-description">Admin</span>
             </span>
           </div>
-          <div class="c-nav__actions">
-            <button class="c-nav__action" type="button" aria-label="Sign out">
-              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-              <span class="c-nav__action-label">Sign out</span>
+          <div class="pl-c-nav__actions">
+            <button class="pl-c-nav__action" type="button" aria-label="Sign out">
+              <svg class="pl-c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              <span class="pl-c-nav__action-label">Sign out</span>
             </button>
           </div>
         </div>

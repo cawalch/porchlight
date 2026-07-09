@@ -9,7 +9,7 @@
  * is hidden entirely (no misleading partial fill).
  *
  * Structure:
- *   <div class="c-scroll-progress" data-tone="accent"></div>
+ *   <div class="pl-c-scroll-progress" data-tone="accent"></div>
  *
  * Place at the top of the page (fixed position). Tone variants via [data-tone].
  * For per-section progress, set animation-timeline to a named scroll
@@ -18,8 +18,8 @@
 @layer porchlight.components {
   /* Scroll-driven progress bar. */
   @supports (animation-timeline: scroll()) {
-    :where(.c-scroll-progress) {
-      --c-progress-tone: var(--pl-color-accent);
+    :where(.pl-c-scroll-progress) {
+      --pl-c-progress-tone: var(--pl-color-accent);
 
       position: fixed;
       inset-block-start: 0;
@@ -27,41 +27,41 @@
       z-index: var(--pl-z-sticky);
       block-size: 4px;
       transform-origin: inline-start;
-      background: var(--c-progress-tone);
+      background: var(--pl-c-progress-tone);
 
       /* Animate scaleX from 0 to 1 as the page scrolls. */
-      animation: c-scroll-progress-grow auto linear;
+      animation: pl-c-scroll-progress-grow auto linear;
       animation-timeline: scroll(root);
     }
 
-    :where(.c-scroll-progress[data-tone="success"]) {
-      --c-progress-tone: var(--pl-color-success);
+    :where(.pl-c-scroll-progress[data-tone="success"]) {
+      --pl-c-progress-tone: var(--pl-color-success);
     }
 
-    :where(.c-scroll-progress[data-tone="warning"]) {
-      --c-progress-tone: var(--pl-color-warning);
+    :where(.pl-c-scroll-progress[data-tone="warning"]) {
+      --pl-c-progress-tone: var(--pl-color-warning);
     }
 
-    :where(.c-scroll-progress[data-tone="danger"]) {
-      --c-progress-tone: var(--pl-color-danger);
+    :where(.pl-c-scroll-progress[data-tone="danger"]) {
+      --pl-c-progress-tone: var(--pl-color-danger);
     }
   }
 
   /* Without scroll-driven animation support, hide the bar. */
   @supports not (animation-timeline: scroll()) {
-    :where(.c-scroll-progress) {
+    :where(.pl-c-scroll-progress) {
       display: none;
     }
   }
 
   /* Under forced colors, use the system highlight color for the bar. */
   @media (forced-colors: active) {
-    :where(.c-scroll-progress) {
+    :where(.pl-c-scroll-progress) {
       background: Highlight;
     }
   }
 
-  @keyframes c-scroll-progress-grow {
+  @keyframes pl-c-scroll-progress-grow {
     from {
       transform: scaleX(0);
     }

@@ -19,7 +19,7 @@ Tokens are split into two layers:
 | ------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Primitive** (`02-tokens.css`) | `--pl-*`       | Raw design scales: font sizes, spacing steps, OKLCH color ramp, radii, motion, shadows                         |
 | **Semantic** (`02-tokens.css`)  | `--pl-color-*` | Foreground/background pairs: `bg`, `surface`, `text`, `border`, `accent`, `danger-*`, `success-*`, `warning-*` |
-| **Component-local**             | `--c-*`        | Per-component tokens defined inside `@scope` (e.g., `--c-alert-tone`)                                          |
+| **Component-local**             | `--pl-c-*`     | Per-component tokens defined inside `@scope` (e.g., `--pl-c-alert-tone`)                                       |
 
 Semantic tokens use `light-dark()` so they automatically adapt to the
 user's color scheme. Override primitives to retheme the entire system;
@@ -32,7 +32,7 @@ color pairs. Two ways to control the active scheme:
 
 ### System preference (default)
 
-Omit the `data-theme` attribute. The browser follows the OS setting:
+Omit the `data-pl-theme` attribute. The browser follows the OS setting:
 
 ```html
 <html>
@@ -42,10 +42,10 @@ Omit the `data-theme` attribute. The browser follows the OS setting:
 
 ### Explicit theme
 
-Set `data-theme` on the root element:
+Set `data-pl-theme` on the root element:
 
 ```html
-<html data-theme="dark">
+<html data-pl-theme="dark">
   <!-- always dark -->
 </html>
 ```
@@ -71,7 +71,7 @@ its text color need to meet WCAG-AA contrast (4.5:1 minimum):
   }
 
   /* Dark theme brand override */
-  :root[data-theme="dark"] {
+  :root[data-pl-theme="dark"] {
     --pl-color-accent: oklch(70% 0.18 290deg);
     --pl-color-accent-text: oklch(20% 0.05 290deg);
   }
@@ -176,10 +176,10 @@ Four density presets control component geometry:
 | `dense`       | 1.75rem (28px) | SIEM, analytics, log viewers |
 
 ```html
-<div data-density="compact">Tighter controls</div>
-<div data-density="comfortable">Default</div>
-<div data-density="touch">Larger touch targets</div>
-<div data-density="dense">Maximum information density</div>
+<div data-pl-density="compact">Tighter controls</div>
+<div data-pl-density="comfortable">Default</div>
+<div data-pl-density="touch">Larger touch targets</div>
+<div data-pl-density="dense">Maximum information density</div>
 ```
 
 Set on any ancestor. `compact`, `comfortable`, and `touch` change only
@@ -225,14 +225,14 @@ remains legible without any action from you.
 
 ## Component-level theming
 
-Each component defines `--c-*` tokens inside its `@scope`. Override these
+Each component defines `--pl-c-*` tokens inside its `@scope`. Override these
 to fine-tune a specific component without touching the global palette:
 
 ```css
 @layer app {
-  .c-card {
-    --c-card-pad: var(--pl-space-6);
-    --c-card-radius: var(--pl-radius-xl);
+  .pl-c-card {
+    --pl-c-card-padding: var(--pl-space-6);
+    --pl-c-card-radius: var(--pl-radius-xl);
   }
 }
 ```

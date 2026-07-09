@@ -11,34 +11,34 @@ const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', '
         <h1>Chart shell</h1>
         <p>Accessible chart framing for app-owned SVG, Canvas, fallbacks, metric headers, and states.</p>
       </div>
-      <div class="c-segmented" role="radiogroup" aria-label="Reporting range">
-        <label class="c-segmented__item"><input type="radio" name="range" /><span>30d</span></label>
-        <label class="c-segmented__item"><input type="radio" name="range" checked /><span>12mo</span></label>
-        <label class="c-segmented__item"><input type="radio" name="range" /><span>YTD</span></label>
+      <div class="pl-c-segmented" role="radiogroup" aria-label="Reporting range">
+        <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>30d</span></label>
+        <label class="pl-c-segmented__item"><input type="radio" name="range" checked /><span>12mo</span></label>
+        <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>YTD</span></label>
       </div>
     </header>
 
-    <section class="c-chart" aria-labelledby="throughput-title" aria-describedby="throughput-desc">
-      <header class="c-chart__header">
+    <section class="pl-c-chart" aria-labelledby="throughput-title" aria-describedby="throughput-desc">
+      <header class="pl-c-chart__header">
         <div>
-          <h2 class="c-chart__title" id="throughput-title">Workflow throughput</h2>
-          <p class="c-chart__description" id="throughput-desc">Completed process instances and breached SLA volume by month.</p>
+          <h2 class="pl-c-chart__title" id="throughput-title">Workflow throughput</h2>
+          <p class="pl-c-chart__description" id="throughput-desc">Completed process instances and breached SLA volume by month.</p>
         </div>
-        <div class="c-chart__metrics" aria-label="Summary metrics">
-          <div class="c-chart__metric">
-            <span class="c-chart__metric-label">Completed</span>
-            <strong class="c-chart__metric-value">1,713</strong>
-            <span class="c-chart__metric-delta" data-direction="up">+12.8%</span>
+        <div class="pl-c-chart__metrics" aria-label="Summary metrics">
+          <div class="pl-c-chart__metric">
+            <span class="pl-c-chart__metric-label">Completed</span>
+            <strong class="pl-c-chart__metric-value">1,713</strong>
+            <span class="pl-c-chart__metric-delta" data-direction="up">+12.8%</span>
           </div>
-          <div class="c-chart__metric">
-            <span class="c-chart__metric-label">SLA breach</span>
-            <strong class="c-chart__metric-value">3.4%</strong>
-            <span class="c-chart__metric-delta" data-direction="down">-1.1%</span>
+          <div class="pl-c-chart__metric">
+            <span class="pl-c-chart__metric-label">SLA breach</span>
+            <strong class="pl-c-chart__metric-value">3.4%</strong>
+            <span class="pl-c-chart__metric-delta" data-direction="down">-1.1%</span>
           </div>
         </div>
       </header>
 
-      <div class="c-chart__plot" role="img" aria-label="Bar chart showing monthly completed workflow items trending upward">
+      <div class="pl-c-chart__plot" role="img" aria-label="Bar chart showing monthly completed workflow items trending upward">
         <svg viewBox="0 0 720 280" aria-hidden="true" focusable="false" preserveAspectRatio="none">
           <line x1="44" y1="236" x2="696" y2="236" stroke="var(--pl-color-border)" />
           <line x1="44" y1="40" x2="44" y2="236" stroke="var(--pl-color-border)" />
@@ -57,14 +57,14 @@ const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', '
         </svg>
       </div>
 
-      <ul class="c-chart__legend" aria-label="Series">
-        <li class="c-chart__legend-item"><span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-accent);"></span>Completed items</li>
-        <li class="c-chart__legend-item"><span class="c-chart__swatch" style="--c-chart-series-color: var(--pl-color-success);"></span>Median cycle time</li>
+      <ul class="pl-c-chart__legend" aria-label="Series">
+        <li class="pl-c-chart__legend-item"><span class="pl-c-chart__swatch" style="--pl-c-chart-series-color: var(--pl-color-accent);"></span>Completed items</li>
+        <li class="pl-c-chart__legend-item"><span class="pl-c-chart__swatch" style="--pl-c-chart-series-color: var(--pl-color-success);"></span>Median cycle time</li>
       </ul>
 
-      <p class="c-chart__caption">Fallback table can be disclosed by the app or linked as source data.</p>
-      <div class="c-chart__table">
-        <table class="c-table" style="--c-table-min: 32rem;">
+      <p class="pl-c-chart__caption">Fallback table can be disclosed by the app or linked as source data.</p>
+      <div class="pl-c-chart__table">
+        <table class="pl-c-table" style="--pl-c-table-min: 32rem;">
           <thead>
             <tr>
               <th>Month</th>
@@ -86,42 +86,42 @@ const labels = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', '
     </section>
 
     <div class="chart-preview__grid">
-      <section class="c-chart" data-state="loading" aria-busy="true" aria-labelledby="loading-title">
-        <header class="c-chart__header">
-          <h2 class="c-chart__title" id="loading-title">Live agent capacity</h2>
+      <section class="pl-c-chart" data-state="loading" aria-busy="true" aria-labelledby="loading-title">
+        <header class="pl-c-chart__header">
+          <h2 class="pl-c-chart__title" id="loading-title">Live agent capacity</h2>
         </header>
-        <div class="c-chart__plot" data-state="loading">
-          <div class="c-chart__overlay">
-            <div class="c-chart__state">
-              <p class="c-chart__state-title">Loading chart</p>
+        <div class="pl-c-chart__plot" data-state="loading">
+          <div class="pl-c-chart__overlay">
+            <div class="pl-c-chart__state">
+              <p class="pl-c-chart__state-title">Loading chart</p>
               <p>Fetching real-time availability from the workforce service.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="c-chart" data-state="empty" aria-labelledby="empty-title">
-        <header class="c-chart__header">
-          <h2 class="c-chart__title" id="empty-title">Escalations</h2>
+      <section class="pl-c-chart" data-state="empty" aria-labelledby="empty-title">
+        <header class="pl-c-chart__header">
+          <h2 class="pl-c-chart__title" id="empty-title">Escalations</h2>
         </header>
-        <div class="c-chart__plot" data-state="empty">
-          <div class="c-chart__overlay">
-            <div class="c-chart__state">
-              <p class="c-chart__state-title">No escalation data</p>
+        <div class="pl-c-chart__plot" data-state="empty">
+          <div class="pl-c-chart__overlay">
+            <div class="pl-c-chart__state">
+              <p class="pl-c-chart__state-title">No escalation data</p>
               <p>This saved view has no matching incidents for the selected range.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="c-chart" data-state="error" role="alert" aria-labelledby="error-title">
-        <header class="c-chart__header">
-          <h2 class="c-chart__title" id="error-title">Risk trend</h2>
+      <section class="pl-c-chart" data-state="error" role="alert" aria-labelledby="error-title">
+        <header class="pl-c-chart__header">
+          <h2 class="pl-c-chart__title" id="error-title">Risk trend</h2>
         </header>
-        <div class="c-chart__plot" data-state="error">
-          <div class="c-chart__overlay">
-            <div class="c-chart__state">
-              <p class="c-chart__state-title">Chart unavailable</p>
+        <div class="pl-c-chart__plot" data-state="error">
+          <div class="pl-c-chart__overlay">
+            <div class="pl-c-chart__state">
+              <p class="pl-c-chart__state-title">Chart unavailable</p>
               <p>The analytics warehouse returned a timeout. Retry from the app action bar.</p>
             </div>
           </div>

@@ -9,9 +9,9 @@ import ButtonPreview from "../../components/ButtonPreview.astro";
 
 # Button
 
-The `.c-button` is the canonical action control. Use a native `<button>` (or an
+The `.pl-c-button` is the canonical action control. Use a native `<button>` (or an
 `<a>` only when it is genuinely navigation). All visuals flow through
-component-local `--c-button-*` aliases that default to framework semantic
+component-local `--pl-c-button-*` aliases that default to framework semantic
 tokens, so you can theme one button or all of them without leaving the
 component.
 
@@ -26,9 +26,9 @@ component.
 ## Semantic HTML
 
 ```html
-<button class="c-button" data-variant="primary">Save changes</button>
-<button class="c-button" data-variant="secondary">Cancel</button>
-<button class="c-button" data-variant="ghost" aria-pressed="true">
+<button class="pl-c-button" data-variant="primary">Save changes</button>
+<button class="pl-c-button" data-variant="secondary">Cancel</button>
+<button class="pl-c-button" data-variant="ghost" aria-pressed="true">
   Preview
 </button>
 ```
@@ -37,7 +37,7 @@ component.
 
 | Selector         | Role                                                                             |
 | ---------------- | -------------------------------------------------------------------------------- |
-| `.c-button`      | The component (native `<button>` or `<a>`).                                      |
+| `.pl-c-button`   | The component (native `<button>` or `<a>`).                                      |
 | `[data-variant]` | `primary` \| `secondary` \| `ghost` (default = none, white surface with border). |
 
 ## Tokens consumed
@@ -48,12 +48,12 @@ component.
 
 ## Tokens exposed (component-local)
 
-| Token                  | Default              | Purpose                                              |
-| ---------------------- | -------------------- | ---------------------------------------------------- |
-| `--c-button-bg`        | `--pl-color-surface` | Fill. Variants override.                             |
-| `--c-button-fg`        | `--pl-color-text`    | Label color.                                         |
-| `--c-button-border`    | `--pl-color-border`  | Border color.                                        |
-| `--c-button-highlight` | `transparent`        | Inset top-catch; `oklch(100% 0 0 / 12%)` on primary. |
+| Token                     | Default              | Purpose                                              |
+| ------------------------- | -------------------- | ---------------------------------------------------- |
+| `--pl-c-button-bg`        | `--pl-color-surface` | Fill. Variants override.                             |
+| `--pl-c-button-fg`        | `--pl-color-text`    | Label color.                                         |
+| `--pl-c-button-border`    | `--pl-color-border`  | Border color.                                        |
+| `--pl-c-button-highlight` | `transparent`        | Inset top-catch; `oklch(100% 0 0 / 12%)` on primary. |
 
 ## States
 
@@ -82,7 +82,7 @@ component.
 - **Light/dark:** tokens resolve via `light-dark()`. Hover shade is
   theme-aware by construction (`color-mix` with `--pl-color-text`).
 - **Density:** sizing comes from `--pl-control-block-size`; set
-  `[data-density]` on an ancestor - no per-component work.
+  `[data-pl-density]` on an ancestor - no per-component work.
 - **RTL:** no physical properties; icon + label order follows the writing mode.
 - **Reduced motion:** the transform/box-shadow transitions are zeroed by the
   themes layer's motion guard (`--pl-motion-scale: 0`).

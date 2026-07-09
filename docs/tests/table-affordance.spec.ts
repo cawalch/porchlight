@@ -16,9 +16,9 @@ const SELECTED_DL = 0.03; // selected rows should be more prominent than hover
 
 test("table row hover is perceptibly distinct", async ({ page }) => {
   await page.goto("./preview/data-table");
-  const row = page.locator(".c-table tbody tr").nth(1); // skip the selected first row
+  const row = page.locator(".pl-c-table tbody tr").nth(1); // skip the selected first row
   const surface = await page
-    .locator(".c-table-wrap")
+    .locator(".pl-c-table-wrap")
     .first()
     .evaluate((el) => getComputedStyle(el).backgroundColor);
   const defColor = await row.evaluate(
@@ -49,12 +49,12 @@ test("table selected row is perceptibly distinct and carries an accent bar", asy
 }) => {
   await page.goto("./preview/data-table");
   const states = await page.evaluate(() => {
-    const wrap = document.querySelector(".c-table-wrap") as HTMLElement;
+    const wrap = document.querySelector(".pl-c-table-wrap") as HTMLElement;
     const selected = document.querySelector(
-      ".c-table tbody tr[aria-selected='true']",
+      ".pl-c-table tbody tr[aria-selected='true']",
     ) as HTMLElement;
     const unselected = document.querySelector(
-      ".c-table tbody tr:not([aria-selected='true']):not(.c-table__detail)",
+      ".pl-c-table tbody tr:not([aria-selected='true']):not(.pl-c-table__detail)",
     ) as HTMLElement;
     if (!wrap || !selected || !unselected) return null;
     const selectedStyle = getComputedStyle(selected);
@@ -86,10 +86,10 @@ test("selected sticky column stays opaque while horizontally scrolled", async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("./preview/data-table");
   const state = await page.evaluate(() => {
-    const wrap = document.querySelector(".c-table-wrap") as HTMLElement;
+    const wrap = document.querySelector(".pl-c-table-wrap") as HTMLElement;
     wrap.scrollLeft = 260;
     const sticky = document.querySelector(
-      ".c-table tbody tr[aria-selected='true'] .c-table__sticky-col",
+      ".pl-c-table tbody tr[aria-selected='true'] .pl-c-table__sticky-col",
     ) as HTMLElement;
     return {
       background: getComputedStyle(sticky).backgroundColor,
@@ -106,7 +106,7 @@ test("selected sticky column stays opaque while horizontally scrolled", async ({
 test("sticky header has an opaque background", async ({ page }) => {
   await page.goto("./preview/data-table");
   const bg = await page.evaluate(() => {
-    const th = document.querySelector(".c-table th") as HTMLElement;
+    const th = document.querySelector(".pl-c-table th") as HTMLElement;
     return getComputedStyle(th).backgroundColor;
   });
   console.log(`[table] header bg=${bg}`);
@@ -122,12 +122,14 @@ test("collapsed detail rows do not expose detail content", async ({ page }) => {
   const metrics = await page.evaluate(() =>
     [
       ...document.querySelectorAll(
-        ".c-table__detail:not([open]):not([data-open])",
+        ".pl-c-table__detail:not([open]):not([data-open])",
       ),
     ].map((row) => {
-      const inner = row.querySelector(".c-table__detail-inner") as HTMLElement;
+      const inner = row.querySelector(
+        ".pl-c-table__detail-inner",
+      ) as HTMLElement;
       const content = row.querySelector(
-        ".c-table__detail-content",
+        ".pl-c-table__detail-content",
       ) as HTMLElement;
       const innerRect = inner.getBoundingClientRect();
       const contentRect = content.getBoundingClientRect();

@@ -61,56 +61,56 @@ const activity = [
 ---
 
 <BaseLayout title="Case Review · Porchlight">
-  <div class="l-app-shell">
+  <div class="pl-l-app-shell">
     <!-- Topbar -->
-    <header class="l-app-shell__topbar cases-topbar">
+    <header class="pl-l-app-shell__topbar cases-topbar">
       <div class="cases-topbar__left">
-        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
           <svg class="cases-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <strong>Helix</strong>
-        <span class="u-muted cases-team-label">/ Platform Team</span>
+        <span class="pl-u-muted cases-team-label">/ Platform Team</span>
       </div>
       <div class="cases-topbar__right">
-        <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="cases-cmdk" aria-label="Search">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cases-cmdk" aria-label="Search">
           <svg class="cases-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <kbd class="cases-kbd">⌘K</kbd>
         </button>
-        <span class="c-badge" data-tone="accent">{cases.filter(c => c.status !== 'done').length} open</span>
-        <div class="c-avatar cases-avatar-accent" data-size="sm">AR</div>
+        <span class="pl-c-badge" data-tone="accent">{cases.filter(c => c.status !== 'done').length} open</span>
+        <div class="pl-c-avatar cases-avatar-accent" data-size="sm">AR</div>
       </div>
     </header>
 
     <!-- Sidebar -->
-    <aside class="l-app-shell__sidebar" id="cases-sidebar">
-      <nav class="c-nav" aria-label="Case navigation">
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
-          <span class="c-nav__label">Inbox</span>
-          <span class="c-badge c-nav__badge" data-tone="accent">3</span>
+    <aside class="pl-l-app-shell__sidebar" id="cases-sidebar">
+      <nav class="pl-c-nav" aria-label="Case navigation">
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          <span class="pl-c-nav__label">Inbox</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">3</span>
         </a>
-        <a href="#" class="c-nav__item" aria-current="page">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <span class="c-nav__label">My Cases</span>
-          <span class="c-badge c-nav__badge">{cases.filter(c => c.assignee === 'A. Rivera' && c.status !== 'done').length}</span>
+        <a href="#" class="pl-c-nav__item" aria-current="page">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span class="pl-c-nav__label">My Cases</span>
+          <span class="pl-c-badge pl-c-nav__badge">{cases.filter(c => c.assignee === 'A. Rivera' && c.status !== 'done').length}</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          <span class="c-nav__label">All Cases</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span class="pl-c-nav__label">All Cases</span>
         </a>
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Teams</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Platform</span></a>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Frontend</span></a>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Security</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Platform</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Frontend</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Security</span></a>
         </details>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg>
-          <span class="c-nav__label">Reports</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg>
+          <span class="pl-c-nav__label">Reports</span>
         </a>
 
         <!-- Assignee workload -->
@@ -118,9 +118,9 @@ const activity = [
           <h3 class="cases-workload__title">Team Workload</h3>
           {assignees.map((a) => (
             <div class="cases-workload__item">
-              <div class="c-avatar cases-workload-avatar" data-size="sm">{a.initials}</div>
+              <div class="pl-c-avatar cases-workload-avatar" data-size="sm">{a.initials}</div>
               <span class="cases-workload__name">{a.name}</span>
-              <span class="c-badge" data-tone={a.open > 3 ? 'warning' : 'default'}>{a.open}</span>
+              <span class="pl-c-badge" data-tone={a.open > 3 ? 'warning' : 'default'}>{a.open}</span>
             </div>
           ))}
         </div>
@@ -128,26 +128,26 @@ const activity = [
     </aside>
 
     <!-- Main -->
-    <main class="l-app-shell__main">
+    <main class="pl-l-app-shell__main">
       <div class="cases-main">
         <!-- Header + view toggle -->
         <div class="cases-header">
           <div>
             <h1>Cases</h1>
-            <p class="u-muted">{cases.length} cases · {cases.filter(c => c.priority === 'urgent').length} urgent</p>
+            <p class="pl-u-muted">{cases.length} cases · {cases.filter(c => c.priority === 'urgent').length} urgent</p>
           </div>
-          <div class="l-cluster">
-            <div class="c-segmented" role="radiogroup" aria-label="View mode">
-              <label class="c-segmented__item"><input type="radio" name="view" checked/><span>
+          <div class="pl-l-cluster">
+            <div class="pl-c-segmented" role="radiogroup" aria-label="View mode">
+              <label class="pl-c-segmented__item"><input type="radio" name="view" checked/><span>
                 <svg class="cases-segment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                 List
               </span></label>
-              <label class="c-segmented__item"><input type="radio" name="view"/><span>
+              <label class="pl-c-segmented__item"><input type="radio" name="view"/><span>
                 <svg class="cases-segment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
                 Board
               </span></label>
             </div>
-            <button class="c-button" data-variant="primary" data-size="sm">
+            <button class="pl-c-button" data-variant="primary" data-size="sm">
               <svg class="cases-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
               New Case
             </button>
@@ -155,27 +155,27 @@ const activity = [
         </div>
 
         <!-- Filter bar -->
-        <div class="c-card cases-filters" data-surface="app">
-          <div class="c-toolbar cases-toolbar-flat">
-            <div class="c-toolbar__group">
-              <span class="c-chip" data-tone="accent">Platform</span>
-              <span class="c-chip">P0-P2</span>
-              <button class="c-chip cases-chip-button" data-tone="ghost">
+        <div class="pl-c-card cases-filters" data-surface="app">
+          <div class="pl-c-toolbar cases-toolbar-flat">
+            <div class="pl-c-toolbar__group">
+              <span class="pl-c-chip" data-tone="accent">Platform</span>
+              <span class="pl-c-chip">P0-P2</span>
+              <button class="pl-c-chip cases-chip-button" data-tone="ghost">
                 <svg class="cases-segment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
                 Add filter
               </button>
             </div>
-            <div class="c-toolbar__group">
+            <div class="pl-c-toolbar__group">
               <!-- Avatar group -->
-              <div class="c-avatar-group cases-avatar-group">
+              <div class="pl-c-avatar-group cases-avatar-group">
                 {assignees.map((a) => (
-                  <div class="c-avatar cases-avatar-xs">{a.initials}</div>
+                  <div class="pl-c-avatar cases-avatar-xs">{a.initials}</div>
                 ))}
               </div>
-              <div class="c-field cases-inline-field">
-                <input type="search" class="c-field__control cases-search-input" placeholder="Search cases…" aria-label="Search cases"/>
+              <div class="pl-c-field cases-inline-field">
+                <input type="search" class="pl-c-field__control cases-search-input" placeholder="Search cases…" aria-label="Search cases"/>
               </div>
-              <button class="c-button" data-variant="secondary" data-size="sm">
+              <button class="pl-c-button" data-variant="secondary" data-size="sm">
                 <svg class="cases-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Export
               </button>
@@ -184,63 +184,63 @@ const activity = [
         </div>
 
         <!-- Case list (data table) -->
-        <div class="c-card cases-table-card" data-surface="app">
-          <div class="c-table-wrap cases-table-wrap">
-            <table class="c-table">
+        <div class="pl-c-card cases-table-card" data-surface="app">
+          <div class="pl-c-table-wrap cases-table-wrap">
+            <table class="pl-c-table">
               <thead>
                 <tr>
-                  <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
-                  <th class="c-table__sticky-col" data-sort="asc">ID <span class="c-table__sort-icon"></span></th>
+                  <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all"/></th>
+                  <th class="pl-c-table__sticky-col" data-sort="asc">ID <span class="pl-c-table__sort-icon"></span></th>
                   <th>Title</th>
                   <th>Assignee</th>
                   <th>Priority</th>
                   <th>Status</th>
                   <th>Tags</th>
-                  <th data-align="end" data-sort>Updated <span class="c-table__sort-icon"></span></th>
-                  <th data-align="center" data-sort>💬 <span class="c-table__sort-icon"></span></th>
+                  <th data-align="end" data-sort>Updated <span class="pl-c-table__sort-icon"></span></th>
+                  <th data-align="center" data-sort>💬 <span class="pl-c-table__sort-icon"></span></th>
                 </tr>
               </thead>
               <tbody>
                 {cases.map((c, i) => (
                   <tr class="cases-row-action" aria-selected={i === 0 ? 'true' : undefined} data-popover-target="case-detail">
-                    <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`}/></td>
-                    <td class="c-table__sticky-col"><code class="cases-code">{c.id}</code></td>
+                    <td class="pl-c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${c.id}`}/></td>
+                    <td class="pl-c-table__sticky-col"><code class="cases-code">{c.id}</code></td>
                     <td><strong class="cases-case-title">{c.title}</strong></td>
                     <td>
                       <div class="cases-assignee">
-                        <div class="c-avatar cases-avatar-compact" data-size="sm">{c.initials}</div>
+                        <div class="pl-c-avatar cases-avatar-compact" data-size="sm">{c.initials}</div>
                         <span class="cases-text-sm">{c.assignee}</span>
                       </div>
                     </td>
                     <td>
-                      <span class="c-badge cases-capitalize" data-tone={priorityTone(c.priority)}>{c.priority}</span>
+                      <span class="pl-c-badge cases-capitalize" data-tone={priorityTone(c.priority)}>{c.priority}</span>
                     </td>
                     <td>
-                      <span class="c-badge" data-tone={statusTone(c.status)}>{statusLabel(c.status)}</span>
+                      <span class="pl-c-badge" data-tone={statusTone(c.status)}>{statusLabel(c.status)}</span>
                     </td>
                     <td>
                       <div class="cases-tag-list">
-                        {c.tags.map((t) => <span class="c-chip cases-tag">{t}</span>)}
+                        {c.tags.map((t) => <span class="pl-c-chip cases-tag">{t}</span>)}
                       </div>
                     </td>
-                    <td data-align="end"><span class="u-muted cases-text-xs">{c.updated}</span></td>
-                    <td data-align="center"><span class="u-muted cases-text-sm">{c.comments}</span></td>
+                    <td data-align="end"><span class="pl-u-muted cases-text-xs">{c.updated}</span></td>
+                    <td data-align="center"><span class="pl-u-muted cases-text-sm">{c.comments}</span></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div class="c-toolbar cases-pagination-toolbar">
-            <div class="c-toolbar__group">
-              <span class="u-muted cases-text-sm">{cases.length} cases</span>
+          <div class="pl-c-toolbar cases-pagination-toolbar">
+            <div class="pl-c-toolbar__group">
+              <span class="pl-u-muted cases-text-sm">{cases.length} cases</span>
             </div>
-            <div class="c-toolbar__group">
-              <nav class="c-pagination" aria-label="Case pagination">
-                <button class="c-pagination__nav" disabled>Prev</button>
-                <button class="c-pagination__page" aria-current="page">1</button>
-                <button class="c-pagination__page">2</button>
-                <button class="c-pagination__page">3</button>
-                <button class="c-pagination__nav">Next</button>
+            <div class="pl-c-toolbar__group">
+              <nav class="pl-c-pagination" aria-label="Case pagination">
+                <button class="pl-c-pagination__nav" disabled>Prev</button>
+                <button class="pl-c-pagination__page" aria-current="page">1</button>
+                <button class="pl-c-pagination__page">2</button>
+                <button class="pl-c-pagination__page">3</button>
+                <button class="pl-c-pagination__nav">Next</button>
               </nav>
             </div>
           </div>
@@ -250,43 +250,43 @@ const activity = [
   </div>
 
   <!-- Case detail drawer -->
-  <div popover="manual" class="c-drawer c-drawer--end" id="case-detail">
-    <div class="c-drawer__header">
+  <div popover="manual" class="pl-c-drawer pl-c-drawer--end" id="case-detail">
+    <div class="pl-c-drawer__header">
       <div>
         <p class="cases-detail-id">{detailCase.id}</p>
         <h2 class="cases-detail-title">{detailCase.title}</h2>
       </div>
-      <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="case-detail" popovertargetaction="hide" aria-label="Close drawer">
+      <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="case-detail" popovertargetaction="hide" aria-label="Close drawer">
         <svg class="cases-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div class="c-drawer__body">
+    <div class="pl-c-drawer__body">
       <!-- Metadata grid -->
-      <div class="l-grid cases-detail-meta">
+      <div class="pl-l-grid cases-detail-meta">
         <div>
-          <span class="u-muted cases-text-xs">Priority</span>
-          <div class="cases-detail-value"><span class="c-badge cases-capitalize" data-tone={priorityTone(detailCase.priority)}>{detailCase.priority}</span></div>
+          <span class="pl-u-muted cases-text-xs">Priority</span>
+          <div class="cases-detail-value"><span class="pl-c-badge cases-capitalize" data-tone={priorityTone(detailCase.priority)}>{detailCase.priority}</span></div>
         </div>
         <div>
-          <span class="u-muted cases-text-xs">Status</span>
-          <div class="cases-detail-value"><span class="c-badge" data-tone={statusTone(detailCase.status)}>{statusLabel(detailCase.status)}</span></div>
+          <span class="pl-u-muted cases-text-xs">Status</span>
+          <div class="cases-detail-value"><span class="pl-c-badge" data-tone={statusTone(detailCase.status)}>{statusLabel(detailCase.status)}</span></div>
         </div>
         <div>
-          <span class="u-muted cases-text-xs">Assignee</span>
+          <span class="pl-u-muted cases-text-xs">Assignee</span>
           <div class="cases-assignee cases-detail-value">
-            <div class="c-avatar cases-avatar-compact cases-avatar-accent" data-size="sm">{detailCase.initials}</div>
+            <div class="pl-c-avatar cases-avatar-compact cases-avatar-accent" data-size="sm">{detailCase.initials}</div>
             <span class="cases-text-sm">{detailCase.assignee}</span>
           </div>
         </div>
         <div>
-          <span class="u-muted cases-text-xs">Updated</span>
+          <span class="pl-u-muted cases-text-xs">Updated</span>
           <div class="cases-detail-value cases-text-sm">{detailCase.updated}</div>
         </div>
       </div>
 
       <!-- Tags -->
       <div class="cases-detail-tags">
-        {detailCase.tags.map((t) => <span class="c-chip">{t}</span>)}
+        {detailCase.tags.map((t) => <span class="pl-c-chip">{t}</span>)}
       </div>
 
       <!-- Description -->
@@ -300,43 +300,43 @@ const activity = [
       <!-- Activity timeline -->
       <div class="cases-detail-section">
         <h3 class="cases-section-title cases-section-title-spacious">Activity</h3>
-        <ol class="c-timeline">
+        <ol class="pl-c-timeline">
           {activity.map((e) => (
-            <li class="c-timeline__item" data-tone={e.tone || undefined}>
-              <span class="c-timeline__dot"></span>
-              <div class="c-timeline__content">
-                <div class="c-timeline__header">
-                  <span class="c-timeline__title cases-text-sm">{e.title}</span>
-                  <time class="c-timeline__time cases-text-xs">{e.time}</time>
+            <li class="pl-c-timeline__item" data-tone={e.tone || undefined}>
+              <span class="pl-c-timeline__dot"></span>
+              <div class="pl-c-timeline__content">
+                <div class="pl-c-timeline__header">
+                  <span class="pl-c-timeline__title cases-text-sm">{e.title}</span>
+                  <time class="pl-c-timeline__time cases-text-xs">{e.time}</time>
                 </div>
-                <p class="c-timeline__body cases-text-xs">{e.body}</p>
+                <p class="pl-c-timeline__body cases-text-xs">{e.body}</p>
               </div>
             </li>
           ))}
         </ol>
       </div>
     </div>
-    <div class="c-drawer__footer">
-      <div class="l-cluster cases-footer-actions">
-        <button class="c-button" data-variant="secondary" data-size="sm">Reassign</button>
-        <button class="c-button" data-variant="secondary" data-size="sm">Escalate</button>
-        <button class="c-button" data-variant="primary" data-size="sm">Mark Resolved</button>
+    <div class="pl-c-drawer__footer">
+      <div class="pl-l-cluster cases-footer-actions">
+        <button class="pl-c-button" data-variant="secondary" data-size="sm">Reassign</button>
+        <button class="pl-c-button" data-variant="secondary" data-size="sm">Escalate</button>
+        <button class="pl-c-button" data-variant="primary" data-size="sm">Mark Resolved</button>
       </div>
     </div>
   </div>
 
   <!-- Command Palette -->
-  <div popover class="c-command" id="cases-cmdk">
-    <input class="c-command__search" placeholder="Search cases, people, tags…" aria-label="Search"/>
-    <div class="c-command__body">
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Quick Actions</h3>
-        <button class="c-command__item" data-selected><span>Create New Case</span></button>
-        <button class="c-command__item"><span>View My Cases</span></button>
-        <button class="c-command__item"><span>Switch to Board View</span></button>
+  <div popover class="pl-c-command" id="cases-cmdk">
+    <input class="pl-c-command__search" placeholder="Search cases, people, tags…" aria-label="Search"/>
+    <div class="pl-c-command__body">
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Quick Actions</h3>
+        <button class="pl-c-command__item" data-selected><span>Create New Case</span></button>
+        <button class="pl-c-command__item"><span>View My Cases</span></button>
+        <button class="pl-c-command__item"><span>Switch to Board View</span></button>
       </div>
     </div>
-    <footer class="c-command__footer"><span>esc to close</span></footer>
+    <footer class="pl-c-command__footer"><span>esc to close</span></footer>
   </div>
 
   <script>
@@ -448,7 +448,7 @@ const activity = [
       cursor: pointer;
     }
     .cases-avatar-group {
-      --c-avatar-group-size: 1.75rem;
+      --pl-c-avatar-group-size: 1.75rem;
     }
     .cases-avatar-xs {
       font-size: var(--pl-text-xs);
@@ -465,7 +465,7 @@ const activity = [
       overflow: hidden;
     }
     .cases-table-wrap {
-      --c-table-min: 52rem;
+      --pl-c-table-min: 52rem;
       border: 0;
       border-radius: 0;
     }
@@ -529,7 +529,7 @@ const activity = [
     }
 
     .cases-detail-meta {
-      --l-grid-min: 8rem;
+      --pl-l-grid-min: 8rem;
       gap: var(--pl-space-3);
       margin-block-end: var(--pl-space-2);
     }
@@ -567,7 +567,7 @@ const activity = [
       justify-content: flex-end;
     }
 
-    .c-drawer--end {
+    .pl-c-drawer--end {
       inset-inline-end: 0;
       inline-size: min(32rem, 90vi);
     }

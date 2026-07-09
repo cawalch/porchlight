@@ -15,52 +15,56 @@ selection, autosave, validation, permissions, and publishing.
 
 ## Structure
 
-- `.l-app-shell` frames the admin area with persistent navigation.
-- `.c-page-header` names the current draft and carries publish actions.
-- `.c-toolbar` groups mode switches, preview, history, and save controls.
-- `.c-split-pane` separates the process tree, map, and inspector.
-- `.c-tree` represents folders, process drafts, and rule groups.
-- `.c-workflow-board` renders a readable step map without requiring a canvas.
-- `.c-form`, `.c-field`, `.c-tabs`, `.c-badge`, and `.c-alert` make the
+- `.pl-l-app-shell` frames the admin area with persistent navigation.
+- `.pl-c-page-header` names the current draft and carries publish actions.
+- `.pl-c-toolbar` groups mode switches, preview, history, and save controls.
+- `.pl-c-split-pane` separates the process tree, map, and inspector.
+- `.pl-c-tree` represents folders, process drafts, and rule groups.
+- `.pl-c-workflow-board` renders a readable step map without requiring a canvas.
+- `.pl-c-form`, `.pl-c-field`, `.pl-c-tabs`, `.pl-c-badge`, and `.pl-c-alert` make the
   inspector actionable and stateful.
 
 ## Semantic HTML
 
 ```html
-<div class="l-app-shell">
-  <header class="l-app-shell__topbar">...</header>
-  <aside class="l-app-shell__sidebar">
-    <nav class="c-nav" aria-label="Admin navigation">...</nav>
+<div class="pl-l-app-shell">
+  <header class="pl-l-app-shell__topbar">...</header>
+  <aside class="pl-l-app-shell__sidebar">
+    <nav class="pl-c-nav" aria-label="Admin navigation">...</nav>
   </aside>
 
-  <main class="l-app-shell__main">
-    <div class="c-page-header">
-      <div class="c-page-header__heading">
-        <h1 class="c-page-header__title">Vendor onboarding</h1>
-        <span class="c-page-header__subtitle">Draft v12, autosaved</span>
+  <main class="pl-l-app-shell__main">
+    <div class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Vendor onboarding</h1>
+        <span class="pl-c-page-header__subtitle">Draft v12, autosaved</span>
       </div>
-      <div class="c-page-header__actions">...</div>
+      <div class="pl-c-page-header__actions">...</div>
     </div>
 
-    <div class="c-toolbar" aria-label="Process draft actions">...</div>
+    <div class="pl-c-toolbar" aria-label="Process draft actions">...</div>
 
-    <section class="c-alert" data-tone="warning" role="status">
-      <div class="c-alert__content">
-        <div class="c-alert__title">Draft has warnings</div>
-        <div class="c-alert__body">Fix one missing owner before publish.</div>
+    <section class="pl-c-alert" data-tone="warning" role="status">
+      <div class="pl-c-alert__content">
+        <div class="pl-c-alert__title">Draft has warnings</div>
+        <div class="pl-c-alert__body">
+          Fix one missing owner before publish.
+        </div>
       </div>
     </section>
 
-    <section class="c-split-pane" data-collapse="stack">
-      <aside class="c-split-pane__pane c-split-pane__pane--start">
-        <div class="c-tree" role="tree" aria-label="Process library">...</div>
+    <section class="pl-c-split-pane" data-collapse="stack">
+      <aside class="pl-c-split-pane__pane pl-c-split-pane__pane--start">
+        <div class="pl-c-tree" role="tree" aria-label="Process library">
+          ...
+        </div>
       </aside>
-      <div class="c-split-pane__separator" role="separator"></div>
-      <section class="c-split-pane__pane c-split-pane__pane--end">
-        <section class="c-workflow-board" aria-labelledby="map-title">
+      <div class="pl-c-split-pane__separator" role="separator"></div>
+      <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end">
+        <section class="pl-c-workflow-board" aria-labelledby="map-title">
           ...
         </section>
-        <form class="c-form" aria-labelledby="inspector-title">...</form>
+        <form class="pl-c-form" aria-labelledby="inspector-title">...</form>
       </section>
     </section>
   </main>

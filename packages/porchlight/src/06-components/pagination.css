@@ -6,19 +6,19 @@
  * [data-size="sm"] variant shrinks the controls for embedded use (inside a
  * toolbar or table footer).
  *
- * Sizing comes from --pl-control-* tokens (like .c-button), so density and
+ * Sizing comes from --pl-control-* tokens (like .pl-c-button), so density and
  * touch-target rules apply automatically. The active page uses aria-current,
  * which is the semantic attribute for "you are here" navigation.
  *
- * The page buttons reuse .c-button[data-variant="ghost"] styling conventions
+ * The page buttons reuse .pl-c-button[data-variant="ghost"] styling conventions
  * (accent wash for the active state) but are self-contained so pagination works
- * without also loading .c-button. If .c-button IS present, a .c-button inside
+ * without also loading .pl-c-button. If .pl-c-button IS present, a .pl-c-button inside
  * the toolbar inherits its own styling  -  the two coexist without conflict.
  */
 @layer porchlight.components {
-  @scope (.c-pagination) {
+  @scope (.pl-c-pagination) {
     :scope {
-      --c-pagination-min: var(--pl-control-block-size);
+      --pl-c-pagination-min: var(--pl-control-block-size);
 
       display: flex;
       align-items: center;
@@ -26,15 +26,15 @@
     }
 
     /* A page button  -  square-ish, ghost-like. */
-    .c-pagination__page,
-    .c-pagination__nav {
+    .pl-c-pagination__page,
+    .pl-c-pagination__nav {
       appearance: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: var(--pl-space-1);
-      min-block-size: var(--c-pagination-min);
-      min-inline-size: var(--c-pagination-min);
+      min-block-size: var(--pl-c-pagination-min);
+      min-inline-size: var(--pl-c-pagination-min);
       padding-inline: var(--pl-space-2);
       border: 1px solid transparent;
       border-radius: var(--pl-radius-md);
@@ -49,7 +49,7 @@
     }
 
     /* Active page  -  aria-current="page" marks "you are here". */
-    .c-pagination__page[aria-current="page"] {
+    .pl-c-pagination__page[aria-current="page"] {
       background: var(--pl-color-accent);
       color: var(--pl-color-accent-text);
       font-weight: var(--pl-font-weight-semibold);
@@ -57,28 +57,28 @@
 
     /* Compact variant  -  smaller targets for embedded use (table footers). */
     :scope[data-size="sm"] {
-      --c-pagination-min: 2rem;
+      --pl-c-pagination-min: 2rem;
     }
 
-    .c-pagination__page:disabled,
-    .c-pagination__nav:disabled {
+    .pl-c-pagination__page:disabled,
+    .pl-c-pagination__nav:disabled {
       opacity: var(--pl-opacity-disabled);
       cursor: not-allowed;
     }
 
     /* Ellipsis  -  a non-interactive spacer for skipped pages. */
-    .c-pagination__ellipsis {
+    .pl-c-pagination__ellipsis {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-inline-size: var(--c-pagination-min);
+      min-inline-size: var(--pl-c-pagination-min);
       color: var(--pl-color-text-muted);
       user-select: none;
     }
   }
 
   /* Live-state hover OUTSIDE @scope. */
-  :where(.c-pagination__page:not([aria-current="page"])):is(
+  :where(.pl-c-pagination__page:not([aria-current="page"])):is(
     :hover,
     :focus-visible
   ) {
@@ -86,20 +86,20 @@
     color: var(--pl-color-text);
   }
 
-  :where(.c-pagination__page):focus-visible,
-  :where(.c-pagination__nav):focus-visible {
+  :where(.pl-c-pagination__page):focus-visible,
+  :where(.pl-c-pagination__nav):focus-visible {
     outline: var(--pl-focus-size) solid var(--pl-focus-color);
     outline-offset: calc(var(--pl-focus-offset) * -1);
   }
 
   @media (forced-colors: active) {
-    :where(.c-pagination__page)[aria-current="page"] {
+    :where(.pl-c-pagination__page)[aria-current="page"] {
       background: Highlight;
       color: HighlightText;
     }
 
-    :where(.c-pagination__page):focus-visible,
-    :where(.c-pagination__nav):focus-visible {
+    :where(.pl-c-pagination__page):focus-visible,
+    :where(.pl-c-pagination__nav):focus-visible {
       outline-color: Highlight;
     }
   }

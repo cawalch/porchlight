@@ -7,7 +7,7 @@ since: 0.8.0
 
 # Workflow board
 
-`.c-workflow-board` provides the CSS contract for BPM and SaaS work queues:
+`.pl-c-workflow-board` provides the CSS contract for BPM and SaaS work queues:
 lanes, swimlanes, WIP/count metadata, work cards, selected cards, dragging
 cards, and drop-target lanes. Porchlight styles the board only. Your app owns
 drag/drop behavior, ordering, permissions, live updates, and persistence.
@@ -15,43 +15,43 @@ drag/drop behavior, ordering, permissions, live updates, and persistence.
 ## Semantic HTML
 
 ```html
-<section class="c-workflow-board" aria-labelledby="work-title">
-  <div class="c-workflow-board__header">
+<section class="pl-c-workflow-board" aria-labelledby="work-title">
+  <div class="pl-c-workflow-board__header">
     <div>
-      <h2 class="c-workflow-board__title" id="work-title">Claims queue</h2>
-      <p class="c-workflow-board__meta">42 open items</p>
+      <h2 class="pl-c-workflow-board__title" id="work-title">Claims queue</h2>
+      <p class="pl-c-workflow-board__meta">42 open items</p>
     </div>
   </div>
 
-  <section class="c-workflow-board__swimlane" aria-labelledby="lane-retail">
-    <div class="c-workflow-board__swimlane-header">
-      <h3 class="c-workflow-board__swimlane-title" id="lane-retail">
+  <section class="pl-c-workflow-board__swimlane" aria-labelledby="lane-retail">
+    <div class="pl-c-workflow-board__swimlane-header">
+      <h3 class="pl-c-workflow-board__swimlane-title" id="lane-retail">
         Retail banking
       </h3>
-      <span class="c-workflow-board__swimlane-meta">16 requests</span>
+      <span class="pl-c-workflow-board__swimlane-meta">16 requests</span>
     </div>
 
-    <div class="c-workflow-board__lanes" data-scroll="inline">
-      <section class="c-workflow-lane" aria-labelledby="lane-new">
-        <header class="c-workflow-lane__header">
-          <div class="c-workflow-lane__heading">
-            <h4 class="c-workflow-lane__title" id="lane-new">New</h4>
-            <span class="c-workflow-lane__count">8</span>
+    <div class="pl-c-workflow-board__lanes" data-scroll="inline">
+      <section class="pl-c-workflow-lane" aria-labelledby="lane-new">
+        <header class="pl-c-workflow-lane__header">
+          <div class="pl-c-workflow-lane__heading">
+            <h4 class="pl-c-workflow-lane__title" id="lane-new">New</h4>
+            <span class="pl-c-workflow-lane__count">8</span>
           </div>
-          <span class="c-workflow-lane__wip" data-state="warning"
+          <span class="pl-c-workflow-lane__wip" data-state="warning"
             >WIP 8 / 10</span
           >
         </header>
-        <div class="c-workflow-lane__body">
-          <article class="c-workflow-card" data-selected>
-            <div class="c-workflow-card__header">
-              <h5 class="c-workflow-card__title">KYC exception review</h5>
-              <span class="c-badge" data-tone="warning">SLA</span>
+        <div class="pl-c-workflow-lane__body">
+          <article class="pl-c-workflow-card" data-selected>
+            <div class="pl-c-workflow-card__header">
+              <h5 class="pl-c-workflow-card__title">KYC exception review</h5>
+              <span class="pl-c-badge" data-tone="warning">SLA</span>
             </div>
-            <p class="c-workflow-card__body">
+            <p class="pl-c-workflow-card__body">
               Missing beneficial owner attestation.
             </p>
-            <div class="c-workflow-card__meta">
+            <div class="pl-c-workflow-card__meta">
               <span>REQ-1048</span>
               <time datetime="2026-06-29T15:30:00-05:00">3:30 PM</time>
             </div>
@@ -65,17 +65,21 @@ drag/drop behavior, ordering, permissions, live updates, and persistence.
 
 ## State hooks
 
-| Selector or attribute                                                       | Purpose                                                                     |
-| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `.c-workflow-board__lanes[data-scroll="inline"]`                            | Opt into horizontal lane scrolling when the app wants stable columns.       |
-| `.c-workflow-lane[data-drop-target]`, `.is-drop-target`                     | Highlight a lane as the current drop target.                                |
-| `.c-workflow-lane[aria-disabled="true"]`, `[data-disabled]`, `.is-disabled` | Show a lane that cannot accept changes.                                     |
-| `.c-workflow-lane__wip[data-state="warning"]`                               | Warn that the WIP limit is near.                                            |
-| `.c-workflow-lane__wip[data-state="danger"]`                                | Show an exceeded WIP limit.                                                 |
-| `.c-workflow-card[data-selected]`, `.is-selected`                           | Show the selected/focused work item.                                        |
-| `.c-workflow-card[aria-selected="true"]`                                    | Selected state only when the card has a role that supports `aria-selected`. |
-| `.c-workflow-card[data-dragging]`, `.is-dragging`                           | Show the item currently being dragged.                                      |
-| `.c-workflow-card[data-overdue]`, `[data-priority="high"]`                  | Add danger emphasis for urgent work.                                        |
+| Selector or attribute                                          | Purpose                                                                     |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `.pl-c-workflow-board__lanes[data-scroll="inline"]`            | Opt into horizontal lane scrolling when the app wants stable columns.       |
+| `.pl-c-workflow-lane[data-drop-target]`                        | Highlight a lane as the current drop target.                                |
+| `.pl-c-workflow-lane[aria-disabled="true"]`, `[data-disabled]` | Show a lane that cannot accept changes.                                     |
+| `.pl-c-workflow-lane__wip[data-state="warning"]`               | Warn that the WIP limit is near.                                            |
+| `.pl-c-workflow-lane__wip[data-state="danger"]`                | Show an exceeded WIP limit.                                                 |
+| `.pl-c-workflow-card[data-selected]`                           | Show the selected/focused work item.                                        |
+| `.pl-c-workflow-card[aria-selected="true"]`                    | Selected state only when the card has a role that supports `aria-selected`. |
+| `.pl-c-workflow-card[data-dragging]`                           | Show the item currently being dragged.                                      |
+| `.pl-c-workflow-card[data-overdue]`, `[data-priority="high"]`  | Add danger emphasis for urgent work.                                        |
+
+Legacy `.is-drop-target`, `.is-disabled`, `.is-selected`, and `.is-dragging`
+aliases still render for pre-namespace markup, but new integrations should
+prefer ARIA or `data-*` hooks.
 
 ## Accessibility responsibilities
 

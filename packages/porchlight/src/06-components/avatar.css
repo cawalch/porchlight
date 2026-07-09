@@ -7,26 +7,26 @@
  *
  * When no image is provided, initials render on a deterministic accent
  * background derived from the name. The app sets the initials; the framework
- * styles the circle. For an image, use <img class="c-avatar__img"> inside.
+ * styles the circle. For an image, use <img class="pl-c-avatar__img"> inside.
  *
- * Group stacking: .c-avatar-group overlaps multiple avatars with a negative
+ * Group stacking: .pl-c-avatar-group overlaps multiple avatars with a negative
  * margin and a ring for separation.
  */
 @layer porchlight.components {
-  @scope (.c-avatar) {
+  @scope (.pl-c-avatar) {
     :scope {
-      --c-avatar-size: 2.5rem;
+      --pl-c-avatar-size: 2.5rem;
 
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      inline-size: var(--c-avatar-size);
-      block-size: var(--c-avatar-size);
+      inline-size: var(--pl-c-avatar-size);
+      block-size: var(--pl-c-avatar-size);
       border-radius: var(--pl-radius-pill);
       background: var(--pl-color-accent);
       color: var(--pl-color-accent-text);
-      font-size: calc(var(--c-avatar-size) * 0.4);
+      font-size: calc(var(--pl-c-avatar-size) * 0.4);
       font-weight: var(--pl-font-weight-semibold);
       line-height: 1;
       overflow: hidden;
@@ -34,18 +34,18 @@
     }
 
     :scope[data-size="sm"] {
-      --c-avatar-size: 1.5rem;
+      --pl-c-avatar-size: 1.5rem;
 
       font-size: var(--pl-text-xs);
     }
 
     :scope[data-size="lg"] {
-      --c-avatar-size: 3rem;
+      --pl-c-avatar-size: 3rem;
 
       font-size: var(--pl-text-lg);
     }
 
-    .c-avatar__img {
+    .pl-c-avatar__img {
       inline-size: 100%;
       block-size: 100%;
       object-fit: cover;
@@ -53,58 +53,58 @@
   }
 
   /* Avatar group  -  overlapping stack. */
-  :where(.c-avatar-group) {
-    --c-avatar-group-size: 2.5rem;
+  :where(.pl-c-avatar-group) {
+    --pl-c-avatar-group-size: 2.5rem;
 
     display: inline-flex;
     align-items: center;
   }
 
-  :where(.c-avatar-group[data-size="sm"]) {
-    --c-avatar-group-size: 1.5rem;
+  :where(.pl-c-avatar-group[data-size="sm"]) {
+    --pl-c-avatar-group-size: 1.5rem;
   }
 
-  :where(.c-avatar-group[data-size="lg"]) {
-    --c-avatar-group-size: 3rem;
+  :where(.pl-c-avatar-group[data-size="lg"]) {
+    --pl-c-avatar-group-size: 3rem;
   }
 
-  :where(.c-avatar-group) .c-avatar {
-    --c-avatar-size: var(--c-avatar-group-size);
+  :where(.pl-c-avatar-group) .pl-c-avatar {
+    --pl-c-avatar-size: var(--pl-c-avatar-group-size);
 
     border: 2px solid var(--pl-color-surface);
-    margin-inline-start: calc(var(--c-avatar-group-size) * -0.35);
+    margin-inline-start: calc(var(--pl-c-avatar-group-size) * -0.35);
   }
 
-  :where(.c-avatar-group) .c-avatar:first-child {
+  :where(.pl-c-avatar-group) .pl-c-avatar:first-child {
     margin-inline-start: 0;
   }
 
   /* A count overflow chip at the end of a group. */
-  :where(.c-avatar-group__more) {
+  :where(.pl-c-avatar-group__more) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: var(--c-avatar-group-size, 2.5rem);
-    block-size: var(--c-avatar-group-size, 2.5rem);
+    inline-size: var(--pl-c-avatar-group-size, 2.5rem);
+    block-size: var(--pl-c-avatar-group-size, 2.5rem);
     border-radius: var(--pl-radius-pill);
     border: 2px solid var(--pl-color-surface);
     background: var(--pl-color-surface-2);
     color: var(--pl-color-text-muted);
-    font-size: calc(var(--c-avatar-group-size, 2.5rem) * 0.4);
+    font-size: calc(var(--pl-c-avatar-group-size, 2.5rem) * 0.4);
     font-weight: var(--pl-font-weight-semibold);
-    margin-inline-start: calc(var(--c-avatar-group-size, 2.5rem) * -0.35);
+    margin-inline-start: calc(var(--pl-c-avatar-group-size, 2.5rem) * -0.35);
   }
 
-  :where(.c-avatar-group[data-size="sm"]) .c-avatar-group__more {
+  :where(.pl-c-avatar-group[data-size="sm"]) .pl-c-avatar-group__more {
     font-size: var(--pl-text-xs);
   }
 
-  :where(.c-avatar-group[data-size="lg"]) .c-avatar-group__more {
+  :where(.pl-c-avatar-group[data-size="lg"]) .pl-c-avatar-group__more {
     font-size: var(--pl-text-lg);
   }
 
   @media (forced-colors: active) {
-    :where(.c-avatar) {
+    :where(.pl-c-avatar) {
       background: Highlight;
       color: HighlightText;
     }

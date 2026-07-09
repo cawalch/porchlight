@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Nav
 
-The `.c-nav` renders a vertical navigation list for sidebars. Icon + label
+The `.pl-c-nav` renders a vertical navigation list for sidebars. Icon + label
 items with active state via `aria-current="page"`. Collapsible sub-sections
 via native `<details>`. Icons-only variant for collapsed sidebars.
 
@@ -15,29 +15,29 @@ It also includes compact sidebar footer patterns for SaaS apps: metadata such
 as account identity, workspace, tenant, environment, or session status, plus
 small full-width actions that can be rendered as either links or buttons.
 
-For nav-launched menus, compose `.c-menu` with `.c-nav__menu`. Use this for
-actions, flyouts, and destination lists. Use `.c-dropdown` only when the nav
+For nav-launched menus, compose `.pl-c-menu` with `.pl-c-nav__menu`. Use this for
+actions, flyouts, and destination lists. Use `.pl-c-dropdown` only when the nav
 control is choosing a value rather than opening a navigation/action menu.
 
 ## Semantic HTML
 
 ```html
-<nav class="c-nav" aria-label="Main">
-  <a class="c-nav__item" aria-current="page">
-    <svg class="c-nav__icon">...</svg>
-    <span class="c-nav__label">Dashboard</span>
+<nav class="pl-c-nav" aria-label="Main">
+  <a class="pl-c-nav__item" aria-current="page">
+    <svg class="pl-c-nav__icon">...</svg>
+    <span class="pl-c-nav__label">Dashboard</span>
   </a>
-  <div class="c-nav__group">
-    <span class="c-nav__group-label">Workspace</span>
+  <div class="pl-c-nav__group">
+    <span class="pl-c-nav__group-label">Workspace</span>
   </div>
-  <details class="c-nav__section" open>
-    <summary class="c-nav__section-trigger">
-      <svg class="c-nav__icon">...</svg>
+  <details class="pl-c-nav__section" open>
+    <summary class="pl-c-nav__section-trigger">
+      <svg class="pl-c-nav__icon">...</svg>
       <span>Projects</span>
-      <svg class="c-nav__chevron">...</svg>
+      <svg class="pl-c-nav__chevron">...</svg>
     </summary>
-    <a class="c-nav__item c-nav__item--child">
-      <span class="c-nav__label">Active</span>
+    <a class="pl-c-nav__item pl-c-nav__item--child">
+      <span class="pl-c-nav__label">Active</span>
     </a>
   </details>
 </nav>
@@ -45,54 +45,54 @@ control is choosing a value rather than opening a navigation/action menu.
 
 ## Groups and Dividers
 
-Use `.c-nav__group-label` for quiet, non-interactive grouping. Use
-`.c-nav__divider` when a separator is enough and a label would add noise.
+Use `.pl-c-nav__group-label` for quiet, non-interactive grouping. Use
+`.pl-c-nav__divider` when a separator is enough and a label would add noise.
 
 ```html
-<nav class="c-nav" aria-label="Main">
-  <div class="c-nav__group">
-    <span class="c-nav__group-label">Workspace</span>
+<nav class="pl-c-nav" aria-label="Main">
+  <div class="pl-c-nav__group">
+    <span class="pl-c-nav__group-label">Workspace</span>
   </div>
-  <a class="c-nav__item" href="/dashboard">Dashboard</a>
-  <a class="c-nav__item" href="/accounts">Accounts</a>
-  <hr class="c-nav__divider" />
-  <a class="c-nav__item" href="/settings">Settings</a>
+  <a class="pl-c-nav__item" href="/dashboard">Dashboard</a>
+  <a class="pl-c-nav__item" href="/accounts">Accounts</a>
+  <hr class="pl-c-nav__divider" />
+  <a class="pl-c-nav__item" href="/settings">Settings</a>
 </nav>
 ```
 
 ## Nav Menus
 
-Use `.c-nav__menu` on a `.c-menu` wrapper when a sidebar row opens a menu or
-flyout. The trigger uses `.c-menu__trigger`, but Porchlight gives that trigger
+Use `.pl-c-nav__menu` on a `.pl-c-menu` wrapper when a sidebar row opens a menu or
+flyout. The trigger uses `.pl-c-menu__trigger`, but Porchlight gives that trigger
 the same density, icon alignment, current state, and icon-rail behavior as
 other nav rows.
 
 ```html
-<nav class="c-nav" aria-label="Main">
+<nav class="pl-c-nav" aria-label="Main">
   <div
-    class="c-menu c-nav__menu"
+    class="pl-c-menu pl-c-nav__menu"
     data-placement="inline-end"
-    style="--c-menu-anchor: --nav-reports;"
+    style="--pl-c-menu-anchor: --nav-reports;"
   >
     <button
-      class="c-menu__trigger"
+      class="pl-c-menu__trigger"
       type="button"
       popovertarget="nav-reports"
       aria-haspopup="menu"
     >
-      <svg class="c-nav__icon" aria-hidden="true">...</svg>
-      <span class="c-nav__label">Reports</span>
-      <svg class="c-nav__chevron" aria-hidden="true">...</svg>
+      <svg class="pl-c-nav__icon" aria-hidden="true">...</svg>
+      <span class="pl-c-nav__label">Reports</span>
+      <svg class="pl-c-nav__chevron" aria-hidden="true">...</svg>
     </button>
-    <div class="c-menu__popover" id="nav-reports" popover>
-      <a class="c-menu__item" href="/reports" aria-current="page">
-        <span class="c-menu__item-body">
-          <span class="c-menu__item-label">Overview</span>
-          <span class="c-menu__item-description">Executive KPI rollup</span>
+    <div class="pl-c-menu__popover" id="nav-reports" popover>
+      <a class="pl-c-menu__item" href="/reports" aria-current="page">
+        <span class="pl-c-menu__item-body">
+          <span class="pl-c-menu__item-label">Overview</span>
+          <span class="pl-c-menu__item-description">Executive KPI rollup</span>
         </span>
-        <kbd class="c-menu__item-shortcut">R</kbd>
+        <kbd class="pl-c-menu__item-shortcut">R</kbd>
       </a>
-      <button class="c-menu__item" type="button">Export CSV</button>
+      <button class="pl-c-menu__item" type="button">Export CSV</button>
     </div>
   </div>
 </nav>
@@ -106,35 +106,35 @@ native links and buttons reachable by Tab.
 
 ## Footer metadata and actions
 
-Use `.c-nav__footer` at the end of a sidebar nav for compact metadata. The
-metadata block keeps long labels truncated, and `.c-nav__action` provides a
+Use `.pl-c-nav__footer` at the end of a sidebar nav for compact metadata. The
+metadata block keeps long labels truncated, and `.pl-c-nav__action` provides a
 full-width action surface for links or buttons without the weight of a regular
-`.c-button`.
+`.pl-c-button`.
 
 ```html
-<nav class="c-nav" aria-label="Main">
+<nav class="pl-c-nav" aria-label="Main">
   ...
-  <div class="c-nav__footer">
-    <div class="c-nav__meta">
-      <span class="c-nav__meta-icon">
+  <div class="pl-c-nav__footer">
+    <div class="pl-c-nav__meta">
+      <span class="pl-c-nav__meta-icon">
         <svg aria-hidden="true">...</svg>
       </span>
-      <span class="c-nav__meta-body">
-        <span class="c-nav__meta-label">avery.long.email@example.com</span>
-        <span class="c-nav__meta-description">
-          <span class="c-badge" data-tone="success">Admin</span>
+      <span class="pl-c-nav__meta-body">
+        <span class="pl-c-nav__meta-label">avery.long.email@example.com</span>
+        <span class="pl-c-nav__meta-description">
+          <span class="pl-c-badge" data-tone="success">Admin</span>
           Online
         </span>
       </span>
     </div>
-    <div class="c-nav__actions">
-      <a class="c-nav__action" href="/switch-user">
-        <svg class="c-nav__action-icon" aria-hidden="true">...</svg>
-        <span class="c-nav__action-label">Switch user</span>
+    <div class="pl-c-nav__actions">
+      <a class="pl-c-nav__action" href="/switch-user">
+        <svg class="pl-c-nav__action-icon" aria-hidden="true">...</svg>
+        <span class="pl-c-nav__action-label">Switch user</span>
       </a>
-      <button class="c-nav__action" type="button">
-        <svg class="c-nav__action-icon" aria-hidden="true">...</svg>
-        <span class="c-nav__action-label">Sign out</span>
+      <button class="pl-c-nav__action" type="button">
+        <svg class="pl-c-nav__action-icon" aria-hidden="true">...</svg>
+        <span class="pl-c-nav__action-label">Sign out</span>
       </button>
     </div>
   </div>
@@ -148,20 +148,20 @@ not require the metadata to represent a user account.
 ## Icons-only (collapsed sidebar)
 
 ```html
-<nav class="c-nav" data-variant="icons" aria-label="Quick nav">
-  <a class="c-nav__item" aria-current="page" aria-label="Dashboard">
-    <svg class="c-nav__icon">...</svg>
+<nav class="pl-c-nav" data-variant="icons" aria-label="Quick nav">
+  <a class="pl-c-nav__item" aria-current="page" aria-label="Dashboard">
+    <svg class="pl-c-nav__icon">...</svg>
   </a>
-  <div class="c-menu c-nav__menu" data-placement="inline-end">
+  <div class="pl-c-menu pl-c-nav__menu" data-placement="inline-end">
     <button
-      class="c-menu__trigger"
+      class="pl-c-menu__trigger"
       aria-label="Reports"
       popovertarget="reports"
     >
-      <svg class="c-nav__icon">...</svg>
-      <span class="c-nav__label">Reports</span>
+      <svg class="pl-c-nav__icon">...</svg>
+      <span class="pl-c-nav__label">Reports</span>
     </button>
-    <div class="c-menu__popover" id="reports" popover>...</div>
+    <div class="pl-c-menu__popover" id="reports" popover>...</div>
   </div>
 </nav>
 ```
@@ -172,30 +172,30 @@ group labels, and chevrons are visually hidden by the variant.
 
 ## Class contract
 
-| Selector                   | Role                            |
-| -------------------------- | ------------------------------- |
-| `.c-nav`                   | Container (flex column).        |
-| `.c-nav__item`             | A navigation link.              |
-| `.c-nav__item--child`      | Nested item inside a section.   |
-| `.c-nav__icon`             | Leading icon.                   |
-| `.c-nav__label`            | Text label.                     |
-| `.c-nav__badge`            | Trailing badge (count).         |
-| `.c-nav__group`            | Non-interactive item group.     |
-| `.c-nav__group-label`      | Quiet group label.              |
-| `.c-nav__divider`          | Separator between item groups.  |
-| `.c-nav__menu`             | `.c-menu` wrapper inside nav.   |
-| `.c-nav__footer`           | Bottom metadata/action region.  |
-| `.c-nav__meta`             | Compact metadata block.         |
-| `.c-nav__meta-icon`        | Metadata icon/avatar slot.      |
-| `.c-nav__meta-body`        | Metadata text stack.            |
-| `.c-nav__meta-label`       | Truncated metadata label.       |
-| `.c-nav__meta-description` | Secondary metadata row.         |
-| `.c-nav__actions`          | Compact action stack.           |
-| `.c-nav__action`           | Small full-width link/button.   |
-| `.c-nav__action-icon`      | Action icon slot.               |
-| `.c-nav__action-label`     | Truncated action label.         |
-| `.c-nav__section`          | Collapsible `<details>` group.  |
-| `.c-nav__section-trigger`  | The `<summary>` (click target). |
-| `.c-nav__chevron`          | Expand/collapse arrow.          |
-| `[aria-current]`           | Current item, except `"false"`. |
-| `[data-variant="icons"]`   | Icons-only mode (hides labels). |
+| Selector                      | Role                             |
+| ----------------------------- | -------------------------------- |
+| `.pl-c-nav`                   | Container (flex column).         |
+| `.pl-c-nav__item`             | A navigation link.               |
+| `.pl-c-nav__item--child`      | Nested item inside a section.    |
+| `.pl-c-nav__icon`             | Leading icon.                    |
+| `.pl-c-nav__label`            | Text label.                      |
+| `.pl-c-nav__badge`            | Trailing badge (count).          |
+| `.pl-c-nav__group`            | Non-interactive item group.      |
+| `.pl-c-nav__group-label`      | Quiet group label.               |
+| `.pl-c-nav__divider`          | Separator between item groups.   |
+| `.pl-c-nav__menu`             | `.pl-c-menu` wrapper inside nav. |
+| `.pl-c-nav__footer`           | Bottom metadata/action region.   |
+| `.pl-c-nav__meta`             | Compact metadata block.          |
+| `.pl-c-nav__meta-icon`        | Metadata icon/avatar slot.       |
+| `.pl-c-nav__meta-body`        | Metadata text stack.             |
+| `.pl-c-nav__meta-label`       | Truncated metadata label.        |
+| `.pl-c-nav__meta-description` | Secondary metadata row.          |
+| `.pl-c-nav__actions`          | Compact action stack.            |
+| `.pl-c-nav__action`           | Small full-width link/button.    |
+| `.pl-c-nav__action-icon`      | Action icon slot.                |
+| `.pl-c-nav__action-label`     | Truncated action label.          |
+| `.pl-c-nav__section`          | Collapsible `<details>` group.   |
+| `.pl-c-nav__section-trigger`  | The `<summary>` (click target).  |
+| `.pl-c-nav__chevron`          | Expand/collapse arrow.           |
+| `[aria-current]`              | Current item, except `"false"`.  |
+| `[data-variant="icons"]`      | Icons-only mode (hides labels).  |

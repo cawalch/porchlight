@@ -5,44 +5,44 @@
  * WIP/count metadata, and visual state hooks for app-owned drag/drop.
  *
  * Structure:
- *   .c-workflow-board
- *     .c-workflow-board__header
- *     .c-workflow-board__swimlane
- *       .c-workflow-board__swimlane-header
- *       .c-workflow-board__lanes
- *         .c-workflow-lane
- *           .c-workflow-lane__header
- *           .c-workflow-lane__body
- *             .c-workflow-card
+ *   .pl-c-workflow-board
+ *     .pl-c-workflow-board__header
+ *     .pl-c-workflow-board__swimlane
+ *       .pl-c-workflow-board__swimlane-header
+ *       .pl-c-workflow-board__lanes
+ *         .pl-c-workflow-lane
+ *           .pl-c-workflow-lane__header
+ *           .pl-c-workflow-lane__body
+ *             .pl-c-workflow-card
  *
  * State hooks are classes or attributes only. The app owns drag/drop, sorting,
  * updates, persistence, and live announcements.
  */
 @layer porchlight.components {
-  @scope (.c-workflow-board) {
+  @scope (.pl-c-workflow-board) {
     :scope {
-      --c-workflow-board-gap: var(--pl-space-4);
-      --c-workflow-board-lane-min: 16rem;
-      --c-workflow-board-lane-size: minmax(
-        var(--c-workflow-board-lane-min),
+      --pl-c-workflow-board-gap: var(--pl-space-4);
+      --pl-c-workflow-board-lane-min: 16rem;
+      --pl-c-workflow-board-lane-size: minmax(
+        var(--pl-c-workflow-board-lane-min),
         1fr
       );
-      --c-workflow-board-card-pad: var(--pl-space-3);
-      --c-workflow-board-card-radius: var(--pl-radius-lg);
-      --c-workflow-board-lane-radius: var(--pl-radius-lg);
-      --c-workflow-board-lane-bg: color-mix(
+      --pl-c-workflow-board-card-pad: var(--pl-space-3);
+      --pl-c-workflow-board-card-radius: var(--pl-radius-lg);
+      --pl-c-workflow-board-lane-radius: var(--pl-radius-lg);
+      --pl-c-workflow-board-lane-bg: color-mix(
         in oklab,
         var(--pl-color-surface-2),
         var(--pl-color-surface) 52%
       );
 
-      container: c-workflow-board / inline-size;
+      container: pl-c-workflow-board / inline-size;
       display: grid;
-      gap: var(--c-workflow-board-gap);
+      gap: var(--pl-c-workflow-board-gap);
       color: var(--pl-color-text);
     }
 
-    .c-workflow-board__header {
+    .pl-c-workflow-board__header {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -50,29 +50,29 @@
       gap: var(--pl-space-3);
     }
 
-    .c-workflow-board__title,
-    .c-workflow-board__swimlane-title,
-    .c-workflow-lane__title,
-    .c-workflow-card__title {
+    .pl-c-workflow-board__title,
+    .pl-c-workflow-board__swimlane-title,
+    .pl-c-workflow-lane__title,
+    .pl-c-workflow-card__title {
       margin: 0;
       line-height: var(--pl-leading-tight);
     }
 
-    .c-workflow-board__title {
+    .pl-c-workflow-board__title {
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-bold);
     }
 
-    .c-workflow-board__meta,
-    .c-workflow-board__swimlane-meta,
-    .c-workflow-lane__meta,
-    .c-workflow-card__meta {
+    .pl-c-workflow-board__meta,
+    .pl-c-workflow-board__swimlane-meta,
+    .pl-c-workflow-lane__meta,
+    .pl-c-workflow-card__meta {
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-xs);
       line-height: var(--pl-leading-snug);
     }
 
-    .c-workflow-board__tools {
+    .pl-c-workflow-board__tools {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -80,18 +80,18 @@
       gap: var(--pl-space-2);
     }
 
-    .c-workflow-board__swimlane {
+    .pl-c-workflow-board__swimlane {
       display: grid;
       gap: var(--pl-space-3);
       min-inline-size: 0;
     }
 
-    .c-workflow-board__swimlane + .c-workflow-board__swimlane {
+    .pl-c-workflow-board__swimlane + .pl-c-workflow-board__swimlane {
       padding-block-start: var(--pl-space-4);
       border-block-start: 1px solid var(--pl-color-border);
     }
 
-    .c-workflow-board__swimlane-header {
+    .pl-c-workflow-board__swimlane-header {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
@@ -99,24 +99,24 @@
       gap: var(--pl-space-2);
     }
 
-    .c-workflow-board__swimlane-title {
+    .pl-c-workflow-board__swimlane-title {
       font-size: var(--pl-text-md);
       font-weight: var(--pl-font-weight-semibold);
     }
 
-    .c-workflow-board__lanes {
+    .pl-c-workflow-board__lanes {
       display: grid;
       grid-template-columns: repeat(
         auto-fit,
-        var(--c-workflow-board-lane-size)
+        var(--pl-c-workflow-board-lane-size)
       );
-      gap: var(--c-workflow-board-gap);
+      gap: var(--pl-c-workflow-board-gap);
       align-items: start;
       min-inline-size: 0;
     }
 
-    .c-workflow-board__lanes[data-scroll="inline"] {
-      grid-auto-columns: var(--c-workflow-board-lane-size);
+    .pl-c-workflow-board__lanes[data-scroll="inline"] {
+      grid-auto-columns: var(--pl-c-workflow-board-lane-size);
       grid-auto-flow: column;
       grid-template-columns: none;
       overflow-x: auto;
@@ -125,12 +125,12 @@
       padding-block-end: var(--pl-space-2);
     }
 
-    .c-workflow-board__lanes[data-scroll="inline"] > .c-workflow-lane {
+    .pl-c-workflow-board__lanes[data-scroll="inline"] > .pl-c-workflow-lane {
       scroll-snap-align: start;
     }
 
-    @container c-workflow-board (inline-size < 44rem) {
-      .c-workflow-board__lanes {
+    @container pl-c-workflow-board (inline-size < 44rem) {
+      .pl-c-workflow-board__lanes {
         grid-auto-columns: minmax(15rem, 86cqi);
         grid-auto-flow: column;
         grid-template-columns: none;
@@ -140,13 +140,13 @@
         padding-block-end: var(--pl-space-2);
       }
 
-      .c-workflow-lane {
+      .pl-c-workflow-lane {
         scroll-snap-align: start;
       }
     }
   }
 
-  @scope (.c-workflow-lane) {
+  @scope (.pl-c-workflow-lane) {
     :scope {
       display: grid;
       grid-template-rows: auto minmax(8rem, 1fr);
@@ -154,9 +154,12 @@
       min-block-size: 14rem;
       border: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 18%);
-      border-radius: var(--c-workflow-board-lane-radius, var(--pl-radius-lg));
+      border-radius: var(
+        --pl-c-workflow-board-lane-radius,
+        var(--pl-radius-lg)
+      );
       background: var(
-        --c-workflow-board-lane-bg,
+        --pl-c-workflow-board-lane-bg,
         color-mix(
           in oklab,
           var(--pl-color-surface-2),
@@ -192,7 +195,7 @@
       opacity: 0.62;
     }
 
-    .c-workflow-lane__header {
+    .pl-c-workflow-lane__header {
       display: grid;
       gap: var(--pl-space-2);
       padding: var(--pl-space-3);
@@ -200,14 +203,14 @@
         color-mix(in oklab, var(--pl-color-border), transparent 20%);
     }
 
-    .c-workflow-lane__heading {
+    .pl-c-workflow-lane__heading {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--pl-space-2);
     }
 
-    .c-workflow-lane__title {
+    .pl-c-workflow-lane__title {
       min-inline-size: 0;
       overflow: hidden;
       color: var(--pl-color-text);
@@ -217,8 +220,8 @@
       white-space: nowrap;
     }
 
-    .c-workflow-lane__count,
-    .c-workflow-lane__wip {
+    .pl-c-workflow-lane__count,
+    .pl-c-workflow-lane__wip {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -233,12 +236,12 @@
       font-weight: var(--pl-font-weight-semibold);
     }
 
-    .c-workflow-lane__wip {
+    .pl-c-workflow-lane__wip {
       justify-self: start;
       border: 1px solid transparent;
     }
 
-    .c-workflow-lane__wip[data-state="warning"] {
+    .pl-c-workflow-lane__wip[data-state="warning"] {
       border-color: color-mix(
         in oklab,
         var(--pl-color-warning),
@@ -248,7 +251,7 @@
       color: var(--pl-color-warning-text);
     }
 
-    .c-workflow-lane__wip[data-state="danger"] {
+    .pl-c-workflow-lane__wip[data-state="danger"] {
       border-color: color-mix(
         in oklab,
         var(--pl-color-danger),
@@ -258,7 +261,7 @@
       color: var(--pl-color-danger-text);
     }
 
-    .c-workflow-lane__body {
+    .pl-c-workflow-lane__body {
       display: grid;
       align-content: start;
       gap: var(--pl-space-3);
@@ -266,7 +269,7 @@
       min-block-size: 8rem;
     }
 
-    .c-workflow-lane__empty {
+    .pl-c-workflow-lane__empty {
       display: grid;
       place-items: center;
       min-block-size: 6rem;
@@ -279,15 +282,18 @@
     }
   }
 
-  @scope (.c-workflow-card) {
+  @scope (.pl-c-workflow-card) {
     :scope {
       display: grid;
       gap: var(--pl-space-2);
       min-inline-size: 0;
-      padding: var(--c-workflow-board-card-pad, var(--pl-space-3));
+      padding: var(--pl-c-workflow-board-card-pad, var(--pl-space-3));
       border: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 12%);
-      border-radius: var(--c-workflow-board-card-radius, var(--pl-radius-lg));
+      border-radius: var(
+        --pl-c-workflow-board-card-radius,
+        var(--pl-radius-lg)
+      );
       background: var(--pl-color-surface);
       box-shadow: var(--pl-shadow-1);
       color: var(--pl-color-text);
@@ -350,8 +356,8 @@
       );
     }
 
-    .c-workflow-card__header,
-    .c-workflow-card__footer {
+    .pl-c-workflow-card__header,
+    .pl-c-workflow-card__footer {
       display: flex;
       align-items: start;
       justify-content: space-between;
@@ -359,7 +365,7 @@
       min-inline-size: 0;
     }
 
-    .c-workflow-card__title {
+    .pl-c-workflow-card__title {
       min-inline-size: 0;
       overflow: hidden;
       font-size: var(--pl-text-sm);
@@ -368,38 +374,42 @@
       white-space: nowrap;
     }
 
-    .c-workflow-card__body {
+    .pl-c-workflow-card__body {
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
       text-wrap: pretty;
     }
 
-    .c-workflow-card__meta {
+    .pl-c-workflow-card__meta {
       display: flex;
       flex-wrap: wrap;
       gap: var(--pl-space-2);
       align-items: center;
     }
 
-    .c-workflow-card__assignees {
+    .pl-c-workflow-card__assignees {
       display: flex;
       align-items: center;
       margin-inline-start: auto;
     }
 
-    .c-workflow-card__assignees > * + * {
+    .pl-c-workflow-card__assignees > * + * {
       margin-inline-start: -0.375rem;
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-workflow-lane, .c-workflow-card, .c-workflow-lane__empty) {
+    :where(
+      .pl-c-workflow-lane,
+      .pl-c-workflow-card,
+      .pl-c-workflow-lane__empty
+    ) {
       border-color: ButtonBorder;
     }
 
     :where(
-      .c-workflow-lane[data-drop-target],
-      .c-workflow-lane.is-drop-target
+      .pl-c-workflow-lane[data-drop-target],
+      .pl-c-workflow-lane.is-drop-target
     ) {
       border-color: Highlight;
     }

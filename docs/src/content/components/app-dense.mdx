@@ -7,7 +7,7 @@ since: 0.3.0
 
 # Data-dense mode
 
-The `data-density="dense"` tier is the fourth and tightest density level,
+The `data-pl-density="dense"` tier is the fourth and tightest density level,
 below `compact`. While `compact` only shrinks control geometry (button height,
 padding), `dense` also compresses the spacing scale, table row height, and
 small text sizes — maximizing information density for data-heavy screens.
@@ -23,10 +23,10 @@ small text sizes — maximizing information density for data-heavy screens.
 
 ## Usage
 
-Set `data-density="dense"` on a container — it cascades to all children:
+Set `data-pl-density="dense"` on a container — it cascades to all children:
 
 ```html
-<div data-density="dense">
+<div data-pl-density="dense">
   <!-- Everything inside is compressed: tighter controls, smaller gaps,
        denser tables, smaller text in data areas. -->
 </div>
@@ -53,21 +53,21 @@ stays consistent at the tighter scale.
 The [data-dense preview](../preview/app-dense) demonstrates:
 
 - **KPI strip** — 8 metrics in one row, compact tiles with value + delta
-- **Tight event table** — `data-density="dense"` on `.c-table-wrap` for
+- **Tight event table** — `data-pl-density="dense"` on `.pl-c-table-wrap` for
   minimal row padding
 - **Compact sidebar** — 12rem width, mini badges for alert counts
 - **Slim toolbar** — filter buttons, split button, inline count text
 - **Mono text** — `--pl-font-mono` for IPs, hostnames, timestamps
-- **Truncated messages** — `.u-truncate` on long event descriptions
+- **Truncated messages** — `.pl-u-truncate` on long event descriptions
 
 ## Mixing tiers
 
 You can nest density tiers — a `dense` page with a `comfortable` modal:
 
 ```html
-<body data-density="dense">
+<body data-pl-density="dense">
   <!-- Everything is dense -->
-  <dialog data-density="comfortable">
+  <dialog data-pl-density="comfortable">
     <!-- But this modal is comfortable -->
   </dialog>
 </body>

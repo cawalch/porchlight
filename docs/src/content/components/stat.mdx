@@ -7,29 +7,31 @@ since: 0.2.0
 
 # Stat
 
-The `.c-stat` component displays a single metric for dashboards. A label, a
+The `.pl-c-stat` component displays a single metric for dashboards. A label, a
 large value with optional unit, a trend indicator (up/down/flat with arrow
 glyph - colorblind-safe), and an optional sparkline slot.
 
 ## Semantic HTML
 
 ```html
-<div class="c-stat">
-  <span class="c-stat__label">Monthly revenue</span>
-  <div class="c-stat__value">$48,200<span class="c-stat__unit">/mo</span></div>
-  <span class="c-stat__trend" data-direction="up">12.4% vs last month</span>
+<div class="pl-c-stat">
+  <span class="pl-c-stat__label">Monthly revenue</span>
+  <div class="pl-c-stat__value">
+    $48,200<span class="pl-c-stat__unit">/mo</span>
+  </div>
+  <span class="pl-c-stat__trend" data-direction="up">12.4% vs last month</span>
 </div>
 ```
 
 ### Tone variants on the value
 
-Apply `data-tone` on `.c-stat__value` to colour the number itself — consistent
-with `c-badge`, `c-alert`, and `c-toast`. Useful for dashboards that need to
+Apply `data-tone` on `.pl-c-stat__value` to colour the number itself — consistent
+with `pl-c-badge`, `pl-c-alert`, and `pl-c-toast`. Useful for dashboards that need to
 highlight thresholds (e.g. overdue counts in danger):
 
 ```html
-<div class="c-stat__value" data-tone="danger">
-  12<span class="c-stat__unit">overdue</span>
+<div class="pl-c-stat__value" data-tone="danger">
+  12<span class="pl-c-stat__unit">overdue</span>
 </div>
 ```
 
@@ -37,15 +39,15 @@ Valid tones: `success`, `warning`, `danger`. Omit for default text colour.
 
 ## Class contract
 
-| Selector                    | Role                                                      |
-| --------------------------- | --------------------------------------------------------- |
-| `.c-stat`                   | The container (flex column).                              |
-| `.c-stat__label`            | Muted label.                                              |
-| `.c-stat__value`            | Large number (`tabular-nums`, `letter-spacing: -0.02em`). |
-| `.c-stat__value[data-tone]` | Tone the number: `success`, `warning`, `danger`.          |
-| `.c-stat__unit`             | Inline unit suffix (smaller, muted).                      |
-| `.c-stat__trend`            | Trend with arrow (`data-direction="up\|down\|flat"`).     |
-| `.c-stat__spark`            | Optional inline SVG sparkline slot.                       |
+| Selector                       | Role                                                      |
+| ------------------------------ | --------------------------------------------------------- |
+| `.pl-c-stat`                   | The container (flex column).                              |
+| `.pl-c-stat__label`            | Muted label.                                              |
+| `.pl-c-stat__value`            | Large number (`tabular-nums`, `letter-spacing: -0.02em`). |
+| `.pl-c-stat__value[data-tone]` | Tone the number: `success`, `warning`, `danger`.          |
+| `.pl-c-stat__unit`             | Inline unit suffix (smaller, muted).                      |
+| `.pl-c-stat__trend`            | Trend with arrow (`data-direction="up\|down\|flat"`).     |
+| `.pl-c-stat__spark`            | Optional inline SVG sparkline slot.                       |
 
 ## Accessibility
 

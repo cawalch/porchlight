@@ -20,83 +20,83 @@ const toneFor = (s: string) =>
   ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[s] ?? 'accent');
 ---
 <BaseLayout title="Responsive dashboard · Porchlight">
-  <div class="l-app-shell">
+  <div class="pl-l-app-shell">
     <!-- Topbar -->
-    <header class="l-app-shell__topbar app-topbar">
+    <header class="pl-l-app-shell__topbar app-topbar">
       <div class="app-topbar__left">
-        <button class="c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
           <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
         <strong>Porchlight</strong>
       </div>
       <div class="app-topbar__right">
-        <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo" aria-label="Search">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo" aria-label="Search">
           <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="u-muted dashboard-shortcut-label">Cmd+K</span>
+          <span class="pl-u-muted dashboard-shortcut-label">Cmd+K</span>
         </button>
-        <div class="c-avatar dashboard-avatar" data-size="sm">JD</div>
+        <div class="pl-c-avatar dashboard-avatar" data-size="sm">JD</div>
       </div>
     </header>
 
     <!-- Sidebar nav -->
-    <aside class="l-app-shell__sidebar" id="app-sidebar">
-      <nav class="c-nav" aria-label="Main navigation">
-        <a href="#" class="c-nav__item" aria-current="page">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-          <span class="c-nav__label">Dashboard</span>
+    <aside class="pl-l-app-shell__sidebar" id="app-sidebar">
+      <nav class="pl-c-nav" aria-label="Main navigation">
+        <a href="#" class="pl-c-nav__item" aria-current="page">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span class="pl-c-nav__label">Dashboard</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-          <span class="c-nav__label">Accounts</span>
-          <span class="c-badge c-nav__badge" data-tone="accent">3</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          <span class="pl-c-nav__label">Accounts</span>
+          <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">3</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-          <span class="c-nav__label">Billing</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          <span class="pl-c-nav__label">Billing</span>
         </a>
-        <a href="#" class="c-nav__item">
-          <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
-          <span class="c-nav__label">Analytics</span>
+        <a href="#" class="pl-c-nav__item">
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+          <span class="pl-c-nav__label">Analytics</span>
         </a>
-        <details class="c-nav__section" open>
-          <summary class="c-nav__section-trigger">
-            <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <details class="pl-c-nav__section" open>
+          <summary class="pl-c-nav__section-trigger">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
             <span>Projects</span>
-            <svg class="c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Active</span></a>
-          <a href="#" class="c-nav__item c-nav__item--child"><span class="c-nav__label">Archived</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Active</span></a>
+          <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Archived</span></a>
         </details>
       </nav>
     </aside>
 
     <!-- Main content -->
-    <main class="l-app-shell__main">
-      <div class="l-container dashboard-shell">
-        <div class="l-stack dashboard-stack">
+    <main class="pl-l-app-shell__main">
+      <div class="pl-l-container dashboard-shell">
+        <div class="pl-l-stack dashboard-stack">
           <!-- Heading + segmented view toggle -->
           <div class="dash-header">
             <div>
               <h1>Dashboard</h1>
-              <p class="u-muted">Overview of your workspace activity</p>
+              <p class="pl-u-muted">Overview of your workspace activity</p>
             </div>
-            <div class="c-segmented" role="radiogroup" aria-label="Time range">
-              <label class="c-segmented__item"><input type="radio" name="range" /><span>Day</span></label>
-              <label class="c-segmented__item"><input type="radio" name="range" checked /><span>Week</span></label>
-              <label class="c-segmented__item"><input type="radio" name="range" /><span>Month</span></label>
+            <div class="pl-c-segmented" role="radiogroup" aria-label="Time range">
+              <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>Day</span></label>
+              <label class="pl-c-segmented__item"><input type="radio" name="range" checked /><span>Week</span></label>
+              <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>Month</span></label>
             </div>
           </div>
 
           <!-- KPI grid: auto-fits from 4 columns down to 1 -->
-          <div class="l-grid dashboard-kpi-grid">
+          <div class="pl-l-grid dashboard-kpi-grid">
             {stats.map((s) => (
-              <div class="c-card" data-surface="app">
-                <div class="c-card__body">
-                  <div class="c-stat">
-                    <span class="c-stat__label">{s.label}</span>
-                    <div class="c-stat__value">{s.value}<span class="c-stat__unit">{s.unit}</span></div>
-                    <span class="c-stat__trend" data-direction={s.direction}>{s.trend}</span>
-                    <div class="c-stat__spark">
+              <div class="pl-c-card" data-surface="app">
+                <div class="pl-c-card__body">
+                  <div class="pl-c-stat">
+                    <span class="pl-c-stat__label">{s.label}</span>
+                    <div class="pl-c-stat__value">{s.value}<span class="pl-c-stat__unit">{s.unit}</span></div>
+                    <span class="pl-c-stat__trend" data-direction={s.direction}>{s.trend}</span>
+                    <div class="pl-c-stat__spark">
                       <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
                         <path d={s.spark} fill="none" stroke={s.direction === 'up' ? 'var(--pl-color-success)' : s.direction === 'down' ? 'var(--pl-color-danger)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
                       </svg>
@@ -108,38 +108,38 @@ const toneFor = (s: string) =>
           </div>
 
           <!-- Data table with toolbar -->
-          <div class="c-card" data-surface="app">
-            <div class="c-toolbar">
-              <div class="c-toolbar__group">
-                <span class="u-muted dashboard-text-sm">5 accounts</span>
+          <div class="pl-c-card" data-surface="app">
+            <div class="pl-c-toolbar">
+              <div class="pl-c-toolbar__group">
+                <span class="pl-u-muted dashboard-text-sm">5 accounts</span>
               </div>
-              <div class="c-toolbar__group">
-                <div class="c-segmented" role="radiogroup" aria-label="View">
-                  <label class="c-segmented__item"><input type="radio" name="view" checked /><span>Table</span></label>
-                  <label class="c-segmented__item"><input type="radio" name="view" /><span>Cards</span></label>
+              <div class="pl-c-toolbar__group">
+                <div class="pl-c-segmented" role="radiogroup" aria-label="View">
+                  <label class="pl-c-segmented__item"><input type="radio" name="view" checked /><span>Table</span></label>
+                  <label class="pl-c-segmented__item"><input type="radio" name="view" /><span>Cards</span></label>
                 </div>
-                <button class="c-button" data-variant="secondary" data-size="sm">Export</button>
+                <button class="pl-c-button" data-variant="secondary" data-size="sm">Export</button>
               </div>
             </div>
-            <div class="c-table-wrap dashboard-table-wrap">
-              <table class="c-table dashboard-table">
+            <div class="pl-c-table-wrap dashboard-table-wrap">
+              <table class="pl-c-table dashboard-table">
                 <thead>
                   <tr>
-                    <th class="c-table__check"><input type="checkbox" aria-label="Select all"/></th>
-                    <th class="c-table__sticky-col" data-sort="asc">Account <span class="c-table__sort-icon"></span></th>
+                    <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all"/></th>
+                    <th class="pl-c-table__sticky-col" data-sort="asc">Account <span class="pl-c-table__sort-icon"></span></th>
                     <th>Plan</th>
                     <th>Status</th>
-                    <th data-align="end" data-sort>Seats <span class="c-table__sort-icon"></span></th>
-                    <th data-align="end" data-sort="desc">MRR <span class="c-table__sort-icon"></span></th>
+                    <th data-align="end" data-sort>Seats <span class="pl-c-table__sort-icon"></span></th>
+                    <th data-align="end" data-sort="desc">MRR <span class="pl-c-table__sort-icon"></span></th>
                   </tr>
                 </thead>
                 <tbody>
                   {accounts.map((a, i) => (
                     <tr aria-selected={i === 0 ? 'true' : undefined}>
-                      <td class="c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.name}`}/></td>
-                      <td class="c-table__sticky-col">{a.name}</td>
+                      <td class="pl-c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.name}`}/></td>
+                      <td class="pl-c-table__sticky-col">{a.name}</td>
                       <td>{a.plan}</td>
-                      <td><span class="c-badge" data-tone={toneFor(a.status)}>{a.status}</span></td>
+                      <td><span class="pl-c-badge" data-tone={toneFor(a.status)}>{a.status}</span></td>
                       <td data-align="end">{a.seats}</td>
                       <td data-align="end">{a.mrr}</td>
                     </tr>
@@ -147,46 +147,46 @@ const toneFor = (s: string) =>
                 </tbody>
               </table>
             </div>
-            <div class="c-toolbar dashboard-pagination-toolbar">
-              <div class="c-toolbar__group">
-                <span class="u-muted dashboard-text-sm">Page 1 of 12</span>
+            <div class="pl-c-toolbar dashboard-pagination-toolbar">
+              <div class="pl-c-toolbar__group">
+                <span class="pl-u-muted dashboard-text-sm">Page 1 of 12</span>
               </div>
-              <div class="c-toolbar__group">
-                <nav class="c-pagination" aria-label="Pagination">
-                  <button class="c-pagination__nav" disabled>Prev</button>
-                  <button class="c-pagination__page" aria-current="page">1</button>
-                  <button class="c-pagination__page">2</button>
-                  <button class="c-pagination__page">3</button>
-                  <button class="c-pagination__nav">Next</button>
+              <div class="pl-c-toolbar__group">
+                <nav class="pl-c-pagination" aria-label="Pagination">
+                  <button class="pl-c-pagination__nav" disabled>Prev</button>
+                  <button class="pl-c-pagination__page" aria-current="page">1</button>
+                  <button class="pl-c-pagination__page">2</button>
+                  <button class="pl-c-pagination__page">3</button>
+                  <button class="pl-c-pagination__nav">Next</button>
                 </nav>
               </div>
             </div>
           </div>
 
           <!-- Activity timeline -->
-          <div class="c-card" data-surface="app">
-            <div class="c-card__header"><h2 class="c-card__title">Recent activity</h2></div>
-            <div class="c-card__body">
-              <ol class="c-timeline">
-                <li class="c-timeline__item" data-tone="success">
-                  <span class="c-timeline__dot"></span>
-                  <div class="c-timeline__content">
-                    <div class="c-timeline__header"><span class="c-timeline__title">New account created</span><time class="c-timeline__time">2m ago</time></div>
-                    <p class="c-timeline__body">Umbrella Corp signed up for Enterprise plan.</p>
+          <div class="pl-c-card" data-surface="app">
+            <div class="pl-c-card__header"><h2 class="pl-c-card__title">Recent activity</h2></div>
+            <div class="pl-c-card__body">
+              <ol class="pl-c-timeline">
+                <li class="pl-c-timeline__item" data-tone="success">
+                  <span class="pl-c-timeline__dot"></span>
+                  <div class="pl-c-timeline__content">
+                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">New account created</span><time class="pl-c-timeline__time">2m ago</time></div>
+                    <p class="pl-c-timeline__body">Umbrella Corp signed up for Enterprise plan.</p>
                   </div>
                 </li>
-                <li class="c-timeline__item">
-                  <span class="c-timeline__dot"></span>
-                  <div class="c-timeline__content">
-                    <div class="c-timeline__header"><span class="c-timeline__title">API key rotated</span><time class="c-timeline__time">1h ago</time></div>
-                    <p class="c-timeline__body">Acme Ops generated a new production API key.</p>
+                <li class="pl-c-timeline__item">
+                  <span class="pl-c-timeline__dot"></span>
+                  <div class="pl-c-timeline__content">
+                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">API key rotated</span><time class="pl-c-timeline__time">1h ago</time></div>
+                    <p class="pl-c-timeline__body">Acme Ops generated a new production API key.</p>
                   </div>
                 </li>
-                <li class="c-timeline__item" data-tone="warning">
-                  <span class="c-timeline__dot"></span>
-                  <div class="c-timeline__content">
-                    <div class="c-timeline__header"><span class="c-timeline__title">Payment failed</span><time class="c-timeline__time">3h ago</time></div>
-                    <p class="c-timeline__body">Initech's payment method was declined.</p>
+                <li class="pl-c-timeline__item" data-tone="warning">
+                  <span class="pl-c-timeline__dot"></span>
+                  <div class="pl-c-timeline__content">
+                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">Payment failed</span><time class="pl-c-timeline__time">3h ago</time></div>
+                    <p class="pl-c-timeline__body">Initech's payment method was declined.</p>
                   </div>
                 </li>
               </ol>
@@ -198,17 +198,17 @@ const toneFor = (s: string) =>
   </div>
 
   <!-- Command palette demo -->
-  <div popover class="c-command" id="cmdk-demo">
-    <input class="c-command__search" placeholder="Search..." aria-label="Search"/>
-    <div class="c-command__body">
-      <div class="c-command__group">
-        <h3 class="c-command__heading">Pages</h3>
-        <button class="c-command__item" data-selected><span>Go to Dashboard</span></button>
-        <button class="c-command__item"><span>Go to Accounts</span></button>
-        <button class="c-command__item"><span>Go to Settings</span></button>
+  <div popover class="pl-c-command" id="cmdk-demo">
+    <input class="pl-c-command__search" placeholder="Search..." aria-label="Search"/>
+    <div class="pl-c-command__body">
+      <div class="pl-c-command__group">
+        <h3 class="pl-c-command__heading">Pages</h3>
+        <button class="pl-c-command__item" data-selected><span>Go to Dashboard</span></button>
+        <button class="pl-c-command__item"><span>Go to Accounts</span></button>
+        <button class="pl-c-command__item"><span>Go to Settings</span></button>
       </div>
     </div>
-    <footer class="c-command__footer"><span>esc to close</span></footer>
+    <footer class="pl-c-command__footer"><span>esc to close</span></footer>
   </div>
 
   <script>
@@ -259,11 +259,11 @@ const toneFor = (s: string) =>
       background: var(--pl-color-accent);
     }
     .dashboard-shell {
-      --l-container-max: 80rem;
+      --pl-l-container-max: 80rem;
       padding-block: var(--pl-space-6);
     }
     .dashboard-stack {
-      --l-stack-gap: var(--pl-space-6);
+      --pl-l-stack-gap: var(--pl-space-6);
     }
     .dash-header {
       display: flex;
@@ -273,7 +273,7 @@ const toneFor = (s: string) =>
       flex-wrap: wrap;
     }
     .dashboard-kpi-grid {
-      --l-grid-min: 14rem;
+      --pl-l-grid-min: 14rem;
     }
     .dashboard-text-sm {
       font-size: var(--pl-text-sm);
@@ -283,7 +283,7 @@ const toneFor = (s: string) =>
       border-radius: 0;
     }
     .dashboard-table {
-      --c-table-min: 36rem;
+      --pl-c-table-min: 36rem;
     }
     .dashboard-pagination-toolbar {
       border-block-start: 1px solid var(--pl-color-border);
@@ -298,6 +298,6 @@ const toneFor = (s: string) =>
       }
     }
     /* Break out of main constraint to a wider layout
-       (handled centrally in global.css via main:has(> .l-app-shell)). */
+       (handled centrally in global.css via main:has(> .pl-l-app-shell)). */
   </style>
 </BaseLayout>

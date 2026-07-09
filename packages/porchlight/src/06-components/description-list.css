@@ -15,57 +15,57 @@
  * Optional [data-dividers] adds a hairline border between items.
  *
  * Structure:
- *   <dl class="c-description">
- *     <div class="c-description__row">
- *       <dt class="c-description__term">Account</dt>
- *       <dd class="c-description__detail">Acme Corporation</dd>
+ *   <dl class="pl-c-description">
+ *     <div class="pl-c-description__row">
+ *       <dt class="pl-c-description__term">Account</dt>
+ *       <dd class="pl-c-description__detail">Acme Corporation</dd>
  *     </div>
- *     <div class="c-description__row">
- *       <dt class="c-description__term">Status</dt>
- *       <dd class="c-description__detail">
- *         <span class="c-badge" data-tone="success">Active</span>
+ *     <div class="pl-c-description__row">
+ *       <dt class="pl-c-description__term">Status</dt>
+ *       <dd class="pl-c-description__detail">
+ *         <span class="pl-c-badge" data-tone="success">Active</span>
  *       </dd>
  *     </div>
  *   </dl>
  *
  * The detail slot accepts any content: text, badges, avatars, links.
- * Token-driven via --c-description-* aliases.
+ * Token-driven via --pl-c-description-* aliases.
  */
 @layer porchlight.components {
-  @scope (.c-description) {
+  @scope (.pl-c-description) {
     :scope {
       /* Term column width — auto by default so labels size to content.
          Set to a fixed width (e.g. 12rem) for a uniform label gutter. */
-      --c-description-term-w: auto;
+      --pl-c-description-term-w: auto;
 
       /* Vertical gap between rows, horizontal gap between term + detail. */
-      --c-description-row-gap: var(--pl-space-3);
-      --c-description-col-gap: var(--pl-space-4);
+      --pl-c-description-row-gap: var(--pl-space-3);
+      --pl-c-description-col-gap: var(--pl-space-4);
 
       /* Term styling. */
-      --c-description-term-color: var(--pl-color-text-muted);
-      --c-description-term-size: var(--pl-text-sm);
+      --pl-c-description-term-color: var(--pl-color-text-muted);
+      --pl-c-description-term-size: var(--pl-text-sm);
 
-      container: c-description / inline-size;
+      container: pl-c-description / inline-size;
       display: grid;
-      gap: var(--c-description-row-gap);
+      gap: var(--pl-c-description-row-gap);
       margin: 0;
     }
 
     /* Each row is itself a grid: term column + detail column. */
-    .c-description__row {
+    .pl-c-description__row {
       display: grid;
-      grid-template-columns: var(--c-description-term-w) minmax(0, 1fr);
-      gap: var(--c-description-col-gap);
+      grid-template-columns: var(--pl-c-description-term-w) minmax(0, 1fr);
+      gap: var(--pl-c-description-col-gap);
       align-items: start;
     }
 
     /* Terms: muted, semibold, right-aligned to the gutter so labels of
        different lengths line up cleanly against the detail column. */
-    .c-description__term {
+    .pl-c-description__term {
       margin: 0;
-      color: var(--c-description-term-color);
-      font-size: var(--c-description-term-size);
+      color: var(--pl-c-description-term-color);
+      font-size: var(--pl-c-description-term-size);
       font-weight: var(--pl-font-weight-semibold);
       line-height: var(--pl-leading-normal);
       text-align: end;
@@ -76,7 +76,7 @@
 
     /* Details: inherit text color so inline badges/links keep their own
        colors. min-inline-size: 0 so long values can shrink/truncate. */
-    .c-description__detail {
+    .pl-c-description__detail {
       margin: 0;
       min-inline-size: 0;
       font-size: var(--pl-text-sm);
@@ -84,31 +84,31 @@
       text-wrap: pretty;
     }
 
-    /* Allow the detail to truncate with .u-truncate if needed.
+    /* Allow the detail to truncate with .pl-u-truncate if needed.
        Without min-inline-size: 0 above, truncation in a grid cell fails. */
 
     /* -----------------------------------------------------------------
      * Layout: stacked (term above detail, single column)
      * ----------------------------------------------------------------- */
-    :scope[data-layout="stacked"] .c-description__row {
+    :scope[data-layout="stacked"] .pl-c-description__row {
       grid-template-columns: 1fr;
       gap: var(--pl-space-1);
     }
 
-    :scope[data-layout="stacked"] .c-description__term {
+    :scope[data-layout="stacked"] .pl-c-description__term {
       text-align: start;
     }
 
     /* -----------------------------------------------------------------
      * Dividers between rows
      * ----------------------------------------------------------------- */
-    :scope[data-dividers] .c-description__row {
-      padding-block-end: var(--c-description-row-gap);
+    :scope[data-dividers] .pl-c-description__row {
+      padding-block-end: var(--pl-c-description-row-gap);
       border-block-end: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 30%);
     }
 
-    :scope[data-dividers] .c-description__row:last-child {
+    :scope[data-dividers] .pl-c-description__row:last-child {
       border-block-end: none;
       padding-block-end: 0;
     }
@@ -118,24 +118,24 @@
      * The container query adapts to the panel width (e.g. a drawer or
      * sidebar), not the viewport.
      * ----------------------------------------------------------------- */
-    @container c-description (inline-size < 32rem) {
-      .c-description__row {
+    @container pl-c-description (inline-size < 32rem) {
+      .pl-c-description__row {
         grid-template-columns: 1fr;
         gap: var(--pl-space-1);
       }
 
-      .c-description__term {
+      .pl-c-description__term {
         text-align: start;
       }
     }
   }
 
   @media (forced-colors: active) {
-    :where(.c-description__term) {
+    :where(.pl-c-description__term) {
       color: CanvasText;
     }
 
-    :where(.c-description[data-dividers]) .c-description__row {
+    :where(.pl-c-description[data-dividers]) .pl-c-description__row {
       border-block-end-color: CanvasText;
     }
   }

@@ -8,13 +8,13 @@ type Rect = {
 };
 
 const closedSurfacePages = [
-  { path: "popover-menu", selector: ".c-menu__popover[popover]" },
-  { path: "dropdown", selector: ".c-dropdown__menu[popover]" },
-  { path: "split-button", selector: ".c-split__menu[popover]" },
-  { path: "calendar", selector: ".c-date-picker__popover[popover]" },
-  { path: "command-palette", selector: ".c-command[popover]" },
-  { path: "drawer", selector: ".c-drawer[popover]" },
-  { path: "dialog", selector: "dialog.c-dialog" },
+  { path: "popover-menu", selector: ".pl-c-menu__popover[popover]" },
+  { path: "dropdown", selector: ".pl-c-dropdown__menu[popover]" },
+  { path: "split-button", selector: ".pl-c-split__menu[popover]" },
+  { path: "calendar", selector: ".pl-c-date-picker__popover[popover]" },
+  { path: "command-palette", selector: ".pl-c-command[popover]" },
+  { path: "drawer", selector: ".pl-c-drawer[popover]" },
+  { path: "dialog", selector: "dialog.pl-c-dialog" },
 ] as const;
 
 const isZeroRect = (rect: Rect) =>
@@ -31,21 +31,25 @@ test("accordion closed panels do not expose panel content", async ({
       return { height: r.height, width: r.width, x: r.x, y: r.y };
     };
 
-    return [...document.querySelectorAll(".c-accordion__item")].map((item) => {
-      const panel = item.querySelector(".c-accordion__panel") as HTMLElement;
-      const content = item.querySelector(
-        ".c-accordion__content",
-      ) as HTMLElement;
-      const panelStyle = getComputedStyle(panel);
-      const contentStyle = getComputedStyle(content);
-      return {
-        contentRect: rect(content),
-        contentVisibility: contentStyle.visibility,
-        open: item.hasAttribute("open"),
-        panelOverflow: panelStyle.overflow,
-        panelRect: rect(panel),
-      };
-    });
+    return [...document.querySelectorAll(".pl-c-accordion__item")].map(
+      (item) => {
+        const panel = item.querySelector(
+          ".pl-c-accordion__panel",
+        ) as HTMLElement;
+        const content = item.querySelector(
+          ".pl-c-accordion__content",
+        ) as HTMLElement;
+        const panelStyle = getComputedStyle(panel);
+        const contentStyle = getComputedStyle(content);
+        return {
+          contentRect: rect(content),
+          contentVisibility: contentStyle.visibility,
+          open: item.hasAttribute("open"),
+          panelOverflow: panelStyle.overflow,
+          panelRect: rect(panel),
+        };
+      },
+    );
   });
 
   const closed = metrics.filter((metric) => !metric.open);
@@ -80,7 +84,7 @@ test("hidden tab panels are removed from layout", async ({ page }) => {
       return { height: r.height, width: r.width, x: r.x, y: r.y };
     };
 
-    return [...document.querySelectorAll(".c-tabs__panel")].map((panel) => {
+    return [...document.querySelectorAll(".pl-c-tabs__panel")].map((panel) => {
       const style = getComputedStyle(panel);
       return {
         display: style.display,

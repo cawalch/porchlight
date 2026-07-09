@@ -22,12 +22,12 @@ Open the [list/detail workspace preview](../preview/app-list-detail).
 Keep the shell regions explicit:
 
 ```html
-<div class="l-app-shell">
-  <header class="l-app-shell__topbar c-toolbar">...</header>
-  <aside class="l-app-shell__sidebar">
-    <nav class="c-nav" aria-label="Primary">...</nav>
+<div class="pl-l-app-shell">
+  <header class="pl-l-app-shell__topbar pl-c-toolbar">...</header>
+  <aside class="pl-l-app-shell__sidebar">
+    <nav class="pl-c-nav" aria-label="Primary">...</nav>
   </aside>
-  <main class="l-app-shell__main">...</main>
+  <main class="pl-l-app-shell__main">...</main>
 </div>
 ```
 
@@ -35,27 +35,27 @@ Place the list and inspector in a split pane:
 
 ```html
 <section
-  class="c-split-pane"
+  class="pl-c-split-pane"
   data-orientation="horizontal"
   data-collapse="stack"
 >
-  <section class="c-split-pane__pane c-split-pane__pane--start">
-    <div class="c-toolbar">
-      <label class="c-field">
-        <span class="u-sr-only">Search requests</span>
-        <input class="c-field__control" type="search" />
+  <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start">
+    <div class="pl-c-toolbar">
+      <label class="pl-c-field">
+        <span class="pl-u-sr-only">Search requests</span>
+        <input class="pl-c-field__control" type="search" />
       </label>
-      <button class="c-button">Filter</button>
+      <button class="pl-c-button">Filter</button>
     </div>
-    <div class="c-table-wrap">
-      <table class="c-table">
+    <div class="pl-c-table-wrap">
+      <table class="pl-c-table">
         ...
       </table>
     </div>
   </section>
 
   <div
-    class="c-split-pane__separator"
+    class="pl-c-split-pane__separator"
     role="separator"
     aria-orientation="vertical"
     aria-valuemin="35"
@@ -65,25 +65,25 @@ Place the list and inspector in a split pane:
   ></div>
 
   <aside
-    class="c-split-pane__pane c-split-pane__pane--end"
+    class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
     aria-label="Selected request"
   >
-    <header class="c-split-pane__header">...</header>
-    <div class="c-split-pane__pane-inner">...</div>
+    <header class="pl-c-split-pane__header">...</header>
+    <div class="pl-c-split-pane__pane-inner">...</div>
   </aside>
 </section>
 ```
 
 Use a real table when records are tabular. Put the primary action in the first
 cell as a button or link, apply `aria-selected="true"` to the selected row, and
-keep status in `.c-badge`. When there is no selected record, render `.c-empty`
+keep status in `.pl-c-badge`. When there is no selected record, render `.pl-c-empty`
 in the detail pane. When the list or detail pane is fetching, render
-`.c-skeleton` placeholders in the region that is waiting.
+`.pl-c-skeleton` placeholders in the region that is waiting.
 
 ## Guidance
 
-- Keep filters in `.c-toolbar` directly above the table or list.
-- Use `.c-split-pane` for persistent detail panes and `.c-drawer` for secondary
+- Keep filters in `.pl-c-toolbar` directly above the table or list.
+- Use `.pl-c-split-pane` for persistent detail panes and `.pl-c-drawer` for secondary
   filter or edit surfaces.
 - Give each pane an accessible name and make scrollable panes focusable when
   they contain long non-interactive content.

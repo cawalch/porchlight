@@ -199,30 +199,30 @@ main {
    content-width constraint and padding above must NOT apply.
    Only triggers when the app shell is a DIRECT child of main (a real
    full-bleed app page), not when it's nested inside a <section> demo. */
-main:has(> .l-app-shell, > .hero-bleed) {
+main:has(> .pl-l-app-shell, > .hero-bleed) {
   inline-size: 100%;
   max-inline-size: none;
   margin-inline: 0;
   padding-block: 0;
 }
 
-/* The framework's .l-app-shell uses block-size: 100dvb so it fills the
+/* The framework's .pl-l-app-shell uses block-size: 100dvb so it fills the
    viewport in a real app (the shell IS the viewport). In the docs, the shell
    lives inside a flex-column <body> with a sticky header above and a footer
    below. block-size: 100dvb makes the shell TALLER than its flex parent
    (main), causing the footer to overlap the bottom of the shell content.
    Override to auto so the shell flows naturally — the body's min-block-size:
    100dvb + main's flex:1 still ensure the page fills the viewport. */
-main > .l-app-shell {
+main > .pl-l-app-shell {
   block-size: auto;
 }
 
-/* Nested main inside an app shell (e.g. <main class="l-app-shell__main">)
+/* Nested main inside an app shell (e.g. <main class="pl-l-app-shell__main">)
    also needs to be freed — global.css's main rule matches by tag name.
    overflow is overridden to visible because the docs chrome wraps the shell,
    so page-level scrolling (on <html>) is the right behavior. The framework's
    overflow:auto is correct for real apps where the shell IS the viewport. */
-.l-app-shell__main {
+.pl-l-app-shell__main {
   inline-size: auto;
   max-inline-size: none;
   margin-inline: 0;

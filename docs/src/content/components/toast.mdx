@@ -7,7 +7,7 @@ since: 0.2.0
 
 # Toast
 
-The `.c-toast` is a transient notification that slides in from the screen
+The `.pl-c-toast` is a transient notification that slides in from the screen
 edge. Unlike alerts (inline), toasts are overlay-level (z-index 1100) and
 auto-dismiss via a JavaScript timer. The CSS handles the visual
 entrance/exit via `@starting-style`.
@@ -16,18 +16,18 @@ entrance/exit via `@starting-style`.
 
 ```html
 <div
-  class="c-toast-stack"
+  class="pl-c-toast-stack"
   data-placement="bottom-end"
   role="region"
   aria-label="Notifications"
 >
-  <div class="c-toast" data-tone="success" data-visible role="status">
-    <span class="c-toast__icon"><svg>...</svg></span>
-    <div class="c-toast__content">
-      <span class="c-toast__title">Saved</span>
-      <span class="c-toast__body">Changes were saved.</span>
+  <div class="pl-c-toast" data-tone="success" data-visible role="status">
+    <span class="pl-c-toast__icon"><svg>...</svg></span>
+    <div class="pl-c-toast__content">
+      <span class="pl-c-toast__title">Saved</span>
+      <span class="pl-c-toast__body">Changes were saved.</span>
     </div>
-    <button class="c-toast__close" aria-label="Dismiss">x</button>
+    <button class="pl-c-toast__close" aria-label="Dismiss">x</button>
   </div>
 </div>
 ```
@@ -65,12 +65,12 @@ translated right) before the transition to the visible state.
 
 ## Stack placement
 
-`.c-toast-stack` is fixed by default at the block-end / inline-end corner. Use
+`.pl-c-toast-stack` is fixed by default at the block-end / inline-end corner. Use
 `data-placement` when an app shell needs another corner:
 
 ```html
 <div
-  class="c-toast-stack"
+  class="pl-c-toast-stack"
   data-placement="top-end"
   role="region"
   aria-label="Notifications"
@@ -88,15 +88,15 @@ Supported values:
 
 ## Class contract
 
-| Selector            | Role                                                                |
-| ------------------- | ------------------------------------------------------------------- |
-| `.c-toast-stack`    | Fixed container (corner placement).                                 |
-| `.c-toast`          | Individual toast notification.                                      |
-| `.c-toast__icon`    | Leading icon (tone-colored).                                        |
-| `.c-toast__content` | Title + body wrapper.                                               |
-| `.c-toast__title`   | Bold heading.                                                       |
-| `.c-toast__body`    | Supporting text (muted).                                            |
-| `.c-toast__close`   | Dismiss button.                                                     |
-| `[data-visible]`    | Triggers enter transition.                                          |
-| `[data-tone]`       | `success`, `warning`, `danger` (default = accent).                  |
-| `[data-placement]`  | Stack corner: `bottom-end`, `bottom-start`, `top-end`, `top-start`. |
+| Selector               | Role                                                                |
+| ---------------------- | ------------------------------------------------------------------- |
+| `.pl-c-toast-stack`    | Fixed container (corner placement).                                 |
+| `.pl-c-toast`          | Individual toast notification.                                      |
+| `.pl-c-toast__icon`    | Leading icon (tone-colored).                                        |
+| `.pl-c-toast__content` | Title + body wrapper.                                               |
+| `.pl-c-toast__title`   | Bold heading.                                                       |
+| `.pl-c-toast__body`    | Supporting text (muted).                                            |
+| `.pl-c-toast__close`   | Dismiss button.                                                     |
+| `[data-visible]`       | Triggers enter transition.                                          |
+| `[data-tone]`          | `success`, `warning`, `danger` (default = accent).                  |
+| `[data-placement]`     | Stack corner: `bottom-end`, `bottom-start`, `top-end`, `top-start`. |

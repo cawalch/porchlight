@@ -6,38 +6,40 @@
  * sortable columns, row selection (checkbox column), expandable detail rows,
  * sticky first column, and density modes.
  *
- * Structure: .c-table-wrap (the scroll container + query container) wraps a
- * native <table class="c-table">. The wrap handles overflow + the gutter; the
+ * Structure: .pl-c-table-wrap (the scroll container + query container) wraps a
+ * native <table class="pl-c-table">. The wrap handles overflow + the gutter; the
  * table sets column min-widths and cell geometry. Sticky headers stay pinned
  * while the body scrolls.
  *
- * Density via [data-density] on .c-table-wrap:
+ * Density via [data-pl-density] on .pl-c-table-wrap:
  *   compact: tighter rows for high information density
  *   comfortable (default): standard spacing
  */
 @layer porchlight.components {
-  @scope (.c-table-wrap) {
+  @scope (.pl-c-table-wrap) {
     :scope {
-      --c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
-      --c-table-min: 48rem;
+      --pl-c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
+      --pl-c-table-min: 48rem;
 
       /* Per-column minimum width hint. Set on individual <th> or <col>
-         elements (e.g. style="--c-table-col-min: 10rem") so the table
+         elements (e.g. style="--pl-c-table-col-min: 10rem") so the table
          layout algorithm distributes space predictably without fighting
          auto layout. */
-      --c-table-col-min: auto;
+      --pl-c-table-col-min: auto;
 
       /* Row height derives from the global control-block-size token so that
-         body-level density (e.g. <body data-density="compact">) cascades to
+         body-level density (e.g. <body data-pl-density="compact">) cascades to
          table rows automatically  -  previously these were disconnected and
          body-level compact left rows at their default height. */
-      --c-table-row-min-block-size: calc(var(--pl-control-block-size) + 0.5rem);
+      --pl-c-table-row-min-block-size: calc(
+        var(--pl-control-block-size) + 0.5rem
+      );
 
       /* Expose the wrap radius as a token so corner cells can inherit it
          exactly (minus 1px for the border). */
-      --c-table-radius: var(--pl-radius-xl);
+      --pl-c-table-radius: var(--pl-radius-xl);
 
-      container: c-table-wrap / inline-size;
+      container: pl-c-table-wrap / inline-size;
       overflow: auto;
 
       /* scrollbar-gutter: stable is intentionally omitted here.
@@ -47,27 +49,27 @@
          layout-shift prevention on its own when the scrollbar actually appears. */
       border: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 20%);
-      border-radius: var(--c-table-radius);
+      border-radius: var(--pl-c-table-radius);
       background: var(--pl-color-surface);
     }
 
     /* Density modes. */
-    :scope[data-density="compact"],
-    :scope[data-density="dense"] {
-      --c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
+    :scope[data-pl-density="compact"],
+    :scope[data-pl-density="dense"] {
+      --pl-c-table-cell-pad: var(--pl-space-1) var(--pl-space-3);
 
       /* Tighter offset for table-level compact: the +0.5rem default is
          reduced to +0.25rem so rows are noticeably denser than comfortable,
          while still deriving from --pl-control-block-size so body-level
          density cascades through this override too. */
-      --c-table-row-min-block-size: calc(
+      --pl-c-table-row-min-block-size: calc(
         var(--pl-control-block-size) + 0.25rem
       );
     }
 
-    .c-table {
+    .pl-c-table {
       inline-size: 100%;
-      min-inline-size: var(--c-table-min);
+      min-inline-size: var(--pl-c-table-min);
       border-collapse: separate;
       border-spacing: 0;
     }
@@ -78,35 +80,35 @@
        border-radius that matches the wrap (minus 1px for the wrap border).
        This is the canonical fix for the "one side rounded, one side square"
        artifact on bordered tables with sticky headers. */
-    .c-table thead tr:first-child th:first-child {
-      border-start-start-radius: calc(var(--c-table-radius) - 1px);
+    .pl-c-table thead tr:first-child th:first-child {
+      border-start-start-radius: calc(var(--pl-c-table-radius) - 1px);
     }
 
-    .c-table thead tr:first-child th:last-child {
-      border-start-end-radius: calc(var(--c-table-radius) - 1px);
+    .pl-c-table thead tr:first-child th:last-child {
+      border-start-end-radius: calc(var(--pl-c-table-radius) - 1px);
     }
 
-    .c-table tbody tr:last-child td:first-child {
-      border-end-start-radius: calc(var(--c-table-radius) - 1px);
+    .pl-c-table tbody tr:last-child td:first-child {
+      border-end-start-radius: calc(var(--pl-c-table-radius) - 1px);
     }
 
-    .c-table tbody tr:last-child td:last-child {
-      border-end-end-radius: calc(var(--c-table-radius) - 1px);
+    .pl-c-table tbody tr:last-child td:last-child {
+      border-end-end-radius: calc(var(--pl-c-table-radius) - 1px);
     }
 
-    .c-table :where(th, td) {
-      padding: var(--c-table-cell-pad);
+    .pl-c-table :where(th, td) {
+      padding: var(--pl-c-table-cell-pad);
       border-block-end: 1px solid var(--pl-color-border);
       text-align: start;
       vertical-align: middle;
       white-space: nowrap;
-      min-block-size: var(--c-table-row-min-block-size);
+      min-block-size: var(--pl-c-table-row-min-block-size);
     }
 
     /* ---------------------------------------------------------------
      * Cell content overflow modes
      * ---------------------------------------------------------------
-     * Set [data-overflow] on .c-table-wrap for a table-wide default, or on
+     * Set [data-overflow] on .pl-c-table-wrap for a table-wide default, or on
      * an individual <td>/<th> for per-column control. Per-cell overrides
      * the table-level setting.
      *
@@ -119,13 +121,13 @@
      * Cells with either mode get min-inline-size: 0 so they shrink within
      * the table's grid instead of forcing it wider.
      */
-    .c-table :where(th, td)[data-overflow="wrap"],
-    .c-table :where(th, td)[data-overflow="truncate"] {
+    .pl-c-table :where(th, td)[data-overflow="wrap"],
+    .pl-c-table :where(th, td)[data-overflow="truncate"] {
       min-inline-size: 0;
     }
 
     /* Table-wide wrap mode. */
-    :scope[data-overflow="wrap"] .c-table :where(td) {
+    :scope[data-overflow="wrap"] .pl-c-table :where(td) {
       white-space: normal;
       text-wrap: pretty;
       overflow-wrap: break-word;
@@ -133,7 +135,7 @@
     }
 
     /* Table-wide truncate mode. */
-    :scope[data-overflow="truncate"] .c-table :where(td) {
+    :scope[data-overflow="truncate"] .pl-c-table :where(td) {
       overflow: hidden;
       text-overflow: ellipsis;
       max-inline-size: 20rem;
@@ -141,32 +143,32 @@
     }
 
     /* Per-cell wrap (overrides table setting). */
-    .c-table :where(td)[data-overflow="wrap"] {
+    .pl-c-table :where(td)[data-overflow="wrap"] {
       white-space: normal;
       text-wrap: pretty;
       overflow-wrap: break-word;
     }
 
     /* Per-cell truncate (overrides table setting). */
-    .c-table :where(td)[data-overflow="truncate"] {
+    .pl-c-table :where(td)[data-overflow="truncate"] {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       max-inline-size: 20rem;
     }
 
-    /* Per-column min width: set --c-table-col-min on a <th>. */
-    .c-table th[style*="--c-table-col-min"],
-    .c-table :where(th, td)[style*="--c-table-col-min"] {
-      inline-size: var(--c-table-col-min);
-      min-inline-size: var(--c-table-col-min);
+    /* Per-column min width: set --pl-c-table-col-min on a <th>. */
+    .pl-c-table th[style*="--pl-c-table-col-min"],
+    .pl-c-table :where(th, td)[style*="--pl-c-table-col-min"] {
+      inline-size: var(--pl-c-table-col-min);
+      min-inline-size: var(--pl-c-table-col-min);
     }
 
-    .c-table :where(td) {
+    .pl-c-table :where(td) {
       color: var(--pl-color-text);
     }
 
-    .c-table :where(th) {
+    .pl-c-table :where(th) {
       position: sticky;
       inset-block-start: 0;
       z-index: var(--pl-z-raised);
@@ -189,8 +191,8 @@
     }
 
     /* Tighten padding when the wrap is narrow. */
-    @container c-table-wrap (inline-size < 40rem) {
-      .c-table :where(th, td) {
+    @container pl-c-table-wrap (inline-size < 40rem) {
+      .pl-c-table :where(th, td) {
         padding-inline: var(--pl-space-2);
       }
     }
@@ -200,19 +202,19 @@
        reduces visual density at comfortable desktop widths. Skipped for
        compact/dense modes so high-density tables stay tight regardless
        of width. */
-    @container c-table-wrap (inline-size > 56rem) {
-      :scope:not([data-density="compact"], [data-density="dense"]) {
-        --c-table-cell-pad: var(--pl-space-3) var(--pl-space-5);
+    @container pl-c-table-wrap (inline-size > 56rem) {
+      :scope:not([data-pl-density="compact"], [data-pl-density="dense"]) {
+        --pl-c-table-cell-pad: var(--pl-space-3) var(--pl-space-5);
       }
     }
 
     /* Numeric columns. */
-    .c-table :where([data-align="end"]) {
+    .pl-c-table :where([data-align="end"]) {
       text-align: end;
       font-variant-numeric: tabular-nums;
     }
 
-    .c-table :where([data-align="center"]) {
+    .pl-c-table :where([data-align="center"]) {
       text-align: center;
     }
 
@@ -223,7 +225,7 @@
      * Unsortable <th> (no data-sort) shows nothing. The arrow is a
      * pure-CSS triangle via border.
      */
-    .c-table th[data-sort] {
+    .pl-c-table th[data-sort] {
       cursor: pointer;
       user-select: none;
 
@@ -236,7 +238,7 @@
        pseudo-element approach. The neutral state (sortable but unsorted)
        shows ⇅ so users can discover sortability without having to hover.
        Active states use accent color for clear directionality. */
-    .c-table__sort-icon {
+    .pl-c-table__sort-icon {
       display: inline-flex;
       align-items: center;
       margin-inline-start: var(--pl-space-1);
@@ -249,50 +251,50 @@
     }
 
     /* Neutral (sortable, no active direction): hint the user this is sortable. */
-    .c-table__sort-icon::before {
+    .pl-c-table__sort-icon::before {
       content: "\21C5"; /* ⇅ updown arrows */
     }
 
     /* Ascending: up arrow, full opacity, accent color. */
-    .c-table th[data-sort="asc"] .c-table__sort-icon {
+    .pl-c-table th[data-sort="asc"] .pl-c-table__sort-icon {
       opacity: 1;
       color: var(--pl-color-accent);
     }
 
-    .c-table th[data-sort="asc"] .c-table__sort-icon::before {
+    .pl-c-table th[data-sort="asc"] .pl-c-table__sort-icon::before {
       content: "\2191"; /* ↑ */
     }
 
     /* Descending: down arrow, full opacity, accent color. */
-    .c-table th[data-sort="desc"] .c-table__sort-icon {
+    .pl-c-table th[data-sort="desc"] .pl-c-table__sort-icon {
       opacity: 1;
       color: var(--pl-color-accent);
     }
 
-    .c-table th[data-sort="desc"] .c-table__sort-icon::before {
+    .pl-c-table th[data-sort="desc"] .pl-c-table__sort-icon::before {
       content: "\2193"; /* ↓ */
     }
 
     /* Active sort column header: full-contrast text so the sorted column
        reads as primary. Unsorted columns stay muted. */
-    .c-table th[data-sort="asc"],
-    .c-table th[data-sort="desc"] {
+    .pl-c-table th[data-sort="asc"],
+    .pl-c-table th[data-sort="desc"] {
       color: var(--pl-color-text);
     }
 
     /* ---------------------------------------------------------------
      * Checkbox column (row selection)
      * ---------------------------------------------------------------
-     * Add .c-table__check to a <th> or <td> for a narrow centered cell
+     * Add .pl-c-table__check to a <th> or <td> for a narrow centered cell
      * containing a native checkbox. The header checkbox is select-all.
      */
-    .c-table .c-table__check {
+    .pl-c-table .pl-c-table__check {
       inline-size: 2.5rem;
       min-inline-size: 2.5rem;
       text-align: center;
     }
 
-    .c-table .c-table__check input[type="checkbox"] {
+    .pl-c-table .pl-c-table__check input[type="checkbox"] {
       inline-size: 1rem;
       block-size: 1rem;
       accent-color: var(--pl-color-accent);
@@ -302,11 +304,11 @@
     /* ---------------------------------------------------------------
      * Expandable detail rows
      * ---------------------------------------------------------------
-     * A row with .c-table__detail is collapsed by default. Add [open]
+     * A row with .pl-c-table__detail is collapsed by default. Add [open]
      * (or data-open) to expand. Uses the grid-template-rows technique
      * for smooth animation without interpolate-size.
      */
-    .c-table .c-table__detail td {
+    .pl-c-table .pl-c-table__detail td {
       padding: 0;
 
       /* Reset the row min-height so the td can fully collapse when the inner
@@ -326,7 +328,7 @@
         color-mix(in oklab, var(--pl-color-accent), transparent 70%);
     }
 
-    .c-table__detail-inner {
+    .pl-c-table__detail-inner {
       display: grid;
       grid-template-rows: 0fr;
       overflow: hidden;
@@ -334,11 +336,13 @@
         var(--pl-ease-standard);
     }
 
-    .c-table .c-table__detail:is([open], [data-open]) .c-table__detail-inner {
+    .pl-c-table
+      .pl-c-table__detail:is([open], [data-open])
+      .pl-c-table__detail-inner {
       grid-template-rows: 1fr;
     }
 
-    .c-table__detail-content {
+    .pl-c-table__detail-content {
       overflow: hidden;
       min-block-size: 0;
       padding-block: 0;
@@ -349,14 +353,16 @@
         visibility 0s linear var(--pl-duration-3);
     }
 
-    .c-table .c-table__detail:is([open], [data-open]) .c-table__detail-content {
+    .pl-c-table
+      .pl-c-table__detail:is([open], [data-open])
+      .pl-c-table__detail-content {
       padding-block: var(--pl-space-4);
       visibility: visible;
       transition-delay: 0s;
     }
 
     /* The expand/collapse toggle button in a row. */
-    .c-table__expand {
+    .pl-c-table__expand {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -371,30 +377,30 @@
       transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-table__expand:hover {
+    .pl-c-table__expand:hover {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-table__expand:focus-visible {
+    .pl-c-table__expand:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
 
-    .c-table__expand svg {
+    .pl-c-table__expand svg {
       inline-size: 0.875rem;
       block-size: 0.875rem;
       transition: rotate var(--pl-duration-2) var(--pl-ease-standard);
     }
 
-    .c-table__expand[aria-expanded="true"] svg {
+    .pl-c-table__expand[aria-expanded="true"] svg {
       rotate: 180deg;
     }
 
     /* Sticky first column  -  outward drop-shadow communicates "content scrolls
        behind this column" (vs. the old inset-border which pointed inward and
        read as a cell divider, not a depth separator). */
-    .c-table .c-table__sticky-col {
+    .pl-c-table .pl-c-table__sticky-col {
       position: sticky;
       inset-inline-start: 0;
       z-index: calc(var(--pl-z-raised) + 1);
@@ -402,7 +408,7 @@
     }
 
     /* Sticky header + sticky column intersection needs higher z-index. */
-    .c-table th.c-table__sticky-col {
+    .pl-c-table th.pl-c-table__sticky-col {
       z-index: calc(var(--pl-z-raised) + 2);
 
       /* Sticky col header: inherit the surface-2 header background so the
@@ -412,13 +418,13 @@
 
     /* Outward drop-shadow on the trailing edge: fades rightward to show
        that body content scrolls underneath. */
-    .c-table .c-table__sticky-col:not(:last-child) {
+    .pl-c-table .pl-c-table__sticky-col:not(:last-child) {
       box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
     /* Sticky cells need opaque hover/selection fills; translucent row
        backgrounds let horizontally scrolled cells show through underneath. */
-    :where(.c-table) tbody tr:hover .c-table__sticky-col {
+    :where(.pl-c-table) tbody tr:hover .pl-c-table__sticky-col {
       background: color-mix(
         in oklab,
         var(--pl-color-surface-2),
@@ -426,7 +432,7 @@
       );
     }
 
-    :where(.c-table) tbody tr[aria-selected="true"] .c-table__sticky-col {
+    :where(.pl-c-table) tbody tr[aria-selected="true"] .pl-c-table__sticky-col {
       background: color-mix(
         in oklab,
         var(--pl-color-surface),
@@ -439,7 +445,7 @@
      content-visibility: auto skips rendering offscreen rows  -  a major
      win for large tables (100+ rows). The browser only renders/layed-out
      rows near the viewport. */
-  :where(.c-table) tbody tr {
+  :where(.pl-c-table) tbody tr {
     content-visibility: auto;
     contain-intrinsic-size: auto 2.5rem;
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
@@ -447,7 +453,7 @@
 
   /* Stronger tint than plain surface-2 so the hover is clearly visible even
      on high-brightness/low-contrast displays (surface-2 alone is ~3% step). */
-  :where(.c-table) tbody tr:hover {
+  :where(.pl-c-table) tbody tr:hover {
     background: color-mix(
       in oklab,
       var(--pl-color-surface-2),
@@ -457,39 +463,39 @@
 
   /* Selection: left-bar accent (matching the nav active state language) +
      stronger tint so the selected state is unmistakable at a glance. */
-  :where(.c-table) tbody tr[aria-selected="true"] {
+  :where(.pl-c-table) tbody tr[aria-selected="true"] {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 84%);
     box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
   }
 
   /* Last data row: remove border-block-end so it doesn't double-up with the
      table-wrap's own border on the bottom edge. */
-  :where(.c-table) tbody tr:last-child td {
+  :where(.pl-c-table) tbody tr:last-child td {
     border-block-end: none;
   }
 
   /* Opt-in zebra striping for extreme information density (financial data,
      log tables). Very subtle at 50% transparent surface-2 so it doesn't
      clash with hover/selection states. */
-  :where(.c-table-wrap[data-zebra]) .c-table tbody tr:nth-child(even) {
+  :where(.pl-c-table-wrap[data-zebra]) .pl-c-table tbody tr:nth-child(even) {
     background: color-mix(in oklab, var(--pl-color-surface-2), transparent 50%);
   }
 
   /* Loading state: suppress hover effects on skeleton rows. */
-  :where(.c-table) tbody[data-loading] tr {
+  :where(.pl-c-table) tbody[data-loading] tr {
     pointer-events: none;
   }
 
   @media (forced-colors: active) {
-    :where(.c-table) :where(th, td) {
+    :where(.pl-c-table) :where(th, td) {
       border-block-end-color: CanvasText;
     }
 
-    :where(.c-table__sticky-col) {
+    :where(.pl-c-table__sticky-col) {
       border-inline-end: 1px solid CanvasText;
     }
 
-    :where(.c-table) tbody tr[aria-selected="true"] {
+    :where(.pl-c-table) tbody tr[aria-selected="true"] {
       background: Highlight;
       color: HighlightText;
     }

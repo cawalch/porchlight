@@ -29,54 +29,54 @@ const sections = [
     <!-- Main settings area -->
     <div class="settings-main">
       <!-- Alert banner -->
-      <div class="c-alert" data-tone="warning">
-        <div class="c-alert__icon">
+      <div class="pl-c-alert" data-tone="warning">
+        <div class="pl-c-alert__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
         </div>
-        <div class="c-alert__content">
-          <div class="c-alert__title">Plan changes pending</div>
-          <div class="c-alert__body">Your plan upgrade to Enterprise takes effect on the next billing cycle.</div>
+        <div class="pl-c-alert__content">
+          <div class="pl-c-alert__title">Plan changes pending</div>
+          <div class="pl-c-alert__body">Your plan upgrade to Enterprise takes effect on the next billing cycle.</div>
         </div>
       </div>
 
       <!-- Tabs -->
-      <div class="c-tabs">
-        <div class="c-tabs__list" role="tablist" aria-label="Workspace settings">
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="true">Profile</button>
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Preferences</button>
-          <button type="button" class="c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Danger zone</button>
+      <div class="pl-c-tabs">
+        <div class="pl-c-tabs__list" role="tablist" aria-label="Workspace settings">
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="true">Profile</button>
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Preferences</button>
+          <button type="button" class="pl-c-tabs__tab" role="tab" aria-selected="false" tabindex="-1">Danger zone</button>
         </div>
 
         <!-- Profile tab -->
-        <div class="c-tabs__panel" role="tabpanel">
-          <div class="c-card">
-            <div class="c-card__header">
-              <h2 class="c-card__title">Workspace profile</h2>
+        <div class="pl-c-tabs__panel" role="tabpanel">
+          <div class="pl-c-card">
+            <div class="pl-c-card__header">
+              <h2 class="pl-c-card__title">Workspace profile</h2>
             </div>
-            <div class="c-card__body">
-              <div class="l-stack">
+            <div class="pl-c-card__body">
+              <div class="pl-l-stack">
                 <div class="form-row">
-                  <div class="c-avatar" data-size="lg">AO</div>
-                  <div class="l-cluster">
-                    <button class="c-button" data-variant="secondary">Upload logo</button>
-                    <button class="c-button" data-variant="ghost">Remove</button>
+                  <div class="pl-c-avatar" data-size="lg">AO</div>
+                  <div class="pl-l-cluster">
+                    <button class="pl-c-button" data-variant="secondary">Upload logo</button>
+                    <button class="pl-c-button" data-variant="ghost">Remove</button>
                   </div>
                 </div>
 
-                <label class="c-field">
-                  <span class="c-field__label">Workspace name</span>
-                  <input class="c-field__control" value="Acme Ops" />
-                  <span class="c-field__hint">Visible to all team members.</span>
+                <label class="pl-c-field">
+                  <span class="pl-c-field__label">Workspace name</span>
+                  <input class="pl-c-field__control" value="Acme Ops" />
+                  <span class="pl-c-field__hint">Visible to all team members.</span>
                 </label>
 
-                <label class="c-field">
-                  <span class="c-field__label">Workspace URL</span>
-                  <input class="c-field__control" type="url" value="https://acme-ops.porchlight.app" />
+                <label class="pl-c-field">
+                  <span class="pl-c-field__label">Workspace URL</span>
+                  <input class="pl-c-field__control" type="url" value="https://acme-ops.porchlight.app" />
                 </label>
 
-                <label class="c-field">
-                  <span class="c-field__label">Default timezone</span>
-                  <select class="c-field__control">
+                <label class="pl-c-field">
+                  <span class="pl-c-field__label">Default timezone</span>
+                  <select class="pl-c-field__control">
                     <option>America/New_York (UTC-5)</option>
                     <option>Europe/London (UTC+0)</option>
                     <option>Asia/Tokyo (UTC+9)</option>
@@ -84,24 +84,24 @@ const sections = [
                 </label>
               </div>
             </div>
-            <div class="c-card__footer">
-              <button class="c-button" data-variant="ghost">Cancel</button>
-              <button class="c-button" data-variant="primary">Save changes</button>
+            <div class="pl-c-card__footer">
+              <button class="pl-c-button" data-variant="ghost">Cancel</button>
+              <button class="pl-c-button" data-variant="primary">Save changes</button>
             </div>
           </div>
 
           <!-- Storage usage card -->
-          <div class="c-card" style="margin-block-start: var(--pl-space-4);">
-            <div class="c-card__header">
-              <h2 class="c-card__title">Storage</h2>
-              <span class="c-badge" data-tone="warning">64% used</span>
+          <div class="pl-c-card" style="margin-block-start: var(--pl-space-4);">
+            <div class="pl-c-card__header">
+              <h2 class="pl-c-card__title">Storage</h2>
+              <span class="pl-c-badge" data-tone="warning">64% used</span>
             </div>
-            <div class="c-card__body">
-              <div class="l-stack">
-                <div class="c-progress" data-tone="warning">
-                  <div class="c-progress__bar" style="inline-size: 64%;"></div>
+            <div class="pl-c-card__body">
+              <div class="pl-l-stack">
+                <div class="pl-c-progress" data-tone="warning">
+                  <div class="pl-c-progress__bar" style="inline-size: 64%;"></div>
                 </div>
-                <p class="u-muted">128 GB of 200 GB used. <a href="#">Upgrade plan</a> for more storage.</p>
+                <p class="pl-u-muted">128 GB of 200 GB used. <a href="#">Upgrade plan</a> for more storage.</p>
               </div>
             </div>
           </div>
@@ -113,8 +113,8 @@ const sections = [
 
 <script>
   // Docs-only tab switching.
-  document.querySelectorAll('.settings-main .c-tabs').forEach((group) => {
-    const tabs = group.querySelectorAll('.c-tabs__tab');
+  document.querySelectorAll('.settings-main .pl-c-tabs').forEach((group) => {
+    const tabs = group.querySelectorAll('.pl-c-tabs__tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => {

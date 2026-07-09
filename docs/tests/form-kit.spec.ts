@@ -50,8 +50,8 @@ test("field and form CSS stay framework agnostic", async () => {
     .map((file) => readFileSync(file, "utf8"))
     .join("\n");
 
-  expect(css).toContain('.c-field__hint[data-tone="warning"]');
-  expect(css).toContain('.c-choice-group__hint[data-tone="warning"]');
+  expect(css).toContain('.pl-c-field__hint[data-tone="warning"]');
+  expect(css).toContain('.pl-c-choice-group__hint[data-tone="warning"]');
   expect(css).not.toMatch(
     /\[(?:hx-|x-|v-|data-reactroot|data-reactid|data-v-)[^\]]*\]/,
   );
@@ -63,12 +63,12 @@ test("field messages support required markers and explicit tones", async ({
   await page.goto("./preview/field");
 
   const required = page.locator("[data-preview-required]");
-  await expect(required.locator(".c-field__required")).toHaveText("*");
-  await expect(required.locator(".c-field__control")).toHaveAttribute(
+  await expect(required.locator(".pl-c-field__required")).toHaveText("*");
+  await expect(required.locator(".pl-c-field__control")).toHaveAttribute(
     "required",
     "",
   );
-  await expect(required.locator(".c-field__control")).toHaveAttribute(
+  await expect(required.locator(".pl-c-field__control")).toHaveAttribute(
     "aria-describedby",
     "workspace-name-help",
   );
@@ -78,17 +78,19 @@ test("field messages support required markers and explicit tones", async ({
   const dangerText = await resolveTokenColor(page, "--pl-color-danger-text");
 
   await expect(
-    page.locator('.c-field__hint[data-tone="warning"]').first(),
+    page.locator('.pl-c-field__hint[data-tone="warning"]').first(),
   ).toHaveCSS("color", warningText);
   await expect(
-    page.locator('.c-field__hint[data-tone="success"]').first(),
+    page.locator('.pl-c-field__hint[data-tone="success"]').first(),
   ).toHaveCSS("color", successText);
   await expect(
-    page.locator('.c-field__hint[data-tone="danger"]').first(),
+    page.locator('.pl-c-field__hint[data-tone="danger"]').first(),
   ).toHaveCSS("color", dangerText);
 
-  const messages = page.locator("[data-preview-messages] .c-field__messages");
-  await expect(messages.locator(".c-field__hint")).toHaveCount(3);
+  const messages = page.locator(
+    "[data-preview-messages] .pl-c-field__messages",
+  );
+  await expect(messages.locator(".pl-c-field__hint")).toHaveCount(3);
   const layout = await messages.evaluate((el) => {
     const style = getComputedStyle(el);
     return {
@@ -107,7 +109,9 @@ test("native and ARIA validity states remain standard HTML driven", async ({
 }) => {
   await page.goto("./preview/field");
 
-  const neutral = page.locator("[data-preview-aria-valid] .c-field__control");
+  const neutral = page.locator(
+    "[data-preview-aria-valid] .pl-c-field__control",
+  );
   const neutralStyles = await neutral.evaluate((el) => {
     const style = getComputedStyle(el);
     return {
@@ -122,13 +126,13 @@ test("native and ARIA validity states remain standard HTML driven", async ({
     await resolveTokenColor(page, "--pl-color-danger"),
   );
 
-  const urlField = page.locator(".c-field__control[type='url']");
+  const urlField = page.locator(".pl-c-field__control[type='url']");
   await urlField.fill("not-a-url");
   await urlField.blur();
   await page.waitForTimeout(300);
 
   const hintColor = await urlField.evaluate((el) => {
-    const hint = el.closest(".c-field")?.querySelector(".c-field__hint");
+    const hint = el.closest(".pl-c-field")?.querySelector(".pl-c-field__hint");
     return hint instanceof HTMLElement ? getComputedStyle(hint).color : null;
   });
   expect(hintColor).toBe(
@@ -143,11 +147,11 @@ test("framework-neutral fragments can be replaced and retoggled", async ({
 
   await page.locator("[data-preview-framework-contract]").evaluate((el) => {
     el.outerHTML = `
-      <div class="c-field" data-preview-framework-contract>
-        <label class="c-field__label" for="fragment-email">Fragment email</label>
+      <div class="pl-c-field" data-preview-framework-contract>
+        <label class="pl-c-field__label" for="fragment-email">Fragment email</label>
         <input
           id="fragment-email"
-          class="c-field__control"
+          class="pl-c-field__control"
           name="email"
           type="email"
           value="taken@example.com"
@@ -155,7 +159,7 @@ test("framework-neutral fragments can be replaced and retoggled", async ({
           aria-describedby="fragment-email-error"
         />
         <span
-          class="c-field__hint"
+          class="pl-c-field__hint"
           id="fragment-email-error"
           data-tone="danger"
           role="alert"
@@ -166,8 +170,8 @@ test("framework-neutral fragments can be replaced and retoggled", async ({
 
   const fragment = page.locator("[data-preview-framework-contract]");
   const dangerState = await fragment.evaluate((el) => {
-    const input = el.querySelector(".c-field__control");
-    const hint = el.querySelector(".c-field__hint");
+    const input = el.querySelector(".pl-c-field__control");
+    const hint = el.querySelector(".pl-c-field__hint");
     if (!(input instanceof HTMLElement) || !(hint instanceof HTMLElement)) {
       return null;
     }
@@ -185,11 +189,11 @@ test("framework-neutral fragments can be replaced and retoggled", async ({
     await resolveTokenColor(page, "--pl-color-danger-text"),
   );
 
-  await fragment.locator(".c-field__control").evaluate((el) => {
+  await fragment.locator(".pl-c-field__control").evaluate((el) => {
     el.setAttribute("aria-invalid", "false");
     el.setAttribute("value", "new@example.com");
   });
-  await fragment.locator(".c-field__hint").evaluate((el) => {
+  await fragment.locator(".pl-c-field__hint").evaluate((el) => {
     el.setAttribute("data-tone", "warning");
     el.removeAttribute("role");
     el.textContent = "Changing this address sends a confirmation email.";
@@ -197,8 +201,8 @@ test("framework-neutral fragments can be replaced and retoggled", async ({
   await page.waitForTimeout(300);
 
   const warningState = await fragment.evaluate((el) => {
-    const input = el.querySelector(".c-field__control");
-    const hint = el.querySelector(".c-field__hint");
+    const input = el.querySelector(".pl-c-field__control");
+    const hint = el.querySelector(".pl-c-field__hint");
     if (!(input instanceof HTMLElement) || !(hint instanceof HTMLElement)) {
       return null;
     }
@@ -223,8 +227,8 @@ test("inline fields align on desktop and stack without overflow on mobile", asyn
   await page.goto("./preview/field");
 
   const field = page.locator("[data-preview-inline]");
-  const label = field.locator(".c-field__label");
-  const control = field.locator(".c-field__control");
+  const label = field.locator(".pl-c-field__label");
+  const control = field.locator(".pl-c-field__control");
 
   const desktop = {
     label: await label.boundingBox(),
@@ -239,8 +243,8 @@ test("inline fields align on desktop and stack without overflow on mobile", asyn
   await page.goto("./preview/field");
   const mobileField = page.locator("[data-preview-inline]");
   const mobile = await mobileField.evaluate((field) => {
-    const label = field.querySelector(".c-field__label");
-    const control = field.querySelector(".c-field__control");
+    const label = field.querySelector(".pl-c-field__label");
+    const control = field.querySelector(".pl-c-field__control");
     if (!(label instanceof HTMLElement) || !(control instanceof HTMLElement)) {
       return null;
     }
@@ -276,8 +280,8 @@ test("hidden-label inline fields do not reserve the label gutter", async ({
   await page.goto("./preview/field");
 
   const metrics = await page.locator(".toolbar-demo").evaluate((toolbar) => {
-    const field = toolbar.querySelector(".c-field");
-    const input = toolbar.querySelector(".c-field__control");
+    const field = toolbar.querySelector(".pl-c-field");
+    const input = toolbar.querySelector(".pl-c-field__control");
     if (!field || !input) return null;
     const fieldRect = field.getBoundingClientRect();
     const inputRect = input.getBoundingClientRect();
@@ -296,7 +300,7 @@ test("form grids use multiple columns on desktop and one column on mobile", asyn
 }) => {
   await page.goto("./preview/form");
   const desktopBoxes = await page
-    .locator("[data-preview-form-grid] .c-form__grid > *")
+    .locator("[data-preview-form-grid] .pl-c-form__grid > *")
     .evaluateAll((els) =>
       els.slice(0, 4).map((el) => {
         const rect = el.getBoundingClientRect();
@@ -312,7 +316,7 @@ test("form grids use multiple columns on desktop and one column on mobile", asyn
   await page.setViewportSize({ width: 375, height: 900 });
   await page.goto("./preview/form");
   const mobileBoxes = await page
-    .locator("[data-preview-form-grid] .c-form__grid > *")
+    .locator("[data-preview-form-grid] .pl-c-form__grid > *")
     .evaluateAll((els) =>
       els.slice(0, 4).map((el) => {
         const rect = el.getBoundingClientRect();
@@ -332,16 +336,16 @@ test("choice groups keep native checkbox and radio controls", async ({
   const group = page.locator("[data-preview-choice-group]");
   await expect(group.locator("legend")).toHaveText("Email updates");
 
-  const first = group.locator(".c-choice__input").first();
+  const first = group.locator(".pl-c-choice__input").first();
   await expect(first).toHaveAttribute("type", "checkbox");
   await expect(first).toBeChecked();
-  await expect(group.locator(".c-choice__input:disabled")).toBeVisible();
-  await expect(group.locator(".c-choice-group__hint")).toHaveCSS(
+  await expect(group.locator(".pl-c-choice__input:disabled")).toBeVisible();
+  await expect(group.locator(".pl-c-choice-group__hint")).toHaveCSS(
     "color",
     await resolveTokenColor(page, "--pl-color-warning-text"),
   );
 
-  await tabUntil(page, "[data-preview-choice-group] .c-choice__input");
+  await tabUntil(page, "[data-preview-choice-group] .pl-c-choice__input");
   const focus = await first.evaluate((el) => {
     const style = getComputedStyle(el);
     return {
@@ -367,11 +371,11 @@ test("choice group hints support grouped invalid state", async ({ page }) => {
     "aria-describedby",
     "review-routing-error",
   );
-  await expect(group.locator(".c-choice-group__hint")).toHaveCSS(
+  await expect(group.locator(".pl-c-choice-group__hint")).toHaveCSS(
     "color",
     await resolveTokenColor(page, "--pl-color-danger-text"),
   );
-  await expect(group.locator(".c-choice__input")).toHaveCount(2);
+  await expect(group.locator(".pl-c-choice__input")).toHaveCount(2);
 });
 
 test("input groups move focus indication to the group while labels target native inputs", async ({
@@ -431,7 +435,7 @@ for (const theme of ["light", "dark"] as const) {
   }) => {
     await page.goto("./preview/field");
     await page.evaluate((value) => {
-      document.documentElement.setAttribute("data-theme", value);
+      document.documentElement.setAttribute("data-pl-theme", value);
     }, theme);
 
     await tabUntil(page, "#workspace-slug");

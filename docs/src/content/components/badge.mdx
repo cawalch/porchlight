@@ -7,45 +7,45 @@ since: 0.1.0
 
 # Badge
 
-The `.c-badge` is a compact inline label for statuses, counts, and tags. Tones
+The `.pl-c-badge` is a compact inline label for statuses, counts, and tags. Tones
 via `[data-tone]`; status tones consume the WCAG-AA `-bg`/`-text` token pairs,
 so they're legible in both themes by construction.
 
 ## Semantic HTML
 
 ```html
-<span class="c-badge">Default</span>
-<span class="c-badge" data-tone="success">Active</span>
-<span class="c-badge" data-tone="warning">Pending review</span>
-<span class="c-badge" data-tone="danger">Blocked</span>
-<span class="c-badge" data-tone="accent">New</span>
+<span class="pl-c-badge">Default</span>
+<span class="pl-c-badge" data-tone="success">Active</span>
+<span class="pl-c-badge" data-tone="warning">Pending review</span>
+<span class="pl-c-badge" data-tone="danger">Blocked</span>
+<span class="pl-c-badge" data-tone="accent">New</span>
 ```
 
 With a leading status dot:
 
 ```html
-<span class="c-badge" data-tone="success">
-  <span class="c-badge__dot"></span>Online
+<span class="pl-c-badge" data-tone="success">
+  <span class="pl-c-badge__dot"></span>Online
 </span>
 ```
 
 Grouping multiple badges:
 
 ```html
-<div class="c-badge-group">
-  <span class="c-badge">Inbound</span>
-  <span class="c-badge" data-tone="warning">SLA watch</span>
+<div class="pl-c-badge-group">
+  <span class="pl-c-badge">Inbound</span>
+  <span class="pl-c-badge" data-tone="warning">SLA watch</span>
 </div>
 ```
 
 ## Class contract
 
-| Selector         | Role                                                                            |
-| ---------------- | ------------------------------------------------------------------------------- |
-| `.c-badge`       | The badge (`<span>`).                                                           |
-| `.c-badge-group` | Wrapping flex container for badge sets.                                         |
-| `[data-tone]`    | `accent` \| `success` \| `warning` \| `danger` (default = neutral `surface-2`). |
-| `.c-badge__dot`  | Optional leading status pip (colored `currentColor`).                           |
+| Selector            | Role                                                                            |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `.pl-c-badge`       | The badge (`<span>`).                                                           |
+| `.pl-c-badge-group` | Wrapping flex container for badge sets.                                         |
+| `[data-tone]`       | `accent` \| `success` \| `warning` \| `danger` (default = neutral `surface-2`). |
+| `.pl-c-badge__dot`  | Optional leading status pip (colored `currentColor`).                           |
 
 ## Tokens consumed
 

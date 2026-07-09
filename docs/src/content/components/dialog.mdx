@@ -7,7 +7,7 @@ since: 0.1.0
 
 # Dialog
 
-The `.c-dialog` is a modal dialog using the **native `<dialog>` element**. It
+The `.pl-c-dialog` is a modal dialog using the **native `<dialog>` element**. It
 uses `showModal()` for top-layer rendering, modal focus trapping, and native
 Esc-to-close. The `::backdrop` pseudo-element provides the page scrim.
 
@@ -18,11 +18,11 @@ Esc-to-close. The `::backdrop` pseudo-element provides the page scrim.
   Delete account
 </button>
 
-<dialog class="c-dialog" id="confirm">
-  <header class="c-dialog__header">
-    <h2 class="c-dialog__title">Delete account?</h2>
+<dialog class="pl-c-dialog" id="confirm">
+  <header class="pl-c-dialog__header">
+    <h2 class="pl-c-dialog__title">Delete account?</h2>
     <button
-      class="c-dialog__close"
+      class="pl-c-dialog__close"
       type="button"
       aria-label="Close"
       onclick="this.closest('dialog').close()"
@@ -30,19 +30,19 @@ Esc-to-close. The `::backdrop` pseudo-element provides the page scrim.
       ✕
     </button>
   </header>
-  <div class="c-dialog__body">
+  <div class="pl-c-dialog__body">
     <p>This action cannot be undone.</p>
   </div>
-  <footer class="c-dialog__footer">
+  <footer class="pl-c-dialog__footer">
     <button
-      class="c-button"
+      class="pl-c-button"
       data-variant="ghost"
       onclick="this.closest('dialog').close()"
     >
       Cancel
     </button>
     <button
-      class="c-button"
+      class="pl-c-button"
       data-variant="danger"
       onclick="this.closest('dialog').close()"
     >
@@ -57,14 +57,14 @@ with `el.close()` or pressing `Esc` (native behavior).
 
 ## Class contract
 
-| Selector            | Role                                           |
-| ------------------- | ---------------------------------------------- |
-| `.c-dialog`         | The `<dialog>` element.                        |
-| `.c-dialog__header` | Title + close button row.                      |
-| `.c-dialog__title`  | The heading (`<h2>`).                          |
-| `.c-dialog__close`  | The close button (top-right ✕).                |
-| `.c-dialog__body`   | Main content.                                  |
-| `.c-dialog__footer` | Action row (flex, right-aligned, top divider). |
+| Selector               | Role                                           |
+| ---------------------- | ---------------------------------------------- |
+| `.pl-c-dialog`         | The `<dialog>` element.                        |
+| `.pl-c-dialog__header` | Title + close button row.                      |
+| `.pl-c-dialog__title`  | The heading (`<h2>`).                          |
+| `.pl-c-dialog__close`  | The close button (top-right ✕).                |
+| `.pl-c-dialog__body`   | Main content.                                  |
+| `.pl-c-dialog__footer` | Action row (flex, right-aligned, top divider). |
 
 ## Tokens consumed
 
@@ -75,13 +75,13 @@ with `el.close()` or pressing `Esc` (native behavior).
 
 ## Tokens exposed
 
-| Token             | Default | Purpose                               |
-| ----------------- | ------- | ------------------------------------- |
-| `--c-dialog-size` | `42rem` | Max inline-size. Override per-dialog. |
+| Token                | Default | Purpose                               |
+| -------------------- | ------- | ------------------------------------- |
+| `--pl-c-dialog-size` | `42rem` | Max inline-size. Override per-dialog. |
 
 ## Responsive sizing
 
-`inline-size: min(100% - 2rem, var(--c-dialog-size))` - the dialog never
+`inline-size: min(100% - 2rem, var(--pl-c-dialog-size))` - the dialog never
 overflows its viewport (the `100% - 2rem` gives 1rem gutters on each side).
 `max-block-size: min(100dvb - 2rem, 80dvb)` + `overflow: auto` keeps tall
 dialogs scrollable.

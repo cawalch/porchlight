@@ -65,12 +65,12 @@ const groupedCommands = commands.reduce(
 ---
 
 <BaseLayout title="Command-driven workspace · Porchlight">
-  <div class="l-app-shell command-shell">
-    <header class="l-app-shell__topbar" data-glass>
-      <div class="c-toolbar" data-surface="flush">
-        <div class="c-toolbar__group">
+  <div class="pl-l-app-shell command-shell">
+    <header class="pl-l-app-shell__topbar" data-glass>
+      <div class="pl-c-toolbar" data-surface="flush">
+        <div class="pl-c-toolbar__group">
           <button
-            class="c-button"
+            class="pl-c-button"
             data-variant="ghost"
             data-size="sm"
             type="button"
@@ -81,14 +81,14 @@ const groupedCommands = commands.reduce(
             </svg>
           </button>
           <strong>Ops Console</strong>
-          <span class="c-badge" data-tone="success">
-            <span class="c-badge__dot"></span>
+          <span class="pl-c-badge" data-tone="success">
+            <span class="pl-c-badge__dot"></span>
             Live
           </span>
         </div>
-        <div class="c-toolbar__group">
+        <div class="pl-c-toolbar__group">
           <button
-            class="c-button"
+            class="pl-c-button"
             data-variant="secondary"
             type="button"
             popovertarget="workspace-command"
@@ -102,76 +102,76 @@ const groupedCommands = commands.reduce(
               <path d="m20 20-3.5-3.5"></path>
             </svg>
             Search commands
-            <span class="c-badge">Cmd K</span>
+            <span class="pl-c-badge">Cmd K</span>
           </button>
-          <button class="c-button" data-variant="primary" type="button" data-run-selected>
+          <button class="pl-c-button" data-variant="primary" type="button" data-run-selected>
             Run selected
           </button>
         </div>
       </div>
     </header>
 
-    <aside class="l-app-shell__sidebar command-sidebar">
-      <nav class="c-nav" aria-label="Workspace navigation">
-        <div class="c-nav__group">
-          <span class="c-nav__group-label">Workspace</span>
+    <aside class="pl-l-app-shell__sidebar command-sidebar">
+      <nav class="pl-c-nav" aria-label="Workspace navigation">
+        <div class="pl-c-nav__group">
+          <span class="pl-c-nav__group-label">Workspace</span>
         </div>
         {
           navItems.map(([label, count, current]) => (
-            <a class="c-nav__item" href="#" aria-current={current ? 'page' : undefined}>
-              <svg class="c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <a class="pl-c-nav__item" href="#" aria-current={current ? 'page' : undefined}>
+              <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="4" y="4" width="16" height="16" rx="2"></rect>
                 <path d="M8 9h8M8 13h5"></path>
               </svg>
-              <span class="c-nav__label">{label}</span>
-              {count && <span class="c-badge c-nav__badge" data-tone={current ? 'accent' : undefined}>{count}</span>}
+              <span class="pl-c-nav__label">{label}</span>
+              {count && <span class="pl-c-badge pl-c-nav__badge" data-tone={current ? 'accent' : undefined}>{count}</span>}
             </a>
           ))
         }
-        <hr class="c-nav__divider" />
-        <div class="c-nav__footer">
-          <div class="c-nav__meta">
-            <span class="c-nav__meta-icon">
+        <hr class="pl-c-nav__divider" />
+        <div class="pl-c-nav__footer">
+          <div class="pl-c-nav__meta">
+            <span class="pl-c-nav__meta-icon">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <circle cx="12" cy="12" r="5"></circle>
               </svg>
             </span>
-            <span class="c-nav__meta-body">
-              <span class="c-nav__meta-label">Command mode</span>
-              <span class="c-nav__meta-description">4 saved automations</span>
+            <span class="pl-c-nav__meta-body">
+              <span class="pl-c-nav__meta-label">Command mode</span>
+              <span class="pl-c-nav__meta-description">4 saved automations</span>
             </span>
           </div>
-          <div class="c-nav__actions">
-            <button class="c-nav__action" type="button" popovertarget="workspace-command">
-              <svg class="c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <div class="pl-c-nav__actions">
+            <button class="pl-c-nav__action" type="button" popovertarget="workspace-command">
+              <svg class="pl-c-nav__action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M12 5v14M5 12h14" stroke-linecap="round"></path>
               </svg>
-              <span class="c-nav__action-label">New command</span>
+              <span class="pl-c-nav__action-label">New command</span>
             </button>
           </div>
         </div>
       </nav>
     </aside>
 
-    <main class="l-app-shell__main">
-      <div class="l-container command-container">
-        <div class="c-page-header">
-          <div class="c-page-header__heading">
-            <h1 class="c-page-header__title">Command center</h1>
-            <p class="c-page-header__subtitle">Search, select, inspect, and run workspace actions from one surface.</p>
+    <main class="pl-l-app-shell__main">
+      <div class="pl-l-container command-container">
+        <div class="pl-c-page-header">
+          <div class="pl-c-page-header__heading">
+            <h1 class="pl-c-page-header__title">Command center</h1>
+            <p class="pl-c-page-header__subtitle">Search, select, inspect, and run workspace actions from one surface.</p>
           </div>
-          <div class="c-page-header__actions">
-            <span class="c-chip">Queue: Vendor onboarding</span>
-            <span class="c-chip" data-tone="warning">SLA watch</span>
+          <div class="pl-c-page-header__actions">
+            <span class="pl-c-chip">Queue: Vendor onboarding</span>
+            <span class="pl-c-chip" data-tone="warning">SLA watch</span>
           </div>
         </div>
 
-        <div class="c-toolbar command-toolbar" data-surface="panel">
-          <div class="c-toolbar__group command-toolbar__scope">
-            <div class="c-combobox command-scope-select">
-              <div class="c-combobox__control">
+        <div class="pl-c-toolbar command-toolbar" data-surface="panel">
+          <div class="pl-c-toolbar__group command-toolbar__scope">
+            <div class="pl-c-combobox command-scope-select">
+              <div class="pl-c-combobox__control">
                 <input
-                  class="c-combobox__input"
+                  class="pl-c-combobox__input"
                   type="search"
                   role="combobox"
                   aria-expanded="false"
@@ -179,39 +179,39 @@ const groupedCommands = commands.reduce(
                   aria-label="Command scope"
                   value="All workspaces"
                 />
-                <svg class="c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <svg class="pl-c-combobox__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
               </div>
-              <div class="c-combobox__popup" id="workspace-scope" role="listbox" hidden></div>
+              <div class="pl-c-combobox__popup" id="workspace-scope" role="listbox" hidden></div>
             </div>
-            <span class="u-muted-sm">12 runnable commands</span>
+            <span class="pl-u-muted-sm">12 runnable commands</span>
           </div>
-          <div class="c-toolbar__group">
-            <button class="c-button" data-variant="ghost" data-size="sm" type="button">Needs review</button>
-            <button class="c-button" data-variant="ghost" data-size="sm" type="button">Assigned to me</button>
-            <button class="c-button" data-variant="secondary" data-size="sm" type="button">Save view</button>
+          <div class="pl-c-toolbar__group">
+            <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Needs review</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Assigned to me</button>
+            <button class="pl-c-button" data-variant="secondary" data-size="sm" type="button">Save view</button>
           </div>
         </div>
 
         <div
-          class="c-split-pane command-split"
+          class="pl-c-split-pane command-split"
           data-collapse="stack"
         >
-          <section class="c-split-pane__pane c-split-pane__pane--start" aria-labelledby="workspace-results-title">
-            <header class="c-split-pane__header">
-              <div class="u-min-0">
-                <h2 class="c-split-pane__title" id="workspace-results-title">Command results</h2>
-                <p class="c-split-pane__description">Best matches from the active queue</p>
+          <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start" aria-labelledby="workspace-results-title">
+            <header class="pl-c-split-pane__header">
+              <div class="pl-u-min-0">
+                <h2 class="pl-c-split-pane__title" id="workspace-results-title">Command results</h2>
+                <p class="pl-c-split-pane__description">Best matches from the active queue</p>
               </div>
-              <span class="c-badge" data-tone="accent">4 groups</span>
+              <span class="pl-c-badge" data-tone="accent">4 groups</span>
             </header>
-            <div class="c-split-pane__pane-inner">
-              <div class="l-stack command-results-stack">
+            <div class="pl-c-split-pane__pane-inner">
+              <div class="pl-l-stack command-results-stack">
                 {
                   commands.map((command, index) => (
                     <button
-                      class="c-card"
+                      class="pl-c-card"
                       data-surface="app"
                       data-interactive
                       data-command-card
@@ -219,16 +219,16 @@ const groupedCommands = commands.reduce(
                       type="button"
                       aria-pressed={index === 0 ? 'true' : 'false'}
                     >
-                      <span class="c-card__header">
-                        <span class="c-card__title">{command.label}</span>
-                        <span class="c-badge" data-tone={command.tone}>{command.result}</span>
+                      <span class="pl-c-card__header">
+                        <span class="pl-c-card__title">{command.label}</span>
+                        <span class="pl-c-badge" data-tone={command.tone}>{command.result}</span>
                       </span>
-                      <span class="c-card__body">
-                        <span class="u-line-clamp">{command.impact}</span>
+                      <span class="pl-c-card__body">
+                        <span class="pl-u-line-clamp">{command.impact}</span>
                       </span>
-                      <span class="c-card__footer command-card-footer">
-                        <span class="c-chip" data-size="sm">{command.target}</span>
-                        <span class="u-muted-sm">{command.status}</span>
+                      <span class="pl-c-card__footer command-card-footer">
+                        <span class="pl-c-chip" data-size="sm">{command.target}</span>
+                        <span class="pl-u-muted-sm">{command.status}</span>
                       </span>
                     </button>
                   ))
@@ -237,56 +237,56 @@ const groupedCommands = commands.reduce(
             </div>
           </section>
 
-          <div class="c-split-pane__separator" aria-hidden="true"></div>
+          <div class="pl-c-split-pane__separator" aria-hidden="true"></div>
 
-          <section class="c-split-pane__pane c-split-pane__pane--end" aria-labelledby="workspace-detail-title">
-            <header class="c-split-pane__header">
-              <div class="u-min-0">
-                <h2 class="c-split-pane__title" id="workspace-detail-title" data-detail-title>{commands[0].label}</h2>
-                <p class="c-split-pane__description" data-detail-target>{commands[0].target}</p>
+          <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end" aria-labelledby="workspace-detail-title">
+            <header class="pl-c-split-pane__header">
+              <div class="pl-u-min-0">
+                <h2 class="pl-c-split-pane__title" id="workspace-detail-title" data-detail-title>{commands[0].label}</h2>
+                <p class="pl-c-split-pane__description" data-detail-target>{commands[0].target}</p>
               </div>
-              <span class="c-badge" data-tone={commands[0].tone} data-detail-status>{commands[0].status}</span>
+              <span class="pl-c-badge" data-tone={commands[0].tone} data-detail-status>{commands[0].status}</span>
             </header>
-            <div class="c-split-pane__pane-inner">
-              <div class="l-stack command-detail-stack">
-                <article class="c-card" data-surface="app">
-                  <div class="c-card__header">
-                    <h3 class="c-card__title">Command detail</h3>
-                    <span class="c-badge" data-detail-shortcut>{commands[0].shortcut}</span>
+            <div class="pl-c-split-pane__pane-inner">
+              <div class="pl-l-stack command-detail-stack">
+                <article class="pl-c-card" data-surface="app">
+                  <div class="pl-c-card__header">
+                    <h3 class="pl-c-card__title">Command detail</h3>
+                    <span class="pl-c-badge" data-detail-shortcut>{commands[0].shortcut}</span>
                   </div>
-                  <div class="c-card__body">
+                  <div class="pl-c-card__body">
                     <p data-detail-impact>{commands[0].impact}</p>
                   </div>
-                  <div class="c-card__footer">
-                    <button class="c-button" data-variant="ghost" type="button" popovertarget="workspace-drawer">
+                  <div class="pl-c-card__footer">
+                    <button class="pl-c-button" data-variant="ghost" type="button" popovertarget="workspace-drawer">
                       Inspect inputs
                     </button>
-                    <button class="c-button" data-variant="primary" type="button" data-run-selected>
+                    <button class="pl-c-button" data-variant="primary" type="button" data-run-selected>
                       Run command
                     </button>
                   </div>
                 </article>
 
-                <section class="c-card" data-surface="app" aria-labelledby="recent-commands-title">
-                  <div class="c-card__header">
-                    <h3 class="c-card__title" id="recent-commands-title">Recent commands</h3>
-                    <span class="c-badge">Live</span>
+                <section class="pl-c-card" data-surface="app" aria-labelledby="recent-commands-title">
+                  <div class="pl-c-card__header">
+                    <h3 class="pl-c-card__title" id="recent-commands-title">Recent commands</h3>
+                    <span class="pl-c-badge">Live</span>
                   </div>
-                  <div class="c-card__body">
-                    <div class="c-chip-group" data-recent-commands>
-                      <span class="c-chip" data-tone="success">Publish morning brief</span>
-                      <span class="c-chip">Assign priority vendor</span>
-                      <span class="c-chip" data-tone="warning">Open risk exceptions</span>
+                  <div class="pl-c-card__body">
+                    <div class="pl-c-chip-group" data-recent-commands>
+                      <span class="pl-c-chip" data-tone="success">Publish morning brief</span>
+                      <span class="pl-c-chip">Assign priority vendor</span>
+                      <span class="pl-c-chip" data-tone="warning">Open risk exceptions</span>
                     </div>
                   </div>
                 </section>
 
-                <section class="c-card" data-surface="app" aria-labelledby="feedback-title">
-                  <div class="c-card__header">
-                    <h3 class="c-card__title" id="feedback-title">Action feedback</h3>
-                    <span class="c-badge" data-tone="success">Ready</span>
+                <section class="pl-c-card" data-surface="app" aria-labelledby="feedback-title">
+                  <div class="pl-c-card__header">
+                    <h3 class="pl-c-card__title" id="feedback-title">Action feedback</h3>
+                    <span class="pl-c-badge" data-tone="success">Ready</span>
                   </div>
-                  <div class="c-card__body">
+                  <div class="pl-c-card__body">
                     <p data-feedback>Palette opened. Choose a command or press Run selected.</p>
                   </div>
                 </section>
@@ -298,40 +298,40 @@ const groupedCommands = commands.reduce(
     </main>
   </div>
 
-  <div popover class="c-drawer" id="workspace-drawer" data-side="end">
-    <div class="c-drawer__header">
-      <h2 class="c-drawer__title">Command inputs</h2>
-      <button class="c-button" data-variant="ghost" data-size="sm" popovertarget="workspace-drawer" aria-label="Close">
+  <div popover class="pl-c-drawer" id="workspace-drawer" data-side="end">
+    <div class="pl-c-drawer__header">
+      <h2 class="pl-c-drawer__title">Command inputs</h2>
+      <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="workspace-drawer" aria-label="Close">
         Close
       </button>
     </div>
-    <div class="c-drawer__body">
-      <div class="l-stack command-drawer-stack">
-        <label class="c-field">
-          <span class="c-field__label">Owner</span>
-          <input class="c-field__control" value="Maya Patel" />
+    <div class="pl-c-drawer__body">
+      <div class="pl-l-stack command-drawer-stack">
+        <label class="pl-c-field">
+          <span class="pl-c-field__label">Owner</span>
+          <input class="pl-c-field__control" value="Maya Patel" />
         </label>
-        <label class="c-field">
-          <span class="c-field__label">Due window</span>
-          <input class="c-field__control" value="Today, 4:00 PM" />
+        <label class="pl-c-field">
+          <span class="pl-c-field__label">Due window</span>
+          <input class="pl-c-field__control" value="Today, 4:00 PM" />
         </label>
-        <div class="c-chip-group">
-          <span class="c-chip">Vendor</span>
-          <span class="c-chip" data-tone="warning">SLA</span>
-          <span class="c-chip" data-tone="success">Auto-route</span>
+        <div class="pl-c-chip-group">
+          <span class="pl-c-chip">Vendor</span>
+          <span class="pl-c-chip" data-tone="warning">SLA</span>
+          <span class="pl-c-chip" data-tone="success">Auto-route</span>
         </div>
       </div>
     </div>
-    <div class="c-drawer__footer">
-      <button class="c-button" data-variant="ghost" popovertarget="workspace-drawer">Cancel</button>
-      <button class="c-button" data-variant="primary" popovertarget="workspace-drawer">Apply</button>
+    <div class="pl-c-drawer__footer">
+      <button class="pl-c-button" data-variant="ghost" popovertarget="workspace-drawer">Cancel</button>
+      <button class="pl-c-button" data-variant="primary" popovertarget="workspace-drawer">Apply</button>
     </div>
   </div>
 
-  <div popover class="c-command" id="workspace-command" role="dialog" aria-labelledby="workspace-command-title">
-    <h2 id="workspace-command-title" class="u-sr-only">Workspace commands</h2>
+  <div popover class="pl-c-command" id="workspace-command" role="dialog" aria-labelledby="workspace-command-title">
+    <h2 id="workspace-command-title" class="pl-u-sr-only">Workspace commands</h2>
     <input
-      class="c-command__search"
+      class="pl-c-command__search"
       role="combobox"
       aria-expanded="true"
       aria-controls="workspace-command-list"
@@ -339,14 +339,14 @@ const groupedCommands = commands.reduce(
       aria-label="Search commands"
       placeholder="Type a command or queue name..."
     />
-    <div class="c-command__body" id="workspace-command-list" role="listbox" aria-label="Commands">
+    <div class="pl-c-command__body" id="workspace-command-list" role="listbox" aria-label="Commands">
       {
         Object.entries(groupedCommands).map(([group, items]) => (
-          <div class="c-command__group">
-            <h3 class="c-command__heading">{group}</h3>
+          <div class="pl-c-command__group">
+            <h3 class="pl-c-command__heading">{group}</h3>
             {items.map((command, index) => (
               <button
-                class="c-command__item"
+                class="pl-c-command__item"
                 id={command.id}
                 type="button"
                 role="option"
@@ -354,36 +354,36 @@ const groupedCommands = commands.reduce(
                 data-command={command.id}
                 data-selected={index === 0 && group === commands[0].group ? true : undefined}
               >
-                <svg class="c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <svg class="pl-c-command__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 <span>{command.label}</span>
-                <span class="c-command__shortcut">{command.shortcut}</span>
+                <span class="pl-c-command__shortcut">{command.shortcut}</span>
               </button>
             ))}
           </div>
         ))
       }
     </div>
-    <footer class="c-command__footer">
+    <footer class="pl-c-command__footer">
       <span>Arrow keys navigate</span>
       <span>Enter selects</span>
       <span>Esc closes</span>
     </footer>
   </div>
 
-  <div class="c-toast-stack" role="region" aria-label="Notifications">
-    <div class="c-toast" data-tone="success" data-visible role="status" data-toast>
-      <span class="c-toast__icon">
+  <div class="pl-c-toast-stack" role="region" aria-label="Notifications">
+    <div class="pl-c-toast" data-tone="success" data-visible role="status" data-toast>
+      <span class="pl-c-toast__icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </span>
-      <div class="c-toast__content">
-        <span class="c-toast__title" data-toast-title>Command ready</span>
-        <span class="c-toast__body" data-toast-body>Assign priority vendor is selected.</span>
+      <div class="pl-c-toast__content">
+        <span class="pl-c-toast__title" data-toast-title>Command ready</span>
+        <span class="pl-c-toast__body" data-toast-body>Assign priority vendor is selected.</span>
       </div>
-      <button class="c-toast__close" type="button" aria-label="Dismiss" data-toast-dismiss>Close</button>
+      <button class="pl-c-toast__close" type="button" aria-label="Dismiss" data-toast-dismiss>Close</button>
     </div>
   </div>
 
@@ -440,9 +440,9 @@ const groupedCommands = commands.reduce(
     ]);
 
     const palette = document.getElementById('workspace-command');
-    const search = palette?.querySelector('.c-command__search');
+    const search = palette?.querySelector('.pl-c-command__search');
     const opener = document.querySelector('[data-command-trigger]');
-    const items = () => Array.from(palette?.querySelectorAll('.c-command__item') ?? []);
+    const items = () => Array.from(palette?.querySelectorAll('.pl-c-command__item') ?? []);
     let selectedIndex = 0;
     let selectedCommand = 'assign-vendor';
 
@@ -489,7 +489,7 @@ const groupedCommands = commands.reduce(
       const recent = document.querySelector('[data-recent-commands]');
       if (recent) {
         const chip = document.createElement('span');
-        chip.className = 'c-chip';
+        chip.className = 'pl-c-chip';
         chip.setAttribute('data-tone', command.tone);
         chip.textContent = command.label;
         recent.prepend(chip);
@@ -574,7 +574,7 @@ const groupedCommands = commands.reduce(
 
 <style>
   .command-shell {
-    --app-sidebar-size: 15rem;
+    --pl-app-sidebar-size: 15rem;
   }
 
   .command-icon {
@@ -589,7 +589,7 @@ const groupedCommands = commands.reduce(
   }
 
   .command-container {
-    --l-container-max: 86rem;
+    --pl-l-container-max: 86rem;
 
     padding-block: var(--pl-space-5);
   }
@@ -607,13 +607,13 @@ const groupedCommands = commands.reduce(
   }
 
   .command-split {
-    --c-split-pane-start-size: minmax(18rem, 0.82fr);
-    --c-split-pane-end-size: minmax(20rem, 1fr);
-    --c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));
+    --pl-c-split-pane-start-size: minmax(18rem, 0.82fr);
+    --pl-c-split-pane-end-size: minmax(20rem, 1fr);
+    --pl-c-split-pane-min-block-size: min(34rem, calc(100dvb - 13rem));
   }
 
   .command-results-stack {
-    --l-stack-gap: var(--pl-space-3);
+    --pl-l-stack-gap: var(--pl-space-3);
   }
 
   [data-command-card] {
@@ -627,14 +627,14 @@ const groupedCommands = commands.reduce(
 
   .command-detail-stack,
   .command-drawer-stack {
-    --l-stack-gap: var(--pl-space-4);
+    --pl-l-stack-gap: var(--pl-space-4);
   }
 
-  .l-app-shell__main .c-split-pane {
+  .pl-l-app-shell__main .pl-c-split-pane {
     overflow: visible;
   }
 
-  .l-app-shell__main .c-split-pane > .c-split-pane__pane {
+  .pl-l-app-shell__main .pl-c-split-pane > .pl-c-split-pane__pane {
     overflow: visible;
     overscroll-behavior: auto;
     scrollbar-gutter: auto;

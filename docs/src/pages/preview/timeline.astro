@@ -18,16 +18,16 @@ const events = [
   </p>
 
   <h2>Activity feed</h2>
-  <ol class="c-timeline">
+  <ol class="pl-c-timeline">
     {events.map((e) => (
-      <li class="c-timeline__item" data-tone={e.tone || undefined}>
-        <span class="c-timeline__dot"></span>
-        <div class="c-timeline__content">
-          <div class="c-timeline__header">
-            <span class="c-timeline__title">{e.title}</span>
-            <time class="c-timeline__time">{e.time}</time>
+      <li class="pl-c-timeline__item" data-tone={e.tone || undefined}>
+        <span class="pl-c-timeline__dot"></span>
+        <div class="pl-c-timeline__content">
+          <div class="pl-c-timeline__header">
+            <span class="pl-c-timeline__title">{e.title}</span>
+            <time class="pl-c-timeline__time">{e.time}</time>
           </div>
-          <p class="c-timeline__body">{e.body}</p>
+          <p class="pl-c-timeline__body">{e.body}</p>
         </div>
       </li>
     ))}

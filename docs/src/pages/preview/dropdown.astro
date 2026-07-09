@@ -11,38 +11,38 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Basic</h2>
   <div class="dropdown-demo-width">
-    <div class="c-dropdown dropdown-demo-basic">
-      <button class="c-dropdown__trigger" id="dd-trigger-1" popovertarget="dd-1" aria-haspopup="menu" aria-controls="dd-1" aria-expanded="false">
-        <span class="c-dropdown__label">Project Alpha</span>
-        <svg class="c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <div class="pl-c-dropdown dropdown-demo-basic">
+      <button class="pl-c-dropdown__trigger" id="dd-trigger-1" popovertarget="dd-1" aria-haspopup="menu" aria-controls="dd-1" aria-expanded="false">
+        <span class="pl-c-dropdown__label">Project Alpha</span>
+        <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
-      <div popover class="c-dropdown__menu" id="dd-1" role="menu" aria-labelledby="dd-trigger-1">
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Project Alpha">Project Alpha</button>
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Beta">Project Beta</button>
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Gamma">Project Gamma</button>
-        <hr class="c-menu__divider" />
-        <button class="c-dropdown__option" type="button" role="menuitem" data-tone="danger">Delete project</button>
+      <div popover class="pl-c-dropdown__menu" id="dd-1" role="menu" aria-labelledby="dd-trigger-1">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Project Alpha">Project Alpha</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Beta">Project Beta</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Project Gamma">Project Gamma</button>
+        <hr class="pl-c-menu__divider" />
+        <button class="pl-c-dropdown__option" type="button" role="menuitem" data-tone="danger">Delete project</button>
       </div>
     </div>
   </div>
 
   <h2>With icons</h2>
   <div class="dropdown-demo-width">
-    <div class="c-dropdown dropdown-demo-icons">
-      <button class="c-dropdown__trigger" id="dd-trigger-2" popovertarget="dd-2" aria-haspopup="menu" aria-controls="dd-2" aria-expanded="false">
-        <span class="c-dropdown__label">Sort by: Name</span>
-        <svg class="c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <div class="pl-c-dropdown dropdown-demo-icons">
+      <button class="pl-c-dropdown__trigger" id="dd-trigger-2" popovertarget="dd-2" aria-haspopup="menu" aria-controls="dd-2" aria-expanded="false">
+        <span class="pl-c-dropdown__label">Sort by: Name</span>
+        <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </button>
-      <div popover class="c-dropdown__menu" id="dd-2" role="menu" aria-labelledby="dd-trigger-2">
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Sort by: Name">
+      <div popover class="pl-c-dropdown__menu" id="dd-2" role="menu" aria-labelledby="dd-trigger-2">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="true" data-label="Sort by: Name">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h12M3 18h6" stroke-linecap="round" /></svg>
           Name (A-Z)
         </button>
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Date created">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Date created">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18V6M9 6l6-3 6 3M3 18h12" stroke-linecap="round" /></svg>
           Date created
         </button>
-        <button class="c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Last modified">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" aria-checked="false" data-label="Sort by: Last modified">
           <svg class="dropdown-demo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" stroke-linecap="round" /></svg>
           Last modified
         </button>
@@ -51,10 +51,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 
   <script>
-    for (const dropdown of document.querySelectorAll('.c-dropdown')) {
-      const trigger = dropdown.querySelector('.c-dropdown__trigger');
-      const label = dropdown.querySelector('.c-dropdown__label');
-      const menu = dropdown.querySelector('.c-dropdown__menu');
+    for (const dropdown of document.querySelectorAll('.pl-c-dropdown')) {
+      const trigger = dropdown.querySelector('.pl-c-dropdown__trigger');
+      const label = dropdown.querySelector('.pl-c-dropdown__label');
+      const menu = dropdown.querySelector('.pl-c-dropdown__menu');
       if (!(trigger instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) continue;
 
       menu.addEventListener('toggle', () => {
@@ -63,11 +63,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
       menu.addEventListener('click', (event) => {
         const option = event.target instanceof Element
-          ? event.target.closest('.c-dropdown__option[role="menuitemradio"]')
+          ? event.target.closest('.pl-c-dropdown__option[role="menuitemradio"]')
           : null;
         if (!(option instanceof HTMLButtonElement)) return;
 
-        for (const item of menu.querySelectorAll('.c-dropdown__option[role="menuitemradio"]')) {
+        for (const item of menu.querySelectorAll('.pl-c-dropdown__option[role="menuitemradio"]')) {
           item.setAttribute('aria-checked', String(item === option));
         }
 
@@ -84,11 +84,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .dropdown-demo-basic {
-    --c-dropdown-anchor: --dd-1;
+    --pl-c-dropdown-anchor: --dd-1;
   }
 
   .dropdown-demo-icons {
-    --c-dropdown-anchor: --dd-2;
+    --pl-c-dropdown-anchor: --dd-2;
   }
 
   .dropdown-demo-icon {

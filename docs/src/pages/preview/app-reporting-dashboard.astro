@@ -54,111 +54,111 @@ const toneFor = (status: string) =>
   ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning' }[status] ?? 'accent');
 ---
 <BaseLayout title="Reporting dashboard · Porchlight">
-  <main class="l-container l-stack reporting-shell">
-    <section class="l-stack reporting-header-stack" aria-labelledby="report-title">
-      <div class="c-page-header">
-        <div class="c-page-header__heading">
-          <h1 class="c-page-header__title" id="report-title">Revenue performance</h1>
-          <span class="c-page-header__subtitle">
+  <main class="pl-l-container pl-l-stack reporting-shell">
+    <section class="pl-l-stack reporting-header-stack" aria-labelledby="report-title">
+      <div class="pl-c-page-header">
+        <div class="pl-c-page-header__heading">
+          <h1 class="pl-c-page-header__title" id="report-title">Revenue performance</h1>
+          <span class="pl-c-page-header__subtitle">
             Generated <time datetime="2026-06-29T09:42:00">Jun 29, 2026 at 9:42 AM</time>
           </span>
         </div>
-        <div class="c-page-header__actions">
-          <label class="c-field">
-            <span class="u-sr-only">Start date</span>
-            <input class="c-field__control" type="date" value="2026-06-01" />
+        <div class="pl-c-page-header__actions">
+          <label class="pl-c-field">
+            <span class="pl-u-sr-only">Start date</span>
+            <input class="pl-c-field__control" type="date" value="2026-06-01" />
           </label>
-          <label class="c-field">
-            <span class="u-sr-only">End date</span>
-            <input class="c-field__control" type="date" value="2026-06-29" />
+          <label class="pl-c-field">
+            <span class="pl-u-sr-only">End date</span>
+            <input class="pl-c-field__control" type="date" value="2026-06-29" />
           </label>
-          <button class="c-button" data-variant="secondary">Refresh</button>
-          <button class="c-button" data-variant="primary">
+          <button class="pl-c-button" data-variant="secondary">Refresh</button>
+          <button class="pl-c-button" data-variant="primary">
             <Icon name="download" />
             Export
           </button>
         </div>
       </div>
 
-      <nav class="c-saved-views" aria-label="Saved report views">
-        <span class="c-saved-views__label">Views</span>
-        <ul class="c-saved-views__list">
-          <li class="c-saved-views__item">
-            <button class="c-saved-views__button" aria-current="true">
-              Executive <span class="c-saved-views__count">12</span>
+      <nav class="pl-c-saved-views" aria-label="Saved report views">
+        <span class="pl-c-saved-views__label">Views</span>
+        <ul class="pl-c-saved-views__list">
+          <li class="pl-c-saved-views__item">
+            <button class="pl-c-saved-views__button" aria-current="true">
+              Executive <span class="pl-c-saved-views__count">12</span>
             </button>
           </li>
-          <li class="c-saved-views__item">
-            <button class="c-saved-views__button">
-              Acquisition <span class="c-saved-views__count">8</span>
+          <li class="pl-c-saved-views__item">
+            <button class="pl-c-saved-views__button">
+              Acquisition <span class="pl-c-saved-views__count">8</span>
             </button>
           </li>
-          <li class="c-saved-views__item">
-            <button class="c-saved-views__button">
-              Expansion <span class="c-saved-views__count">5</span>
+          <li class="pl-c-saved-views__item">
+            <button class="pl-c-saved-views__button">
+              Expansion <span class="pl-c-saved-views__count">5</span>
             </button>
           </li>
-          <li class="c-saved-views__item">
-            <button class="c-saved-views__button">
-              At risk <span class="c-saved-views__count">3</span>
+          <li class="pl-c-saved-views__item">
+            <button class="pl-c-saved-views__button">
+              At risk <span class="pl-c-saved-views__count">3</span>
             </button>
           </li>
         </ul>
       </nav>
 
-      <div class="c-query-bar" role="search" aria-label="Active report filters">
-        <span class="c-query-bar__label">Filters</span>
-        <div class="c-query-bar__chips">
-          <span class="c-query-chip">
-            <span class="c-query-chip__field">Region</span>
-            <span class="c-query-chip__operator">is</span>
-            <span class="c-query-chip__value">North America</span>
-            <button class="c-query-chip__remove" aria-label="Remove region filter">x</button>
+      <div class="pl-c-query-bar" role="search" aria-label="Active report filters">
+        <span class="pl-c-query-bar__label">Filters</span>
+        <div class="pl-c-query-bar__chips">
+          <span class="pl-c-query-chip">
+            <span class="pl-c-query-chip__field">Region</span>
+            <span class="pl-c-query-chip__operator">is</span>
+            <span class="pl-c-query-chip__value">North America</span>
+            <button class="pl-c-query-chip__remove" aria-label="Remove region filter">x</button>
           </span>
-          <span class="c-query-chip">
-            <span class="c-query-chip__field">Plan</span>
-            <span class="c-query-chip__operator">is not</span>
-            <span class="c-query-chip__value">Free</span>
-            <button class="c-query-chip__remove" aria-label="Remove plan filter">x</button>
+          <span class="pl-c-query-chip">
+            <span class="pl-c-query-chip__field">Plan</span>
+            <span class="pl-c-query-chip__operator">is not</span>
+            <span class="pl-c-query-chip__value">Free</span>
+            <button class="pl-c-query-chip__remove" aria-label="Remove plan filter">x</button>
           </span>
-          <span class="c-query-chip">
-            <span class="c-query-chip__field">Owner</span>
-            <span class="c-query-chip__operator">includes</span>
-            <span class="c-query-chip__value">Growth team</span>
-            <button class="c-query-chip__remove" aria-label="Remove owner filter">x</button>
+          <span class="pl-c-query-chip">
+            <span class="pl-c-query-chip__field">Owner</span>
+            <span class="pl-c-query-chip__operator">includes</span>
+            <span class="pl-c-query-chip__value">Growth team</span>
+            <button class="pl-c-query-chip__remove" aria-label="Remove owner filter">x</button>
           </span>
         </div>
-        <div class="c-query-bar__actions">
-          <button class="c-button" data-variant="ghost" data-size="sm">Clear</button>
-          <button class="c-button" data-variant="secondary" data-size="sm">Save view</button>
+        <div class="pl-c-query-bar__actions">
+          <button class="pl-c-button" data-variant="ghost" data-size="sm">Clear</button>
+          <button class="pl-c-button" data-variant="secondary" data-size="sm">Save view</button>
         </div>
       </div>
     </section>
 
-    <div class="c-tabs">
-      <div class="c-tabs__list" role="tablist" aria-label="Report sections">
-        <button class="c-tabs__tab" role="tab" aria-selected="true" id="tab-summary" aria-controls="panel-summary" tabindex="0">
-          Summary <span class="c-tabs__count">4</span>
+    <div class="pl-c-tabs">
+      <div class="pl-c-tabs__list" role="tablist" aria-label="Report sections">
+        <button class="pl-c-tabs__tab" role="tab" aria-selected="true" id="tab-summary" aria-controls="panel-summary" tabindex="0">
+          Summary <span class="pl-c-tabs__count">4</span>
         </button>
-        <button class="c-tabs__tab" role="tab" aria-selected="false" id="tab-acquisition" aria-controls="panel-acquisition" tabindex="-1">
+        <button class="pl-c-tabs__tab" role="tab" aria-selected="false" id="tab-acquisition" aria-controls="panel-acquisition" tabindex="-1">
           Acquisition
         </button>
-        <button class="c-tabs__tab" role="tab" aria-selected="false" id="tab-retention" aria-controls="panel-retention" tabindex="-1">
+        <button class="pl-c-tabs__tab" role="tab" aria-selected="false" id="tab-retention" aria-controls="panel-retention" tabindex="-1">
           Retention
         </button>
       </div>
-      <div class="c-tabs__panel l-stack reporting-panel-stack" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary">
-        <section class="l-grid reporting-kpi-grid" aria-label="Key performance indicators">
+      <div class="pl-c-tabs__panel pl-l-stack reporting-panel-stack" role="tabpanel" id="panel-summary" aria-labelledby="tab-summary">
+        <section class="pl-l-grid reporting-kpi-grid" aria-label="Key performance indicators">
           {kpis.map((item) => (
-            <article class="c-card" data-surface="app">
-              <div class="c-card__body">
-                <div class="c-stat">
-                  <span class="c-stat__label">{item.label}</span>
-                  <div class="c-stat__value" data-tone={item.tone}>
-                    {item.value}<span class="c-stat__unit">{item.unit}</span>
+            <article class="pl-c-card" data-surface="app">
+              <div class="pl-c-card__body">
+                <div class="pl-c-stat">
+                  <span class="pl-c-stat__label">{item.label}</span>
+                  <div class="pl-c-stat__value" data-tone={item.tone}>
+                    {item.value}<span class="pl-c-stat__unit">{item.unit}</span>
                   </div>
-                  <span class="c-stat__trend" data-direction={item.direction}>{item.trend}</span>
-                  <div class="c-stat__spark">
+                  <span class="pl-c-stat__trend" data-direction={item.direction}>{item.trend}</span>
+                  <div class="pl-c-stat__spark">
                     <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                       <path
                         d={item.spark}
@@ -176,24 +176,24 @@ const toneFor = (status: string) =>
           ))}
         </section>
 
-        <div class="l-sidebar reporting-sidebar">
-          <section class="c-chart" aria-labelledby="revenue-trend-title" aria-describedby="revenue-trend-description">
-            <header class="c-chart__header">
+        <div class="pl-l-sidebar reporting-sidebar">
+          <section class="pl-c-chart" aria-labelledby="revenue-trend-title" aria-describedby="revenue-trend-description">
+            <header class="pl-c-chart__header">
               <div>
-                <h2 class="c-chart__title" id="revenue-trend-title">Revenue trend</h2>
-                <p class="c-chart__description" id="revenue-trend-description">
+                <h2 class="pl-c-chart__title" id="revenue-trend-title">Revenue trend</h2>
+                <p class="pl-c-chart__description" id="revenue-trend-description">
                   Weekly recurring revenue with forecast overlay.
                 </p>
               </div>
-              <div class="c-chart__metrics" aria-label="Trend summary">
-                <div class="c-chart__metric">
-                  <span class="c-chart__metric-label">Forecast</span>
-                  <strong class="c-chart__metric-value">$514k</strong>
-                  <span class="c-chart__metric-delta" data-direction="up">+6.5%</span>
+              <div class="pl-c-chart__metrics" aria-label="Trend summary">
+                <div class="pl-c-chart__metric">
+                  <span class="pl-c-chart__metric-label">Forecast</span>
+                  <strong class="pl-c-chart__metric-value">$514k</strong>
+                  <span class="pl-c-chart__metric-delta" data-direction="up">+6.5%</span>
                 </div>
               </div>
             </header>
-            <div class="c-chart__plot" role="img" aria-label="Bar and line chart showing weekly revenue increasing across the quarter">
+            <div class="pl-c-chart__plot" role="img" aria-label="Bar and line chart showing weekly revenue increasing across the quarter">
               <svg viewBox="0 0 720 280" aria-hidden="true" focusable="false" preserveAspectRatio="none">
                 <line x1="44" y1="236" x2="696" y2="236" stroke="var(--pl-color-border)" />
                 <line x1="44" y1="40" x2="44" y2="236" stroke="var(--pl-color-border)" />
@@ -211,42 +211,42 @@ const toneFor = (status: string) =>
                 <path d="M78 188 L130 174 L182 166 L234 136 L286 145 L338 118 L390 106 L442 96 L494 90 L546 70 L598 76 L650 50" fill="none" stroke="var(--pl-color-success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </div>
-            <ul class="c-chart__legend" aria-label="Series">
-              <li class="c-chart__legend-item">
-                <span class="c-chart__swatch reporting-swatch-actual"></span>
+            <ul class="pl-c-chart__legend" aria-label="Series">
+              <li class="pl-c-chart__legend-item">
+                <span class="pl-c-chart__swatch reporting-swatch-actual"></span>
                 Actual revenue
               </li>
-              <li class="c-chart__legend-item">
-                <span class="c-chart__swatch reporting-swatch-forecast"></span>
+              <li class="pl-c-chart__legend-item">
+                <span class="pl-c-chart__swatch reporting-swatch-forecast"></span>
                 Forecast
               </li>
             </ul>
-            <p class="c-chart__caption">Includes closed-won expansion and self-serve upgrades.</p>
+            <p class="pl-c-chart__caption">Includes closed-won expansion and self-serve upgrades.</p>
           </section>
 
-          <aside class="l-stack reporting-insights" aria-label="Report insights">
-            <section class="c-card" data-surface="app">
-              <header class="c-card__header">
-                <h2 class="c-card__title">Insight queue</h2>
-                <span class="c-badge" data-tone="success">New</span>
+          <aside class="pl-l-stack reporting-insights" aria-label="Report insights">
+            <section class="pl-c-card" data-surface="app">
+              <header class="pl-c-card__header">
+                <h2 class="pl-c-card__title">Insight queue</h2>
+                <span class="pl-c-badge" data-tone="success">New</span>
               </header>
-              <div class="c-card__body l-stack">
+              <div class="pl-c-card__body pl-l-stack">
                 <p>Expansion revenue is carrying 31% of the month-over-month lift.</p>
-                <p class="u-muted-sm">Recommended action: review partner channel enablement before the next forecast lock.</p>
+                <p class="pl-u-muted-sm">Recommended action: review partner channel enablement before the next forecast lock.</p>
               </div>
-              <footer class="c-card__footer">
-                <button class="c-button" data-variant="secondary" data-size="sm">Add note</button>
+              <footer class="pl-c-card__footer">
+                <button class="pl-c-button" data-variant="secondary" data-size="sm">Add note</button>
               </footer>
             </section>
 
-            <section class="c-chart" data-state="empty" aria-labelledby="anomaly-title">
-              <header class="c-chart__header">
-                <h2 class="c-chart__title" id="anomaly-title">Anomalies</h2>
+            <section class="pl-c-chart" data-state="empty" aria-labelledby="anomaly-title">
+              <header class="pl-c-chart__header">
+                <h2 class="pl-c-chart__title" id="anomaly-title">Anomalies</h2>
               </header>
-              <div class="c-chart__plot" data-state="empty">
-                <div class="c-chart__overlay">
-                  <div class="c-chart__state">
-                    <p class="c-chart__state-title">No material anomalies</p>
+              <div class="pl-c-chart__plot" data-state="empty">
+                <div class="pl-c-chart__overlay">
+                  <div class="pl-c-chart__state">
+                    <p class="pl-c-chart__state-title">No material anomalies</p>
                     <p>All tracked segments stayed within expected variance.</p>
                   </div>
                 </div>
@@ -255,30 +255,30 @@ const toneFor = (status: string) =>
           </aside>
         </div>
 
-        <section class="c-card" data-surface="app" aria-labelledby="breakdown-title">
-          <div class="c-toolbar">
-            <div class="c-toolbar__group">
-              <h2 class="c-card__title" id="breakdown-title">Channel breakdown</h2>
-              <span class="c-badge">4 rows</span>
+        <section class="pl-c-card" data-surface="app" aria-labelledby="breakdown-title">
+          <div class="pl-c-toolbar">
+            <div class="pl-c-toolbar__group">
+              <h2 class="pl-c-card__title" id="breakdown-title">Channel breakdown</h2>
+              <span class="pl-c-badge">4 rows</span>
             </div>
-            <div class="c-toolbar__group">
-              <label class="c-field">
-                <span class="u-sr-only">Search channels</span>
-                <input class="c-field__control" type="search" placeholder="Search channels..." />
+            <div class="pl-c-toolbar__group">
+              <label class="pl-c-field">
+                <span class="pl-u-sr-only">Search channels</span>
+                <input class="pl-c-field__control" type="search" placeholder="Search channels..." />
               </label>
-              <button class="c-button" data-variant="secondary" data-size="sm">
+              <button class="pl-c-button" data-variant="secondary" data-size="sm">
                 <Icon name="download" />
                 CSV
               </button>
             </div>
           </div>
-          <div class="c-table-wrap" data-density="compact">
-            <table class="c-table reporting-table">
+          <div class="pl-c-table-wrap" data-pl-density="compact">
+            <table class="pl-c-table reporting-table">
               <thead>
                 <tr>
-                  <th class="c-table__sticky-col" data-sort="asc">Channel <span class="c-table__sort-icon"></span></th>
+                  <th class="pl-c-table__sticky-col" data-sort="asc">Channel <span class="pl-c-table__sort-icon"></span></th>
                   <th>Segment</th>
-                  <th data-align="end" data-sort="desc">Revenue <span class="c-table__sort-icon"></span></th>
+                  <th data-align="end" data-sort="desc">Revenue <span class="pl-c-table__sort-icon"></span></th>
                   <th data-align="end">Growth</th>
                   <th data-align="end">Conversion</th>
                   <th>Status</th>
@@ -287,39 +287,39 @@ const toneFor = (status: string) =>
               <tbody>
                 {channels.map((channel, index) => (
                   <tr aria-selected={index === 0 ? 'true' : undefined}>
-                    <td class="c-table__sticky-col">{channel.name}</td>
+                    <td class="pl-c-table__sticky-col">{channel.name}</td>
                     <td>{channel.segment}</td>
                     <td data-align="end">{channel.revenue}</td>
                     <td data-align="end">{channel.growth}</td>
                     <td data-align="end">{channel.conversion}</td>
                     <td>
-                      <span class="c-badge" data-tone={toneFor(channel.status)}>{channel.status}</span>
+                      <span class="pl-c-badge" data-tone={toneFor(channel.status)}>{channel.status}</span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div class="c-toolbar">
-            <div class="c-toolbar__group">
-              <span class="u-muted-sm" aria-live="polite">Showing 4 matching channels for Executive.</span>
+          <div class="pl-c-toolbar">
+            <div class="pl-c-toolbar__group">
+              <span class="pl-u-muted-sm" aria-live="polite">Showing 4 matching channels for Executive.</span>
             </div>
-            <div class="c-toolbar__group">
-              <button class="c-button" data-variant="ghost" data-size="sm">Open source data</button>
+            <div class="pl-c-toolbar__group">
+              <button class="pl-c-button" data-variant="ghost" data-size="sm">Open source data</button>
             </div>
           </div>
         </section>
       </div>
-      <div class="c-tabs__panel" role="tabpanel" id="panel-acquisition" aria-labelledby="tab-acquisition" hidden>
-        <div class="c-empty">
-          <h2 class="c-empty__title">Acquisition view is saved</h2>
-          <p class="c-empty__description">Switch tabs in app code to render the acquisition-specific report body.</p>
+      <div class="pl-c-tabs__panel" role="tabpanel" id="panel-acquisition" aria-labelledby="tab-acquisition" hidden>
+        <div class="pl-c-empty">
+          <h2 class="pl-c-empty__title">Acquisition view is saved</h2>
+          <p class="pl-c-empty__description">Switch tabs in app code to render the acquisition-specific report body.</p>
         </div>
       </div>
-      <div class="c-tabs__panel" role="tabpanel" id="panel-retention" aria-labelledby="tab-retention" hidden>
-        <div class="c-empty">
-          <h2 class="c-empty__title">Retention view is saved</h2>
-          <p class="c-empty__description">Use the same shell for cohorts, renewals, and risk reporting.</p>
+      <div class="pl-c-tabs__panel" role="tabpanel" id="panel-retention" aria-labelledby="tab-retention" hidden>
+        <div class="pl-c-empty">
+          <h2 class="pl-c-empty__title">Retention view is saved</h2>
+          <p class="pl-c-empty__description">Use the same shell for cohorts, renewals, and risk reporting.</p>
         </div>
       </div>
     </div>
@@ -328,36 +328,36 @@ const toneFor = (status: string) =>
 
 <style>
   .reporting-shell {
-    --l-container-max: 92rem;
-    --l-stack-gap: var(--pl-space-5);
+    --pl-l-container-max: 92rem;
+    --pl-l-stack-gap: var(--pl-space-5);
   }
 
   .reporting-header-stack,
   .reporting-insights {
-    --l-stack-gap: var(--pl-space-4);
+    --pl-l-stack-gap: var(--pl-space-4);
   }
 
   .reporting-panel-stack {
-    --l-stack-gap: var(--pl-space-5);
+    --pl-l-stack-gap: var(--pl-space-5);
   }
 
   .reporting-kpi-grid {
-    --l-grid-min: 14rem;
+    --pl-l-grid-min: 14rem;
   }
 
   .reporting-sidebar {
-    --l-sidebar-size: 20rem;
+    --pl-l-sidebar-size: 20rem;
   }
 
   .reporting-swatch-actual {
-    --c-chart-series-color: var(--pl-color-accent);
+    --pl-c-chart-series-color: var(--pl-color-accent);
   }
 
   .reporting-swatch-forecast {
-    --c-chart-series-color: var(--pl-color-success);
+    --pl-c-chart-series-color: var(--pl-color-success);
   }
 
   .reporting-table {
-    --c-table-min: 48rem;
+    --pl-c-table-min: 48rem;
   }
 </style>

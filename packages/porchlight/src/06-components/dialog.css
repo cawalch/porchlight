@@ -7,21 +7,21 @@
  *
  * Open state is styled via [open] (or :modal for showModal). Entry/exit
  * animation uses @starting-style + transition-behavior: allow-discrete on
- * overlay/display  -  the same pattern as .c-menu, so the EXIT transition runs
+ * overlay/display  -  the same pattern as .pl-c-menu, so the EXIT transition runs
  * (display: none normally kills transitions instantly).
  *
- * Header + body + footer slots (like .c-card). The close button in the header
+ * Header + body + footer slots (like .pl-c-card). The close button in the header
  * is a standard pattern. Open the dialog with el.showModal() in your app JS.
  *
- * Token-driven via --c-dialog-* aliases. Responsive by default:
- * inline-size is min(100% - 2rem, --c-dialog-size) so it never overflows.
+ * Token-driven via --pl-c-dialog-* aliases. Responsive by default:
+ * inline-size is min(100% - 2rem, --pl-c-dialog-size) so it never overflows.
  */
 @layer porchlight.components {
-  @scope (.c-dialog) {
+  @scope (.pl-c-dialog) {
     :scope {
-      --c-dialog-size: 42rem;
+      --pl-c-dialog-size: 42rem;
 
-      inline-size: min(100% - 2rem, var(--c-dialog-size));
+      inline-size: min(100% - 2rem, var(--pl-c-dialog-size));
       max-block-size: min(100dvb - 2rem, 80dvb);
       padding: 0;
       margin: auto;
@@ -76,7 +76,7 @@
         saturate(var(--pl-backdrop-saturate-scrim));
     }
 
-    .c-dialog__header {
+    .pl-c-dialog__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -89,7 +89,7 @@
         color-mix(in oklab, var(--pl-color-border), transparent 40%);
     }
 
-    .c-dialog__title {
+    .pl-c-dialog__title {
       margin: 0;
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-bold);
@@ -98,7 +98,7 @@
     }
 
     /* Close button  -  a ghost-icon button top-right. */
-    .c-dialog__close {
+    .pl-c-dialog__close {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -119,8 +119,8 @@
         color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .c-dialog__close::before,
-    .c-dialog__close::after {
+    .pl-c-dialog__close::before,
+    .pl-c-dialog__close::after {
       content: "";
       position: absolute;
       inset-block-start: 50%;
@@ -132,16 +132,16 @@
       transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    .c-dialog__close::after {
+    .pl-c-dialog__close::after {
       transform: translate(-50%, -50%) rotate(-45deg);
     }
 
-    .c-dialog__close:hover {
+    .pl-c-dialog__close:hover {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .c-dialog__body {
+    .pl-c-dialog__body {
       padding: var(--pl-space-5);
 
       /* Prevent orphans in dialog prose / descriptions. Degrades gracefully
@@ -149,7 +149,7 @@
       text-wrap: pretty;
     }
 
-    .c-dialog__footer {
+    .pl-c-dialog__footer {
       display: flex;
       align-items: center;
       justify-content: flex-end;

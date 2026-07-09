@@ -12,230 +12,230 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Primitive controls</h2>
   <div class="demo field-grid">
-    <label class="c-field" data-preview-required>
-      <span class="c-field__label">
+    <label class="pl-c-field" data-preview-required>
+      <span class="pl-c-field__label">
         Workspace name
-        <span class="c-field__required" aria-hidden="true">*</span>
+        <span class="pl-c-field__required" aria-hidden="true">*</span>
       </span>
-      <input class="c-field__control" required placeholder="Acme Ops" aria-describedby="workspace-name-help" />
-      <span class="c-field__hint" id="workspace-name-help">Use a name your team recognizes.</span>
+      <input class="pl-c-field__control" required placeholder="Acme Ops" aria-describedby="workspace-name-help" />
+      <span class="pl-c-field__hint" id="workspace-name-help">Use a name your team recognizes.</span>
     </label>
 
-    <label class="c-field">
-      <span class="c-field__label">Billing email</span>
-      <input class="c-field__control" type="email" placeholder="ops@example.com" />
-      <span class="c-field__hint">Invoices and receipts are sent here.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Billing email</span>
+      <input class="pl-c-field__control" type="email" placeholder="ops@example.com" />
+      <span class="pl-c-field__hint">Invoices and receipts are sent here.</span>
     </label>
 
-    <label class="c-field">
-      <span class="c-field__label">Plan</span>
-      <select class="c-field__control">
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Plan</span>
+      <select class="pl-c-field__control">
         <option>Business</option>
         <option>Enterprise</option>
         <option>Sandbox</option>
       </select>
-      <span class="c-field__hint">Native select, themed with the field control.</span>
+      <span class="pl-c-field__hint">Native select, themed with the field control.</span>
     </label>
 
-    <label class="c-field">
-      <span class="c-field__label">Internal notes</span>
-      <textarea class="c-field__control" rows="3" placeholder="Add context for support..."></textarea>
-      <span class="c-field__hint">Textarea uses the same field surface.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Internal notes</span>
+      <textarea class="pl-c-field__control" rows="3" placeholder="Add context for support..."></textarea>
+      <span class="pl-c-field__hint">Textarea uses the same field surface.</span>
     </label>
   </div>
 
   <h2>Messages</h2>
   <div class="demo field-grid">
-    <div class="c-field" data-preview-message-tones>
-      <label class="c-field__label" for="storage-limit">Storage limit</label>
+    <div class="pl-c-field" data-preview-message-tones>
+      <label class="pl-c-field__label" for="storage-limit">Storage limit</label>
       <input
         id="storage-limit"
-        class="c-field__control"
+        class="pl-c-field__control"
         type="number"
         value="92"
         aria-describedby="storage-limit-warning"
       />
-      <span class="c-field__hint" id="storage-limit-warning" data-tone="warning">
+      <span class="pl-c-field__hint" id="storage-limit-warning" data-tone="warning">
         This workspace is close to its storage limit.
       </span>
     </div>
 
-    <div class="c-field">
-      <label class="c-field__label" for="backup-email">Backup email</label>
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="backup-email">Backup email</label>
       <input
         id="backup-email"
-        class="c-field__control"
+        class="pl-c-field__control"
         type="email"
         value="ops@example.com"
         aria-describedby="backup-email-success"
       />
-      <span class="c-field__hint" id="backup-email-success" data-tone="success">
+      <span class="pl-c-field__hint" id="backup-email-success" data-tone="success">
         Email verified.
       </span>
     </div>
 
-    <div class="c-field" data-preview-messages>
-      <label class="c-field__label" for="project-slug">
+    <div class="pl-c-field" data-preview-messages>
+      <label class="pl-c-field__label" for="project-slug">
         Project slug
-        <span class="c-field__required" aria-hidden="true">*</span>
+        <span class="pl-c-field__required" aria-hidden="true">*</span>
       </label>
       <input
         id="project-slug"
-        class="c-field__control"
+        class="pl-c-field__control"
         required
         pattern="[a-z0-9-]+"
         value="acme ops"
         aria-invalid="true"
         aria-describedby="project-slug-help project-slug-warning project-slug-error"
       />
-      <span class="c-field__messages">
-        <span class="c-field__hint" id="project-slug-help">Use lowercase letters, numbers, and hyphens.</span>
-        <span class="c-field__hint" id="project-slug-warning" data-tone="warning">Changing this updates future invite links.</span>
-        <span class="c-field__hint" id="project-slug-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
+      <span class="pl-c-field__messages">
+        <span class="pl-c-field__hint" id="project-slug-help">Use lowercase letters, numbers, and hyphens.</span>
+        <span class="pl-c-field__hint" id="project-slug-warning" data-tone="warning">Changing this updates future invite links.</span>
+        <span class="pl-c-field__hint" id="project-slug-error" data-tone="danger" role="alert">Spaces are not allowed.</span>
       </span>
     </div>
   </div>
 
   <h2>Inline labels</h2>
   <div class="demo">
-    <label class="c-field c-field--inline" data-preview-inline>
-      <span class="c-field__label">Region</span>
-      <select class="c-field__control">
+    <label class="pl-c-field pl-c-field--inline" data-preview-inline>
+      <span class="pl-c-field__label">Region</span>
+      <select class="pl-c-field__control">
         <option>US Central</option>
         <option>EU West</option>
         <option>AP Southeast</option>
       </select>
-      <span class="c-field__hint">Inline labels make dense settings easier to scan.</span>
+      <span class="pl-c-field__hint">Inline labels make dense settings easier to scan.</span>
     </label>
 
-    <label class="c-field c-field--inline">
-      <span class="c-field__label">Retention</span>
-      <input class="c-field__control" type="number" value="90" />
-      <span class="c-field__hint">Stacks automatically on narrow screens.</span>
+    <label class="pl-c-field pl-c-field--inline">
+      <span class="pl-c-field__label">Retention</span>
+      <input class="pl-c-field__control" type="number" value="90" />
+      <span class="pl-c-field__hint">Stacks automatically on narrow screens.</span>
     </label>
   </div>
 
   <h2>Hidden label search</h2>
   <div class="demo toolbar-demo">
-    <label class="c-field c-field--inline">
-      <span class="u-sr-only">Search accounts</span>
-      <input class="c-field__control" type="search" placeholder="Search accounts..." />
+    <label class="pl-c-field pl-c-field--inline">
+      <span class="pl-u-sr-only">Search accounts</span>
+      <input class="pl-c-field__control" type="search" placeholder="Search accounts..." />
     </label>
-    <button class="c-button" type="button" data-variant="ghost">Filter</button>
-    <button class="c-button" type="button" data-variant="primary">New account</button>
+    <button class="pl-c-button" type="button" data-variant="ghost">Filter</button>
+    <button class="pl-c-button" type="button" data-variant="primary">New account</button>
   </div>
 
   <h2>Input groups</h2>
   <div class="demo field-grid">
-    <div class="c-field">
-      <label class="c-field__label" for="workspace-slug">Workspace URL</label>
-      <div class="c-input-group" data-preview-input-group>
-        <input id="workspace-slug" class="c-field__control" placeholder="acme-ops" />
-        <span class="c-input-group__addon">.porchlight.app</span>
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="workspace-slug">Workspace URL</label>
+      <div class="pl-c-input-group" data-preview-input-group>
+        <input id="workspace-slug" class="pl-c-field__control" placeholder="acme-ops" />
+        <span class="pl-c-input-group__addon">.porchlight.app</span>
       </div>
-      <span class="c-field__hint">Suffix text is visual chrome; the input stays native.</span>
+      <span class="pl-c-field__hint">Suffix text is visual chrome; the input stays native.</span>
     </div>
 
-    <div class="c-field">
-      <label class="c-field__label" for="budget">Monthly budget</label>
-      <div class="c-input-group">
-        <span class="c-input-group__addon">$</span>
-        <input id="budget" class="c-field__control" type="number" value="2400" />
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="budget">Monthly budget</label>
+      <div class="pl-c-input-group">
+        <span class="pl-c-input-group__addon">$</span>
+        <input id="budget" class="pl-c-field__control" type="number" value="2400" />
       </div>
-      <span class="c-field__hint">Prefix and number input share one focus ring.</span>
+      <span class="pl-c-field__hint">Prefix and number input share one focus ring.</span>
     </div>
 
-    <div class="c-field">
-      <label class="c-field__label" for="invite">Invite teammate</label>
-      <div class="c-input-group">
-        <input id="invite" class="c-field__control" type="email" placeholder="teammate@example.com" />
-        <button class="c-input-group__action" type="button">Send</button>
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="invite">Invite teammate</label>
+      <div class="pl-c-input-group">
+        <input id="invite" class="pl-c-field__control" type="email" placeholder="teammate@example.com" />
+        <button class="pl-c-input-group__action" type="button">Send</button>
       </div>
-      <span class="c-field__hint">Action groups use explicit labels, not wrapper labels.</span>
+      <span class="pl-c-field__hint">Action groups use explicit labels, not wrapper labels.</span>
     </div>
   </div>
 
   <h2>States</h2>
   <div class="demo field-grid">
-    <label class="c-field">
-      <span class="c-field__label">Email</span>
-      <input class="c-field__control" type="email" placeholder="you@example.com" />
-      <span class="c-field__hint">Focus me to see the accent ring.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Email</span>
+      <input class="pl-c-field__control" type="email" placeholder="you@example.com" />
+      <span class="pl-c-field__hint">Focus me to see the accent ring.</span>
     </label>
 
-    <label class="c-field">
-      <span class="c-field__label">Workspace URL</span>
-      <input class="c-field__control" type="url" required placeholder="https://" />
-      <span class="c-field__hint">Type invalid text and blur to trigger validation.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Workspace URL</span>
+      <input class="pl-c-field__control" type="url" required placeholder="https://" />
+      <span class="pl-c-field__hint">Type invalid text and blur to trigger validation.</span>
     </label>
 
-    <div class="c-field" data-preview-aria-invalid>
-      <label class="c-field__label" for="server-email">Server validation</label>
+    <div class="pl-c-field" data-preview-aria-invalid>
+      <label class="pl-c-field__label" for="server-email">Server validation</label>
       <input
         id="server-email"
-        class="c-field__control"
+        class="pl-c-field__control"
         type="email"
         value="already-used@example.com"
         aria-invalid="true"
         aria-describedby="server-email-error"
       />
-      <span class="c-field__hint" id="server-email-error" data-tone="danger" role="alert">That email is already invited.</span>
+      <span class="pl-c-field__hint" id="server-email-error" data-tone="danger" role="alert">That email is already invited.</span>
     </div>
 
-    <div class="c-field" data-preview-aria-valid>
-      <label class="c-field__label" for="clean-email">Valid server state</label>
+    <div class="pl-c-field" data-preview-aria-valid>
+      <label class="pl-c-field__label" for="clean-email">Valid server state</label>
       <input
         id="clean-email"
-        class="c-field__control"
+        class="pl-c-field__control"
         type="email"
         value="new@example.com"
         aria-invalid="false"
         aria-describedby="clean-email-help"
       />
-      <span class="c-field__hint" id="clean-email-help">Explicit false invalid state stays neutral.</span>
+      <span class="pl-c-field__hint" id="clean-email-help">Explicit false invalid state stays neutral.</span>
     </div>
 
-    <div class="c-field">
-      <label class="c-field__label" for="server-slug">Grouped server validation</label>
-      <div class="c-input-group" data-preview-group-invalid>
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="server-slug">Grouped server validation</label>
+      <div class="pl-c-input-group" data-preview-group-invalid>
         <input
           id="server-slug"
-          class="c-field__control"
+          class="pl-c-field__control"
           value="acme ops"
           aria-invalid="true"
           aria-describedby="server-slug-error"
         />
-        <span class="c-input-group__addon">.porchlight.app</span>
+        <span class="pl-c-input-group__addon">.porchlight.app</span>
       </div>
-      <span class="c-field__hint" id="server-slug-error" data-tone="danger" role="alert">Use lowercase letters, numbers, and hyphens.</span>
+      <span class="pl-c-field__hint" id="server-slug-error" data-tone="danger" role="alert">Use lowercase letters, numbers, and hyphens.</span>
     </div>
 
-    <label class="c-field">
-      <span class="c-field__label">Read-only key</span>
-      <input class="c-field__control" value="pk_live_••••" readonly />
-      <span class="c-field__hint">Read-only values can still be copied.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Read-only key</span>
+      <input class="pl-c-field__control" value="pk_live_••••" readonly />
+      <span class="pl-c-field__hint">Read-only values can still be copied.</span>
     </label>
 
-    <label class="c-field">
-      <span class="c-field__label">Disabled key</span>
-      <input class="c-field__control" value="pk_live_••••" disabled />
-      <span class="c-field__hint">Disabled controls are muted and skipped.</span>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Disabled key</span>
+      <input class="pl-c-field__control" value="pk_live_••••" disabled />
+      <span class="pl-c-field__hint">Disabled controls are muted and skipped.</span>
     </label>
   </div>
 
   <h2>Framework-neutral rendering</h2>
   <div class="demo field-grid">
-    <div class="c-field" data-preview-framework-contract>
-      <label class="c-field__label" for="fragment-email">Fragment email</label>
+    <div class="pl-c-field" data-preview-framework-contract>
+      <label class="pl-c-field__label" for="fragment-email">Fragment email</label>
       <input
         id="fragment-email"
-        class="c-field__control"
+        class="pl-c-field__control"
         type="email"
         name="email"
         value="queued@example.com"
         aria-describedby="fragment-email-help"
       />
-      <span class="c-field__hint" id="fragment-email-help">
+      <span class="pl-c-field__hint" id="fragment-email-help">
         This field can be replaced by any server or framework that emits the same HTML.
       </span>
     </div>
@@ -264,7 +264,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     align-items: end;
   }
 
-  .toolbar-demo .c-field {
+  .toolbar-demo .pl-c-field {
     flex: 1 1 18rem;
   }
 </style>

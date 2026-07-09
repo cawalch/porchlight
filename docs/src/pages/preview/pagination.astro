@@ -11,42 +11,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </p>
 
   <h2>Standard</h2>
-  <nav class="c-pagination" aria-label="Page navigation">
-    <button class="c-pagination__nav" disabled>‹ Prev</button>
-    <button class="c-pagination__page" aria-current="page">1</button>
-    <button class="c-pagination__page">2</button>
-    <button class="c-pagination__page">3</button>
-    <span class="c-pagination__ellipsis">…</span>
-    <button class="c-pagination__page">12</button>
-    <button class="c-pagination__nav">Next ›</button>
+  <nav class="pl-c-pagination" aria-label="Page navigation">
+    <button class="pl-c-pagination__nav" disabled>‹ Prev</button>
+    <button class="pl-c-pagination__page" aria-current="page">1</button>
+    <button class="pl-c-pagination__page">2</button>
+    <button class="pl-c-pagination__page">3</button>
+    <span class="pl-c-pagination__ellipsis">…</span>
+    <button class="pl-c-pagination__page">12</button>
+    <button class="pl-c-pagination__nav">Next ›</button>
   </nav>
 
   <h2>Compact (embedded)</h2>
-  <nav class="c-pagination" aria-label="Compact pagination" data-size="sm">
-    <button class="c-pagination__nav">‹</button>
-    <button class="c-pagination__page" aria-current="page">1</button>
-    <button class="c-pagination__page">2</button>
-    <button class="c-pagination__page">3</button>
-    <button class="c-pagination__nav">›</button>
+  <nav class="pl-c-pagination" aria-label="Compact pagination" data-size="sm">
+    <button class="pl-c-pagination__nav">‹</button>
+    <button class="pl-c-pagination__page" aria-current="page">1</button>
+    <button class="pl-c-pagination__page">2</button>
+    <button class="pl-c-pagination__page">3</button>
+    <button class="pl-c-pagination__nav">›</button>
   </nav>
 
   <h2>Inside a table footer</h2>
-  <div class="c-table-wrap">
-    <table class="c-table">
+  <div class="pl-c-table-wrap">
+    <table class="pl-c-table">
       <thead><tr><th>Account</th><th data-align="end">MRR</th></tr></thead>
       <tbody>
         <tr><td>Acme Ops</td><td data-align="end">$2,400</td></tr>
         <tr><td>Northwind</td><td data-align="end">$980</td></tr>
       </tbody>
     </table>
-    <div class="c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border); justify-content: flex-end;">
-      <div class="c-toolbar__group">
-        <span class="u-muted" style="font-size: var(--pl-text-sm);">Page 1 of 12</span>
-        <nav class="c-pagination" aria-label="Table pagination" data-size="sm">
-          <button class="c-pagination__nav" disabled>‹</button>
-          <button class="c-pagination__page" aria-current="page">1</button>
-          <button class="c-pagination__page">2</button>
-          <button class="c-pagination__nav">›</button>
+    <div class="pl-c-toolbar" style="border-block-end: 0; border-block-start: 1px solid var(--pl-color-border); justify-content: flex-end;">
+      <div class="pl-c-toolbar__group">
+        <span class="pl-u-muted" style="font-size: var(--pl-text-sm);">Page 1 of 12</span>
+        <nav class="pl-c-pagination" aria-label="Table pagination" data-size="sm">
+          <button class="pl-c-pagination__nav" disabled>‹</button>
+          <button class="pl-c-pagination__page" aria-current="page">1</button>
+          <button class="pl-c-pagination__page">2</button>
+          <button class="pl-c-pagination__nav">›</button>
         </nav>
       </div>
     </div>
