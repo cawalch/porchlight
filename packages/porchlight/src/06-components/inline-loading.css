@@ -1,0 +1,51 @@
+/* Local, indeterminate progress for actions and compact application regions. */
+@layer porchlight.components {
+  .pl-c-inline-loading {
+    --pl-c-inline-loading-size: 1em;
+    --pl-c-inline-loading-color: currentColor;
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-control-gap);
+    color: var(--pl-color-text-muted);
+    line-height: 1.25;
+  }
+
+  .pl-c-spinner {
+    display: inline-block;
+    flex: none;
+    inline-size: var(--pl-c-inline-loading-size, 1em);
+    block-size: var(--pl-c-inline-loading-size, 1em);
+    box-sizing: border-box;
+    border: 0.16em solid
+      color-mix(
+        in oklab,
+        var(--pl-c-inline-loading-color, currentColor),
+        transparent 70%
+      );
+    border-block-start-color: var(--pl-c-inline-loading-color, currentColor);
+    border-radius: 50%;
+    animation: pl-c-spinner-rotate calc(700ms * var(--pl-motion-scale, 1))
+      linear infinite;
+  }
+
+  @keyframes pl-c-spinner-rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pl-c-spinner {
+      animation: none;
+      border-style: dotted;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .pl-c-spinner {
+      border-color: GrayText;
+      border-block-start-color: CanvasText;
+    }
+  }
+}

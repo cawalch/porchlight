@@ -8,9 +8,16 @@ since: 0.1.0
 # Popover menu
 
 The `.pl-c-menu` is a dropdown menu anchored to its trigger. It uses the **native
-Popover API** (top-layer rendering, light-dismiss, focus management) + **CSS
+Popover API** (top-layer rendering and light-dismiss) + **CSS
 anchor positioning** (tethered to the trigger) + **`@starting-style`** for a
-native enter/exit animation. No JavaScript required.
+native enter/exit animation. No JavaScript is required for this disclosure
+pattern.
+
+This component is deliberately not an ARIA `menu`. It is a simple disclosure
+containing ordinary links and buttons, so users move through its contents with
+`Tab`. Use [Dropdown](/components/dropdown) when an application needs the full
+menu-button interaction model (`role="menu"`, arrow-key navigation, managed
+focus, and synchronized `aria-expanded`).
 
 ## Semantic HTML
 
@@ -123,11 +130,13 @@ transition runs (normally `display: none` kills transitions instantly).
 
 ## Accessibility
 
-- **Keyboard:** `Tab` to the trigger, `Enter`/`Space` to open. `Esc` closes
-  and returns focus to the trigger (native Popover API behavior). Light-dismiss
-  (click outside) also closes.
-- **Focus management:** the Popover API handles focus trap and restore
-  natively - no JS needed.
+- **Keyboard:** `Tab` to the trigger and `Enter`/`Space` to open. Continue with
+  `Tab` to reach the links and buttons. `Esc` closes the popover; light-dismiss
+  (click outside) also closes it.
+- **Focus management:** a non-modal popover does not trap focus. The browser
+  handles declarative opening and closing, but an app that needs menu-style
+  initial focus, arrow keys, or deterministic focus return must implement the
+  menu-button contract described by [Dropdown](/components/dropdown).
 - **Items:** each item is a real `<a>` or `<button>` (full-width,
   keyboard-focusable, semantic role).
 - **Forced colors:** border falls back to `ButtonBorder`, focus to `Highlight`.

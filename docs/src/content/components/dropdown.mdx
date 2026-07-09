@@ -41,6 +41,7 @@ or selected option, and a hidden input or other submitted value.
       class="pl-c-dropdown__option"
       type="button"
       role="menuitemradio"
+      tabindex="-1"
       aria-checked="true"
     >
       Project Alpha
@@ -49,6 +50,7 @@ or selected option, and a hidden input or other submitted value.
       class="pl-c-dropdown__option"
       type="button"
       role="menuitemradio"
+      tabindex="-1"
       aria-checked="false"
     >
       Project Beta
@@ -62,6 +64,21 @@ menus, use `role="menuitemradio"` plus `aria-checked`; for command/action
 menus, use `role="menuitem"` and do not present the component as a submitted
 form value unless you sync one.
 
+Unlike the simpler [Popover menu](/components/popover-menu) disclosure, using
+`role="menu"` opts into the complete ARIA menu-button contract. Application
+JavaScript must:
+
+- open the menu and move focus to its first enabled item (or the checked item
+  for a single-choice menu);
+- support `ArrowDown`/`ArrowUp` with wrapping plus `Home`/`End`;
+- close on `Escape` and return focus to the trigger;
+- keep `aria-expanded`, `aria-checked`, the visible label, and any submitted
+  value synchronized.
+
+Menu items use `tabindex="-1"` because arrow keys, rather than `Tab`, move
+focus within an open ARIA menu. Porchlight ships the visual contract only; the
+preview provides a framework-neutral reference implementation.
+
 ## Class contract
 
 | Selector                  | Role                                                  |
@@ -69,7 +86,7 @@ form value unless you sync one.
 | `.pl-c-dropdown`          | Container (inline-block).                             |
 | `.pl-c-dropdown__trigger` | The button that opens the menu. Sync `aria-expanded`. |
 | `.pl-c-dropdown__chevron` | Arrow icon (rotates when open).                       |
-| `.pl-c-dropdown__menu`    | The popover menu (anchored).                          |
+| `.pl-c-dropdown__menu`    | The popover menu (anchored); app owns interaction JS. |
 | `.pl-c-dropdown__option`  | A menu item (button or link).                         |
 | `[aria-selected]`         | Highlighted option.                                   |
 | `[aria-checked]`          | Checked menuitemradio option.                         |

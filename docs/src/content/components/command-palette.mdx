@@ -47,8 +47,18 @@ and keyboard state.
     role="listbox"
     aria-label="Commands"
   >
-    <div class="pl-c-command__group">
-      <h3 class="pl-c-command__heading">Actions</h3>
+    <div
+      class="pl-c-command__group"
+      role="group"
+      aria-labelledby="cmdk-actions-heading"
+    >
+      <h3
+        class="pl-c-command__heading"
+        id="cmdk-actions-heading"
+        role="presentation"
+      >
+        Actions
+      </h3>
       <button
         class="pl-c-command__item"
         id="cmdk-create"
@@ -71,7 +81,11 @@ and keyboard state.
 </div>
 ```
 
-Keep focus on `.pl-c-command__search` while arrow keys move the active command.
+This is a combobox with listbox options representing commands, not an ARIA
+`menu`: keep focus on `.pl-c-command__search` while arrow keys move the active
+option. Give each visual section `role="group"` and an accessible name; keep
+non-option headings presentational so the listbox contains only groups and
+options.
 Synchronize the opener's `aria-expanded`, the search input's
 `aria-activedescendant`, each item's `aria-selected`, and optional
 `data-selected` for styling. Enter should activate the selected command; Escape
@@ -84,9 +98,9 @@ can call `hidePopover()`.
 | `.pl-c-command`           | The popover palette, usually `role="dialog"`.     |
 | `.pl-c-command__search`   | Top search input, usually a combobox.             |
 | `.pl-c-command__body`     | Scrollable action list, usually `role="listbox"`. |
-| `.pl-c-command__group`    | Named group of actions.                           |
-| `.pl-c-command__heading`  | Group label (uppercase, muted).                   |
-| `.pl-c-command__item`     | An action button.                                 |
+| `.pl-c-command__group`    | Named `role="group"` of command options.          |
+| `.pl-c-command__heading`  | Presentational visual label for a group.          |
+| `.pl-c-command__item`     | `role="option"` representing a command.           |
 | `.pl-c-command__icon`     | Leading icon.                                     |
 | `.pl-c-command__shortcut` | Keyboard shortcut badge.                          |
 | `.pl-c-command__footer`   | Footer with keyboard hints.                       |

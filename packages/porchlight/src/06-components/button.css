@@ -26,6 +26,7 @@
       --pl-c-button-highlight: transparent;
 
       display: inline-flex;
+      position: relative;
       align-items: center;
       justify-content: center;
       gap: var(--pl-control-gap);
@@ -154,6 +155,20 @@
       opacity: var(--pl-opacity-disabled);
       cursor: not-allowed;
       box-shadow: none;
+    }
+
+    /* A native disabled button prevents repeat submission; aria-busy exposes
+       the in-progress state. Keeping the label in flow preserves its width. */
+    :scope[aria-busy="true"] > .pl-c-button__label {
+      opacity: 0;
+    }
+
+    :scope[aria-busy="true"] > .pl-c-spinner {
+      --pl-c-inline-loading-color: currentColor;
+
+      position: absolute;
+      inset: 50% auto auto 50%;
+      translate: -50% -50%;
     }
 
     /* Optical alignment: trim the cap-height half-leading so the label sits

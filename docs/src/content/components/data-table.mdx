@@ -201,6 +201,17 @@ semantically correct pattern for keyboard-navigable row selection:
 
 No custom `.is-selected` class is needed — `aria-selected` is built in.
 
+For multi-row workflows, place a `.pl-c-toolbar` immediately above the table,
+announce only the short selected count with `aria-live="polite"`, and keep the
+checkboxes plus `aria-selected` rows as the source of truth. The
+[composition recipes guide](../guides/composition-recipes) includes the full
+bulk-selection action pattern.
+
+For short editable values, compose a read view with a sibling native form
+instead of turning the table cell itself into a custom widget. The same guide
+documents focus entry, cancel restoration, save announcements, and validation
+for framework-neutral inline editing.
+
 ## Responsive columns
 
 When a table overflows on narrow containers, hide non-essential columns via

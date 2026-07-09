@@ -357,17 +357,11 @@ Use the prebuilt stylesheet where possible. If a bundler cannot parse modern CSS
 
 ## Component reference
 
-Generated from docs/src/content/components so this list tracks the documented component set.
+Generated from docs/src/content/components and filtered by content kind so this
+list tracks CSS component contracts rather than composed application recipes.
 
 - accordion: /components/accordion
 - alert: /components/alert
-- app-command-workspace: /components/app-command-workspace
-- app-dense: /components/app-dense
-- app-list-detail: /components/app-list-detail
-- app-process-builder: /components/app-process-builder
-- app-queue-triage: /components/app-queue-triage
-- app-reporting-dashboard: /components/app-reporting-dashboard
-- app-settings-console: /components/app-settings-console
 - avatar: /components/avatar
 - badge: /components/badge
 - breadcrumb: /components/breadcrumb
@@ -388,6 +382,7 @@ Generated from docs/src/content/components so this list tracks the documented co
 - file-upload: /components/file-upload
 - filter-builder: /components/filter-builder
 - form: /components/form
+- inline-loading: /components/inline-loading
 - nav: /components/nav
 - page-header: /components/page-header
 - pagination: /components/pagination
@@ -411,6 +406,19 @@ Generated from docs/src/content/components so this list tracks the documented co
 - tooltip: /components/tooltip
 - tree: /components/tree
 - workflow-board: /components/workflow-board
+
+## Application pattern reference
+
+These entries compose existing components into reusable SaaS workflows without
+claiming a new component stylesheet.
+
+- app-command-workspace: /components/app-command-workspace
+- app-dense: /components/app-dense
+- app-list-detail: /components/app-list-detail
+- app-process-builder: /components/app-process-builder
+- app-queue-triage: /components/app-queue-triage
+- app-reporting-dashboard: /components/app-reporting-dashboard
+- app-settings-console: /components/app-settings-console
 
 ## Best first examples
 
@@ -469,6 +477,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/file-upload
 - /preview/filter-builder
 - /preview/form
+- /preview/inline-loading
 - /preview/layout
 - /preview/nav
 - /preview/page-header

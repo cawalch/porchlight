@@ -356,6 +356,29 @@ async function slugsFrom(directory, extension) {
     .sort((a, b) => a.localeCompare(b));
 }
 
+async function documentedReferencesFrom(directory) {
+  const slugs = await slugsFrom(directory, ".mdx");
+  const entries = await Promise.all(
+    slugs.map(async (slug) => ({
+      slug,
+      kind: /^kind:\s*pattern\s*$/m.test(
+        await readFile(new URL(`${slug}.mdx`, directory), "utf8"),
+      )
+        ? "pattern"
+        : "component",
+    })),
+  );
+
+  return {
+    componentLinks: entries
+      .filter((entry) => entry.kind === "component")
+      .map((entry) => entry.slug),
+    patternLinks: entries
+      .filter((entry) => entry.kind === "pattern")
+      .map((entry) => entry.slug),
+  };
+}
+
 function assertRoutesExist(previewLinks) {
   const knownPreviews = new Set(previewLinks);
   const missingPreviews = bestExamples
@@ -370,14 +393,14 @@ function assertRoutesExist(previewLinks) {
 }
 
 async function loadReference() {
-  const [componentLinks, previewLinks] = await Promise.all([
-    slugsFrom(sourcePaths.components, ".mdx"),
+  const [documentedReferences, previewLinks] = await Promise.all([
+    documentedReferencesFrom(sourcePaths.components),
     slugsFrom(sourcePaths.previews, ".astro"),
   ]);
 
   assertRoutesExist(previewLinks);
 
-  return { componentLinks, previewLinks };
+  return { ...documentedReferences, previewLinks };
 }
 
 function renderShort() {
@@ -419,7 +442,7 @@ ${links(bestExamples)}
 `;
 }
 
-function renderFull({ componentLinks, previewLinks }) {
+function renderFull({ componentLinks, patternLinks, previewLinks }) {
   return `# Porchlight model composition pack
 
 > This file is optimized for coding agents that need to compose Porchlight components into working app screens. It is generated from the same source as /llms.txt so the short and full model guides stay synchronized.
@@ -570,9 +593,17 @@ ${links(primaryLinks)}
 
 ## Component reference
 
-Generated from docs/src/content/components so this list tracks the documented component set.
+Generated from docs/src/content/components and filtered by content kind so this
+list tracks CSS component contracts rather than composed application recipes.
 
 ${componentReference(componentLinks)}
+
+## Application pattern reference
+
+These entries compose existing components into reusable SaaS workflows without
+claiming a new component stylesheet.
+
+${componentReference(patternLinks)}
 
 ## Best first examples
 

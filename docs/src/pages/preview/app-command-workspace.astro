@@ -342,8 +342,8 @@ const groupedCommands = commands.reduce(
     <div class="pl-c-command__body" id="workspace-command-list" role="listbox" aria-label="Commands">
       {
         Object.entries(groupedCommands).map(([group, items]) => (
-          <div class="pl-c-command__group">
-            <h3 class="pl-c-command__heading">{group}</h3>
+          <div class="pl-c-command__group" role="group" aria-labelledby={`command-group-${group.toLowerCase().replaceAll(' ', '-')}`}>
+            <h3 class="pl-c-command__heading" id={`command-group-${group.toLowerCase().replaceAll(' ', '-')}`} role="presentation">{group}</h3>
             {items.map((command, index) => (
               <button
                 class="pl-c-command__item"

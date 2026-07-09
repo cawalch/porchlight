@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Inline loading · Porchlight">
+  <h1>Inline loading</h1>
+  <p>Localized status feedback and width-stable busy actions.</p>
+
+  <h2>Status</h2>
+  <div class="pl-c-inline-loading" role="status">
+    <span class="pl-c-spinner" aria-hidden="true"></span>
+    <span>Refreshing invoices…</span>
+  </div>
+
+  <h2>Busy buttons</h2>
+  <div class="pl-l-cluster">
+    <button class="pl-c-button" data-variant="primary" aria-busy="true" disabled>
+      <span class="pl-c-button__label">Save changes</span>
+      <span class="pl-c-spinner" aria-hidden="true"></span>
+    </button>
+    <button class="pl-c-button" data-variant="secondary" aria-busy="true" disabled>
+      <span class="pl-c-button__label">Export report</span>
+      <span class="pl-c-spinner" aria-hidden="true"></span>
+    </button>
+  </div>
+</BaseLayout>

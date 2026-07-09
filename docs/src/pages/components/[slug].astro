@@ -24,7 +24,7 @@ const hasStyleSource = existsSync(fileURLToPath(styleSource));
 <DocsLayout
   title={title}
   description={entry.data.description}
-  sectionLabel="Component"
+  sectionLabel={entry.data.kind === 'pattern' ? 'Pattern' : 'Component'}
   status={entry.data.status}
   since={entry.data.since}
   previewHref={`${b}preview/${entry.id}`}

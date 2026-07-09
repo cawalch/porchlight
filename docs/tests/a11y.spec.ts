@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { previewRedirectRoutes, previewRoutes } from "./lib/preview-routes";
 
 /**
  * Deterministic accessibility scan, the PLAN §18 mandated check.
@@ -26,67 +27,7 @@ const PAGES = [
   "/tokens/color",
   "/tokens/typography",
   "/tokens/spacing",
-  "/preview/",
-  "/preview/reset",
-  "/preview/tokens",
-  "/preview/themes",
-  "/preview/base",
-  "/preview/layout",
-  "/preview/app-shell",
-  "/preview/button",
-  "/preview/field",
-  "/preview/form",
-  "/preview/card",
-  "/preview/badge",
-  "/preview/popover-menu",
-  "/preview/dialog",
-  "/preview/data-table",
-  "/preview/dashboard",
-  "/preview/tabs",
-  "/preview/toolbar",
-  "/preview/pagination",
-  "/preview/stat",
-  "/preview/skeleton",
-  "/preview/empty-state",
-  "/preview/alert",
-  "/preview/progress",
-  "/preview/avatar",
-  "/preview/settings",
-  "/preview/tooltip",
-  "/preview/accordion",
-  "/preview/switch",
-  "/preview/chip",
-  "/preview/drawer",
-  "/preview/toast",
-  "/preview/scroll-progress",
-  "/preview/breadcrumb",
-  "/preview/stepper",
-  "/preview/timeline",
-  "/preview/textarea-auto",
-  "/preview/segmented",
-  "/preview/tag-input",
-  "/preview/calendar",
-  "/preview/combobox",
-  "/preview/dropdown",
-  "/preview/file-upload",
-  "/preview/command-palette",
-  "/preview/tree",
-  "/preview/split-pane",
-  "/preview/filter-builder",
-  "/preview/workflow-board",
-  "/preview/chart",
-  "/preview/nav",
-  "/preview/description-list",
-  "/preview/page-header",
-  "/preview/split-button",
-  "/preview/app-dashboard",
-  "/preview/app-dense",
-  "/preview/app-inbox",
-  "/preview/app-marketing",
-  "/preview/app-cases",
-  "/preview/app-siem",
-  "/preview/utilities",
-  "/preview/enhancements",
+  ...previewRoutes,
 ];
 
 // Normalize each path to the base-path-aware form Playwright expects.
@@ -131,5 +72,13 @@ for (const path of PAGES) {
       serious,
       `${path} must have zero serious/critical a11y violations`,
     ).toEqual([]);
+  });
+}
+
+for (const path of previewRedirectRoutes) {
+  test(`${path} redirects to a scannable preview`, async ({ page }) => {
+    await page.goto(url(path));
+    await expect(page).toHaveURL(/\/preview\/(?!reveal(?:\/)?$)/);
+    await expect(page.locator("main")).toBeVisible();
   });
 }

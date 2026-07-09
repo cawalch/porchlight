@@ -13,6 +13,7 @@ const components = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
+    kind: z.enum(["component", "pattern"]).default("component"),
     status: z.enum(["stable", "experimental", "planned"]).default("planned"),
     since: z.string().optional(),
   }),

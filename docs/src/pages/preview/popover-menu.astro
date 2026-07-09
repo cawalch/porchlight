@@ -6,8 +6,8 @@ import Icon from '../../components/Icon.astro';
   <h1>Popover menu</h1>
   <p>
     A dropdown menu anchored to its trigger — account menus, action menus,
-    context menus. Built on the native Popover API (top-layer, light-dismiss,
-    focus management) + CSS anchor positioning (tethered to the trigger) +
+    context menus. Built on the native Popover API (top-layer and light-dismiss)
+    + CSS anchor positioning (tethered to the trigger) +
     <code>@starting-style</code> for a native enter/exit animation. No
     JavaScript required — the trigger's <code>popovertarget</code> opens it
     declaratively.
@@ -76,9 +76,14 @@ import Icon from '../../components/Icon.astro';
   </div>
 
   <h2>Keyboard interaction</h2>
+  <p>
+    This is a simple disclosure, not an ARIA menu: its links and buttons stay in
+    the normal tab sequence, and the non-modal popover does not trap focus.
+  </p>
   <ul>
     <li><kbd>Tab</kbd> to the trigger, <kbd>Enter</kbd>/<kbd>Space</kbd> to open.</li>
-    <li><kbd>Esc</kbd> closes and returns focus to the trigger.</li>
+    <li>Continue with <kbd>Tab</kbd> to move through the disclosed actions.</li>
+    <li><kbd>Esc</kbd> closes the popover.</li>
     <li>Click outside (light-dismiss) closes.</li>
   </ul>
 </BaseLayout>

@@ -10,6 +10,8 @@ export default defineConfig({
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? "github" : "html",
+  snapshotPathTemplate:
+    "{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}",
   use: {
     // Astro serves the site under its base path (e.g. /porchlight/).
     // The trailing slash is required: astro preview returns 404 without it.
@@ -21,6 +23,16 @@ export default defineConfig({
     {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "firefox-smoke",
+      testMatch: /cross-browser-smoke\.spec\.ts/,
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit-smoke",
+      testMatch: /cross-browser-smoke\.spec\.ts/,
+      use: { ...devices["Desktop Safari"] },
     },
   ],
   webServer: {

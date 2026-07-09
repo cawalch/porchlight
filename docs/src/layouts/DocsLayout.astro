@@ -39,9 +39,11 @@ const b = import.meta.env.BASE_URL;
 const repo = 'https://github.com/cawalch/porchlight';
 const pageName = title?.replace(/\s+·\s+Porchlight$/, '') ?? sectionLabel;
 
-const components = (await getCollection('components')).sort((a, z) =>
+const documentedEntries = (await getCollection('components')).sort((a, z) =>
   a.data.title.localeCompare(z.data.title),
 );
+const components = documentedEntries.filter((entry) => entry.data.kind === 'component');
+const patterns = documentedEntries.filter((entry) => entry.data.kind === 'pattern');
 const guides = (await getCollection('guides')).sort((a, z) =>
   (a.data.order ?? 0) - (z.data.order ?? 0),
 );
@@ -83,12 +85,6 @@ const screenLinks = [
   { href: `${b}preview/app-siem`, label: 'Security SIEM', meta: 'App', search: 'Security SIEM preview example' },
   { href: `${b}preview/app-cases`, label: 'Case Review', meta: 'App', search: 'Case Review preview example' },
   { href: `${b}preview/app-inbox`, label: 'Inbox', meta: 'App', search: 'Inbox preview example' },
-  { href: `${b}preview/app-list-detail`, label: 'List/Detail', meta: 'App', search: 'List Detail preview example' },
-  { href: `${b}preview/app-queue-triage`, label: 'Queue Triage', meta: 'App', search: 'Queue Triage preview example' },
-  { href: `${b}preview/app-process-builder`, label: 'Process Builder', meta: 'App', search: 'Process Builder preview example' },
-  { href: `${b}preview/app-settings-console`, label: 'Settings Console', meta: 'App', search: 'Settings Console preview example' },
-  { href: `${b}preview/app-reporting-dashboard`, label: 'Reporting Dashboard', meta: 'App', search: 'Reporting Dashboard preview example' },
-  { href: `${b}preview/app-command-workspace`, label: 'Command Workspace', meta: 'App', search: 'Command Workspace preview example' },
   { href: `${b}preview/app-marketing`, label: 'Marketing Page', meta: 'Page', search: 'Marketing Page preview example' },
   { href: `${b}preview/app-shell`, label: 'App Shell', meta: 'Layout', search: 'App Shell preview example' },
 ];
@@ -134,6 +130,16 @@ const commandSections = [
     })),
   },
   {
+    title: 'Patterns',
+    links: patterns.map((pattern) => ({
+      href: `${b}components/${pattern.id}`,
+      label: pattern.data.title,
+      meta: pattern.data.status,
+      search: `${pattern.data.title} ${pattern.data.description ?? ''} ${pattern.data.status} pattern application recipe preview`,
+      current: isActive(`/components/${pattern.id}`),
+    })),
+  },
+  {
     title: 'Screens',
     links: screenLinks.map((link) => ({
       ...link,
@@ -170,6 +176,7 @@ const commandSections = [
 
           <p class="docs-command-bar__meta" aria-label="Workbench coverage">
             <span>{components.length} components</span>
+            <span>{patterns.length} patterns</span>
             <span>{stableCount} stable</span>
             <span>{experimentalCount} experimental</span>
           </p>
@@ -416,7 +423,7 @@ const commandSections = [
       button.addEventListener('click', () => getCommandElements().commandDialog?.close());
     });
 
-    if (commandInput?.dataset.docsCommandFilterBound !== 'true') {
+    if (commandInput && commandInput.dataset.docsCommandFilterBound !== 'true') {
       commandInput.dataset.docsCommandFilterBound = 'true';
       commandInput.addEventListener('input', applyCommandFilter);
     }
@@ -427,7 +434,7 @@ const commandSections = [
       link.addEventListener('click', () => getCommandElements().commandDialog?.close());
     });
 
-    if (commandDialog?.dataset.docsCommandDialogBound !== 'true') {
+    if (commandDialog && commandDialog.dataset.docsCommandDialogBound !== 'true') {
       commandDialog.dataset.docsCommandDialogBound = 'true';
       commandDialog.addEventListener('click', (event) => {
         const rect = commandDialog.getBoundingClientRect();
@@ -656,6 +663,7 @@ const commandSections = [
       minmax(0, 0.9fr)
       minmax(0, 1.15fr)
       minmax(0, 2fr)
+      minmax(0, 1.15fr)
       minmax(0, 0.95fr);
     gap: var(--pl-space-3);
     align-items: start;
@@ -695,6 +703,7 @@ const commandSections = [
   }
 
   .docs-atlas__section[data-atlas-section='components'] ul,
+  .docs-atlas__section[data-atlas-section='patterns'] ul,
   .docs-atlas__section[data-atlas-section='screens'] ul {
     padding-inline-end: var(--pl-space-1);
     overflow-x: hidden;
@@ -707,6 +716,7 @@ const commandSections = [
     max-block-size: clamp(8.75rem, 20vh, 10rem);
   }
 
+  .docs-atlas__section[data-atlas-section='patterns'] ul,
   .docs-atlas__section[data-atlas-section='screens'] ul {
     max-block-size: clamp(7rem, 16vh, 8rem);
   }
@@ -1370,7 +1380,8 @@ const commandSections = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .docs-atlas__section[data-atlas-section='components'] {
+    .docs-atlas__section[data-atlas-section='components'],
+    .docs-atlas__section[data-atlas-section='patterns'] {
       grid-column: 1 / -1;
     }
 
@@ -1443,7 +1454,8 @@ const commandSections = [
       min-inline-size: 0;
     }
 
-    .docs-atlas__section[data-atlas-section='components'] {
+    .docs-atlas__section[data-atlas-section='components'],
+    .docs-atlas__section[data-atlas-section='patterns'] {
       grid-column: auto;
     }
 

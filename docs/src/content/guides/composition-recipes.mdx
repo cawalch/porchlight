@@ -190,6 +190,84 @@ the table must stay inside `.pl-c-table-wrap`.
 </section>
 ```
 
+## Bulk Selection Actions Recipe
+
+When table rows are selected, replace generic table actions with a scoped
+selection toolbar. Keep the selected count in a polite live region, provide a
+clear-selection action, and leave the table as the source of selection state.
+
+```html
+<div class="pl-c-toolbar" role="region" aria-label="Selected account actions">
+  <div class="pl-c-toolbar__group">
+    <strong aria-live="polite">3 accounts selected</strong>
+    <button class="pl-c-button" data-variant="ghost" type="button">
+      Clear selection
+    </button>
+  </div>
+  <div class="pl-c-toolbar__group">
+    <button class="pl-c-button" data-variant="secondary" type="button">
+      Export
+    </button>
+    <button class="pl-c-button" data-variant="primary" type="button">
+      Assign owner
+    </button>
+  </div>
+</div>
+```
+
+Application code owns the selected row IDs and keeps each checkbox,
+`aria-selected` row state, count, and available actions synchronized. Do not
+make the whole toolbar a live region; only announce the short count so focus
+and button labels are not repeatedly re-read.
+
+## Inline Edit Recipe
+
+Use inline edit for short, familiar values in tables, description lists, and
+inspectors. Keep a read view and a real form as sibling states so server-rendered
+fragments, client components, and hypermedia swaps can use the same HTML
+contract.
+
+```html
+<div data-inline-edit>
+  <div data-inline-edit-read>
+    <span id="workspace-name-value">Acme Operations</span>
+    <button
+      class="pl-c-button"
+      data-variant="ghost"
+      type="button"
+      aria-controls="workspace-name-form"
+    >
+      Edit workspace name
+    </button>
+  </div>
+
+  <form id="workspace-name-form" class="pl-c-form" data-inline-edit-form hidden>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Workspace name</span>
+      <input
+        class="pl-c-field__control"
+        name="workspace"
+        value="Acme Operations"
+      />
+    </label>
+    <div class="pl-c-form__actions">
+      <button class="pl-c-button" data-variant="ghost" type="button">
+        Cancel
+      </button>
+      <button class="pl-c-button" data-variant="primary" type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+```
+
+On edit, reveal the form and move focus to its control. On cancel, restore the
+original value and focus to the edit button. On success, replace the read value,
+hide the form, return focus, and announce the saved result with a nearby
+`role="status"`. On validation failure, keep the form open and use the standard
+field `aria-invalid` and `aria-describedby` contract.
+
 ## Settings Page Recipe
 
 Use `.pl-l-sidebar` for local navigation plus a flexible settings panel. Use tabs
