@@ -25,6 +25,18 @@ test("desktop documentation atlas presents peer sections at one height", async (
   expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
   expect(Math.max(...heights)).toBeLessThanOrEqual(288);
   expect(Math.max(...headingToListGaps)).toBeLessThanOrEqual(16);
+
+  const clippedComponentRows = await page
+    .locator('[data-atlas-section="components"] ul')
+    .evaluate((list) => {
+      const viewportBottom = list.getBoundingClientRect().bottom;
+      return Array.from(list.children).filter((item) => {
+        const row = item.getBoundingClientRect();
+        return row.top < viewportBottom && row.bottom > viewportBottom + 1;
+      }).length;
+    });
+
+  expect(clippedComponentRows).toBe(0);
 });
 
 test("preview index separates CSS components from application patterns", async ({
