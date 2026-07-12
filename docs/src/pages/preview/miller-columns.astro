@@ -107,7 +107,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
           <h3 class="pl-c-miller-columns__column-title">Permission Inspector</h3>
           <span class="pl-c-badge" data-tone="warning" id="detail-risk">High Risk</span>
         </header>
-        <div class="pl-c-miller-columns__column-body" style="padding: var(--pl-space-4); gap: var(--pl-space-4);" id="detail-body">
+        <div class="pl-c-miller-columns__column-body" id="detail-body">
           <!-- Populated by script -->
         </div>
       </div>
@@ -464,5 +464,16 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     white-space: pre-wrap;
     overflow-wrap: break-word;
     word-break: normal;
+  }
+
+  #detail-body {
+    padding: var(--pl-space-4);
+    gap: var(--pl-space-4);
+  }
+
+  :global(.pl-c-miller-columns[data-pl-density="compact"]) #detail-body,
+  :global(.pl-c-miller-columns[data-pl-density="dense"]) #detail-body {
+    padding: var(--pl-space-2);
+    gap: var(--pl-space-2);
   }
 </style>
