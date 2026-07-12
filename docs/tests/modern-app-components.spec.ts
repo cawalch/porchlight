@@ -7,6 +7,11 @@ const newComponentPages = [
   { path: "./preview/combobox", heading: "Combobox", root: ".pl-c-combobox" },
   { path: "./preview/tree", heading: "Tree view", root: ".pl-c-tree" },
   {
+    path: "./preview/miller-columns",
+    heading: "Miller columns",
+    root: ".pl-c-miller-columns",
+  },
+  {
     path: "./preview/split-pane",
     heading: "Split pane",
     root: ".pl-c-split-pane",
@@ -327,6 +332,7 @@ test.describe("modern app component contracts", () => {
       "../../packages/porchlight/src/06-components/calendar.css",
       "../../packages/porchlight/src/06-components/combobox.css",
       "../../packages/porchlight/src/06-components/tree.css",
+      "../../packages/porchlight/src/06-components/miller-columns.css",
       "../../packages/porchlight/src/06-components/split-pane.css",
       "../../packages/porchlight/src/06-components/filter-builder.css",
       "../../packages/porchlight/src/06-components/workflow-board.css",

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added a new `miller-columns` cascading component and interactive IAM Permission Explorer preview page for multi-level hierarchical drill-down data exploration.
 - Added a framework-neutral inline loading spinner and width-stable busy-button
   contract using native `aria-busy` and `disabled` semantics, with reduced-motion
   and forced-colors fallbacks.
