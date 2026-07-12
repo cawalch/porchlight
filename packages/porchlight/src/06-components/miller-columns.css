@@ -77,16 +77,13 @@
     .pl-c-miller-columns__column:last-of-type {
       border-inline-end: 0;
       flex-grow: 1;
+      border-start-end-radius: inherit;
+      border-end-end-radius: inherit;
     }
 
     .pl-c-miller-columns__column:first-of-type {
       border-start-start-radius: inherit;
       border-end-start-radius: inherit;
-    }
-
-    .pl-c-miller-columns__column:last-of-type {
-      border-start-end-radius: inherit;
-      border-end-end-radius: inherit;
     }
 
     .pl-c-miller-columns__column:first-of-type .pl-c-miller-columns__column-header {
