@@ -383,15 +383,15 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
         </div>
       </section>
 
-      <section class="pl-c-card" data-surface="app">
-        <div class="pl-c-card__header" style="justify-content: space-between; align-items: center; display: flex;">
-          <h4 class="pl-c-card__title" style="font-size: var(--pl-text-sm);">JSON Policy Statement</h4>
-          <span class="pl-c-badge" data-tone="accent" style="font-size: 10px;">READONLY</span>
-        </div>
-        <div class="pl-c-card__body" style="padding: 0; background: var(--pl-color-surface-2); border-radius: 0 0 var(--pl-radius-md) var(--pl-radius-md);">
-          <pre style="margin: 0; padding: var(--pl-space-4); overflow-x: auto; font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); line-height: var(--pl-leading-normal); color: var(--pl-color-text);"><code class="json-code">${policyJson}</code></pre>
-        </div>
-      </section>
+        <section class="pl-c-card" data-surface="app">
+          <div class="pl-c-card__header" style="justify-content: space-between; align-items: center; display: flex;">
+            <h4 class="pl-c-card__title" style="font-size: var(--pl-text-sm);">JSON Policy Statement</h4>
+            <span class="pl-c-badge" data-tone="accent" style="font-size: 10px;">READONLY</span>
+          </div>
+          <div class="pl-c-card__body">
+            <pre style="margin: 0; font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); line-height: var(--pl-leading-normal); color: var(--pl-color-text); max-inline-size: 100%; min-inline-size: 0; overflow-x: auto;"><code class="json-code">${policyJson}</code></pre>
+          </div>
+        </section>
 
       <div style="display: flex; gap: var(--pl-space-2); margin-block-start: auto; justify-content: flex-end;">
         <button class="pl-c-button" data-variant="secondary" type="button">Copy action</button>
@@ -451,9 +451,12 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
   #col-detail {
     min-inline-size: 22rem;
   }
-  
-  .json-code {
-    white-space: pre-wrap;
-    word-break: break-all;
+
+  #col-detail :global(.pl-c-card) {
+    min-inline-size: 0;
+  }
+
+  #col-detail :global(.pl-c-card__body) {
+    min-inline-size: 0;
   }
 </style>
