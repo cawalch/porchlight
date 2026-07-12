@@ -45,7 +45,6 @@
       color: var(--pl-color-text);
       overflow-x: auto;
       scroll-behavior: smooth;
-      scrollbar-gutter: stable;
       border: 1px solid var(--pl-c-miller-border-color);
       border-radius: var(--pl-radius-xl);
     }
