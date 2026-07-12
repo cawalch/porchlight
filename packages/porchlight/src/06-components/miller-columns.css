@@ -63,10 +63,10 @@
     }
 
     .pl-c-miller-columns__column {
-      flex: 0 0 var(--pl-c-miller-column-width);
+      flex: 0 1 var(--pl-c-miller-column-width);
       display: flex;
       flex-direction: column;
-      min-inline-size: var(--pl-c-miller-column-width);
+      min-inline-size: 12rem;
       border-inline-end: 1px solid var(--pl-c-miller-border-color);
       background: var(--pl-color-surface);
     }

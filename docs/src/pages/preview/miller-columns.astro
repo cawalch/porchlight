@@ -449,7 +449,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
   }
 
   #col-detail {
-    min-inline-size: 22rem;
+    min-inline-size: 18rem;
   }
 
   #col-detail :global(.pl-c-card) {
@@ -458,5 +458,11 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
 
   #col-detail :global(.pl-c-card__body) {
     min-inline-size: 0;
+  }
+
+  :global(.json-code) {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 </style>
