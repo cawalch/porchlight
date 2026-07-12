@@ -86,11 +86,13 @@
       border-end-start-radius: inherit;
     }
 
-    .pl-c-miller-columns__column:first-of-type .pl-c-miller-columns__column-header {
+    .pl-c-miller-columns__column:first-of-type
+      .pl-c-miller-columns__column-header {
       border-start-start-radius: inherit;
     }
 
-    .pl-c-miller-columns__column:last-of-type .pl-c-miller-columns__column-header {
+    .pl-c-miller-columns__column:last-of-type
+      .pl-c-miller-columns__column-header {
       border-start-end-radius: inherit;
     }
 

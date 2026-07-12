@@ -340,7 +340,9 @@ test.describe("modern app component contracts", () => {
     // Wait for dynamic resource population (initial skeleton load)
     const resourceList = page.locator("#res-body .pl-c-miller-columns__list");
     await expect(resourceList).toBeVisible();
-    await expect(page.locator("#res-title")).toContainText("Identity Access Resources");
+    await expect(page.locator("#res-title")).toContainText(
+      "Identity Access Resources",
+    );
 
     // Check default active resource
     const activeResource = page.locator("#res-body [aria-selected='true']");
@@ -354,17 +356,21 @@ test.describe("modern app component contracts", () => {
 
     // 2. Interactivity Check (click another service)
     await page.locator("#col-services [data-id='billing']").click();
-    await expect(page.locator("#res-title")).toContainText("Billing Ops Resources");
-    
+    await expect(page.locator("#res-title")).toContainText(
+      "Billing Ops Resources",
+    );
+
     // Wait for skeleton load and update
     await expect(page.locator("#res-body [data-id='invoices']")).toBeVisible();
     await page.locator("#res-body [data-id='payment-methods']").click();
-    await expect(page.locator("#act-title")).toContainText("Payment-methods Actions");
+    await expect(page.locator("#act-title")).toContainText(
+      "Payment-methods Actions",
+    );
 
     // 3. Density Selector Check
     const explorer = page.locator("#iam-explorer");
     await expect(explorer).not.toHaveAttribute("data-pl-density"); // default none
-    
+
     await page.selectOption("#density-select", "compact");
     await expect(explorer).toHaveAttribute("data-pl-density", "compact");
 
