@@ -1,0 +1,66 @@
+# Porchlight LLM guide
+
+> Porchlight is a no-dependency, native-CSS framework for modern SaaS and admin interfaces. It uses real HTML semantics, CSS custom properties, native CSS layers/scopes, and framework-agnostic component classes.
+
+Use this short file to route quickly. Use /llms-full.txt when generating or refactoring full screens.
+
+## Primary docs
+
+- Getting started: /guides/getting-started
+- Composition recipes: /guides/composition-recipes
+- Layout primitives: /guides/layout
+- Utilities: /guides/utilities
+- Browser support: /guides/browser-support
+- Component reference: /components
+- Preview gallery: /preview
+- Full model pack: /llms-full.txt
+
+## Core composition rules
+
+- Use layout primitives for structure: pl-l-app-shell, pl-l-container, pl-l-stack, pl-l-grid, pl-l-cluster, pl-l-sidebar.
+- Use components for semantics and chrome: pl-c-card, pl-c-toolbar, pl-c-page-header, pl-c-form, pl-c-field, pl-c-table-wrap, pl-c-table, pl-c-pagination, pl-c-nav, pl-c-stat, pl-c-tabs, pl-c-badge.
+- Use utilities only for small adjustments: pl-u-muted, pl-u-muted-sm, pl-u-truncate, pl-u-sr-only, pl-u-min-0.
+- Use real HTML semantics: table, thead, tbody, th, td, form, fieldset, legend, label, input, select, textarea, button, a, nav, main, section, h1-h3.
+- Prefer Porchlight tokens such as --pl-space-* and --pl-color-* over new app-local spacing and color scales.
+- Keep app CSS small and local. Add app CSS for page-specific widths, one-off splits, or product-specific alignment only.
+
+## Avoid
+
+- Do not make div-based tables. Use table/thead/tbody/tr/th/td inside pl-c-table-wrap.
+- Do not put page headers inside pl-c-toolbar. Use pl-c-page-header inside padded content; use pl-c-toolbar on data-region edges.
+- Do not nest cards inside cards for layout. Use pl-l-grid, pl-l-sidebar, pl-l-stack, or sibling pl-c-card elements.
+- Do not omit pl-c-table-wrap around pl-c-table.
+- Do not invent new spacing scales. Use pl-l-stack, pl-l-grid, pl-l-cluster, and --pl-space-* tokens.
+- Do not use placeholders as the only labels. Use visible labels or pl-u-sr-only labels.
+- Do not style framework state through app-specific class toggles when native attributes already exist. Prefer aria-selected, aria-current, aria-expanded, aria-invalid, disabled, required, and data-tone.
+- Do not make htmx, Alpine, Vue, or React wrappers the Porchlight contract. Any renderer should emit the same native HTML.
+- Do not build marketing-style hero layouts for SaaS/admin tools. Prefer dense but calm application surfaces.
+
+## Best first examples
+
+- /preview/app-list-detail: list/detail workspace with a persistent table and selected-record panel
+- /preview/app-queue-triage: queue triage workspace with SLA lanes, priority list, and decision fields
+- /preview/app-process-builder: process builder/admin shell with library, draft map, and inspector panel
+- /preview/app-settings-console: settings console with local navigation, forms, alerts, and danger zone
+- /preview/app-reporting-dashboard: reporting dashboard with filters, KPIs, charts, and breakdown table
+- /preview/app-command-workspace: command-driven workspace with palette, result cards, detail, and feedback
+- /preview/app-dashboard: full app shell with KPI grid, data table, nav, and page actions
+- /preview/dashboard: compact dashboard composition proof
+- /preview/app-dense: dense admin/data-console layout
+- /preview/app-cases: case queue with filters and detail panel
+- /preview/form: forms, grids, input groups, choice groups, and validation states
+- /preview/field: native controls, messages, required markers, and framework-neutral validation
+
+## Agent routing
+
+- Building a full app screen: start with /guides/composition-recipes, then copy the closest /preview/app-* pattern.
+- Building list/detail UX: use /components/app-list-detail and /preview/app-list-detail.
+- Building triage UX: use /components/app-queue-triage and /preview/app-queue-triage.
+- Building process/admin UX: use /components/app-process-builder and /preview/app-process-builder.
+- Building settings UX: use /components/app-settings-console and /preview/app-settings-console.
+- Building reporting UX: use /components/app-reporting-dashboard and /preview/app-reporting-dashboard.
+- Building command-first UX: use /components/app-command-workspace and /preview/app-command-workspace.
+- Building a table workflow: use /components/data-table and /preview/data-table.
+- Building forms: use /components/form, /components/field, /preview/form, and /preview/field.
+- Building dense/admin UX: use /components/app-dense and /preview/app-dense.
+- Unsure which class exists: use /components first, then /preview for rendered composition.
