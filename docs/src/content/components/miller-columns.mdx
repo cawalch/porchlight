@@ -1,0 +1,130 @@
+---
+title: Miller columns
+description: Roles-first cascading columns for IAM permissions, taxonomic exploration, nested document navigation, and hierarchical data sets.
+status: stable
+since: 0.11.0
+---
+
+# Miller columns
+
+The `.pl-c-miller-columns` component styles cascading lists side-by-side. It is perfect for drill-down exploration of deep hierarchies such as nested category paths, catalog directories, or IAM role and permission definitions. Like all Porchlight components, it is native CSS and framework-neutral; your application logic manages column insertion, selection, horizontal scroll focus, and dynamic lazy loading.
+
+Use the standard ARIA listbox roles as the contract: `role="listbox"` on the list container and `role="option"` on each selectable item wrapper. Express active parent state and item selection with `aria-selected="true"`.
+
+## Semantic HTML
+
+```html
+<div class="pl-c-miller-columns" data-scroll="inline">
+  <!-- First Column -->
+  <div class="pl-c-miller-columns__column">
+    <header class="pl-c-miller-columns__column-header">
+      <h3 class="pl-c-miller-columns__column-title">Services</h3>
+    </header>
+    <div class="pl-c-miller-columns__column-body">
+      <ul
+        class="pl-c-miller-columns__list"
+        role="listbox"
+        aria-label="Services list"
+      >
+        <li
+          class="pl-c-miller-columns__item"
+          role="option"
+          aria-selected="true"
+          tabindex="0"
+        >
+          <div class="pl-c-miller-columns__item-row">
+            <svg class="pl-c-miller-columns__item-icon">...</svg>
+            <span class="pl-c-miller-columns__item-label">Identity Access</span>
+            <span class="pl-c-miller-columns__item-badge">4</span>
+            <svg class="pl-c-miller-columns__item-chevron">...</svg>
+          </div>
+        </li>
+        <li class="pl-c-miller-columns__item" role="option" tabindex="-1">
+          <div class="pl-c-miller-columns__item-row">
+            <svg class="pl-c-miller-columns__item-icon">...</svg>
+            <span class="pl-c-miller-columns__item-label">Billing Ops</span>
+            <span class="pl-c-miller-columns__item-badge">12</span>
+            <svg class="pl-c-miller-columns__item-chevron">...</svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Second Column (dynamically appended) -->
+  <div class="pl-c-miller-columns__column">
+    <header class="pl-c-miller-columns__column-header">
+      <h3 class="pl-c-miller-columns__column-title">Resources</h3>
+    </header>
+    <div class="pl-c-miller-columns__column-body">
+      <ul
+        class="pl-c-miller-columns__list"
+        role="listbox"
+        aria-label="Resources list"
+      >
+        <li
+          class="pl-c-miller-columns__item"
+          role="option"
+          aria-selected="true"
+          tabindex="-1"
+        >
+          <div class="pl-c-miller-columns__item-row">
+            <span class="pl-c-miller-columns__item-label">Users</span>
+            <svg class="pl-c-miller-columns__item-chevron">...</svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+```
+
+## Responsive Layout and Scroll Snapping
+
+By default, the Miller columns container will overflow horizontally if its columns exceed the screen width. Use `data-scroll="inline"` to enable CSS scroll snapping: columns will snap cleanly to the start of the horizontal scroll viewport as the user swipes or navigates.
+
+```html
+<div class="pl-c-miller-columns" data-scroll="inline">...</div>
+```
+
+The column widths can be customized globally or per instance using `--pl-c-miller-column-width` (defaults to `18rem`). The last column in the container automatically stretches (`flex-grow: 1`) to fill the remaining horizontal space, making it ideal to house a detailed inspector panel or detail view.
+
+## Accessibility Responsibilities
+
+- **Roving Focus**: Implement standard roving tabindex: only one item within the entire component should be in the keyboard tab order (`tabindex="0"`) at a time. The rest should have `tabindex="-1"`.
+- **Keyboard Navigation**: Move focus vertically using `Up` and `Down` arrow keys, and navigate columns using `Left` and `Right` arrow keys.
+- **Selection State**: Use `aria-selected="true"` to denote both the active selection path (which node is driving the display of the next column) and the final target.
+- **Lazy Loading**: When fetching columns asynchronously, use the `.pl-c-skeleton` loaders inside the next column body to indicate waiting state.
+
+## Class Contract
+
+| Selector                              | Role                                             |
+| ------------------------------------- | ------------------------------------------------ |
+| `.pl-c-miller-columns`                | Main container.                                  |
+| `.pl-c-miller-columns__column`        | Column container.                                |
+| `.pl-c-miller-columns__column-header` | Column header containing the title.              |
+| `.pl-c-miller-columns__column-title`  | Small capitalized column label.                  |
+| `.pl-c-miller-columns__column-body`   | Vertical scrollable content container for lists. |
+| `.pl-c-miller-columns__list`          | Standard ul list element (`role="listbox"`).     |
+| `.pl-c-miller-columns__item`          | List item wrapper (`role="option"`).             |
+| `.pl-c-miller-columns__item-row`      | The visual button/row surface.                   |
+| `.pl-c-miller-columns__item-icon`     | Leading icon slot.                               |
+| `.pl-c-miller-columns__item-label`    | Main content label.                              |
+| `.pl-c-miller-columns__item-badge`    | Number badge indicating child count.             |
+| `.pl-c-miller-columns__item-chevron`  | Trailing disclosure arrow.                       |
+| `[aria-selected="true"]`              | The currently selected/active path item.         |
+| `[data-scroll="inline"]`              | Enables horizontal scroll snap.                  |
+| `[data-pl-density="compact"]`         | Compact sizing.                                  |
+
+## Tokens Exposed
+
+| Token                              | Default                  | Purpose                           |
+| ---------------------------------- | ------------------------ | --------------------------------- |
+| `--pl-c-miller-column-width`       | `18rem`                  | Default width of each column.     |
+| `--pl-c-miller-column-gap`         | `0px`                    | Space between columns.            |
+| `--pl-c-miller-min-block-size`     | `26rem`                  | Minimum height of the container.  |
+| `--pl-c-miller-row-min-block-size` | `2.25rem`                | Minimum row item height.          |
+| `--pl-c-miller-row-gap`            | `var(--pl-space-2)`      | Horizontal gap inside a row.      |
+| `--pl-c-miller-row-padding-block`  | `var(--pl-space-1)`      | Vertical padding of a row item.   |
+| `--pl-c-miller-row-padding-inline` | `var(--pl-space-3)`      | Horizontal padding of a row item. |
+| `--pl-c-miller-border-color`       | `var(--pl-color-border)` | Boundary lines color.             |

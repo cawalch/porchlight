@@ -60,6 +60,7 @@
 @import "src/06-components/file-upload.css";
 @import "src/06-components/command-palette.css";
 @import "src/06-components/tree.css";
+@import "src/06-components/miller-columns.css";
 @import "src/06-components/split-pane.css";
 @import "src/06-components/filter-builder.css";
 @import "src/06-components/workflow-board.css";

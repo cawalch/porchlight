@@ -1,0 +1,256 @@
+/*
+ * Porchlight  -  miller columns component
+ * ===========================================================================
+ * A CSS-only cascading column explorer for nested hierarchies (IAM roles,
+ * folder structures, taxonomies). Columns scroll inline with support for
+ * scroll snapping and fluid width control.
+ *
+ * Structure:
+ *   <div class="pl-c-miller-columns" data-scroll="inline">
+ *     <div class="pl-c-miller-columns__column">
+ *       <header class="pl-c-miller-columns__column-header">
+ *         <h3 class="pl-c-miller-columns__column-title">Root</h3>
+ *       </header>
+ *       <div class="pl-c-miller-columns__column-body">
+ *         <ul class="pl-c-miller-columns__list" role="listbox" aria-label="Root categories">
+ *           <li class="pl-c-miller-columns__item" role="option" aria-selected="true" tabindex="0">
+ *             <div class="pl-c-miller-columns__item-row">
+ *               <svg class="pl-c-miller-columns__item-icon">...</svg>
+ *               <span class="pl-c-miller-columns__item-label">Billing</span>
+ *               <span class="pl-c-miller-columns__item-badge">12</span>
+ *               <svg class="pl-c-miller-columns__item-chevron">...</svg>
+ *             </div>
+ *           </li>
+ *         </ul>
+ *       </div>
+ *     </div>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.pl-c-miller-columns) {
+    :scope {
+      --pl-c-miller-column-width: 18rem;
+      --pl-c-miller-column-gap: 0px;
+      --pl-c-miller-min-block-size: 26rem;
+      --pl-c-miller-row-min-block-size: 2.25rem;
+      --pl-c-miller-row-gap: var(--pl-space-2);
+      --pl-c-miller-row-padding-block: var(--pl-space-1);
+      --pl-c-miller-row-padding-inline: var(--pl-space-3);
+      --pl-c-miller-border-color: var(--pl-color-border);
+
+      display: flex;
+      gap: var(--pl-c-miller-column-gap);
+      inline-size: 100%;
+      min-block-size: var(--pl-c-miller-min-block-size);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      border: 1px solid var(--pl-c-miller-border-color);
+      border-radius: var(--pl-radius-xl);
+    }
+
+    :scope[data-scroll="inline"] {
+      scroll-snap-type: inline mandatory;
+    }
+
+    :scope[data-pl-density="compact"],
+    :scope[data-pl-density="dense"] {
+      --pl-c-miller-row-min-block-size: 1.875rem;
+      --pl-c-miller-row-gap: var(--pl-space-1);
+      --pl-c-miller-row-padding-block: 0.125rem;
+      --pl-c-miller-column-width: 15rem;
+    }
+
+    .pl-c-miller-columns__column {
+      flex: 0 1 var(--pl-c-miller-column-width);
+      display: flex;
+      flex-direction: column;
+      min-inline-size: 12rem;
+      border-inline-end: 1px solid var(--pl-c-miller-border-color);
+      background: var(--pl-color-surface);
+    }
+
+    :scope[data-scroll="inline"] .pl-c-miller-columns__column {
+      scroll-snap-align: start;
+    }
+
+    .pl-c-miller-columns__column:last-of-type {
+      border-inline-end: 0;
+      flex-grow: 1;
+      border-start-end-radius: inherit;
+      border-end-end-radius: inherit;
+    }
+
+    .pl-c-miller-columns__column:first-of-type {
+      border-start-start-radius: inherit;
+      border-end-start-radius: inherit;
+    }
+
+    .pl-c-miller-columns__column:first-of-type
+      .pl-c-miller-columns__column-header {
+      border-start-start-radius: inherit;
+    }
+
+    .pl-c-miller-columns__column:last-of-type
+      .pl-c-miller-columns__column-header {
+      border-start-end-radius: inherit;
+    }
+
+    .pl-c-miller-columns__column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      block-size: var(--pl-control-block-size);
+      padding-inline: var(--pl-space-4);
+      border-block-end: 1px solid var(--pl-c-miller-border-color);
+      background: color-mix(in oklab, var(--pl-color-surface), transparent 3%);
+      flex: none;
+    }
+
+    .pl-c-miller-columns__column-title {
+      margin: 0;
+      min-inline-size: 0;
+      overflow: hidden;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      letter-spacing: 0.04em;
+      line-height: var(--pl-leading-tight);
+      text-transform: uppercase;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pl-c-miller-columns__column-body {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      padding: var(--pl-space-2);
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+    }
+
+    .pl-c-miller-columns__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--pl-space-1);
+    }
+
+    .pl-c-miller-columns__item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      min-inline-size: 0;
+      outline: 0;
+      cursor: default;
+    }
+
+    .pl-c-miller-columns__item-row {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-c-miller-row-gap);
+      min-block-size: var(--pl-c-miller-row-min-block-size);
+      min-inline-size: 0;
+      padding: var(--pl-c-miller-row-padding-block)
+        var(--pl-c-miller-row-padding-inline);
+      border-radius: var(--pl-radius-md);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      user-select: none;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-miller-columns__item-row:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-miller-columns__item:focus-visible > .pl-c-miller-columns__item-row {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .pl-c-miller-columns__item[aria-selected="true"]
+      > .pl-c-miller-columns__item-row {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-semibold);
+      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .pl-c-miller-columns__item[aria-disabled="true"]
+      > .pl-c-miller-columns__item-row {
+      opacity: var(--pl-opacity-disabled);
+      cursor: not-allowed;
+    }
+
+    .pl-c-miller-columns__item-icon {
+      inline-size: 1rem;
+      block-size: 1rem;
+      flex: 0 0 auto;
+      color: inherit;
+    }
+
+    .pl-c-miller-columns__item-label {
+      flex: 1 1 auto;
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pl-c-miller-columns__item-badge {
+      flex: 0 0 auto;
+      min-inline-size: 1.25rem;
+      padding-inline: var(--pl-space-1);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .pl-c-miller-columns__item[aria-selected="true"]
+      > .pl-c-miller-columns__item-row
+      .pl-c-miller-columns__item-badge {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 82%);
+      color: var(--pl-color-accent);
+    }
+
+    .pl-c-miller-columns__item-chevron {
+      inline-size: 1rem;
+      block-size: 1rem;
+      flex: 0 0 auto;
+      color: var(--pl-color-text-muted);
+      opacity: 0.7;
+    }
+
+    .pl-c-miller-columns__item[aria-selected="true"]
+      > .pl-c-miller-columns__item-row
+      .pl-c-miller-columns__item-chevron {
+      color: var(--pl-color-accent);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(
+      .pl-c-miller-columns__item[aria-selected="true"]
+        > .pl-c-miller-columns__item-row
+    ) {
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
+}

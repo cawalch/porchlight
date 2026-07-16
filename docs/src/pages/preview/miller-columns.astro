@@ -1,0 +1,544 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// SVGs and icons
+const keyIcon = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />';
+const cardIcon = '<rect x="1" y="4" width="22" height="16" rx="2" ry="2" /><line x1="1" y1="10" x2="23" y2="10" />';
+const cpuIcon = '<rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="15" x2="23" y2="15" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="15" x2="4" y2="15" />';
+const databaseIcon = '<ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />';
+const chevron = '<polyline points="9 18 15 12 9 6" />';
+---
+<BaseLayout title="Miller columns · Porchlight">
+  <div class="miller-columns-container">
+    <div class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Miller columns</h1>
+        <span class="pl-c-page-header__subtitle">Cascading multi-column drill-down exploration for hierarchical data.</span>
+      </div>
+      <div class="pl-c-page-header__actions">
+        <div class="pl-c-toolbar" data-surface="flush">
+          <div class="pl-c-toolbar__group">
+            <label class="pl-c-field" style="flex-direction: row; align-items: center; gap: var(--pl-space-2);">
+              <span class="pl-c-field__label" style="margin: 0; font-size: var(--pl-text-xs); white-space: nowrap;">Density</span>
+              <select class="pl-c-field__control" id="density-select" style="min-block-size: 2rem; padding-block: 0; font-size: var(--pl-text-xs);">
+                <option value="comfortable">Comfortable</option>
+                <option value="compact">Compact</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-block-end: var(--pl-space-5); color: var(--pl-color-text-muted);">
+      Click items or use the arrow keys to drill down through the IAM hierarchy. As you select services, resources, and actions, new columns slide in from the right. The last column dynamically stretches to house a detailed inspector panel.
+    </p>
+
+    <!-- The Miller Columns Explorer -->
+    <section class="pl-c-miller-columns" id="iam-explorer" data-scroll="inline">
+      
+      <!-- Column 1: Services -->
+      <div class="pl-c-miller-columns__column" id="col-services">
+        <header class="pl-c-miller-columns__column-header">
+          <h3 class="pl-c-miller-columns__column-title">Services</h3>
+          <span class="pl-c-badge" data-tone="accent">4</span>
+        </header>
+        <div class="pl-c-miller-columns__column-body">
+          <ul class="pl-c-miller-columns__list" role="listbox" aria-label="Cloud services">
+            <li class="pl-c-miller-columns__item" role="option" aria-selected="true" data-id="identity" tabindex="0">
+              <div class="pl-c-miller-columns__item-row">
+                <svg class="pl-c-miller-columns__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={keyIcon} />
+                <span class="pl-c-miller-columns__item-label">Identity Access</span>
+                <span class="pl-c-miller-columns__item-badge">3</span>
+                <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
+              </div>
+            </li>
+            <li class="pl-c-miller-columns__item" role="option" data-id="billing" tabindex="-1">
+              <div class="pl-c-miller-columns__item-row">
+                <svg class="pl-c-miller-columns__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={cardIcon} />
+                <span class="pl-c-miller-columns__item-label">Billing Ops</span>
+                <span class="pl-c-miller-columns__item-badge">2</span>
+                <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
+              </div>
+            </li>
+            <li class="pl-c-miller-columns__item" role="option" data-id="compute" tabindex="-1">
+              <div class="pl-c-miller-columns__item-row">
+                <svg class="pl-c-miller-columns__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={cpuIcon} />
+                <span class="pl-c-miller-columns__item-label">Compute Instances</span>
+                <span class="pl-c-miller-columns__item-badge">3</span>
+                <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
+              </div>
+            </li>
+            <li class="pl-c-miller-columns__item" role="option" data-id="storage" tabindex="-1">
+              <div class="pl-c-miller-columns__item-row">
+                <svg class="pl-c-miller-columns__item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={databaseIcon} />
+                <span class="pl-c-miller-columns__item-label">Cloud Storage</span>
+                <span class="pl-c-miller-columns__item-badge">2</span>
+                <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 2: Resources (populated dynamically, default shows identity resources) -->
+      <div class="pl-c-miller-columns__column" id="col-resources">
+        <header class="pl-c-miller-columns__column-header">
+          <h3 class="pl-c-miller-columns__column-title" id="res-title">Resources</h3>
+        </header>
+        <div class="pl-c-miller-columns__column-body" id="res-body">
+          <!-- Populated by script -->
+        </div>
+      </div>
+
+      <!-- Column 3: Actions (populated dynamically, default shows users actions) -->
+      <div class="pl-c-miller-columns__column" id="col-actions">
+        <header class="pl-c-miller-columns__column-header">
+          <h3 class="pl-c-miller-columns__column-title" id="act-title">Actions</h3>
+        </header>
+        <div class="pl-c-miller-columns__column-body" id="act-body">
+          <!-- Populated by script -->
+        </div>
+      </div>
+
+      <!-- Column 4: Details Panel (stretches to fill space) -->
+      <div class="pl-c-miller-columns__column" id="col-detail" style="flex-grow: 1;">
+        <header class="pl-c-miller-columns__column-header">
+          <h3 class="pl-c-miller-columns__column-title">Permission Inspector</h3>
+          <span class="pl-c-badge" data-tone="warning" id="detail-risk">High Risk</span>
+        </header>
+        <div class="pl-c-miller-columns__column-body" id="detail-body">
+          <!-- Populated by script -->
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <div hidden data-miller-script>
+  <script is:inline>
+  // Interactive hierarchy data
+  const services = {
+    identity: {
+      name: 'Identity Access',
+      resources: [
+        { id: 'users', name: 'Users', count: 3 },
+        { id: 'groups', name: 'Groups', count: 2 },
+        { id: 'keys', name: 'API Keys', count: 2 }
+      ]
+    },
+    billing: {
+      name: 'Billing Ops',
+      resources: [
+        { id: 'invoices', name: 'Invoices', count: 2 },
+        { id: 'payment-methods', name: 'Payment Methods', count: 2 }
+      ]
+    },
+    compute: {
+      name: 'Compute Instances',
+      resources: [
+        { id: 'servers', name: 'Virtual Servers', count: 3 },
+        { id: 'snapshots', name: 'Snapshots', count: 2 },
+        { id: 'ip-addresses', name: 'IP Addresses', count: 2 }
+      ]
+    },
+    storage: {
+      name: 'Cloud Storage',
+      resources: [
+        { id: 'buckets', name: 'Buckets', count: 3 },
+        { id: 'cdn', name: 'CDN Distributions', count: 1 }
+      ]
+    }
+  };
+
+  const resources = {
+    users: [
+      { id: 'create-user', name: 'iam:CreateUser', risk: 'high', desc: 'Allows creation of new IAM user accounts in this tenant.' },
+      { id: 'delete-user', name: 'iam:DeleteUser', risk: 'danger', desc: 'Allows permanent deletion of IAM user accounts.' },
+      { id: 'list-users', name: 'iam:ListUsers', risk: 'success', desc: 'Allows read-only queries of all user accounts.' }
+    ],
+    groups: [
+      { id: 'add-to-group', name: 'iam:AddUserToGroup', risk: 'high', desc: 'Allows adding users to security and administrative groups.' },
+      { id: 'remove-from-group', name: 'iam:RemoveUserFromGroup', risk: 'warning', desc: 'Allows removing users from groups, disrupting access.' }
+    ],
+    keys: [
+      { id: 'create-key', name: 'iam:CreateAccessKey', risk: 'high', desc: 'Allows generation of permanent API credentials.' },
+      { id: 'rotate-key', name: 'iam:RotateAccessKey', risk: 'warning', desc: 'Allows rotating or disabling API access credentials.' }
+    ],
+    invoices: [
+      { id: 'view-invoice', name: 'billing:ViewInvoice', risk: 'success', desc: 'Allows read-only viewing of historical billing receipts.' },
+      { id: 'pay-invoice', name: 'billing:PayInvoice', risk: 'warning', desc: 'Allows triggering manual or automated invoice payouts.' }
+    ],
+    'payment-methods': [
+      { id: 'add-card', name: 'billing:AddPaymentMethod', risk: 'high', desc: 'Allows connecting credit cards or corporate bank accounts.' },
+      { id: 'delete-card', name: 'billing:DeletePaymentMethod', risk: 'warning', desc: 'Allows deleting configured active payment routes.' }
+    ],
+    servers: [
+      { id: 'start-server', name: 'compute:StartInstance', risk: 'warning', desc: 'Starts stopped virtual servers.' },
+      { id: 'stop-server', name: 'compute:StopInstance', risk: 'warning', desc: 'Stops active running virtual server instances.' },
+      { id: 'terminate-server', name: 'compute:TerminateInstance', risk: 'danger', desc: 'Permanently deletes virtual servers and attached disks.' }
+    ],
+    snapshots: [
+      { id: 'create-snapshot', name: 'compute:CreateSnapshot', risk: 'success', desc: 'Triggers point-in-time volume backups.' },
+      { id: 'delete-snapshot', name: 'compute:DeleteSnapshot', risk: 'high', desc: 'Deletes server volume backups.' }
+    ],
+    'ip-addresses': [
+      { id: 'allocate-ip', name: 'compute:AllocateAddress', risk: 'warning', desc: 'Reserves public static IP addresses.' },
+      { id: 'release-ip', name: 'compute:ReleaseAddress', risk: 'success', desc: 'Returns public static IPs to the cloud pool.' }
+    ],
+    buckets: [
+      { id: 'create-bucket', name: 'storage:CreateBucket', risk: 'high', desc: 'Creates new logical object storage buckets.' },
+      { id: 'delete-bucket', name: 'storage:DeleteBucket', risk: 'danger', desc: 'Deletes object storage buckets and all nested files.' },
+      { id: 'list-bucket', name: 'storage:ListBucket', risk: 'success', desc: 'Lists bucket directories.' }
+    ],
+    cdn: [
+      { id: 'invalidate-cdn', name: 'storage:InvalidateCache', risk: 'warning', desc: 'Invalidates CDN caches globally.' }
+    ]
+  };
+
+  const chevronSvg = '<svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
+  // Elements
+  const explorer = document.getElementById('iam-explorer');
+  const densitySelect = document.getElementById('density-select');
+  const resTitle = document.getElementById('res-title');
+  const resBody = document.getElementById('res-body');
+  const actTitle = document.getElementById('act-title');
+  const actBody = document.getElementById('act-body');
+  const detailRisk = document.getElementById('detail-risk');
+  const detailBody = document.getElementById('detail-body');
+  const itemSelector = '.pl-c-miller-columns__item[role="option"]';
+  const columnSelector = '.pl-c-miller-columns__column';
+
+  // Selected state trackers
+  let activeService = 'identity';
+  let activeResource = 'users';
+
+  // Show skeletons inside a body
+  function showSkeleton(container, count) {
+    container.setAttribute('aria-busy', 'true');
+    container.innerHTML = `
+      <div class="pl-c-skeleton-group" style="padding: var(--pl-space-2); display: grid; gap: var(--pl-space-3);">
+        ${Array(count).fill(0).map(() => '<span class="pl-c-skeleton" data-shape="text" style="inline-size: 85%; block-size: 1.25rem;"></span>').join('')}
+      </div>
+    `;
+  }
+
+  // Scroll container to make sure columns are visible
+  function scrollColumns() {
+    if (explorer) {
+      setTimeout(() => {
+        explorer.scrollLeft = explorer.scrollWidth;
+      }, 100);
+    }
+  }
+
+  function setRovingTarget(target) {
+    if (!explorer) return;
+
+    explorer.querySelectorAll(`${itemSelector}[tabindex="0"]`).forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+    });
+    target.setAttribute('tabindex', '0');
+    target.focus({ preventScroll: true });
+  }
+
+  function setSelected(target) {
+    const listbox = target.closest('[role="listbox"]');
+    if (!listbox) return;
+
+    listbox.querySelectorAll(itemSelector).forEach((item) => {
+      item.setAttribute('aria-selected', 'false');
+    });
+    target.setAttribute('aria-selected', 'true');
+  }
+
+  function focusWithinList(target, nextIndex) {
+    const listbox = target.closest('[role="listbox"]');
+    if (!listbox) return;
+
+    const items = Array.from(listbox.querySelectorAll(itemSelector)).filter(
+      (item) => item.getAttribute('aria-disabled') !== 'true'
+    );
+    const item = items[Math.max(0, Math.min(nextIndex, items.length - 1))];
+    if (item) setRovingTarget(item);
+  }
+
+  function focusAdjacentColumn(target, offset) {
+    if (!explorer) return;
+
+    const column = target.closest(columnSelector);
+    const columns = Array.from(explorer.querySelectorAll(`:scope > ${columnSelector}`));
+    const columnIndex = columns.indexOf(column);
+    const adjacentColumn = columns[columnIndex + offset];
+    const item =
+      adjacentColumn?.querySelector(`${itemSelector}[aria-selected="true"]`) ??
+      adjacentColumn?.querySelector(itemSelector);
+    if (item) setRovingTarget(item);
+  }
+
+  function activateItem(target) {
+    if (target.getAttribute('aria-disabled') === 'true') return;
+
+    const id = target.dataset.id ?? '';
+    setSelected(target);
+
+    if (target.closest('#col-services')) {
+      const service = services[id];
+      if (service?.resources.length > 0) {
+        activeResource = service.resources[0].id;
+        loadResources(id);
+      }
+      return;
+    }
+
+    if (resBody?.contains(target)) {
+      loadActions(id, target.dataset.name ?? id);
+      return;
+    }
+
+    if (actBody?.contains(target)) {
+      loadDetails(activeResource, id);
+    }
+  }
+
+  // Load Resources
+  function loadResources(serviceId) {
+    activeService = serviceId;
+    const service = services[serviceId];
+    if (resTitle) resTitle.textContent = `${service.name} Resources`;
+
+    if (!resBody) return;
+    showSkeleton(resBody, 3);
+
+    setTimeout(() => {
+      const items = service.resources;
+      let html = '<ul class="pl-c-miller-columns__list" role="listbox" aria-label="Resources">';
+      items.forEach((item) => {
+        const isSelected = item.id === activeResource;
+        html += `
+          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" data-name="${item.name}" tabindex="-1">
+            <div class="pl-c-miller-columns__item-row">
+              <span class="pl-c-miller-columns__item-label">${item.name}</span>
+              <span class="pl-c-miller-columns__item-badge">${item.count}</span>
+              ${chevronSvg}
+            </div>
+          </li>
+        `;
+      });
+      html += '</ul>';
+      resBody.innerHTML = html;
+      resBody.removeAttribute('aria-busy');
+
+      // Trigger load of actions for first item
+      if (items.length > 0) {
+        const defaultRes = items.find(item => item.id === activeResource) || items[0];
+        loadActions(defaultRes.id, defaultRes.name);
+      }
+    }, 250);
+  }
+
+  // Load Actions
+  function loadActions(resourceId, resourceName) {
+    activeResource = resourceId;
+    if (actTitle) actTitle.textContent = `${resourceName} Actions`;
+
+    if (!actBody) return;
+    showSkeleton(actBody, 3);
+
+    setTimeout(() => {
+      const items = resources[resourceId] || [];
+      let html = '<ul class="pl-c-miller-columns__list" role="listbox" aria-label="Actions">';
+      items.forEach((item, index) => {
+        const isSelected = index === 0;
+        html += `
+          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" tabindex="-1">
+            <div class="pl-c-miller-columns__item-row">
+              <span class="pl-c-miller-columns__item-label">${item.name}</span>
+              ${chevronSvg}
+            </div>
+          </li>
+        `;
+      });
+      html += '</ul>';
+      actBody.innerHTML = html;
+      actBody.removeAttribute('aria-busy');
+
+      if (items.length > 0) {
+        loadDetails(resourceId, items[0].id);
+      }
+    }, 200);
+  }
+
+  // Load Details
+  function loadDetails(resourceId, actionId) {
+    const items = resources[resourceId] || [];
+    const action = items.find((item) => item.id === actionId);
+
+    if (!action || !detailBody || !detailRisk) return;
+
+    // Map risk level to Porchlight status badge tones
+    let tone = 'neutral';
+    let riskLabel = 'Unknown Risk';
+    if (action.risk === 'danger') {
+      tone = 'danger';
+      riskLabel = 'Critical Risk';
+    } else if (action.risk === 'high') {
+      tone = 'warning';
+      riskLabel = 'High Risk';
+    } else if (action.risk === 'warning') {
+      tone = 'accent';
+      riskLabel = 'Medium Risk';
+    } else if (action.risk === 'success') {
+      tone = 'success';
+      riskLabel = 'Low Risk';
+    }
+
+    detailRisk.setAttribute('data-tone', tone);
+    detailRisk.textContent = riskLabel;
+
+    const policyJson = JSON.stringify({
+      Version: "2026-06-01",
+      Statement: [
+        {
+          Effect: "Allow",
+          Action: action.name,
+          Resource: `arn:pl:${activeService}::*:${resourceId}/*`
+        }
+      ]
+    }, null, 2);
+
+    detailBody.innerHTML = `
+      <div style="display: grid; gap: var(--pl-space-1);">
+        <strong style="font-size: var(--pl-text-md); font-weight: var(--pl-font-weight-semibold); color: var(--pl-color-text);">${action.name}</strong>
+        <small style="color: var(--pl-color-text-muted); text-transform: uppercase; font-size: var(--pl-text-xs); letter-spacing: 0.04em;">Permission Identifier</small>
+      </div>
+
+      <section class="pl-c-card" data-surface="app" style="margin-block-start: var(--pl-space-2);">
+        <div class="pl-c-card__header">
+          <h4 class="pl-c-card__title" style="font-size: var(--pl-text-sm);">Description</h4>
+        </div>
+        <div class="pl-c-card__body">
+          <p class="pl-u-marginless" style="font-size: var(--pl-text-sm); line-height: var(--pl-leading-normal); color: var(--pl-color-text-muted);">${action.desc}</p>
+        </div>
+      </section>
+
+        <section class="pl-c-card" data-surface="app">
+          <div class="pl-c-card__header" style="justify-content: space-between; align-items: center; display: flex;">
+            <h4 class="pl-c-card__title" style="font-size: var(--pl-text-sm);">JSON Policy Statement</h4>
+            <span class="pl-c-badge" data-tone="accent" style="font-size: 10px;">READONLY</span>
+          </div>
+          <div class="pl-c-card__body">
+            <pre style="margin: 0; font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); line-height: var(--pl-leading-normal); color: var(--pl-color-text); max-inline-size: 100%; min-inline-size: 0; overflow-x: auto;"><code class="json-code">${policyJson}</code></pre>
+          </div>
+        </section>
+
+      <div style="display: flex; gap: var(--pl-space-2); margin-block-start: auto; justify-content: flex-end;">
+        <button class="pl-c-button" data-variant="secondary" type="button">Copy action</button>
+        <button class="pl-c-button" data-variant="primary" type="button">Add policy</button>
+      </div>
+    `;
+
+    scrollColumns();
+  }
+
+  explorer?.addEventListener('click', (event) => {
+    const target = event.target.closest(itemSelector);
+    if (!target) return;
+
+    setRovingTarget(target);
+    activateItem(target);
+  });
+
+  explorer?.addEventListener('keydown', (event) => {
+    const target = event.target.closest(itemSelector);
+    if (!target) return;
+
+    const listbox = target.closest('[role="listbox"]');
+    const items = listbox
+      ? Array.from(listbox.querySelectorAll(itemSelector)).filter(
+          (item) => item.getAttribute('aria-disabled') !== 'true'
+        )
+      : [];
+    const itemIndex = items.indexOf(target);
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      focusWithinList(target, itemIndex - 1);
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      focusWithinList(target, itemIndex + 1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      focusWithinList(target, 0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      focusWithinList(target, items.length - 1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      focusAdjacentColumn(target, -1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      focusAdjacentColumn(target, 1);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setRovingTarget(target);
+      activateItem(target);
+    }
+  });
+
+  // Density Changer
+  densitySelect?.addEventListener('change', () => {
+    const density = densitySelect.value;
+    if (explorer) {
+      explorer.setAttribute('data-pl-density', density);
+    }
+  });
+
+  // Initial Load
+  loadResources('identity');
+  </script>
+  </div>
+
+<style>
+  .miller-columns-container {
+    --pl-l-container-max: 104rem;
+    --pl-l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));
+    padding-block: var(--pl-space-5);
+  }
+
+  /* Custom overrides for the demo */
+  #iam-explorer {
+    block-size: clamp(30rem, 65vh, 42rem);
+  }
+
+  #col-detail {
+    min-inline-size: 18rem;
+  }
+
+  #col-detail :global(.pl-c-card) {
+    min-inline-size: 0;
+  }
+
+  #col-detail :global(.pl-c-card__body) {
+    min-inline-size: 0;
+  }
+
+  :global(.json-code) {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  #detail-body {
+    padding: var(--pl-space-4);
+    gap: var(--pl-space-4);
+  }
+
+  :global(.pl-c-miller-columns[data-pl-density="compact"]) #detail-body,
+  :global(.pl-c-miller-columns[data-pl-density="dense"]) #detail-body {
+    padding: var(--pl-space-2);
+    gap: var(--pl-space-2);
+  }
+</style>
+</BaseLayout>

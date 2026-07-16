@@ -383,6 +383,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - filter-builder: /components/filter-builder
 - form: /components/form
 - inline-loading: /components/inline-loading
+- miller-columns: /components/miller-columns
 - nav: /components/nav
 - page-header: /components/page-header
 - pagination: /components/pagination
@@ -479,6 +480,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/form
 - /preview/inline-loading
 - /preview/layout
+- /preview/miller-columns
 - /preview/nav
 - /preview/page-header
 - /preview/pagination

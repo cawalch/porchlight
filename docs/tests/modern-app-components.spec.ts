@@ -7,6 +7,11 @@ const newComponentPages = [
   { path: "./preview/combobox", heading: "Combobox", root: ".pl-c-combobox" },
   { path: "./preview/tree", heading: "Tree view", root: ".pl-c-tree" },
   {
+    path: "./preview/miller-columns",
+    heading: "Miller columns",
+    root: ".pl-c-miller-columns",
+  },
+  {
     path: "./preview/split-pane",
     heading: "Split pane",
     root: ".pl-c-split-pane",
@@ -322,11 +327,115 @@ test.describe("modern app component contracts", () => {
     ).toBeVisible();
   });
 
+  test("miller columns explorer supports keyboard drill-down, active selection, and density overrides", async ({
+    page,
+  }) => {
+    await page.goto("./preview/miller-columns");
+
+    const explorer = page.locator("#iam-explorer");
+    const activeService = page.locator("#col-services [aria-selected='true']");
+    await expect(activeService).toContainText("Identity Access");
+    await expect(activeService).toHaveAttribute("tabindex", "0");
+    await expect(explorer.locator("[tabindex='0']")).toHaveCount(1);
+
+    const resourceList = page.locator("#res-body .pl-c-miller-columns__list");
+    await expect(resourceList).toBeVisible();
+    await expect(page.locator("#res-title")).toContainText(
+      "Identity Access Resources",
+    );
+
+    const activeResource = page.locator("#res-body [aria-selected='true']");
+    await expect(activeResource).toContainText("Users");
+    await expect(activeResource).toHaveAttribute("tabindex", "-1");
+
+    await expect(page.locator("#act-title")).toContainText("Users Actions");
+    const activeAction = page.locator("#act-body [aria-selected='true']");
+    await expect(activeAction).toContainText("iam:CreateUser");
+    await expect(activeAction).toHaveAttribute("tabindex", "-1");
+    await expect(page.locator("#detail-risk")).toContainText("High Risk");
+
+    await activeService.press("ArrowDown");
+    const billing = page.locator("#col-services [data-id='billing']");
+    await expect(billing).toBeFocused();
+    await expect(billing).toHaveAttribute("tabindex", "0");
+    await expect(activeService).toHaveAttribute("tabindex", "-1");
+    await expect(activeService).toHaveAttribute("aria-selected", "true");
+
+    await billing.press("Enter");
+    await expect(billing).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("#res-title")).toContainText(
+      "Billing Ops Resources",
+    );
+
+    const invoices = page.locator("#res-body [data-id='invoices']");
+    await expect(invoices).toBeVisible();
+    await billing.press("ArrowRight");
+    await expect(invoices).toBeFocused();
+
+    const paymentMethods = page.locator(
+      "#res-body [data-id='payment-methods']",
+    );
+    await invoices.press("ArrowDown");
+    await expect(paymentMethods).toBeFocused();
+    await paymentMethods.press("Enter");
+    await expect(paymentMethods).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("#act-title")).toContainText(
+      "Payment Methods Actions",
+    );
+
+    const addPaymentMethod = page.locator("#act-body [data-id='add-card']");
+    await expect(addPaymentMethod).toBeVisible();
+    await paymentMethods.press("ArrowRight");
+    await expect(addPaymentMethod).toBeFocused();
+    await addPaymentMethod.press("ArrowLeft");
+    await expect(paymentMethods).toBeFocused();
+    await expect(explorer.locator("[tabindex='0']")).toHaveCount(1);
+
+    const compute = page.locator("#col-services [data-id='compute']");
+    await compute.click();
+    await expect(compute).toHaveAttribute("aria-selected", "true");
+    await expect(compute).toHaveAttribute("tabindex", "0");
+    await expect(explorer.locator("[tabindex='0']")).toHaveCount(1);
+
+    await expect(explorer).not.toHaveAttribute("data-pl-density"); // default none
+
+    await page.selectOption("#density-select", "compact");
+    await expect(explorer).toHaveAttribute("data-pl-density", "compact");
+
+    await page.selectOption("#density-select", "comfortable");
+    await expect(explorer).toHaveAttribute("data-pl-density", "comfortable");
+
+    await explorer.evaluate((element) => {
+      (element as HTMLElement).style.setProperty(
+        "--pl-c-miller-column-gap",
+        "12px",
+      );
+    });
+    expect(
+      await explorer.evaluate((element) => getComputedStyle(element).columnGap),
+    ).toBe("12px");
+  });
+
+  test("miller columns preview keeps its script inside the layout contract", async () => {
+    const previewSource = await readFile(
+      new URL("../src/pages/preview/miller-columns.astro", import.meta.url),
+      "utf8",
+    );
+    const componentClose = previewSource.indexOf("</BaseLayout>");
+
+    expect(previewSource.match(/<\/BaseLayout>/g)).toHaveLength(1);
+    expect(previewSource.indexOf("<script is:inline>")).toBeGreaterThan(
+      previewSource.indexOf("<BaseLayout"),
+    );
+    expect(previewSource.indexOf("</script>")).toBeLessThan(componentClose);
+  });
+
   test("new component CSS remains framework-selector agnostic", async () => {
     const cssFiles = [
       "../../packages/porchlight/src/06-components/calendar.css",
       "../../packages/porchlight/src/06-components/combobox.css",
       "../../packages/porchlight/src/06-components/tree.css",
+      "../../packages/porchlight/src/06-components/miller-columns.css",
       "../../packages/porchlight/src/06-components/split-pane.css",
       "../../packages/porchlight/src/06-components/filter-builder.css",
       "../../packages/porchlight/src/06-components/workflow-board.css",
