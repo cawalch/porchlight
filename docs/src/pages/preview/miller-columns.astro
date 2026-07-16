@@ -31,7 +31,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     </div>
 
     <p style="margin-block-end: var(--pl-space-5); color: var(--pl-color-text-muted);">
-      Click items to drill down deeper into the IAM hierarchy. As you select services, resources, and actions, new columns slide in from the right. The last column dynamically stretches to house a detailed inspector panel.
+      Click items or use the arrow keys to drill down through the IAM hierarchy. As you select services, resources, and actions, new columns slide in from the right. The last column dynamically stretches to house a detailed inspector panel.
     </p>
 
     <!-- The Miller Columns Explorer -->
@@ -115,10 +115,8 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     </section>
   </div>
 
-  </script>
-</BaseLayout>
-
-<script is:inline>
+  <div hidden data-miller-script>
+  <script is:inline>
   // Interactive hierarchy data
   const services = {
     identity: {
@@ -200,27 +198,25 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
 
   const chevronSvg = '<svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>';
 
-  console.log("Miller Columns script loaded!");
   // Elements
   const explorer = document.getElementById('iam-explorer');
   const densitySelect = document.getElementById('density-select');
-  
-  const serviceItems = document.querySelectorAll('#col-services .pl-c-miller-columns__item');
   const resTitle = document.getElementById('res-title');
   const resBody = document.getElementById('res-body');
   const actTitle = document.getElementById('act-title');
   const actBody = document.getElementById('act-body');
-  
   const detailRisk = document.getElementById('detail-risk');
   const detailBody = document.getElementById('detail-body');
+  const itemSelector = '.pl-c-miller-columns__item[role="option"]';
+  const columnSelector = '.pl-c-miller-columns__column';
 
   // Selected state trackers
   let activeService = 'identity';
   let activeResource = 'users';
-  let activeAction = 'create-user';
 
   // Show skeletons inside a body
   function showSkeleton(container, count) {
+    container.setAttribute('aria-busy', 'true');
     container.innerHTML = `
       <div class="pl-c-skeleton-group" style="padding: var(--pl-space-2); display: grid; gap: var(--pl-space-3);">
         ${Array(count).fill(0).map(() => '<span class="pl-c-skeleton" data-shape="text" style="inline-size: 85%; block-size: 1.25rem;"></span>').join('')}
@@ -237,22 +233,91 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     }
   }
 
+  function setRovingTarget(target) {
+    if (!explorer) return;
+
+    explorer.querySelectorAll(`${itemSelector}[tabindex="0"]`).forEach((item) => {
+      item.setAttribute('tabindex', '-1');
+    });
+    target.setAttribute('tabindex', '0');
+    target.focus({ preventScroll: true });
+  }
+
+  function setSelected(target) {
+    const listbox = target.closest('[role="listbox"]');
+    if (!listbox) return;
+
+    listbox.querySelectorAll(itemSelector).forEach((item) => {
+      item.setAttribute('aria-selected', 'false');
+    });
+    target.setAttribute('aria-selected', 'true');
+  }
+
+  function focusWithinList(target, nextIndex) {
+    const listbox = target.closest('[role="listbox"]');
+    if (!listbox) return;
+
+    const items = Array.from(listbox.querySelectorAll(itemSelector)).filter(
+      (item) => item.getAttribute('aria-disabled') !== 'true'
+    );
+    const item = items[Math.max(0, Math.min(nextIndex, items.length - 1))];
+    if (item) setRovingTarget(item);
+  }
+
+  function focusAdjacentColumn(target, offset) {
+    if (!explorer) return;
+
+    const column = target.closest(columnSelector);
+    const columns = Array.from(explorer.querySelectorAll(`:scope > ${columnSelector}`));
+    const columnIndex = columns.indexOf(column);
+    const adjacentColumn = columns[columnIndex + offset];
+    const item =
+      adjacentColumn?.querySelector(`${itemSelector}[aria-selected="true"]`) ??
+      adjacentColumn?.querySelector(itemSelector);
+    if (item) setRovingTarget(item);
+  }
+
+  function activateItem(target) {
+    if (target.getAttribute('aria-disabled') === 'true') return;
+
+    const id = target.dataset.id ?? '';
+    setSelected(target);
+
+    if (target.closest('#col-services')) {
+      const service = services[id];
+      if (service?.resources.length > 0) {
+        activeResource = service.resources[0].id;
+        loadResources(id);
+      }
+      return;
+    }
+
+    if (resBody?.contains(target)) {
+      loadActions(id, target.dataset.name ?? id);
+      return;
+    }
+
+    if (actBody?.contains(target)) {
+      loadDetails(activeResource, id);
+    }
+  }
+
   // Load Resources
   function loadResources(serviceId) {
     activeService = serviceId;
     const service = services[serviceId];
     if (resTitle) resTitle.textContent = `${service.name} Resources`;
-    
+
     if (!resBody) return;
     showSkeleton(resBody, 3);
 
     setTimeout(() => {
       const items = service.resources;
       let html = '<ul class="pl-c-miller-columns__list" role="listbox" aria-label="Resources">';
-      items.forEach((item, index) => {
+      items.forEach((item) => {
         const isSelected = item.id === activeResource;
         html += `
-          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" tabindex="${index === 0 ? '0' : '-1'}">
+          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" data-name="${item.name}" tabindex="-1">
             <div class="pl-c-miller-columns__item-row">
               <span class="pl-c-miller-columns__item-label">${item.name}</span>
               <span class="pl-c-miller-columns__item-badge">${item.count}</span>
@@ -263,32 +328,20 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
       });
       html += '</ul>';
       resBody.innerHTML = html;
-
-      // Add listeners to new items
-      resBody.querySelectorAll('.pl-c-miller-columns__item').forEach((el) => {
-        el.addEventListener('click', (e) => {
-          const target = e.currentTarget;
-          const resId = target.dataset.id ?? '';
-          resBody.querySelectorAll('.pl-c-miller-columns__item').forEach((item) => {
-            item.setAttribute('aria-selected', 'false');
-          });
-          target.setAttribute('aria-selected', 'true');
-          loadActions(resId);
-        });
-      });
+      resBody.removeAttribute('aria-busy');
 
       // Trigger load of actions for first item
       if (items.length > 0) {
         const defaultRes = items.find(item => item.id === activeResource) || items[0];
-        loadActions(defaultRes.id);
+        loadActions(defaultRes.id, defaultRes.name);
       }
     }, 250);
   }
 
   // Load Actions
-  function loadActions(resourceId) {
+  function loadActions(resourceId, resourceName) {
     activeResource = resourceId;
-    if (actTitle) actTitle.textContent = `${resourceId.charAt(0).toUpperCase() + resourceId.slice(1)} Actions`;
+    if (actTitle) actTitle.textContent = `${resourceName} Actions`;
 
     if (!actBody) return;
     showSkeleton(actBody, 3);
@@ -299,7 +352,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
       items.forEach((item, index) => {
         const isSelected = index === 0;
         html += `
-          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" tabindex="${index === 0 ? '0' : '-1'}">
+          <li class="pl-c-miller-columns__item" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-id="${item.id}" tabindex="-1">
             <div class="pl-c-miller-columns__item-row">
               <span class="pl-c-miller-columns__item-label">${item.name}</span>
               ${chevronSvg}
@@ -309,19 +362,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
       });
       html += '</ul>';
       actBody.innerHTML = html;
-
-      // Add listeners to actions
-      actBody.querySelectorAll('.pl-c-miller-columns__item').forEach((el) => {
-        el.addEventListener('click', (e) => {
-          const target = e.currentTarget;
-          const actId = target.dataset.id ?? '';
-          actBody.querySelectorAll('.pl-c-miller-columns__item').forEach((item) => {
-            item.setAttribute('aria-selected', 'false');
-          });
-          target.setAttribute('aria-selected', 'true');
-          loadDetails(resourceId, actId);
-        });
-      });
+      actBody.removeAttribute('aria-busy');
 
       if (items.length > 0) {
         loadDetails(resourceId, items[0].id);
@@ -331,7 +372,6 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
 
   // Load Details
   function loadDetails(resourceId, actionId) {
-    activeAction = actionId;
     const items = resources[resourceId] || [];
     const action = items.find((item) => item.id === actionId);
 
@@ -402,25 +442,49 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     scrollColumns();
   }
 
-  // Service Click Handler
-  serviceItems.forEach((el) => {
-    el.addEventListener('click', (e) => {
-      const target = e.currentTarget;
-      const serviceId = target.dataset.id ?? '';
+  explorer?.addEventListener('click', (event) => {
+    const target = event.target.closest(itemSelector);
+    if (!target) return;
 
-      serviceItems.forEach((item) => {
-        item.setAttribute('aria-selected', 'false');
-      });
-      target.setAttribute('aria-selected', 'true');
+    setRovingTarget(target);
+    activateItem(target);
+  });
 
-      // Reset resource and action states to default first item
-      const service = services[serviceId];
-      if (service && service.resources.length > 0) {
-        activeResource = service.resources[0].id;
-      }
+  explorer?.addEventListener('keydown', (event) => {
+    const target = event.target.closest(itemSelector);
+    if (!target) return;
 
-      loadResources(serviceId);
-    });
+    const listbox = target.closest('[role="listbox"]');
+    const items = listbox
+      ? Array.from(listbox.querySelectorAll(itemSelector)).filter(
+          (item) => item.getAttribute('aria-disabled') !== 'true'
+        )
+      : [];
+    const itemIndex = items.indexOf(target);
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      focusWithinList(target, itemIndex - 1);
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      focusWithinList(target, itemIndex + 1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      focusWithinList(target, 0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      focusWithinList(target, items.length - 1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      focusAdjacentColumn(target, -1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      focusAdjacentColumn(target, 1);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setRovingTarget(target);
+      activateItem(target);
+    }
   });
 
   // Density Changer
@@ -434,7 +498,7 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
   // Initial Load
   loadResources('identity');
   </script>
-</BaseLayout>
+  </div>
 
 <style>
   .miller-columns-container {
@@ -477,3 +541,4 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
     gap: var(--pl-space-2);
   }
 </style>
+</BaseLayout>

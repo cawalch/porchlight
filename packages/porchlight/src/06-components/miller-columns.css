@@ -39,6 +39,7 @@
       --pl-c-miller-border-color: var(--pl-color-border);
 
       display: flex;
+      gap: var(--pl-c-miller-column-gap);
       inline-size: 100%;
       min-block-size: var(--pl-c-miller-min-block-size);
       background: var(--pl-color-surface);
