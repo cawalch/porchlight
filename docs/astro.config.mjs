@@ -14,5 +14,15 @@ export default defineConfig({
   trailingSlash: "ignore",
   integrations: [mdx()],
   build: { format: "directory" },
-  vite: { build: { target: "es2022" } },
+  vite: {
+    build: {
+      target: "es2022",
+      // Match the framework's own lightningcss targets (chrome 149, which
+      // supports light-dark() natively). vite 8 minifies CSS with
+      // lightningcss for server builds and defaults cssTarget to an old
+      // esbuild baseline, which rewrites light-dark() into broken
+      // color-scheme conditionals (see --lightningcss-light artifacts).
+      cssTarget: "chrome149",
+    },
+  },
 });

@@ -1608,19 +1608,17 @@ test.describe("docs scaffold", () => {
           ".list-detail-table th:nth-child(6)",
         );
 
-        if (
-          !(
-            shellTopbar &&
-            sidebar &&
-            workspace &&
-            split &&
-            startPane &&
-            endPane &&
-            tableWrap &&
-            listBody &&
-            dueHeader
-          )
-        ) {
+        if (!(
+          shellTopbar &&
+          sidebar &&
+          workspace &&
+          split &&
+          startPane &&
+          endPane &&
+          tableWrap &&
+          listBody &&
+          dueHeader
+        )) {
           return null;
         }
 

@@ -72,6 +72,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "lightningcss": "^1.32.0"
+    "lightningcss": "^1.33.0"
   }
 }
