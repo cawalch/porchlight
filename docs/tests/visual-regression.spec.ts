@@ -10,6 +10,14 @@ const surfaces = [
   ["reporting-dashboard", "./preview/app-reporting-dashboard"],
 ] as const;
 
+const mobileSurfaces = [
+  ...surfaces.filter(([name]) =>
+    ["form", "data-table", "list-detail", "settings-console"].includes(name),
+  ),
+  ["app-shell", "./preview/app-shell"],
+  ["chip", "./preview/chip"],
+] as const;
+
 test.describe("representative visual baselines", () => {
   for (const [name, path] of surfaces) {
     test(`${name} desktop`, async ({ page }) => {
@@ -25,9 +33,7 @@ test.describe("representative visual baselines", () => {
     });
   }
 
-  for (const [name, path] of surfaces.filter(([name]) =>
-    ["form", "data-table", "list-detail", "settings-console"].includes(name),
-  )) {
+  for (const [name, path] of mobileSurfaces) {
     test(`${name} mobile`, async ({ page }) => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(path);

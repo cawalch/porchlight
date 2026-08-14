@@ -26,6 +26,7 @@
       --pl-c-drawer-block: 100vb;
       --pl-c-drawer-pad: var(--pl-space-4);
       --pl-c-drawer-gap: var(--pl-space-3);
+      --pl-c-drawer-translate: 100%;
 
       /* Position: stretch from the side edge. */
       inset-inline: auto 0;
@@ -51,7 +52,7 @@
 
       /* Animation: slide + fade. Asymmetric: enters deliberately, exits snappily. */
       opacity: 0;
-      transform: translateX(100%);
+      transform: translateX(var(--pl-c-drawer-translate));
       transition:
         opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
         transform var(--pl-duration-enter) var(--pl-ease-decelerate),
@@ -61,8 +62,17 @@
 
     /* Start side: slide from inline-start. */
     :scope[data-side="start"] {
+      --pl-c-drawer-translate: -100%;
+
       inset-inline: 0 auto;
-      transform: translateX(-100%);
+    }
+
+    :scope:dir(rtl) {
+      --pl-c-drawer-translate: -100%;
+    }
+
+    :scope[data-side="start"]:dir(rtl) {
+      --pl-c-drawer-translate: 100%;
     }
 
     /* Open state: visible + settled. */
@@ -75,11 +85,7 @@
     @starting-style {
       :scope:popover-open {
         opacity: 0;
-        transform: translateX(100%);
-      }
-
-      :scope[data-side="start"]:popover-open {
-        transform: translateX(-100%);
+        transform: translateX(var(--pl-c-drawer-translate));
       }
     }
 

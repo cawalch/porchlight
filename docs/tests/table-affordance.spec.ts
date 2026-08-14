@@ -48,6 +48,10 @@ test("table selected row is perceptibly distinct and carries an accent bar", asy
   page,
 }) => {
   await page.goto("./preview/data-table");
+  // Rows transition their background on initial paint. Under a fully parallel
+  // run, sampling immediately can catch the selected row at transparent even
+  // though it settles to the correct accent wash one frame later.
+  await page.waitForTimeout(200);
   const states = await page.evaluate(() => {
     const wrap = document.querySelector(".pl-c-table-wrap") as HTMLElement;
     const selected = document.querySelector(

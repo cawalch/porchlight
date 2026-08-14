@@ -212,6 +212,10 @@
       background-size: 1rem;
     }
 
+    select.pl-c-filter-builder__control:dir(rtl) {
+      background-position: left var(--pl-space-3) center;
+    }
+
     .pl-c-filter-builder__control:focus-visible {
       outline: none;
       border-color: var(--pl-focus-color);

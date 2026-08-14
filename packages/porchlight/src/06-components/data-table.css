@@ -416,10 +416,14 @@
       background: var(--pl-color-surface-2);
     }
 
-    /* Outward drop-shadow on the trailing edge: fades rightward to show
+    /* Outward drop-shadow on the trailing edge: fades inline-end to show
        that body content scrolls underneath. */
     .pl-c-table .pl-c-table__sticky-col:not(:last-child) {
       box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
+    }
+
+    .pl-c-table:dir(rtl) .pl-c-table__sticky-col:not(:last-child) {
+      box-shadow: -4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
     /* Sticky cells need opaque hover/selection fills; translucent row
@@ -461,11 +465,16 @@
     );
   }
 
-  /* Selection: left-bar accent (matching the nav active state language) +
+  /* Selection: inline-start accent (matching the nav active state language) +
      stronger tint so the selected state is unmistakable at a glance. */
   :where(.pl-c-table) tbody tr[aria-selected="true"] {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 84%);
     box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+  }
+
+  :where(.pl-c-table:dir(rtl)) tbody tr[aria-selected="true"] {
+    box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+      var(--pl-color-accent);
   }
 
   /* Last data row: remove border-block-end so it doesn't double-up with the
