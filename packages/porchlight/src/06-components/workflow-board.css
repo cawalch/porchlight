@@ -178,6 +178,11 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
+    :scope[data-tone="accent"]:dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        var(--pl-color-accent);
+    }
+
     :scope[data-drop-target],
     :scope.is-drop-target {
       border-style: dashed;
@@ -336,6 +341,13 @@
       );
       box-shadow:
         inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent),
+        0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 78%),
+        var(--pl-shadow-1);
+    }
+
+    :scope:is([aria-selected="true"], [data-selected], .is-selected):dir(rtl) {
+      box-shadow:
+        inset calc(-1 * var(--pl-accent-bar-width)) 0 0 var(--pl-color-accent),
         0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 78%),
         var(--pl-shadow-1);
     }

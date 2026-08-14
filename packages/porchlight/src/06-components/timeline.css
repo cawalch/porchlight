@@ -59,6 +59,10 @@
       transform: translateX(-50%);
     }
 
+    .pl-c-timeline__item:not(:last-child):dir(rtl)::before {
+      transform: translateX(50%);
+    }
+
     .pl-c-timeline__dot {
       inline-size: var(--pl-c-timeline-dot-size);
       block-size: var(--pl-c-timeline-dot-size);

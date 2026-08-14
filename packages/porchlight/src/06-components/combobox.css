@@ -185,6 +185,11 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
+    .pl-c-combobox__option[aria-selected="true"]:dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        var(--pl-color-accent);
+    }
+
     .pl-c-combobox__option[aria-disabled="true"] {
       color: var(--pl-color-text-muted);
       cursor: not-allowed;
@@ -357,9 +362,10 @@
       outline-color: Highlight;
     }
 
-    :where(.pl-c-combobox__option[aria-selected="true"]) {
+    .pl-c-combobox__option[aria-selected="true"] {
       color: Highlight;
-      box-shadow: inset 2px 0 0 Highlight;
+      border-inline-start: 2px solid Highlight;
+      box-shadow: none;
     }
   }
 }

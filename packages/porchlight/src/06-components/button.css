@@ -86,6 +86,20 @@
       );
     }
 
+    /* Icon-only buttons keep the same density-driven block size while
+       removing label padding to produce a square hit target. The accessible
+       name still comes from aria-label or visually hidden text. */
+    :scope[data-icon-only] {
+      inline-size: var(--pl-control-block-size);
+      padding-inline: 0;
+    }
+
+    :scope[data-icon-only] > :is(svg, img) {
+      flex: none;
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
     /* Hover: mix a little of the text color into the current fill. Done via
        the background-color LONGHAND, NOT by reassigning --pl-c-button-bg -
        reassigning a custom property in terms of itself is a cycle, which CSS

@@ -188,6 +188,12 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
+    .pl-c-miller-columns__item[aria-selected="true"]
+      > .pl-c-miller-columns__item-row:dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        var(--pl-color-accent);
+    }
+
     .pl-c-miller-columns__item[aria-disabled="true"]
       > .pl-c-miller-columns__item-row {
       opacity: var(--pl-opacity-disabled);

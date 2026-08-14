@@ -31,14 +31,23 @@ component.
 <button class="pl-c-button" data-variant="ghost" aria-pressed="true">
   Preview
 </button>
+<button
+  class="pl-c-button"
+  data-variant="ghost"
+  data-icon-only
+  aria-label="Settings"
+>
+  <!-- icon -->
+</button>
 ```
 
 ## Class contract
 
-| Selector         | Role                                                                             |
-| ---------------- | -------------------------------------------------------------------------------- |
-| `.pl-c-button`   | The component (native `<button>` or `<a>`).                                      |
-| `[data-variant]` | `primary` \| `secondary` \| `ghost` (default = none, white surface with border). |
+| Selector           | Role                                                                             |
+| ------------------ | -------------------------------------------------------------------------------- |
+| `.pl-c-button`     | The component (native `<button>` or `<a>`).                                      |
+| `[data-variant]`   | `primary` \| `secondary` \| `ghost` (default = none, white surface with border). |
+| `[data-icon-only]` | Square, density-aware icon button; requires an accessible name.                  |
 
 ## Tokens consumed
 
@@ -73,7 +82,7 @@ component.
 - **Disabled vs aria-disabled:** `disabled` removes the button from the
   activation path entirely; `aria-disabled="true"` keeps it focusable (use when
   you want to announce "disabled" but still show a tooltip).
-- **Icon-only:** provide an `aria-label`.
+- **Icon-only:** add `[data-icon-only]` and provide an `aria-label` or visually hidden text.
 - **Contrast:** primary uses `--pl-color-accent` + `--pl-color-accent-text`
   (AA in both themes - see the contrast test).
 
