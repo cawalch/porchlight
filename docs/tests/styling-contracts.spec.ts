@@ -70,6 +70,157 @@ test("RTL mirrors inline-edge accents and sticky depth", async ({ page }) => {
   expect(shadowOffsetX(tableState.rtl.sticky)).toBeLessThan(0);
 });
 
+test("RTL mirrors the remaining component state rails", async ({ page }) => {
+  const surfaces = [
+    {
+      path: "tree",
+      selector: ".pl-c-tree__item[aria-selected='true'] > .pl-c-tree__item-row",
+    },
+    {
+      path: "miller-columns",
+      selector:
+        ".pl-c-miller-columns__item[aria-selected='true'] > .pl-c-miller-columns__item-row",
+    },
+    {
+      path: "filter-builder",
+      selector: ".pl-c-filter-builder__row[aria-invalid='true']",
+    },
+    {
+      path: "workflow-board",
+      selector: ".pl-c-workflow-card[data-selected]",
+    },
+    {
+      path: "workflow-board",
+      selector: ".pl-c-workflow-lane[data-tone='accent']",
+      setupSelector: ".pl-c-workflow-lane",
+    },
+    {
+      path: "data-table",
+      selector: ".pl-c-table__detail td",
+    },
+    {
+      path: "combobox",
+      selector: ".pl-c-combobox__option[aria-selected='true']",
+    },
+    {
+      path: "command-palette",
+      selector: ".pl-c-command__item[data-selected]",
+    },
+    {
+      path: "popover-menu",
+      selector: ".pl-c-menu__item[aria-current]",
+    },
+  ];
+
+  for (const { path, selector, setupSelector } of surfaces) {
+    await page.goto(`./preview/${path}`);
+    if (setupSelector) {
+      await page
+        .locator(setupSelector)
+        .first()
+        .evaluate((element) => {
+          element.setAttribute("data-tone", "accent");
+        });
+    }
+
+    const ltrShadow = await page.evaluate((surfaceSelector) => {
+      const element = document.querySelector(surfaceSelector) as HTMLElement;
+      return getComputedStyle(element).boxShadow;
+    }, selector);
+    await page.evaluate(() => (document.documentElement.dir = "rtl"));
+    await page.waitForTimeout(200);
+    const rtlShadow = await page.evaluate((surfaceSelector) => {
+      const element = document.querySelector(surfaceSelector) as HTMLElement;
+      return getComputedStyle(element).boxShadow;
+    }, selector);
+
+    expect(shadowOffsetX(ltrShadow), `${path} LTR rail`).toBeGreaterThan(0);
+    expect(shadowOffsetX(rtlShadow), `${path} RTL rail`).toBeLessThan(0);
+  }
+});
+
+test("RTL forced-color state rails stay on the inline-start edge", async ({
+  page,
+}) => {
+  await page.emulateMedia({ forcedColors: "active" });
+
+  for (const { path, selector } of [
+    {
+      path: "combobox",
+      selector: ".pl-c-combobox__option[aria-selected='true']",
+    },
+    {
+      path: "command-palette",
+      selector: ".pl-c-command__item[data-selected]",
+    },
+  ]) {
+    await page.goto(`./preview/${path}`);
+    const borders = await page.evaluate((surfaceSelector) => {
+      document.documentElement.dir = "rtl";
+      const style = getComputedStyle(
+        document.querySelector(surfaceSelector) as HTMLElement,
+      );
+      return {
+        inlineEnd: style.borderInlineEndWidth,
+        inlineStart: style.borderInlineStartWidth,
+        left: style.borderLeftWidth,
+        right: style.borderRightWidth,
+      };
+    }, selector);
+
+    expect(borders.inlineStart, `${path} logical start rail`).toBe("2px");
+    expect(borders.inlineEnd, `${path} logical end rail`).toBe("0px");
+    expect(borders.left, `${path} physical left edge`).toBe("0px");
+    expect(borders.right, `${path} physical right edge`).toBe("2px");
+  }
+});
+
+test("RTL timeline connectors stay centered on their logical edge", async ({
+  page,
+}) => {
+  await page.goto("./preview/timeline");
+
+  const offsets = await page.evaluate(() => {
+    const item = document.querySelector(
+      ".pl-c-timeline__item:not(:last-child)",
+    ) as HTMLElement;
+    const readOffset = () =>
+      new DOMMatrix(getComputedStyle(item, "::before").transform).e;
+    const ltr = readOffset();
+    document.documentElement.dir = "rtl";
+    const rtl = readOffset();
+    return { ltr, rtl };
+  });
+
+  expect(offsets.ltr).toBeLessThan(0);
+  expect(offsets.rtl).toBeGreaterThan(0);
+});
+
+test("icon-only buttons use a square density-aware hit target", async ({
+  page,
+}) => {
+  for (const path of ["button", "app-dense", "app-queue-triage"]) {
+    await page.goto(`./preview/${path}`);
+    const metrics = await page
+      .locator(".pl-c-button[data-icon-only]")
+      .evaluate((button) => {
+        const style = getComputedStyle(button);
+        const rect = button.getBoundingClientRect();
+        return {
+          height: rect.height,
+          paddingEnd: style.paddingInlineEnd,
+          paddingStart: style.paddingInlineStart,
+          width: rect.width,
+        };
+      });
+
+    expect(metrics.width, `${path} width`).toBeCloseTo(metrics.height, 0);
+    expect(metrics.paddingStart).toBe("0px");
+    expect(metrics.paddingEnd).toBe("0px");
+    await expect(page.locator(".pl-c-button--icon")).toHaveCount(0);
+  }
+});
+
 test("RTL drawer and toast motion originates from the logical edge", async ({
   page,
 }) => {

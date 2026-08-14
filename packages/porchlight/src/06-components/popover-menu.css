@@ -145,6 +145,16 @@
     box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
   }
 
+  :where(.pl-c-menu__popover)
+    > :is(a, button, .pl-c-menu__item):is(
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-selected]
+    ):dir(rtl) {
+    box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+      var(--pl-color-accent);
+  }
+
   :where(.pl-c-menu__item-icon) {
     inline-size: var(--pl-menu-row-icon-size);
     block-size: var(--pl-menu-row-icon-size);

@@ -328,6 +328,11 @@
         color-mix(in oklab, var(--pl-color-accent), transparent 70%);
     }
 
+    .pl-c-table .pl-c-table__detail td:dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        color-mix(in oklab, var(--pl-color-accent), transparent 70%);
+    }
+
     .pl-c-table__detail-inner {
       display: grid;
       grid-template-rows: 0fr;

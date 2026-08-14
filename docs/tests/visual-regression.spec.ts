@@ -18,6 +18,12 @@ const mobileSurfaces = [
   ["chip", "./preview/chip"],
 ] as const;
 
+const rtlSurfaces = [
+  ["tree", "./preview/tree"],
+  ["workflow-board", "./preview/workflow-board"],
+  ["timeline", "./preview/timeline"],
+] as const;
+
 test.describe("representative visual baselines", () => {
   for (const [name, path] of surfaces) {
     test(`${name} desktop`, async ({ page }) => {
@@ -39,6 +45,19 @@ test.describe("representative visual baselines", () => {
       await page.goto(path);
       await expect(page.locator("#main")).toBeVisible();
       await expect(page).toHaveScreenshot(`${name}-mobile.png`, {
+        animations: "disabled",
+        maxDiffPixelRatio: 0.09,
+      });
+    });
+  }
+
+  for (const [name, path] of rtlSurfaces) {
+    test(`${name} RTL mobile`, async ({ page }) => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(path);
+      await page.evaluate(() => (document.documentElement.dir = "rtl"));
+      await expect(page.locator("#main")).toBeVisible();
+      await expect(page).toHaveScreenshot(`${name}-rtl-mobile.png`, {
         animations: "disabled",
         maxDiffPixelRatio: 0.09,
       });
