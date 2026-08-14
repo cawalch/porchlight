@@ -100,6 +100,10 @@
       background-size: 1rem;
     }
 
+    select.pl-c-field__control:dir(rtl) {
+      background-position: left var(--pl-space-3) center;
+    }
+
     .pl-c-field__control::placeholder {
       color: var(--pl-color-text-muted);
     }

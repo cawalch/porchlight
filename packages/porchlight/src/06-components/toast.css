@@ -29,6 +29,8 @@
      contains the stacking context so toasts never bleed z-index to page
      content  -  cleaner than an opacity hack. */
   :where(.pl-c-toast-stack) {
+    --pl-c-toast-translate: 100%;
+
     position: fixed;
     inset: auto;
     inset-block-end: var(--pl-space-4);
@@ -45,6 +47,8 @@
   }
 
   :where(.pl-c-toast-stack[data-placement="bottom-start"]) {
+    --pl-c-toast-translate: -100%;
+
     inset-inline: var(--pl-space-4) auto;
   }
 
@@ -53,8 +57,18 @@
   }
 
   :where(.pl-c-toast-stack[data-placement="top-start"]) {
+    --pl-c-toast-translate: -100%;
+
     inset-block: var(--pl-space-4) auto;
     inset-inline: var(--pl-space-4) auto;
+  }
+
+  :where(.pl-c-toast-stack:dir(rtl)) {
+    --pl-c-toast-translate: -100%;
+  }
+
+  :where(.pl-c-toast-stack[data-placement$="-start"]:dir(rtl)) {
+    --pl-c-toast-translate: 100%;
   }
 
   @scope (.pl-c-toast) {
@@ -87,10 +101,10 @@
       box-shadow: var(--pl-shadow-3);
       pointer-events: auto;
 
-      /* Enter animation: slide in from the right + fade.
+      /* Enter animation: slide in from the stack's inline edge + fade.
          Asymmetric: enters deliberately, exits by JS removing [data-visible]. */
       opacity: 0;
-      transform: translateX(100%);
+      transform: translateX(var(--pl-c-toast-translate));
       transition:
         opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
         transform var(--pl-duration-enter) var(--pl-ease-decelerate);
@@ -108,7 +122,7 @@
     @starting-style {
       :scope[data-visible] {
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(var(--pl-c-toast-translate));
       }
     }
 

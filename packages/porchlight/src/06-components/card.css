@@ -56,7 +56,7 @@
       --pl-c-card-radius: var(--pl-radius-lg);
     }
 
-    /* Accent variant  -  left-edge brand bar + barely-there tinted surface.
+    /* Accent variant  -  inline-start brand bar + barely-there tinted surface.
        Use for featured KPI tiles, selected states, upgrade CTAs. */
     :scope[data-variant="accent"] {
       --pl-c-card-border: color-mix(
@@ -72,6 +72,12 @@
       );
       box-shadow:
         inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent),
+        var(--pl-shadow-1);
+    }
+
+    :scope[data-variant="accent"]:dir(rtl) {
+      box-shadow:
+        inset calc(-1 * var(--pl-accent-bar-width)) 0 0 var(--pl-color-accent),
         var(--pl-shadow-1);
     }
 

@@ -95,15 +95,22 @@
       outline-offset: var(--pl-focus-offset);
     }
 
-    /* Active item  -  left-bar accent pattern: a 3px inset shadow on the
+    /* Active item  -  inline-start accent pattern: a 3px inset shadow on the
        leading edge reads as a rail marker, strongly signalling "you are here".
        Asymmetric border-radius (0 on start side) anchors the bar to the edge. */
     .pl-c-nav__item[aria-current]:not([aria-current="false"]) {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
-      border-radius: 0 var(--pl-radius-md) var(--pl-radius-md) 0;
+      border-radius: var(--pl-radius-md);
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .pl-c-nav__item[aria-current]:not([aria-current="false"]):dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        var(--pl-color-accent);
     }
 
     /* Nested item (inside a section). */
@@ -201,8 +208,16 @@
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
-      border-radius: 0 var(--pl-radius-md) var(--pl-radius-md) 0;
+      border-radius: var(--pl-radius-md);
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+    }
+
+    .pl-c-nav__menu
+      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]):dir(rtl) {
+      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+        var(--pl-color-accent);
     }
 
     .pl-c-nav__menu
