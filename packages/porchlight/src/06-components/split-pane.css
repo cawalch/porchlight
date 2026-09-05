@@ -34,7 +34,6 @@
       border-radius: var(--pl-radius-xl);
       background: var(--pl-color-surface);
       color: var(--pl-color-text);
-      container: pl-c-split-pane / inline-size;
     }
 
     :scope,
@@ -205,42 +204,51 @@
       line-height: var(--pl-leading-snug);
     }
 
-    :scope[data-collapse="stack"] {
-      @container pl-c-split-pane (inline-size < 42rem) {
-        :scope:not([data-orientation="vertical"]) {
-          grid-template-columns: minmax(0, 1fr);
-          grid-template-rows:
-            minmax(12rem, auto)
-            var(--pl-c-split-pane-separator-size)
-            minmax(16rem, 1fr);
-          overflow: hidden;
-        }
+    /* data-collapse="stack"  -  horizontal panes restyle as a stacked layout
+       in narrow regions. An element cannot query its own size, so the collapse
+       keys to the nearest ANCESTOR query container (an element is never a
+       descendant of itself): wrap the pane in a container-type: inline-size
+       element, or nest it inside a porchlight container element such as
+       .pl-l-app-shell__main. A named query (pl-c-split-pane) could only ever
+       match descendants of the pane, never :scope - that form was dead code.
+       Without a size-container ancestor the query falls back to the viewport,
+       which the media query below also covers. */
+    @container (inline-size < 42rem) {
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"]) {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows:
+          minmax(12rem, auto)
+          var(--pl-c-split-pane-separator-size)
+          minmax(16rem, 1fr);
+        overflow: hidden;
+      }
 
-        :scope:not([data-orientation="vertical"])
-          .pl-c-split-pane__pane--start {
-          grid-area: 1 / 1;
-        }
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .pl-c-split-pane__pane--start {
+        grid-area: 1 / 1;
+      }
 
-        :scope:not([data-orientation="vertical"]) .pl-c-split-pane__pane--end {
-          grid-area: 3 / 1;
-        }
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .pl-c-split-pane__pane--end {
+        grid-area: 3 / 1;
+      }
 
-        :scope:not([data-orientation="vertical"]) .pl-c-split-pane__separator {
-          grid-area: 2 / 1;
-          cursor: row-resize;
-        }
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .pl-c-split-pane__separator {
+        grid-area: 2 / 1;
+        cursor: row-resize;
+      }
 
-        :scope:not([data-orientation="vertical"])
-          .pl-c-split-pane__separator::before {
-          inline-size: 100%;
-          block-size: var(--pl-c-split-pane-separator-line-size);
-        }
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .pl-c-split-pane__separator::before {
+        inline-size: 100%;
+        block-size: var(--pl-c-split-pane-separator-line-size);
+      }
 
-        :scope:not([data-orientation="vertical"])
-          .pl-c-split-pane__separator::after {
-          inline-size: 2rem;
-          block-size: 0.1875rem;
-        }
+      :scope[data-collapse="stack"]:not([data-orientation="vertical"])
+        .pl-c-split-pane__separator::after {
+        inline-size: 2rem;
+        block-size: 0.1875rem;
       }
     }
 

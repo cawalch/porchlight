@@ -17,7 +17,7 @@ first column, density modes, and loading states.
 ### Basic table
 
 ```html
-<div class="pl-c-table-wrap">
+<div class="pl-c-table-wrap" tabindex="0">
   <table class="pl-c-table">
     <thead>
       <tr>
@@ -34,6 +34,10 @@ first column, density modes, and loading states.
   </table>
 </div>
 ```
+
+`tabindex="0"` on the wrap makes the horizontal scroll region keyboard
+operable (WCAG 2.1.1 — essential on mobile/tablet widths where the table
+overflows). Omit it only when the table can never overflow horizontally.
 
 ### Sortable headers
 
