@@ -327,7 +327,7 @@
       font: inherit;
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-medium);
-      line-height: var(--pl-line-height-tight);
+      line-height: var(--pl-leading-tight);
       text-align: start;
       text-decoration: none;
       cursor: pointer;

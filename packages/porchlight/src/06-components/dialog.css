@@ -141,6 +141,11 @@
       color: var(--pl-color-text);
     }
 
+    .pl-c-dialog__close:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
     .pl-c-dialog__body {
       padding: var(--pl-space-5);
 

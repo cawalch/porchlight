@@ -346,6 +346,10 @@ main > .pl-l-app-shell {
     padding: 0;
     background: none;
     border: 0;
+
+    /* Override the 0.85em inline-code size: 0.85 × 14px pre falls below
+       the 12px readable minimum on small viewports. */
+    font-size: 1em;
   }
 }
 

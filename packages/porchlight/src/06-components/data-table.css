@@ -11,6 +11,10 @@
  * table sets column min-widths and cell geometry. Sticky headers stay pinned
  * while the body scrolls.
  *
+ * Accessibility: when the table can overflow horizontally (the common case),
+ * add tabindex="0" to .pl-c-table-wrap so the scroll region is keyboard
+ * operable (WCAG 2.1.1 / Safari keyboard scrolling).
+ *
  * Density via [data-pl-density] on .pl-c-table-wrap:
  *   compact: tighter rows for high information density
  *   comfortable (default): standard spacing
