@@ -133,10 +133,15 @@ When resizing is interactive:
 ## Responsive Behavior
 
 Add `data-collapse="stack"` to horizontal splits that should stack in narrow
-containers. The component uses a container query, so a split pane inside a
-drawer, tab, or app shell responds to its own width rather than the viewport.
-For dense enterprise screens where stacking would hide critical data, omit
-`data-collapse` and let panes overflow or use product-specific responsive rules.
+containers. An element cannot query its own size, so the collapse is keyed to
+the nearest ancestor that declares `container-type: inline-size`: wrap the
+split pane in such an element (a drawer panel, tab body, or side card) and it
+stacks below 42rem (672px) of wrapper width, even on a wide desktop viewport.
+Nesting inside a porchlight container element such as `.pl-l-app-shell__main`
+works the same way. Without a size-container ancestor, the query falls back to
+the viewport. For dense enterprise screens where stacking would hide critical
+data, omit `data-collapse` and let panes overflow or use product-specific
+responsive rules.
 
 Each pane is its own scroll container with a stable scrollbar gutter. This keeps
 tables, editors, and log viewers from sliding under the pane edge when content
@@ -167,7 +172,7 @@ properties without changing the markup contract.
 | `[data-orientation="vertical"]`   | Stacked panes.                                  |
 | `[data-layout="fixed-start"]`     | Fixed first pane.                               |
 | `[data-layout="fixed-end"]`       | Fixed second pane.                              |
-| `[data-collapse="stack"]`         | Stack horizontal panes in narrow containers.    |
+| `[data-collapse="stack"]`         | Stack when the nearest container ancestor (or the viewport, without one) is below 42rem. |
 | `[data-variant="plain"]`          | Remove outer border and radius.                 |
 
 ## Tokens Exposed
