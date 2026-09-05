@@ -30,7 +30,10 @@ interface PaneMetrics {
 
 declare global {
   interface Window {
-    __measureSplitPane: (pageWidthCss: string, useWrapper: boolean) => PaneMetrics;
+    __measureSplitPane: (
+      pageWidthCss: string,
+      useWrapper: boolean,
+    ) => PaneMetrics;
   }
 }
 
@@ -133,13 +136,27 @@ test("data-collapse=stack falls back to the viewport without a container ancesto
   // No container-type wrapper: the query has no ancestor container, so the
   // viewport is the fallback context (and the media query agrees).
   await page.setViewportSize({ width: 1280, height: 900 });
-  const wide = await page.evaluate(() => window.__measureSplitPane("100%", false));
+  const wide = await page.evaluate(() =>
+    window.__measureSplitPane("100%", false),
+  );
   expect(wide.columns).toBe(3);
   expect(wide.rows).toBe(1);
   expect(wide.endRowStart).toBe("1");
 
+  // Narrow unwrapped pane on desktop: without a container ancestor, both :scope
+  // and child panes must consistently fall back to the viewport (not asymmetrically stack).
+  const narrowUnwrapped = await page.evaluate(() =>
+    window.__measureSplitPane("30rem", false),
+  );
+  expect(narrowUnwrapped.columns).toBe(3);
+  expect(narrowUnwrapped.rows).toBe(1);
+  expect(narrowUnwrapped.endRowStart).toBe("1");
+  expect(narrowUnwrapped.separatorCursor).toBe("col-resize");
+
   await page.setViewportSize({ width: 390, height: 844 });
-  const narrow = await page.evaluate(() => window.__measureSplitPane("100%", false));
+  const narrow = await page.evaluate(() =>
+    window.__measureSplitPane("100%", false),
+  );
   expect(narrow.columns).toBe(1);
   expect(narrow.rows).toBe(3);
   expect(narrow.endRowStart).toBe("3");

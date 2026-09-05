@@ -34,7 +34,6 @@
       border-radius: var(--pl-radius-xl);
       background: var(--pl-color-surface);
       color: var(--pl-color-text);
-      container: pl-c-split-pane / inline-size;
     }
 
     :scope,

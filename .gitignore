@@ -33,6 +33,7 @@ Thumbs.db
 test-results/
 playwright-report/
 docs/tests/visual/test-results/
+docs/reports/
 
 # Cache
 .turbo/
