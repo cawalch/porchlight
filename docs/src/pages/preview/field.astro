@@ -125,6 +125,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <button class="pl-c-button" type="button" data-variant="primary">New account</button>
   </div>
 
+  <h2>Standalone controls</h2>
+  <p>Controls keep their styling when a toolbar or dialog owns the layout.</p>
+  <div class="demo field-grid">
+    <label>
+      <span class="pl-u-sr-only">Search docs</span>
+      <input class="pl-c-field__control" type="search" placeholder="Search docs..." />
+    </label>
+    <label>
+      <span class="pl-u-sr-only">Unavailable search</span>
+      <input class="pl-c-field__control" type="search" disabled placeholder="Search unavailable" />
+    </label>
+    <label dir="rtl">
+      <span class="pl-u-sr-only">Standalone RTL plan</span>
+      <select class="pl-c-field__control"><option>Business</option><option>Enterprise</option></select>
+    </label>
+  </div>
+
   <h2>Input groups</h2>
   <div class="demo field-grid">
     <div class="pl-c-field">
