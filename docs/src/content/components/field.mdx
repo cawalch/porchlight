@@ -122,6 +122,24 @@ native `type="search"`.
 </label>
 ```
 
+### Standalone control
+
+Use `.pl-c-field__control` without a `.pl-c-field` wrapper when another component
+owns the layout, as in command dialogs or toolbar searches. Keep an accessible
+label. The control still receives theme tokens, density, validation, disabled
+styling, and keyboard focus; use the wrapper for label/hint layout.
+
+```html
+<label>
+  <span class="pl-u-sr-only">Search docs</span>
+  <input
+    class="pl-c-field__control"
+    type="search"
+    placeholder="Search docs..."
+  />
+</label>
+```
+
 ### HTML5 validation
 
 Use native constraints first: `required`, `type`, `minlength`, `pattern`,
@@ -312,4 +330,5 @@ DOM updates; Porchlight only styles the resulting semantic HTML.
   `min-block-size`).
 - **Reduced motion:** the border/box-shadow transitions are zeroed by the
   themes layer.
-- **Forced colors:** border falls back to `ButtonBorder`.
+- **Forced colors:** the border uses `ButtonBorder`; keyboard focus retains a
+  two-pixel `Highlight` outline when box shadows are suppressed.

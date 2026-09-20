@@ -6,12 +6,11 @@
  * validation, autofill, IME, spellcheck). No JS, no custom widgets.
  *
  * State is driven by native pseudos and ARIA: :focus-visible, :user-invalid,
- * [aria-invalid="true"], :disabled. Focus draws a token-colored border AND a
- * 2px ring (box-shadow); invalid flips the border to danger and the hint to
- * danger-text, while focused-invalid keeps the calmer focus ring. State rules
- * live OUTSIDE @scope  -  :focus-visible /
- * :user-invalid inside @scope (.pl-c-field) did not reliably apply to the focused
- * control. They stay in the same layer, with :where() for low specificity.
+ * [aria-invalid="true"], :disabled. Focus draws a token-colored border and an
+ * outer ring; invalid flips the border to danger and the hint to danger-text,
+ * while focused-invalid keeps the calmer focus ring. Control styles and states
+ * also apply without a .pl-c-field wrapper; the wrapper owns label/message
+ * layout and shared disabled opacity.
  *
  * Token-driven via --pl-c-field-* aliases. Density comes from --pl-control-*
  * (set [data-pl-density] on an ancestor).
@@ -68,46 +67,6 @@
       padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
     }
 
-    .pl-c-field__control {
-      /* appearance: none  -  we fully restyle the control; the UA's native
-         input chrome (including its :focus border ring) would otherwise win
-         over our border-color/box-shadow and freeze the border at the UA gray. */
-      appearance: none;
-      inline-size: 100%;
-      min-inline-size: 0;
-      min-block-size: var(--pl-control-block-size);
-
-      /* Vertical padding is token-derived so the control height stays within
-         --pl-control-block-size when combined with line-height + border.
-         padding-block 0.375rem × 2 + border 1px × 2 + line-height 1.5 × 1rem =
-         12px + 2px + 24px = 38px < 40px (min-block-size). */
-      padding-block: var(--pl-space-1);
-      padding-inline: var(--pl-control-padding-inline);
-      border: var(--pl-control-border-width) solid var(--pl-c-field-border);
-      border-radius: var(--pl-control-radius);
-      background: var(--pl-c-field-bg);
-      color: var(--pl-c-field-fg);
-      transition:
-        border-color var(--pl-duration-1) var(--pl-ease-standard),
-        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
-    }
-
-    select.pl-c-field__control {
-      padding-inline-end: var(--pl-space-8);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right var(--pl-space-3) center;
-      background-size: 1rem;
-    }
-
-    select.pl-c-field__control:dir(rtl) {
-      background-position: left var(--pl-space-3) center;
-    }
-
-    .pl-c-field__control::placeholder {
-      color: var(--pl-color-text-muted);
-    }
-
     .pl-c-field__hint {
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-sm);
@@ -158,19 +117,54 @@
     }
   }
 
-  /* State rules OUTSIDE @scope. Live-state pseudos (:focus-visible,
-     :user-invalid) inside @scope (.pl-c-field) do not reliably apply to the
-     focused control  -  @scope evaluates subtree membership but state pseudos
-     need direct element matching. Keeping them in the same layer, just
-     unscoped, with a :where() prefix for low specificity. */
+  /* Standalone search and composed controls also need field chrome. Wrapped
+     controls inherit the wrapper's aliases; standalone controls fall back to
+     theme tokens. Later components can override their inner control chrome. */
+  .pl-c-field__control {
+    /* appearance: none  -  we fully restyle the control; the UA's native
+     input chrome (including its :focus border ring) would otherwise win
+     over our border-color/box-shadow and freeze the border at the UA gray. */
+    appearance: none;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: var(--pl-control-block-size);
 
-  /* Focus indicator: a single crisp 2px ring in the focus color, plus a
-     genuinely BLURRED outer glow. The border is NOT recolored  -  recoloring it
-     produced a “double blue stroke” (solid recolored border + a translucent
-     ring stacked beside it). The ring is the focus indicator; the border
-     stays as the neutral field edge. (The previous `0 0 0 4px` had no blur,
-     so it was a hard translucent ring, not the intended glow.) */
-  :where(.pl-c-field) .pl-c-field__control:focus-visible {
+    /* Vertical padding is token-derived so the control height stays within
+     --pl-control-block-size when combined with line-height + border.
+     padding-block 0.375rem × 2 + border 1px × 2 + line-height 1.5 × 1rem =
+     12px + 2px + 24px = 38px < 40px (min-block-size). */
+    padding-block: var(--pl-space-1);
+    padding-inline: var(--pl-control-padding-inline);
+    border: var(--pl-control-border-width) solid
+      var(--pl-c-field-border, var(--pl-color-border));
+    border-radius: var(--pl-control-radius);
+    background: var(--pl-c-field-bg, var(--pl-color-surface));
+    color: var(--pl-c-field-fg, var(--pl-color-text));
+    transition:
+      border-color var(--pl-duration-1) var(--pl-ease-standard),
+      box-shadow var(--pl-duration-1) var(--pl-ease-standard);
+  }
+
+  select.pl-c-field__control {
+    padding-inline-end: var(--pl-space-8);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--pl-space-3) center;
+    background-size: 1rem;
+  }
+
+  select.pl-c-field__control:dir(rtl) {
+    background-position: left var(--pl-space-3) center;
+  }
+
+  .pl-c-field__control::placeholder {
+    color: var(--pl-color-text-muted);
+  }
+
+  /* State rules apply to standalone and wrapped controls. */
+
+  /* Focus uses the focus border and a translucent outer ring. */
+  .pl-c-field__control:focus-visible {
     outline: none;
     border-color: var(--pl-focus-color);
     box-shadow: 0 0 0 4px
@@ -181,10 +175,9 @@
       );
   }
 
-  /* Invalid: same single-ring + glow treatment, in danger. The hint still
+  /* Invalid: the border and outer ring use danger. The hint still
      flips to danger-text via :has() on the wrapper (below). */
-  :where(.pl-c-field)
-    .pl-c-field__control:is(:user-invalid, [aria-invalid="true"]) {
+  .pl-c-field__control:is(:user-invalid, [aria-invalid="true"]) {
     border-color: var(--pl-color-danger);
     box-shadow: 0 0 0 4px
       color-mix(
@@ -196,11 +189,7 @@
 
   /* Focused invalid fields keep the error border/hint but use the standard
      focus glow, avoiding a harsh red halo around the active typing target. */
-  :where(.pl-c-field)
-    .pl-c-field__control:is(
-      :user-invalid,
-      [aria-invalid="true"]
-    ):focus-visible {
+  .pl-c-field__control:is(:user-invalid, [aria-invalid="true"]):focus-visible {
     border-color: var(--pl-color-danger);
     box-shadow: 0 0 0 4px
       color-mix(
@@ -221,13 +210,25 @@
     opacity: var(--pl-opacity-disabled);
   }
 
-  :where(.pl-c-field):has(.pl-c-field__control:disabled) .pl-c-field__control {
+  .pl-c-field__control:disabled {
+    opacity: var(--pl-opacity-disabled);
     cursor: not-allowed;
   }
 
+  /* Wrapped fields already dim their label, control and hint together. */
+  :where(.pl-c-field) .pl-c-field__control:disabled {
+    opacity: 1;
+  }
+
   @media (forced-colors: active) {
-    :where(.pl-c-field) .pl-c-field__control {
+    .pl-c-field__control {
       border-color: ButtonBorder;
+    }
+
+    /* Forced colors suppresses box shadows; keep a keyboard focus outline. */
+    .pl-c-field__control:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: var(--pl-focus-offset);
     }
   }
 }
