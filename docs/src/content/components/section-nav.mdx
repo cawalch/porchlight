@@ -1,0 +1,53 @@
+---
+title: Section Navigation
+description: Native fragment links that highlight the currently visible record or article section.
+status: experimental
+---
+
+# Section Navigation
+
+Use `.pl-c-section-nav` for a record's table of contents. Its fragment links
+remain ordinary keyboard-operable links. Where `scroll-target-group: auto`
+is supported, `:target-current` highlights the section selected by the browser's
+scroll-position algorithm, including the last short section at the scroll boundary.
+
+```html
+<nav class="pl-c-section-nav" aria-label="Record sections">
+  <ul>
+    <li><a class="pl-c-section-nav__link" href="#overview">Overview</a></li>
+    <li><a class="pl-c-section-nav__link" href="#activity">Activity</a></li>
+  </ul>
+</nav>
+<section id="overview" tabindex="-1" aria-labelledby="overview-title">
+  <h2 id="overview-title">Overview</h2>
+</section>
+<section id="activity" tabindex="-1" aria-labelledby="activity-title">
+  <h2 id="activity-title">Activity</h2>
+</section>
+```
+
+Keep IDs unique and labels meaningful. `tabindex="-1"` allows fragment navigation
+to focus the section without adding it to the normal Tab order. Use Tab and Enter,
+not tab-widget arrow-key conventions. All sections remain visible and accessible;
+these links do not control hidden panels. Do not hard-code `aria-current` on the
+first link: it would become incorrect when the user scrolls. Chrome 154 exposes
+these as ordinary links in its accessibility tree, without a current/selected
+state. The current indication is visual; applications that need an announced
+current location must synchronize `aria-current="location"` themselves.
+
+The component supplies no sticky positioning. Applications may place it alongside
+a long record, but must disable sticky positioning when that layout becomes one
+column. Set `scroll-margin-block-start` on targets or `scroll-padding-block-start`
+on their scroll container to clear fixed headers. Keep nested scroll regions named
+and keyboard reachable. The <a href={`${import.meta.env.BASE_URL}preview/app-record-detail`}>record-detail example</a>
+measures only the docs header with a ResizeObserver; current-section tracking is CSS.
+
+Set `--pl-c-section-nav-gap` (default `--pl-space-1`) and
+`--pl-c-section-nav-current` (default `--pl-color-accent`) on the root. Controls
+follow density tokens and logical RTL borders; underline also distinguishes the
+current item without depending on color. The full and compatibility bundles both
+include this component; selective consumers import `components/section-nav.css`
+after core. Unsupported browsers retain working fragment links without a scroll highlight.
+
+[Chrome introduced this feature in version 140](https://developer.chrome.com/release-notes/140#css_scroll-target-group_property).
+See the <a href={`${import.meta.env.BASE_URL}preview/section-nav`}>nested-scroll preview</a>.

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Section navigation with native scroll-position highlighting and a complete
+  record-detail example, retaining ordinary fragment links as the fallback.
+
 - Opt-in customizable native select picker for fields, with themed options,
   native form behavior, density support, and an ordinary-select fallback.
 - Opt-in scroll regions with logical overflow-edge indicators and stuck table

@@ -1,0 +1,64 @@
+/* In-page navigation stays ordinary fragment links without scroll-target-group.
+   Applications own sticky positioning and scroll offsets for their headers. */
+@layer porchlight.components {
+  @scope (.pl-c-section-nav) {
+    :scope {
+      --pl-c-section-nav-gap: var(--pl-space-1);
+      --pl-c-section-nav-current: var(--pl-color-accent);
+
+      min-inline-size: 0;
+    }
+
+    :scope > ul {
+      display: grid;
+      gap: var(--pl-c-section-nav-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pl-c-section-nav__link {
+      display: flex;
+      align-items: center;
+      min-block-size: var(--pl-control-block-size);
+      padding: var(--pl-space-2) var(--pl-control-padding-inline);
+      border-inline-start: var(--pl-accent-bar-width) solid transparent;
+      border-radius: var(--pl-control-radius);
+      color: var(--pl-color-text-muted);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .pl-c-section-nav__link:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-section-nav__link:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    @supports (scroll-target-group: auto) {
+      :scope {
+        scroll-target-group: auto;
+      }
+
+      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native current fragment target. */
+      .pl-c-section-nav__link:target-current {
+        border-inline-start-color: var(--pl-c-section-nav-current);
+        background: var(--pl-color-surface-2);
+        color: var(--pl-c-section-nav-current);
+        font-weight: var(--pl-font-weight-semibold);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+    }
+
+    @media (forced-colors: active) {
+      :scope {
+        --pl-c-section-nav-current: LinkText;
+      }
+    }
+  }
+}

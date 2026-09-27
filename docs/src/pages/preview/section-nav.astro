@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const sections = ['Summary', 'History', 'Notes'];
+---
+<BaseLayout title="Section navigation · Porchlight">
+  <h1>Section navigation</h1>
+  <p>Native links track the current section without a scroll listener. This example scrolls inside its own named region.</p>
+  <div class="section-demo">
+    <nav class="pl-c-section-nav" aria-label="Example sections"><ul>{sections.map(label => <li><a class="pl-c-section-nav__link" href={`#example-${label.toLowerCase()}`}>{label}</a></li>)}</ul></nav>
+    <div class="section-demo__scroll" tabindex="0" role="region" aria-label="Example record">
+      {sections.map(label => <section id={`example-${label.toLowerCase()}`} tabindex="-1"><h2>{label}</h2><p>{label === 'Notes' ? 'This final section is intentionally short.' : 'Scroll this panel or activate the navigation links to follow the current section.'}</p></section>)}
+    </div>
+  </div>
+  <p><a href={`${import.meta.env.BASE_URL}preview/app-record-detail`}>Open the complete record-detail app</a></p>
+</BaseLayout>
+<style>
+  .section-demo { display: grid; gap: var(--pl-space-4); }
+  .section-demo__scroll { block-size: 22rem; overflow: auto; border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-lg); scroll-padding-block-start: var(--pl-space-4); }
+  .section-demo__scroll section { padding: var(--pl-space-5); }
+  .section-demo__scroll section:not(:last-child) { min-block-size: 28rem; }
+  @media (width >= 48rem) { .section-demo { grid-template-columns: 12rem minmax(0, 1fr); } }
+</style>

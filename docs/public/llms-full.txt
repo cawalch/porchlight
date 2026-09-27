@@ -393,6 +393,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - reveal: /components/reveal
 - scroll-progress: /components/scroll-progress
 - scroll-region: /components/scroll-region
+- section-nav: /components/section-nav
 - segmented: /components/segmented
 - skeleton: /components/skeleton
 - split-button: /components/split-button
@@ -420,6 +421,7 @@ claiming a new component stylesheet.
 - app-list-detail: /components/app-list-detail
 - app-process-builder: /components/app-process-builder
 - app-queue-triage: /components/app-queue-triage
+- app-record-detail: /components/app-record-detail
 - app-reporting-dashboard: /components/app-reporting-dashboard
 - app-settings-console: /components/app-settings-console
 
@@ -453,6 +455,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-marketing
 - /preview/app-process-builder
 - /preview/app-queue-triage
+- /preview/app-record-detail
 - /preview/app-reporting-dashboard
 - /preview/app-settings-console
 - /preview/app-shell
@@ -493,6 +496,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/reveal
 - /preview/scroll-progress
 - /preview/scroll-region
+- /preview/section-nav
 - /preview/segmented
 - /preview/settings
 - /preview/skeleton

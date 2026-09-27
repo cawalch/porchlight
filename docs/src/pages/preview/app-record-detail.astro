@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const sections = ['Overview', 'Activity', 'Permissions', 'Billing'];
+const events = ['Production workspace created', 'Single sign-on enabled', 'Security review completed', 'Data retention policy approved', 'Operations team invited', 'Quarterly access review started'];
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Record detail · Porchlight">
+  <div class="pl-l-app-shell record-shell">
+    <header class="pl-l-app-shell__topbar pl-c-toolbar">
+      <strong>Northstar Operations</strong>
+      <a class="pl-c-button" data-variant="ghost" href={`${base}preview/app-cases`}>All records</a>
+    </header>
+    <div class="pl-l-app-shell__main record-main">
+      <div class="pl-c-page-header">
+        <div class="pl-c-page-header__heading"><h1 class="pl-c-page-header__title">Acme Research</h1><p class="pl-c-page-header__subtitle">ORG-2048 · Enterprise workspace</p></div>
+        <div class="pl-c-page-header__actions"><span class="pl-c-badge" data-tone="success">Active</span><a class="pl-c-button" href="#record-permissions">Review access</a></div>
+      </div>
+      <div class="record-layout">
+        <nav class="pl-c-section-nav record-nav" aria-label="Record sections">
+          <ul>{sections.map(label => <li><a class="pl-c-section-nav__link" href={`#record-${label.toLowerCase()}`}>{label}</a></li>)}</ul>
+        </nav>
+        <div class="pl-l-stack record-content">
+          <section class="pl-c-card record-section" id="record-overview" tabindex="-1" aria-labelledby="overview-title">
+            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="overview-title">Overview</h2><p class="pl-c-card__subtitle">Workspace ownership and operational context</p></header>
+            <div class="pl-c-card__body pl-l-stack">
+              <p>Acme Research coordinates incident response and compliance reviews across three regional teams. This record brings ownership, activity, access, and billing into one place.</p>
+              <dl class="pl-c-description" data-layout="stacked"><div class="pl-c-description__row"><dt class="pl-c-description__term">Workspace owner</dt><dd class="pl-c-description__detail">Maya Chen · Platform operations</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Region</dt><dd class="pl-c-description__detail">United States · Central</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Service tier</dt><dd class="pl-c-description__detail">Enterprise · 99.95% availability target</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Next review</dt><dd class="pl-c-description__detail">October 12, 2026</dd></div></dl>
+              <div class="pl-c-alert" data-tone="info"><div class="pl-c-alert__body"><strong>Review in progress</strong><p>The quarterly access review is open. Confirm ownership before approving new permissions.</p></div></div>
+            </div>
+          </section>
+          <section class="pl-c-card record-section" id="record-activity" tabindex="-1" aria-labelledby="activity-title">
+            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="activity-title">Activity</h2><p class="pl-c-card__subtitle">Recent changes to this workspace</p></header>
+            <div class="pl-c-card__body"><ol class="record-events">{events.map((event, i) => <li><strong>{event}</strong><p>September {27 - i}, 2026 · Operations team</p><span class="pl-u-muted">Recorded in the workspace audit log.</span></li>)}</ol></div>
+          </section>
+          <section class="pl-c-card record-section" id="record-permissions" tabindex="-1" aria-labelledby="permissions-title">
+            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="permissions-title">Permissions</h2><p class="pl-c-card__subtitle">Access follows least-privilege roles</p></header>
+            <div class="pl-c-card__body pl-l-stack">
+              {['Administrators · 3 members', 'Responders · 18 members', 'Auditors · 7 members'].map(role => <div class="record-role"><strong>{role}</strong><p>Managed through single sign-on. Role changes require approval from a workspace administrator.</p><span class="pl-c-badge" data-tone="success">Reviewed</span></div>)}
+              <p class="pl-u-muted">Last review completed September 20, 2026. External guests cannot access billing or workspace administration.</p>
+            </div>
+          </section>
+          <section class="pl-c-card record-section" id="record-billing" tabindex="-1" aria-labelledby="billing-title">
+            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="billing-title">Billing</h2></header>
+            <div class="pl-c-card__body"><p>Annual enterprise plan · Renewal January 15, 2027.</p><p class="pl-u-muted">Invoices go to the workspace owner. No payment details are shown in this sample.</p></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+<style>
+  .record-main { container-name: record-page; padding: var(--pl-space-6); }
+  .record-layout { display: grid; gap: var(--pl-space-6); }
+  .record-content { --pl-l-stack-gap: var(--pl-space-6); min-inline-size: 0; }
+  .record-nav { align-self: start; }
+  .record-section { scroll-margin-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
+  .record-section p { margin: 0; }
+  .record-section > .pl-c-card__header { display: grid; gap: var(--pl-space-2); }
+  .record-role { justify-items: start; }
+  .record-events { display: grid; gap: var(--pl-space-5); padding-inline-start: var(--pl-space-5); margin: 0; }
+  .record-events li, .record-role { display: grid; gap: var(--pl-space-2); }
+  @container record-page (inline-size >= 48rem) {
+    .record-layout { grid-template-columns: 12rem minmax(0, 1fr); }
+    .record-nav { position: sticky; inset-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
+  }
+</style>
+<script>
+  // Docs chrome can wrap or resize. This only measures its header; native CSS
+  // owns current-section tracking and native fragment links own navigation.
+  let observer: ResizeObserver | undefined;
+  function measureDocsHeader() {
+    observer?.disconnect();
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const shell = document.querySelector<HTMLElement>('.record-shell');
+    if (!header || !shell) return;
+    observer = new ResizeObserver(() => shell.style.setProperty('--record-docs-header', `${header.getBoundingClientRect().height}px`));
+    observer.observe(header);
+  }
+  document.addEventListener('astro:page-load', measureDocsHeader);
+  document.addEventListener('astro:before-swap', () => observer?.disconnect());
+  measureDocsHeader();
+</script>
