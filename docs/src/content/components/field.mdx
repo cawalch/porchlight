@@ -61,15 +61,16 @@ Use an explicit label when the field contains an input group:
 
 ## Class contract
 
-| Selector                | Role                                                                |
-| ----------------------- | ------------------------------------------------------------------- |
-| `.pl-c-field`           | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
-| `.pl-c-field--inline`   | Two-column label/control layout that stacks on narrow viewports.    |
-| `.pl-c-field__label`    | The visible label text.                                             |
-| `.pl-c-field__control`  | The native input/select/textarea.                                   |
-| `.pl-c-field__required` | Optional visual required marker inside the label.                   |
-| `.pl-c-field__hint`     | Helper, warning, success, or error text below the control.          |
-| `.pl-c-field__messages` | Optional stack for multiple `.pl-c-field__hint` messages.           |
+| Selector                       | Role                                                                |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `.pl-c-field`                  | Field wrapper: usually a `<label>`, or a container with `for`/`id`. |
+| `.pl-c-field--inline`          | Two-column label/control layout that stacks on narrow viewports.    |
+| `.pl-c-field__label`           | The visible label text.                                             |
+| `.pl-c-field__control`         | The native input/select/textarea.                                   |
+| `.pl-c-field__control--select` | Opt-in themed native picker; add alongside the control class.       |
+| `.pl-c-field__required`        | Optional visual required marker inside the label.                   |
+| `.pl-c-field__hint`            | Helper, warning, success, or error text below the control.          |
+| `.pl-c-field__messages`        | Optional stack for multiple `.pl-c-field__hint` messages.           |
 
 ## Common Patterns
 
@@ -105,6 +106,49 @@ admin metadata forms or dense settings panels.
   <span class="pl-c-field__hint">Controls default data residency.</span>
 </label>
 ```
+
+### Customizable native select
+
+Add `.pl-c-field__control--select` alongside `.pl-c-field__control` to opt into
+Porchlight's themed picker, options, groups, and selected checkmark. It uses the
+same field colors, sizing, density, focus, disabled and validation states.
+No script, replacement button, or custom ARIA roles are needed.
+
+```html
+<label class="pl-c-field">
+  <span class="pl-c-field__label">Priority</span>
+  <select
+    class="pl-c-field__control pl-c-field__control--select"
+    name="priority"
+    required
+  >
+    <option value="">Choose a priority</option>
+    <optgroup label="Active queue">
+      <option value="normal">Normal</option>
+      <option value="urgent">Urgent</option>
+      <option value="critical" disabled>Critical (restricted)</option>
+    </optgroup>
+  </select>
+</label>
+```
+
+Keep explicit option values and text labels. Selection, keyboard navigation,
+`change` events, form submission/reset and required validation stay native.
+`aria-invalid` describes server errors; it does not change native validity.
+Selects do not support `readonly`; use `disabled` only when omission from form
+submission is intended.
+
+The enhancement requires `appearance: base-select` and `::picker(select)`
+([Chrome 135+](https://developer.chrome.com/blog/a-customizable-select));
+unsupported browsers retain the ordinary field select. Only single selects
+with no `size` attribute or `size="1"` opt in. Keep `multiple` and listbox-sized
+selects native; use the <a href={`${import.meta.env.BASE_URL}components/combobox`}>combobox</a> for application-managed search
+or asynchronous options.
+
+**Mobile tradeoff:** the enhanced picker renders inside the browser viewport
+instead of opening the operating system picker. Remove the modifier to retain
+the platform picker. Long option labels wrap; the popup scrolls within a bounded
+height. Test your option lengths and application overrides at narrow widths.
 
 ### Hidden label search
 

@@ -44,6 +44,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </label>
   </div>
 
+  <h2>Customizable native select</h2>
+  <p>Opt-in themed options with native keyboard selection and form behavior.</p>
+  <form class="demo field-grid" data-preview-select>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Queue priority</span>
+      <select class="pl-c-field__control pl-c-field__control--select" name="priority" required aria-describedby="priority-help">
+        <option value="">Choose a priority</option>
+        <optgroup label="Active queue">
+          <option value="normal">Normal</option>
+          <option value="urgent">Urgent</option>
+          <option value="critical" disabled>Critical (restricted)</option>
+        </optgroup>
+        <optgroup label="Scheduled work">
+          <option value="later">Later — review during the next scheduled workspace planning session</option>
+        </optgroup>
+      </select>
+      <span class="pl-c-field__hint" id="priority-help">Required. Critical needs an elevated role.</span>
+    </label>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Locked region</span>
+      <select class="pl-c-field__control pl-c-field__control--select" name="region" disabled>
+        <option value="us">US Central</option>
+      </select>
+      <span class="pl-c-field__hint">Disabled controls are omitted from submission.</span>
+    </label>
+    <label class="pl-c-field">
+      <span class="pl-c-field__label">Workspace policy</span>
+      <select class="pl-c-field__control pl-c-field__control--select" name="policy" aria-invalid="true" aria-describedby="policy-error">
+        <option value="legacy">Legacy policy</option>
+        <option value="standard">Standard policy</option>
+      </select>
+      <span class="pl-c-field__hint" id="policy-error">Choose a policy supported by your workspace.</span>
+    </label>
+    <button class="pl-c-button" type="reset">Reset selections</button>
+  </form>
+
   <h2>Messages</h2>
   <div class="demo field-grid">
     <div class="pl-c-field" data-preview-message-tones>
