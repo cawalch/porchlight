@@ -387,6 +387,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - nav: /components/nav
 - page-header: /components/page-header
 - pagination: /components/pagination
+- panel-deck: /components/panel-deck
 - popover-menu: /components/popover-menu
 - progress: /components/progress
 - reveal: /components/reveal
@@ -485,6 +486,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/nav
 - /preview/page-header
 - /preview/pagination
+- /preview/panel-deck
 - /preview/popover-menu
 - /preview/progress
 - /preview/reset

@@ -24,7 +24,7 @@ it does not mean `bun install` / `bun test` replace this repository's commands.
 
 ```sh
 pnpm build                         # package artifacts + production docs
-pnpm --filter ./docs exec playwright install chromium firefox webkit
+pnpm --filter ./docs exec playwright install chromium firefox webkit chrome
 pnpm test                          # Playwright; builds/serves docs if needed
 pnpm lint:all
 pnpm format:check
@@ -34,7 +34,7 @@ pnpm --filter ./docs llms:check
 
 On Linux, use Playwright's `install --with-deps` when system libraries are
 missing. Tests reuse an existing server on port 4321; stop a stale server or
-set `PLAYWRIGHT_BASE_URL` to the build you intend to test. Generated LLM docs
+set `PLAYWRIGHT_BASE_URL` to the build you intend to test. The focused panel-deck suite uses installed Chrome stable (154+) to verify generated tabs; Firefox/WebKit exercise the readable fallback. Generated LLM docs
 are maintained with `pnpm --filter ./docs llms:generate` when their inputs change.
 
 Workspace layout:

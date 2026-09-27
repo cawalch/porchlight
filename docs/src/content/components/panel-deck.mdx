@@ -1,0 +1,98 @@
+---
+title: Panel deck
+description: A small set of fixed panels with native CSS tab navigation and a readable stacked fallback.
+status: experimental
+---
+
+# Panel deck
+
+Use `.pl-c-panel-deck` for onboarding information, reports, or galleries with a
+small, fixed set of panels. Chrome 154's `scroll-marker-group: before tabs`
+provides labeled tabs, arrow-key navigation, and selected-panel accessibility
+without an application navigation script. There is no autoplay or animation.
+
+Use <a href={`${import.meta.env.BASE_URL}components/tabs`}>Tabs</a> instead when the application controls selection, loads panels
+on demand, or must provide the same tab interaction in every supported browser.
+Do not use this deck for required multi-step forms or validation-gated workflows.
+
+## Semantic HTML
+
+```html
+<div class="pl-c-panel-deck" role="region" aria-label="Workspace overview">
+  <section
+    class="pl-c-panel-deck__panel"
+    data-label="Activity"
+    aria-labelledby="activity-title"
+    tabindex="0"
+  >
+    <h2 id="activity-title">Activity</h2>
+    <p>Recent changes to the workspace.</p>
+  </section>
+  <section
+    class="pl-c-panel-deck__panel"
+    data-label="Reports"
+    aria-labelledby="reports-title"
+    tabindex="0"
+  >
+    <h2 id="reports-title">Reports</h2>
+    <p>Reports ready for review.</p>
+  </section>
+</div>
+```
+
+Every direct panel needs a short, unique, localized `data-label`: it becomes the
+visible marker text and accessible tab name. Keep a real heading inside each
+panel for the fallback. Give panels without interactive content `tabindex="0"`
+so keyboard users can enter them. Name the region and use unique heading IDs when repeating
+decks. The browser supplies tab roles and selection; do not add `hidden`,
+`aria-selected`, manually authored tab buttons, or `role="tabpanel"` to this markup.
+
+## Class contract and spacing
+
+| Selector                  | Role                                                    |
+| ------------------------- | ------------------------------------------------------- |
+| `.pl-c-panel-deck`        | Named region; stacked layout or native inline scroller. |
+| `.pl-c-panel-deck__panel` | Direct child panel, with `data-label` and a heading.    |
+
+`--pl-c-panel-deck-gap` defaults to `--pl-space-3`, separating panels and navigation.
+`--pl-c-panel-deck-padding` defaults to `--pl-control-padding-inline`. Override
+these on the root. Markers also consume density-aware `--pl-control-block-size`,
+`--pl-control-padding-inline`, and `--pl-control-gap`. Markers scroll in one row when space is
+limited; panel content must use responsive media and contain its own table overflow.
+
+## Accessibility and fallback
+
+In Chrome 154, Tab enters the selected marker; arrow keys move between panels.
+Tab then enters the selected panel's interactive content. Inactive panels are
+excluded from the accessibility tree by the browser. The selected marker has an
+underline as well as color, and keyboard focus has an inset ring. Forced colors retain selection and focus. No smooth scrolling is
+requested, so reduced-motion users do not receive an animated transition.
+
+The enhancement requires the complete `before tabs` value and a left-to-right
+deck. Chrome 154 can select and expose a different panel from the one visible in
+RTL, so `dir="rtl"` deliberately uses the stacked fallback. Browsers without
+`before tabs` also show all panels stacked in document order with ordinary headings and links.
+This is intentional: older scroll-marker support alone does not establish the
+same keyboard or accessibility behavior. Test your actual browser and assistive
+technology combination; this experimental component is not a universal tabs polyfill.
+
+See [Chrome 154's marker modes](https://developer.chrome.com/release-notes/154#css_scroll-marker-group_modes).
+
+## Package import
+
+The full and compatibility bundles include this component. For selected imports,
+load `@cawalch/porchlight/core.css` followed by
+`@cawalch/porchlight/components/panel-deck.css`. The compatibility bundle preserves
+the feature gate; it does not add tab behavior to older browsers.
+
+Lightning CSS 1.33 and Bun 1.4.2 preserve the native rules in selected and
+compatibility builds. Bun reports nonfatal unknown scroll-marker selector
+warnings; both outputs were checked with keyboard navigation in Chrome 154.
+The full bundle still has the separate
+
+<a
+  href={`${import.meta.env.BASE_URL}guides/getting-started#bun-and-parser-fallbacks`}
+>
+  Bun scroll-state parser limitation
+</a>
+.

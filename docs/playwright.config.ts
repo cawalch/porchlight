@@ -22,16 +22,22 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
+      testIgnore: /panel-deck-(?:native|fallback)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
     {
+      name: "chrome-stable",
+      testMatch: /panel-deck-native\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], channel: "chrome" },
+    },
+    {
       name: "firefox-smoke",
-      testMatch: /cross-browser-smoke\.spec\.ts/,
+      testMatch: /(?:cross-browser-smoke|panel-deck-fallback)\.spec\.ts/,
       use: { ...devices["Desktop Firefox"] },
     },
     {
       name: "webkit-smoke",
-      testMatch: /cross-browser-smoke\.spec\.ts/,
+      testMatch: /(?:cross-browser-smoke|panel-deck-fallback)\.spec\.ts/,
       use: { ...devices["Desktop Safari"] },
     },
   ],

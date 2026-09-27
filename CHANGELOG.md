@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Opt-in scroll regions with logical overflow-edge indicators and stuck table
   header/column separators; base styles remain available in the Bun-compatible bundle.
 
+- Experimental native panel deck with labeled CSS scroll-marker tabs, density-aware
+  spacing, keyboard navigation in Chrome 154, and readable stacked fallback.
+
 ### Fixed
 
 - Observe the sticky bar itself so sticky-shell shadows activate while stuck.

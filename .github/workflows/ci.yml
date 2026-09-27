@@ -72,6 +72,10 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit
 
+      # Stable Chrome 154+ verifies native marker tabs; Firefox/WebKit exercise fallback.
+      - name: Install Chrome stable
+        run: pnpm --filter ./docs exec playwright install --with-deps chrome
+
       - name: Run tests
         run: pnpm --filter ./docs test
 
