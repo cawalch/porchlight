@@ -123,6 +123,15 @@ test("sticky header has an opaque background", async ({ page }) => {
 
 test("collapsed detail rows do not expose detail content", async ({ page }) => {
   await page.goto("./preview/data-table");
+  // Visibility switches after the collapse transition, which can still be
+  // settling when the page load event fires. Measure the final hidden state.
+  for (const content of await page
+    .locator(
+      ".pl-c-table__detail:not([open]):not([data-open]) .pl-c-table__detail-content",
+    )
+    .all()) {
+    await expect(content).toHaveCSS("visibility", "hidden");
+  }
   const metrics = await page.evaluate(() =>
     [
       ...document.querySelectorAll(
