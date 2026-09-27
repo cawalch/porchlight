@@ -1,0 +1,252 @@
+---
+title: HTMX, Alpine, and CSS Modules
+description: Use Porchlight in server-rendered HTML, HTMX fragments, Alpine islands, and apps with locally scoped CSS.
+order: 0.5
+---
+
+# HTMX, Alpine, and CSS Modules
+
+Porchlight's public API is ordinary HTML, stable `pl-*` classes, and CSS custom
+properties. HTMX and Alpine applications can use it directly: there is no
+Porchlight controller to mount or reinitialize after a swap. Keep your server
+rendering HTML and let your application's JavaScript own requests and local state.
+
+| Integration      | Owns                           | Porchlight supplies                       |
+| ---------------- | ------------------------------ | ----------------------------------------- |
+| Server templates | Markup, routes, validation     | Classes, tokens, layout, themes           |
+| HTMX             | Requests and HTML swaps        | Styling for the incoming markup           |
+| Alpine           | Local state and event handling | Control appearance and state styles       |
+| CSS Modules      | App-local class names          | Stable framework classes and token values |
+
+## Start with server-rendered HTML
+
+Install Porchlight, then copy its prebuilt CSS into your static asset directory:
+
+```sh
+npm install @cawalch/porchlight
+npx --no-install porchlight copy --out public/porchlight --compat
+```
+
+Load it once in your document shell, followed by your app stylesheet:
+
+```html
+<link rel="stylesheet" href="/porchlight/compat.css" />
+<link rel="stylesheet" href="/app.css" />
+```
+
+These paths assume `public/` is served at `/`. No client-side bundler is required.
+The compatibility bundle omits the enhancement layer; use `--full` when you
+want that layer too. See <a href={import.meta.env.BASE_URL + "guides/getting-started"}>Getting Started</a>
+for selected components and Bun's static-copy workflow.
+
+In `app.css`, declare your overrides after the framework layer:
+
+```css
+@layer porchlight, app;
+
+@layer app {
+  .asset-summary {
+    --pl-c-card-padding: var(--pl-space-6);
+  }
+}
+```
+
+Apply component token overrides to the component root itself, for example
+`class="pl-c-card asset-summary"`. The component may declare its own default
+there, so an inherited override on a distant ancestor may not win.
+
+## HTMX: swap content, keep the layout shell
+
+Load [HTMX](https://htmx.org/docs/#installing) once using your application's
+asset pipeline. This GET form works as a normal navigation without JavaScript;
+HTMX enhances it to update just the result list. The HTMX and Alpine recipes
+below were verified with HTMX 2.0.11 and Alpine 3.17.4.
+
+```html
+<form
+  id="asset-search"
+  class="pl-l-stack"
+  action="/assets"
+  method="get"
+  hx-get="/assets"
+  hx-target="#asset-results"
+  hx-swap="innerHTML"
+  hx-disabled-elt="find button"
+>
+  <label class="pl-c-field" for="asset-query">
+    <span class="pl-c-field__label">Find an asset</span>
+    <input
+      id="asset-query"
+      class="pl-c-field__control"
+      name="q"
+      type="search"
+    />
+  </label>
+  <div class="pl-l-cluster">
+    <button class="pl-c-button" type="submit">Search</button>
+  </div>
+</form>
+<p id="asset-status" role="status"></p>
+<div id="asset-results" class="pl-l-stack" role="region" aria-label="Assets">
+  <!-- Render the initial result cards here on the server. -->
+</div>
+```
+
+For `GET /assets?q=payroll`, your server returns a complete document on an
+ordinary request. When `HX-Request: true`, return only the result cards, for example:
+
+```html
+<article class="pl-c-card">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Payroll production</h2>
+  </header>
+  <div class="pl-c-card__body">
+    <p>Owner: Operations</p>
+    <a class="pl-c-button" href="/assets/1042">View asset</a>
+  </div>
+</article>
+```
+
+The persistent `.pl-l-stack` supplies spacing between returned cards. Do not
+return another `#asset-results` wrapper for an `innerHTML` swap. With `outerHTML`,
+the response must recreate the wrapper, its ID, and its layout classes instead.
+Escape dynamic values in your server template just as you would for a full page.
+
+Load this application script once in the shell to announce loading and failure;
+it also keeps existing results available if a request fails:
+
+```js
+const form = document.querySelector("#asset-search");
+const results = document.querySelector("#asset-results");
+const status = document.querySelector("#asset-status");
+form.addEventListener("htmx:beforeRequest", () => {
+  results.setAttribute("aria-busy", "true");
+  status.textContent = "Searching…";
+});
+form.addEventListener("htmx:afterRequest", (event) => {
+  results.removeAttribute("aria-busy");
+  status.textContent = event.detail.successful
+    ? "Results updated."
+    : "Search failed. Your previous results are still shown. Try again.";
+});
+```
+
+This recipe keeps the form and status outside the swap target. Do not replace
+that shell without also cleaning up/rebinding its application listeners. If you
+swap a focused control, give inputs stable IDs and explicitly restore focus
+when the original control is removed. HTMX's
+[focus behavior](https://htmx.org/attributes/hx-swap/#focus-scroll) does not cover
+every destructive swap.
+
+For editable forms, return `.pl-c-field__control` with `aria-invalid="true"` and
+an associated error message. HTMX 2 does not swap 4xx/5xx responses by default;
+choose and configure your validation-response policy explicitly. If a URL serves
+both full pages and fragments through a cache, vary responses on `HX-Request`.
+History restoration must receive a full page; follow HTMX's
+[history configuration](https://htmx.org/docs/#history-support) before adding
+`hx-push-url` or boosted navigation.
+
+## Alpine: local state around native controls
+
+Load [Alpine](https://alpinejs.dev/essentials/installation) once: use a deferred
+script for its browser build, or call `Alpine.start()` once in your bundled entry.
+For a simple disclosure, native `<details>` may already meet the need. When the
+visibility is part of application state, Alpine can own it:
+
+```html
+<section class="pl-c-card" x-data="{ expanded: true }">
+  <header class="pl-c-card__header">
+    <h2 class="pl-c-card__title">Review notes</h2>
+    <button
+      class="pl-c-button"
+      type="button"
+      disabled
+      x-bind:disabled="false"
+      aria-controls="review-notes"
+      aria-expanded="true"
+      x-bind:aria-expanded="expanded ? 'true' : 'false'"
+      x-on:click="expanded = !expanded"
+    >
+      Toggle notes
+    </button>
+  </header>
+  <div id="review-notes" class="pl-c-card__body" x-show="expanded">
+    <p>Confirm the owner before marking this asset reviewed.</p>
+  </div>
+</section>
+```
+
+The notes start visible and the toggle starts disabled, so the content remains
+readable if Alpine fails to load. Alpine enables the button and keeps its
+expanded state in sync. Use unique IDs when repeating the component. If you
+start a panel hidden, follow Alpine's [x-cloak guidance](https://alpinejs.dev/directives/cloak)
+to prevent a flash before initialization, and choose an intentional no-JS fallback.
+
+When combining HTMX and Alpine, keep `x-data` on a persistent ancestor and swap
+inside it when local state must survive. Replacing that root with `outerHTML`
+creates a new component and resets its local state. Do not call `Alpine.start()`
+on every HTMX swap. Prefer attribute bindings for states such as `disabled`,
+`aria-expanded`, and `data-variant`; preserve Porchlight's structural classes.
+Complex menus, tabs, and comboboxes still need their documented keyboard/focus
+behavior; Alpine directives alone do not supply those contracts.
+
+## CSS Modules: optional app styling
+
+[CSS Modules](https://github.com/css-modules/css-modules) scope app-local class
+names during a build. They are useful when an application already has a bundler,
+but are not needed for HTMX or Alpine. Keep Porchlight's stylesheet global so
+its documented classes remain usable in server templates and swapped fragments.
+
+For Vite, import this ordinary `app.css` once from the application entry:
+
+```css
+@layer porchlight, app;
+@import "@cawalch/porchlight/compat.css";
+```
+
+Put only your app-specific overrides in `asset.module.css`:
+
+```css
+@layer porchlight, app;
+
+@layer app {
+  .card {
+    --pl-c-card-padding: var(--pl-space-6);
+    --pl-c-card-border: var(--pl-color-accent);
+  }
+}
+```
+
+Apply both the stable framework class and the generated local class:
+
+```js
+import "./app.css";
+import styles from "./asset.module.css";
+
+const card = document.querySelector("#asset-card");
+card.classList.add(styles.card);
+```
+
+```html
+<article id="asset-card" class="pl-c-card">
+  <h2 class="pl-c-card__title">Payroll production</h2>
+  <div class="pl-c-card__body"><p>Owner: Operations</p></div>
+</article>
+```
+
+[Vite recognizes `.module.css` imports](https://vite.dev/guide/features.html#css-modules)
+and exports the class-name mapping. For server-rendered fragments, the server
+must use that same build's mapping if it emits module classes; never hard-code
+generated names. Plain app classes are often simpler for HTMX templates.
+
+CSS Modules isolate names; cascade layers decide precedence. Neither supplies
+missing layout gaps, padding, or accessibility behavior. Do not import the full
+Porchlight stylesheet into a module or rename its public selectors. Astro's
+component `<style>` blocks are already scoped; use a module when an explicit
+imported mapping is useful.
+
+<a href={import.meta.env.BASE_URL + "preview/css-modules"}>
+  Open the CSS Modules preview
+</a>
+to compare a default card with the same component customized through an actual
+module import.

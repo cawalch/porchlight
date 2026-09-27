@@ -1,0 +1,8 @@
+@layer porchlight, app;
+
+@layer app {
+  .card {
+    --pl-c-card-padding: var(--pl-space-6);
+    --pl-c-card-border: var(--pl-color-accent);
+  }
+}

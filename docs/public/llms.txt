@@ -7,6 +7,7 @@ Use this short file to route quickly. Use /llms-full.txt when generating or refa
 ## Primary docs
 
 - Getting started: /guides/getting-started
+- HTMX, Alpine, and CSS Modules: /guides/integrations
 - Composition recipes: /guides/composition-recipes
 - Layout primitives: /guides/layout
 - Utilities: /guides/utilities

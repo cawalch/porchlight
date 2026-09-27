@@ -8,6 +8,10 @@ utilities, and progressive enhancements. No JavaScript runtime is required.
 
 Docs and previews: <https://cawalch.github.io/porchlight>
 
+Use stable classes in server templates, HTMX fragments, and Alpine components.
+See the [integration guide](https://cawalch.github.io/porchlight/guides/integrations)
+for those workflows and optional CSS Modules customization.
+
 ## Install
 
 ```sh

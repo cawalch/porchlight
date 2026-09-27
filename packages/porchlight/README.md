@@ -4,6 +4,10 @@ Porchlight is a no-dependency, native-CSS framework for accessible,
 themeable web applications. See the root [README](https://github.com/cawalch/porchlight#readme) and
 the [docs site](https://cawalch.github.io/porchlight) for full guidance.
 
+Use stable classes in server templates, HTMX fragments, and Alpine components.
+See the [integration guide](https://cawalch.github.io/porchlight/guides/integrations)
+for those workflows and optional CSS Modules customization.
+
 ## Install
 
 ```sh
