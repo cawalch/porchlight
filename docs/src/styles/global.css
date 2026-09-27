@@ -217,6 +217,20 @@ main > .pl-l-app-shell {
   block-size: auto;
 }
 
+/* Keep sample table cells and pane headers beneath the docs header, even
+   when they use the framework's raised/sticky z-index tokens. */
+main:has(> .pl-l-app-shell) {
+  isolation: isolate;
+}
+
+/* Full-page samples share the docs page's scroll container. Keep its header
+   as the sole sticky bar so app controls cannot paint over the docs nav.
+   Contained app-shell demos retain the framework's sticky behavior. */
+main > .pl-l-app-shell > .pl-l-app-shell__topbar {
+  position: static;
+  z-index: auto;
+}
+
 /* Nested main inside an app shell (e.g. <main class="pl-l-app-shell__main">)
    also needs to be freed — global.css's main rule matches by tag name.
    overflow is overridden to visible because the docs chrome wraps the shell,
