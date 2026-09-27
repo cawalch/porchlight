@@ -61,3 +61,37 @@ for (const width of [390, 1440]) {
     expect(metrics.badgeWidth).toBeLessThan(metrics.headerWidth / 2);
   });
 }
+
+for (const width of [390, 1440]) {
+  test(`queue triage separates sibling panels with the standard spacing at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("./preview/app-queue-triage");
+    const panes = await page
+      .locator(".pl-c-split-pane__pane > .pl-c-split-pane__pane-inner")
+      .evaluateAll((bodies) =>
+        bodies.map((body) => {
+          const style = getComputedStyle(body);
+          const children = [...body.children].map((child) =>
+            child.getBoundingClientRect(),
+          );
+          return {
+            inset: parseFloat(style.paddingBlockStart),
+            gaps: children
+              .slice(1)
+              .map((child, i) => child.top - children[i].bottom),
+          };
+        }),
+      );
+    expect(panes).toHaveLength(2);
+    expect(panes.map((pane) => pane.gaps.length)).toEqual([4, 2]);
+    for (const pane of panes) {
+      expect(pane.inset).toBeGreaterThan(0);
+      for (const gap of pane.gaps) {
+        // Both pane padding and the standard stack gap use --pl-space-4.
+        expect(gap).toBeCloseTo(pane.inset, 1);
+      }
+    }
+  });
+}
