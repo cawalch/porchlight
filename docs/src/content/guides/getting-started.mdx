@@ -16,7 +16,16 @@ utilities, and progressive enhancements as prebuilt CSS files.
 npm install @cawalch/porchlight
 # or
 pnpm add @cawalch/porchlight
+# or
+bun add @cawalch/porchlight
 ```
+
+Install into your application; you do not need to clone this repository.
+The package has no runtime dependencies and ships prebuilt CSS. Interactive
+contracts such as tabs and comboboxes still need application-owned behavior,
+keyboard handling, and state updates; CSS does not provide a controller.
+For working on Porchlight itself, use the repository's
+[contributor setup](https://github.com/cawalch/porchlight/blob/main/CONTRIBUTING.md).
 
 ## Full bundle
 
@@ -31,7 +40,8 @@ The package main export is the complete prebuilt stylesheet:
 }
 ```
 
-Use this when you want the whole framework available everywhere.
+Use this in a bundler-resolved CSS entry when you want the whole framework.
+Load that entry once. For plain HTML, use the static-assets instructions below.
 
 ## Import only what you need
 
@@ -67,20 +77,31 @@ Server-rendered apps can copy prebuilt files from
 `node_modules/@cawalch/porchlight/dist/` without asking a bundler to parse
 modern CSS. Use the included copy helper for the common paths:
 
+Install the package first, then run its local executable:
+
 ```sh
-npx porchlight copy --out public/porchlight --compat
+npx --no-install porchlight copy --out public/porchlight --compat
 ```
+
+```html
+<link rel="stylesheet" href="/porchlight/compat.css" />
+```
+
+These URLs assume your server exposes `public/` at `/`; adjust them for your
+asset mount or deployment base path.
 
 For a smaller static slice, name the components you use:
 
 ```sh
-npx porchlight copy --out public/porchlight --components button,field --layout --utilities
+npx --no-install porchlight copy --out public/porchlight --components button,field --layout --utilities
 ```
 
 ```html
 <link rel="stylesheet" href="/porchlight/core.css" />
+<link rel="stylesheet" href="/porchlight/layout.css" />
 <link rel="stylesheet" href="/porchlight/components/button.css" />
 <link rel="stylesheet" href="/porchlight/components/field.css" />
+<link rel="stylesheet" href="/porchlight/utilities.css" />
 <link rel="stylesheet" href="/app.css" />
 ```
 
@@ -95,8 +116,8 @@ available files, component names, and recommended load order for copy scripts.
 
 ## Vite
 
-Vite handles CSS `@import` and rebasing, so the full bundle and partial
-imports both work well.
+Vite resolves package CSS imports. Import one CSS entry from your app or
+link it from Vite's HTML entry; bare package imports are not browser URLs.
 
 ```css
 @layer porchlight, app;
@@ -114,33 +135,54 @@ import "@cawalch/porchlight/components/button.css";
 import "./app.css";
 ```
 
+For production builds, set a CSS target that matches your supported browsers.
+The docs build uses `build.cssTarget: "chrome149"` to preserve native color
+functions. This is a Chromium target, not a cross-browser support guarantee.
+The full bundle was also checked with Vite 8.2.1's default target in a small
+light/dark consumer fixture. Recheck your rendered output after changing targets
+or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-options#build-csstarget).
+
 ## Bun and parser fallbacks
 
-Bun 1.3.14 can bundle `compat.css` and selected component imports. It may
-print non-fatal warnings for `@property`.
+Bun can install Porchlight and run its copy helper. Using Bun as a package
+manager is separate from sending CSS through `bun build`.
+
+Verified with **Bun 1.4.2 and Porchlight 0.11.1**:
+
+| Path                                                    | Result                                               |
+| ------------------------------------------------------- | ---------------------------------------------------- |
+| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                   |
+| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal `@property` warnings         |
+| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`              |
+| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation |
+
+For Bun's CSS bundler, put this in `app.css`, then run
+`bun build ./app.css --outdir ./dist`:
 
 ```css
 @layer porchlight, app;
 @import "@cawalch/porchlight/compat.css";
 ```
 
-```css
-@layer porchlight, app;
-@import "@cawalch/porchlight/core.css";
-@import "@cawalch/porchlight/components/button.css";
-```
+Load the emitted stylesheet in your page; a CSS build alone does not attach it
+to the DOM. Basic button/card colors were checked in light and dark themes;
+this is not a guarantee for every component or future Bun release.
 
-The full default bundle and `enhancements.css` include
-`@container scroll-state(...)`, which Bun 1.3.14 does not parse. If you need
-those enhancement rules, copy the prebuilt files into static assets and load
-them with `<link>`:
+For the full bundle, run the installed CLI with Bun's runtime explicitly:
 
 ```sh
-bun x porchlight copy --out public/porchlight --full
+bunx --bun --no-install porchlight copy --out public/porchlight --full
 ```
 
-This also works well for Go, Rails, Django, and other server-rendered
-applications.
+```html
+<link rel="stylesheet" href="/porchlight/porchlight.css" />
+```
+
+Serve that directory as static files. Feeding the copied CSS back into Bun's
+HTML/CSS bundler reintroduces the parser limitation. `--bun` avoids the CLI's
+Node shebang; `--no-install` uses the locally installed package.
+See [Bun's CSS bundler](https://bun.com/docs/bundler/css) and
+[bunx runtime selection](https://bun.com/docs/pm/bunx#shebangs).
 
 ## The layer model
 
@@ -154,8 +196,9 @@ Porchlight wraps everything in a single top-level cascade layer:
 }
 ```
 
-Later layers win over earlier ones, so a component beats base, a utility
-beats a component, and product CSS in `@layer app` beats Porchlight.
+For normal stylesheet declarations, later layers win: components beat base,
+utilities beat components, and `app` beats Porchlight. `!important` reverses
+layer precedence; do not override accessibility safeguards casually.
 
 Do **not** pass `layer(...)` to Porchlight imports. Modules already
 self-layer.
@@ -175,8 +218,8 @@ Each component uses the `.pl-c-*` class prefix. Drop them into your HTML:
 </div>
 ```
 
-Browse the [component reference](../../components/button) or the
-[preview gallery](../../preview) to see every component with live examples.
+Browse the <a href={`${import.meta.env.BASE_URL}components/button`}>component reference</a> or the <a href={`${import.meta.env.BASE_URL}preview`}>preview gallery</a> to see every
+component with live examples.
 
 ## Token metadata
 
@@ -193,7 +236,7 @@ console.log(tokenGroups.map((group) => group.name));
 JSON is also available:
 
 ```ts
-import tokens from "@cawalch/porchlight/tokens.json";
+import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 ```
 
 ## Exports reference
@@ -202,7 +245,7 @@ import tokens from "@cawalch/porchlight/tokens.json";
 | ------------------------------------------- | ---------------------------------------- |
 | `@cawalch/porchlight`                       | Full prebuilt CSS bundle                 |
 | `@cawalch/porchlight/min.css`               | Minified full bundle                     |
-| `@cawalch/porchlight/compat.css`            | Bun-friendly bundle without enhancements |
+| `@cawalch/porchlight/compat.css`            | Bundle without the enhancement layer     |
 | `@cawalch/porchlight/core.css`              | Layer order, reset, tokens, themes, base |
 | `@cawalch/porchlight/layout.css`            | Layout primitives                        |
 | `@cawalch/porchlight/components.css`        | All component CSS                        |
@@ -220,13 +263,20 @@ Porchlight targets modern browsers and does not polyfill old CSS engines.
 The core uses cascade layers, custom properties, `:has()`, `@scope`,
 `color-mix()`, and OKLCH. Advanced features are gated where possible.
 
-See the [Browser Support guide](../browser-support) for the full feature
+See the <a href={`${import.meta.env.BASE_URL}guides/browser-support`}>Browser Support guide</a> for the full feature
 matrix.
 
 ## Next steps
 
-- [Theming guide](../theming) - override tokens and create a brand theme
-- [Architecture guide](../architecture) - deep dive into the layer model
-- [Composition Recipes](../composition-recipes) - compose dashboards, tables,
-  settings, and dense admin screens
-- [Preview gallery](../../preview) - see every component live
+- <a href={`${import.meta.env.BASE_URL}guides/theming`}>Theming guide</a> -
+  override tokens and create a brand theme
+- <a href={`${import.meta.env.BASE_URL}guides/architecture`}>
+    Architecture guide
+  </a>
+  - deep dive into the layer model
+- <a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>
+    Composition Recipes
+  </a>
+  - compose dashboards, tables, settings, and dense admin screens
+- <a href={`${import.meta.env.BASE_URL}preview`}>Preview gallery</a> - see every
+  component live

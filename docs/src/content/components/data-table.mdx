@@ -208,8 +208,11 @@ No custom `.is-selected` class is needed — `aria-selected` is built in.
 For multi-row workflows, place a `.pl-c-toolbar` immediately above the table,
 announce only the short selected count with `aria-live="polite"`, and keep the
 checkboxes plus `aria-selected` rows as the source of truth. The
-[composition recipes guide](../guides/composition-recipes) includes the full
-bulk-selection action pattern.
+
+<a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>
+  composition recipes guide
+</a>
+includes the full bulk-selection action pattern.
 
 For short editable values, compose a read view with a sibling native form
 instead of turning the table cell itself into a custom widget. The same guide

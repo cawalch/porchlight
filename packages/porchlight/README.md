@@ -1,7 +1,7 @@
 # @cawalch/porchlight
 
 Porchlight is a no-dependency, native-CSS framework for accessible,
-themeable web applications. See the root [README](../../README.md) and
+themeable web applications. See the root [README](https://github.com/cawalch/porchlight#readme) and
 the [docs site](https://cawalch.github.io/porchlight) for full guidance.
 
 ## Install
@@ -9,13 +9,16 @@ the [docs site](https://cawalch.github.io/porchlight) for full guidance.
 ```sh
 pnpm add @cawalch/porchlight
 # or
+bun add @cawalch/porchlight
+# or
 npm install @cawalch/porchlight
 ```
 
 ## Full Bundle
 
-The main export is a prebuilt stylesheet: one file, no `@import` statements
-for your bundler to resolve.
+The main export is a prebuilt stylesheet. Resolve the package import through
+your app bundler and load the resulting CSS entry once. Browsers cannot resolve
+these bare package names directly; use Static HTML below without a bundler.
 
 ```css
 @layer porchlight, app;
@@ -74,20 +77,31 @@ states stay unprefixed when scoped under a Porchlight component class.
 For server-rendered apps or pipelines that copy assets directly, use the
 included copy helper:
 
+Install the package first, then run its local executable:
+
 ```sh
-npx porchlight copy --out public/porchlight --compat
+npx --no-install porchlight copy --out public/porchlight --compat
 ```
+
+```html
+<link rel="stylesheet" href="/porchlight/compat.css" />
+```
+
+These URLs assume your server exposes `public/` at `/`; adjust them for your
+asset mount or deployment base path.
 
 For a smaller static slice, name the components you use:
 
 ```sh
-npx porchlight copy --out public/porchlight --components button,field --layout --utilities
+npx --no-install porchlight copy --out public/porchlight --components button,field --layout --utilities
 ```
 
 ```html
 <link rel="stylesheet" href="/porchlight/core.css" />
+<link rel="stylesheet" href="/porchlight/layout.css" />
 <link rel="stylesheet" href="/porchlight/components/button.css" />
 <link rel="stylesheet" href="/porchlight/components/field.css" />
+<link rel="stylesheet" href="/porchlight/utilities.css" />
 <link rel="stylesheet" href="/app.css" />
 ```
 
@@ -106,8 +120,8 @@ component name, and recommended copy order for scripts.
 
 ## Vite
 
-Vite handles CSS `@import` and modern CSS syntax well, so either the full
-bundle or selected component imports work.
+Vite resolves package CSS imports. Import one CSS entry from your app or
+link it from Vite's HTML entry; bare package imports are not browser URLs.
 
 ```css
 @layer porchlight, app;
@@ -125,33 +139,54 @@ import "@cawalch/porchlight/components/button.css";
 import "./app.css";
 ```
 
+For production builds, set a CSS target that matches your supported browsers.
+The docs build uses `build.cssTarget: "chrome149"` to preserve native color
+functions. This is a Chromium target, not a cross-browser support guarantee.
+The full bundle was also checked with Vite 8.2.1's default target in a small
+light/dark consumer fixture. Recheck your rendered output after changing targets
+or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-options#build-csstarget).
+
 ## Bun And Other Static Pipelines
 
-Bun 1.3.14 can bundle `compat.css` and selected component imports. It may
-print non-fatal warnings for `@property`.
+Bun can install Porchlight and run its copy helper. Using Bun as a package
+manager is separate from sending CSS through `bun build`.
+
+Verified with **Bun 1.4.2 and Porchlight 0.11.1**:
+
+| Path                                                    | Result                                               |
+| ------------------------------------------------------- | ---------------------------------------------------- |
+| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                   |
+| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal `@property` warnings         |
+| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`              |
+| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation |
+
+For Bun's CSS bundler, put this in `app.css`, then run
+`bun build ./app.css --outdir ./dist`:
 
 ```css
 @layer porchlight, app;
 @import "@cawalch/porchlight/compat.css";
 ```
 
-```css
-@layer porchlight, app;
-@import "@cawalch/porchlight/core.css";
-@import "@cawalch/porchlight/components/button.css";
-```
+Load the emitted stylesheet in your page; a CSS build alone does not attach it
+to the DOM. Basic button/card colors were checked in light and dark themes;
+this is not a guarantee for every component or future Bun release.
 
-The full default bundle and `enhancements.css` include
-`@container scroll-state(...)`, which Bun 1.3.14 does not parse. If you need
-those enhancement rules, bypass CSS parsing and copy the prebuilt files to
-static assets instead:
+For the full bundle, run the installed CLI with Bun's runtime explicitly:
 
 ```sh
-bun x porchlight copy --out public/porchlight --full
+bunx --bun --no-install porchlight copy --out public/porchlight --full
 ```
 
-That path is also the best fit for Go, Rails, Django, and other
-server-rendered apps that serve CSS through a static file handler.
+```html
+<link rel="stylesheet" href="/porchlight/porchlight.css" />
+```
+
+Serve that directory as static files. Feeding the copied CSS back into Bun's
+HTML/CSS bundler reintroduces the parser limitation. `--bun` avoids the CLI's
+Node shebang; `--no-install` uses the locally installed package.
+See [Bun's CSS bundler](https://bun.com/docs/bundler/css) and
+[bunx runtime selection](https://bun.com/docs/pm/bunx#shebangs).
 
 ## Tokens
 
@@ -168,7 +203,7 @@ console.log(tokenGroups.map((group) => group.name));
 JSON is available too:
 
 ```ts
-import tokens from "@cawalch/porchlight/tokens.json";
+import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 ```
 
 ## Exports
@@ -177,7 +212,7 @@ import tokens from "@cawalch/porchlight/tokens.json";
 | ------------------------------------------- | ---------------------------------------- |
 | `@cawalch/porchlight`                       | Full prebuilt CSS bundle                 |
 | `@cawalch/porchlight/min.css`               | Minified full bundle                     |
-| `@cawalch/porchlight/compat.css`            | Bun-friendly bundle without enhancements |
+| `@cawalch/porchlight/compat.css`            | Bundle without the enhancement layer     |
 | `@cawalch/porchlight/core.css`              | Layer order, reset, tokens, themes, base |
 | `@cawalch/porchlight/layout.css`            | Layout primitives                        |
 | `@cawalch/porchlight/components.css`        | All component CSS                        |
@@ -198,7 +233,8 @@ Do not pass `layer(...)` to these imports. Porchlight already self-layers.
 
 ## Browser Support
 
-Targets Chrome/Edge 149+, Safari 18+, Firefox 135+. Porchlight uses
+Chromium is the primary test target; Firefox and WebKit have limited smoke
+coverage. `@scope` requires Firefox 146 or later, not Firefox 135. Porchlight uses
 modern CSS including `@layer`, `@scope`, `@property`, OKLCH,
 `light-dark()`, `color-mix()`, `:has()`, container queries, Popover API,
 and anchor positioning. See the

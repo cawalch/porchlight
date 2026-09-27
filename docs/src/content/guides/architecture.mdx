@@ -6,7 +6,7 @@ order: 1
 
 # Architecture & the layer model
 
-Porchlight is a single CSS file authored as small modules. Every rule lives
+Porchlight ships full and partial CSS bundles authored as small modules. Every framework rule lives
 inside one top-level cascade layer: **`porchlight`**.
 
 ## The wrap
@@ -18,9 +18,9 @@ inside one top-level cascade layer: **`porchlight`**.
 }
 ```
 
-Inside `porchlight`, nine sub-layers declare a deterministic order. Later
-layers win over earlier ones, so a component always beats base, a utility
-always beats a component - and nothing needs `!important`.
+Inside `porchlight`, nine sub-layers declare a deterministic order. For normal
+stylesheet declarations, later layers win: components beat base and utilities
+beat components. `!important` reverses layer precedence.
 
 | Layer          | Purpose                                              |
 | -------------- | ---------------------------------------------------- |
@@ -48,9 +48,10 @@ Place the framework in the cascade **before** you import it:
 }
 ```
 
-Unlayered styles always beat layered styles, so unlayered app CSS wins too.
-Either way, you never fight `!important` - Porchlight reserves `!important`
-for accessibility-critical utilities only (screen-reader helpers, `[hidden]`).
+Normal unlayered styles beat normal layered styles. Important declarations
+follow different precedence; Porchlight uses them for safeguards such as
+hidden content, reduced motion, and print visibility. See
+[MDN cascade-layer precedence](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@layer#description).
 
 > Do **not** pass `layer(...)` to the `@import`. Each Porchlight module
 > self-wraps in `@layer porchlight.<name>`; adding `layer(...)` would
@@ -65,9 +66,9 @@ outside `porchlight` (or unlayered). One wrap, one mental model.
 ## Overriding component tokens
 
 Each component defines `--pl-c-*` tokens inside a `@scope` block (e.g.
-`@scope (.pl-c-card) { … }`). These scoped rules look higher-specificity than a
-flat `.pl-c-card { … }` rule in your app layer, but **layer order takes
-precedence over `@scope` proximity** in the cascade.
+`@scope (.pl-c-card) { … }`). The scope root does not add
+specificity to the rules inside it. **Layer order takes precedence over
+selector specificity and scope proximity** for normal stylesheet declarations.
 
 This means you can override component tokens from plain selectors in
 `@layer app` — no specificity hacks needed:
@@ -86,11 +87,12 @@ This means you can override component tokens from plain selectors in
 1. All Porchlight rules are in `@layer porchlight.*`.
 2. Your rules are in `@layer app` (declared after `porchlight`).
 3. The cascade resolves layers in declared order. Since `app` comes after
-   `porchlight`, any rule in `app` beats any rule in `porchlight` —
+   `porchlight`, competing normal stylesheet declarations in `app` win —
    regardless of selector specificity or `@scope` proximity.
 4. You only need higher specificity if you're overriding **within the same
    layer** (e.g., overriding one Porchlight component from another Porchlight
    component). That's not a consumer concern.
 
-**Bottom line:** if your override isn't working, check that it's inside
-`@layer app` (or unlayered). Do not reach for `!important`.
+If an override is not working, check the layer order, selector, and target
+element. Component-local tokens must be set on the component root: a value
+on an ancestor cannot override a default declared directly on the component.

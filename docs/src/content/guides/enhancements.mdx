@@ -7,10 +7,10 @@ order: 4
 # Enhancements
 
 Porchlight includes a set of progressive enhancement features that activate
-only where the browser supports them. Every enhancement is gated behind
-`@supports`, so unsupported browsers simply render the base styles with no
-visual breakage. These features are never required for a component to
-function.
+only where the browser supports them. Enhancement rules are gated behind
+`@supports`. Unsupported browsers skip them; application-owned demo wrappers
+still need their own base layout and fallback appearance. Browser feature
+gates do not protect against a bundler that cannot parse the enclosed CSS.
 
 ## `interpolate-size: allow-keywords`
 
@@ -24,20 +24,12 @@ when unavailable.
 
 ## Sticky shell shadow
 
-A scroll container wrapper that adds an elevation shadow to its sticky child
-when the child is stuck to the top. Replaces the JavaScript scroll-listener
-pattern entirely.
-
-```html
-<div class="pl-c-sticky-shell">
-  <header class="pl-c-sticky-shell__bar">Sticky bar</header>
-  <!-- scrolling content -->
-</div>
-```
-
-Wrap any scroll region in `.pl-c-sticky-shell` and place the sticky element in
-`.pl-c-sticky-shell__bar`. When the bar becomes stuck, it gains `box-shadow-2`
-plus a translucent `backdrop-filter: blur` background.
+The current `.pl-c-sticky-shell` example is experimental. The bar sticks,
+but its conditional shadow does not activate in the tested Chromium build:
+the scroll-state query container is the non-sticky wrapper, so the query does
+not observe the child's stuck state. Do not depend on the shadow as a scroll
+indicator. Use an app-owned persistent border/shadow until this pattern is
+corrected, and provide your own sticky layout if the feature is unsupported.
 
 ## `text-box` optical alignment
 
@@ -76,12 +68,14 @@ attribute, type-checked as `<color>`. Eliminates the need for inline
 <span class="pl-c-swatch" data-color="oklch(58% 0.18 260deg)"></span>
 ```
 
-Falls back to the border color token when `data-color` is absent or the
-feature is unsupported.
+Where typed `attr()` is supported, a missing attribute uses the border color
+token. Where unsupported, no swatch background is supplied by this rule.
+Define the swatch's dimensions/display and an unsupported-browser fallback in
+your app CSS; the preview's square geometry is docs-only styling.
 
 ## Checking browser support
 
 Each feature degrades independently. To see which enhancements are active
-in your browser, open the [enhancements preview page](../../preview/enhancements).
+in your browser, open the <a href={`${import.meta.env.BASE_URL}preview/enhancements`}>enhancements preview page</a>.
 For a full breakdown of which features are required vs progressive vs
-experimental, see the [Browser Support guide](../browser-support).
+experimental, see the <a href={`${import.meta.env.BASE_URL}guides/browser-support`}>Browser Support guide</a>.

@@ -22,8 +22,9 @@ when focused because another visible element carries the focus treatment.
 <label for="plan-pro">Pro</label>
 ```
 
-This is the one utility (and one of the few places in the framework) that uses
-`!important`. It's an a11y guarantee that must win over any context.
+The screen-reader utilities use `!important` to protect their hiding rules.
+Provide a visible focus treatment on the associated control when a focusable
+input stays visually hidden.
 
 ## `.pl-u-focusable-sr-only`
 
@@ -68,7 +69,8 @@ than its container.
 ## `.pl-u-flow`
 
 Vertical rhythm for a prose block. The sibling selector (`> * + *`) adds space
-between top-level children: no top margin on the first, no bottom on the last.
+before every child after the first. It does not clear existing child margins;
+reset those separately when they double up with your intended rhythm.
 Tune the step via `--pl-u-flow-space`.
 
 ```html
@@ -90,7 +92,8 @@ inside dense component chrome or app-specific flex/grid rows.
 ## `.pl-u-surface`
 
 Panel styling for ad-hoc grouping: background, text color, border, radius.
-For inline callouts that don't need a full `.pl-c-card`.
+For callouts that don't need a full `.pl-c-card`. It supplies no padding;
+add token-based padding in your app layer when the surface contains content.
 
 ```html
 <div class="pl-u-surface">An ad-hoc surface.</div>
@@ -138,8 +141,9 @@ the gap with `--pl-l-cluster-gap`.
 
 ## `.pl-u-full-bleed`
 
-Break an element out to the viewport edges inside a constrained container (a
-wide table or image in a prose column).
+Break an element out to the viewport edges inside a centered container (a
+wide image in a prose column). Avoid it in off-center panes or independently
+scrolling regions, where viewport-relative width can cause overflow.
 
 ```html
 <figure class="pl-u-full-bleed">...</figure>

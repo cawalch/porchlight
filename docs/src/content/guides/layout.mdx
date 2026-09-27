@@ -34,6 +34,22 @@ Use for vertical flow, such as form groups, card contents, settings sections, or
 | :----------------- | :------------------------- | :------------------ |
 | `--pl-l-stack-gap` | Vertical gap between items | `var(--pl-space-4)` |
 
+The stack owns gaps **between** children; it does not add outer padding or
+remove child margins. Put sibling cards in a stack/grid, then let each card
+own its internal padding. If a child already has a bottom margin (for example,
+`.pl-c-page-header`), clear it in your app layer when the stack owns separation:
+
+```css
+@layer app {
+  .workspace > .pl-c-page-header {
+    margin-block-end: 0;
+  }
+}
+```
+
+Keep that reset scoped to your composition. Docs-only preview styles are not
+included in the published package.
+
 ### 2. Cluster (`.pl-l-cluster`)
 
 Use for horizontal wrapping groups where elements flow naturally. Ideal for toolbar controls, filter lists, chip groups, or buttons in an action row.
@@ -99,7 +115,7 @@ An independent scroll container that contains overscroll to prevent scroll chain
 
 ### 6. Columns (`.pl-l-columns`)
 
-A CSS multi-column layout optimized for card walls, search listings, or image galleries. Unlike CSS grids, masonry columns allow elements of varying heights to stack cleanly without horizontal gaps.
+A CSS multi-column layout for card walls or image galleries. Content flows down each column before moving to the next; this is not row-major CSS Grid masonry. Use a grid for ordered content that people need to scan across rows.
 
 ```html
 <div class="pl-l-columns" style="--pl-l-columns-width: 16rem;">
@@ -125,10 +141,10 @@ A centered, responsive max-width wrapper designed for dashboards, list views, an
 </div>
 ```
 
-| Token                  | Description             | Default             |
-| :--------------------- | :---------------------- | :------------------ |
-| `--pl-l-container-max` | Maximum inline width    | `80rem`             |
-| `--pl-l-container-pad` | Inline padding (gutter) | `var(--pl-space-4)` |
+| Token                  | Description                        | Default             |
+| :--------------------- | :--------------------------------- | :------------------ |
+| `--pl-l-container-max` | Maximum inline width               | `80rem`             |
+| `--pl-l-container-pad` | Space reserved on each inline side | `var(--pl-space-4)` |
 
 ### 8. Inset (`.pl-l-inset`)
 
@@ -146,9 +162,14 @@ A centered column designed to constrain content inside a wider, full-bleed eleme
 | :----------------- | :------------------- | :------ |
 | `--pl-l-inset-max` | Maximum inline width | `48rem` |
 
+The inset only limits width; it does not supply gutters or vertical spacing.
+Add token-based padding to the full-bleed parent so content does not touch
+the viewport edge on mobile.
+
 ### 9. Page (`.pl-l-page`)
 
-A centered max-width container optimized for readable prose and documentation content.
+A centered container with inline gutters and an `88rem` default maximum.
+For long-form prose, set a narrower measure such as `--pl-l-page-max: 68ch`.
 
 | Token             | Description          | Default |
 | :---------------- | :------------------- | :------ |
@@ -164,11 +185,17 @@ The `.pl-l-app-shell` coordinates the main layout of a SaaS or dashboard applica
 - A sidebar navigation rail (`.pl-l-app-shell__sidebar`) supporting manual collapse toggles.
 - A scrolling main window (`.pl-l-app-shell__main`) configured as a container query context.
 
+The shell fills `100dvb` and scrolls its main region. When embedding it below
+an existing site header, size the shell to the remaining space and account for
+that header in sticky positioning. Use one main landmark; use a `div` for an
+embedded work region if the host page already has `main`. Provide a mobile
+navigation control before hiding the desktop rail.
+
 ### Responsive Behavior
 
-- **Desktop (60rem+)**: Sidebar and topbar are displayed side-by-side.
+- **Desktop (60rem+)**: The topbar spans the full width; sidebar and main sit below it.
 - **Tablet / Mobile (< 60rem)**: The sidebar is hidden (`display: none`), prioritizing the work canvas.
-- **Sidebar Collapse**: Setting `data-sidebar="collapsed"` on `.pl-l-app-shell__sidebar` transitions its width from `16rem` to `3.5rem`, transforming it into an icon rail.
+- **Sidebar Collapse**: `data-sidebar="collapsed"` changes the default rail width from `16rem` to `3.5rem`. Your app supplies icons, accessible labels, and label-hiding behavior.
 
 ```html
 <div class="pl-l-app-shell">
@@ -216,7 +243,8 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
     style="background: var(--pl-color-surface-2); border-inline-end: 1px solid var(--pl-color-border);"
   >
     <nav
-      class="pl-l-stack"
+      class="pl-c-nav pl-l-stack"
+      aria-label="Main navigation"
       style="--pl-l-stack-gap: var(--pl-space-1); padding: var(--pl-space-3);"
     >
       <a class="pl-c-nav__item" href="#" aria-current="page">Dashboard</a>
@@ -254,7 +282,7 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
 
       <!-- Main Columns -->
       <div class="pl-l-sidebar" style="--pl-l-sidebar-size: 20rem;">
-        <!-- Right side (Sidebar column) -->
+        <!-- First, fixed-width column (inline start) -->
         <div class="pl-c-card">
           <div class="pl-c-card__header">
             <h3 class="pl-c-card__title">Activity Feed</h3>
@@ -268,7 +296,7 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
           </div>
         </div>
 
-        <!-- Left side (Main column) -->
+        <!-- Second, flexible column (inline end) -->
         <div class="pl-c-card">
           <div class="pl-c-card__header">
             <h3 class="pl-c-card__title">Active Issues</h3>
@@ -291,7 +319,7 @@ A classic setting view showing a side menu and stacked inputs that adapt when sc
 <div class="pl-l-container" style="padding-block: var(--pl-space-6);">
   <div class="pl-l-sidebar" style="--pl-l-sidebar-size: 16rem;">
     <!-- Local Sub-navigation -->
-    <nav class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-1);">
+    <nav class="pl-c-nav" aria-label="Settings navigation">
       <a class="pl-c-nav__item" href="#" aria-current="page"
         >General Settings</a
       >
@@ -300,10 +328,7 @@ A classic setting view showing a side menu and stacked inputs that adapt when sc
     </nav>
 
     <!-- Settings Content -->
-    <form
-      class="pl-l-stack pl-c-card"
-      style="--pl-l-stack-gap: var(--pl-space-6);"
-    >
+    <form class="pl-c-card">
       <div class="pl-c-card__header">
         <h2 class="pl-c-card__title">Profile Settings</h2>
       </div>
