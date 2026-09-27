@@ -89,6 +89,17 @@ soft.
 The card establishes `container: pl-c-card / inline-size`. The header collapses
 from a row to a column when the **card** is narrower than 28rem - not the
 viewport. A card in a narrow split pane stacks even on a wide screen.
+Badges and actions keep their natural width when the header stacks.
+
+## Spacing
+
+The card owns the inset around its header, body, and footer. First and last
+body children do not add outer block margins. When the body also uses
+`.pl-l-stack`, its gap supplies the spacing between children.
+
+When composing a toolbar inside a padded card, remove the toolbar's horizontal
+padding in your app styles so its content aligns with the body. Keep toolbar
+padding when the surrounding card has no padding, as in an edge-to-edge table.
 
 ## Accessibility
 
