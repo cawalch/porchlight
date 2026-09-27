@@ -11,18 +11,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     Tier B modern CSS, all gated behind <code>@supports</code>. The framework
     is fully usable without any of these; they layer on where the browser
     supports them, with zero behavior change where it doesn't. Open this page
-    in Chrome 149+ to see them; older browsers see the plain versions.
+    in a current browser to inspect each feature. Support varies by feature;
+    the sticky-shell experiment below also has a known implementation limitation.
   </p>
 
   <h2>Scroll-state sticky-shell shadow</h2>
   <p>
-    A sticky bar that gains an elevation shadow when it scrolls to the top of
-    its container. The whole pattern is CSS: no JS scroll listener, no
-    IntersectionObserver. Scroll the panel below to see the bar activate.
+    Experimental: the bar sticks, but its conditional shadow currently does
+    not activate. The query observes the non-sticky wrapper instead of the
+    sticky bar. Use a persistent border or shadow in application code until
+    this pattern is corrected.
   </p>
   <div class="pl-c-sticky-shell sticky-demo" tabindex="0" role="region" aria-label="Sticky-shell scroll demo">
     <header class="pl-c-sticky-shell__bar">
-      <strong>Sticky bar</strong> <span class="pl-u-muted">shadow appears when stuck</span>
+      <strong>Sticky bar</strong> <span class="pl-u-muted">experimental shadow pending</span>
     </header>
     <div class="sticky-demo__content">
       {Array.from({ length: 12 }).map((_, i) => (
@@ -71,7 +73,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     Set on <code>:root</code>, this allows height/width to animate
     to/from <code>auto</code> and content-keyword sizes. It's the foundation
     for native disclosure/collapsible animations. (No visible demo here; it
-    enables <code>@starting-style</code> on auto-sized elements in components.)
+    allows size interpolation where a component transitions an intrinsic size.)
   </p>
 </BaseLayout>
 

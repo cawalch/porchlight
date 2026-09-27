@@ -15,7 +15,7 @@ pattern.
 
 This component is deliberately not an ARIA `menu`. It is a simple disclosure
 containing ordinary links and buttons, so users move through its contents with
-`Tab`. Use [Dropdown](/components/dropdown) when an application needs the full
+`Tab`. Use <a href={`${import.meta.env.BASE_URL}components/dropdown`}>Dropdown</a> when an application needs the full
 menu-button interaction model (`role="menu"`, arrow-key navigation, managed
 focus, and synchronized `aria-expanded`).
 
@@ -136,7 +136,7 @@ transition runs (normally `display: none` kills transitions instantly).
 - **Focus management:** a non-modal popover does not trap focus. The browser
   handles declarative opening and closing, but an app that needs menu-style
   initial focus, arrow keys, or deterministic focus return must implement the
-  menu-button contract described by [Dropdown](/components/dropdown).
+  menu-button contract described by <a href={`${import.meta.env.BASE_URL}components/dropdown`}>Dropdown</a>.
 - **Items:** each item is a real `<a>` or `<button>` (full-width,
   keyboard-focusable, semantic role).
 - **Forced colors:** border falls back to `ButtonBorder`, focus to `Highlight`.

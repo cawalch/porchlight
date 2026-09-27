@@ -1,137 +1,81 @@
 ---
 title: Browser Support
-description: The feature matrix  -  what Porchlight requires, what degrades, and what is experimental.
+description: Required CSS capabilities, progressive fallbacks, and the limits of Porchlight's browser coverage.
 order: 3
 ---
 
 # Browser Support
 
-Porchlight is a **modern CSS-first framework**. It does not polyfill old
-browsers. Instead, it uses a tiered strategy: required features for the
-core, progressive enhancement for newer capabilities, and `@supports`
-gating for experimental ones.
+Porchlight uses modern CSS without polyfills. Browser support, CSS bundler
+support, and the project's test coverage are different questions.
 
 ## Support matrix
 
-| Tier                        | Meaning                                                  | Strategy                                                                       |
-| --------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| **Required**                | The framework assumes this works.                        | No fallback. Breaks gracefully if unsupported (styles won't apply).            |
-| **Baseline-modern**         | Safe in all current-generation browsers (Baseline 2025). | Used directly. Part of the framework's baseline.                               |
-| **Progressive enhancement** | Works without it, improves with it.                      | `@supports`-gated. Component degrades to a simpler but fully functional state. |
-| **Experimental**            | Demo-quality, not production-ready everywhere.           | `@supports`-gated with obvious fallback (static layout).                       |
+| Area                    | Current contract                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Package build           | Lightning CSS targets Chrome 149; this preserves modern syntax, not a promise of identical behavior in every engine |
+| Primary validation      | Playwright Chromium: component, accessibility, layout, and visual tests                                             |
+| Additional coverage     | Playwright Firefox and WebKit: narrow smoke tests for forms/app shell, dense tables, and native dialog behavior     |
+| Consumer responsibility | Check your own supported browser versions, components, themes, and interaction states                               |
+
+Playwright WebKit is not a test of every shipping Safari version. The repo
+does not run a full minimum-version matrix for Chrome, Firefox, or Safari.
+Do not interpret the build target or a CSS specification's publication date
+as an independently tested browser support floor.
 
 ## Required features
 
-These are foundational CSS capabilities that are in the
-[CSS Snapshot 2026](https://www.w3.org/TR/css-2026/) Official Definition.
-Any browser from 2024+ supports all of them:
+| Feature                                               | Why it matters                                                                            |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Cascade layers and custom properties                  | Layer ordering and design tokens                                                          |
+| `@scope`                                              | Most component rules are scoped; unsupported browsers can lose component styling entirely |
+| `:has()`, `:is()`, `:where()`                         | Component states and low-specificity selectors                                            |
+| OKLCH, `light-dark()`, `color-mix()`                  | Theme tokens and derived colors                                                           |
+| Logical properties, grid/flex, size container queries | Layout, RTL, and responsive component behavior                                            |
+| Native dialog / Popover API                           | Required when using the corresponding interactive HTML patterns                           |
 
-| Feature                                                 | Baseline | CSS-2026             | Used for                          |
-| ------------------------------------------------------- | -------- | -------------------- | --------------------------------- |
-| Cascade layers (`@layer`)                               | 2024     | ✅ `css-cascade-5`   | The entire framework architecture |
-| Custom properties (`--var`)                             | 2023     | ✅ `css-variables-1` | All tokens                        |
-| `:has()`, `:is()`, `:where()`                           | 2024     | ✅ `selectors-4`     | Selectors throughout              |
-| `oklch()` color                                         | 2023     | ✅ `css-color-4`     | All color tokens                  |
-| Logical properties (`inline-size`, `block-start`, etc.) | 2023     | ✅ `css-logical-1`   | RTL-aware layout                  |
-| CSS nesting                                             | 2024     | ✅ `css-nesting-1`   | Source authoring                  |
+For example, Firefox enabled `@scope` by default in **146**; earlier versions
+lack this required capability. See the
+[Firefox 146 release notes](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/146#css)
+and [MDN's `@scope` compatibility table](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope#browser_compatibility).
+This identifies one required capability, not a guarantee that every component
+works identically from that version onward.
 
-## Baseline-modern features
+## Progressive and experimental features
 
-These are safe to use in production as of mid-2026. All major browsers
-(Chrome, Edge, Firefox, Safari) support them:
+Fallbacks differ by component; some optional affordances disappear entirely.
 
-| Feature                               | Baseline | CSS-2026                          | Used for                                            |
-| ------------------------------------- | -------- | --------------------------------- | --------------------------------------------------- |
-| `@scope`                              | 2025     | ⚠️ `css-cascade-6` (pre-snapshot) | All components (scoped styles without BEM)          |
-| `light-dark()`                        | 2024     | ✅ `css-color-adjust-1`           | Automatic light/dark color pairs                    |
-| `color-mix()`                         | 2024     | ✅ `css-color-5`                  | Derived tints (alert backgrounds, hover states)     |
-| Popover API (`popover` attribute)     | 2024     | HTML spec                         | `pl-c-menu` (popover-menu) component                |
-| `@starting-style`                     | 2024     | ✅ `css-transitions-1`            | Dialog and popover enter animations                 |
-| `transition-behavior: allow-discrete` | 2024     | ✅ `css-transitions-1`            | Exit animations on `display: none` elements         |
-| `:user-invalid` / `:user-valid`       | 2024     | ✅ `selectors-4`                  | `pl-c-field` validation states                      |
-| `text-wrap: balance` / `pretty`       | 2024     | ✅ `css-text-4`                   | Heading and paragraph typography                    |
-| Container queries (`@container`)      | 2023     | ✅ `css-contain-2`                | Card, data-table responsive behavior                |
-| `prefers-contrast`                    | 2022     | ✅ `mediaqueries-5`               | Stronger boundaries and focus affordances           |
-| `@property` (Houdini)                 | 2024     | ⚠️ pre-snapshot                   | Token type registration (`--pl-motion-scale`, etc.) |
-
-## Progressive enhancement features
-
-These features are gated behind `@supports`. The framework works perfectly
-without them; they add polish where supported:
-
-| Feature                                               | Baseline | CSS-2026                    | Enhancement                                    | Fallback                                  |
-| ----------------------------------------------------- | -------- | --------------------------- | ---------------------------------------------- | ----------------------------------------- |
-| Anchor Positioning (`anchor-name`, `position-anchor`) | 2025     | ⚠️ pre-snapshot             | `pl-c-menu` popover is tethered to its trigger | Popover appears centered (UA default)     |
-| CSS Gap Decorations (`rule`, `rule-visibility-items`) | 2026     | ⚠️ pre-snapshot             | Grid dividers via `data-dividers`              | Normal grid gap (no divider line)         |
-| `text-box: trim-both`                                 | 2025     | ✅ `css-inline-3`           | Optically-centered button/badge labels         | Standard half-leading (1px visual offset) |
-| Typed `attr()` (`attr(data-x type(<color>))`          | 2026     | ⚠️ pre-snapshot             | `pl-c-swatch` reads color from `data-color`    | Inline `style` attribute                  |
-| View Transitions                                      | 2025     | ✅ `css-view-transitions-1` | Smooth cross-page fades on docs site           | Hard page reload                          |
-
-## Experimental features
-
-These are not yet Baseline across all browsers. They are `@supports`-gated
-and degrade to a static but functional state. Note that several are in the
-CSS-2026 Official Definition (their _specification_ is stable) even though
-_implementation_ is still rolling out:
-
-| Feature                                                   | Chrome | CSS-2026                       | Enhancement                             | Fallback                                   |
-| --------------------------------------------------------- | ------ | ------------------------------ | --------------------------------------- | ------------------------------------------ |
-| `interpolate-size: allow-keywords`                        | 149    | ✅ `css-sizing-4`              | Smooth `height: auto` animations        | `grid-template-rows: 0fr -> 1fr` technique |
-| Scroll-driven animations (`animation-timeline: scroll()`) | 149    | ⚠️ pre-snapshot                | Scroll-progress bar fills as you scroll | Bar hidden (no false progress)             |
-| Scroll-driven animations (`animation-timeline: view()`)   | 149    | ⚠️ pre-snapshot                | Elements fade in on scroll              | Elements always visible                    |
-| `field-sizing: content`                                   | 123    | ✅ `css-ui-4` / `css-sizing-4` | Textarea grows to fit content           | Fixed height                               |
-
-> **Note on `@property`-registered `contrast-color()`:** While
-> `contrast-color()` became Baseline in April 2026, MDN warns that
-> mid-tone backgrounds can produce unexpected results. Porchlight keeps
-> explicit paired tokens (`--pl-color-accent` / `--pl-color-accent-text`)
-> with WCAG-AA verified contrast, and validates them in the deterministic
-> contrast test suite.
-
-## CSS Snapshot 2026 status
-
-The [CSS Snapshot 2026](https://www.w3.org/TR/css-2026/) defines what the
-CSS Working Group considers the "Official Definition" of CSS. Features
-marked ✅ above are in the snapshot; those marked ⚠️ are beyond it
-(pre-snapshot or in an earlier stability tier). This does not mean the
-⚠️ features are unstable — `@scope` and `@property` have shipped in all
-major browsers — just that their specifications haven't reached the W3C
-Candidate Recommendation stage required for inclusion in the snapshot.
-
-Porchlight targets Chrome 149+ and is tested with Playwright, so it can
-use features that are stable in browsers even if their specs are still
-maturing through the W3C process.
+| Feature                  | Use                                   | Without support                                                                                   |
+| ------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Anchor positioning       | Menus, calendar popovers, tooltips    | Menus use their base positioning; tooltips are hidden, so keep essential labels visible elsewhere |
+| Scroll-driven animations | Reveal and scroll-progress components | Reveal content stays visible; progress bar is hidden                                              |
+| `field-sizing: content`  | Auto-growing textareas                | Ordinary resizable textarea                                                                       |
+| `interpolate-size`       | Intrinsic-size transitions            | Base disclosure behavior; no intrinsic-size interpolation                                         |
+| `text-box`               | Optical label alignment               | Normal line-box alignment                                                                         |
+| Gap decorations          | Optional grid dividers                | Normal gaps without divider lines                                                                 |
+| Typed `attr()`           | Color swatches                        | Supply application-owned dimensions and fallback appearance                                       |
+| Scroll-state queries     | Experimental sticky-shell effects     | Supply ordinary sticky/scroll layout in application CSS                                           |
+| View transitions         | Optional navigation animations        | Cross-document navigation is disabled by default; apps must opt in                                |
 
 ## How degradation works
 
-Every `@supports` gate follows the same pattern:
+`@supports` gates an optional browser feature; it cannot polyfill a required
+feature such as `@scope`, and it cannot prevent a build tool from failing to
+parse syntax inside the gate. The base component and its accessibility
+contract still need to be checked in the target browser.
 
-```css
-/* Base: always applies */
-.pl-c-thing {
-  /* functional styles */
-}
-
-/* Enhancement: only where supported */
-@supports (feature: value) {
-  .pl-c-thing {
-    /* progressive polish */
-  }
-}
-```
-
-The base styles are always sufficient. The `@supports` block adds a
-capability that improves the experience but is not required for
-functionality.
+`compat.css` omits the dedicated enhancement layer. It still uses modern
+component CSS, including `@scope`, color functions, and component-level feature
+gates. It is a parser-friendly entry, **not an old-browser compatibility layer**.
+See <a href={`${import.meta.env.BASE_URL}guides/getting-started#bun-and-parser-fallbacks`}>installation and Bun parser guidance</a>.
 
 ## Testing
 
-Porchlight's test suite includes:
-
-- **Playwright coverage** across component contracts, composed application
-  patterns, targeted visual baselines, and narrow Firefox/WebKit smoke checks
-- **Contrast tests** that compute WCAG ratios from OKLCH values (not
-  axe-core, which cannot parse OKLCH computed colors as of v4.12)
-- **Accessibility-mode tests** for RTL, forced-colors, prefers-contrast,
-  reduced-motion, and 200% zoom
-- **Smoke tests** for every preview and docs page
+- Chromium covers component contracts, composed apps, visual snapshots, RTL,
+  forced colors, contrast preferences, reduced motion, and zoom.
+- Firefox/WebKit smoke coverage is smaller; passing it does not establish full parity.
+- Automated accessibility and deterministic color-contrast checks help detect
+  regressions. They do not certify every composition or custom theme as WCAG-conformant.
+- Applications own behaviors such as tab keyboard navigation, combobox state,
+  focus management, and data loading. Native HTML semantics and CSS alone do
+  not implement those controllers.

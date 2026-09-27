@@ -188,8 +188,7 @@ Set on any ancestor. `compact`, `comfortable`, and `touch` change only
 
 The `dense` tier goes further: it also compresses the `--pl-space-*` scale
 (~30% reduction) and small text sizes (`--pl-text-sm`, `--pl-text-xs`) for
-maximum information density. See the
-[Data-dense mode](/porchlight/components/app-dense) reference for details.
+maximum information density. See the <a href={`${import.meta.env.BASE_URL}components/app-dense`}>Data-dense mode</a> reference for details.
 
 ## Reduced motion
 
@@ -219,9 +218,9 @@ contrast behavior.
 
 ## Forced colors (High Contrast)
 
-Under Windows High Contrast mode, all semantic tokens remap to system
-colors (`Canvas`, `CanvasText`, `ButtonBorder`, `Highlight`). The UI
-remains legible without any action from you.
+Under Windows High Contrast mode, key surface, text, border, accent, and focus tokens remap to system
+colors (`Canvas`, `CanvasText`, `ButtonBorder`, `Highlight`). Keep native controls and test your custom colors, borders, and icons in
+forced-colors mode; framework defaults do not guarantee every app override remains legible.
 
 ## Component-level theming
 
@@ -239,5 +238,4 @@ to fine-tune a specific component without touching the global palette:
 
 ## Token reference
 
-For the complete list of tokens with live values, see the
-[token reference pages](../../tokens).
+For the complete list of tokens with live values, see the <a href={`${import.meta.env.BASE_URL}tokens`}>token reference pages</a>.

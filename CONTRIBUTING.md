@@ -4,8 +4,8 @@ Thanks for helping build Porchlight. This guide covers setup, branching, pull-re
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org) 22+ (see `.nvmrc`) — run `nvm use` if you use nvm.
-- [pnpm](https://pnpm.io), managed via [corepack](https://nodejs.org/api/corepack.html) using the `packageManager` field in `package.json`: `corepack enable`.
+- [Node.js](https://nodejs.org) 22.12+ (Astro/Vite minimum). `.nvmrc` selects the Node 22 line; run `nvm install` then `nvm use` with nvm.
+- [pnpm](https://pnpm.io) 10.0.0, pinned by `packageManager`. With Corepack available, run `corepack enable`; otherwise install the pinned CLI with `npm install --global pnpm@10.0.0`. Corepack is not bundled with every Node distribution.
 - Chrome stable for previewing (the production target).
 
 ## Setup
@@ -13,9 +13,29 @@ Thanks for helping build Porchlight. This guide covers setup, branching, pull-re
 ```sh
 git clone https://github.com/cawalch/porchlight.git
 cd porchlight
-pnpm install
-pnpm dev      # Astro docs site at http://localhost:4321
+pnpm install --frozen-lockfile
+pnpm dev      # Astro docs site at http://localhost:4321/porchlight/
 ```
+
+The supported contributor workflow uses Node and pnpm with `pnpm-lock.yaml`,
+matching CI. Bun consumption of the published CSS package is covered in
+[Getting Started](https://cawalch.github.io/porchlight/guides/getting-started);
+it does not mean `bun install` / `bun test` replace this repository's commands.
+
+```sh
+pnpm build                         # package artifacts + production docs
+pnpm --filter ./docs exec playwright install chromium firefox webkit
+pnpm test                          # Playwright; builds/serves docs if needed
+pnpm lint:all
+pnpm format:check
+pnpm --filter ./docs astro:check
+pnpm --filter ./docs llms:check
+```
+
+On Linux, use Playwright's `install --with-deps` when system libraries are
+missing. Tests reuse an existing server on port 4321; stop a stale server or
+set `PLAYWRIGHT_BASE_URL` to the build you intend to test. Generated LLM docs
+are maintained with `pnpm --filter ./docs llms:generate` when their inputs change.
 
 Workspace layout:
 
@@ -24,11 +44,13 @@ packages/porchlight   # the CSS framework (the product)
 docs/                 # Astro showcase + reference site (imports the real CSS)
 ```
 
-The docs site imports `@cawalch/porchlight` directly from the workspace, so the showcase **never drifts** from source — the documentation _is_ the preview.
+The docs site imports the tracked workspace CSS source. Build and test the
+packaged artifacts separately with `pnpm --filter @cawalch/porchlight test:package`;
+a working source preview alone does not verify published exports.
 
 ## Branching & pull requests
 
-- Branch from `main`. `main` is protected: it requires a green CI run and at least one review.
+- Branch from `main`. Follow the repository's current branch protections and wait for required checks before merging.
 - Branch naming: `<type>/<phase>-<slug>` — e.g. `feat/03-button`, `docs/theming`, `fix/card-rtl`.
 - `type` follows [Conventional Commits](https://www.conventionalcommits.org): `feat`, `fix`, `docs`, `chore`, `test`, `refactor`.
 - **Keep PRs around ~400 lines** of changed CSS + docs + tests combined. If a PR crosses ~500 lines it is probably doing two things — split it.
@@ -52,7 +74,7 @@ Every PR description starts from `.github/PULL_REQUEST_TEMPLATE.md`. A PR is not
 ## Preview deployments
 
 - **Production** (`main`): the docs site builds and deploys to the GitHub Pages root on every merge to `main`.
-- **Per-PR previews**: every PR builds the docs site and deploys it to `https://cawalch.github.io/porchlight/pr/<number>/`. A bot posts the URL as a PR comment.
+- **Per-PR previews**: the PR workflow writes `pr-preview/pr-<number>/` to `gh-pages` and posts `https://cawalch.github.io/porchlight/pr-preview/pr-<number>/`. The link becomes live only after **Publish Pages** runs. Preview updates do not trigger that workflow automatically; a maintainer can dispatch `gh workflow run publish-pages.yml --ref main`.
 - Review the preview in **Chrome stable**. Use DevTools to emulate forced-colors, reduced-motion, and 200% zoom before approving.
 
 ## Committing

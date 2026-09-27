@@ -28,7 +28,7 @@
 
 ## Preview
 
-<!-- The preview bot will post the /pr/<n>/ URL. Call out anything reviewers should check specifically (density, RTL, a particular state). -->
+<!-- The bot posts /pr-preview/pr-<n>/. Publish Pages must run before the URL is live. Call out reviewer checks. -->
 
 ## Notes
 

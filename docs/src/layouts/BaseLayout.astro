@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 
 // Resolve internal links against the build-time base path so the site works
-// both at the Pages root (/porchlight/) and under PR previews (/porchlight/pr/<n>/).
+// both at the Pages root (/porchlight/) and under PR previews (/porchlight/pr-preview/pr-<n>/).
 const b = import.meta.env.BASE_URL;
 const link = (path: string) => `${b}${path.replace(/^\//, '')}`;
 

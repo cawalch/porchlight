@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Correct installation, Bun/static-asset setup, contributor build instructions,
+  browser coverage claims, and layout/cascade guidance.
+
 - Correct page insets, heading and section gaps, mobile hero gutters, metadata
   alignment, and settings form spacing across the sample apps.
 
