@@ -157,6 +157,87 @@
     background-position: left var(--pl-space-3) center;
   }
 
+  /* Opt-in single-select picker. Keep ordinary selects and unsupported
+     browsers on the existing native control contract. */
+  @supports (appearance: base-select) and selector(::picker(select)) {
+    @scope (select.pl-c-field__control--select:not([multiple], [size]:not([size="1"]))) {
+      :scope.pl-c-field__control {
+        appearance: base-select;
+        padding-inline-end: var(--pl-control-padding-inline);
+        background-image: none;
+        overflow-wrap: anywhere;
+        gap: var(--pl-space-2);
+      }
+
+      :scope::picker(select) {
+        appearance: base-select;
+        inline-size: anchor-size(self-inline);
+        max-inline-size: calc(100dvi - var(--pl-space-4));
+        padding: var(--pl-space-1);
+        border: var(--pl-control-border-width) solid var(--pl-color-border);
+        border-radius: var(--pl-control-radius);
+        background: var(--pl-c-field-bg, var(--pl-color-surface));
+        color: var(--pl-c-field-fg, var(--pl-color-text));
+        box-shadow: var(--pl-shadow-3);
+        max-block-size: min(24rem, 60dvb);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+
+      :scope::picker-icon {
+        color: inherit;
+        margin-inline-start: auto;
+      }
+
+      option {
+        min-block-size: var(--pl-control-block-size);
+        padding-block: var(--pl-space-1);
+        padding-inline: var(--pl-control-padding-inline);
+        border-radius: var(--pl-radius-sm);
+        gap: var(--pl-space-2);
+        overflow-wrap: anywhere;
+        white-space: normal;
+      }
+
+      option:checked {
+        background: var(--pl-color-accent);
+        color: var(--pl-color-accent-text);
+      }
+
+      option:not(:disabled):is(:hover, :focus-visible) {
+        background: var(--pl-color-surface-2);
+        color: var(--pl-c-field-fg, var(--pl-color-text));
+        outline: var(--pl-focus-size) solid var(--pl-focus-color);
+        outline-offset: calc(-1 * var(--pl-focus-size));
+      }
+
+      option:disabled {
+        color: var(--pl-color-text-muted);
+        cursor: not-allowed;
+      }
+
+      option::checkmark {
+        color: inherit;
+      }
+
+      optgroup {
+        padding: var(--pl-space-1);
+      }
+
+      @media (forced-colors: active) {
+        option:checked {
+          background: Highlight;
+          color: HighlightText;
+          forced-color-adjust: none;
+        }
+
+        option:disabled {
+          color: GrayText;
+        }
+      }
+    }
+  }
+
   .pl-c-field__control::placeholder {
     color: var(--pl-color-text-muted);
   }

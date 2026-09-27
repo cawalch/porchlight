@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Opt-in customizable native select picker for fields, with themed options,
+  native form behavior, density support, and an ordinary-select fallback.
+
 ### Fixed
 
 - Correct installation, Bun/static-asset setup, contributor build instructions,
