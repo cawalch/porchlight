@@ -59,6 +59,10 @@ const bestExamples = [
   ["/preview/app-dense", "dense admin/data-console layout"],
   ["/preview/app-cases", "case queue with filters and detail panel"],
   [
+    "/preview/app-asset-inventory",
+    "searchable asset inventory with native entity inspectors and review actions",
+  ],
+  [
     "/preview/form",
     "forms, grids, input groups, choice groups, and validation states",
   ],

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntityInspector from '../../components/EntityInspector.astro';
+const assets = [
+  { id: 'AST-1042', name: 'Payroll production', owner: 'Mina Chen', kind: 'Cloud service', location: 'US Central', risk: true },
+  { id: 'AST-2088', name: 'Design workstation', owner: 'Sam Rivera', kind: 'Managed laptop', location: 'London', risk: false },
+  { id: 'AST-3091', name: 'Customer analytics', owner: 'Jordan Patel', kind: 'Data warehouse', location: 'EU West', risk: true },
+  { id: 'AST-4016', name: 'Build runner 04', owner: 'Alex Morgan', kind: 'Virtual machine', location: 'US East', risk: false },
+  { id: 'AST-5073', name: 'Support knowledge base', owner: 'Casey Brooks', kind: 'Cloud service', location: 'US Central', risk: false },
+];
+---
+<BaseLayout title="Asset inventory · Porchlight">
+  <div class="pl-l-app-shell inventory">
+    <header class="pl-l-app-shell__topbar pl-c-toolbar">
+      <strong>Northstar / Operations</strong><span class="pl-c-badge" data-tone="success">Inventory synced</span>
+    </header>
+    <aside class="pl-l-app-shell__sidebar">
+      <nav class="pl-c-nav" aria-label="Inventory navigation">
+        <a class="pl-c-nav__item" href="#inventory" aria-current="page">Asset inventory</a>
+        <a class="pl-c-nav__item" href="#review-plan">Review plan</a>
+        <a class="pl-c-nav__item" href="#coverage">Coverage</a>
+      </nav>
+    </aside>
+    <div class="pl-l-app-shell__main pl-l-stack" id="inventory">
+      <header class="pl-c-page-header">
+        <div class="pl-c-page-header__heading"><h1 class="pl-c-page-header__title">Asset inventory</h1><p class="pl-c-page-header__subtitle">Know what you own, who owns it, and what needs attention.</p></div>
+      </header>
+      <div class="pl-l-grid" id="coverage" style="--pl-l-grid-min: 12rem;">
+        {[['Assets tracked', '5'], ['Flagged by policy', '2'], ['Owners assigned', '100%']].map(([label, value]) => <article class="pl-c-card"><div class="pl-c-card__body"><span>{label}</span><strong class="inventory-stat">{value}</strong></div></article>)}
+      </div>
+      <section class="pl-c-card" aria-labelledby="assets-title">
+        <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="assets-title">Workspace assets</h2><span class="pl-c-badge">5 records</span></header>
+        <div class="pl-c-card__body pl-l-stack">
+          <label class="pl-c-field"><span class="pl-c-field__label">Find an asset or owner</span><input class="pl-c-field__control" type="search" id="asset-search" placeholder="Search this inventory" /></label>
+          <p>Choose an asset name to inspect details. Reviews are saved only for this demo session.</p>
+          <div class="pl-c-table-wrap" tabindex="0" role="region" aria-label="Asset records">
+            <table class="pl-c-table"><thead><tr><th scope="col">Asset</th><th scope="col">Owner</th><th scope="col">Type</th><th scope="col">Review</th></tr></thead>
+              <tbody>{assets.map(asset => <tr data-asset-id={asset.id} data-search={`${asset.name} ${asset.owner}`}><td><EntityInspector {...asset} /></td><td>{asset.owner}</td><td>{asset.kind}</td><td data-review-state>{asset.risk ? 'Needs review' : 'Current'}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <p id="asset-count" role="status">5 assets shown</p>
+        </div>
+      </section>
+      <section class="pl-c-card" id="review-plan" aria-labelledby="review-title">
+        <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="review-title">Next review window</h2></header>
+        <div class="pl-c-card__body"><p>Start with Payroll production and Customer analytics. Confirm ownership, contact the owner if needed, and mark each asset reviewed.</p><p>Next scheduled review: October 1, 2026 · Operations team</p></div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+<script>
+  document.addEventListener('input', event => {
+    const input = event.target as HTMLInputElement;
+    if (input.id !== 'asset-search') return;
+    const query = input.value.toLowerCase().trim();
+    let count = 0;
+    document.querySelectorAll<HTMLElement>('[data-asset-id]').forEach(row => {
+      row.hidden = !row.dataset.search?.toLowerCase().includes(query);
+      if (!row.hidden) count++;
+    });
+    document.querySelector('#asset-count')!.textContent = `${count} assets shown`;
+  });
+</script>
+<style>
+  .inventory { min-block-size: 0; }
+  .inventory .pl-l-app-shell__main { padding: var(--pl-space-6); }
+  @media (width < 48rem) { .inventory .pl-l-app-shell__main { padding: var(--pl-space-4); } }
+  .inventory-stat { display: block; margin-block-start: var(--pl-space-2); font-size: var(--pl-text-2xl); }
+  .inventory :global([hidden]) { display: none; }
+</style>

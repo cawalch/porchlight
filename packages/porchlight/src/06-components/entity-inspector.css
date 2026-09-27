@@ -1,0 +1,101 @@
+/* A native non-modal record popover. popovertarget provides the implicit anchor;
+   repeated instances need unique HTML ids, never per-instance CSS anchor names. */
+@layer porchlight.components {
+  @position-try --pl-inspector-viewport {
+    position-anchor: none;
+    position-area: none;
+    inset: var(--pl-space-4);
+    margin: auto;
+    inline-size: min(
+      var(--pl-c-inspector-size),
+      calc(100% - 2 * var(--pl-space-4))
+    );
+  }
+
+  .pl-c-inspector {
+    --pl-c-inspector-size: 24rem;
+    --pl-c-inspector-padding: var(--pl-space-4);
+
+    position: fixed;
+    inset: var(--pl-space-4);
+    margin: auto;
+    inline-size: min(
+      var(--pl-c-inspector-size),
+      calc(100% - 2 * var(--pl-space-4))
+    );
+    max-block-size: calc(100dvb - 2 * var(--pl-space-4));
+    padding: var(--pl-c-inspector-padding);
+    overflow: auto;
+    overscroll-behavior: contain;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    box-shadow: var(--pl-shadow-3);
+    text-align: start;
+    white-space: normal;
+    font-size: var(--pl-text-md);
+    line-height: var(--pl-leading-normal);
+  }
+
+  .pl-c-inspector:popover-open {
+    display: grid;
+    gap: var(--pl-space-4);
+  }
+
+  .pl-c-inspector__header,
+  .pl-c-inspector__actions {
+    display: flex;
+    min-inline-size: 0;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--pl-space-3);
+  }
+
+  .pl-c-inspector__title {
+    margin: 0;
+    min-inline-size: 0;
+    font-size: var(--pl-text-lg);
+  }
+
+  .pl-c-inspector__body {
+    display: grid;
+    gap: var(--pl-space-3);
+    min-inline-size: 0;
+  }
+
+  .pl-c-inspector__body > * {
+    margin-block: 0;
+  }
+
+  .pl-c-inspector__actions {
+    flex-wrap: wrap;
+    border-block-start: 1px solid var(--pl-color-border);
+    padding-block-start: var(--pl-space-4);
+  }
+
+  .pl-c-inspector__actions > :is(button, a) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    white-space: normal;
+  }
+
+  @supports (position-area: block-end) {
+    .pl-c-inspector {
+      inline-size: min(
+        var(--pl-c-inspector-size),
+        calc(100dvi - 2 * var(--pl-space-4))
+      );
+      position-anchor: auto;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline,
+        --pl-inspector-viewport;
+      inset: auto;
+      margin: var(--pl-space-4);
+    }
+  }
+}

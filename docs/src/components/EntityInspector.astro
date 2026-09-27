@@ -1,0 +1,41 @@
+---
+interface Props { id: string; name: string; owner: string; kind: string; location: string; risk?: boolean; }
+const { id, name, owner, kind, location, risk = false } = Astro.props;
+---
+<button class="pl-c-button" data-variant="ghost" type="button" popovertarget={`inspect-${id}`} aria-haspopup="dialog">{name}</button>
+<section class="pl-c-inspector" id={`inspect-${id}`} popover="auto" role="dialog" aria-labelledby={`inspect-title-${id}`}>
+  <header class="pl-c-inspector__header">
+    <h2 class="pl-c-inspector__title" id={`inspect-title-${id}`}>{name}</h2>
+    <button class="pl-c-button" data-variant="ghost" type="button" popovertarget={`inspect-${id}`} popovertargetaction="hide" autofocus aria-label={`Close ${name}`}>Close</button>
+  </header>
+  <div class="pl-c-inspector__body">
+    <div class="pl-l-cluster"><span class="pl-c-badge" data-tone={risk ? 'warning' : 'success'}>{risk ? 'Needs review' : 'Protected'}</span></div>
+    <p>{risk ? 'This asset has not reported a recent security check. Confirm its owner before the next maintenance window.' : 'Security checks are current. This asset is included in the nightly inventory sync.'}</p>
+    <dl class="pl-c-description" data-layout="stacked">
+      {Object.entries({ 'Asset ID': id, 'Type': kind, 'Owner': owner, 'Location': location }).map(([term, value]) => <div class="pl-c-description__row"><dt class="pl-c-description__term">{term}</dt><dd class="pl-c-description__detail">{value}</dd></div>)}
+    </dl>
+  </div>
+  <footer class="pl-c-inspector__actions">
+    <button class="pl-c-button" type="button" data-review-asset={id}>Mark reviewed</button>
+    <a class="pl-c-button" data-variant="ghost" href={`mailto:${owner.toLowerCase().replaceAll(' ', '.')}@example.com?subject=Asset%20${id}`}>Contact owner</a>
+    <span role="status" data-review-status></span>
+  </footer>
+</section>
+<script>
+  // Delegation survives Astro client navigation without rebinding each record.
+  document.addEventListener('click', event => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('[data-review-asset]');
+      if (!button || button.disabled) return;
+      const panel = button.closest('.pl-c-inspector')!;
+      panel.querySelector('[data-review-status]')!.textContent = 'Review recorded for this demo session.';
+      button.textContent = 'Reviewed';
+      const badge = panel.querySelector<HTMLElement>('.pl-c-badge')!;
+      badge.textContent = 'Reviewed';
+      badge.dataset.tone = 'success';
+      panel.querySelector<HTMLButtonElement>('[popovertargetaction=hide]')!.focus();
+      button.disabled = true;
+      const row = document.querySelector(`[data-asset-id="${button.dataset.reviewAsset}"]`);
+      const state = row?.querySelector('[data-review-state]');
+      if (state) state.textContent = 'Reviewed';
+  });
+</script>

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Section navigation with native scroll-position highlighting and a complete
   record-detail example, retaining ordinary fragment links as the fallback.
+- Add a native entity inspector popover with per-invoker anchoring, viewport
+  fallback, rich record actions, and an interactive asset inventory sample.
 
 - Opt-in customizable native select picker for fields, with themed options,
   native form behavior, density support, and an ordinary-select fallback.
