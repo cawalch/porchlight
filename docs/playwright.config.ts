@@ -27,7 +27,7 @@ export default defineConfig({
     },
     {
       name: "chrome-stable",
-      testMatch: /panel-deck-native\.spec\.ts/,
+      testMatch: /(?:panel-deck-native|section-nav)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], channel: "chrome" },
     },
     {
