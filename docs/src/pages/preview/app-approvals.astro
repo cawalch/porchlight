@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const requests = [
+  { id: 'access', title: 'Production analytics access', owner: 'Maya Chen · Data science', category: 'Access', amount: 'Read only · 30 days', reason: 'Investigate customer onboarding trends using the reporting replica.', review: 'Manager endorsement received. Access expires automatically after 30 days.' },
+  { id: 'design', title: 'Design research subscription', owner: 'Alex Rivera · Product design', category: 'Purchase', amount: '$480 / year', reason: 'Renew the research library used for quarterly usability studies.', review: 'Within the team budget. No customer data is shared with the vendor.' },
+  { id: 'hardware', title: 'Developer workstation', owner: 'Sam Okafor · Engineering', category: 'Purchase', amount: '$2,400 · one time', reason: 'Replace the workstation assigned to a new platform engineer.', review: 'Standard equipment configuration. Delivery is requested for October 5.' },
+];
+---
+<BaseLayout title="Approvals · Porchlight">
+  <div id="approvals-app" class="pl-l-stack" data-pl-density="comfortable">
+    <header class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Approvals</h1>
+        <p class="pl-c-page-header__subtitle">Review requests, keep work moving, and leave a clear decision trail.</p>
+      </div>
+      <span class="pl-c-badge" id="approval-count">3 pending</span>
+    </header>
+    <div class="approval-actions pl-l-cluster">
+      <label class="pl-c-field">Show requests
+        <select id="approval-filter" class="pl-c-field__control"><option value="all">All requests</option><option value="pending">Pending</option><option value="approved">Approved</option></select>
+      </label>
+      <button class="pl-c-button" id="approval-notes" aria-expanded="false" aria-controls="review-notes">Review checklist</button>
+    </div>
+    <aside id="review-notes" class="pl-c-alert" hidden><span class="pl-c-alert__icon" aria-hidden="true">ⓘ</span><div class="pl-c-alert__content"><strong class="pl-c-alert__title">Before you approve</strong><p class="pl-c-alert__body pl-u-marginless">Confirm the business purpose, budget or access scope, and the requester's manager endorsement.</p></div></aside>
+    <p class="pl-u-muted-sm" role="status" id="approval-status">Sample data. Decisions are not saved.</p>
+    <div id="approval-workspace" class="approval-workspace pl-u-transition-scope">
+      <nav aria-label="Approval requests" class="pl-c-card">
+        <h2 class="pl-c-card__title">Requests</h2>
+        <ul class="approval-list">
+          {requests.map((request, index) => <li data-request={request.id} data-title={request.title}>
+            <button class="pl-c-button approval-row" aria-current={index === 0 ? 'true' : undefined} aria-controls={`detail-${request.id}`}>
+              <strong>{request.title}</strong><span class="pl-u-muted-sm">{request.owner}</span><span class="pl-c-badge" data-status>Pending</span>
+            </button>
+          </li>)}
+        </ul>
+        <p id="approval-empty-list" hidden>No requests in this view.</p>
+      </nav>
+      <div>
+        {requests.map((request, index) => <article id={`detail-${request.id}`} class="pl-c-card" data-detail={request.id} hidden={index !== 0} aria-labelledby={`title-${request.id}`}>
+          <div class="pl-c-card__header"><span class="pl-c-badge">{request.category}</span><span class="pl-c-badge" data-status>Pending</span></div>
+          <h2 class="pl-c-card__title" id={`title-${request.id}`}>{request.title}</h2>
+          <div class="pl-c-card__body pl-l-stack"><p class="pl-u-muted-sm">Requested by {request.owner}</p>
+          <p><strong>{request.amount}</strong></p><p>{request.reason}</p></div>
+          <div class="pl-c-alert"><span class="pl-c-alert__icon" aria-hidden="true">ⓘ</span><div class="pl-c-alert__content"><strong class="pl-c-alert__title">Review context</strong><p class="pl-c-alert__body pl-u-marginless">{request.review}</p></div></div>
+        </article>)}
+        <article class="pl-c-card" id="approval-empty-detail" hidden><h2 class="pl-c-card__title">You're up to date</h2><p>Choose another view to review previous decisions.</p></article>
+      </div>
+    </div>
+    <div class="pl-l-cluster approval-decisions" aria-label="Review actions">
+      <button class="pl-c-button" data-variant="primary" id="approval-approve">Approve selected</button>
+      <button class="pl-c-button" id="approval-undo" disabled>Undo approval</button>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Application-owned sample state; Porchlight ships only the CSS utility.
+  const initialized = new WeakSet<HTMLElement>();
+  function setupApprovals() {
+    const app = document.querySelector<HTMLElement>('#approvals-app');
+    if (!app || initialized.has(app)) return;
+    initialized.add(app);
+    const scope = app.querySelector<HTMLElement>('#approval-workspace')! as HTMLElement & {
+      startViewTransition?: (update: () => void) => ViewTransition;
+    };
+    const filter = app.querySelector<HTMLSelectElement>('#approval-filter')!;
+    const approve = app.querySelector<HTMLButtonElement>('#approval-approve')!;
+    const undo = app.querySelector<HTMLButtonElement>('#approval-undo')!;
+    const status = app.querySelector<HTMLElement>('#approval-status')!;
+    const items = [...app.querySelectorAll<HTMLElement>('[data-request]')].map(row => ({
+      row, id: row.dataset.request!, title: row.dataset.title!, approved: false,
+      panel: app.querySelector<HTMLElement>(`[data-detail="${row.dataset.request}"]`)!,
+    }));
+    let selected = items[0].id;
+    let lastApproved: typeof items[number] | undefined;
+    let active: ViewTransition | undefined;
+    let revision = 0;
+    const render = () => {
+      const focused = document.activeElement;
+      const visible = items.filter(item => filter.value === 'all' || item.approved === (filter.value === 'approved'));
+      if (!visible.some(item => item.id === selected)) selected = visible[0]?.id ?? '';
+      for (const item of items) {
+        item.row.hidden = !visible.includes(item);
+        item.panel.hidden = item.id !== selected;
+        item.row.querySelector('button')!.setAttribute('aria-current', String(item.id === selected));
+        for (const badge of [item.row, item.panel].flatMap(node => [...node.querySelectorAll('[data-status]')])) badge.textContent = item.approved ? 'Approved' : 'Pending';
+      }
+      approve.disabled = !selected || !!items.find(item => item.id === selected)?.approved;
+      undo.disabled = !lastApproved;
+      app.querySelector('#approval-count')!.textContent = `${items.filter(item => !item.approved).length} pending`;
+      (app.querySelector('#approval-empty-list') as HTMLElement).hidden = visible.length > 0;
+      (app.querySelector('#approval-empty-detail') as HTMLElement).hidden = !!selected;
+      // Keep focus useful when an action disables the button that invoked it.
+      if (focused === approve && approve.disabled) (undo.disabled ? filter : undo).focus();
+      if (focused === undo && undo.disabled) (approve.disabled ? filter : approve).focus();
+    };
+    const update = (change: () => void) => {
+      const current = ++revision;
+      active?.skipTransition();
+      change();
+      const commit = () => { if (current === revision) render(); };
+      if (!scope.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) { commit(); return; }
+      try {
+        const transition = scope.startViewTransition(commit);
+        active = transition;
+        // Skipping a superseded transition rejects ready; state still commits once.
+        void transition.ready.catch(() => {});
+        void transition.finished.finally(() => { if (active === transition) active = undefined; }).catch(() => {});
+      } catch { commit(); }
+    };
+    filter.addEventListener('change', () => update(() => { status.textContent = 'Request view updated.'; }));
+    items.forEach(item => item.row.querySelector('button')!.addEventListener('click', () => update(() => { selected = item.id; status.textContent = `${item.title} selected for review.`; })));
+    approve.addEventListener('click', () => update(() => {
+      const item = items.find(item => item.id === selected);
+      if (!item || item.approved) return;
+      item.approved = true; lastApproved = item; status.textContent = `${item.title} approved. Undo is available.`;
+    }));
+    undo.addEventListener('click', () => update(() => {
+      if (!lastApproved) return;
+      lastApproved.approved = false; selected = lastApproved.id; filter.value = 'all';
+      status.textContent = `${lastApproved.title} returned to pending.`; lastApproved = undefined;
+    }));
+    app.querySelector('#approval-notes')!.addEventListener('click', (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const notes = app.querySelector<HTMLElement>('#review-notes')!;
+      notes.hidden = !notes.hidden; button.setAttribute('aria-expanded', String(!notes.hidden));
+    });
+    render();
+  }
+  document.addEventListener('astro:page-load', setupApprovals);
+  setupApprovals();
+</script>
+
+<style>
+  #approvals-app > .pl-c-page-header { margin-block-end: 0; }
+  #approval-status { margin: 0; }
+  .approval-actions { align-items: end; }
+  .approval-decisions { justify-content: end; }
+  .approval-workspace { display: grid; grid-template-columns: minmax(14rem, 1fr) minmax(0, 2fr); gap: var(--pl-space-5); padding: var(--pl-space-1); }
+  .approval-workspace > * { min-inline-size: 0; }
+  .approval-list { display: grid; gap: var(--pl-space-3); list-style: none; padding: 0; margin: 0; }
+  .approval-row { inline-size: 100%; align-items: start; flex-direction: column; text-align: start; white-space: normal; padding: var(--pl-control-padding-inline); }
+  .approval-row[aria-current='true'] { border-color: var(--pl-color-accent); background: var(--pl-color-surface-2); }
+  @media (width < 48rem) { .approval-workspace { grid-template-columns: minmax(0, 1fr); } }
+</style>

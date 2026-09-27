@@ -22,12 +22,13 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      testIgnore: /panel-deck-(?:native|fallback)\.spec\.ts/,
+      testIgnore:
+        /(?:panel-deck-(?:native|fallback)|approvals-native)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
     {
       name: "chrome-stable",
-      testMatch: /(?:panel-deck-native|section-nav)\.spec\.ts/,
+      testMatch: /(?:panel-deck-native|section-nav|approvals-native)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], channel: "chrome" },
     },
     {

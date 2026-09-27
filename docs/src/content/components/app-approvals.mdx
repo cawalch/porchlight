@@ -1,0 +1,62 @@
+---
+title: Approvals inbox
+description: Scoped workspace updates with application-owned selection, filtering, approval and undo.
+kind: pattern
+status: experimental
+---
+
+# Approvals inbox
+
+<a href={`${import.meta.env.BASE_URL}preview/app-approvals`}>
+  Open the preview
+</a>
+
+A request list and review panel share a scoped transition while the filter,
+approve/undo actions, and review checklist remain interactive outside it.
+The example uses local sample data; it does not persist or authorize decisions.
+Selection, pending/approved filtering, and one-level undo belong to the application.
+
+## Opt-in transition utility
+
+Add `.pl-u-transition-scope` to the smallest subtree that changes. It isolates
+transition names from outer transitions and clips snapshots to that region.
+Keep menus and other content that must overflow outside this clipping boundary.
+Its pseudo-elements use `--pl-u-transition-duration` (default `--pl-duration-2`)
+and `--pl-ease-standard`. Import the full/compat bundle, or core plus utilities.
+The utility does not add layout, spacing, event handlers, or state management.
+
+## Application integration
+
+```js
+const scope = document.querySelector(".pl-u-transition-scope");
+const update = () => renderApplicationState();
+if (
+  typeof scope.startViewTransition === "function" &&
+  !matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  const transition = scope.startViewTransition(update);
+  transition.ready.catch(() => {}); // A superseding transition can skip animation.
+} else {
+  update();
+}
+```
+
+The function overload was verified in Chrome 154. The
+
+<a href="https://drafts.csswg.org/css-view-transitions-2/#additions-to-element">
+  current API
+</a>
+also accepts an options object with `update`; `callback` does not invoke the
+update in Chrome 154. Detect the element API itself; document-wide view
+transition support is not sufficient. Browsers without it run the same state
+update directly.
+
+The preview skips the previous animation and uses a revision guard so a deferred
+callback cannot render stale state. It keeps DOM controls stable, moves focus when
+an action disables its invoker, handles skipped-transition promises, and initializes
+on Astro's `astro:page-load` event without duplicate listeners. Real applications
+must also handle authorization, persistence, failed requests, and announcement text.
+
+Reduced motion bypasses the API; CSS additionally sets transition duration to zero.
+RTL uses the same logical layout and workflow. Test your browser/assistive technology
+combination; this is an experimental visual enhancement, not an interaction requirement.

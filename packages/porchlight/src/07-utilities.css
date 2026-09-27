@@ -138,4 +138,29 @@
     inline-size: 100vi;
     margin-inline: calc(50% - 50vi);
   }
+
+  /* Opt-in boundary for Element.startViewTransition(); the application owns
+     updates, feature detection, focus, and reduced-motion bypass. */
+  :where(.pl-u-transition-scope) {
+    --pl-u-transition-duration: var(--pl-duration-2);
+
+    isolation: isolate;
+    overflow: clip;
+    view-transition-scope: all;
+  }
+
+  :where(.pl-u-transition-scope)::view-transition-group(*),
+  :where(.pl-u-transition-scope)::view-transition-old(*),
+  :where(.pl-u-transition-scope)::view-transition-new(*) {
+    animation-duration: var(--pl-u-transition-duration);
+    animation-timing-function: var(--pl-ease-standard);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.pl-u-transition-scope)::view-transition-group(*),
+    :where(.pl-u-transition-scope)::view-transition-old(*),
+    :where(.pl-u-transition-scope)::view-transition-new(*) {
+      animation-duration: 0s;
+    }
+  }
 }

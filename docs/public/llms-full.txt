@@ -417,6 +417,7 @@ list tracks CSS component contracts rather than composed application recipes.
 These entries compose existing components into reusable SaaS workflows without
 claiming a new component stylesheet.
 
+- app-approvals: /components/app-approvals
 - app-command-workspace: /components/app-command-workspace
 - app-dense: /components/app-dense
 - app-list-detail: /components/app-list-detail
@@ -448,6 +449,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 
 - /preview/accordion
 - /preview/alert
+- /preview/app-approvals
 - /preview/app-asset-inventory
 - /preview/app-cases
 - /preview/app-command-workspace
