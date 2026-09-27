@@ -11,8 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Opt-in customizable native select picker for fields, with themed options,
   native form behavior, density support, and an ordinary-select fallback.
+- Opt-in scroll regions with logical overflow-edge indicators and stuck table
+  header/column separators; base styles remain available in the Bun-compatible bundle.
 
 ### Fixed
+
+- Observe the sticky bar itself so sticky-shell shadows activate while stuck.
 
 - Correct installation, Bun/static-asset setup, contributor build instructions,
   browser coverage claims, and layout/cascade guidance.

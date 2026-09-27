@@ -45,17 +45,17 @@ works identically from that version onward.
 
 Fallbacks differ by component; some optional affordances disappear entirely.
 
-| Feature                  | Use                                   | Without support                                                                                   |
-| ------------------------ | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Anchor positioning       | Menus, calendar popovers, tooltips    | Menus use their base positioning; tooltips are hidden, so keep essential labels visible elsewhere |
-| Scroll-driven animations | Reveal and scroll-progress components | Reveal content stays visible; progress bar is hidden                                              |
-| `field-sizing: content`  | Auto-growing textareas                | Ordinary resizable textarea                                                                       |
-| `interpolate-size`       | Intrinsic-size transitions            | Base disclosure behavior; no intrinsic-size interpolation                                         |
-| `text-box`               | Optical label alignment               | Normal line-box alignment                                                                         |
-| Gap decorations          | Optional grid dividers                | Normal gaps without divider lines                                                                 |
-| Typed `attr()`           | Color swatches                        | Supply application-owned dimensions and fallback appearance                                       |
-| Scroll-state queries     | Experimental sticky-shell effects     | Supply ordinary sticky/scroll layout in application CSS                                           |
-| View transitions         | Optional navigation animations        | Cross-document navigation is disabled by default; apps must opt in                                |
+| Feature                  | Use                                      | Without support                                                                                   |
+| ------------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Anchor positioning       | Menus, calendar popovers, tooltips       | Menus use their base positioning; tooltips are hidden, so keep essential labels visible elsewhere |
+| Scroll-driven animations | Reveal and scroll-progress components    | Reveal content stays visible; progress bar is hidden                                              |
+| `field-sizing: content`  | Auto-growing textareas                   | Ordinary resizable textarea                                                                       |
+| `interpolate-size`       | Intrinsic-size transitions               | Base disclosure behavior; no intrinsic-size interpolation                                         |
+| `text-box`               | Optical label alignment                  | Normal line-box alignment                                                                         |
+| Gap decorations          | Optional grid dividers                   | Normal gaps without divider lines                                                                 |
+| Typed `attr()`           | Color swatches                           | Supply application-owned dimensions and fallback appearance                                       |
+| Scroll-state queries     | Scroll-region edges and stuck separators | Base scrollport, persistent border, and sticky positioning remain available                       |
+| View transitions         | Optional navigation animations           | Cross-document navigation is disabled by default; apps must opt in                                |
 
 ## How degradation works
 

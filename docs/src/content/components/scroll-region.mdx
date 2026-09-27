@@ -1,0 +1,64 @@
+---
+title: Scroll Region
+description: Bounded scrollports with logical overflow indicators and scroll-aware sticky table boundaries.
+status: experimental
+---
+
+# Scroll Region
+
+Use `.pl-c-scroll-region` for a bounded data pane. In current Chrome, accent
+edges show which directions contain more content. Edges disappear when that
+boundary is reached or the content fits. Sticky table headers and first columns
+receive an accent separator only while stuck. No scroll listeners are required.
+
+## Semantic HTML
+
+```html
+<div
+  class="pl-c-scroll-region"
+  tabindex="0"
+  role="region"
+  aria-label="Investigation activity"
+>
+  <div><!-- All content goes inside this single direct child. --></div>
+</div>
+```
+
+The root uses overlapping grid areas for its content and decorative edge frame:
+**use exactly one direct content child**. Keep paragraphs, cards, or other
+siblings inside that child and supply their normal padding and gaps. The region
+does not space its content. Give each region an accessible name and `tabindex="0"`
+for keyboard scrolling; avoid unnecessary nested scroll regions. Indicators have
+no pointer events and add no screen-reader announcements. Scrollbars remain native.
+
+For tables, combine `pl-c-table-wrap pl-c-scroll-region` on the **same** element,
+with the native `.pl-c-table` as its direct child. Do not put a second overflow
+wrapper inside it. Existing `.pl-c-table__sticky-col` cells gain a stuck separator.
+Use table headers and captions as usual; the CSS does not change table semantics.
+
+## Tokens
+
+| Token                            | Default             | Purpose                            |
+| -------------------------------- | ------------------- | ---------------------------------- |
+| `--pl-c-scroll-region-size`      | `20rem`             | Fixed block size of the scrollport |
+| `--pl-c-scroll-region-indicator` | `--pl-color-accent` | Overflow and stuck-edge color      |
+
+Set overrides on the component root. Logical edges follow writing direction,
+including RTL. Indicators do not animate; forced-colors mode uses `Highlight`.
+
+## Imports and fallback
+
+The full bundle includes both the base component and enhancement rules.
+For selective imports, load core, `components/scroll-region.css`, optional
+`components/data-table.css`, and `enhancements.css`, in that order. The base
+component supplies the scrollport, persistent border, focus ring, and sticky-shell
+bar positioning. `compat.css` includes that base but omits the state indicators.
+
+All `scroll-state()` syntax stays in `enhancements.css`. Bun 1.4.2 can bundle the
+base component or `compat.css`; it still rejects the enhancement/full bundle.
+Use the static-copy path from the <a href={`${import.meta.env.BASE_URL}guides/getting-started`}>setup guide</a>
+when serving enhancements with Bun. Browsers without scroll-state queries retain
+normal scrolling and sticky table cells, with no misleading accent edges.
+
+See the <a href={`${import.meta.env.BASE_URL}preview/scroll-region`}>live queue and no-overflow examples</a>
+and [Chrome's scroll-state documentation](https://developer.chrome.com/blog/css-scroll-state-queries).

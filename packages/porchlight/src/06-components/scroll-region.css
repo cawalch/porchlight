@@ -1,0 +1,38 @@
+/* Bounded, keyboard-operable scrollport. State indicators live in enhancements
+   so compat.css and this component remain consumable by older CSS parsers. */
+@layer porchlight.components {
+  .pl-c-scroll-region {
+    --pl-c-scroll-region-size: 20rem;
+    --pl-c-scroll-region-indicator: var(--pl-color-accent);
+
+    display: grid;
+    grid-template: "region" 100% / 100%;
+    block-size: var(--pl-c-scroll-region-size);
+    min-inline-size: 0;
+    overflow: auto;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+  }
+
+  .pl-c-scroll-region > * {
+    grid-area: region;
+    align-self: start;
+    min-inline-size: 0;
+  }
+
+  .pl-c-scroll-region:focus-visible {
+    outline: var(--pl-focus-size) solid var(--pl-focus-color);
+    outline-offset: var(--pl-focus-offset);
+  }
+
+  /* A sticky bar is useful even when scroll-state queries are unavailable.
+     The bar itself, not its non-sticky shell, is the state query container. */
+  .pl-c-sticky-shell__bar {
+    position: sticky;
+    inset-block-start: var(--pl-c-sticky-shell-offset, 0);
+    z-index: var(--pl-z-sticky);
+    background: var(--pl-color-surface);
+    border-block-end: 1px solid var(--pl-color-border);
+  }
+}

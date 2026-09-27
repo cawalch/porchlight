@@ -185,7 +185,7 @@ const activity = [
 
         <!-- Case list (data table) -->
         <div class="pl-c-card cases-table-card" data-surface="app">
-          <div class="pl-c-table-wrap cases-table-wrap" tabindex="0">
+          <div class="pl-c-table-wrap pl-c-scroll-region cases-table-wrap" tabindex="0" role="region" aria-label="Case queue">
             <table class="pl-c-table">
               <thead>
                 <tr>
@@ -472,6 +472,7 @@ const activity = [
     }
     .cases-table-wrap {
       --pl-c-table-min: 52rem;
+      --pl-c-scroll-region-size: 26rem;
       border: 0;
       border-radius: 0;
     }
