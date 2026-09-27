@@ -144,6 +144,21 @@
       text-wrap: pretty;
     }
 
+    /* The card owns its outer inset; prose margins belong between content,
+       not between the first/last block and the card's padding or slot gap. */
+    .pl-c-card__body > :first-child {
+      margin-block-start: 0;
+    }
+
+    .pl-c-card__body > :last-child {
+      margin-block-end: 0;
+    }
+
+    /* A stack already supplies the spacing between its children. */
+    .pl-c-card__body:where(.pl-l-stack) > * {
+      margin-block: 0;
+    }
+
     .pl-c-card__footer {
       display: flex;
       flex-wrap: wrap;
@@ -161,7 +176,7 @@
     /* Header collapses to a stack when the CARD is narrow (container query). */
     @container pl-c-card (inline-size < 28rem) {
       .pl-c-card__header {
-        align-items: stretch;
+        align-items: start;
         flex-direction: column;
       }
     }
