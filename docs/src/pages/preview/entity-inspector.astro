@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntityInspector from '../../components/EntityInspector.astro';
+---
+<BaseLayout title="Entity inspector · Porchlight">
+  <h1>Entity inspector</h1>
+  <p>Open a record to inspect its metadata and act without leaving the current view. Escape or click outside to dismiss; Tab follows normal document order.</p>
+  <div class="pl-l-cluster">
+    <EntityInspector id="AST-1042" name="Payroll production" owner="Mina Chen" kind="Cloud service" location="US Central" risk />
+    <EntityInspector id="AST-2088" name="Design workstation" owner="Sam Rivera" kind="Managed laptop" location="London" />
+  </div>
+  <p><a href={`${import.meta.env.BASE_URL}preview/app-asset-inventory`}>Explore the complete asset inventory sample</a></p>
+</BaseLayout>

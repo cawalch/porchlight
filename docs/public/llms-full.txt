@@ -378,6 +378,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - drawer: /components/drawer
 - dropdown: /components/dropdown
 - empty-state: /components/empty-state
+- entity-inspector: /components/entity-inspector
 - field: /components/field
 - file-upload: /components/file-upload
 - filter-builder: /components/filter-builder
@@ -437,6 +438,7 @@ claiming a new component stylesheet.
 - /preview/dashboard: compact dashboard composition proof
 - /preview/app-dense: dense admin/data-console layout
 - /preview/app-cases: case queue with filters and detail panel
+- /preview/app-asset-inventory: searchable asset inventory with native entity inspectors and review actions
 - /preview/form: forms, grids, input groups, choice groups, and validation states
 - /preview/field: native controls, messages, required markers, and framework-neutral validation
 
@@ -446,6 +448,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 
 - /preview/accordion
 - /preview/alert
+- /preview/app-asset-inventory
 - /preview/app-cases
 - /preview/app-command-workspace
 - /preview/app-dashboard
@@ -479,6 +482,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/dropdown
 - /preview/empty-state
 - /preview/enhancements
+- /preview/entity-inspector
 - /preview/field
 - /preview/file-upload
 - /preview/filter-builder

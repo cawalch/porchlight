@@ -48,6 +48,7 @@ Use this short file to route quickly. Use /llms-full.txt when generating or refa
 - /preview/dashboard: compact dashboard composition proof
 - /preview/app-dense: dense admin/data-console layout
 - /preview/app-cases: case queue with filters and detail panel
+- /preview/app-asset-inventory: searchable asset inventory with native entity inspectors and review actions
 - /preview/form: forms, grids, input groups, choice groups, and validation states
 - /preview/field: native controls, messages, required markers, and framework-neutral validation
 

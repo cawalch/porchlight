@@ -1,0 +1,79 @@
+---
+title: Entity inspector
+description: A native nonmodal record popover with contextual metadata, actions, and automatic per-invoker anchoring.
+status: experimental
+---
+
+# Entity inspector
+
+Use an inspector for a person, asset, or account summary with real links and
+buttons. Unlike a tooltip or action menu, it contains structured record details.
+Native popover controls open on click, tap, Enter or Space; Escape and outside
+click dismiss. No Porchlight runtime or per-instance CSS anchor name is needed.
+
+```html
+<button type="button" popovertarget="asset-42" aria-haspopup="dialog">
+  Payroll production
+</button>
+<section
+  id="asset-42"
+  class="pl-c-inspector"
+  popover="auto"
+  role="dialog"
+  aria-labelledby="asset-42-title"
+>
+  <header class="pl-c-inspector__header">
+    <h2 id="asset-42-title" class="pl-c-inspector__title">
+      Payroll production
+    </h2>
+    <button
+      type="button"
+      popovertarget="asset-42"
+      popovertargetaction="hide"
+      autofocus
+      aria-label="Close Payroll production"
+    >
+      Close
+    </button>
+  </header>
+  <div class="pl-c-inspector__body">
+    <p>Owned by Mina Chen · US Central</p>
+    <!-- Compose badges and a pl-c-description list here. -->
+  </div>
+  <footer class="pl-c-inspector__actions">
+    <a href="/assets/42">Open full record</a>
+  </footer>
+</section>
+```
+
+Every popover and heading needs a unique HTML id. `popovertarget` supplies the
+[implicit anchor](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Anchor_positioning/Using#implicit_anchor_association),
+so repeated records bind to the button that actually opened them. Put the
+popover after its trigger in DOM order. If opening with JavaScript, use
+`showPopover({ source: trigger })` to preserve that association.
+
+This is a **nonmodal dialog**: do not add `aria-modal="true"`, `role="tooltip"`,
+a focus trap, or redundant scripted `aria-expanded`. The labeled Close button
+receives initial focus through `autofocus`; Escape returns focus to the invoker.
+Tab can leave the inspector. Keep a full-record destination available elsewhere
+when details are essential. The app owns data loading, authorization and actions.
+
+The panel tries below/above and either inline side of its invoker. If none fits,
+a custom position fallback centers it in the viewport. Long content scrolls
+within the viewport; long values wrap. Without anchor positioning, the native
+popover remains centered. Popover API support is required. No animation or
+backdrop is added, and tokens follow theme, density and forced colors.
+
+Set `--pl-c-inspector-size` (default `24rem`) and
+`--pl-c-inspector-padding` (default `--pl-space-4`) on the popover itself.
+Import core and `components/entity-inspector.css`; import button, badge and
+other components used inside separately. Full and compat bundles include it.
+
+<a href={`${import.meta.env.BASE_URL}preview/entity-inspector`}>
+  Try two independent inspectors
+</a>
+or explore the
+<a href={`${import.meta.env.BASE_URL}preview/app-asset-inventory`}>
+  asset inventory app
+</a>
+.
