@@ -26,6 +26,14 @@ lanes, a dense table, a split detail panel, badges, and timeline activity.
 - **Detail/action panel:** use `.pl-c-split-pane` to keep the selected item,
   decision controls, metadata, and `.pl-c-timeline` activity visible.
 
+## Panel spacing
+
+Compose each `.pl-c-split-pane__pane-inner` with `.pl-l-stack` when it contains
+multiple queue sections or detail cards. The pane body supplies the outer
+padding; the stack supplies the `--pl-space-4` gap between sibling panels,
+including the selected item, decision fields, and activity history. Keep card
+padding for the content inside each panel.
+
 ## Semantic HTML
 
 Keep each region explicit:
