@@ -18,6 +18,7 @@ const PAGES = [
   "/",
   "/guides/",
   "/guides/getting-started",
+  "/guides/integrations",
   "/guides/theming",
   "/guides/browser-support",
   "/guides/architecture",

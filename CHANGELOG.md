@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Integration guidance for server-rendered HTML, HTMX fragments, Alpine state,
+  and optional CSS Modules, with a live module-based customization preview.
+
 ## [0.12.0] - 2026-09-27
 
 ### Added

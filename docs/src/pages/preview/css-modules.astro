@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import styles from '../../styles/integration.module.css';
+const b = import.meta.env.BASE_URL;
+---
+<BaseLayout title="CSS Modules · Porchlight">
+  <div class="pl-l-stack">
+    <header class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">CSS Modules</h1>
+        <p class="pl-c-page-header__subtitle">Stable Porchlight classes with optional app-local styles.</p>
+      </div>
+    </header>
+    <p>Both cards use the same component. The customized card adds a generated module class to change its padding and border through Porchlight tokens.</p>
+    <div class="pl-l-grid">
+      <article class="pl-c-card" id="default-card">
+        <header class="pl-c-card__header"><h2 class="pl-c-card__title">Default card</h2></header>
+        <div class="pl-c-card__body"><p>Porchlight supplies the spacing, surface, and border.</p></div>
+      </article>
+      <article class:list={['pl-c-card', styles.card]} id="module-card">
+        <header class="pl-c-card__header"><h2 class="pl-c-card__title">App-specific card</h2></header>
+        <div class="pl-c-card__body"><p>The module adds a larger padding token and the theme's accent border.</p></div>
+      </article>
+    </div>
+    <p>Server templates, HTMX fragments, and Alpine controls can keep ordinary Porchlight classes. CSS Modules are optional application tooling.</p>
+    <p><a href={`${b}guides/integrations`}>HTMX, Alpine, and CSS Modules guide</a></p>
+  </div>
+</BaseLayout>

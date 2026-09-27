@@ -347,6 +347,7 @@ Use the prebuilt stylesheet where possible. If a bundler cannot parse modern CSS
 ## Primary docs
 
 - Getting started: /guides/getting-started
+- HTMX, Alpine, and CSS Modules: /guides/integrations
 - Composition recipes: /guides/composition-recipes
 - Layout primitives: /guides/layout
 - Utilities: /guides/utilities
@@ -476,6 +477,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/chip
 - /preview/combobox
 - /preview/command-palette
+- /preview/css-modules
 - /preview/dashboard
 - /preview/data-table
 - /preview/description-list
@@ -527,6 +529,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 ## Absolute URLs
 
 - Getting started: https://cawalch.github.io/porchlight/guides/getting-started
+- HTMX, Alpine, and CSS Modules: https://cawalch.github.io/porchlight/guides/integrations
 - Composition recipes: https://cawalch.github.io/porchlight/guides/composition-recipes
 - Layout primitives: https://cawalch.github.io/porchlight/guides/layout
 - Utilities: https://cawalch.github.io/porchlight/guides/utilities

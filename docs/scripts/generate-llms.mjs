@@ -17,6 +17,7 @@ const baseUrl = "https://cawalch.github.io/porchlight/";
 
 const primaryLinks = [
   ["Getting started", "/guides/getting-started"],
+  ["HTMX, Alpine, and CSS Modules", "/guides/integrations"],
   ["Composition recipes", "/guides/composition-recipes"],
   ["Layout primitives", "/guides/layout"],
   ["Utilities", "/guides/utilities"],
