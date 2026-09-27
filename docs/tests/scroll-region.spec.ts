@@ -8,6 +8,12 @@ for (const direction of ["ltr", "rtl"]) {
     await page.goto("./preview/scroll-region");
     const region = page.locator("#queue");
     await region.evaluate((el, dir) => el.setAttribute("dir", dir), direction);
+    const start = () =>
+      region.evaluate(
+        (el, dir) => el.scrollTo(dir === "rtl" ? el.scrollWidth : 0, 0),
+        direction,
+      );
+    await start();
     const edges = () =>
       region.evaluate((el) => {
         const s = getComputedStyle(el, "::after");
@@ -49,7 +55,7 @@ for (const direction of ["ltr", "rtl"]) {
       direction,
     );
     await expect.poll(edges).toEqual([true, false, true, false]);
-    await region.evaluate((el) => el.scrollTo(0, 0));
+    await start();
     await expect.poll(edges).toEqual([false, true, false, true]);
     await expect
       .poll(() =>
@@ -121,7 +127,19 @@ test("forced colors keep state boundaries and reduced motion adds no transition"
 }) => {
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   await page.goto("./preview/scroll-region");
-  const state = await page.locator("#queue").evaluate((el) => {
+  const queue = page.locator("#queue");
+  const highlight = await page.evaluate(() => {
+    const probe = document.createElement("span");
+    probe.style.cssText = "color: Highlight; forced-color-adjust: none";
+    document.body.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return color;
+  });
+  const edge = () =>
+    queue.evaluate((el) => getComputedStyle(el, "::after").borderBlockEndColor);
+  await expect.poll(edge).toBe(highlight);
+  const state = await queue.evaluate((el) => {
     const s = getComputedStyle(el, "::after");
     return {
       border: s.borderBlockEndStyle,
@@ -132,6 +150,8 @@ test("forced colors keep state boundaries and reduced motion adds no transition"
   expect(state.border).toBe("solid");
   expect(state.width).toBe("2px");
   expect(parseFloat(state.transition)).toBeLessThanOrEqual(0.001);
+  await queue.evaluate((el) => el.scrollTo(0, el.scrollHeight));
+  await expect.poll(edge).toBe("rgba(0, 0, 0, 0)");
   await expect
     .poll(() =>
       page
