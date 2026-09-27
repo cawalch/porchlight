@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Correct page insets, heading and section gaps, mobile hero gutters, metadata
+  alignment, and settings form spacing across the sample apps.
+
 - Restore standard stack spacing between queue-triage sections and detail-panel
   cards in the sample app.
 

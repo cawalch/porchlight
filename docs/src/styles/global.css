@@ -286,6 +286,16 @@ main > .pl-l-app-shell > .pl-l-app-shell__topbar {
   filter: brightness(1.08);
 }
 
+/* Layout gaps own separation in sample compositions; prose margins must not
+ * add a second gap around framework page headings. */
+main:not(:has(.docs-shell, .prose)) .pl-l-stack > .pl-c-page-header {
+  margin-block-end: 0;
+}
+
+main:not(:has(.docs-shell, .prose)) .pl-c-page-header__subtitle {
+  margin-block-end: 0;
+}
+
 /* ---------------------------------------------------------------------------
  * Preview pages: restore element spacing that the framework reset zeroes.
  *
