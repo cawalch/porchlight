@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const panels = [
+  { label: 'Activity', title: 'Recent activity', body: 'Keep your team informed about workspace changes.', link: 'Review activity' },
+  { label: 'Reports', title: 'Reports ready', body: 'Review the weekly summary and share the next steps.', link: 'Read reports' },
+  { label: 'Resources', title: 'Team resources', body: 'Find the guidance your team needs to get started.', link: 'Browse resources' },
+];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<BaseLayout title="Panel deck · Porchlight">
+  <h1>Panel deck</h1>
+  <p>Fixed panels with native CSS tabs in Chrome 154. Other browsers show readable stacked panels. No navigation script, autoplay, or animated transition.</p>
+  <p><a id="deck-start" href="#workspace-deck">Explore workspace overview</a></p>
+  <div id="workspace-deck" class="pl-c-panel-deck" role="region" aria-label="Workspace overview">
+    {panels.map((panel, index) => (
+      <section class="pl-c-panel-deck__panel" data-label={panel.label} aria-labelledby={`panel-title-${index}`}>
+        <h2 id={`panel-title-${index}`}>{panel.title}</h2>
+        <p>{panel.body}</p>
+        <a class="pl-c-button" href={`${base}guides/getting-started`}>{panel.link}</a>
+      </section>
+    ))}
+  </div>
+  <h2>Density and direction</h2>
+  <p>Navigation scrolls on narrow screens; content padding and control size follow density. RTL uses stacked panels because Chrome 154 can expose the wrong panel to assistive technology.</p>
+  {(['compact', 'comfortable', 'touch', 'touch RTL'] as const).map((density) => (
+    <section data-pl-density={density === 'touch RTL' ? 'touch' : density} dir={density === 'touch RTL' ? 'rtl' : undefined}>
+      <h3>{density}</h3>
+      <div class="pl-c-panel-deck" role="region" aria-label={`${density} example`}>
+        {panels.map((panel, index) => (
+          <section class="pl-c-panel-deck__panel" data-label={panel.label} aria-labelledby={`${density.replace(' ', '-')}-${index}`} tabindex="0">
+            <h4 id={`${density.replace(' ', '-')}-${index}`}>{panel.title}</h4>
+            <p>{panel.body}</p>
+          </section>
+        ))}
+      </div>
+    </section>
+  ))}
+</BaseLayout>

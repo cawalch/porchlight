@@ -1,0 +1,110 @@
+/* Native, fixed-content panels. The complete tabs mode is the enhancement
+   gate: older marker implementations must keep the readable stacked fallback. */
+@layer porchlight.components {
+  :where(.pl-c-panel-deck) {
+    --pl-c-panel-deck-gap: var(--pl-space-3);
+    --pl-c-panel-deck-padding: var(--pl-control-padding-inline);
+
+    display: grid;
+    gap: var(--pl-c-panel-deck-gap);
+    min-inline-size: 0;
+  }
+
+  :where(.pl-c-panel-deck) > .pl-c-panel-deck__panel {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding: var(--pl-c-panel-deck-padding);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-lg);
+    background: var(--pl-color-surface);
+    overflow-wrap: anywhere;
+  }
+
+  :where(.pl-c-panel-deck__panel) > :first-child {
+    margin-block-start: 0;
+  }
+
+  :where(.pl-c-panel-deck__panel) > :last-child {
+    margin-block-end: 0;
+  }
+
+  @supports (scroll-marker-group: before tabs) {
+    /* Chrome 154 can expose a different RTL panel from the visible one. */
+    :where(.pl-c-panel-deck:not(:dir(rtl))) {
+      display: flex;
+      overflow: auto;
+      scroll-snap-type: inline mandatory;
+      scroll-marker-group: before tabs;
+    }
+
+    :where(.pl-c-panel-deck) > .pl-c-panel-deck__panel {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    :where(.pl-c-panel-deck)::scroll-marker-group {
+      display: flex;
+
+      /* UA size containment requires an explicit size. Reserve room for the
+         horizontal scrollbar; labels stay readable in one scrollable row. */
+      block-size: calc(var(--pl-control-block-size) + var(--pl-space-4));
+      overflow: auto;
+      scrollbar-width: thin;
+      gap: var(--pl-control-gap);
+      margin-block-end: var(--pl-c-panel-deck-gap);
+    }
+
+    :where(.pl-c-panel-deck) > .pl-c-panel-deck__panel::scroll-marker {
+      content: attr(data-label);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      block-size: var(--pl-control-block-size);
+      padding-inline: var(--pl-control-padding-inline);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-control-radius);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      font: inherit;
+      font-weight: var(--pl-font-weight-medium);
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    :where(.pl-c-panel-deck) > .pl-c-panel-deck__panel::scroll-marker:hover {
+      background: var(--pl-color-surface-2);
+    }
+
+    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
+    .pl-c-panel-deck__panel::scroll-marker:target-current {
+      border-color: var(--pl-color-accent);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-accent);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    :where(.pl-c-panel-deck)
+      > .pl-c-panel-deck__panel::scroll-marker:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(-1 * var(--pl-focus-size));
+    }
+
+    @media (forced-colors: active) {
+      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
+      .pl-c-panel-deck__panel::scroll-marker:target-current {
+        border-color: Highlight;
+        color: Highlight;
+      }
+
+      :where(.pl-c-panel-deck)
+        > .pl-c-panel-deck__panel::scroll-marker:focus-visible {
+        outline-color: Highlight;
+      }
+    }
+  }
+}
