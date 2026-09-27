@@ -34,7 +34,7 @@ pnpm --filter ./docs llms:check
 
 On Linux, use Playwright's `install --with-deps` when system libraries are
 missing. Tests reuse an existing server on port 4321; stop a stale server or
-set `PLAYWRIGHT_BASE_URL` to the build you intend to test. The focused panel-deck and section-navigation suites use installed Chrome stable (154+) to verify native CSS navigation; Firefox/WebKit exercise the readable fallback. Generated LLM docs
+set `PLAYWRIGHT_BASE_URL` to the build you intend to test. The focused native-feature suites use installed Chrome stable (154+) to verify native CSS navigation and scoped transitions; Firefox/WebKit exercise the readable fallback. Generated LLM docs
 are maintained with `pnpm --filter ./docs llms:generate` when their inputs change.
 
 Workspace layout:

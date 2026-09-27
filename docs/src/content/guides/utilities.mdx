@@ -149,8 +149,17 @@ scrolling regions, where viewport-relative width can cause overflow.
 <figure class="pl-u-full-bleed">...</figure>
 ```
 
+## `.pl-u-transition-scope`
+
+Opt into a clipped, isolated boundary for application-owned
+`Element.startViewTransition()` updates. It styles only that element's transition
+pseudo-tree. See the <a href={`${import.meta.env.BASE_URL}components/app-approvals`}>approvals pattern</a>
+for feature detection, reduced-motion bypass, focus and interrupted updates.
+
 ## Tokens exposed
 
 | Token               | Default        | Purpose                           |
 | ------------------- | -------------- | --------------------------------- |
 | `--pl-u-flow-space` | `--pl-space-4` | The rhythm step for `.pl-u-flow`. |
+
+`--pl-u-transition-duration` defaults to `--pl-duration-2` for scoped transitions.
