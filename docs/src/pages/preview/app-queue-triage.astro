@@ -403,27 +403,27 @@ const selectedItem = queueItems[0];
               <header class="pl-c-card__header">
                 <h3 class="pl-c-card__title">{selectedItem.title}</h3>
               </header>
-              <div class="pl-c-card__body">
+              <div class="pl-c-card__body pl-l-stack">
                 <div class="pl-c-badge-group" aria-label="Selected item urgency">
                   <span class="pl-c-badge" data-tone={selectedItem.priorityTone}>{selectedItem.priority}</span>
                   <span class="pl-c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span>
                 </div>
-                <dl class="pl-l-grid">
-                  <div>
-                    <dt class="pl-u-muted-sm">SLA</dt>
-                    <dd><span class="pl-c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span></dd>
+                <dl class="pl-c-description" data-layout="stacked">
+                  <div class="pl-c-description__row">
+                    <dt class="pl-c-description__term">SLA</dt>
+                    <dd class="pl-c-description__detail"><span class="pl-c-badge" data-tone={selectedItem.slaTone}>{selectedItem.sla}</span></dd>
                   </div>
-                  <div>
-                    <dt class="pl-u-muted-sm">Status</dt>
-                    <dd><span class="pl-c-badge" data-tone={selectedItem.statusTone}>{selectedItem.status}</span></dd>
+                  <div class="pl-c-description__row">
+                    <dt class="pl-c-description__term">Status</dt>
+                    <dd class="pl-c-description__detail"><span class="pl-c-badge" data-tone={selectedItem.statusTone}>{selectedItem.status}</span></dd>
                   </div>
-                  <div>
-                    <dt class="pl-u-muted-sm">Channel</dt>
-                    <dd>{selectedItem.channel}</dd>
+                  <div class="pl-c-description__row">
+                    <dt class="pl-c-description__term">Channel</dt>
+                    <dd class="pl-c-description__detail">{selectedItem.channel}</dd>
                   </div>
-                  <div>
-                    <dt class="pl-u-muted-sm">Owner</dt>
-                    <dd><span class="pl-c-avatar" data-size="sm">{selectedItem.owner}</span></dd>
+                  <div class="pl-c-description__row">
+                    <dt class="pl-c-description__term">Owner</dt>
+                    <dd class="pl-c-description__detail"><span class="pl-c-avatar" data-size="sm">{selectedItem.owner}</span></dd>
                   </div>
                 </dl>
               </div>

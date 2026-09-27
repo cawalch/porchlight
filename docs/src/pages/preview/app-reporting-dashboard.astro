@@ -54,7 +54,7 @@ const toneFor = (status: string) =>
   ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning' }[status] ?? 'accent');
 ---
 <BaseLayout title="Reporting dashboard · Porchlight">
-  <main class="pl-l-container pl-l-stack reporting-shell">
+  <div class="pl-l-stack reporting-shell">
     <section class="pl-l-stack reporting-header-stack" aria-labelledby="report-title">
       <div class="pl-c-page-header">
         <div class="pl-c-page-header__heading">
@@ -323,7 +323,7 @@ const toneFor = (status: string) =>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
@@ -332,7 +332,6 @@ const toneFor = (status: string) =>
   }
 
   .reporting-shell {
-    --pl-l-container-max: 92rem;
     --pl-l-stack-gap: var(--pl-space-5);
   }
 

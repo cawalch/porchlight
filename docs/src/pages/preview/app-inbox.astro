@@ -223,7 +223,10 @@ const messages = [
       gap: var(--pl-space-3);
       flex-wrap: wrap;
     }
-    .msg-detail__header h2 { font-size: var(--pl-text-lg); }
+    .msg-detail__header h2 {
+      font-size: var(--pl-text-lg);
+      margin-block: 0;
+    }
     .msg-detail__meta {
       display: flex;
       align-items: center;
@@ -242,6 +245,9 @@ const messages = [
     .msg-detail__body p {
       margin-block-end: var(--pl-space-3);
       line-height: 1.6;
+    }
+    .msg-detail__body p:last-child {
+      margin-block-end: 0;
     }
     .msg-detail__reply-actions {
       margin-block-start: var(--pl-space-2);

@@ -27,7 +27,7 @@ const sections = [
     </nav>
 
     <!-- Main settings area -->
-    <div class="settings-main">
+    <div class="settings-main pl-l-stack">
       <!-- Alert banner -->
       <div class="pl-c-alert" data-tone="warning">
         <div class="pl-c-alert__icon">
@@ -48,7 +48,7 @@ const sections = [
         </div>
 
         <!-- Profile tab -->
-        <div class="pl-c-tabs__panel" role="tabpanel">
+        <div class="pl-c-tabs__panel pl-l-stack" role="tabpanel">
           <div class="pl-c-card">
             <div class="pl-c-card__header">
               <h2 class="pl-c-card__title">Workspace profile</h2>
@@ -91,18 +91,16 @@ const sections = [
           </div>
 
           <!-- Storage usage card -->
-          <div class="pl-c-card" style="margin-block-start: var(--pl-space-4);">
+          <div class="pl-c-card">
             <div class="pl-c-card__header">
               <h2 class="pl-c-card__title">Storage</h2>
               <span class="pl-c-badge" data-tone="warning">64% used</span>
             </div>
-            <div class="pl-c-card__body">
-              <div class="pl-l-stack">
-                <div class="pl-c-progress" data-tone="warning">
-                  <div class="pl-c-progress__bar" style="inline-size: 64%;"></div>
-                </div>
-                <p class="pl-u-muted">128 GB of 200 GB used. <a href="#">Upgrade plan</a> for more storage.</p>
+            <div class="pl-c-card__body pl-l-stack">
+              <div class="pl-c-progress" data-tone="warning">
+                <div class="pl-c-progress__bar" style="inline-size: 64%;"></div>
               </div>
+              <p class="pl-u-muted">128 GB of 200 GB used. <a href="#">Upgrade plan</a> for more storage.</p>
             </div>
           </div>
         </div>

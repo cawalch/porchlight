@@ -102,6 +102,7 @@ const nav = [
 <style>
   .toggles {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--pl-space-3);
     margin-block-end: var(--pl-space-4);
@@ -218,8 +219,11 @@ const nav = [
     justify-content: space-between;
     gap: var(--pl-space-3);
   }
+  .main__header h2 {
+    margin-block: 0;
+  }
   .filters h3 {
-    margin-block-end: var(--pl-space-2);
+    margin-block: 0 var(--pl-space-2);
     font-size: var(--pl-text-sm);
     color: var(--pl-color-text-muted);
   }
