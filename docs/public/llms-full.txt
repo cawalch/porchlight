@@ -391,6 +391,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - progress: /components/progress
 - reveal: /components/reveal
 - scroll-progress: /components/scroll-progress
+- scroll-region: /components/scroll-region
 - segmented: /components/segmented
 - skeleton: /components/skeleton
 - split-button: /components/split-button
@@ -489,6 +490,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/reset
 - /preview/reveal
 - /preview/scroll-progress
+- /preview/scroll-region
 - /preview/segmented
 - /preview/settings
 - /preview/skeleton

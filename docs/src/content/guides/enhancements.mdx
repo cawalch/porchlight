@@ -24,12 +24,25 @@ when unavailable.
 
 ## Sticky shell shadow
 
-The current `.pl-c-sticky-shell` example is experimental. The bar sticks,
-but its conditional shadow does not activate in the tested Chromium build:
-the scroll-state query container is the non-sticky wrapper, so the query does
-not observe the child's stuck state. Do not depend on the shadow as a scroll
-indicator. Use an app-owned persistent border/shadow until this pattern is
-corrected, and provide your own sticky layout if the feature is unsupported.
+The `.pl-c-sticky-shell__bar` queries its own sticky state and gains a shadow
+only while stuck. Its decorative pseudo-element responds to the query; the
+non-sticky wrapper is not the query container. Keep the bar inside a wrapper
+that also contains enough content to scroll:
+
+```html
+<div class="pl-c-sticky-shell">
+  <header class="pl-c-sticky-shell__bar">Activity</header>
+  <div><!-- Scrollable content --></div>
+</div>
+```
+
+The app owns wrapper dimensions, overflow, and bar padding. Set
+`--pl-c-sticky-shell-offset` on the bar when another fixed header needs space.
+For selective imports, load `components/scroll-region.css` as well as core and
+`enhancements.css`; the base component provides sticky positioning and a
+persistent border even without scroll-state support. `compat.css` includes this
+fallback. The full bundle includes both. For overflow-edge indicators and sticky
+table separators, see <a href={`${import.meta.env.BASE_URL}components/scroll-region`}>Scroll Region</a>.
 
 ## `text-box` optical alignment
 

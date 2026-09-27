@@ -9,8 +9,8 @@
  *   1. interpolate-size: allow-keywords on :root, so height/width can animate
  *      to/from auto and content-keyword sizes (Baseline 2026; enables
  *      disclosure/collapsible animations without measuring JS).
- *   2. scroll-state container queries: a .pl-c-sticky-shell that gains a shadow
- *      when it becomes stuck (the "app-bar shadow on scroll" pattern, no JS).
+ *   2. scroll-state container queries: logical overflow indicators, stuck table
+ *      separators, and sticky-shell bar shadows, without scroll listeners.
  *   3. text-box: trim-both cap alphabetic on buttons/badges, removing the
  *      cap-height half-leading for optically-centered labels.
  *   4. rule (CSS Gap Decorations): dividers between grid/flex items via
@@ -31,37 +31,91 @@
     }
   }
 
-  /* 2. Scroll-state container queries: the sticky-shell shadow pattern.
-     A scroll container becomes a scroll-state query container; when its
-     sticky child is "stuck to top", the inner bar gains an elevation shadow.
-     Replaces the JS scroll-listener pattern entirely. */
+  /* 2. State indicators paint only narrow borders, never a translucent veil
+     over controls. Named queries prevent nested scrollports stealing state. */
   @supports (container-type: scroll-state) {
-    .pl-c-sticky-shell {
-      container-type: scroll-state;
+    .pl-c-scroll-region {
+      container: pl-c-scroll-region pl-c-table-wrap / inline-size scroll-state;
     }
 
-    .pl-c-sticky-shell__bar {
+    .pl-c-scroll-region::after {
+      content: "";
+      grid-area: region;
       position: sticky;
       inset-block-start: 0;
-      z-index: var(--pl-z-sticky);
-      background: var(--pl-color-surface);
-      transition:
-        box-shadow var(--pl-duration-2) var(--pl-ease-standard),
-        background-color var(--pl-duration-2) var(--pl-ease-standard);
+      inset-inline-start: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      border: 2px solid transparent;
+      z-index: calc(var(--pl-z-sticky) + 1);
+      pointer-events: none;
     }
 
-    @container scroll-state(stuck: top) {
-      .pl-c-sticky-shell__bar {
+    @container pl-c-scroll-region scroll-state(scrollable: inline-start) {
+      .pl-c-scroll-region::after {
+        border-inline-start-color: var(--pl-c-scroll-region-indicator);
+      }
+    }
+
+    @container pl-c-scroll-region scroll-state(scrollable: inline-end) {
+      .pl-c-scroll-region::after {
+        border-inline-end-color: var(--pl-c-scroll-region-indicator);
+      }
+    }
+
+    @container pl-c-scroll-region scroll-state(scrollable: block-start) {
+      .pl-c-scroll-region::after {
+        border-block-start-color: var(--pl-c-scroll-region-indicator);
+      }
+    }
+
+    @container pl-c-scroll-region scroll-state(scrollable: block-end) {
+      .pl-c-scroll-region::after {
+        border-block-end-color: var(--pl-c-scroll-region-indicator);
+      }
+    }
+
+    .pl-c-sticky-shell__bar,
+    .pl-c-scroll-region .pl-c-table :where(th, .pl-c-table__sticky-col) {
+      container: pl-c-stuck / scroll-state;
+    }
+
+    .pl-c-sticky-shell__bar::after,
+    .pl-c-scroll-region .pl-c-table th::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    @container pl-c-stuck scroll-state(stuck: block-start) {
+      .pl-c-sticky-shell__bar::after {
         box-shadow: var(--pl-shadow-2);
-        background: color-mix(
-          in oklab,
-          var(--pl-color-surface),
-          transparent 18%
-        );
-        backdrop-filter: blur(16px) saturate(180%);
-        -webkit-backdrop-filter: blur(16px) saturate(180%);
-        border-block-end: 1px solid
-          color-mix(in oklab, var(--pl-color-border), transparent 55%);
+      }
+
+      .pl-c-scroll-region .pl-c-table th::after {
+        border-block-end: 2px solid var(--pl-c-scroll-region-indicator);
+      }
+    }
+
+    @container pl-c-stuck scroll-state(stuck: inline-start) {
+      .pl-c-scroll-region .pl-c-table .pl-c-table__sticky-col::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-inline-end: 2px solid var(--pl-c-scroll-region-indicator);
+        pointer-events: none;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .pl-c-scroll-region {
+        --pl-c-scroll-region-indicator: Highlight;
+      }
+
+      /* Keep inactive transparent borders invisible in high-contrast modes. */
+      .pl-c-scroll-region::after {
+        forced-color-adjust: none;
       }
     }
   }

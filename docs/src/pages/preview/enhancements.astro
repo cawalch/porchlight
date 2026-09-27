@@ -11,20 +11,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     Tier B modern CSS, all gated behind <code>@supports</code>. The framework
     is fully usable without any of these; they layer on where the browser
     supports them, with zero behavior change where it doesn't. Open this page
-    in a current browser to inspect each feature. Support varies by feature;
-    the sticky-shell experiment below also has a known implementation limitation.
+    in a current browser to inspect each feature. Support varies by feature.
   </p>
 
   <h2>Scroll-state sticky-shell shadow</h2>
   <p>
-    Experimental: the bar sticks, but its conditional shadow currently does
-    not activate. The query observes the non-sticky wrapper instead of the
-    sticky bar. Use a persistent border or shadow in application code until
-    this pattern is corrected.
+    The bar gains a shadow only while stuck. The query observes the sticky bar
+    itself; the persistent border and sticky positioning work without the enhancement.
   </p>
   <div class="pl-c-sticky-shell sticky-demo" tabindex="0" role="region" aria-label="Sticky-shell scroll demo">
     <header class="pl-c-sticky-shell__bar">
-      <strong>Sticky bar</strong> <span class="pl-u-muted">experimental shadow pending</span>
+      <strong>Sticky bar</strong> <span class="pl-u-muted">shadow appears when stuck</span>
     </header>
     <div class="sticky-demo__content">
       {Array.from({ length: 12 }).map((_, i) => (
