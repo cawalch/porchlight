@@ -7,11 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-09-27
+
 ### Fixed
 
 - Style standalone field controls in docs search and composed interfaces while
   preserving disabled affordance, input-group chrome, RTL select arrows, and
   keyboard focus in forced colors.
+- Normalize card body margins and stack gaps, preserve natural badge widths in
+  narrow card headers, and align toolbar and heading spacing in sample apps.
+- Keep full-page preview app bars, sticky table cells, and pane headers from
+  covering the docs header; let mobile Settings navigation scroll with the form.
+- Correct RTL accents, shadows, directional controls, and panel motion across
+  navigation, tables, cards, trees, timelines, workflow boards, and overlays.
+- Make split-pane stacking respond consistently to ancestor container width.
+- Restore square icon-only button sizing, visible keyboard focus on dialog close
+  buttons, and the navigation line-height token. Make sample table scroll regions
+  keyboard accessible and improve docs code and theme-token readability.
 
 ## [0.11.0] - 2026-08-08
 
