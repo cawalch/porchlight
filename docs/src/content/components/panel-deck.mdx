@@ -4,8 +4,6 @@ description: A small set of fixed panels with native CSS tab navigation and a re
 status: experimental
 ---
 
-# Panel deck
-
 Use `.pl-c-panel-deck` for onboarding information, reports, or galleries with a
 small, fixed set of panels. Chrome 154's `scroll-marker-group: before tabs`
 provides labeled tabs, arrow-key navigation, and selected-panel accessibility
@@ -88,11 +86,13 @@ the feature gate; it does not add tab behavior to older browsers.
 Lightning CSS 1.33 and Bun 1.4.2 preserve the native rules in selected and
 compatibility builds. Bun reports nonfatal unknown scroll-marker selector
 warnings; both outputs were checked with keyboard navigation in Chrome 154.
-The full bundle still has the separate
 
-<a
-  href={`${import.meta.env.BASE_URL}guides/getting-started#bun-and-parser-fallbacks`}
->
-  Bun scroll-state parser limitation
-</a>
-.
+<p>
+  {"The full bundle also has a "}
+  <a
+    href={`${import.meta.env.BASE_URL}guides/getting-started#bun-and-parser-fallbacks`}
+  >
+    {"Bun scroll-state parser limitation"}
+  </a>
+  {"."}
+</p>

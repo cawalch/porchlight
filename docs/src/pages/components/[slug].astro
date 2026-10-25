@@ -3,7 +3,6 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { getCollection, render } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
-import '../../styles/prose.css';
 
 // Renders a component reference page from src/content/components/*.mdx.
 export async function getStaticPaths() {
@@ -14,7 +13,7 @@ export async function getStaticPaths() {
   }));
 }
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 const title = `${entry.data.title} · Porchlight`;
 const b = import.meta.env.BASE_URL;
 const repo = 'https://github.com/cawalch/porchlight';
@@ -27,6 +26,8 @@ const hasStyleSource = existsSync(fileURLToPath(styleSource));
   sectionLabel={entry.data.kind === 'pattern' ? 'Pattern' : 'Component'}
   status={entry.data.status}
   since={entry.data.since}
+  headings={headings}
+  inlineExample={entry.data.kind === 'component' && !['button', 'field'].includes(entry.id)}
   previewHref={`${b}preview/${entry.id}`}
   sourceHref={`${repo}/blob/main/docs/src/content/components/${entry.id}.mdx`}
   styleHref={hasStyleSource ? `${repo}/blob/main/packages/porchlight/src/06-components/${entry.id}.css` : undefined}

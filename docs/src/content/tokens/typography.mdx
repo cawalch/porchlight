@@ -3,47 +3,34 @@ title: Typography
 category: type
 ---
 
-# Typography Tokens
+import TokenTable from "../../components/TokenTable.astro";
 
-Porchlight uses a fluid type scale with `clamp()` so text smoothly scales
-between mobile and desktop without media queries.
+Use the font, type-size, and line-height tokens to keep application text
+consistent. Values below come from the framework CSS at build time.
 
-## Font stacks
+## Font stacks and weights
 
-| Token            | Stack                                                                                                          |
-| ---------------- | -------------------------------------------------------------------------------------------------------------- |
-| `--pl-font-sans` | `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif` |
-| `--pl-font-mono` | `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`                          |
+The default stacks use system fonts. Load a variable font in your application
+before changing its font-family and weight tokens.
+
+<TokenTable prefix="--pl-font-" caption="Font defaults" />
 
 ## Type scale
 
-Five steps. The `clamp()` ranges ensure minimum readability on small
-screens and comfortable scaling on large ones:
+The fluid sizes use `clamp()` to scale between small and large viewports.
+`vi` is one percent of the viewport's inline size. The `rem` limits still
+respect the reader's root font size.
 
-| Token          | Min               | Max                | Example use                   |
-| -------------- | ----------------- | ------------------ | ----------------------------- |
-| `--pl-text-xs` | `0.75rem` (12px)  | `0.8125rem` (13px) | Captions, labels, timestamps  |
-| `--pl-text-sm` | `0.875rem` (14px) | `0.9375rem` (15px) | Body small, secondary text    |
-| `--pl-text-md` | `1rem` (16px)     | `1rem` (16px)      | Body text (default)           |
-| `--pl-text-lg` | `1.125rem` (18px) | `1.25rem` (20px)   | Card titles, section headings |
-| `--pl-text-xl` | `1.25rem` (20px)  | `1.625rem` (26px)  | Page titles                   |
+<TokenTable prefix="--pl-text-" caption="Type sizes" />
 
-The viewport-relative unit (`vi`) in the `clamp()` values means text scales
-with **1% of the viewport inline size**, not the root font size.
+## Line height
 
-## Line height (leading)
+Use tighter line height for headings and labels, normal line height for body
+text, and loose line height for longer prose.
 
-| Token                 | Value | Usage               |
-| --------------------- | ----- | ------------------- |
-| `--pl-leading-tight`  | `1.2` | Headings, UI labels |
-| `--pl-leading-normal` | `1.5` | Body text           |
-| `--pl-leading-loose`  | `1.7` | Long-form prose     |
+<TokenTable prefix="--pl-leading-" caption="Line-height values" />
 
 ## Text wrapping
 
-These are applied globally, not as tokens:
-
-| Property             | Value  | Usage                                      |
-| -------------------- | ------ | ------------------------------------------ |
-| `text-wrap: balance` | Global | Headings (H1-H4) distribute lines evenly   |
-| `text-wrap: pretty`  | Global | Paragraphs avoid orphan words on last line |
+The base layer applies `text-wrap: balance` to headings and `text-wrap: pretty`
+to paragraphs. These are element styles, not custom properties.

@@ -48,6 +48,28 @@ The docs site imports the tracked workspace CSS source. Build and test the
 packaged artifacts separately with `pnpm --filter @cawalch/porchlight test:package`;
 a working source preview alone does not verify published exports.
 
+### Documentation
+
+Follow the [Google developer documentation style guide](https://developers.google.com/style/highlights).
+Use sentence-case titles and headings, direct task instructions, and descriptive
+links. Keep CSS names and browser requirements precise; explain the HTML/CSS
+contract before using that term throughout a guide.
+
+`DocsLayout` owns the page heading, prose styles, navigation, and contents list.
+Start collection content with its introduction rather than another H1. Pass the
+headings returned by `render(entry)` to the layout. Keep the navigation order
+stable and put component examples in the reading flow.
+
+Use `TokenTable` for source-derived token values. Keep explanations in MDX and
+avoid copying values or project statistics into handwritten tables. The
+`docs-reading.spec.ts` checks every route at mobile and desktop widths and covers
+client navigation, identifiers in search, zoom, and documentation screenshots.
+Documentation screenshots use native macOS and Ubuntu CI baselines. Inspect the
+screenshots and traces in the CI failure artifact before updating a baseline;
+the route layout and navigation checks must still pass.
+To reproduce Ubuntu screenshots in the matching Playwright container, install
+`fonts-dejavu-core` so `system-ui` resolves to the same font as the CI runner.
+
 ## Branching & pull requests
 
 - Branch from `main`. Follow the repository's current branch protections and wait for required checks before merging.

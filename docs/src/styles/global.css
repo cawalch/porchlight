@@ -149,9 +149,105 @@ body {
   font-weight: 600;
 }
 
+.site-header__tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--pl-space-2);
+  min-inline-size: 0;
+}
+
+.site-menu {
+  display: none;
+}
+
+.site-search {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pl-space-2);
+  min-block-size: 2rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--pl-color-border);
+  border-radius: var(--pl-radius-md);
+  background: var(--pl-color-surface);
+  color: var(--pl-color-text-muted);
+  font: inherit;
+  font-size: var(--pl-text-sm);
+  cursor: pointer;
+}
+
+.site-search kbd {
+  font-family: inherit;
+  font-size: var(--pl-text-xs);
+}
+
+@media (width < 48rem) {
+  .site-search kbd {
+    display: none;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-menu {
+    display: block;
+    position: relative;
+  }
+
+  .site-menu summary {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+    cursor: pointer;
+    font-size: var(--pl-text-sm);
+    list-style: none;
+  }
+
+  .site-menu nav {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-start: calc(100% + var(--pl-space-2));
+    z-index: 20;
+    inline-size: 12rem;
+    padding: var(--pl-space-3);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+    box-shadow: var(--pl-shadow-2);
+  }
+
+  .site-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-menu a {
+    display: block;
+    padding: var(--pl-space-2);
+  }
+}
+
+/* Embedded examples keep their real control sizes and omit site navigation. */
+html[data-docs-embed] :is(.site-header, .site-footer, .skip-link) {
+  display: none;
+}
+
+html[data-docs-embed] :where(#main) {
+  inline-size: calc(100% - 2rem);
+  padding-block: var(--pl-space-4);
+}
+
+html[data-docs-embed] :where(#main) > h1:first-child,
+html[data-docs-embed] :where(#main) > h1:first-child + p {
+  display: none;
+}
+
 @media (width < 24rem) {
   .site-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: 0.5rem;
   }
 
@@ -286,11 +382,11 @@ body {
 
 /* Layout gaps own separation in sample compositions; prose margins must not
  * add a second gap around framework page headings. */
-main:not(:has(.docs-shell, .prose)) .pl-l-stack > .pl-c-page-header {
+.preview-page main .pl-l-stack > .pl-c-page-header {
   margin-block-end: 0;
 }
 
-main:not(:has(.docs-shell, .prose)) .pl-c-page-header__subtitle {
+.preview-page main .pl-c-page-header__subtitle {
   margin-block-end: 0;
 }
 
@@ -308,44 +404,44 @@ main:not(:has(.docs-shell, .prose)) .pl-c-page-header__subtitle {
  * specificity (unlayered > layered in the cascade), causing bugs like card
  * titles getting 32px top margins.
  *
- * Scoped via :has() so this ONLY applies when main does NOT contain a
- * .docs-shell or .prose article (those have their own spacing).
+ * The BaseLayout marks preview pages explicitly. Nested demo classes do not
+ * change the typography of the surrounding page.
  * ------------------------------------------------------------------------- */
 @layer porchlight.base {
-  main:not(:has(.docs-shell, .prose)) :where(h1) {
+  .preview-page main :where(h1) {
     margin-block: 0 var(--pl-space-5);
     font-size: var(--pl-text-xl);
     font-weight: 700;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(h2) {
+  .preview-page main :where(h2) {
     margin-block: var(--pl-space-8) var(--pl-space-3);
     font-size: var(--pl-text-lg);
     font-weight: 600;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(h3) {
+  .preview-page main :where(h3) {
     margin-block: var(--pl-space-6) var(--pl-space-2);
     font-size: var(--pl-text-md);
     font-weight: 600;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(p) {
+  .preview-page main :where(p) {
     margin-block: 0 var(--pl-space-4);
     line-height: 1.6;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(ul, ol) {
+  .preview-page main :where(ul, ol) {
     margin-block: 0 var(--pl-space-4);
     padding-inline-start: var(--pl-space-6);
     line-height: 1.6;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(li) {
+  .preview-page main :where(li) {
     margin-block: 0 var(--pl-space-1);
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(code) {
+  .preview-page main :where(code) {
     padding: 0.0625rem 0.25rem;
     border-radius: var(--pl-radius-sm);
     background: var(--pl-color-surface-2);
@@ -353,7 +449,7 @@ main:not(:has(.docs-shell, .prose)) .pl-c-page-header__subtitle {
     font-family: var(--pl-font-mono);
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(pre) {
+  .preview-page main :where(pre) {
     margin-block: var(--pl-space-4);
     padding: var(--pl-space-4);
     border: 1px solid var(--pl-color-border);
@@ -364,7 +460,7 @@ main:not(:has(.docs-shell, .prose)) .pl-c-page-header__subtitle {
     line-height: 1.6;
   }
 
-  main:not(:has(.docs-shell, .prose)) :where(pre) :where(code) {
+  .preview-page main :where(pre) :where(code) {
     padding: 0;
     background: none;
     border: 0;

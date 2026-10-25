@@ -48,7 +48,7 @@ test("approvals initialize after Astro navigation and history traversal", async 
   await expect(page.locator("#review-notes")).toBeVisible();
   await page.goBack();
   await expect(
-    page.getByRole("heading", { name: "Preview index", exact: true }),
+    page.getByRole("heading", { name: "Examples", exact: true }),
   ).toBeVisible();
   await page.goForward();
   await page.getByRole("button", { name: "Approve selected" }).click();

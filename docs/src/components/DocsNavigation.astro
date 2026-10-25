@@ -1,0 +1,12 @@
+---
+interface Props { sections: { title: string; links: { href: string; label: string }[] }[]; }
+const { sections } = Astro.props;
+const here = Astro.url.pathname.replace(/\/$/, '');
+---
+<nav class="docs-nav" aria-label="Documentation">
+  {sections.map(section => (
+    <section><h2>{section.title}</h2><ul>
+      {section.links.map(link => <li><a href={link.href} aria-current={here === link.href.replace(/\/$/, '') ? 'page' : undefined}>{link.label}</a></li>)}
+    </ul></section>
+  ))}
+</nav>

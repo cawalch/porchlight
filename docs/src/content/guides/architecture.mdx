@@ -1,10 +1,8 @@
 ---
-title: Architecture & layer model
+title: Architecture and layer model
 description: How Porchlight is layered, and how host applications override it.
 order: 1
 ---
-
-# Architecture & the layer model
 
 Porchlight ships full and partial CSS bundles authored as small modules. Every framework rule lives
 inside one top-level cascade layer: **`porchlight`**.
@@ -34,7 +32,7 @@ beat components. `!important` reverses layer precedence.
 | `enhancements` | Progressive `@supports`-gated features.              |
 | `print`        | Print behavior.                                      |
 
-## How a host app overrides Porchlight
+## How a host app overrides porchlight
 
 Place the framework in the cascade **before** you import it:
 

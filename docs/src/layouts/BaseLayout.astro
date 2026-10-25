@@ -12,11 +12,15 @@ import { ClientRouter } from 'astro:transitions';
 interface Props {
   title?: string;
   description?: string;
+  search?: boolean;
+  skipTarget?: string;
 }
 
 const {
   title = 'Porchlight',
   description = 'A no-dependency, native-CSS framework.',
+  search = false,
+  skipTarget = 'main',
 } = Astro.props;
 
 // Resolve internal links against the build-time base path so the site works
@@ -25,10 +29,10 @@ const b = import.meta.env.BASE_URL;
 const link = (path: string) => `${b}${path.replace(/^\//, '')}`;
 
 const nav = [
-  { href: link('guides/getting-started'), label: 'Start', external: false },
-  { href: link('components/button'), label: 'Components', external: false },
+  { href: link('guides'), label: 'Guides', external: false },
+  { href: link('components'), label: 'Components', external: false },
   { href: link('tokens'), label: 'Tokens', external: false },
-  { href: link('preview'), label: 'Preview', external: false },
+  { href: link('preview'), label: 'Examples', external: false },
   { href: 'https://github.com/cawalch/porchlight', label: 'GitHub', external: true },
 ];
 
@@ -38,11 +42,7 @@ const isActive = (href: string) => {
   const clean = href.replace(/\/$/, '');
   // Exact match, or prefix match for nav sections.
   if (here === clean) return true;
-  if (clean.endsWith('getting-started') && here.includes('/guides/')) return true;
-  if (clean.endsWith('components/button') && here.includes('/components/')) return true;
-  if (clean.endsWith('tokens') && here.includes('/tokens')) return true;
-  if (clean.endsWith('preview') && here.includes('/preview/')) return true;
-  return false;
+  return here.startsWith(`${clean}/`);
 };
 ---
 <!doctype html>
@@ -55,17 +55,22 @@ const isActive = (href: string) => {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
+    <script is:inline data-astro-rerun>
+      document.documentElement.toggleAttribute('data-docs-embed', new URL(location.href).searchParams.get('embed') === '1');
+    </script>
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class:list={{ 'docs-page': search, 'preview-page': !search }}>
+    <a class="skip-link" href={`#${skipTarget}`}>Skip to content</a>
     <header class="site-header">
       <a class="site-header__brand" href={b} aria-label="Porchlight docs home">
         <span class="site-header__mark" aria-hidden="true">P</span>
         <span class="site-header__brand-copy">
           <strong>Porchlight</strong>
-          <small>CSS workbench</small>
+          <small>Documentation</small>
         </span>
       </a>
+      <div class="site-header__tools">
+        {search && <button type="button" class="site-search" aria-label="Search docs" aria-haspopup="dialog" aria-controls="docs-search-dialog" data-docs-command-open>Search <kbd>⌘ K</kbd></button>}
       <nav class="site-nav" aria-label="Primary">
         <ul>
           {nav.map((item) => (
@@ -79,6 +84,13 @@ const isActive = (href: string) => {
           ))}
         </ul>
       </nav>
+        <details class="site-menu">
+          <summary>Menu</summary>
+          <nav aria-label="Primary"><ul>
+            {nav.map(item => <li><a href={item.href} aria-current={item.external ? undefined : (isActive(item.href) ? 'page' : undefined)}>{item.label}</a></li>)}
+          </ul></nav>
+        </details>
+      </div>
     </header>
     <main id="main">
       <slot />
@@ -88,3 +100,19 @@ const isActive = (href: string) => {
     </footer>
   </body>
 </html>
+
+<script>
+  let headerObserver: ResizeObserver | undefined;
+  function measureHeader() {
+    headerObserver?.disconnect();
+    const header = document.querySelector<HTMLElement>('.site-header');
+    if (!header) return;
+    const update = () => document.documentElement.style.setProperty('--doc-header-size', `${header.getBoundingClientRect().height}px`);
+    update();
+    headerObserver = new ResizeObserver(update);
+    headerObserver.observe(header);
+  }
+  measureHeader();
+  document.addEventListener('astro:page-load', measureHeader);
+  document.addEventListener('astro:before-swap', () => headerObserver?.disconnect());
+</script>

@@ -1,0 +1,8 @@
+---
+import type { MarkdownHeading } from 'astro';
+interface Props { headings: MarkdownHeading[]; }
+const { headings } = Astro.props;
+---
+<ol class="docs-toc" data-docs-toc>
+  {headings.map(heading => <li data-depth={heading.depth}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+</ol>

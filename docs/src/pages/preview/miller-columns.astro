@@ -16,17 +16,13 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
         <span class="pl-c-page-header__subtitle">Cascading multi-column drill-down exploration for hierarchical data.</span>
       </div>
       <div class="pl-c-page-header__actions">
-        <div class="pl-c-toolbar" data-surface="flush">
-          <div class="pl-c-toolbar__group">
-            <label class="pl-c-field" style="flex-direction: row; align-items: center; gap: var(--pl-space-2);">
-              <span class="pl-c-field__label" style="margin: 0; font-size: var(--pl-text-xs); white-space: nowrap;">Density</span>
+            <label class="miller-density">
+              <span>Density</span>
               <select class="pl-c-field__control" id="density-select" style="min-block-size: 2rem; padding-block: 0; font-size: var(--pl-text-xs);">
                 <option value="comfortable">Comfortable</option>
                 <option value="compact">Compact</option>
               </select>
             </label>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -501,6 +497,17 @@ const chevron = '<polyline points="9 18 15 12 9 6" />';
   </div>
 
 <style>
+  .miller-density {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pl-space-2);
+    min-inline-size: 0;
+    font-size: var(--pl-text-sm);
+  }
+
+  .miller-density select { inline-size: auto; }
+
   .miller-columns-container {
     --pl-l-container-max: 104rem;
     --pl-l-container-pad: clamp(var(--pl-space-4), 2vi, var(--pl-space-6));

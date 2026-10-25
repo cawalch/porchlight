@@ -5,8 +5,6 @@ status: stable
 since: 0.8.0
 ---
 
-# Tree view
-
 The `.pl-c-tree` component styles rendered tree markup for enterprise app
 navigation: process folders, case files, rule sets, document libraries, tenant
 hierarchies, and workflow builders. It is CSS-only and framework-neutral. Your
@@ -54,7 +52,7 @@ is expressed with attributes such as `aria-expanded`, `aria-selected`,
 </div>
 ```
 
-## State Attributes
+## State attributes
 
 ```html
 <div class="pl-c-tree__item" role="treeitem" aria-expanded="false">
@@ -89,7 +87,7 @@ templates, or formatted JSX/HTML cannot create extra anonymous line boxes
 between rows. Only `.pl-c-tree__item-row` and `.pl-c-tree__group` participate in the
 vertical rhythm.
 
-## Actions and Metadata
+## Actions and metadata
 
 ```html
 <div class="pl-c-tree" role="tree" data-actions="persistent">
@@ -119,7 +117,7 @@ Actions are optional. Keep destructive or editing actions as real buttons with
 durable accessible names. `data-actions="persistent"` keeps row actions visible;
 otherwise they appear on hover or focus.
 
-## Accessibility Responsibilities
+## Accessibility responsibilities
 
 Porchlight does not ship a tree controller. The app should implement the WAI-ARIA
 tree view interaction model that fits its product:
@@ -136,7 +134,7 @@ For simple sidebar navigation that only needs links and native disclosure, use
 `.pl-c-nav` instead. Use `.pl-c-tree` when the hierarchy behaves like a selectable
 widget or object explorer.
 
-## SSR and Framework Compatibility
+## SSR and framework compatibility
 
 The component is rendered HTML plus CSS. It works from server-rendered templates,
 hypermedia responses, Web Components, React, Vue, Svelte, Astro, Rails, Django,
@@ -144,7 +142,7 @@ Phoenix, Laravel, or any other stack that can emit the class names and ARIA
 attributes. Porchlight does not require client-only rendering, hydration, custom
 elements, or framework selectors.
 
-## Class Contract
+## Class contract
 
 | Selector                      | Role                                           |
 | ----------------------------- | ---------------------------------------------- |
@@ -168,7 +166,7 @@ elements, or framework selectors.
 | `[data-pl-density="compact"]` | Tighter row density.                           |
 | `[data-actions="persistent"]` | Always-visible row actions.                    |
 
-## Tokens Exposed
+## Tokens exposed
 
 | Token                            | Default             | Purpose                   |
 | -------------------------------- | ------------------- | ------------------------- |

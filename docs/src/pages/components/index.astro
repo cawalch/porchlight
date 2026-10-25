@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+const b = import.meta.env.BASE_URL;
+const entries = (await getCollection('components')).sort((a, z) => a.data.title.localeCompare(z.data.title));
+const groups = [
+  { title: 'Controls and surfaces', slug: 'controls-and-surfaces', entries: entries.filter(entry => entry.data.kind === 'component') },
+  { title: 'Application patterns', slug: 'application-patterns', entries: entries.filter(entry => entry.data.kind === 'pattern') },
+];
+const headings = groups.map(group => ({ depth: 2, slug: group.slug, text: group.title }));
+---
+<DocsLayout title="Components · Porchlight" description="Find a control, surface, or application pattern for your interface." sectionLabel="Reference" headings={headings} sourceHref="https://github.com/cawalch/porchlight/tree/main/docs/src/content/components">
+  <article class="prose">
+    <p>Each reference explains the HTML structure, supported states, design tokens, and accessibility responsibilities. Your application supplies behavior and state where a component needs them.</p>
+    {groups.map(group => (
+      <section>
+        <h2 id={group.slug}>{group.title}</h2>
+        <dl class="docs-component-list">
+          {group.entries.map(entry => (
+            <div><dt><a href={`${b}components/${entry.id}`}>{entry.data.title}</a>{entry.data.status === 'experimental' && <small> · Experimental</small>}</dt><dd>{entry.data.description}</dd></div>
+          ))}
+        </dl>
+      </section>
+    ))}
+  </article>
+</DocsLayout>

@@ -20,19 +20,19 @@ const stableCount = components.filter((component) => component.data.status === '
 
 const startLinks = [
   {
-    label: 'Install and wire CSS',
+    label: 'Install Porchlight',
     href: `${b}guides/getting-started`,
     detail: 'Package entry, import order, and the first component.',
   },
   {
     label: 'Browse components',
-    href: `${b}components/button`,
-    detail: `${components.length} contracts with HTML, states, tokens, and accessibility notes.`,
+    href: `${b}components`,
+    detail: `${components.length} components with HTML, states, tokens, and accessibility guidance.`,
   },
   {
-    label: 'Open live previews',
+    label: 'Try the examples',
     href: `${b}preview`,
-    detail: `${previewCount} generated fixtures for visual QA and layout checks.`,
+    detail: `${previewCount} examples, from individual controls to complete application layouts.`,
   },
   {
     label: 'Check tokens',
@@ -73,12 +73,12 @@ const entryHighlights = [
       <p class="home-eyebrow">Native CSS design system</p>
       <h1 id="home-title">Porchlight</h1>
       <p>
-        Docs, component contracts, token references, and live preview fixtures for building
-        accessible application UI without a JavaScript runtime dependency.
+        Build accessible interfaces with HTML and CSS. Install Porchlight,
+        browse components, and try the examples.
       </p>
       <div class="home-actions">
-        <a class="home-action home-action--primary" href={`${b}guides/getting-started`}>Start</a>
-        <a class="home-action" href={`${b}preview`}>Preview directory</a>
+        <a class="home-action home-action--primary" href={`${b}guides/getting-started`}>Get started</a>
+        <a class="home-action" href={`${b}preview`}>Browse examples</a>
       </div>
     </div>
 
@@ -107,7 +107,7 @@ const entryHighlights = [
   <section class="home-panel home-panel--start" aria-labelledby="home-start">
     <div>
       <p class="home-eyebrow">Start here</p>
-      <h2 id="home-start">Choose the artifact you need</h2>
+      <h2 id="home-start">Find what you need</h2>
     </div>
     <div class="home-paths">
       {startLinks.map((item) => (
@@ -140,14 +140,13 @@ const entryHighlights = [
     </article>
 
     <article class="home-panel">
-      <p class="home-eyebrow">Live QA</p>
-      <h2>Preview before you ship</h2>
+      <p class="home-eyebrow">Examples</p>
+      <h2>See the components in use</h2>
       <p>
-        The preview directory is generated from source pages, component docs, and
-        pattern docs, so missing previews fail the build instead of drifting quietly.
+        Try individual controls and complete application layouts. Explore
+        different states, themes, and screen sizes before choosing a pattern.
       </p>
-      <pre><code>pnpm --filter ./docs test</code></pre>
-      <a class="home-inline-link" href={`${b}preview`}>Search previews</a>
+      <a class="home-inline-link" href={`${b}preview`}>Browse examples</a>
     </article>
   </section>
 
@@ -157,7 +156,7 @@ const entryHighlights = [
         <p class="home-eyebrow">Components and patterns</p>
         <h2 id="home-components">Common entry points</h2>
       </div>
-      <a class="home-inline-link" href={`${b}components/button`}>Open component docs</a>
+      <a class="home-inline-link" href={`${b}components`}>Open component docs</a>
     </div>
     <ul class="home-components">
       {entryHighlights.map((component) => (

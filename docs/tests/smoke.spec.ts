@@ -111,14 +111,12 @@ test.describe("docs scaffold", () => {
   test("preview index page is reachable", async ({ page }) => {
     await page.goto("./preview");
     await expect(
-      page.getByRole("heading", { name: "Preview index" }),
+      page.getByRole("heading", { name: "Examples", exact: true }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Components" }),
     ).toBeVisible();
-    await expect(
-      page.getByPlaceholder("Search preview pages..."),
-    ).toBeVisible();
+    await expect(page.getByPlaceholder("Search examples...")).toBeVisible();
   });
 
   test("reset preview page renders and lists the layers", async ({ page }) => {
@@ -218,18 +216,20 @@ test.describe("docs scaffold", () => {
   test("component docs expose search, preview, styles, and page contents", async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("./components/button");
     const content = page.locator(".docs-content");
-    const rail = page.locator(".docs-rail");
+    const rail = page.locator(".docs-contents");
 
     await expect(
       content.getByRole("heading", { name: "Button", exact: true }),
     ).toBeVisible();
+    await expect(content.locator(".docs-example-link")).toHaveAttribute(
+      "href",
+      /\/preview\/button$/,
+    );
     await expect(
-      rail.getByRole("link", { name: "Live preview" }),
-    ).toHaveAttribute("href", /\/preview\/button$/);
-    await expect(
-      rail.getByRole("link", { name: "Style source" }),
+      content.getByRole("link", { name: "CSS source", exact: true }),
     ).toHaveAttribute("href", /button\.css$/);
     await expect(
       rail.getByRole("link", { name: "When to use what" }),
@@ -244,8 +244,12 @@ test.describe("docs scaffold", () => {
 
     const search = dialog.getByLabel("Search docs");
     await search.fill("timeline");
-    await expect(dialog.getByRole("link", { name: "Timeline" })).toBeVisible();
-    await expect(dialog.getByRole("link", { name: "Button" })).toBeHidden();
+    await expect(
+      dialog.getByRole("link", { name: "Timeline", exact: true }),
+    ).toBeVisible();
+    await expect(
+      dialog.getByRole("link", { name: "Button", exact: true }),
+    ).toBeHidden();
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
   });
@@ -254,14 +258,14 @@ test.describe("docs scaffold", () => {
     page,
   }) => {
     await page.goto("./components/button");
-    await page.locator(".docs-atlas a[href$='/components/field']").click();
+    await page.locator(".docs-sidebar a[href$='/components/field']").click();
     await expect(
       page.getByRole("heading", { name: "Field", exact: true, level: 1 }),
     ).toBeVisible();
 
     await page
       .getByRole("button", {
-        name: "Search docs, components, styles Cmd K",
+        name: "Search docs",
         exact: true,
       })
       .click();
@@ -675,7 +679,7 @@ test.describe("docs scaffold", () => {
     await page.goto("./guides/getting-started");
     const content = page.locator(".docs-content");
     await expect(
-      content.getByRole("heading", { name: "Getting Started", exact: true }),
+      content.getByRole("heading", { name: "Getting started", exact: true }),
     ).toBeVisible();
     // Should mention npm/pnpm install.
     await expect(content.getByText("npm install")).toBeVisible();
@@ -699,7 +703,7 @@ test.describe("docs scaffold", () => {
     await page.goto("./guides/browser-support");
     const content = page.locator(".docs-content");
     await expect(
-      content.getByRole("heading", { name: "Browser Support", exact: true }),
+      content.getByRole("heading", { name: "Browser support", exact: true }),
     ).toBeVisible();
     await expect(
       content.getByRole("heading", { name: "How degradation works" }),
@@ -713,16 +717,16 @@ test.describe("docs scaffold", () => {
     const content = page.locator(".docs-content");
     await expect(
       content.getByRole("heading", {
-        name: "Composition Recipes",
+        name: "Composition recipes",
         exact: true,
       }),
     ).toBeVisible();
     for (const heading of [
-      "App Shell Recipe",
-      "Dashboard Recipe",
-      "Data Region Recipe",
-      "Settings Page Recipe",
-      "Dense Admin View Recipe",
+      "App shell recipe",
+      "Dashboard recipe",
+      "Data region recipe",
+      "Settings page recipe",
+      "Dense admin view recipe",
     ]) {
       await expect(
         content.getByRole("heading", { name: heading, exact: true }),
@@ -767,10 +771,10 @@ test.describe("docs scaffold", () => {
     await page.goto("./tokens/color");
     const content = page.locator(".docs-content");
     await expect(
-      content.getByRole("heading", { name: "Color Tokens", exact: true }),
+      content.getByRole("heading", { name: "Color", exact: true }),
     ).toBeVisible();
     await expect(
-      content.getByText("--pl-color-accent", { exact: true }),
+      content.locator('[data-token="--pl-color-accent"]'),
     ).toBeVisible();
     await expect(
       content.getByText("--pl-color-bg", { exact: true }),
@@ -781,7 +785,7 @@ test.describe("docs scaffold", () => {
     await page.goto("./tokens/typography");
     const content = page.locator(".docs-content");
     await expect(
-      content.getByRole("heading", { name: "Typography Tokens", exact: true }),
+      content.getByRole("heading", { name: "Typography", exact: true }),
     ).toBeVisible();
     await expect(content.getByText("--pl-text-md")).toBeVisible();
   });
@@ -791,7 +795,7 @@ test.describe("docs scaffold", () => {
     const content = page.locator(".docs-content");
     await expect(
       content.getByRole("heading", {
-        name: "Spacing, Radius & Motion Tokens",
+        name: "Spacing, radius, and motion",
         exact: true,
       }),
     ).toBeVisible();
@@ -806,9 +810,11 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Porchlight", exact: true }),
     ).toBeVisible();
-    await expect(page.getByText("Choose the artifact you need")).toBeVisible();
-    await expect(page.getByText("Preview before you ship")).toBeVisible();
-    await expect(page.getByText("pnpm --filter ./docs test")).toBeVisible();
+    await expect(page.getByText("Find what you need")).toBeVisible();
+    await expect(page.getByText("See the components in use")).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Browse examples", exact: true }).first(),
+    ).toBeVisible();
   });
 
   test("tooltip renders trigger and tooltip body", async ({ page }) => {

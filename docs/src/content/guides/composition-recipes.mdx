@@ -1,10 +1,8 @@
 ---
-title: Composition Recipes
+title: Composition recipes
 description: Model-friendly recipes for composing Porchlight app shells, dashboards, data regions, settings pages, and dense admin views.
 order: 1.6
 ---
-
-# Composition Recipes
 
 Use this guide when building complete app screens from Porchlight primitives.
 It is intentionally prescriptive: pick a recipe, keep the semantic component
@@ -38,7 +36,7 @@ it.
 - Do not use visible labels as placeholders only. Use real visible labels or
   `.pl-u-sr-only` for compact controls.
 
-## App Shell Recipe
+## App shell recipe
 
 Use this for SaaS workspaces, dashboards, inboxes, consoles, and admin tools.
 The shell owns the topbar/sidebar/main regions; the page content goes inside
@@ -75,7 +73,7 @@ The shell owns the topbar/sidebar/main regions; the page content goes inside
 </div>
 ```
 
-## Dashboard Recipe
+## Dashboard recipe
 
 Use `.pl-c-page-header` for the page title and actions, `.pl-l-grid` for responsive
 metric cards, and `.pl-c-card[data-surface="app"]` around each KPI.
@@ -114,7 +112,7 @@ metric cards, and `.pl-c-card[data-surface="app"]` around each KPI.
 </div>
 ```
 
-## Data Region Recipe
+## Data region recipe
 
 Use this for tables with headers, filters, actions, selected rows, and
 pagination. The card frames the region; toolbars sit at the top and bottom;
@@ -190,7 +188,7 @@ the table must stay inside `.pl-c-table-wrap`.
 </section>
 ```
 
-## Bulk Selection Actions Recipe
+## Bulk selection actions recipe
 
 When table rows are selected, replace generic table actions with a scoped
 selection toolbar. Keep the selected count in a polite live region, provide a
@@ -220,7 +218,7 @@ Application code owns the selected row IDs and keeps each checkbox,
 make the whole toolbar a live region; only announce the short count so focus
 and button labels are not repeatedly re-read.
 
-## Inline Edit Recipe
+## Inline edit recipe
 
 Use inline edit for short, familiar values in tables, description lists, and
 inspectors. Keep a read view and a real form as sibling states so server-rendered
@@ -268,7 +266,7 @@ hide the form, return focus, and announce the saved result with a nearby
 `role="status"`. On validation failure, keep the form open and use the standard
 field `aria-invalid` and `aria-describedby` contract.
 
-## Settings Page Recipe
+## Settings page recipe
 
 Use `.pl-l-sidebar` for local navigation plus a flexible settings panel. Use tabs
 for major sections and `.pl-c-form` for real form layout.
@@ -335,7 +333,7 @@ for major sections and `.pl-c-form` for real form layout.
 </div>
 ```
 
-## Dense Admin View Recipe
+## Dense admin view recipe
 
 Use `data-pl-density="dense"` for screens where scan speed matters more than
 breathing room. Pair it with compact copy, truncation, numeric alignment, and
