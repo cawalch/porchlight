@@ -75,6 +75,29 @@ test("accordion closed panels do not expose panel content", async ({
   }
 });
 
+test("accordion size interpolation stays on its panel", async ({ page }) => {
+  await page.goto("./preview/accordion");
+
+  const values = await page.evaluate(() => {
+    const value = (selector: string) =>
+      getComputedStyle(document.querySelector(selector)!).getPropertyValue(
+        "interpolate-size",
+      );
+    return {
+      supported: CSS.supports("interpolate-size: allow-keywords"),
+      root: value(":root"),
+      body: value("body"),
+      panel: value(".pl-c-accordion__panel"),
+    };
+  });
+
+  expect(values.root).toBe("numeric-only");
+  expect(values.body).toBe("numeric-only");
+  if (values.supported) {
+    expect(values.panel).toBe("allow-keywords");
+  }
+});
+
 test("hidden tab panels are removed from layout", async ({ page }) => {
   await page.goto("./preview/tabs");
 

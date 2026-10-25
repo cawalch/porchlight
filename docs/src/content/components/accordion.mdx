@@ -35,7 +35,8 @@ Two techniques are used, layered:
 1. **Universal fallback:** `grid-template-rows: 0fr to 1fr` on the panel
    wrapper. Works in all browsers. Smooth height transition.
 2. **Enhanced:** Where `interpolate-size: allow-keywords` is supported,
-   `block-size: 0 to auto` animates directly. Produces smoother results.
+   the panel opts in locally and `block-size: 0 to auto` animates directly.
+   Produces smoother results in both the full and compatibility bundles.
 
 ## Class contract
 

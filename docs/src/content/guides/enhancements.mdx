@@ -18,9 +18,10 @@ Allows `height` and `width` to animate to and from `auto` and `content`
 keywords. This enables smooth expand/collapse animations on accordion panels,
 detail rows, and other auto-sized elements without JavaScript measurement.
 
-Set globally on `:root` where supported. The accordion and expandable table
-rows use this for smoother animations, with a `grid-template-rows` fallback
-when unavailable.
+The accordion sets this property on its own panel where supported, so it does
+not change size transitions elsewhere in the host app. Its panel uses a
+`grid-template-rows` fallback when unavailable. The accordion enhancement is
+included in both the full and compatibility bundles.
 
 ## Sticky shell shadow
 
