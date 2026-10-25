@@ -79,6 +79,15 @@ jobs:
       - name: Run tests
         run: pnpm --filter ./docs test
 
+      - name: Preserve browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-results
+          path: docs/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
   # ── Publish @cawalch/porchlight to npm via OIDC trusted publishing ──────
   # Tokenless: no NPM_TOKEN secret. npm exchanges a short-lived, signed OIDC
   # token issued by GitHub Actions for each run. Requires npm CLI ≥ 11.5.1
