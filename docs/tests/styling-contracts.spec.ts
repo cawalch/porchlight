@@ -86,15 +86,6 @@ test("RTL mirrors the remaining component state rails", async ({ page }) => {
       selector: ".pl-c-filter-builder__row[aria-invalid='true']",
     },
     {
-      path: "workflow-board",
-      selector: ".pl-c-workflow-card[data-selected]",
-    },
-    {
-      path: "workflow-board",
-      selector: ".pl-c-workflow-lane[data-tone='accent']",
-      setupSelector: ".pl-c-workflow-lane",
-    },
-    {
       path: "data-table",
       selector: ".pl-c-table__detail td",
     },
@@ -112,16 +103,8 @@ test("RTL mirrors the remaining component state rails", async ({ page }) => {
     },
   ];
 
-  for (const { path, selector, setupSelector } of surfaces) {
+  for (const { path, selector } of surfaces) {
     await page.goto(`./preview/${path}`);
-    if (setupSelector) {
-      await page
-        .locator(setupSelector)
-        .first()
-        .evaluate((element) => {
-          element.setAttribute("data-tone", "accent");
-        });
-    }
 
     const ltrShadow = await page.evaluate((surfaceSelector) => {
       const element = document.querySelector(surfaceSelector) as HTMLElement;

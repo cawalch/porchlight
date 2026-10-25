@@ -284,7 +284,7 @@ html[data-docs-embed] :where(#main) > h1:first-child + p {
   }
 }
 
-main {
+:where(#main) {
   flex: 1;
   inline-size: min(100% - 2 * var(--doc-pad), var(--doc-max-inline));
   margin-inline: auto;
@@ -295,7 +295,7 @@ main {
    content-width constraint and padding above must NOT apply.
    Only triggers when the app shell is a DIRECT child of main (a real
    full-bleed app page), not when it's nested inside a <section> demo. */
-main:has(> .pl-l-app-shell, > .hero-bleed) {
+:where(#main):has(> .pl-l-app-shell, > .hero-bleed) {
   inline-size: 100%;
   max-inline-size: none;
   margin-inline: 0;
@@ -309,28 +309,26 @@ main:has(> .pl-l-app-shell, > .hero-bleed) {
    (main), causing the footer to overlap the bottom of the shell content.
    Override to auto so the shell flows naturally — the body's min-block-size:
    100dvb + main's flex:1 still ensure the page fills the viewport. */
-main > .pl-l-app-shell {
+:where(#main) > .pl-l-app-shell {
   block-size: auto;
 }
 
 /* Keep sample table cells and pane headers beneath the docs header, even
    when they use the framework's raised/sticky z-index tokens. */
-main:has(> .pl-l-app-shell) {
+:where(#main):has(> .pl-l-app-shell) {
   isolation: isolate;
 }
 
 /* Full-page samples share the docs page's scroll container. Keep its header
    as the sole sticky bar so app controls cannot paint over the docs nav.
    Contained app-shell demos retain the framework's sticky behavior. */
-main > .pl-l-app-shell > .pl-l-app-shell__topbar {
+:where(#main) > .pl-l-app-shell > .pl-l-app-shell__topbar {
   position: static;
   z-index: auto;
 }
 
-/* Nested main inside an app shell (e.g. <main class="pl-l-app-shell__main">)
-   also needs to be freed — global.css's main rule matches by tag name.
-   overflow is overridden to visible because the docs chrome wraps the shell,
-   so page-level scrolling (on <html>) is the right behavior. The framework's
+/* Full-page app samples use the document scroll container because the docs
+   chrome wraps the shell. The shell content owns its own inset. The framework's
    overflow:auto is correct for real apps where the shell IS the viewport. */
 .pl-l-app-shell__main {
   inline-size: auto;

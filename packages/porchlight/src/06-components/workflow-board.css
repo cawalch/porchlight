@@ -175,11 +175,7 @@
         var(--pl-color-accent),
         transparent 64%
       );
-      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
-    }
-
-    :scope[data-tone="accent"]:dir(rtl) {
-      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
+      border-inline-start: var(--pl-accent-bar-width) solid
         var(--pl-color-accent);
     }
 
@@ -339,17 +335,14 @@
         var(--pl-color-accent),
         transparent 35%
       );
-      box-shadow:
-        inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent),
-        0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 78%),
-        var(--pl-shadow-1);
-    }
+      border-inline-start: var(--pl-accent-bar-width) solid
+        var(--pl-color-accent);
 
-    :scope:is([aria-selected="true"], [data-selected], .is-selected):dir(rtl) {
-      box-shadow:
-        inset calc(-1 * var(--pl-accent-bar-width)) 0 0 var(--pl-color-accent),
-        0 0 0 1px color-mix(in oklab, var(--pl-color-accent), transparent 78%),
-        var(--pl-shadow-1);
+      /* Keep text aligned when selection changes the border width. */
+      padding-inline-start: calc(
+        var(--pl-c-workflow-board-card-pad, var(--pl-space-3)) -
+          var(--pl-accent-bar-width) + 1px
+      );
     }
 
     :scope[data-dragging],
