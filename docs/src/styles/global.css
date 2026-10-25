@@ -235,13 +235,13 @@ html[data-docs-embed] :is(.site-header, .site-footer, .skip-link) {
   display: none;
 }
 
-html[data-docs-embed] main {
+html[data-docs-embed] :where(#main) {
   inline-size: calc(100% - 2rem);
   padding-block: var(--pl-space-4);
 }
 
-html[data-docs-embed] main > h1:first-child,
-html[data-docs-embed] main > h1:first-child + p {
+html[data-docs-embed] :where(#main) > h1:first-child,
+html[data-docs-embed] :where(#main) > h1:first-child + p {
   display: none;
 }
 

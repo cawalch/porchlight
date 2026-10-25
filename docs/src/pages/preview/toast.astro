@@ -110,8 +110,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  /* Static examples still animate from outside their own inline bounds. */
-  .pl-c-toast-stack { overflow-x: clip; }
+  /* Static examples fade in place so entrance motion cannot overflow the page. */
+  .pl-c-toast-stack { --pl-c-toast-translate: 0; }
 
   .placement-grid {
     display: grid;
