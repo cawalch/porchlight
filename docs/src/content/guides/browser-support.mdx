@@ -15,7 +15,7 @@ support, and the project's test coverage are different questions.
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Package build           | Lightning CSS targets Chrome 149; this preserves modern syntax, not a promise of identical behavior in every engine |
 | Primary validation      | Playwright Chromium: component, accessibility, layout, and visual tests                                             |
-| Additional coverage     | Playwright Firefox and WebKit: narrow smoke tests for forms/app shell, dense tables, and native dialog behavior     |
+| Additional coverage     | Playwright Firefox and WebKit: focused checks for forms, dropdowns, popovers, tables, dialogs, and panel fallbacks  |
 | Consumer responsibility | Check your own supported browser versions, components, themes, and interaction states                               |
 
 Playwright WebKit is not a test of every shipping Safari version. The repo
@@ -73,7 +73,9 @@ See <a href={`${import.meta.env.BASE_URL}guides/getting-started#bun-and-parser-f
 
 - Chromium covers component contracts, composed apps, visual snapshots, RTL,
   forced colors, contrast preferences, reduced motion, and zoom.
-- Firefox/WebKit smoke coverage is smaller; passing it does not establish full parity.
+- Firefox/WebKit coverage includes field and select behavior, dropdown keyboard
+  selection, popover dismissal, mobile table layout, dialogs, and panel-deck
+  fallback. It is smaller than Chromium coverage and does not establish full parity.
 - Automated accessibility and deterministic color-contrast checks help detect
   regressions. They do not certify every composition or custom theme as WCAG-conformant.
 - Applications own behaviors such as tab keyboard navigation, combobox state,

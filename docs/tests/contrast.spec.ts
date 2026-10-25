@@ -94,3 +94,20 @@ for (const theme of ["light", "dark"] as const) {
     }
   });
 }
+
+test("selected theme toggle has readable text in dark mode", async ({
+  page,
+}) => {
+  await page.goto("./preview/themes");
+  await page.locator("html").evaluate((html) => {
+    html.dataset.plTheme = "dark";
+  });
+  const toggle = page.getByRole("button", { name: "dark" });
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-pressed", "true");
+  const colors = await toggle.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return { fg: style.color, bg: style.backgroundColor };
+  });
+  expect(contrast(colors.fg, colors.bg)).toBeGreaterThanOrEqual(AA);
+});

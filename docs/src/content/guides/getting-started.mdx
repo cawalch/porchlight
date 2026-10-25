@@ -146,22 +146,26 @@ For production builds, set a CSS target that matches your supported browsers.
 The docs build uses `build.cssTarget: "chrome149"` to preserve native color
 functions. This is a Chromium target, not a cross-browser support guarantee.
 The full bundle was also checked with Vite 8.2.1's default target in a small
-light/dark consumer fixture. Recheck your rendered output after changing targets
-or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-options#build-csstarget).
+light/dark consumer fixture. Vite reports non-fatal Lightning CSS warnings for
+newer selectors such as `::scroll-marker` and `:target-current`, but retains
+those rules in the emitted CSS. A served full-bundle build rendered the expected
+button and card styles in Chromium. Recheck advanced feature behavior in your
+target browsers after changing targets or minifiers; see
+[Vite's CSS target option](https://vite.dev/config/build-options#build-csstarget).
 
 ## Bun and parser fallbacks
 
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.2 and Porchlight 0.11.1**:
+Verified with **Bun 1.4.3 and a packed Porchlight 0.12.0 consumer**:
 
-| Path                                                    | Result                                               |
-| ------------------------------------------------------- | ---------------------------------------------------- |
-| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                   |
-| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal `@property` warnings         |
-| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`              |
-| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation |
+| Path                                                    | Result                                                        |
+| ------------------------------------------------------- | ------------------------------------------------------------- |
+| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                            |
+| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal warnings for newer at-rules/selectors |
+| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`                       |
+| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation          |
 
 For Bun's CSS bundler, put this in `app.css`, then run
 `bun build ./app.css --outdir ./dist`:
@@ -172,8 +176,9 @@ For Bun's CSS bundler, put this in `app.css`, then run
 ```
 
 Load the emitted stylesheet in your page; a CSS build alone does not attach it
-to the DOM. Basic button/card colors were checked in light and dark themes;
-this is not a guarantee for every component or future Bun release.
+to the DOM. Basic button/card styles from Bun's `compat.css` output were checked
+in Chromium; the warnings do not establish that every newer CSS feature works
+after bundling. Check those features in your target browsers.
 
 For the full bundle, run the installed CLI with Bun's runtime explicitly:
 
