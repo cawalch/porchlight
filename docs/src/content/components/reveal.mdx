@@ -36,4 +36,6 @@ Stagger reveals with `[data-delay]`:
 ## Progressive enhancement
 
 Where `animation-timeline: view()` is not supported, elements are always
-visible (`opacity: 1`, no transform). No content is ever hidden.
+visible (`opacity: 1`, no transform). The same visible fallback applies when
+the user requests reduced motion or forced colors. In supporting browsers with
+motion enabled, offscreen elements become visible as they enter the viewport.

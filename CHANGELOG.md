@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Include required button CSS when copying only the split-button component,
   and style split-menu dividers without the popover-menu stylesheet.
+- Preserve scroll-driven reveal and progress animations in built CSS, and keep
+  reveal content visible when reduced motion is requested.
 
 ### Added
 

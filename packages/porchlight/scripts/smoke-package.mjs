@@ -48,6 +48,31 @@ await Promise.all(
   componentSourceFiles.map((file) => exists(`dist/components/${file}`)),
 );
 
+// The package builder must not fold scroll timelines into animation shorthands.
+// Lightning CSS 1.33 can emit `animation: ... view()` / `scroll(root)`, which
+// browsers reject even though they support the animation-timeline longhand.
+for (const [file, timelines] of [
+  ["dist/porchlight.css", ["view()", "scroll(root)"]],
+  ["dist/porchlight.min.css", ["view()", "scroll(root)"]],
+  ["dist/compat.css", ["view()", "scroll(root)"]],
+  ["dist/components.css", ["view()", "scroll(root)"]],
+  ["dist/components/reveal.css", ["view()"]],
+  ["dist/components/scroll-progress.css", ["scroll(root)"]],
+]) {
+  const css = await readFile(resolve(root, file), "utf8");
+  assert(
+    !/\banimation\s*:[^;{}]*(?:view\(\)|scroll\(root\))/i.test(css),
+    `${file} folds a scroll timeline into an invalid animation shorthand`,
+  );
+  for (const timeline of timelines) {
+    assert(
+      css.includes(`animation-timeline: ${timeline}`) ||
+        css.includes(`animation-timeline:${timeline}`),
+      `${file} is missing animation-timeline: ${timeline}`,
+    );
+  }
+}
+
 const exportsMap = packageJson.exports;
 for (const path of [
   ".",
