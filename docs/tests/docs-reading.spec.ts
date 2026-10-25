@@ -185,12 +185,15 @@ for (const [name, route] of [
     }) => {
       await page.setViewportSize({ width, height: 844 });
       await page.goto(`./${route}`);
-      await expect(page).toHaveScreenshot(`docs-${name}-${width}.png`, {
-        animations: "disabled",
-        // Match the existing macOS/Linux font-rasterization allowance. The
-        // route checks above independently enforce geometry and navigation.
-        maxDiffPixelRatio: 0.09,
-      });
+      await expect(page).toHaveScreenshot(
+        `docs-${name}-${width}-${process.platform}.png`,
+        {
+          animations: "disabled",
+          // Platform baselines account for native fonts and scrollbar geometry
+          // without hiding layout changes behind a broad pixel allowance.
+          maxDiffPixelRatio: 0.02,
+        },
+      );
     });
   }
 }
@@ -202,10 +205,13 @@ test("documentation appearance: dark and RTL", async ({ page }) => {
   await page.evaluate(() => {
     document.documentElement.dir = "rtl";
   });
-  await expect(page).toHaveScreenshot("docs-button-dark-rtl.png", {
-    animations: "disabled",
-    maxDiffPixelRatio: 0.09,
-  });
+  await expect(page).toHaveScreenshot(
+    `docs-button-dark-rtl-${process.platform}.png`,
+    {
+      animations: "disabled",
+      maxDiffPixelRatio: 0.02,
+    },
+  );
 });
 
 test("documentation navigation retains focus indicators in forced colors", async ({
