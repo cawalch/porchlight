@@ -14,13 +14,12 @@
  * UA's default centering; Chrome 149+ positions the popover at the trigger's
  * block-end / inline-end corner via position-area.
  *
- * Multiple menus on one page need unique anchor names  -  set --pl-c-menu-anchor
- * per instance (defaults to --pl-menu-anchor; works for a single menu).
+ * popovertarget supplies an implicit anchor for each menu. Applications can
+ * still set --pl-c-menu-anchor to use an explicit named anchor instead.
  */
 @layer porchlight.components {
   @scope (.pl-c-menu) {
     :scope {
-      --pl-c-menu-anchor: --pl-menu-anchor;
       --pl-c-menu-position-area: block-end span-inline-end;
       --pl-c-menu-position-try-fallbacks: flip-block;
       --pl-c-menu-offset-block: var(--pl-space-2);
@@ -37,7 +36,7 @@
     }
 
     .pl-c-menu__trigger {
-      anchor-name: var(--pl-c-menu-anchor);
+      anchor-name: var(--pl-c-menu-anchor, none);
     }
 
     .pl-c-menu__popover {
@@ -74,7 +73,7 @@
       .pl-c-menu__popover {
         inset: auto;
         position: absolute;
-        position-anchor: var(--pl-c-menu-anchor);
+        position-anchor: var(--pl-c-menu-anchor, auto);
         position-area: var(--pl-c-menu-position-area);
         position-try-fallbacks: var(--pl-c-menu-position-try-fallbacks);
         margin-block-start: var(--pl-c-menu-offset-block);

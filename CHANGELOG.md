@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and style split-menu dividers without the popover-menu stylesheet.
 - Preserve scroll-driven reveal and progress animations in built CSS, and keep
   reveal content visible when reduced motion is requested.
+- Anchor repeated popover menus, dropdowns, split buttons, and date pickers to
+  their own triggers without per-instance CSS anchor names. Explicit named
+  anchors remain available for custom placements.
 
 ### Added
 

@@ -126,8 +126,9 @@ with an ISO value, or a read-only display input backed by hidden form data.
 </div>
 ```
 
-Set `--pl-c-date-picker-anchor` per instance when multiple picker popovers appear
-on one page. The default anchor is fine for a single picker. The picker popover
+Match each trigger's `popovertarget` to a unique popover `id`; the browser
+anchors repeated pickers to their own triggers. Set `--pl-c-date-picker-anchor`
+only when intentionally using a different named anchor. The picker popover
 uses the native top layer and an overlay z-index; it keeps a full month visible
 on ordinary desktop viewports, then scrolls only when the viewport is too short.
 
@@ -301,13 +302,13 @@ date library.
 
 ## Tokens Exposed
 
-| Token                                  | Default                           | Purpose                           |
-| -------------------------------------- | --------------------------------- | --------------------------------- |
-| `--pl-c-calendar-cell-size`            | `2.5rem`                          | Minimum day-cell block size.      |
-| `--pl-c-calendar-gap`                  | `--pl-space-1`                    | Gap between grid cells.           |
-| `--pl-c-calendar-radius`               | `--pl-radius-lg`                  | Day-cell radius.                  |
-| `--pl-c-calendar-range-bg`             | accent tint                       | Fill behind in-range days.        |
-| `--pl-c-calendar-range-hover-bg`       | stronger accent tint              | Hover fill for in-range days.     |
-| `--pl-c-date-picker-anchor`            | `--pl-date-picker-anchor`         | Anchor name for a picker popover. |
-| `--pl-c-date-picker-popover-size`      | `min(100vi - 2rem, 23rem)`        | Popover inline size.              |
-| `--pl-c-date-picker-popover-max-block` | `min(34rem, calc(100dvb - 2rem))` | Popover max block size.           |
+| Token                                  | Default                           | Purpose                        |
+| -------------------------------------- | --------------------------------- | ------------------------------ |
+| `--pl-c-calendar-cell-size`            | `2.5rem`                          | Minimum day-cell block size.   |
+| `--pl-c-calendar-gap`                  | `--pl-space-1`                    | Gap between grid cells.        |
+| `--pl-c-calendar-radius`               | `--pl-radius-lg`                  | Day-cell radius.               |
+| `--pl-c-calendar-range-bg`             | accent tint                       | Fill behind in-range days.     |
+| `--pl-c-calendar-range-hover-bg`       | stronger accent tint              | Hover fill for in-range days.  |
+| `--pl-c-date-picker-anchor`            | implicit trigger                  | Optional explicit anchor name. |
+| `--pl-c-date-picker-popover-size`      | `min(100vi - 2rem, 23rem)`        | Popover inline size.           |
+| `--pl-c-date-picker-popover-max-block` | `min(34rem, calc(100dvb - 2rem))` | Popover max block size.        |

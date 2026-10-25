@@ -33,19 +33,23 @@ export default defineConfig({
     },
     {
       name: "firefox-smoke",
-      testMatch: /(?:cross-browser-smoke|panel-deck-fallback)\.spec\.ts/,
+      testMatch:
+        /(?:cross-browser-smoke|implicit-popover-anchors|panel-deck-fallback)\.spec\.ts/,
       use: { ...devices["Desktop Firefox"] },
     },
     {
       name: "webkit-smoke",
-      testMatch: /(?:cross-browser-smoke|panel-deck-fallback)\.spec\.ts/,
+      testMatch:
+        /(?:cross-browser-smoke|implicit-popover-anchors|panel-deck-fallback)\.spec\.ts/,
       use: { ...devices["Desktop Safari"] },
     },
   ],
-  webServer: {
-    command: "pnpm run test:serve",
-    url: "http://localhost:4321/porchlight/",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: process.env.PLAYWRIGHT_BASE_URL
+    ? undefined
+    : {
+        command: "pnpm run test:serve",
+        url: "http://localhost:4321/porchlight/",
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
 });

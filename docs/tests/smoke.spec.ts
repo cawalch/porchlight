@@ -344,22 +344,27 @@ test.describe("docs scaffold", () => {
     await expect(popover).toBeHidden();
   });
 
-  test("popover menu examples use unique anchors", async ({ page }) => {
+  test("popover menu examples pair unique IDs with their triggers", async ({
+    page,
+  }) => {
     await page.goto("./preview/popover-menu");
-
-    // Every menu instance sets a unique --pl-c-menu-anchor so popovers do not
-    // tether to the last trigger sharing the default anchor name.
     const menus = page.locator(".pl-c-menu");
     const count = await menus.count();
     expect(count).toBeGreaterThanOrEqual(2);
-    const anchors = new Set<string>();
+    const ids = new Set<string>();
     for (let i = 0; i < count; i++) {
-      const style = (await menus.nth(i).getAttribute("style")) || "";
-      const match = style.match(/--pl-c-menu-anchor:\s*(--[^;]+)/);
-      expect(match, `instance ${i} must set --pl-c-menu-anchor`).not.toBeNull();
-      anchors.add(match![1].trim());
+      const menu = menus.nth(i);
+      const target = await menu
+        .locator(".pl-c-menu__trigger")
+        .getAttribute("popovertarget");
+      expect(target).toBeTruthy();
+      await expect(menu.locator(".pl-c-menu__popover")).toHaveAttribute(
+        "id",
+        target!,
+      );
+      ids.add(target!);
     }
-    expect(anchors.size).toBe(count);
+    expect(ids.size).toBe(count);
   });
 
   test("dialog opens via trigger and closes via Esc", async ({ page }) => {
@@ -1234,7 +1239,7 @@ test.describe("docs scaffold", () => {
     await expect(page.locator("#dd-trigger-1")).toBeFocused();
   });
 
-  test("split button renders segments, menu, and unique anchors", async ({
+  test("split button renders segments, menu, and matched targets", async ({
     page,
   }) => {
     await page.goto("./preview/split-button");
@@ -1267,28 +1272,23 @@ test.describe("docs scaffold", () => {
       page.locator(".pl-c-split__option[data-tone='danger']").first(),
     ).toBeAttached();
 
-    // Every menu-bearing instance has a unique split anchor so popovers don't
-    // all tether to the last toggle on the page. The value may come from local
-    // preview CSS rather than an inline style.
     const splits = page.locator(".pl-c-split:has(.pl-c-split__menu)");
     const count = await splits.count();
     expect(count).toBeGreaterThanOrEqual(2);
-    const anchors = new Set<string>();
+    const ids = new Set<string>();
     for (let i = 0; i < count; i++) {
-      const anchor = await splits
-        .nth(i)
-        .evaluate((split) =>
-          getComputedStyle(split)
-            .getPropertyValue("--pl-c-split-anchor")
-            .trim(),
-        );
-      expect(anchor, `instance ${i} must set --pl-c-split-anchor`).toMatch(
-        /^--.+/,
+      const split = splits.nth(i);
+      const target = await split
+        .locator(".pl-c-split__toggle")
+        .getAttribute("popovertarget");
+      expect(target).toBeTruthy();
+      await expect(split.locator(".pl-c-split__menu")).toHaveAttribute(
+        "id",
+        target!,
       );
-      anchors.add(anchor);
+      ids.add(target!);
     }
-    // No two instances share an anchor name.
-    expect(anchors.size).toBe(count);
+    expect(ids.size).toBe(count);
   });
 
   test("split button menu opens via toggle and closes via Esc", async ({

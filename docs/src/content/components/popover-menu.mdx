@@ -69,7 +69,7 @@ treatment; `[data-tone="danger"]` gets destructive color.
 | Selector                        | Role                                                 |
 | ------------------------------- | ---------------------------------------------------- |
 | `.pl-c-menu`                    | The wrapper (inline-block).                          |
-| `.pl-c-menu__trigger`           | The opening button (gets `anchor-name`).             |
+| `.pl-c-menu__trigger`           | The opening button and implicit popover anchor.      |
 | `.pl-c-menu__popover`           | The `popover` element.                               |
 | `.pl-c-menu__item`              | Optional row class for links/buttons.                |
 | `.pl-c-menu__item-icon`         | Leading icon slot.                                   |
@@ -84,14 +84,28 @@ treatment; `[data-tone="danger"]` gets destructive color.
 
 ## Multiple menus
 
-Each menu needs a **unique anchor name**. Set `--pl-c-menu-anchor` per instance:
+Each popover needs a unique HTML `id` matched by its trigger's `popovertarget`.
+The browser anchors each popover to its own trigger, including when a page has
+many menus. No per-instance CSS anchor name is needed:
 
 ```html
-<div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-a;">...</div>
-<div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-b;">...</div>
+<div class="pl-c-menu">
+  <button class="pl-c-button pl-c-menu__trigger" popovertarget="menu-a">
+    Menu A
+  </button>
+  <div class="pl-c-menu__popover" id="menu-a" popover>...</div>
+</div>
+<div class="pl-c-menu">
+  <button class="pl-c-button pl-c-menu__trigger" popovertarget="menu-b">
+    Menu B
+  </button>
+  <div class="pl-c-menu__popover" id="menu-b" popover>...</div>
+</div>
 ```
 
-The default `--pl-menu-anchor` works for a single menu on the page.
+For an intentionally different named anchor, set `--pl-c-menu-anchor` on the
+component root; this overrides the implicit association. When opening a popover
+programmatically, pass its trigger as `showPopover({ source: trigger })`.
 
 ## Sidebar Placement
 
@@ -99,13 +113,7 @@ Use `data-placement="inline-end"` for desktop sidebar or icon-rail flyouts.
 This changes the anchor position from below the trigger to beside it.
 
 ```html
-<div
-  class="pl-c-menu"
-  data-placement="inline-end"
-  style="--pl-c-menu-anchor: --sidebar-menu;"
->
-  ...
-</div>
+<div class="pl-c-menu" data-placement="inline-end">...</div>
 ```
 
 ## Tokens consumed
