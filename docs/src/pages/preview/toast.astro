@@ -110,6 +110,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  /* Static examples fade in place so entrance motion cannot overflow the page. */
+  .pl-c-toast-stack { --pl-c-toast-translate: 0; }
+
   .placement-grid {
     display: grid;
     gap: var(--pl-space-3);

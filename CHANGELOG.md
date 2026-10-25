@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Follow rounded surface corners with logical accent borders on alerts, accent
+  cards, workflow lanes, and selected work cards. Selection preserves text
+  alignment, and accent borders remain visible with hover and focus shadows.
+- Reduce toast shadow elevation and let static preview shadows fade naturally.
+- Keep documentation page padding out of nested split panes and clip preview
+  header backgrounds to their rounded frames.
+
 ## [0.12.1] - 2026-10-25
 
 ### Fixed
