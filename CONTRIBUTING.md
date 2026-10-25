@@ -64,6 +64,11 @@ Use `TokenTable` for source-derived token values. Keep explanations in MDX and
 avoid copying values or project statistics into handwritten tables. The
 `docs-reading.spec.ts` checks every route at mobile and desktop widths and covers
 client navigation, identifiers in search, zoom, and documentation screenshots.
+Documentation screenshots use native macOS and Ubuntu CI baselines. Inspect the
+screenshots and traces in the CI failure artifact before updating a baseline;
+the route layout and navigation checks must still pass.
+To reproduce Ubuntu screenshots in the matching Playwright container, install
+`fonts-dejavu-core` so `system-ui` resolves to the same font as the CI runner.
 
 ## Branching & pull requests
 
