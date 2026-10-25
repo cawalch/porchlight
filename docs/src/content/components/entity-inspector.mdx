@@ -4,8 +4,6 @@ description: A native nonmodal record popover with contextual metadata, actions,
 status: experimental
 ---
 
-# Entity inspector
-
 Use an inspector for a person, asset, or account summary with real links and
 buttons. Unlike a tooltip or action menu, it contains structured record details.
 Native popover controls open on click, tap, Enter or Space; Escape and outside
@@ -69,11 +67,14 @@ Set `--pl-c-inspector-size` (default `24rem`) and
 Import core and `components/entity-inspector.css`; import button, badge and
 other components used inside separately. Full and compat bundles include it.
 
-<a href={`${import.meta.env.BASE_URL}preview/entity-inspector`}>
-  Try two independent inspectors
-</a>
-or explore the
-<a href={`${import.meta.env.BASE_URL}preview/app-asset-inventory`}>
-  asset inventory app
-</a>
-.
+<p>
+  {"Try the "}
+  <a href={`${import.meta.env.BASE_URL}preview/entity-inspector`}>
+    {"independent inspectors"}
+  </a>
+  {" or explore the "}
+  <a href={`${import.meta.env.BASE_URL}preview/app-asset-inventory`}>
+    {"asset inventory app"}
+  </a>
+  {"."}
+</p>

@@ -1,44 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-test("desktop documentation atlas presents peer sections at one height", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 2048, height: 900 });
-  await page.goto("./components/data-table");
-
-  const sections = page.locator(".docs-atlas__section");
-  await expect(sections).toHaveCount(5);
-
-  const heights = await sections.evaluateAll((items) =>
-    items.map((item) => item.getBoundingClientRect().height),
-  );
-  const headingToListGaps = await sections.evaluateAll((items) =>
-    items.map((item) => {
-      const heading = item.querySelector("h2")?.getBoundingClientRect();
-      const list = item.querySelector("ul")?.getBoundingClientRect();
-      return heading && list
-        ? list.top - heading.bottom
-        : Number.POSITIVE_INFINITY;
-    }),
-  );
-
-  expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
-  expect(Math.max(...heights)).toBeLessThanOrEqual(288);
-  expect(Math.max(...headingToListGaps)).toBeLessThanOrEqual(16);
-
-  const clippedComponentRows = await page
-    .locator('[data-atlas-section="components"] ul')
-    .evaluate((list) => {
-      const viewportBottom = list.getBoundingClientRect().bottom;
-      return Array.from(list.children).filter((item) => {
-        const row = item.getBoundingClientRect();
-        return row.top < viewportBottom && row.bottom > viewportBottom + 1;
-      }).length;
-    });
-
-  expect(clippedComponentRows).toBe(0);
-});
-
 test("preview index separates CSS components from application patterns", async ({
   page,
 }) => {
@@ -48,7 +9,7 @@ test("preview index separates CSS components from application patterns", async (
     page.getByRole("heading", { name: "Components", level: 2 }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "SaaS patterns", level: 2 }),
+    page.getByRole("heading", { name: "Application patterns", level: 2 }),
   ).toBeVisible();
 
   const patterns = page.locator('section[aria-labelledby="preview-patterns"]');

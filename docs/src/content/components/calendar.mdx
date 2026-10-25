@@ -5,8 +5,6 @@ status: experimental
 since: 0.8.0
 ---
 
-# Calendar
-
 The `.pl-c-calendar` contract styles date grids, date picker popovers, date-range
 fields, and time options without owning date logic. Porchlight provides the
 surface, spacing, focus treatment, and visual state mapping; the application
@@ -87,7 +85,7 @@ Porchlight does not enforce either pattern in CSS. The
 `.pl-c-calendar__day-label` wrapper is optional, but recommended for range
 calendars because it lets the range track paint behind selected start/end days.
 
-## Date Picker Field
+## Date picker field
 
 Pair the calendar with `.pl-c-field` and the native Popover API for dependency-free
 field disclosure. The visible field may be a native date input, a text input
@@ -132,7 +130,7 @@ only when intentionally using a different named anchor. The picker popover
 uses the native top layer and an overlay z-index; it keeps a full month visible
 on ordinary desktop viewports, then scrolls only when the viewport is too short.
 
-## Date Range
+## Date range
 
 Use `.pl-c-date-range` around two explicit fields when the app needs a start/end
 contract. A range calendar can mark start, end, and in-range days with
@@ -186,7 +184,7 @@ contract. A range calendar can mark start, end, and in-range days with
 </div>
 ```
 
-## Time Options
+## Time options
 
 `.pl-c-time-picker` styles discrete time choices. Use real buttons, or radio inputs
 with labels if your app needs native form selection semantics.
@@ -217,7 +215,7 @@ with labels if your app needs native form selection semantics.
 </div>
 ```
 
-## Class Contract
+## Class contract
 
 | Selector                        | Role                                              |
 | ------------------------------- | ------------------------------------------------- |
@@ -245,7 +243,7 @@ with labels if your app needs native form selection semantics.
 | `.pl-c-time-picker__grid`       | Responsive time option grid.                      |
 | `.pl-c-time-picker__option`     | Selectable time button.                           |
 
-## State Contract
+## State contract
 
 | State         | Attribute                                              | Notes                                                             |
 | ------------- | ------------------------------------------------------ | ----------------------------------------------------------------- |
@@ -259,7 +257,7 @@ with labels if your app needs native form selection semantics.
 | invalid field | `aria-invalid="true"` on a nested field control        | Field hint inherits the danger tone unless explicitly toned.      |
 | selected time | `aria-selected="true"` or `data-selected`              | Works on `.pl-c-time-picker__option`.                             |
 
-## Accessibility Contract
+## Accessibility contract
 
 Porchlight intentionally does not implement calendar interaction. Your app
 should provide:
@@ -278,7 +276,7 @@ For purely native browser behavior, use `<input type="date">`,
 instead. Reach for `.pl-c-calendar` when the product needs a custom grid or range
 surface.
 
-## SSR, Hypermedia, And Frameworks
+## SSR, hypermedia, and frameworks
 
 Any renderer can emit this contract. Server-rendered pages, hypermedia
 fragment swaps, web components, React, Vue, Svelte, Solid, and similar
@@ -293,14 +291,14 @@ locale strings, trap focus, manage the Popover API from unsupported browsers,
 or serialize ranges. It is a CSS contract for modern application markup, not a
 date library.
 
-## Tokens Consumed
+## Tokens consumed
 
 `--pl-color-{accent,accent-text,border,danger-text,surface,surface-2,text,text-muted}`,
 `--pl-control-{block-size,border-width,padding-inline,radius}`,
 `--pl-focus-{color,offset,size}`, `--pl-font-weight-*`,
 `--pl-radius-{sm,lg,xl}`, `--pl-shadow-2`, and `--pl-space-*`.
 
-## Tokens Exposed
+## Tokens exposed
 
 | Token                                  | Default                           | Purpose                        |
 | -------------------------------------- | --------------------------------- | ------------------------------ |

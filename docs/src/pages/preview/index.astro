@@ -130,25 +130,24 @@ const stableCount = components.filter((component) => component.data.status === '
 const experimentalCount = components.filter((component) => component.data.status === 'experimental').length;
 const plannedCount = components.filter((component) => component.data.status === 'planned').length;
 ---
-<BaseLayout title="Preview · Porchlight">
+<BaseLayout title="Examples · Porchlight">
   <section class="preview-hero" aria-labelledby="preview-title">
     <div>
-      <p class="preview-eyebrow">Live QA surface</p>
-      <h1 id="preview-title">Preview index</h1>
+      <p class="preview-eyebrow">Components and layouts</p>
+      <h1 id="preview-title">Examples</h1>
       <p>
-        Searchable live pages for component QA, CSS regression checks, and composed app
-        fixtures. Component and pattern entries are generated from the docs collection,
-        so missing previews fail the build.
+        Try individual controls, layout primitives, and complete applications.
+        Explore their states, themes, and responsive behavior.
       </p>
     </div>
 
-    <aside class="preview-search-panel" aria-label="Preview search and counts">
+    <aside class="preview-search-panel" aria-label="Example search and counts">
       <label class="preview-search">
-        <span>Search previews</span>
+        <span>Search examples</span>
         <input
           class="pl-c-field__control"
           type="search"
-          placeholder="Search preview pages..."
+          placeholder="Search examples..."
           data-preview-filter
         />
       </label>
@@ -233,7 +232,7 @@ const plannedCount = components.filter((component) => component.data.status === 
     <header class="preview-section__header">
       <div>
         <p class="preview-eyebrow">Application recipes</p>
-        <h2 id="preview-patterns">SaaS patterns</h2>
+        <h2 id="preview-patterns">Application patterns</h2>
       </div>
       <span>{patterns.length} documented patterns</span>
     </header>
@@ -266,7 +265,7 @@ const plannedCount = components.filter((component) => component.data.status === 
       <header class="preview-section__header">
         <div>
           <p class="preview-eyebrow">Composed screens</p>
-          <h2 id="preview-examples">Examples and fixtures</h2>
+        <h2 id="preview-examples">More examples</h2>
         </div>
         <span>{standalonePreviews.length} pages</span>
       </header>

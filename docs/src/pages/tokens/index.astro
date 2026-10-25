@@ -8,7 +8,7 @@ const b = import.meta.env.BASE_URL;
 const repo = 'https://github.com/cawalch/porchlight';
 ---
 <DocsLayout
-  title="Token Reference · Porchlight"
+  title="Token reference · Porchlight"
   description="Source-backed color, type, spacing, radius, motion, and control tokens."
   sectionLabel="Token reference"
   previewHref={`${b}preview/tokens`}
@@ -16,11 +16,10 @@ const repo = 'https://github.com/cawalch/porchlight';
   styleHref={`${repo}/blob/main/packages/porchlight/src/02-tokens.css`}
 >
   <article class="prose">
-    <h1>Token Reference</h1>
     <p>
-      Porchlight design tokens parsed live from source. These pages reflect
-      the actual <code>02-tokens.css</code> and <code>03-themes.css</code>
-      source, not hand-maintained tables.
+      Look up design token values and learn how to use them. Value tables are
+      generated at build time from the framework CSS. Theme and density
+      overrides are documented alongside the defaults.
     </p>
     {tokens.length > 0 ? (
       <ul>

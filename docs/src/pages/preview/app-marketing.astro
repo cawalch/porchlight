@@ -1,20 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { version } from '../../../../packages/porchlight/package.json';
+const entries = await getCollection('components');
+const componentCount = entries.filter(entry => entry.data.kind === 'component').length;
+const patternCount = entries.filter(entry => entry.data.kind === 'pattern').length;
+const tokenCount = (await getCollection('tokens')).length;
+const b = import.meta.env.BASE_URL;
 
 const features = [
-  { title: 'Zero JavaScript', body: 'Every component is pure CSS. No runtime, no bundle, no hydration.', icon: '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>' },
+  { title: 'Zero JavaScript', body: 'The stylesheet has no JavaScript dependency. Add application behavior where needed.', icon: '<path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>' },
   { title: 'WCAG-AA verified', body: 'Contrast-tested in both themes. RTL, forced-colors, reduced-motion.', icon: '<path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>' },
   { title: 'Modern CSS first', body: '@scope, @layer, anchor positioning, OKLCH, scroll-driven animations.', icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
   { title: 'Token-driven', body: 'Override one custom property to retheme the entire system.', icon: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>' },
-  { title: '34 components', body: 'Button, card, data table, dialog, tabs, tree, timeline, and more.', icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>' },
+  { title: `${componentCount} components`, body: 'Button, card, data table, dialog, tabs, tree, timeline, and more.', icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>' },
   { title: 'Responsive by default', body: 'Container queries, auto-fit grids, fluid type, logical properties.', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
 ];
 
-const testimonials = [
-  { quote: 'Porchlight replaced 40kb of CSS and 3 dependencies.', author: 'Tech Lead, SaaS startup' },
-  { quote: 'The container-query-first approach is genuinely ahead of its time.', author: 'Frontend Architect' },
-  { quote: 'Best-in-class dark mode. It just works.', author: 'Product Designer' },
-  { quote: 'We shipped our dashboard in 2 days, not 2 weeks.', author: 'Indie hacker' },
+const recipes = [
+  { title: 'Dashboard', body: 'Combine metrics, charts, and account tables.', href: 'preview/app-dashboard' },
+  { title: 'Settings', body: 'Group fields, validation, and actions in a responsive form.', href: 'preview/settings' },
+  { title: 'Inbox', body: 'Build a list and detail view that adapts to its container.', href: 'preview/app-inbox' },
 ];
 ---
 <BaseLayout title="Marketing page · Porchlight">
@@ -24,9 +30,9 @@ const testimonials = [
   <!-- Full-bleed hero with inset content -->
   <section class="hero-bleed">
     <div class="pl-l-inset">
-      <span class="pl-c-badge" data-tone="accent">v1.0 coming soon</span>
+      <span class="pl-c-badge" data-tone="accent">Version {version}</span>
       <h1 class="hero-title">Build beautiful, accessible UI with pure CSS.</h1>
-      <p class="hero-sub">A no-dependency design system with 34 components, zero JavaScript, and modern CSS throughout.</p>
+      <p class="hero-sub">A CSS design system with {componentCount} components. Your application owns interaction logic and state.</p>
       <div class="pl-l-cluster">
         <button class="pl-c-button" data-variant="primary">Get started</button>
         <button class="pl-c-button" data-variant="secondary">View components</button>
@@ -37,10 +43,10 @@ const testimonials = [
   <!-- Stats bar -->
   <section class="pl-l-container marketing-section marketing-section--lg">
     <div class="pl-l-grid marketing-stats-grid">
-      <div class="stat-block"><span class="stat-block__value">34</span><span class="stat-block__label">Components</span></div>
+      <div class="stat-block"><span class="stat-block__value">{componentCount}</span><span class="stat-block__label">Components</span></div>
       <div class="stat-block"><span class="stat-block__value">0</span><span class="stat-block__label">Dependencies</span></div>
-      <div class="stat-block"><span class="stat-block__value">143</span><span class="stat-block__label">Tests</span></div>
-      <div class="stat-block"><span class="stat-block__value">~27kb</span><span class="stat-block__label">Bundle</span></div>
+      <div class="stat-block"><span class="stat-block__value">{patternCount}</span><span class="stat-block__label">Patterns</span></div>
+      <div class="stat-block"><span class="stat-block__value">{tokenCount}</span><span class="stat-block__label">Token guides</span></div>
     </div>
   </section>
 
@@ -64,7 +70,7 @@ const testimonials = [
 
   <!-- Code example -->
   <section class="pl-l-container marketing-section marketing-section--lg">
-    <h2 class="section-heading pl-c-reveal">Get started in seconds</h2>
+    <h2 class="section-heading pl-c-reveal">Install Porchlight</h2>
     <div class="pl-c-reveal" data-delay="1">
       <pre><code>pnpm add @cawalch/porchlight</code></pre>
       <pre><code>{`/* app.css */
@@ -75,13 +81,13 @@ const testimonials = [
 
   <!-- Testimonials in columns -->
   <section class="pl-l-container marketing-section">
-    <h2 class="section-heading pl-c-reveal">Loved by developers</h2>
+    <h2 class="section-heading pl-c-reveal">Build common screens</h2>
     <div class="pl-l-columns marketing-testimonial-columns">
-      {testimonials.map((t) => (
+      {recipes.map((recipe) => (
         <div class="pl-c-card pl-c-reveal">
           <div class="pl-c-card__body">
-            <p class="testimonial-quote">"{t.quote}"</p>
-            <p class="pl-u-muted testimonial-author">{t.author}</p>
+            <h3><a href={`${b}${recipe.href}`}>{recipe.title}</a></h3>
+            <p class="pl-u-muted">{recipe.body}</p>
           </div>
         </div>
       ))}

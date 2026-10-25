@@ -1,0 +1,294 @@
+/* The documentation shell uses the framework's tokens without changing demos. */
+main:has(> .docs-layout) {
+  inline-size: min(100% - 2 * var(--doc-pad), 90rem);
+  container: docs-reading / inline-size;
+  padding-block: var(--pl-space-8) var(--pl-space-12);
+}
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 76ch) 12rem;
+  justify-content: center;
+  align-items: start;
+  gap: var(--pl-space-8);
+}
+
+.docs-content,
+.docs-article {
+  min-inline-size: 0;
+}
+
+.docs-component-list {
+  display: grid;
+  gap: var(--pl-space-5);
+}
+
+.docs-component-list dt {
+  font-weight: var(--pl-font-weight-semibold);
+}
+
+.docs-component-list dd {
+  margin: var(--pl-space-1) 0 0;
+  color: var(--pl-color-text-muted);
+}
+
+.docs-article {
+  scroll-margin-block-start: calc(
+    var(--doc-header-size, 4rem) + var(--pl-space-4)
+  );
+}
+
+.docs-sidebar,
+.docs-contents {
+  position: sticky;
+  inset-block-start: calc(var(--doc-header-size, 4rem) + var(--pl-space-4));
+  max-block-size: calc(100dvb - var(--doc-header-size, 4rem) - 2rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  font-size: var(--pl-text-sm);
+}
+
+.docs-sidebar {
+  border-inline-end: 1px solid var(--pl-color-border);
+  padding-inline-end: var(--pl-space-4);
+}
+
+.docs-nav section + section {
+  margin-block-start: var(--pl-space-6);
+}
+
+.docs-nav h2,
+.docs-contents h2 {
+  margin-block: 0 var(--pl-space-2);
+  color: var(--pl-color-text);
+  font-size: var(--pl-text-sm);
+  font-weight: var(--pl-font-weight-bold);
+}
+
+.docs-nav ul,
+.docs-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-nav a,
+.docs-toc a {
+  display: block;
+  padding: var(--pl-space-1) var(--pl-space-2);
+  border-radius: var(--pl-radius-sm);
+  color: var(--pl-color-text-muted);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.docs-nav a:hover,
+.docs-toc a:hover {
+  color: var(--pl-color-accent);
+  text-decoration: underline;
+}
+
+.docs-nav a[aria-current="page"] {
+  background: var(--pl-color-surface-2);
+  color: var(--pl-color-accent);
+  font-weight: var(--pl-font-weight-semibold);
+}
+
+.docs-toc li[data-depth="3"] {
+  padding-inline-start: var(--pl-space-3);
+}
+
+.docs-title {
+  margin-block-end: var(--pl-space-6);
+}
+
+.docs-section-label {
+  margin-block-end: var(--pl-space-2);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
+}
+
+.docs-title h1 {
+  font-size: var(--pl-text-3xl);
+  line-height: var(--pl-leading-tight);
+  margin-block: 0 var(--pl-space-3);
+}
+
+.docs-description {
+  color: var(--pl-color-text-muted);
+  line-height: var(--pl-leading-normal);
+}
+
+.docs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pl-space-3);
+  margin-block: var(--pl-space-3);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
+}
+
+.docs-example-link {
+  display: inline-block;
+  margin-block-start: var(--pl-space-2);
+}
+
+.docs-example {
+  margin: 0 0 var(--pl-space-6);
+  border: 1px solid var(--pl-color-border);
+  border-radius: var(--pl-radius-lg);
+  overflow: hidden;
+  background: var(--pl-color-surface);
+}
+
+.docs-example figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--pl-space-2);
+  padding: var(--pl-space-3) var(--pl-space-4);
+  border-block-end: 1px solid var(--pl-color-border);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
+}
+
+.docs-example iframe {
+  display: block;
+  inline-size: 100%;
+  block-size: 24rem;
+  border: 0;
+}
+
+.docs-page-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pl-space-3) var(--pl-space-5);
+  border-block-start: 1px solid var(--pl-color-border);
+  margin-block-start: var(--pl-space-8);
+  padding-block-start: var(--pl-space-4);
+  font-size: var(--pl-text-sm);
+}
+
+.docs-mobile-navigation,
+.docs-mobile-contents {
+  display: none;
+  padding-block: var(--pl-space-3);
+  border-block: 1px solid var(--pl-color-border);
+  margin-block-end: var(--pl-space-5);
+}
+
+.docs-mobile-navigation summary,
+.docs-mobile-contents summary {
+  color: var(--pl-color-text);
+  cursor: pointer;
+  font-weight: var(--pl-font-weight-semibold);
+}
+
+.docs-mobile-navigation .docs-nav,
+.docs-mobile-contents .docs-toc {
+  padding-block-start: var(--pl-space-4);
+}
+
+.docs-mobile-navigation .docs-nav {
+  max-block-size: 65dvb;
+  overflow-y: auto;
+}
+
+.docs-search-dialog {
+  inline-size: min(44rem, calc(100% - 2rem));
+  max-block-size: calc(100dvb - 2rem);
+  padding: var(--pl-space-5);
+  border: 1px solid var(--pl-color-border);
+  border-radius: var(--pl-radius-lg);
+  background: var(--pl-color-surface);
+  color: var(--pl-color-text);
+  box-shadow: var(--pl-shadow-3);
+  overflow-y: auto;
+}
+
+.docs-search-dialog::backdrop {
+  background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
+}
+
+.docs-search-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pl-space-4);
+  margin-block-end: var(--pl-space-4);
+}
+
+.docs-search-dialog h2 {
+  font-size: var(--pl-text-xl);
+}
+
+.docs-search-dialog label {
+  display: block;
+  margin-block-end: var(--pl-space-2);
+  font-weight: var(--pl-font-weight-semibold);
+}
+
+.docs-search-status {
+  margin-block: var(--pl-space-3);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
+}
+
+.docs-search-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.docs-search-results a {
+  display: grid;
+  gap: var(--pl-space-1);
+  padding: var(--pl-space-3);
+  border-block-end: 1px solid var(--pl-color-border);
+  text-decoration: none;
+}
+
+.docs-search-results a:hover {
+  background: var(--pl-color-surface-2);
+}
+
+.docs-search-results small {
+  color: var(--pl-color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+@container docs-reading (inline-size < 80rem) {
+  .docs-layout {
+    grid-template-columns: 13rem minmax(0, 76ch);
+  }
+
+  .docs-contents {
+    display: none;
+  }
+
+  .docs-mobile-contents {
+    display: block;
+  }
+}
+
+@media (width < 60rem) {
+  main:has(> .docs-layout) {
+    padding-block-start: var(--pl-space-4);
+  }
+}
+
+@container docs-reading (inline-size < 60rem) {
+  .docs-layout {
+    grid-template-columns: minmax(0, 76ch);
+  }
+
+  .docs-sidebar {
+    display: none;
+  }
+
+  .docs-mobile-navigation {
+    display: block;
+  }
+}

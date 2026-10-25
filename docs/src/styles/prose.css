@@ -1,8 +1,7 @@
 /*
  * Shared prose styling for all docs content (guides, tokens, components).
  *
- * Used by guides/[slug].astro, tokens/[slug].astro, components/[slug].astro.
- * Import via Astro \3c style is:global> or apply as a shared class.
+ * Imported by DocsLayout so index pages and reference articles share it.
  *
  * Uses token-driven spacing with generous rhythm for readability.
  */
@@ -14,7 +13,7 @@
 /* ----------------------------------------------------------------------- */
 
 .prose {
-  max-inline-size: none;
+  max-inline-size: 76ch;
   min-inline-size: 0;
 }
 
@@ -30,6 +29,12 @@
   font-size: var(--pl-text-lg);
   font-weight: 600;
   line-height: var(--pl-leading-tight);
+}
+
+.docs-article :where(h2[id], h3[id], h4[id]) {
+  scroll-margin-block-start: calc(
+    var(--doc-header-size, 4rem) + var(--pl-space-4)
+  );
 }
 
 .prose :where(h3) {
@@ -106,6 +111,10 @@
   border-block-end: 1px solid var(--pl-color-border);
   text-align: start;
   vertical-align: top;
+}
+
+.prose :where(th, td) code {
+  white-space: nowrap;
 }
 
 .prose :where(th) {

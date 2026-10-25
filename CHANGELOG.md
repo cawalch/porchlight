@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Simplify the documentation layout with stable navigation, complete page
+  contents, readable examples, and search for CSS classes and token names.
+- Generate token reference values from the framework source, standardize
+  documentation headings, and repair preview spacing and overflow.
+
 ## [0.12.1] - 2026-10-25
 
 ### Fixed

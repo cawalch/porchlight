@@ -5,8 +5,6 @@ status: stable
 since: 0.1.0
 ---
 
-# Popover menu
-
 The `.pl-c-menu` is a dropdown menu anchored to its trigger. It uses the **native
 Popover API** (top-layer rendering and light-dismiss) + **CSS
 anchor positioning** (tethered to the trigger) + **`@starting-style`** for a
@@ -38,7 +36,7 @@ focus, and synchronized `aria-expanded`).
 The trigger's `popovertarget="id"` opens the popover declaratively - no JS.
 The popover element MUST have the `popover` attribute.
 
-## Rich Menu Rows
+## Rich menu rows
 
 Plain direct-child links and buttons work. For denser enterprise menus, use the
 optional `.pl-c-menu__item*` anatomy for icons, descriptions, shortcuts, and
@@ -107,7 +105,7 @@ For an intentionally different named anchor, set `--pl-c-menu-anchor` on the
 component root; this overrides the implicit association. When opening a popover
 programmatically, pass its trigger as `showPopover({ source: trigger })`.
 
-## Sidebar Placement
+## Sidebar placement
 
 Use `data-placement="inline-end"` for desktop sidebar or icon-rail flyouts.
 This changes the anchor position from below the trigger to beside it.

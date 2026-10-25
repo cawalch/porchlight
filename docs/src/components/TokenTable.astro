@@ -1,0 +1,26 @@
+---
+import { referenceTokens, tokenDocument, densityPresets } from '../lib/token-reference';
+interface Props { prefix?: string; names?: string[]; caption: string; registered?: boolean; density?: boolean; }
+const { prefix, names, caption, registered = false, density = false } = Astro.props;
+const tokens = referenceTokens.filter(token => names ? names.includes(token.name) : prefix && token.name.startsWith(prefix));
+if (names?.some(name => !referenceTokens.some(token => token.name === name))) throw new Error(`Unknown token in ${caption}`);
+---
+<table class="token-reference">
+  <caption>{caption}</caption>
+  {registered ? (
+    <>
+      <thead><tr><th scope="col">Property</th><th scope="col">Syntax</th><th scope="col">Initial value</th><th scope="col">Inherits</th></tr></thead>
+      <tbody>{tokenDocument.registered.map(property => <tr><td><code>{property.name}</code></td><td><code>{property.syntax}</code></td><td><code>{property.initialValue}</code></td><td>{property.inherits ? 'yes' : 'no'}</td></tr>)}</tbody>
+    </>
+  ) : density ? (
+    <>
+      <thead><tr><th scope="col">Density</th><th scope="col">Control height</th><th scope="col">Inline padding</th><th scope="col">Gap</th></tr></thead>
+      <tbody>{densityPresets.map(preset => <tr><td><code>{preset.name}</code></td>{['--pl-control-block-size', '--pl-control-padding-inline', '--pl-control-gap'].map(name => <td><code>{preset.values[name]}</code></td>)}</tr>)}</tbody>
+    </>
+  ) : (
+    <>
+      <thead><tr><th scope="col">Token</th><th scope="col">Default value</th></tr></thead>
+      <tbody>{tokens.map(token => <tr data-token={token.name}><td><code>{token.name}</code></td><td><code>{token.value}</code></td></tr>)}</tbody>
+    </>
+  )}
+</table>

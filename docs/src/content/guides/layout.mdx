@@ -1,10 +1,8 @@
 ---
-title: Layout & Page Building
+title: Layout and page building
 description: Use Porchlight's layout primitives, app shell, and container-query sidebar to compose responsive SaaS pages.
 order: 1.5
 ---
-
-# Layout & Page Building
 
 Porchlight provides a collection of lightweight layout primitives instead of rigid page grids. They are designed to manage the regions **around** components, allowing you to compose full pages out of custom components and utilities.
 
@@ -17,9 +15,9 @@ All layout primitives live in `@layer porchlight.layout` and share a few core de
 
 ---
 
-## Primitive Reference
+## Primitive reference
 
-### 1. Stack (`.pl-l-stack`)
+### 1. stack (`.pl-l-stack`)
 
 Use for vertical flow, such as form groups, card contents, settings sections, or stacked list items.
 
@@ -50,7 +48,7 @@ own its internal padding. If a child already has a bottom margin (for example,
 Keep that reset scoped to your composition. Docs-only preview styles are not
 included in the published package.
 
-### 2. Cluster (`.pl-l-cluster`)
+### 2. cluster (`.pl-l-cluster`)
 
 Use for horizontal wrapping groups where elements flow naturally. Ideal for toolbar controls, filter lists, chip groups, or buttons in an action row.
 
@@ -67,7 +65,7 @@ Use for horizontal wrapping groups where elements flow naturally. Ideal for tool
 | `--pl-l-cluster-align`   | Vertical alignment (`align-items`)       | `center`            |
 | `--pl-l-cluster-justify` | Horizontal alignment (`justify-content`) | `flex-start`        |
 
-### 3. Grid (`.pl-l-grid`)
+### 3. grid (`.pl-l-grid`)
 
 An auto-fitting grid that wraps columns automatically when they fall below a minimum width. Perfect for dashboard KPI grids, search results, or card directories.
 
@@ -84,7 +82,7 @@ An auto-fitting grid that wraps columns automatically when they fall below a min
 | `--pl-l-grid-gap` | Grid gap                          | `var(--pl-space-4)` |
 | `--pl-l-grid-min` | Minimum width before columns wrap | `16rem`             |
 
-### 4. Sidebar (`.pl-l-sidebar`)
+### 4. sidebar (`.pl-l-sidebar`)
 
 A two-column layout consisting of a fixed-width column (typically a sidebar navigation or filter panel) and a flexible main column. It collapses to a single column when the viewport or parent container is narrower than `48rem`.
 
@@ -103,7 +101,7 @@ A two-column layout consisting of a fixed-width column (typically a sidebar navi
 | `--pl-l-sidebar-gap`  | Column gap                  | `var(--pl-space-4)` |
 | `--pl-l-sidebar-size` | Width of the sidebar column | `16rem`             |
 
-### 5. Scroll Area (`.pl-l-scroll-area`)
+### 5. scroll area (`.pl-l-scroll-area`)
 
 An independent scroll container that contains overscroll to prevent scroll chaining to the main page. It uses `scrollbar-gutter: stable` to prevent layout shifts when scrollbars appear or disappear.
 
@@ -113,7 +111,7 @@ An independent scroll container that contains overscroll to prevent scroll chain
 </div>
 ```
 
-### 6. Columns (`.pl-l-columns`)
+### 6. columns (`.pl-l-columns`)
 
 A CSS multi-column layout for card walls or image galleries. Content flows down each column before moving to the next; this is not row-major CSS Grid masonry. Use a grid for ordered content that people need to scan across rows.
 
@@ -130,7 +128,7 @@ A CSS multi-column layout for card walls or image galleries. Content flows down 
 | `--pl-l-columns-width` | Target column width             | `16rem`             |
 | `--pl-l-columns-count` | Maximum column count (optional) | `auto`              |
 
-### 7. Container (`.pl-l-container`)
+### 7. container (`.pl-l-container`)
 
 A centered, responsive max-width wrapper designed for dashboards, list views, and settings forms.
 
@@ -146,7 +144,7 @@ A centered, responsive max-width wrapper designed for dashboards, list views, an
 | `--pl-l-container-max` | Maximum inline width               | `80rem`             |
 | `--pl-l-container-pad` | Space reserved on each inline side | `var(--pl-space-4)` |
 
-### 8. Inset (`.pl-l-inset`)
+### 8. inset (`.pl-l-inset`)
 
 A centered column designed to constrain content inside a wider, full-bleed element (such as forms inside a hero banner or captions in a video section).
 
@@ -166,7 +164,7 @@ The inset only limits width; it does not supply gutters or vertical spacing.
 Add token-based padding to the full-bleed parent so content does not touch
 the viewport edge on mobile.
 
-### 9. Page (`.pl-l-page`)
+### 9. page (`.pl-l-page`)
 
 A centered container with inline gutters and an `88rem` default maximum.
 For long-form prose, set a narrower measure such as `--pl-l-page-max: 68ch`.
@@ -177,7 +175,7 @@ For long-form prose, set a narrower measure such as `--pl-l-page-max: 68ch`.
 
 ---
 
-## App Shell Layout
+## App shell layout
 
 The `.pl-l-app-shell` coordinates the main layout of a SaaS or dashboard application. It provides:
 
@@ -191,7 +189,7 @@ that header in sticky positioning. Use one main landmark; use a `div` for an
 embedded work region if the host page already has `main`. Provide a mobile
 navigation control before hiding the desktop rail.
 
-### Responsive Behavior
+### Responsive behavior
 
 - **Desktop (60rem+)**: The topbar spans the full width; sidebar and main sit below it.
 - **Tablet / Mobile (< 60rem)**: The sidebar is hidden (`display: none`), prioritizing the work canvas.
@@ -213,9 +211,9 @@ navigation control before hiding the desktop rail.
 
 ---
 
-## Page-Building Examples
+## Page-building examples
 
-### Example 1: SaaS Dashboard Page
+### Example 1: SaaS dashboard page
 
 A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a split layout for recent activity.
 
@@ -311,7 +309,7 @@ A complete dashboard composed of a sticky topbar, sidebar rail, KPI grid, and a 
 </div>
 ```
 
-### Example 2: Settings Form
+### Example 2: settings form
 
 A classic setting view showing a side menu and stacked inputs that adapt when screen width decreases.
 

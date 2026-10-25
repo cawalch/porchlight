@@ -5,8 +5,6 @@ status: stable
 since: 0.5.0
 ---
 
-# Form
-
 The `.pl-c-form` kit composes native fields into real application forms: settings
 sections, billing forms, filter bars, modal create/edit flows, dense admin
 metadata, choice groups, and prefix/suffix input groups. It is CSS-only and
@@ -18,7 +16,7 @@ frameworks all use the same contract: native controls, semantic form elements,
 HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
 `data-tone` message attributes.
 
-## Form Layout
+## Form layout
 
 ```html
 <form class="pl-c-form">
@@ -53,7 +51,7 @@ HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
 </form>
 ```
 
-## Class Contract
+## Class contract
 
 | Selector                    | Role                                                 |
 | --------------------------- | ---------------------------------------------------- |
@@ -75,7 +73,7 @@ HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
 | `.pl-c-input-group__addon`  | Non-interactive prefix or suffix.                    |
 | `.pl-c-input-group__action` | Button aligned inside the group.                     |
 
-## Choice Groups
+## Choice groups
 
 Use real `fieldset` and `legend` for groups of related checkboxes or radios.
 
@@ -100,7 +98,7 @@ Use real `fieldset` and `legend` for groups of related checkboxes or radios.
 Set `data-layout="inline"` on `.pl-c-choice-list` for compact radio groups such as
 billing cadence or plan type.
 
-## Input Groups
+## Input groups
 
 Input groups keep a native `.pl-c-field__control` while adding a prefix, suffix, or
 action. Use explicit labels when an action button sits beside the input.

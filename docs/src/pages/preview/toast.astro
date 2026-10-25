@@ -110,6 +110,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  /* Static examples still animate from outside their own inline bounds. */
+  .pl-c-toast-stack { overflow-x: clip; }
+
   .placement-grid {
     display: grid;
     gap: var(--pl-space-3);
