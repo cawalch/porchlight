@@ -16,7 +16,7 @@ import Icon from '../../components/Icon.astro';
   <h2>Account menu</h2>
   <p>The canonical SaaS pattern: avatar → account/settings/sign-out.</p>
   <div class="demo-row">
-    <div class="pl-c-menu" style="--pl-c-menu-anchor: --account-menu-anchor;">
+    <div class="pl-c-menu">
       <button class="pl-c-button pl-c-menu__trigger" data-variant="ghost" popovertarget="account-menu">
         <Icon name="gear" /> Account
       </button>
@@ -42,7 +42,7 @@ import Icon from '../../components/Icon.astro';
   <h2>Action menu</h2>
   <p>A compact actions menu — row-level actions in a data table.</p>
   <div class="demo-row">
-    <div class="pl-c-menu" style="--pl-c-menu-anchor: --row-menu-anchor;">
+    <div class="pl-c-menu">
       <button class="pl-c-button pl-c-menu__trigger" data-variant="ghost" popovertarget="row-menu" aria-label="Row actions">
         <Icon name="gear" />
       </button>
@@ -57,16 +57,16 @@ import Icon from '../../components/Icon.astro';
   </div>
 
   <h2>Multiple menus</h2>
-  <p>Each menu needs a unique anchor name — set <code>--pl-c-menu-anchor</code> per instance.</p>
+  <p>Each menu needs a unique HTML ID and matching <code>popovertarget</code>; no CSS anchor name is needed.</p>
   <div class="demo-row">
-    <div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-a;">
+    <div class="pl-c-menu">
       <button class="pl-c-button pl-c-menu__trigger" data-variant="secondary" popovertarget="menu-a">Menu A</button>
       <div class="pl-c-menu__popover" id="menu-a" popover>
         <button class="pl-c-menu__item" type="button">Item A1</button>
         <button class="pl-c-menu__item" type="button">Item A2</button>
       </div>
     </div>
-    <div class="pl-c-menu" style="--pl-c-menu-anchor: --menu-b;">
+    <div class="pl-c-menu">
       <button class="pl-c-button pl-c-menu__trigger" data-variant="secondary" popovertarget="menu-b">Menu B</button>
       <div class="pl-c-menu__popover" id="menu-b" popover>
         <button class="pl-c-menu__item" type="button">Item B1</button>

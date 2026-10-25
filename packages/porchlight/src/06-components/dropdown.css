@@ -24,7 +24,6 @@
 @layer porchlight.components {
   @scope (.pl-c-dropdown) {
     :scope {
-      --pl-c-dropdown-anchor: --pl-dropdown-anchor;
       --pl-c-dropdown-min-inline: 12rem;
       --pl-c-dropdown-max-block: 20rem;
 
@@ -47,7 +46,7 @@
       font-size: var(--pl-text-sm);
       text-align: start;
       cursor: pointer;
-      anchor-name: var(--pl-c-dropdown-anchor);
+      anchor-name: var(--pl-c-dropdown-anchor, none);
       transition: border-color var(--pl-duration-1) var(--pl-ease-standard);
     }
 
@@ -106,7 +105,7 @@
       .pl-c-dropdown__menu {
         inset: auto;
         position: absolute;
-        position-anchor: var(--pl-c-dropdown-anchor);
+        position-anchor: var(--pl-c-dropdown-anchor, auto);
         position-area: block-end span-inline-end;
         position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-1);

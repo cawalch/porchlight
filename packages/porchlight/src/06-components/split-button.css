@@ -40,7 +40,6 @@
 @layer porchlight.components {
   @scope (.pl-c-split) {
     :scope {
-      --pl-c-split-anchor: --pl-split-anchor;
       --pl-c-split-min-inline: 10rem;
       --pl-c-split-max-block: 20rem;
 
@@ -69,8 +68,8 @@
       border-end-start-radius: 0;
       border-inline-start-color: var(--pl-c-split-divider);
 
-      /* Anchor name so the popover can tether to the toggle. */
-      anchor-name: var(--pl-c-split-anchor);
+      /* Optional named-anchor override; popovertarget anchors by default. */
+      anchor-name: var(--pl-c-split-anchor, none);
     }
 
     /* Filled variants (primary): a semi-transparent white rule reads as a
@@ -144,7 +143,7 @@
       .pl-c-split__menu {
         inset: auto;
         position: absolute;
-        position-anchor: var(--pl-c-split-anchor);
+        position-anchor: var(--pl-c-split-anchor, auto);
         position-area: block-end span-inline-end;
         position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-1);

@@ -331,7 +331,6 @@
 
   @scope (.pl-c-date-picker) {
     :scope {
-      --pl-c-date-picker-anchor: --pl-date-picker-anchor;
       --pl-c-date-picker-popover-size: min(100vi - 2rem, 23rem);
       --pl-c-date-picker-popover-max-block: min(34rem, calc(100dvb - 2rem));
 
@@ -353,7 +352,7 @@
     }
 
     .pl-c-date-picker__trigger {
-      anchor-name: var(--pl-c-date-picker-anchor);
+      anchor-name: var(--pl-c-date-picker-anchor, none);
       flex: 0 0 auto;
     }
 
@@ -407,7 +406,7 @@
       .pl-c-date-picker__popover {
         inset: auto;
         position: absolute;
-        position-anchor: var(--pl-c-date-picker-anchor);
+        position-anchor: var(--pl-c-date-picker-anchor, auto);
         position-area: block-end span-inline-start;
         position-try-fallbacks: flip-block, flip-inline;
         margin-block-start: var(--pl-space-2);

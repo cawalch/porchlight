@@ -67,24 +67,14 @@ includes `button.css` automatically. The divider is styled by `split-button.css`
 older markup using `.pl-c-menu__divider` inside a split button still works
 without importing `popover-menu.css`.
 
-> **Multiple instances:** each `.pl-c-split` must set a unique `--pl-c-split-anchor`
-> (e.g. `style="--pl-c-split-anchor: --sb-1;"`) so popovers don't all tether to
-> the last toggle on the page. The default `--pl-split-anchor` works only for
-> a single instance.
+### Repeated split buttons
 
-### SSR/CSP-safe anchors
-
-CSS Anchor Positioning requires `anchor-name` and `position-anchor` to resolve
-to a CSS custom identifier. Today that identifier cannot be read from an HTML
-attribute, so each simultaneously rendered split button still needs a unique
-CSS value as well as a unique `id` / `popovertarget` pair.
-
-If inline styles are awkward for a server-rendered or CSP-heavy app, generate a
-class and put the custom property in an app stylesheet or nonce-protected
-`<style>` block:
+Each menu needs a unique HTML `id` and matching `popovertarget`. The browser
+anchors it to its own toggle, so server-rendered lists and HTMX fragments need
+no per-instance CSS anchor names:
 
 ```html
-<div class="pl-c-split request-actions-42">
+<div class="pl-c-split">
   <button class="pl-c-button pl-c-split__primary" data-variant="primary">
     Approve
   </button>
@@ -100,23 +90,16 @@ class and put the custom property in an app stylesheet or nonce-protected
 </div>
 ```
 
-```css
-@layer app {
-  .request-actions-42 {
-    --pl-c-split-anchor: --request-actions-42;
-  }
-}
-```
-
-For HTMX/server-rendered lists, a stable row/request id is a good suffix. If a
-page renders only one split button, you can omit the custom property and use the
-default anchor name.
+For HTMX/server-rendered lists, a stable row/request id is a good suffix for
+the HTML `id`. If the menu must use a different named anchor, set
+`--pl-c-split-anchor` on its root as an explicit override. Programmatic opens
+should call `showPopover({ source: toggle })`.
 
 ## Tokens exposed (component-local)
 
 | Token                     | Default             | Purpose                                                |
 | ------------------------- | ------------------- | ------------------------------------------------------ |
-| `--pl-c-split-anchor`     | `--pl-split-anchor` | CSS anchor name for the toggle (unique per instance).  |
+| `--pl-c-split-anchor`     | implicit trigger    | Optional explicit CSS anchor name.                     |
 | `--pl-c-split-min-inline` | `10rem`             | Minimum menu width.                                    |
 | `--pl-c-split-max-block`  | `20rem`             | Maximum menu height (scrolls if exceeded).             |
 | `--pl-c-split-divider`    | `--pl-color-border` | Divider color between segments (per-variant override). |

@@ -11,7 +11,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Basic</h2>
   <div class="dropdown-demo-width">
-    <div class="pl-c-dropdown dropdown-demo-basic">
+    <div class="pl-c-dropdown">
       <button class="pl-c-dropdown__trigger" id="dd-trigger-1" popovertarget="dd-1" aria-haspopup="menu" aria-controls="dd-1" aria-expanded="false">
         <span class="pl-c-dropdown__label">Project Alpha</span>
         <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -28,7 +28,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>With icons</h2>
   <div class="dropdown-demo-width">
-    <div class="pl-c-dropdown dropdown-demo-icons">
+    <div class="pl-c-dropdown">
       <button class="pl-c-dropdown__trigger" id="dd-trigger-2" popovertarget="dd-2" aria-haspopup="menu" aria-controls="dd-2" aria-expanded="false">
         <span class="pl-c-dropdown__label">Sort by: Name</span>
         <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -85,7 +85,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
         event.preventDefault();
         requestedInitialFocus = event.key === 'ArrowDown' ? 0 : -1;
-        menu.showPopover();
+        // DOM typings lag the Popover API's source option.
+        const showWithSource = menu.showPopover as (options: { source: HTMLElement }) => void;
+        showWithSource.call(menu, { source: trigger });
       });
 
       menu.addEventListener('keydown', (event) => {
@@ -130,14 +132,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <style>
   .dropdown-demo-width {
     max-inline-size: 20rem;
-  }
-
-  .dropdown-demo-basic {
-    --pl-c-dropdown-anchor: --dd-1;
-  }
-
-  .dropdown-demo-icons {
-    --pl-c-dropdown-anchor: --dd-2;
   }
 
   .dropdown-demo-icon {
