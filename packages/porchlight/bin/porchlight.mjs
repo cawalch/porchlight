@@ -164,15 +164,24 @@ function selectFiles(options, manifest) {
   if (options.enhancements) addFile(files, manifest.files.enhancements);
 
   const componentsByName = new Map(
-    manifest.components.map((component) => [component.name, component.file]),
+    manifest.components.map((component) => [component.name, component]),
   );
   for (const component of options.components) {
-    const file = componentsByName.get(component);
-    if (!file) {
+    const entry = componentsByName.get(component);
+    if (!entry) {
       const names = [...componentsByName.keys()].join(", ");
       fail(`unknown component "${component}". Available components: ${names}`);
     }
-    addFile(files, file);
+    for (const dependency of entry.dependencies ?? []) {
+      const required = componentsByName.get(dependency);
+      if (!required) {
+        fail(
+          `component "${component}" requires unknown component "${dependency}"`,
+        );
+      }
+      addFile(files, required.file);
+    }
+    addFile(files, entry.file);
   }
 
   if (options.manifest) {

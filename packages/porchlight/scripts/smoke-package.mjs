@@ -106,6 +106,24 @@ assert(
   manifest.recommendedLoadOrder.includes("dist/core.css"),
   "Manifest does not include core.css in the load order",
 );
+const componentsByName = new Map(
+  manifest.components.map((component) => [component.name, component]),
+);
+for (const component of manifest.components) {
+  for (const name of component.dependencies ?? []) {
+    const dependency = componentsByName.get(name);
+    assert(dependency, `${component.name} has unknown dependency ${name}`);
+    assert(name !== component.name, `${component.name} depends on itself`);
+    assert(
+      !dependency.dependencies?.length,
+      `Nested dependencies need explicit copy support: ${component.name} -> ${name}`,
+    );
+  }
+}
+assert(
+  componentsByName.get("split-button")?.dependencies?.join(",") === "button",
+  "Split button must declare its button CSS dependency",
+);
 
 const copyRoot = await mkdtemp(resolve(tmpdir(), "porchlight-copy-"));
 const compatCopy = spawnSync(
@@ -149,6 +167,47 @@ await exists(resolve(copyRoot, "partial/layout.css"));
 await exists(resolve(copyRoot, "partial/components/button.css"));
 await exists(resolve(copyRoot, "partial/components/field.css"));
 await exists(resolve(copyRoot, "partial/utilities.css"));
+
+const splitCopy = spawnSync(
+  process.execPath,
+  [
+    resolve(root, "bin/porchlight.mjs"),
+    "copy",
+    "--out",
+    resolve(copyRoot, "split"),
+    "--components",
+    "split-button",
+  ],
+  { encoding: "utf8" },
+);
+assert(
+  splitCopy.status === 0,
+  `split-button copy failed: ${splitCopy.stderr || splitCopy.stdout}`,
+);
+await exists(resolve(copyRoot, "split/core.css"));
+await exists(resolve(copyRoot, "split/components/button.css"));
+await exists(resolve(copyRoot, "split/components/split-button.css"));
+const copiedComponents = (
+  await readdir(resolve(copyRoot, "split/components"))
+).sort();
+assert(
+  copiedComponents.join(",") === "button.css,split-button.css",
+  `Unexpected split-button CSS files: ${copiedComponents.join(", ")}`,
+);
+assert(
+  splitCopy.stdout.indexOf("button.css") <
+    splitCopy.stdout.indexOf("split-button.css"),
+  "Button CSS must be copied before split-button CSS",
+);
+const splitCss = await readFile(
+  resolve(copyRoot, "split/components/split-button.css"),
+  "utf8",
+);
+assert(
+  splitCss.includes(".pl-c-split__divider") &&
+    splitCss.includes(".pl-c-menu__divider"),
+  "Split CSS must style its divider and previously documented divider markup",
+);
 
 console.log(
   `✓ package smoke passed for ${componentSourceFiles.length} components and ${Object.keys(tokenDoc.tokens).length} tokens`,

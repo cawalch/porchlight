@@ -29,7 +29,7 @@
  *     <div popover class="pl-c-split__menu" id="sb-1">
  *       <button class="pl-c-split__option">Save as PDF</button>
  *       <button class="pl-c-split__option">Save as draft</button>
- *       <hr class="pl-c-menu__divider" />
+ *       <hr class="pl-c-split__divider" />
  *       <button class="pl-c-split__option" data-tone="danger">Discard changes</button>
  *     </div>
  *   </div>
@@ -128,6 +128,14 @@
         transform var(--pl-duration-enter) var(--pl-ease-decelerate),
         overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
         display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
+    }
+
+    /* The split menu owns its divider. Keep the earlier menu class working
+       inside a split button without requiring popover-menu.css. */
+    :is(.pl-c-split__divider, .pl-c-menu__divider) {
+      margin-block: var(--pl-space-1);
+      border: 0;
+      border-block-start: 1px solid var(--pl-color-border);
     }
 
     /* Anchor positioning  -  tether to the toggle. @supports-gated; browsers

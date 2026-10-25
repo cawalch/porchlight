@@ -1303,6 +1303,10 @@ test.describe("docs scaffold", () => {
     await expect(menu).toBeVisible();
     // Options are real buttons inside the open popover.
     await expect(menu.locator(".pl-c-split__option").first()).toBeVisible();
+    await expect(menu.locator(".pl-c-split__divider")).toHaveCSS(
+      "border-top-style",
+      "solid",
+    );
     // Esc closes.
     await page.keyboard.press("Escape");
     await expect(menu).toBeHidden();
