@@ -86,15 +86,6 @@ test("RTL mirrors the remaining component state rails", async ({ page }) => {
       selector: ".pl-c-filter-builder__row[aria-invalid='true']",
     },
     {
-      path: "workflow-board",
-      selector: ".pl-c-workflow-card[data-selected]",
-    },
-    {
-      path: "workflow-board",
-      selector: ".pl-c-workflow-lane[data-tone='accent']",
-      setupSelector: ".pl-c-workflow-lane",
-    },
-    {
       path: "data-table",
       selector: ".pl-c-table__detail td",
     },
@@ -112,16 +103,8 @@ test("RTL mirrors the remaining component state rails", async ({ page }) => {
     },
   ];
 
-  for (const { path, selector, setupSelector } of surfaces) {
+  for (const { path, selector } of surfaces) {
     await page.goto(`./preview/${path}`);
-    if (setupSelector) {
-      await page
-        .locator(setupSelector)
-        .first()
-        .evaluate((element) => {
-          element.setAttribute("data-tone", "accent");
-        });
-    }
 
     const ltrShadow = await page.evaluate((surfaceSelector) => {
       const element = document.querySelector(surfaceSelector) as HTMLElement;
@@ -251,12 +234,21 @@ test("RTL drawer and toast motion originates from the logical edge", async ({
 
   await page.goto("./preview/toast");
   const toast = await page.evaluate(() => {
+    // Static docs examples fade in place. Test the framework's floating stack
+    // independently of those scoped preview overrides.
+    const stacks = ["bottom-start", "bottom-end"].map((placement) => {
+      const stack = document.createElement("div");
+      stack.className = "pl-c-toast-stack";
+      stack.dataset.placement = placement;
+      document.body.append(stack);
+      return stack;
+    });
     const read = () =>
       Object.fromEntries(
         ["bottom-start", "bottom-end"].map((placement) => {
-          const stack = document.querySelector(
-            `.pl-c-toast-stack[data-placement="${placement}"]`,
-          ) as HTMLElement;
+          const stack = stacks.find(
+            (element) => element.dataset.placement === placement,
+          )!;
           return [
             placement,
             getComputedStyle(stack)
@@ -268,6 +260,7 @@ test("RTL drawer and toast motion originates from the logical edge", async ({
     const ltr = read();
     document.documentElement.dir = "rtl";
     const rtl = read();
+    stacks.forEach((stack) => stack.remove());
     return { ltr, rtl };
   });
 

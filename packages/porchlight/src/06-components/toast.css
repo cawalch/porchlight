@@ -77,6 +77,7 @@
       --pl-c-toast-pad: var(--pl-space-3) var(--pl-space-4);
       --pl-c-toast-radius: var(--pl-radius-xl);
       --pl-c-toast-gap: var(--pl-space-3);
+      --pl-c-toast-shadow: var(--pl-shadow-2);
 
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -98,7 +99,7 @@
         saturate(var(--pl-backdrop-saturate));
       -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
-      box-shadow: var(--pl-shadow-3);
+      box-shadow: var(--pl-c-toast-shadow);
       pointer-events: auto;
 
       /* Enter animation: slide in from the stack's inline edge + fade.
