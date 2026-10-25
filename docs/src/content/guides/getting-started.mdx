@@ -69,6 +69,14 @@ components.
 `core.css` includes layer order, reset, tokens, themes, and base styles.
 Component files consume those tokens, so keep `core.css` first.
 
+Selected CSS imports follow the classes in your markup. A split button always
+uses `.pl-c-button` for both segments, so import `button.css` before
+`split-button.css`. The static-copy helper includes that required dependency
+when you request `--components split-button`; CSS `@import` does not.
+Other compositions are optional: a menu with a `.pl-c-button` trigger needs
+`button.css`, a nav flyout needs `popover-menu.css`, and the inline-loading
+busy-button recipe needs both `button.css` and `inline-loading.css`.
+
 If you want the whole practical framework without experimental enhancement
 syntax, use `compat.css`. It includes core, layout, all components, and
 utilities, but leaves out `enhancements.css`.

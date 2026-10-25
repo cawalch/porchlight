@@ -21,7 +21,12 @@
   /* Scroll-driven reveal. */
   @supports (animation-timeline: view()) {
     :where(.pl-c-reveal) {
-      animation: pl-c-reveal-enter both linear;
+      /* Keep these as longhands. Lightning CSS 1.33 folds a shorthand plus
+         animation-timeline into an animation value browsers reject. */
+      animation-name: pl-c-reveal-enter;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
       animation-timeline: view();
       animation-range: entry 0% cover 30%;
     }
@@ -49,9 +54,9 @@
     }
   }
 
-  /* Under forced colors, ensure content is always visible (no scroll-gated
-     animations that could leave content invisible in high-contrast mode). */
-  @media (forced-colors: active) {
+  /* A 1ms duration does not disable a view timeline. Keep offscreen content
+     visible for reduced-motion and forced-colors users. */
+  @media (forced-colors: active), (prefers-reduced-motion: reduce) {
     :where(.pl-c-reveal) {
       animation: none;
       opacity: 1;

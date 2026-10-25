@@ -3,7 +3,7 @@
  * ===========================================================================
  * A collapsible disclosure built on native <details>/<summary>. Animates
  * open/close to/from height: auto using interpolate-size: allow-keywords
- * (declared globally in 08-enhancements). As a universal fallback, uses the
+ * (scoped to the panel). As a universal fallback, uses the
  * grid-template-rows: 0fr -> 1fr technique which works without it.
  *
  * Structure:
@@ -124,6 +124,7 @@
        This produces smoother results than the grid technique. */
     @supports (interpolate-size: allow-keywords) {
       .pl-c-accordion__panel {
+        interpolate-size: allow-keywords;
         display: block;
         overflow: hidden;
         grid-template-rows: initial;

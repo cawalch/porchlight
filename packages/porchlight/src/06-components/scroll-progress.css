@@ -29,8 +29,12 @@
       transform-origin: inline-start;
       background: var(--pl-c-progress-tone);
 
-      /* Animate scaleX from 0 to 1 as the page scrolls. */
-      animation: pl-c-scroll-progress-grow auto linear;
+      /* Animate scaleX from 0 to 1 as the page scrolls. Keep these as
+         longhands; Lightning CSS 1.33 otherwise folds the timeline into an
+         animation shorthand that browsers reject. */
+      animation-name: pl-c-scroll-progress-grow;
+      animation-duration: auto;
+      animation-timing-function: linear;
       animation-timeline: scroll(root);
     }
 

@@ -42,6 +42,12 @@ const moduleEntries = {
   utilities: [layerOrder, "src/07-utilities.css"],
   enhancements: [layerOrder, "src/08-enhancements.css"],
 };
+// Only stylesheet dependencies required by a component's own markup contract.
+// Optional compositions (for example, a menu with a styled button trigger)
+// remain application-selected imports.
+const componentDependencies = {
+  "split-button": ["button"],
+};
 const namespaceChecks = [
   {
     name: "unprefixed public class",
@@ -288,6 +294,9 @@ async function emitManifest(componentNames) {
       name,
       file: `dist/components/${name}.css`,
       import: `@cawalch/porchlight/components/${name}.css`,
+      ...(componentDependencies[name]
+        ? { dependencies: componentDependencies[name] }
+        : {}),
     })),
     recommendedLoadOrder: [
       "dist/core.css",

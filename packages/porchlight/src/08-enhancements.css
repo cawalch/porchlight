@@ -6,32 +6,20 @@
  * zero behavior change where it doesn't.
  *
  * Features:
- *   1. interpolate-size: allow-keywords on :root, so height/width can animate
- *      to/from auto and content-keyword sizes (Baseline 2026; enables
- *      disclosure/collapsible animations without measuring JS).
- *   2. scroll-state container queries: logical overflow indicators, stuck table
+ *   1. scroll-state container queries: logical overflow indicators, stuck table
  *      separators, and sticky-shell bar shadows, without scroll listeners.
- *   3. text-box: trim-both cap alphabetic on buttons/badges, removing the
+ *   2. text-box: trim-both cap alphabetic on buttons/badges, removing the
  *      cap-height half-leading for optically-centered labels.
- *   4. rule (CSS Gap Decorations): dividers between grid/flex items via
+ *   3. rule (CSS Gap Decorations): dividers between grid/flex items via
  *      [data-dividers] on .pl-l-grid, purely visual (no layout impact).
- *   5. Advanced typed attr(): a .pl-c-swatch that reads its color from a
+ *   4. Advanced typed attr(): a .pl-c-swatch that reads its color from a
  *      data-color attribute, type-checked as <color>.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
  * critical path; everything below is opt-in via @supports.
  */
 @layer porchlight.enhancements {
-  /* 1. Allow animating to/from intrinsic sizes (content, auto). Enables
-     native disclosure/collapsible animations and @starting-style on
-     auto-sized elements. */
-  @supports (interpolate-size: allow-keywords) {
-    :root {
-      interpolate-size: allow-keywords;
-    }
-  }
-
-  /* 2. State indicators paint only narrow borders, never a translucent veil
+  /* 1. State indicators paint only narrow borders, never a translucent veil
      over controls. Named queries prevent nested scrollports stealing state. */
   @supports (container-type: scroll-state) {
     .pl-c-scroll-region {
@@ -120,7 +108,7 @@
     }
   }
 
-  /* 3. text-box: optical alignment. Trims the cap-height half-leading so a
+  /* 2. text-box: optical alignment. Trims the cap-height half-leading so a
      single-line label sits visually centered without the inline-box overshoot
      that makes controls look 1px off. */
   @supports (text-box: trim-both cap alphabetic) {
@@ -129,7 +117,7 @@
     }
   }
 
-  /* 4. CSS Gap Decorations: vertical dividers between grid items, purely
+  /* 3. CSS Gap Decorations: vertical dividers between grid items, purely
      visual (the gap stays, a rule is drawn in it). Opt in via
      [data-dividers="true"] on .pl-l-grid. The `rule` properties are behind
      @supports so unsupported browsers just show the normal gap. */
@@ -140,7 +128,7 @@
     }
   }
 
-  /* 5. Advanced typed attr(): a swatch that reads its color directly from a
+  /* 4. Advanced typed attr(): a swatch that reads its color directly from a
      data-color attribute, type-checked as <color> (with a token fallback).
      Removes the need for inline style="" for static color chips. */
   @supports (background: attr(data-color type(<color>))) {
@@ -149,7 +137,7 @@
     }
   }
 
-  /* 6. View Transitions: opt-in cross-document page animations (Baseline 2026).
+  /* 5. View Transitions: opt-in cross-document page animations (Baseline 2026).
      DISABLED by default (`navigation: none`). MPA View Transitions break
      silently in JS-heavy apps: the browser captures a DOM snapshot during the
      transition, and frameworks that initialise components during that snapshot

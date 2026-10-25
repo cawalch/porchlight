@@ -51,6 +51,9 @@ the pieces you need.
 
 `core.css` includes layer order, reset, tokens, themes, and base styles.
 Component files depend on those tokens, so load `core.css` first.
+For a split button, also load `button.css` before `split-button.css`; its two
+segments use the button component. `porchlight copy --components split-button`
+includes `button.css` automatically, while CSS `@import` stays explicit.
 
 If you want the whole practical framework without experimental enhancement
 syntax, use `compat.css`. It includes core, layout, all components, and

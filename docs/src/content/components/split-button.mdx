@@ -36,7 +36,7 @@ button only adds the layout, the seam divider, and the Popover API menu.
   <div popover class="pl-c-split__menu" id="sb-1">
     <button class="pl-c-split__option">Save as PDF</button>
     <button class="pl-c-split__option">Save as draft</button>
-    <hr class="pl-c-menu__divider" />
+    <hr class="pl-c-split__divider" />
     <button class="pl-c-split__option" data-tone="danger">
       Discard changes
     </button>
@@ -54,10 +54,18 @@ button only adds the layout, the seam divider, and the Popover API menu.
 | `.pl-c-split__chevron` | Arrow icon inside the toggle (rotates 180° when open).                 |
 | `.pl-c-split__menu`    | The popover menu (anchored to the toggle).                             |
 | `.pl-c-split__option`  | A menu item (button or link).                                          |
+| `.pl-c-split__divider` | Optional divider between menu groups.                                  |
 | `[data-tone="danger"]` | Destructive item (discard, delete).                                    |
 
 Both buttons **must** carry the same `data-variant` so the fill, text, and
 border match across the seam.
+
+For selected CSS imports, load `core.css`, `components/button.css`, then
+`components/split-button.css`. The split-button segments require the button
+component's base and variant rules. `porchlight copy --components split-button`
+includes `button.css` automatically. The divider is styled by `split-button.css`;
+older markup using `.pl-c-menu__divider` inside a split button still works
+without importing `popover-menu.css`.
 
 > **Multiple instances:** each `.pl-c-split` must set a unique `--pl-c-split-anchor`
 > (e.g. `style="--pl-c-split-anchor: --sb-1;"`) so popovers don't all tether to
