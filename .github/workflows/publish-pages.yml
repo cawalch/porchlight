@@ -25,7 +25,7 @@ concurrency:
 jobs:
   publish:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -34,6 +34,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           ref: gh-pages
+          persist-credentials: false
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

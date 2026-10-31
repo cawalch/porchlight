@@ -24,10 +24,12 @@ concurrency:
 jobs:
   preview:
     if: github.event.action != 'closed' || github.event.pull_request.merged == false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
