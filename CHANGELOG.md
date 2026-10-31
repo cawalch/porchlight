@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `porchlight init` CLI command to scaffold accessible starter HTML templates
+  configured with `@layer` ordering, CDN/local CSS links, and responsive SaaS layout (#154).
+- Add `porchlight tokens` CLI command to inspect, filter by query, and explore design
+  tokens grouped by category in terminal output or structured JSON (#154).
+- Generate offline `COMPONENTS.md` reference documenting all 51 components (primary selectors,
+  modular import paths, dependencies, descriptions) and include in npm package files (#154).
 - Add style container queries (`@container style(--pl-density: dense|compact)` and
   `@container style(--pl-tone: brand|success|warning|danger)`) in `08-enhancements.css`
   for ancestor token inheritance without DOM attribute duplication (#153).
