@@ -93,6 +93,46 @@ const accounts = [
       </section>
     ))}
   </div>
+
+  <h2>Card deck alignment (CSS Subgrid)</h2>
+  <p>Add <code>data-subgrid="rows"</code> to an <code>.pl-l-grid</code> container so nested cards participate in shared row tracks. Headers align across cards, body text starts at the exact same vertical baseline, and action footers align to the bottom row regardless of content height differences.</p>
+  <div class="pl-l-grid" data-subgrid="rows" style="--pl-l-grid-min: 18rem;">
+    <section class="pl-c-card">
+      <header class="pl-c-card__header">
+        <h2 class="pl-c-card__title">Starter Plan</h2>
+      </header>
+      <div class="pl-c-card__body">
+        Essential infrastructure for small projects, staging environments, and personal experiments.
+      </div>
+      <footer class="pl-c-card__footer">
+        <button class="pl-c-button" data-variant="secondary">Select Starter</button>
+      </footer>
+    </section>
+
+    <section class="pl-c-card">
+      <header class="pl-c-card__header">
+        <h2 class="pl-c-card__title">Enterprise Dedicated Cluster and Support Tier</h2>
+      </header>
+      <div class="pl-c-card__body">
+        High-throughput dedicated hardware with 99.99% uptime SLA, custom data residency, audit log streaming, and 24/7 incident response.
+      </div>
+      <footer class="pl-c-card__footer">
+        <button class="pl-c-button" data-variant="primary">Select Enterprise</button>
+      </footer>
+    </section>
+
+    <section class="pl-c-card">
+      <header class="pl-c-card__header">
+        <h2 class="pl-c-card__title">Pro Growth</h2>
+      </header>
+      <div class="pl-c-card__body">
+        Advanced autoscaling and team management for growing teams.
+      </div>
+      <footer class="pl-c-card__footer">
+        <button class="pl-c-button" data-variant="secondary">Select Pro</button>
+      </footer>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>

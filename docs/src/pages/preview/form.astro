@@ -217,6 +217,31 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
     </section>
   </form>
+
+  <h2>Two-column aligned form (CSS Subgrid)</h2>
+  <p>Add <code>data-layout="aligned"</code> to an <code>.pl-c-form</code> to align label and input columns across fields using CSS Subgrid. Labels size dynamically to the widest label in the form without hardcoded widths or JavaScript, and collapse to a single column on narrow screens.</p>
+  <form class="pl-c-form demo-form aligned-form" data-layout="aligned">
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="subgrid-name">Full legal name</label>
+      <input id="subgrid-name" class="pl-c-field__control" value="Alex Morgan" />
+    </div>
+
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="subgrid-org">Organization or department</label>
+      <input id="subgrid-org" class="pl-c-field__control" value="Platform Infrastructure" />
+    </div>
+
+    <div class="pl-c-field">
+      <label class="pl-c-field__label" for="subgrid-email">Direct contact email address</label>
+      <input id="subgrid-email" class="pl-c-field__control" type="email" value="alex@platform.example" />
+      <span class="pl-c-field__hint">Used for urgent security notifications.</span>
+    </div>
+
+    <div class="pl-c-form__actions">
+      <button type="button" class="pl-c-button" data-variant="ghost">Cancel</button>
+      <button type="submit" class="pl-c-button" data-variant="primary">Save changes</button>
+    </div>
+  </form>
 </BaseLayout>
 
 <style>
@@ -228,7 +253,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border-radius: var(--pl-radius-lg);
   }
 
-  .dense-form {
+  .dense-form,
+  .aligned-form {
     max-inline-size: 46rem;
   }
 </style>

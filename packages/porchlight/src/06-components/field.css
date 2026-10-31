@@ -46,6 +46,30 @@
       grid-template-columns: 1fr;
     }
 
+    /* Column subgrid  -  participates in a parent multi-column grid, aligning its
+       label in column 1 and control/messages in column 2. */
+    @supports (grid-template-columns: subgrid) {
+      :scope[data-subgrid="columns"],
+      :scope[data-subgrid] {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        gap: var(--pl-space-1) var(--pl-space-3);
+        align-items: start;
+      }
+
+      :scope[data-subgrid="columns"] .pl-c-field__label,
+      :scope[data-subgrid] .pl-c-field__label {
+        grid-column: 1;
+        padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
+      }
+
+      :scope[data-subgrid="columns"] > :not(.pl-c-field__label),
+      :scope[data-subgrid] > :not(.pl-c-field__label) {
+        grid-column: 2;
+      }
+    }
+
     .pl-c-field__label {
       display: inline-flex;
       gap: var(--pl-space-1);

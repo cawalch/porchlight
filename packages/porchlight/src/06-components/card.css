@@ -166,6 +166,46 @@
         color-mix(in oklab, var(--pl-c-card-border), transparent 45%);
     }
 
+    /* Subgrid rows  -  when cards participate in row subgrid (either explicitly
+       via [data-subgrid] or via an ancestor [data-subgrid="rows"]), header, body,
+       and footer tracks align across cards.
+       Note: container-type must be normal because container size query and subgrid
+       are mutually exclusive on the same element across browser engines. */
+    @supports (grid-template-rows: subgrid) {
+      :where([data-subgrid="rows"], [data-subgrid]) > :scope,
+      :scope[data-subgrid="rows"],
+      :scope[data-subgrid] {
+        grid-row: span var(--pl-c-card-subgrid-rows, 3);
+        grid-template-rows: subgrid;
+        align-content: stretch;
+        container-type: normal;
+      }
+
+      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__header,
+      :scope[data-subgrid="rows"] > .pl-c-card__header,
+      :scope[data-subgrid] > .pl-c-card__header {
+        grid-row: 1;
+      }
+
+      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__body,
+      :scope[data-subgrid="rows"] > .pl-c-card__body,
+      :scope[data-subgrid] > .pl-c-card__body {
+        grid-row: 2;
+      }
+
+      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__footer,
+      :scope[data-subgrid="rows"] > .pl-c-card__footer,
+      :scope[data-subgrid] > .pl-c-card__footer {
+        grid-row: 3;
+      }
+
+      :where([data-subgrid="rows"], [data-subgrid]) > :scope:not(:has(.pl-c-card__footer)) > .pl-c-card__body,
+      :scope[data-subgrid="rows"]:not(:has(.pl-c-card__footer)) > .pl-c-card__body,
+      :scope[data-subgrid]:not(:has(.pl-c-card__footer)) > .pl-c-card__body {
+        grid-row: 2 / -1;
+      }
+    }
+
     /* Header collapses to a stack when the CARD is narrow (container query). */
     @container pl-c-card (inline-size < 28rem) {
       .pl-c-card__header {
