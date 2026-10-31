@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add CSS Subgrid support for card decks (`.pl-l-grid[data-subgrid="rows"]`) and multi-row
+  aligned forms (`.pl-c-form[data-layout="aligned"]` / `[data-subgrid="columns"]`), enabling
+  shared header/body/footer row baselines and dynamic label track alignment (#147).
 - Ship minified modular CSS exports (`core.min.css`, `layout.min.css`, `utilities.min.css`,
   `enhancements.min.css`, `components.min.css`, and individual `components/*.min.css`),
   support minified modular copies in `porchlight copy --min`, and include minified targets

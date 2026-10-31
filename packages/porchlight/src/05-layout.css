@@ -44,6 +44,14 @@
     );
   }
 
+  /* Subgrid rows  -  when items (such as .pl-c-card) span multiple rows, the
+     grid provides explicit row tracks for subgridded children to inherit. */
+  @supports (grid-template-rows: subgrid) {
+    :where(.pl-l-grid[data-subgrid="rows"]) {
+      grid-template-rows: repeat(var(--pl-l-grid-rows, 3), auto);
+    }
+  }
+
   /* Sidebar + main  -  settings/filter panels, master-detail regions. The
      default is the desktop two-column layout. It collapses to a single
      column when its nearest ANCESTOR query container is narrower than 48rem
