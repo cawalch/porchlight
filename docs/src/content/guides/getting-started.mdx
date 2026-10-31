@@ -79,7 +79,39 @@ utilities, but leaves out `enhancements.css`.
 @import "@cawalch/porchlight/compat.css";
 ```
 
-## Static assets
+## CLI tools
+
+Porchlight ships a built-in CLI for project scaffolding, token inspection, and static asset distribution:
+
+### Scaffold a starter template
+
+Quickly generate an accessible starter HTML page configured with proper `@layer` ordering, CDN or local stylesheets, and a responsive SaaS layout:
+
+```sh
+# Generate starter index.html
+npx --no-install porchlight init
+
+# Or customize target file, title, and local stylesheet links
+npx --no-install porchlight init --out src/index.html --local --title "App Dashboard"
+```
+
+### Inspect tokens in terminal
+
+Query and explore Porchlight's design tokens directly from the terminal:
+
+```sh
+# List all tokens grouped by category
+npx --no-install porchlight tokens
+
+# Filter by keyword or token group
+npx --no-install porchlight tokens radius
+npx --no-install porchlight tokens --group Fonts
+
+# Output as structured JSON
+npx --no-install porchlight tokens --group Colors --json
+```
+
+### Static assets
 
 Server-rendered apps can copy prebuilt files from
 `node_modules/@cawalch/porchlight/dist/` without asking a bundler to parse
