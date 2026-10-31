@@ -28,13 +28,17 @@
     margin-block-end: 0;
   }
 
-  @supports (scroll-marker-group: before tabs) {
+  @supports (scroll-marker-group: before tabs) or (scroll-marker-group: before) {
     /* Chrome 154 can expose a different RTL panel from the visible one. */
     :where(.pl-c-panel-deck:not(:dir(rtl))) {
       display: flex;
       overflow: auto;
       scroll-snap-type: inline mandatory;
       scroll-marker-group: before tabs;
+    }
+
+    :where(.pl-c-panel-deck[data-markers="dots"]:not(:dir(rtl))) {
+      scroll-marker-group: before;
     }
 
     :where(.pl-c-panel-deck) > .pl-c-panel-deck__panel {
@@ -86,6 +90,56 @@
       color: var(--pl-color-accent);
       text-decoration: underline;
       text-underline-offset: 0.2em;
+    }
+
+    .pl-c-panel-deck__panel::scroll-marker:checked {
+      border-color: var(--pl-color-accent);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-accent);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    /* Carousel dot markers variant via [data-markers="dots"] */
+    :where(.pl-c-panel-deck[data-markers="dots"])::scroll-marker-group {
+      justify-content: center;
+      align-items: center;
+      block-size: auto;
+      gap: var(--pl-space-2);
+      padding-block: var(--pl-space-2);
+    }
+
+    :where(.pl-c-panel-deck[data-markers="dots"])
+      > .pl-c-panel-deck__panel::scroll-marker {
+      content: "";
+      inline-size: 0.625rem;
+      block-size: 0.625rem;
+      min-inline-size: 0;
+      padding: 0;
+      border-radius: var(--pl-radius-full);
+      background: var(--pl-color-border);
+      border: 0;
+      transition:
+        background var(--pl-duration-1) var(--pl-ease-standard),
+        transform var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    :where(.pl-c-panel-deck[data-markers="dots"])
+      > .pl-c-panel-deck__panel::scroll-marker:hover {
+      background: var(--pl-color-text-muted);
+    }
+
+    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
+    .pl-c-panel-deck[data-markers="dots"]
+      > .pl-c-panel-deck__panel::scroll-marker:target-current {
+      background: var(--pl-color-accent);
+      transform: scale(1.25);
+    }
+
+    .pl-c-panel-deck[data-markers="dots"]
+      > .pl-c-panel-deck__panel::scroll-marker:checked {
+      background: var(--pl-color-accent);
+      transform: scale(1.25);
     }
 
     :where(.pl-c-panel-deck)

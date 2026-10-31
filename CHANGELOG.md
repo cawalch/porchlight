@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add style container queries (`@container style(--pl-density: dense|compact)` and
+  `@container style(--pl-tone: brand|success|warning|danger)`) in `08-enhancements.css`
+  for ancestor token inheritance without DOM attribute duplication (#153).
+- Add CSS scroll marker enhancements (`::scroll-marker` and `::scroll-marker-group`)
+  for carousel dot markers in `.pl-c-panel-deck[data-markers="dots"]` and scroll-driven
+  tab panels in `.pl-c-tabs[data-markers="scroll"]` (#153).
 - Add native `<progress class="pl-c-progress">` support with tone inheritance, indeterminate
   animations, and forced-colors integration (#152).
 - Add opt-in `:user-valid` positive form feedback via `[data-feedback="valid"]` on fields

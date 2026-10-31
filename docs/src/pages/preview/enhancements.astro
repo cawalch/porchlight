@@ -54,6 +54,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <span class="pl-c-swatch" data-color="oklch(58% 0.2 25deg)"></span>
   </div>
 
+  <h2>Style container queries: density &amp; tone inheritance</h2>
+  <p>
+    Ancestor containers configure <code>style="--pl-density: dense|compact"</code> or <code>style="--pl-tone: success|warning|danger"</code>.
+    Descendants automatically inherit control scaling, compressed spacing, and tone colors without DOM attribute repetition.
+  </p>
+  <div class="demo-stack" id="style-query-density-demo" style="--pl-density: dense;">
+    <div class="pl-l-cluster">
+      <button class="pl-c-button">Dense Button</button>
+      <input class="pl-c-field__control" aria-label="Dense input" value="Dense Input" />
+      <span class="pl-c-badge">Dense Badge</span>
+    </div>
+  </div>
+
+  <div class="demo-stack" id="style-query-tone-demo" style="--pl-tone: success;">
+    <div class="pl-l-cluster">
+      <span class="pl-c-badge">Cascaded Success Badge</span>
+      <span class="pl-c-chip">Cascaded Success Chip</span>
+      <div class="pl-c-alert" role="status">
+        <p class="pl-c-alert__title">Cascaded Success Alert</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>CSS scroll markers carousel dots</h2>
+  <p>
+    Opt in to dot indicators via <code>data-markers="dots"</code> on <code>.pl-c-panel-deck</code>
+    for card slideshows and media carousels where supported.
+  </p>
+  <div id="carousel-dots-deck" class="pl-c-panel-deck" data-markers="dots" role="region" aria-label="Carousel dots example" tabindex="0">
+    <section class="pl-c-panel-deck__panel" data-label="Slide 1" aria-labelledby="carousel-title-1" tabindex="0">
+      <h3 id="carousel-title-1">Slide 1: Real-time telemetry</h3>
+      <p>High-frequency operational metrics visualized natively.</p>
+    </section>
+    <section class="pl-c-panel-deck__panel" data-label="Slide 2" aria-labelledby="carousel-title-2" tabindex="0">
+      <h3 id="carousel-title-2">Slide 2: Automated alerting</h3>
+      <p>Configurable thresholds with zero runtime overhead.</p>
+    </section>
+    <section class="pl-c-panel-deck__panel" data-label="Slide 3" aria-labelledby="carousel-title-3" tabindex="0">
+      <h3 id="carousel-title-3">Slide 3: Audit trails</h3>
+      <p>Immutable log streaming for enterprise compliance.</p>
+    </section>
+  </div>
+
   <h2>text-box optical alignment</h2>
   <p>
     Buttons and badges trim the cap-height half-leading so single-line labels
