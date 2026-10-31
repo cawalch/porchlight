@@ -77,7 +77,8 @@
     "prepublishOnly": "pnpm build"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "devDependencies": {
     "lightningcss": "^1.33.0"
