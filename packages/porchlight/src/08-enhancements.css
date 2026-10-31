@@ -110,9 +110,11 @@
 
   /* 2. text-box: optical alignment. Trims the cap-height half-leading so a
      single-line label sits visually centered without the inline-box overshoot
-     that makes controls look 1px off. */
-  @supports (text-box: trim-both cap alphabetic) {
+     that makes controls look 1px off. Supports both shorthand and longhands. */
+  @supports (text-box: trim-both cap alphabetic) or (text-box-trim: trim-both) {
     :where(.pl-c-button, .pl-c-badge, .pl-c-dialog__close) {
+      text-box-trim: trim-both;
+      text-box-edge: cap alphabetic;
       text-box: trim-both cap alphabetic;
     }
   }

@@ -24,6 +24,12 @@
     accent-color: var(--pl-color-accent);
   }
 
+  @supports (interpolate-size: allow-keywords) {
+    :where(html) {
+      interpolate-size: allow-keywords;
+    }
+  }
+
   :where(body) {
     font-size: var(--pl-text-md);
     line-height: var(--pl-leading-normal);
@@ -62,6 +68,10 @@
   :where(h2) {
     font-weight: var(--pl-font-weight-bold, 700);
     letter-spacing: -0.025em;
+  }
+
+  :where(p) {
+    text-wrap: pretty;
   }
 
   :where(p, ul, ol, dl, figure, blockquote) {

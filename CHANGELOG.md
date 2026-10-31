@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `text-wrap: pretty` to body paragraphs, document-wide `interpolate-size: allow-keywords`
+  on root under `@supports`, and `text-box-trim` / `text-box-edge` longhands for Safari 18.2+
+  optical centering (#146).
+
 ### Changed
 
 - Simplify the documentation layout with stable navigation, complete page
@@ -16,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Prevent Astro 7 preview detachment from causing early exit errors in Playwright
+  webServer test runs by setting `ASTRO_PREVIEW_BACKGROUND=1` (#144).
 - Follow rounded surface corners with logical accent borders on alerts, accent
   cards, workflow lanes, and selected work cards. Selection preserves text
   alignment, and accent borders remain visible with hover and focus shadows.
