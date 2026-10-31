@@ -211,12 +211,12 @@
     }
 
     /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
-    :is(
-      .pl-c-tabs[data-markers="scroll"]
-        [role="tabpanel"]::scroll-marker:checked,
-      .pl-c-tabs[data-markers="scroll"]
-        [role="tabpanel"]::scroll-marker:target-current
-    ) {
+    .pl-c-tabs[data-markers="scroll"]
+      [role="tabpanel"]::scroll-marker:target-current {
+      background: var(--pl-color-accent);
+    }
+
+    .pl-c-tabs[data-markers="scroll"] [role="tabpanel"]::scroll-marker:checked {
       background: var(--pl-color-accent);
     }
   }

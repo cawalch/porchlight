@@ -52,7 +52,7 @@ test.describe("style queries and scroll markers enhancements", () => {
   });
 
   test("panel deck supports carousel dot markers", async ({ page }) => {
-    await page.goto("./preview/panel-deck");
+    await page.goto("./preview/enhancements");
 
     const carouselDeck = page.locator("#carousel-dots-deck");
     await expect(carouselDeck).toBeVisible();

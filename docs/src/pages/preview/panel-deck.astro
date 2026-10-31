@@ -20,17 +20,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       </section>
     ))}
   </div>
-  <h2>Carousel with dot markers</h2>
-  <p>Opt in to dot indicators via <code>data-markers="dots"</code> for carousels and card slideshows.</p>
-  <div id="carousel-dots-deck" class="pl-c-panel-deck" data-markers="dots" role="region" aria-label="Carousel dots example">
-    {panels.map((panel, index) => (
-      <section class="pl-c-panel-deck__panel" data-label={panel.label} aria-labelledby={`carousel-title-${index}`}>
-        <h3 id={`carousel-title-${index}`}>{panel.title}</h3>
-        <p>{panel.body}</p>
-      </section>
-    ))}
-  </div>
-
   <h2>Density and direction</h2>
   <p>Navigation scrolls on narrow screens; content padding and control size follow density. RTL uses stacked panels because Chrome 154 can expose the wrong panel to assistive technology.</p>
   {(['compact', 'comfortable', 'touch', 'touch RTL'] as const).map((density) => (

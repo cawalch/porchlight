@@ -28,12 +28,16 @@
     margin-block-end: 0;
   }
 
-  @supports (scroll-marker-group: before) or (scroll-marker-group: before tabs) {
+  @supports (scroll-marker-group: before tabs) or (scroll-marker-group: before) {
     /* Chrome 154 can expose a different RTL panel from the visible one. */
     :where(.pl-c-panel-deck:not(:dir(rtl))) {
       display: flex;
       overflow: auto;
       scroll-snap-type: inline mandatory;
+      scroll-marker-group: before tabs;
+    }
+
+    :where(.pl-c-panel-deck[data-markers="dots"]:not(:dir(rtl))) {
       scroll-marker-group: before;
     }
 
@@ -80,10 +84,15 @@
     }
 
     /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
-    :is(
-      .pl-c-panel-deck__panel::scroll-marker:checked,
-      .pl-c-panel-deck__panel::scroll-marker:target-current
-    ) {
+    .pl-c-panel-deck__panel::scroll-marker:target-current {
+      border-color: var(--pl-color-accent);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-accent);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    .pl-c-panel-deck__panel::scroll-marker:checked {
       border-color: var(--pl-color-accent);
       background: var(--pl-color-surface-2);
       color: var(--pl-color-accent);
@@ -121,12 +130,14 @@
     }
 
     /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
-    :is(
-      .pl-c-panel-deck[data-markers="dots"]
-        > .pl-c-panel-deck__panel::scroll-marker:checked,
-      .pl-c-panel-deck[data-markers="dots"]
-        > .pl-c-panel-deck__panel::scroll-marker:target-current
-    ) {
+    .pl-c-panel-deck[data-markers="dots"]
+      > .pl-c-panel-deck__panel::scroll-marker:target-current {
+      background: var(--pl-color-accent);
+      transform: scale(1.25);
+    }
+
+    .pl-c-panel-deck[data-markers="dots"]
+      > .pl-c-panel-deck__panel::scroll-marker:checked {
       background: var(--pl-color-accent);
       transform: scale(1.25);
     }
