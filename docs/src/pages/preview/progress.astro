@@ -47,6 +47,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="pl-c-progress__bar progress-value-60"></div>
     </div>
   </div>
+
+  <h2>Semantic &lt;progress&gt; elements</h2>
+  <p>Native HTML progress elements with zero child nodes and native accessibility semantics.</p>
+  <div class="pl-l-stack progress-demo-stack" id="semantic-progress-demo">
+    <div>
+      <div class="progress-label">
+        <span>Accent (default)</span>
+        <span class="pl-u-muted">75%</span>
+      </div>
+      <progress class="pl-c-progress" value="75" max="100"></progress>
+    </div>
+
+    <div>
+      <div class="progress-label">
+        <span>Success tone</span>
+        <span class="pl-u-muted">100%</span>
+      </div>
+      <progress class="pl-c-progress" data-tone="success" value="100" max="100"></progress>
+    </div>
+
+    <div>
+      <div class="progress-label">
+        <span>Warning tone</span>
+        <span class="pl-u-muted">45%</span>
+      </div>
+      <progress class="pl-c-progress" data-tone="warning" value="45" max="100"></progress>
+    </div>
+
+    <div>
+      <div class="progress-label">
+        <span>Danger tone</span>
+        <span class="pl-u-muted">90%</span>
+      </div>
+      <progress class="pl-c-progress" data-tone="danger" value="90" max="100"></progress>
+    </div>
+
+    <div>
+      <div class="progress-label">
+        <span>Native indeterminate</span>
+      </div>
+      <progress class="pl-c-progress"></progress>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>

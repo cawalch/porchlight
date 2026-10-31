@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add native `<progress class="pl-c-progress">` support with tone inheritance, indeterminate
+  animations, and forced-colors integration (#152).
+- Add opt-in `:user-valid` positive form feedback via `[data-feedback="valid"]` on fields
+  and auto-expanding textareas (#152).
 - Add `@starting-style` and discrete opacity transitions to `::backdrop` on `.pl-c-dialog`,
   `.pl-c-drawer`, and `.pl-c-command` for smooth scrim entrances and exits (#151).
 - Add first-class support and documentation for native exclusive accordions using

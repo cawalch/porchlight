@@ -311,6 +311,44 @@
     color: var(--pl-color-danger-text);
   }
 
+  /* Valid: opt-in positive feedback via [data-feedback="valid"]. When the
+     user interacts and satisfies constraints (:user-valid), flips border
+     to success token. */
+  :is(
+    :where([data-feedback="valid"]) .pl-c-field__control:user-valid,
+    .pl-c-field__control[data-feedback="valid"]:user-valid
+  ):not(:placeholder-shown) {
+    border-color: var(--pl-color-success);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-color-success),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  /* Focused valid fields keep the success border but use standard focus glow. */
+  :is(
+    :where([data-feedback="valid"])
+      .pl-c-field__control:user-valid:focus-visible,
+    .pl-c-field__control[data-feedback="valid"]:user-valid:focus-visible
+  ):not(:placeholder-shown) {
+    border-color: var(--pl-color-success);
+    box-shadow: 0 0 0 4px
+      color-mix(
+        in oklab,
+        var(--pl-focus-color),
+        transparent var(--pl-focus-glow-opacity)
+      );
+  }
+
+  :where(.pl-c-field[data-feedback="valid"]):has(
+      .pl-c-field__control:user-valid:not(:placeholder-shown)
+    )
+    .pl-c-field__hint:not([data-tone]) {
+    color: var(--pl-color-success-text);
+  }
+
   :where(.pl-c-field):has(.pl-c-field__control:disabled) {
     opacity: var(--pl-opacity-disabled);
   }

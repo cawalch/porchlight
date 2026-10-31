@@ -2,16 +2,22 @@
  * Porchlight  -  progress bar component
  * ===========================================================================
  * A linear progress indicator for task completion, uploads, or capacity.
- * Determinate ([data-value="65"]) shows a fill proportional to the value;
- * indeterminate ([data-indeterminate]) shows an animated sweep.
+ * Supports both semantic <progress> elements and <div> structures.
+ *
+ * Semantic markup:
+ *   <progress class="pl-c-progress" value="65" max="100"></progress>
+ *
+ * Div markup:
+ *   <div class="pl-c-progress" data-value="65">
+ *     <div class="pl-c-progress__bar" style="inline-size: 65%;"></div>
+ *   </div>
  *
  * Tone variants via [data-tone]: default (accent), success, warning, danger.
- * For multi-segment progress (e.g. storage usage), nest multiple
- * .pl-c-progress__bar elements with different tones.
+ * Indeterminate progress: <progress class="pl-c-progress"></progress> (no value)
+ * or <div class="pl-c-progress" data-indeterminate>.
  *
- * The track is a 4px-high rounded bar; the fill animates width via
- * transition (respects reduced-motion). The indeterminate animation uses
- * a keyframe sweep that stops under reduced-motion (themes layer clamp).
+ * For multi-segment progress (e.g. storage usage), nest multiple
+ * .pl-c-progress__bar elements with different tones inside a <div> container.
  */
 @layer porchlight.components {
   @scope (.pl-c-progress) {
@@ -21,13 +27,37 @@
 
       position: relative;
       overflow: hidden;
+      display: block;
+      inline-size: 100%;
       block-size: var(--pl-c-progress-height);
+      border: none;
       border-radius: var(--pl-radius-pill);
       background: var(--pl-color-surface-2);
+      appearance: none;
+      -webkit-appearance: none;
     }
 
     .pl-c-progress__bar {
       block-size: 100%;
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-c-progress-tone);
+      transition: inline-size var(--pl-duration-3) var(--pl-ease-standard);
+    }
+
+    /* Native <progress> vendor pseudo-elements (kept in separate rules so engines
+       do not drop unrecognized pseudo-selectors). */
+    progress:scope::-webkit-progress-bar {
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface-2);
+    }
+
+    progress:scope::-webkit-progress-value {
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-c-progress-tone);
+      transition: inline-size var(--pl-duration-3) var(--pl-ease-standard);
+    }
+
+    progress:scope::-moz-progress-bar {
       border-radius: var(--pl-radius-pill);
       background: var(--pl-c-progress-tone);
       transition: inline-size var(--pl-duration-3) var(--pl-ease-standard);
@@ -46,7 +76,7 @@
       --pl-c-progress-tone: var(--pl-color-danger);
     }
 
-    /* Indeterminate  -  an animated sweep that loops. */
+    /* Indeterminate  -  an animated sweep that loops on div markup. */
     :scope[data-indeterminate] .pl-c-progress__bar {
       position: absolute;
       inset-block: 0;
@@ -71,6 +101,14 @@
     }
 
     :where(.pl-c-progress__bar) {
+      background: Highlight;
+    }
+
+    progress:where(.pl-c-progress)::-webkit-progress-value {
+      background: Highlight;
+    }
+
+    progress:where(.pl-c-progress)::-moz-progress-bar {
       background: Highlight;
     }
   }
