@@ -26,11 +26,17 @@ const requiredFiles = [
   "dist/porchlight.css",
   "dist/porchlight.min.css",
   "dist/compat.css",
+  "dist/compat.min.css",
   "dist/core.css",
+  "dist/core.min.css",
   "dist/layout.css",
+  "dist/layout.min.css",
   "dist/components.css",
+  "dist/components.min.css",
   "dist/utilities.css",
+  "dist/utilities.min.css",
   "dist/enhancements.css",
+  "dist/enhancements.min.css",
   "dist/porchlight.manifest.json",
   "dist/tokens.json",
   "dist/tokens.js",
@@ -44,9 +50,12 @@ await Promise.all(requiredFiles.map((file) => exists(file)));
 const componentSourceFiles = (await readdir(resolve(root, "src/06-components")))
   .filter((file) => file.endsWith(".css"))
   .sort();
-await Promise.all(
-  componentSourceFiles.map((file) => exists(`dist/components/${file}`)),
-);
+await Promise.all([
+  ...componentSourceFiles.map((file) => exists(`dist/components/${file}`)),
+  ...componentSourceFiles.map((file) =>
+    exists(`dist/components/${file.replace(/\.css$/, ".min.css")}`),
+  ),
+]);
 
 // The package builder must not fold scroll timelines into animation shorthands.
 // Lightning CSS 1.33 can emit `animation: ... view()` / `scroll(root)`, which
@@ -78,12 +87,19 @@ for (const path of [
   ".",
   "./min.css",
   "./compat.css",
+  "./compat.min.css",
   "./core.css",
+  "./core.min.css",
   "./layout.css",
+  "./layout.min.css",
   "./components.css",
+  "./components.min.css",
+  "./components/*.min.css",
   "./components/*.css",
   "./utilities.css",
+  "./utilities.min.css",
   "./enhancements.css",
+  "./enhancements.min.css",
   "./tokens",
   "./tokens.json",
   "./manifest.json",
@@ -233,6 +249,28 @@ assert(
     splitCss.includes(".pl-c-menu__divider"),
   "Split CSS must style its divider and previously documented divider markup",
 );
+
+const minCopy = spawnSync(
+  process.execPath,
+  [
+    resolve(root, "bin/porchlight.mjs"),
+    "copy",
+    "--out",
+    resolve(copyRoot, "minified"),
+    "--components",
+    "button",
+    "--layout",
+    "--min",
+  ],
+  { encoding: "utf8" },
+);
+assert(
+  minCopy.status === 0,
+  `min copy failed: ${minCopy.stderr || minCopy.stdout}`,
+);
+await exists(resolve(copyRoot, "minified/core.min.css"));
+await exists(resolve(copyRoot, "minified/layout.min.css"));
+await exists(resolve(copyRoot, "minified/components/button.min.css"));
 
 console.log(
   `✓ package smoke passed for ${componentSourceFiles.length} components and ${Object.keys(tokenDoc.tokens).length} tokens`,

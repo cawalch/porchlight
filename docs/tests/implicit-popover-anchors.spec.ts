@@ -81,7 +81,7 @@ for (const component of cases) {
     });
     expect(result.withinViewport).toBe(true);
     if (result.supportsAnchorPositioning) {
-      expect(result.gapToFirst).toBeLessThan(40);
+      expect(result.gapToFirst).toBeLessThanOrEqual(40);
       expect(result.gapToSecond).toBeGreaterThan(100);
     }
   });

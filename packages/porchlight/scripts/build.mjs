@@ -201,11 +201,12 @@ async function emitBundle({ filename, output, minify = false }) {
   return code.length;
 }
 
-async function emitGeneratedCss(name, paths, output) {
+async function emitGeneratedCss(name, paths, output, minify = false) {
   const filename = await cssEntry(name, paths);
   return emitBundle({
     filename,
     output: resolve(outDir, output),
+    minify,
   });
 }
 
@@ -279,11 +280,17 @@ async function emitManifest(componentNames) {
       full: "dist/porchlight.css",
       minified: "dist/porchlight.min.css",
       compat: "dist/compat.css",
+      compatMinified: "dist/compat.min.css",
       core: "dist/core.css",
+      coreMinified: "dist/core.min.css",
       layout: "dist/layout.css",
+      layoutMinified: "dist/layout.min.css",
       components: "dist/components.css",
+      componentsMinified: "dist/components.min.css",
       utilities: "dist/utilities.css",
+      utilitiesMinified: "dist/utilities.min.css",
       enhancements: "dist/enhancements.css",
+      enhancementsMinified: "dist/enhancements.min.css",
       tokens: {
         json: "dist/tokens.json",
         module: "dist/tokens.js",
@@ -293,7 +300,9 @@ async function emitManifest(componentNames) {
     components: componentNames.map((name) => ({
       name,
       file: `dist/components/${name}.css`,
+      minified: `dist/components/${name}.min.css`,
       import: `@cawalch/porchlight/components/${name}.css`,
+      importMinified: `@cawalch/porchlight/components/${name}.min.css`,
       ...(componentDependencies[name]
         ? { dependencies: componentDependencies[name] }
         : {}),
@@ -351,6 +360,10 @@ for (const [name, paths] of Object.entries(moduleEntries)) {
     file: `dist/${name}.css`,
     bytes: await emitGeneratedCss(name, paths, `${name}.css`),
   });
+  emitted.push({
+    file: `dist/${name}.min.css`,
+    bytes: await emitGeneratedCss(name, paths, `${name}.min.css`, true),
+  });
 }
 
 emitted.push({
@@ -359,6 +372,15 @@ emitted.push({
     "components",
     [layerOrder, ...componentModules],
     "components.css",
+  ),
+});
+emitted.push({
+  file: "dist/components.min.css",
+  bytes: await emitGeneratedCss(
+    "components-min",
+    [layerOrder, ...componentModules],
+    "components.min.css",
+    true,
   ),
 });
 emitted.push({
@@ -374,6 +396,20 @@ emitted.push({
     "compat.css",
   ),
 });
+emitted.push({
+  file: "dist/compat.min.css",
+  bytes: await emitGeneratedCss(
+    "compat-min",
+    [
+      ...coreModules,
+      "src/05-layout.css",
+      ...componentModules,
+      "src/07-utilities.css",
+    ],
+    "compat.min.css",
+    true,
+  ),
+});
 
 for (const file of componentFiles) {
   const name = file.replace(/\.css$/, "");
@@ -383,6 +419,15 @@ for (const file of componentFiles) {
       `component-${name}`,
       [layerOrder, `src/06-components/${file}`],
       `components/${file}`,
+    ),
+  });
+  emitted.push({
+    file: `dist/components/${name}.min.css`,
+    bytes: await emitGeneratedCss(
+      `component-${name}-min`,
+      [layerOrder, `src/06-components/${file}`],
+      `components/${name}.min.css`,
+      true,
     ),
   });
 }

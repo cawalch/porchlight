@@ -152,16 +152,67 @@ function selectFiles(options, manifest) {
     options.compat = true;
   }
 
+  const useMinified = Boolean(options.min);
+  const isModularSelection =
+    options.core ||
+    options.layout ||
+    options.utilities ||
+    options.enhancements ||
+    options.allComponents ||
+    options.components.size > 0;
+
   if (options.full) addFile(files, manifest.files.full);
-  if (options.min) addFile(files, manifest.files.minified);
-  if (options.compat) addFile(files, manifest.files.compat);
-  if (options.core || options.components.size > 0 || options.allComponents) {
-    addFile(files, manifest.files.core);
+  if (options.min && !isModularSelection && !options.compat) {
+    addFile(files, manifest.files.minified);
   }
-  if (options.layout) addFile(files, manifest.files.layout);
-  if (options.allComponents) addFile(files, manifest.files.components);
-  if (options.utilities) addFile(files, manifest.files.utilities);
-  if (options.enhancements) addFile(files, manifest.files.enhancements);
+  if (options.compat) {
+    addFile(
+      files,
+      useMinified && manifest.files.compatMinified
+        ? manifest.files.compatMinified
+        : manifest.files.compat,
+    );
+  }
+  if (options.core || options.components.size > 0 || options.allComponents) {
+    addFile(
+      files,
+      useMinified && manifest.files.coreMinified
+        ? manifest.files.coreMinified
+        : manifest.files.core,
+    );
+  }
+  if (options.layout) {
+    addFile(
+      files,
+      useMinified && manifest.files.layoutMinified
+        ? manifest.files.layoutMinified
+        : manifest.files.layout,
+    );
+  }
+  if (options.allComponents) {
+    addFile(
+      files,
+      useMinified && manifest.files.componentsMinified
+        ? manifest.files.componentsMinified
+        : manifest.files.components,
+    );
+  }
+  if (options.utilities) {
+    addFile(
+      files,
+      useMinified && manifest.files.utilitiesMinified
+        ? manifest.files.utilitiesMinified
+        : manifest.files.utilities,
+    );
+  }
+  if (options.enhancements) {
+    addFile(
+      files,
+      useMinified && manifest.files.enhancementsMinified
+        ? manifest.files.enhancementsMinified
+        : manifest.files.enhancements,
+    );
+  }
 
   const componentsByName = new Map(
     manifest.components.map((component) => [component.name, component]),
@@ -179,9 +230,12 @@ function selectFiles(options, manifest) {
           `component "${component}" requires unknown component "${dependency}"`,
         );
       }
-      addFile(files, required.file);
+      addFile(
+        files,
+        useMinified && required.minified ? required.minified : required.file,
+      );
     }
-    addFile(files, entry.file);
+    addFile(files, useMinified && entry.minified ? entry.minified : entry.file);
   }
 
   if (options.manifest) {

@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `text-wrap: pretty` to body paragraphs, document-wide `interpolate-size: allow-keywords`
-  on root under `@supports`, and `text-box-trim` / `text-box-edge` longhands for Safari 18.2+
-  optical centering (#146).
+- Ship minified modular CSS exports (`core.min.css`, `layout.min.css`, `utilities.min.css`,
+  `enhancements.min.css`, `components.min.css`, and individual `components/*.min.css`),
+  support minified modular copies in `porchlight copy --min`, and include minified targets
+  in the package manifest (#145).
+- Add `text-wrap: pretty` to body paragraphs and `text-box-trim` / `text-box-edge` longhands
+  for Safari 18.2+ optical centering (#146).
 
 ### Changed
 
