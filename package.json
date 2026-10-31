@@ -35,12 +35,12 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.7",
-    "prettier": "^3.9.6",
-    "stylelint": "^17.14.1",
+    "@biomejs/biome": "^2.6.3",
+    "prettier": "^3.9.10",
+    "stylelint": "^17.16.0",
     "stylelint-config-standard": "^40.0.0",
-    "stylelint-declaration-strict-value": "^1.11.1",
-    "stylelint-plugin-defensive-css": "^2.9.6",
+    "stylelint-declaration-strict-value": "^1.12.1",
+    "stylelint-plugin-defensive-css": "^2.9.7",
     "stylelint-use-logical": "^2.1.3"
   }
 }

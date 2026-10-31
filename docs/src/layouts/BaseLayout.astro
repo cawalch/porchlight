@@ -62,7 +62,7 @@ const isActive = (href: string) => {
   <body class:list={{ 'docs-page': search, 'preview-page': !search }}>
     <a class="skip-link" href={`#${skipTarget}`}>Skip to content</a>
     <header class="site-header">
-      <a class="site-header__brand" href={b} aria-label="Porchlight docs home">
+      <a class="site-header__brand" href={b}>
         <span class="site-header__mark" aria-hidden="true">P</span>
         <span class="site-header__brand-copy">
           <strong>Porchlight</strong>
@@ -70,7 +70,7 @@ const isActive = (href: string) => {
         </span>
       </a>
       <div class="site-header__tools">
-        {search && <button type="button" class="site-search" aria-label="Search docs" aria-haspopup="dialog" aria-controls="docs-search-dialog" data-docs-command-open>Search <kbd>⌘ K</kbd></button>}
+        {search && <button type="button" class="site-search" aria-haspopup="dialog" aria-controls="docs-search-dialog" data-docs-command-open>Search docs <kbd aria-hidden="true">⌘ K</kbd></button>}
       <nav class="site-nav" aria-label="Primary">
         <ul>
           {nav.map((item) => (
