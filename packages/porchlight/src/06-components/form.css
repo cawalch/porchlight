@@ -85,96 +85,60 @@
        Labels size dynamically to the widest label in the form without
        hardcoded widths, and controls align cleanly in column 2. */
     @supports (grid-template-columns: subgrid) {
-      :scope[data-layout="aligned"],
-      :scope[data-subgrid="columns"],
-      .pl-c-form__body[data-subgrid="columns"] {
+      :is(
+        :scope:is([data-layout="aligned"], [data-subgrid="columns"]),
+        .pl-c-form__body[data-subgrid="columns"]
+      ) {
         grid-template-columns: auto minmax(0, 1fr);
         gap: var(--pl-c-form-gap) var(--pl-space-4);
         align-items: start;
-      }
 
-      :scope[data-layout="aligned"] .pl-c-field,
-      :scope[data-subgrid="columns"] .pl-c-field,
-      .pl-c-form__body[data-subgrid="columns"] .pl-c-field {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: subgrid;
-        gap: var(--pl-space-1) var(--pl-space-4);
-        align-items: start;
-      }
+        .pl-c-field {
+          grid-column: 1 / -1;
+          display: grid;
+          grid-template-columns: subgrid;
+          gap: var(--pl-space-1) var(--pl-space-4);
+          align-items: start;
 
-      :scope[data-layout="aligned"] .pl-c-field__label,
-      :scope[data-subgrid="columns"] .pl-c-field__label,
-      .pl-c-form__body[data-subgrid="columns"] .pl-c-field__label {
-        grid-column: 1;
-        padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
-      }
+          & > .pl-c-field__label {
+            grid-column: 1;
+            padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
+          }
 
-      :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
-      :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-      .pl-c-form__body[data-subgrid="columns"]
-        .pl-c-field
-        > :not(.pl-c-field__label) {
-        grid-column: 2;
-      }
+          & > :not(.pl-c-field__label) {
+            grid-column: 2;
+          }
+        }
 
-      :scope[data-layout="aligned"] .pl-c-form__actions,
-      :scope[data-subgrid="columns"] .pl-c-form__actions {
-        grid-column: 1 / -1;
-      }
+        .pl-c-form__actions,
+        .pl-c-form__header {
+          grid-column: 1 / -1;
+        }
 
-      :scope[data-layout="aligned"] .pl-c-form__header,
-      :scope[data-subgrid="columns"] .pl-c-form__header {
-        grid-column: 1 / -1;
-      }
-
-      @media (width < 36rem) {
-        :scope[data-layout="aligned"],
-        :scope[data-subgrid="columns"],
-        .pl-c-form__body[data-subgrid="columns"] {
+        @media (width < 36rem) {
           grid-template-columns: 1fr;
+
+          .pl-c-field {
+            grid-template-columns: 1fr;
+
+            & > *,
+            & > :not(.pl-c-field__label) {
+              grid-column: 1;
+            }
+          }
         }
 
-        :scope[data-layout="aligned"] .pl-c-field,
-        :scope[data-subgrid="columns"] .pl-c-field,
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field {
+        @container (inline-size < 36rem) {
           grid-template-columns: 1fr;
-        }
 
-        :scope[data-layout="aligned"] .pl-c-field > *,
-        :scope[data-subgrid="columns"] .pl-c-field > *,
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field > *,
-        :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
-        :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-        .pl-c-form__body[data-subgrid="columns"]
-          .pl-c-field
-          > :not(.pl-c-field__label) {
-          grid-column: 1;
-        }
-      }
+          .pl-c-field {
+            grid-template-columns: 1fr;
 
-      @container (inline-size < 36rem) {
-        :scope[data-layout="aligned"],
-        :scope[data-subgrid="columns"],
-        .pl-c-form__body[data-subgrid="columns"] {
-          grid-template-columns: 1fr;
-        }
-
-        :scope[data-layout="aligned"] .pl-c-field,
-        :scope[data-subgrid="columns"] .pl-c-field,
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field {
-          grid-template-columns: 1fr;
-        }
-
-        :scope[data-layout="aligned"] .pl-c-field > *,
-        :scope[data-subgrid="columns"] .pl-c-field > *,
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field > *,
-        :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
-        :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-        .pl-c-form__body[data-subgrid="columns"]
-          .pl-c-field
-          > :not(.pl-c-field__label) {
-          grid-column: 1;
+            & > *,
+            & > :not(.pl-c-field__label) {
+              grid-column: 1;
+            }
+          }
         }
       }
     }

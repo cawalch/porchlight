@@ -49,24 +49,21 @@
     /* Column subgrid  -  participates in a parent multi-column grid, aligning its
        label in column 1 and control/messages in column 2. */
     @supports (grid-template-columns: subgrid) {
-      :scope[data-subgrid="columns"],
-      :scope[data-subgrid] {
+      :scope:is([data-subgrid="columns"], [data-subgrid]) {
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: subgrid;
         gap: var(--pl-space-1) var(--pl-space-3);
         align-items: start;
-      }
 
-      :scope[data-subgrid="columns"] .pl-c-field__label,
-      :scope[data-subgrid] .pl-c-field__label {
-        grid-column: 1;
-        padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
-      }
+        .pl-c-field__label {
+          grid-column: 1;
+          padding-block-start: calc((var(--pl-control-block-size) - 1lh) / 2);
+        }
 
-      :scope[data-subgrid="columns"] > :not(.pl-c-field__label),
-      :scope[data-subgrid] > :not(.pl-c-field__label) {
-        grid-column: 2;
+        & > :not(.pl-c-field__label) {
+          grid-column: 2;
+        }
       }
     }
 
@@ -290,18 +287,16 @@
         var(--pl-color-danger),
         transparent var(--pl-focus-glow-opacity)
       );
-  }
 
-  /* Focused invalid fields keep the error border/hint but use the standard
-     focus glow, avoiding a harsh red halo around the active typing target. */
-  .pl-c-field__control:is(:user-invalid, [aria-invalid="true"]):focus-visible {
-    border-color: var(--pl-color-danger);
-    box-shadow: 0 0 0 4px
-      color-mix(
-        in oklab,
-        var(--pl-focus-color),
-        transparent var(--pl-focus-glow-opacity)
-      );
+    /* Focused invalid fields keep the error border/hint but use standard focus glow. */
+    &:focus-visible {
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
   }
 
   :where(.pl-c-field):has(
@@ -315,9 +310,9 @@
      user interacts and satisfies constraints (:user-valid), flips border
      to success token. */
   :is(
-    :where([data-feedback="valid"]) .pl-c-field__control:user-valid,
-    .pl-c-field__control[data-feedback="valid"]:user-valid
-  ):not(:placeholder-shown) {
+      :where([data-feedback="valid"]) .pl-c-field__control,
+      .pl-c-field__control[data-feedback="valid"]
+    ):user-valid:not(:placeholder-shown) {
     border-color: var(--pl-color-success);
     box-shadow: 0 0 0 4px
       color-mix(
@@ -325,21 +320,16 @@
         var(--pl-color-success),
         transparent var(--pl-focus-glow-opacity)
       );
-  }
 
-  /* Focused valid fields keep the success border but use standard focus glow. */
-  :is(
-    :where([data-feedback="valid"])
-      .pl-c-field__control:user-valid:focus-visible,
-    .pl-c-field__control[data-feedback="valid"]:user-valid:focus-visible
-  ):not(:placeholder-shown) {
-    border-color: var(--pl-color-success);
-    box-shadow: 0 0 0 4px
-      color-mix(
-        in oklab,
-        var(--pl-focus-color),
-        transparent var(--pl-focus-glow-opacity)
-      );
+    /* Focused valid fields keep success border but use standard focus glow. */
+    &:focus-visible {
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-focus-color),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
   }
 
   :where(.pl-c-field[data-feedback="valid"]):has(

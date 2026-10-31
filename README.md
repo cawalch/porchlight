@@ -109,8 +109,10 @@ Layout primitives use the same pattern:
 
 | Import path                                | Contents                                |
 | ------------------------------------------ | --------------------------------------- |
-| `@cawalch/porchlight`                      | Full prebuilt CSS bundle                |
-| `@cawalch/porchlight/min.css`              | Minified full bundle                    |
+| `@cawalch/porchlight`                      | Full prebuilt CSS bundle (minified)     |
+| `@cawalch/porchlight/min.css`              | Minified full bundle alias              |
+| `@cawalch/porchlight/porchlight.css`       | Full unminified CSS bundle              |
+| `@cawalch/porchlight/unminified.css`       | Full unminified CSS bundle alias        |
 | `@cawalch/porchlight/compat.css`           | Core, layout, components, utilities     |
 | `@cawalch/porchlight/compat.min.css`       | Minified compat bundle                  |
 | `@cawalch/porchlight/core.css`             | Layers, reset, tokens, themes, base     |

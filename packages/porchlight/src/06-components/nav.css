@@ -68,15 +68,21 @@
       padding: var(--pl-c-nav-pad);
     }
 
-    .pl-c-nav__item {
+    .pl-c-nav__item,
+    .pl-c-nav__menu .pl-c-menu__trigger {
+      appearance: none;
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
       padding: var(--pl-space-2) var(--pl-space-3);
+      border: 0;
       border-radius: var(--pl-radius-md);
+      background: transparent;
       color: var(--pl-color-text-muted);
+      font: inherit;
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-medium);
+      text-align: start;
       text-decoration: none;
       cursor: pointer;
       transition:
@@ -85,12 +91,14 @@
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    .pl-c-nav__item:hover {
+    .pl-c-nav__item:hover,
+    .pl-c-nav__menu .pl-c-menu__trigger:is(:hover, :focus-visible) {
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
     }
 
-    .pl-c-nav__item:focus-visible {
+    .pl-c-nav__item:focus-visible,
+    .pl-c-nav__menu .pl-c-menu__trigger:focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: var(--pl-focus-offset);
     }
@@ -98,7 +106,9 @@
     /* Active item  -  inline-start accent pattern: a 3px inset shadow on the
        leading edge reads as a rail marker, strongly signalling "you are here".
        Asymmetric border-radius (0 on start side) anchors the bar to the edge. */
-    .pl-c-nav__item[aria-current]:not([aria-current="false"]) {
+    .pl-c-nav__item[aria-current]:not([aria-current="false"]),
+    .pl-c-nav__menu
+      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]) {
       background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
@@ -108,7 +118,9 @@
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
     }
 
-    .pl-c-nav__item[aria-current]:not([aria-current="false"]):dir(rtl) {
+    .pl-c-nav__item[aria-current]:not([aria-current="false"]):dir(rtl),
+    .pl-c-nav__menu
+      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]):dir(rtl) {
       box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
         var(--pl-color-accent);
     }
@@ -169,61 +181,16 @@
     }
 
     .pl-c-nav__menu .pl-c-menu__trigger {
-      appearance: none;
-      display: flex;
-      align-items: center;
-      gap: var(--pl-space-3);
       inline-size: 100%;
-      padding: var(--pl-space-2) var(--pl-space-3);
-      border: 0;
-      border-radius: var(--pl-radius-md);
-      background: transparent;
-      color: var(--pl-color-text-muted);
-      font: inherit;
-      font-size: var(--pl-text-sm);
-      font-weight: var(--pl-font-weight-medium);
-      text-align: start;
-      text-decoration: none;
-      cursor: pointer;
-      transition:
-        background-color var(--pl-duration-1) var(--pl-ease-standard),
-        color var(--pl-duration-1) var(--pl-ease-standard),
-        box-shadow var(--pl-duration-1) var(--pl-ease-standard);
-    }
 
-    .pl-c-nav__menu .pl-c-menu__trigger:is(:hover, :focus-visible),
-    .pl-c-nav__menu
-      .pl-c-menu__trigger:has(~ .pl-c-menu__popover:popover-open) {
-      background: var(--pl-color-surface-2);
-      color: var(--pl-color-text);
-    }
+      &:has(~ .pl-c-menu__popover:popover-open) {
+        background: var(--pl-color-surface-2);
+        color: var(--pl-color-text);
 
-    .pl-c-nav__menu .pl-c-menu__trigger:focus-visible {
-      outline: var(--pl-focus-size) solid var(--pl-focus-color);
-      outline-offset: var(--pl-focus-offset);
-    }
-
-    .pl-c-nav__menu
-      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]) {
-      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
-      color: var(--pl-color-accent);
-      font-weight: var(--pl-font-weight-semibold);
-      border-radius: var(--pl-radius-md);
-      border-start-start-radius: 0;
-      border-end-start-radius: 0;
-      box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
-    }
-
-    .pl-c-nav__menu
-      .pl-c-menu__trigger[aria-current]:not([aria-current="false"]):dir(rtl) {
-      box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
-        var(--pl-color-accent);
-    }
-
-    .pl-c-nav__menu
-      .pl-c-menu__trigger:has(~ .pl-c-menu__popover:popover-open)
-      .pl-c-nav__chevron {
-      rotate: 90deg;
+        .pl-c-nav__chevron {
+          rotate: 90deg;
+        }
+      }
     }
 
     .pl-c-nav__menu .pl-c-menu__popover {

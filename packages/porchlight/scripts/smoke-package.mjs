@@ -93,9 +93,16 @@ for (const [file, timelines] of [
   }
 }
 
+assert(
+  packageJson.style === "dist/porchlight.min.css",
+  "package.json style must point to minified bundle",
+);
+
 const exportsMap = packageJson.exports;
 for (const path of [
   ".",
+  "./porchlight.css",
+  "./unminified.css",
   "./min.css",
   "./compat.css",
   "./compat.min.css",
@@ -123,7 +130,6 @@ for (const removedAlias of [
   "./css",
   "./min",
   "./source",
-  "./porchlight.css",
   "./dist",
   "./dist/porchlight.css",
   "./dist/porchlight.min.css",
