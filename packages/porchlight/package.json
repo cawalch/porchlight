@@ -28,7 +28,7 @@
     "no-dependencies",
     "native-css"
   ],
-  "style": "dist/porchlight.css",
+  "style": "dist/porchlight.min.css",
   "bin": {
     "porchlight": "bin/porchlight.mjs"
   },
@@ -36,7 +36,9 @@
     "**/*.css"
   ],
   "exports": {
-    ".": "./dist/porchlight.css",
+    ".": "./dist/porchlight.min.css",
+    "./porchlight.css": "./dist/porchlight.css",
+    "./unminified.css": "./dist/porchlight.css",
     "./min.css": "./dist/porchlight.min.css",
     "./compat.css": "./dist/compat.css",
     "./compat.min.css": "./dist/compat.min.css",

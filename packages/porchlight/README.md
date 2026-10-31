@@ -229,8 +229,10 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 
 | Import path                                | Contents                                 |
 | ------------------------------------------ | ---------------------------------------- |
-| `@cawalch/porchlight`                      | Full prebuilt CSS bundle                 |
-| `@cawalch/porchlight/min.css`              | Minified full bundle                     |
+| `@cawalch/porchlight`                      | Full prebuilt CSS bundle (minified)      |
+| `@cawalch/porchlight/min.css`              | Minified full bundle alias               |
+| `@cawalch/porchlight/porchlight.css`       | Full unminified CSS bundle               |
+| `@cawalch/porchlight/unminified.css`       | Full unminified CSS bundle alias         |
 | `@cawalch/porchlight/compat.css`           | Bundle without the enhancement layer     |
 | `@cawalch/porchlight/compat.min.css`       | Minified compat bundle                   |
 | `@cawalch/porchlight/core.css`             | Layer order, reset, tokens, themes, base |

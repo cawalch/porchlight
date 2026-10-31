@@ -123,10 +123,10 @@
       overscroll-behavior-inline: contain;
       scroll-snap-type: inline proximity;
       padding-block-end: var(--pl-space-2);
-    }
 
-    .pl-c-workflow-board__lanes[data-scroll="inline"] > .pl-c-workflow-lane {
-      scroll-snap-align: start;
+      & > .pl-c-workflow-lane {
+        scroll-snap-align: start;
+      }
     }
 
     @container pl-c-workflow-board (inline-size < 44rem) {
@@ -179,8 +179,7 @@
         var(--pl-color-accent);
     }
 
-    :scope[data-drop-target],
-    :scope.is-drop-target {
+    :scope:is([data-drop-target], .is-drop-target) {
       border-style: dashed;
       border-color: var(--pl-color-accent);
       background: color-mix(
@@ -190,9 +189,7 @@
       );
     }
 
-    :scope[aria-disabled="true"],
-    :scope[data-disabled],
-    :scope.is-disabled {
+    :scope:is([aria-disabled="true"], [data-disabled], .is-disabled) {
       opacity: 0.62;
     }
 
@@ -327,9 +324,7 @@
         var(--pl-shadow-2);
     }
 
-    :scope[aria-selected="true"],
-    :scope[data-selected],
-    :scope.is-selected {
+    :scope:is([aria-selected="true"], [data-selected], .is-selected) {
       border-color: color-mix(
         in oklab,
         var(--pl-color-accent),
@@ -345,15 +340,13 @@
       );
     }
 
-    :scope[data-dragging],
-    :scope.is-dragging {
+    :scope:is([data-dragging], .is-dragging) {
       opacity: 0.72;
       transform: rotate(0.5deg) scale(0.99);
       box-shadow: var(--pl-shadow-2);
     }
 
-    :scope[data-overdue],
-    :scope[data-priority="high"] {
+    :scope:is([data-overdue], [data-priority="high"]) {
       border-color: color-mix(
         in oklab,
         var(--pl-color-danger),
@@ -412,10 +405,7 @@
       border-color: ButtonBorder;
     }
 
-    :where(
-      .pl-c-workflow-lane[data-drop-target],
-      .pl-c-workflow-lane.is-drop-target
-    ) {
+    :where(.pl-c-workflow-lane):is([data-drop-target], .is-drop-target) {
       border-color: Highlight;
     }
   }

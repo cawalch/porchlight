@@ -172,44 +172,30 @@
        Note: container-type must be normal because container size query and subgrid
        are mutually exclusive on the same element across browser engines. */
     @supports (grid-template-rows: subgrid) {
-      :where([data-subgrid="rows"], [data-subgrid]) > :scope,
-      :scope[data-subgrid="rows"],
-      :scope[data-subgrid] {
+      :is(
+        :where([data-subgrid="rows"], [data-subgrid]) > :scope,
+        :scope:is([data-subgrid="rows"], [data-subgrid])
+      ) {
         grid-row: span var(--pl-c-card-subgrid-rows, 3);
         grid-template-rows: subgrid;
         align-content: stretch;
         container-type: normal;
-      }
 
-      :where([data-subgrid="rows"], [data-subgrid])
-        > :scope
-        > .pl-c-card__header,
-      :scope[data-subgrid="rows"] > .pl-c-card__header,
-      :scope[data-subgrid] > .pl-c-card__header {
-        grid-row: 1;
-      }
+        & > .pl-c-card__header {
+          grid-row: 1;
+        }
 
-      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__body,
-      :scope[data-subgrid="rows"] > .pl-c-card__body,
-      :scope[data-subgrid] > .pl-c-card__body {
-        grid-row: 2;
-      }
+        & > .pl-c-card__body {
+          grid-row: 2;
+        }
 
-      :where([data-subgrid="rows"], [data-subgrid])
-        > :scope
-        > .pl-c-card__footer,
-      :scope[data-subgrid="rows"] > .pl-c-card__footer,
-      :scope[data-subgrid] > .pl-c-card__footer {
-        grid-row: 3;
-      }
+        & > .pl-c-card__footer {
+          grid-row: 3;
+        }
 
-      :where([data-subgrid="rows"], [data-subgrid])
-        > :scope:not(:has(.pl-c-card__footer))
-        > .pl-c-card__body,
-      :scope[data-subgrid="rows"]:not(:has(.pl-c-card__footer))
-        > .pl-c-card__body,
-      :scope[data-subgrid]:not(:has(.pl-c-card__footer)) > .pl-c-card__body {
-        grid-row: 2 / -1;
+        &:not(:has(.pl-c-card__footer)) > .pl-c-card__body {
+          grid-row: 2 / -1;
+        }
       }
     }
 

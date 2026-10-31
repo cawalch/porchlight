@@ -238,61 +238,36 @@
       color: var(--pl-color-accent-text);
       font-weight: var(--pl-font-weight-bold);
       box-shadow: var(--_pl-c-calendar-selected-shadow);
-    }
 
-    .pl-c-calendar__day:is(
-        [aria-selected="true"],
-        [data-selected],
-        [data-range-start],
-        [data-range-end]
-      ):has(.pl-c-calendar__day-label) {
-      background: transparent;
-      box-shadow: none;
-    }
+      &:is(:hover, :focus-visible) {
+        background: color-mix(
+          in oklab,
+          var(--pl-color-accent),
+          var(--pl-color-text) 12%
+        );
+      }
 
-    .pl-c-calendar__day:is(
-        [aria-selected="true"],
-        [data-selected],
-        [data-range-start],
-        [data-range-end]
-      ):has(.pl-c-calendar__day-label)::after {
-      background: var(--pl-color-accent);
-      box-shadow: var(--_pl-c-calendar-selected-shadow);
-    }
+      &:has(.pl-c-calendar__day-label) {
+        background: transparent;
+        box-shadow: none;
 
-    .pl-c-calendar__day:is(
-        [aria-selected="true"],
-        [data-selected],
-        [data-range-start],
-        [data-range-end]
-      ):is(:hover, :focus-visible) {
-      background: color-mix(
-        in oklab,
-        var(--pl-color-accent),
-        var(--pl-color-text) 12%
-      );
-    }
+        &::after {
+          background: var(--pl-color-accent);
+          box-shadow: var(--_pl-c-calendar-selected-shadow);
+        }
 
-    .pl-c-calendar__day:is(
-        [aria-selected="true"],
-        [data-selected],
-        [data-range-start],
-        [data-range-end]
-      ):has(.pl-c-calendar__day-label):is(:hover, :focus-visible) {
-      background: transparent;
-    }
+        &:is(:hover, :focus-visible) {
+          background: transparent;
 
-    .pl-c-calendar__day:is(
-        [aria-selected="true"],
-        [data-selected],
-        [data-range-start],
-        [data-range-end]
-      ):has(.pl-c-calendar__day-label):is(:hover, :focus-visible)::after {
-      background: color-mix(
-        in oklab,
-        var(--pl-color-accent),
-        var(--pl-color-text) 12%
-      );
+          &::after {
+            background: color-mix(
+              in oklab,
+              var(--pl-color-accent),
+              var(--pl-color-text) 12%
+            );
+          }
+        }
+      }
     }
 
     .pl-c-calendar__day:is(:disabled, [aria-disabled="true"], [data-disabled]) {
@@ -549,9 +524,7 @@
         [data-selected],
         [data-range-start],
         [data-range-end]
-      )
-    ),
-    :where(
+      ),
       .pl-c-time-picker__option:is([aria-selected="true"], [data-selected])
     ) {
       forced-color-adjust: none;
