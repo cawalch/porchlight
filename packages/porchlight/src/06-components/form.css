@@ -112,7 +112,9 @@
 
       :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
       :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-      .pl-c-form__body[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label) {
+      .pl-c-form__body[data-subgrid="columns"]
+        .pl-c-field
+        > :not(.pl-c-field__label) {
         grid-column: 2;
       }
 
@@ -144,7 +146,9 @@
         .pl-c-form__body[data-subgrid="columns"] .pl-c-field > *,
         :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
         :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label) {
+        .pl-c-form__body[data-subgrid="columns"]
+          .pl-c-field
+          > :not(.pl-c-field__label) {
           grid-column: 1;
         }
       }
@@ -167,7 +171,9 @@
         .pl-c-form__body[data-subgrid="columns"] .pl-c-field > *,
         :scope[data-layout="aligned"] .pl-c-field > :not(.pl-c-field__label),
         :scope[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label),
-        .pl-c-form__body[data-subgrid="columns"] .pl-c-field > :not(.pl-c-field__label) {
+        .pl-c-form__body[data-subgrid="columns"]
+          .pl-c-field
+          > :not(.pl-c-field__label) {
           grid-column: 1;
         }
       }

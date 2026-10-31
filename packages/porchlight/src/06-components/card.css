@@ -181,7 +181,9 @@
         container-type: normal;
       }
 
-      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__header,
+      :where([data-subgrid="rows"], [data-subgrid])
+        > :scope
+        > .pl-c-card__header,
       :scope[data-subgrid="rows"] > .pl-c-card__header,
       :scope[data-subgrid] > .pl-c-card__header {
         grid-row: 1;
@@ -193,14 +195,19 @@
         grid-row: 2;
       }
 
-      :where([data-subgrid="rows"], [data-subgrid]) > :scope > .pl-c-card__footer,
+      :where([data-subgrid="rows"], [data-subgrid])
+        > :scope
+        > .pl-c-card__footer,
       :scope[data-subgrid="rows"] > .pl-c-card__footer,
       :scope[data-subgrid] > .pl-c-card__footer {
         grid-row: 3;
       }
 
-      :where([data-subgrid="rows"], [data-subgrid]) > :scope:not(:has(.pl-c-card__footer)) > .pl-c-card__body,
-      :scope[data-subgrid="rows"]:not(:has(.pl-c-card__footer)) > .pl-c-card__body,
+      :where([data-subgrid="rows"], [data-subgrid])
+        > :scope:not(:has(.pl-c-card__footer))
+        > .pl-c-card__body,
+      :scope[data-subgrid="rows"]:not(:has(.pl-c-card__footer))
+        > .pl-c-card__body,
       :scope[data-subgrid]:not(:has(.pl-c-card__footer)) > .pl-c-card__body {
         grid-row: 2 / -1;
       }
