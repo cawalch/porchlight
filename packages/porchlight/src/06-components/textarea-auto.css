@@ -55,6 +55,16 @@
         );
     }
 
+    :scope:where([data-feedback="valid"]):user-valid:not(:placeholder-shown) {
+      border-color: var(--pl-color-success);
+      box-shadow: 0 0 0 4px
+        color-mix(
+          in oklab,
+          var(--pl-color-success),
+          transparent var(--pl-focus-glow-opacity)
+        );
+    }
+
     :scope:disabled {
       opacity: var(--pl-opacity-disabled);
     }

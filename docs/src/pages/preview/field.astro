@@ -248,6 +248,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <span class="pl-c-field__hint" id="clean-email-help">Explicit false invalid state stays neutral.</span>
     </div>
 
+    <div class="pl-c-field" data-feedback="valid" id="user-valid-demo">
+      <label class="pl-c-field__label" for="confirmed-username">Opt-in user-valid feedback</label>
+      <input
+        id="confirmed-username"
+        class="pl-c-field__control"
+        type="text"
+        required
+        value="acme-admin"
+        placeholder="Username"
+        aria-describedby="confirmed-username-help"
+      />
+      <span class="pl-c-field__hint" id="confirmed-username-help">Username is available and valid.</span>
+    </div>
+
     <div class="pl-c-field">
       <label class="pl-c-field__label" for="server-slug">Grouped server validation</label>
       <div class="pl-c-input-group" data-preview-group-invalid>

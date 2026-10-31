@@ -650,10 +650,10 @@ test.describe("docs scaffold", () => {
     const bars = page.locator(".pl-c-progress__bar");
     expect(await bars.count()).toBeGreaterThanOrEqual(2);
     await expect(
-      page.locator(".pl-c-progress[data-indeterminate]"),
+      page.locator(".pl-c-progress[data-indeterminate]").first(),
     ).toBeVisible();
     await expect(
-      page.locator(".pl-c-progress[data-tone='danger']"),
+      page.locator(".pl-c-progress[data-tone='danger']").first(),
     ).toBeVisible();
   });
 
