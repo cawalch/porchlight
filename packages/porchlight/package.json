@@ -80,7 +80,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "lightningcss": "^1.33.0",
-    "prettier": "^3.9.6"
+    "lightningcss": "^1.33.0"
   }
 }
