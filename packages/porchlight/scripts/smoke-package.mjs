@@ -42,6 +42,7 @@ const requiredFiles = [
   "dist/tokens.js",
   "dist/tokens.d.ts",
   "CHANGELOG.md",
+  "COMPONENTS.md",
   "bin/porchlight.mjs",
 ];
 
@@ -56,6 +57,16 @@ await Promise.all([
     exists(`dist/components/${file.replace(/\.css$/, ".min.css")}`),
   ),
 ]);
+
+const componentsMd = await readFile(resolve(root, "COMPONENTS.md"), "utf8");
+for (const file of componentSourceFiles) {
+  const name = file.replace(/\.css$/, "");
+  assert(
+    componentsMd.includes(`### ${name}`) &&
+      componentsMd.includes(`@cawalch/porchlight/components/${name}.css`),
+    `COMPONENTS.md missing reference to component "${name}"`,
+  );
+}
 
 // The package builder must not fold scroll timelines into animation shorthands.
 // Lightning CSS 1.33 can emit `animation: ... view()` / `scroll(root)`, which
@@ -271,6 +282,164 @@ assert(
 await exists(resolve(copyRoot, "minified/core.min.css"));
 await exists(resolve(copyRoot, "minified/layout.min.css"));
 await exists(resolve(copyRoot, "minified/components/button.min.css"));
+
+// CLI --help and --version
+const helpRun = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "--help"],
+  { encoding: "utf8" },
+);
+assert(helpRun.status === 0, "CLI --help failed");
+assert(
+  helpRun.stdout.includes("Commands:") &&
+    helpRun.stdout.includes("init") &&
+    helpRun.stdout.includes("tokens"),
+  "CLI --help output missing commands",
+);
+
+const versionRun = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "--version"],
+  { encoding: "utf8" },
+);
+assert(versionRun.status === 0, "CLI --version failed");
+assert(
+  versionRun.stdout.trim() === packageJson.version,
+  "CLI --version mismatch",
+);
+
+// CLI init --stdout
+const initStdout = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "init", "--stdout"],
+  { encoding: "utf8" },
+);
+assert(initStdout.status === 0, "CLI init --stdout failed");
+assert(
+  initStdout.stdout.includes("<!doctype html>") &&
+    initStdout.stdout.includes("porchlight.min.css") &&
+    initStdout.stdout.includes("pl-c-button") &&
+    initStdout.stdout.includes("pl-c-card"),
+  "CLI init --stdout output missing required template markup",
+);
+
+// CLI init --out
+const initTarget = resolve(copyRoot, "init-test/index.html");
+const initOut = spawnSync(
+  process.execPath,
+  [
+    resolve(root, "bin/porchlight.mjs"),
+    "init",
+    "--out",
+    initTarget,
+    "--local",
+    "--title",
+    "Test App",
+  ],
+  { encoding: "utf8" },
+);
+assert(
+  initOut.status === 0,
+  `CLI init --out failed: ${initOut.stderr || initOut.stdout}`,
+);
+await exists(initTarget);
+const initContent = await readFile(initTarget, "utf8");
+assert(
+  initContent.includes("<title>Test App</title>") &&
+    initContent.includes("./porchlight.min.css"),
+  "CLI init file missing expected options",
+);
+
+// CLI init collision check (fails without --force)
+const initCollision = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "init", "--out", initTarget],
+  { encoding: "utf8" },
+);
+assert(
+  initCollision.status === 1,
+  "CLI init should fail when target exists without --force",
+);
+assert(
+  initCollision.stderr.includes("already exists"),
+  "CLI init collision error message missing",
+);
+
+// CLI init overwrite with --force
+const initForce = spawnSync(
+  process.execPath,
+  [
+    resolve(root, "bin/porchlight.mjs"),
+    "init",
+    "--out",
+    initTarget,
+    "--force",
+    "--title",
+    "Overwritten App",
+  ],
+  { encoding: "utf8" },
+);
+assert(initForce.status === 0, "CLI init --force failed");
+const initOverwritten = await readFile(initTarget, "utf8");
+assert(
+  initOverwritten.includes("<title>Overwritten App</title>"),
+  "CLI init --force did not overwrite file",
+);
+
+// CLI tokens grouped inspection
+const tokensAll = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "tokens"],
+  { encoding: "utf8" },
+);
+assert(tokensAll.status === 0, "CLI tokens failed");
+assert(
+  tokensAll.stdout.includes("Group: Fonts") &&
+    tokensAll.stdout.includes("--pl-font-sans"),
+  "CLI tokens missing expected group or token",
+);
+
+// CLI tokens query filtering
+const tokensQuery = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "tokens", "radius"],
+  { encoding: "utf8" },
+);
+assert(tokensQuery.status === 0, "CLI tokens query failed");
+assert(
+  tokensQuery.stdout.includes("--pl-radius-md"),
+  "CLI tokens query missing expected token",
+);
+
+// CLI tokens group filter
+const tokensGroup = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "tokens", "--group", "Fonts"],
+  { encoding: "utf8" },
+);
+assert(tokensGroup.status === 0, "CLI tokens --group failed");
+assert(
+  tokensGroup.stdout.includes("Group: Fonts") &&
+    !tokensGroup.stdout.includes("Group: Spacers"),
+  "CLI tokens --group did not filter groups properly",
+);
+
+// CLI tokens JSON format
+const tokensJson = spawnSync(
+  process.execPath,
+  [resolve(root, "bin/porchlight.mjs"), "tokens", "--group", "Fonts", "--json"],
+  { encoding: "utf8" },
+);
+assert(tokensJson.status === 0, "CLI tokens --json failed");
+const parsedJson = JSON.parse(tokensJson.stdout);
+assert(
+  Array.isArray(parsedJson.groups) && parsedJson.groups.length === 1,
+  "CLI tokens --json did not return expected JSON structure",
+);
+assert(
+  parsedJson.groups[0].name === "Fonts",
+  "CLI tokens --json returned unexpected group",
+);
 
 console.log(
   `✓ package smoke passed for ${componentSourceFiles.length} components and ${Object.keys(tokenDoc.tokens).length} tokens`,

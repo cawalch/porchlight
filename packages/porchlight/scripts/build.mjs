@@ -322,6 +322,118 @@ async function emitManifest(componentNames) {
   return manifest;
 }
 
+async function emitComponentsDoc(componentNames) {
+  const components = [];
+  for (const name of componentNames) {
+    const file = `src/06-components/${name}.css`;
+    const content = await readFile(resolve(root, file), "utf8");
+    let description = "";
+    const bannerMatch = content.match(/\/\*[\s\S]*?=\s*\n([\s\S]*?)\*\//);
+    if (bannerMatch) {
+      const lines = bannerMatch[1]
+        .split("\n")
+        .map((l) => l.replace(/^\s*\*\s?/, "").trim());
+      const firstPara = [];
+      for (const line of lines) {
+        if (!line) break;
+        firstPara.push(line);
+      }
+      description = firstPara.join(" ");
+    } else {
+      const simpleMatch = content.match(/\/\*([\s\S]*?)\*\//);
+      if (simpleMatch) {
+        description = simpleMatch[1]
+          .split("\n")
+          .map((l) => l.replace(/^\s*\*\s?/, "").trim())
+          .filter(Boolean)
+          .join(" ");
+      }
+    }
+
+    const scopeMatch = content.match(/@scope\s*\(\s*([^)]+?)\s*\)/);
+    const classMatch = content.match(new RegExp(`\\.pl-c-${name}\\b`));
+    const primarySelector = classMatch
+      ? `.pl-c-${name}`
+      : scopeMatch
+        ? scopeMatch[1].trim()
+        : `.pl-c-${name}`;
+
+    const deps = componentDependencies[name] ?? [];
+
+    components.push({
+      name,
+      primarySelector,
+      description,
+      dependencies: deps,
+      cssFile: `dist/components/${name}.css`,
+      minifiedFile: `dist/components/${name}.min.css`,
+      importPath: `@cawalch/porchlight/components/${name}.css`,
+      importMinifiedPath: `@cawalch/porchlight/components/${name}.min.css`,
+    });
+  }
+
+  const lines = [
+    "# Porchlight Components Reference",
+    "",
+    `Offline reference for all ${components.length} CSS-only and semantic HTML components included in \`@cawalch/porchlight\`.`,
+    "",
+    "## Architecture & Modular Usage",
+    "",
+    "Porchlight components are authored in `@layer porchlight.components` and can be imported individually or as complete bundles. When importing individual components, always import the core module first to establish cascade layer ordering, design tokens, themes, and base resets:",
+    "",
+    "```css",
+    '@import "@cawalch/porchlight/core.css";',
+    "/* Import specific components as needed: */",
+    '@import "@cawalch/porchlight/components/button.css";',
+    '@import "@cawalch/porchlight/components/card.css";',
+    "```",
+    "",
+    "## Component Index",
+    "",
+    "| Component | Primary Selector | Dependencies | Description |",
+    "| :--- | :--- | :--- | :--- |",
+  ];
+
+  for (const c of components) {
+    const depStr =
+      c.dependencies.length > 0
+        ? c.dependencies.map((d) => `\`${d}\``).join(", ")
+        : "None";
+    const tableDesc = c.description.replaceAll("|", "\\|");
+    lines.push(
+      `| [${c.name}](#${c.name}) | \`${c.primarySelector}\` | ${depStr} | ${tableDesc} |`,
+    );
+  }
+
+  lines.push("", "## Component Details", "");
+
+  for (const c of components) {
+    lines.push(`### ${c.name}`, "");
+    lines.push(c.description, "");
+    lines.push(`- **Primary Selector**: \`${c.primarySelector}\``);
+    lines.push(`- **Import**: \`${c.importPath}\``);
+    lines.push(`- **Minified Import**: \`${c.importMinifiedPath}\``);
+    lines.push(`- **Dist File**: \`${c.cssFile}\``);
+    lines.push(`- **Minified Dist File**: \`${c.minifiedFile}\``);
+    if (c.dependencies.length > 0) {
+      lines.push(
+        `- **Dependencies**: ${c.dependencies.map((d) => `\`${d}\``).join(", ")}`,
+      );
+    } else {
+      lines.push("- **Dependencies**: None");
+    }
+    lines.push("");
+    lines.push("```css");
+    lines.push(`@import "${c.importPath}";`);
+    lines.push("```");
+    lines.push("");
+  }
+
+  const doc = `${lines.join("\n").trim()}\n`;
+  await writeFile(resolve(root, "COMPONENTS.md"), doc, "utf8");
+  return components;
+}
+
 const componentFiles = (await readdir(componentsDir))
   .filter((file) => file.endsWith(".css"))
   .sort();
@@ -434,6 +546,7 @@ for (const file of componentFiles) {
 
 const tokenDoc = await emitTokens();
 await emitManifest(componentNames);
+await emitComponentsDoc(componentNames);
 await copyFile(
   resolve(repoRoot, "CHANGELOG.md"),
   resolve(root, "CHANGELOG.md"),

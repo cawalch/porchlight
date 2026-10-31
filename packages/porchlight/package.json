@@ -67,7 +67,8 @@
     "src",
     "dist",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "COMPONENTS.md"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
