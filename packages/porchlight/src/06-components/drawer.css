@@ -90,11 +90,27 @@
     }
 
     /* Backdrop scrim (native ::backdrop on popovers). Stronger tint + blur
-       contrasts against the translucent drawer surface. */
+       contrasts against the translucent drawer surface. Animates opacity on
+       enter and exit with allow-discrete to avoid harsh popping. */
     :scope::backdrop {
+      opacity: 0;
       background: var(--pl-color-scrim);
       backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
         saturate(var(--pl-backdrop-saturate-scrim));
+      transition:
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
+    }
+
+    :scope:popover-open::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      :scope:popover-open::backdrop {
+        opacity: 0;
+      }
     }
 
     /* Layout inside the drawer. */

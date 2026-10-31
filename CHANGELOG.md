@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `@starting-style` and discrete opacity transitions to `::backdrop` on `.pl-c-dialog`,
+  `.pl-c-drawer`, and `.pl-c-command` for smooth scrim entrances and exits (#151).
+- Add first-class support and documentation for native exclusive accordions using
+  `<details class="pl-c-accordion__item" name="...">` with zero JavaScript (#151).
 - Add CSS Subgrid support for card decks (`.pl-l-grid[data-subgrid="rows"]`) and multi-row
   aligned forms (`.pl-c-form[data-layout="aligned"]` / `[data-subgrid="columns"]`), enabling
   shared header/body/footer row baselines and dynamic label track alignment (#147).
