@@ -9,8 +9,12 @@ test.describe("exclusive accordion", () => {
     const exclusiveGroup = page.locator("#exclusive-accordion");
     await expect(exclusiveGroup).toBeVisible();
 
-    const item1 = exclusiveGroup.locator('.pl-c-accordion__item[name="docs-faq"]').nth(0);
-    const item2 = exclusiveGroup.locator('.pl-c-accordion__item[name="docs-faq"]').nth(1);
+    const item1 = exclusiveGroup
+      .locator('.pl-c-accordion__item[name="docs-faq"]')
+      .nth(0);
+    const item2 = exclusiveGroup
+      .locator('.pl-c-accordion__item[name="docs-faq"]')
+      .nth(1);
 
     // Initial state: both items start closed
     await expect(item1).not.toHaveAttribute("open");

@@ -838,7 +838,9 @@ test.describe("docs scaffold", () => {
     expect(await items.count()).toBeGreaterThanOrEqual(3);
     await expect(page.locator(".pl-c-accordion__icon").first()).toBeVisible();
     // The open-by-default item exists.
-    await expect(page.locator(".pl-c-accordion__item[open]").first()).toBeVisible();
+    await expect(
+      page.locator(".pl-c-accordion__item[open]").first(),
+    ).toBeVisible();
   });
 
   test("switch renders tracks and thumbs", async ({ page }) => {
