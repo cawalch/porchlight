@@ -54,7 +54,7 @@ or selected imports; the full bundle requires the static-copy path. See the
 [installation and Bun guide](https://cawalch.github.io/porchlight/guides/getting-started).
 Bun can install the package independently of which CSS bundler you use.
 
-## Use It
+## Use it
 
 Porchlight components are HTML/CSS contracts. Bring your own rendering layer:
 server templates, Astro, React, Vue, htmx, plain HTML, or something else.
@@ -105,7 +105,7 @@ Layout primitives use the same pattern:
 }
 ```
 
-## What Ships
+## What ships
 
 | Import path                                | Contents                                |
 | ------------------------------------------ | --------------------------------------- |
@@ -129,27 +129,31 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/tokens.json`          | Token metadata JSON                     |
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                    |
 
-Porchlight also packages a complete offline reference: [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md) documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions).
+For an offline reference documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
 
-## CLI Tools
+## CLI tools
 
-Porchlight ships a built-in CLI for scaffolding starter templates, inspecting design tokens, and copying static assets:
+Porchlight includes a command-line interface (CLI) to scaffold starter templates, inspect design tokens, and copy static assets:
 
 ```sh
-# 1. Scaffold an accessible starter HTML page
+# Scaffold a starter HTML file
 npx --no-install porchlight init
-# Or customize target path, title, or local stylesheet links:
+
+# Scaffold with a custom output path, local stylesheet, and title
 npx --no-install porchlight init --out public/index.html --local --title "My App"
 
-# 2. Inspect and query design tokens from the terminal
+# Inspect design tokens in the terminal
 npx --no-install porchlight tokens
 npx --no-install porchlight tokens radius
 npx --no-install porchlight tokens --group Fonts
+
+# Output matching tokens as JSON
 npx --no-install porchlight tokens --group Colors --json
 
-# 3. Copy static CSS files for non-bundler pipelines
+# Copy static CSS files for non-bundler pipelines
 npx --no-install porchlight copy --out public/porchlight --compat
-# Or choose a smaller slice with minified files:
+
+# Copy selected components with minification
 npx --no-install porchlight copy --out public/porchlight --components button,field --layout --min
 ```
 
@@ -168,7 +172,7 @@ For `--compat`, load `/porchlight/compat.css` instead. These URLs assume
 `public/` is served at `/`; adjust them for your deployment base path.
 The commands use the locally installed package's `porchlight` executable.
 
-## Source Layout
+## Source layout
 
 ```text
 packages/porchlight/src/
@@ -186,7 +190,7 @@ docs/src/content/components/*.mdx
 docs/src/pages/preview/*.astro
 ```
 
-## Browser Support
+## Browser support
 
 Chromium is the primary test target; Firefox and WebKit have limited smoke
 coverage. Component styles require `@scope` (Firefox 146+, not 135).

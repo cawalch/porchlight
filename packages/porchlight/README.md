@@ -18,7 +18,7 @@ bun add @cawalch/porchlight
 npm install @cawalch/porchlight
 ```
 
-## Full Bundle
+## Full bundle
 
 The main export is a prebuilt stylesheet. Resolve the package import through
 your app bundler and load the resulting CSS entry once. Browsers cannot resolve
@@ -33,7 +33,7 @@ these bare package names directly; use Static HTML below without a bundler.
 }
 ```
 
-## Smaller Bundles
+## Smaller bundles
 
 If your app only uses a few components, start with `core.css`, then import
 the pieces you need.
@@ -79,23 +79,26 @@ application CSS and other frameworks:
 Component-local attributes such as `data-tone`, `data-selected`, and ARIA
 states stay unprefixed when scoped under a Porchlight component class.
 
-## Static HTML & CLI Helper
+## Static HTML and CLI tools
 
-For server-rendered apps, rapid prototyping, or pipelines that copy assets directly, Porchlight includes a multi-purpose CLI:
+For server-rendered apps, rapid prototyping, or pipelines that copy assets directly, Porchlight includes a command-line interface (CLI):
 
 ```sh
-# Scaffold an accessible starter HTML page configured with Porchlight
+# Scaffold a starter HTML file
 npx --no-install porchlight init
-# Or customize output path, local stylesheet links, and title:
+
+# Scaffold with a custom output path, local stylesheet, and title
 npx --no-install porchlight init --out public/index.html --local --title "My App"
 
-# Inspect and query design tokens from the terminal
+# Inspect design tokens in the terminal
 npx --no-install porchlight tokens
 npx --no-install porchlight tokens radius
 npx --no-install porchlight tokens --group Fonts
+
+# Output matching tokens as JSON
 npx --no-install porchlight tokens --group Colors --json
 
-# Copy prebuilt CSS files to an asset directory
+# Copy static CSS files for non-bundler pipelines
 npx --no-install porchlight copy --out public/porchlight --compat
 ```
 
@@ -162,7 +165,7 @@ The full bundle was also checked with Vite 8.2.1's default target in a small
 light/dark consumer fixture. Recheck your rendered output after changing targets
 or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-options#build-csstarget).
 
-## Bun And Other Static Pipelines
+## Bun and other static pipelines
 
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
@@ -206,7 +209,7 @@ See [Bun's CSS bundler](https://bun.com/docs/bundler/css) and
 
 ## Tokens
 
-Porchlight ships generated token metadata for editor autocomplete,
+Porchlight provides generated token metadata for editor autocomplete,
 validation, and custom tooling.
 
 ```ts
@@ -224,7 +227,7 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 
 ## Exports
 
-| Import path                                | What you get                             |
+| Import path                                | Contents                                 |
 | ------------------------------------------ | ---------------------------------------- |
 | `@cawalch/porchlight`                      | Full prebuilt CSS bundle                 |
 | `@cawalch/porchlight/min.css`              | Minified full bundle                     |
@@ -247,21 +250,21 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                     |
 | `@cawalch/porchlight/src/*`                | Raw source escape hatch                  |
 
-For a complete offline reference of all 51 components (primary selectors, dependencies, and imports), see [`COMPONENTS.md`](COMPONENTS.md).
+For an offline reference documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](COMPONENTS.md).
 
-## Layer Ordering
+## Layer ordering
 
 Porchlight wraps every rule in `@layer porchlight.*`. Declare your app layer
 after Porchlight so product CSS wins without specificity fights.
 
 Do not pass `layer(...)` to these imports. Porchlight already self-layers.
 
-## Browser Support
+## Browser support
 
 Chromium is the primary test target; Firefox and WebKit have limited smoke
 coverage. `@scope` requires Firefox 146 or later, not Firefox 135. Porchlight uses
 modern CSS including `@layer`, `@scope`, `@property`, OKLCH,
 `light-dark()`, `color-mix()`, `:has()`, container queries, Popover API,
 and anchor positioning. See the
-[Browser Support guide](https://cawalch.github.io/porchlight/guides/browser-support)
+[Browser support guide](https://cawalch.github.io/porchlight/guides/browser-support)
 for the full feature matrix.

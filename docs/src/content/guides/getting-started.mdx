@@ -5,7 +5,7 @@ order: 0
 ---
 
 Porchlight is a **native CSS framework** with zero JavaScript dependencies.
-It ships tokens, themes, base styles, layout primitives, component contracts,
+It includes tokens, themes, base styles, layout primitives, component contracts,
 utilities, and progressive enhancements as prebuilt CSS files.
 
 For server templates, HTMX swaps, Alpine state, and optional CSS Modules, see the <a href={`${import.meta.env.BASE_URL}guides/integrations`}>integration guide</a>.
@@ -21,7 +21,7 @@ bun add @cawalch/porchlight
 ```
 
 Install into your application; you do not need to clone this repository.
-The package has no runtime dependencies and ships prebuilt CSS. Interactive
+The package has no runtime dependencies and provides prebuilt CSS. Interactive
 contracts such as tabs and comboboxes still need application-owned behavior,
 keyboard handling, and state updates; CSS does not provide a controller.
 For working on Porchlight itself, use the repository's
@@ -81,33 +81,33 @@ utilities, but leaves out `enhancements.css`.
 
 ## CLI tools
 
-Porchlight ships a built-in CLI for project scaffolding, token inspection, and static asset distribution:
+Porchlight provides a command-line interface (CLI) to scaffold projects, inspect design tokens, and copy static assets:
 
 ### Scaffold a starter template
 
-Quickly generate an accessible starter HTML page configured with proper `@layer` ordering, CDN or local stylesheets, and a responsive SaaS layout:
+Generate an accessible starter HTML page configured with `@layer` ordering, CDN or local stylesheets, and a responsive layout:
 
 ```sh
-# Generate starter index.html
+# Scaffold a starter HTML file
 npx --no-install porchlight init
 
-# Or customize target file, title, and local stylesheet links
+# Scaffold with a custom output path, local stylesheet, and title
 npx --no-install porchlight init --out src/index.html --local --title "App Dashboard"
 ```
 
-### Inspect tokens in terminal
+### Inspect tokens in the terminal
 
-Query and explore Porchlight's design tokens directly from the terminal:
+Query and inspect Porchlight design tokens from the terminal:
 
 ```sh
-# List all tokens grouped by category
+# Inspect design tokens in the terminal
 npx --no-install porchlight tokens
 
-# Filter by keyword or token group
+# Filter by token name or group
 npx --no-install porchlight tokens radius
 npx --no-install porchlight tokens --group Fonts
 
-# Output as structured JSON
+# Output matching tokens as JSON
 npx --no-install porchlight tokens --group Colors --json
 ```
 
@@ -151,7 +151,7 @@ Then declare the layer order in app CSS:
 @layer porchlight, app;
 ```
 
-The package also ships `dist/porchlight.manifest.json`, which lists the
+The package also provides `dist/porchlight.manifest.json`, which lists the
 available files, component names, and recommended load order for copy scripts.
 
 ## Vite
@@ -286,7 +286,7 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 
 ## Exports reference
 
-| Import path                                 | What you get                             |
+| Import path                                 | Contents                                 |
 | ------------------------------------------- | ---------------------------------------- |
 | `@cawalch/porchlight`                       | Full prebuilt CSS bundle                 |
 | `@cawalch/porchlight/min.css`               | Minified full bundle                     |
@@ -308,7 +308,7 @@ Porchlight targets modern browsers and does not polyfill old CSS engines.
 The core uses cascade layers, custom properties, `:has()`, `@scope`,
 `color-mix()`, and OKLCH. Advanced features are gated where possible.
 
-See the <a href={`${import.meta.env.BASE_URL}guides/browser-support`}>Browser Support guide</a> for the full feature
+See the <a href={`${import.meta.env.BASE_URL}guides/browser-support`}>Browser support guide</a> for the full feature
 matrix.
 
 ## Next steps
@@ -320,7 +320,7 @@ matrix.
   </a>
   - deep dive into the layer model
 - <a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>
-    Composition Recipes
+    Composition recipes
   </a>
   - compose dashboards, tables, settings, and dense admin screens
 - <a href={`${import.meta.env.BASE_URL}preview`}>Preview gallery</a> - see every
