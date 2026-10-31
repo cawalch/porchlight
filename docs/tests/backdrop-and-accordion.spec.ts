@@ -9,25 +9,31 @@ test.describe("exclusive accordion", () => {
     const exclusiveGroup = page.locator("#exclusive-accordion");
     await expect(exclusiveGroup).toBeVisible();
 
-    const item1 = exclusiveGroup
-      .locator('.pl-c-accordion__item[name="docs-faq"]')
-      .nth(0);
-    const item2 = exclusiveGroup
-      .locator('.pl-c-accordion__item[name="docs-faq"]')
-      .nth(1);
+    const item1 = exclusiveGroup.locator('.pl-c-accordion__item[name="docs-faq"]').nth(0);
+    const item2 = exclusiveGroup.locator('.pl-c-accordion__item[name="docs-faq"]').nth(1);
 
-    // Initial state: item 1 is open, item 2 is closed
+    // Initial state: both items start closed
+    await expect(item1).not.toHaveAttribute("open");
+    await expect(item2).not.toHaveAttribute("open");
+
+    // Click item 1 summary to open it
+    await item1.locator("summary").click();
     await expect(item1).toHaveAttribute("open", "");
     await expect(item2).not.toHaveAttribute("open");
 
-    // Click item 2 summary
-    await item2.locator("summary").click();
+    await expect
+      .poll(async () => {
+        return await item1.locator(".pl-c-accordion__icon").evaluate((el) => {
+          return getComputedStyle(el).rotate;
+        });
+      })
+      .toBe("180deg");
 
-    // Item 2 should now be open, item 1 should automatically be closed
+    // Click item 2 summary: item 2 opens, item 1 closes automatically
+    await item2.locator("summary").click();
     await expect(item2).toHaveAttribute("open", "");
     await expect(item1).not.toHaveAttribute("open");
 
-    // Verify chevron icon states after transition settles
     await expect
       .poll(async () => {
         return await item2.locator(".pl-c-accordion__icon").evaluate((el) => {
