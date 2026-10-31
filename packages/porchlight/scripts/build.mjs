@@ -429,7 +429,13 @@ async function emitComponentsDoc(componentNames) {
     lines.push("");
   }
 
-  const doc = `${lines.join("\n").trim()}\n`;
+  let doc = `${lines.join("\n").trim()}\n`;
+  try {
+    const prettier = await import("prettier");
+    doc = await prettier.default.format(doc, { parser: "markdown" });
+  } catch {
+    // Keep unformatted document if prettier is unavailable
+  }
   await writeFile(resolve(root, "COMPONENTS.md"), doc, "utf8");
   return components;
 }
