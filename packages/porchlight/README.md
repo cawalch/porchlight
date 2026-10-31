@@ -170,7 +170,7 @@ or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-optio
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.2 and Porchlight 0.13.0**:
+Verified with **Bun 1.4.2 and Porchlight 0.13.1**:
 
 | Path                                                    | Result                                               |
 | ------------------------------------------------------- | ---------------------------------------------------- |

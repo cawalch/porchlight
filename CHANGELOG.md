@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-10-31
+
+### Changed
+
+- Point default package export (`.` and `style`) to `dist/porchlight.min.css` instead of unminified CSS, delivering an immediate ~23% minified (and ~27% brotli) bundle size improvement out of the box for bundlers, CDNs, and Bundlephobia (#166).
+- Re-minify and strip redundant CSS comments, banner duplicates, and declaration redundancies across all production distribution bundles (#166).
+
+### Fixed
+
+- Resolve WCAG 2.5.3 (Label in Name) mismatches across documentation layouts and preview templates flagged by axe-core 4.14 (#165).
+
 ## [0.13.0] - 2026-10-31
 
 ### Added
