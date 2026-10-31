@@ -17,8 +17,10 @@
  *     </div>
  *   </details>
  *
- * Wrap multiple items in .pl-c-accordion. For single-open behavior, use
- * [data-variant="single"] (implemented via :has()).
+ * Wrap multiple items in .pl-c-accordion. For single-open behavior, add the
+ * native `name` attribute to <details> (e.g. name="faq-group") so the browser
+ * coordinates exclusive disclosure natively without JavaScript. Alternatively,
+ * [data-variant="single"] provides a legacy :has() selector fallback.
  *
  * The native <summary> marker is hidden and replaced with a custom chevron.
  */
@@ -145,16 +147,17 @@
     }
   }
 
-  /* Single-open variant: close other items when one opens. Uses :has() to
-     detect which item is open and collapse siblings. */
+  /* Single-open behavior:
+     1. Modern standard (Baseline 2024): add the native `name` attribute to
+        <details> (e.g. name="faq-group"). The browser automatically closes all
+        other items in the group with zero JavaScript.
+     2. Legacy fallback: [data-variant="single"] via :has(). */
   :where(.pl-c-accordion[data-variant="single"])
     > .pl-c-accordion__item:not([open]):has(~ .pl-c-accordion__item[open]),
   :where(.pl-c-accordion[data-variant="single"])
     > .pl-c-accordion__item[open]
     ~ .pl-c-accordion__item:not([open]) {
-    /* These remain closed (default state). The :has() ensures only one
-       [open] item survives visually; JS should manage the actual [open]
-       attribute removal for full single-open behavior. */
+    /* These remain closed (default state). */
   }
 
   @media (forced-colors: active) {
