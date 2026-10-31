@@ -79,14 +79,23 @@ application CSS and other frameworks:
 Component-local attributes such as `data-tone`, `data-selected`, and ARIA
 states stay unprefixed when scoped under a Porchlight component class.
 
-## Static HTML
+## Static HTML & CLI Helper
 
-For server-rendered apps or pipelines that copy assets directly, use the
-included copy helper:
-
-Install the package first, then run its local executable:
+For server-rendered apps, rapid prototyping, or pipelines that copy assets directly, Porchlight includes a multi-purpose CLI:
 
 ```sh
+# Scaffold an accessible starter HTML page configured with Porchlight
+npx --no-install porchlight init
+# Or customize output path, local stylesheet links, and title:
+npx --no-install porchlight init --out public/index.html --local --title "My App"
+
+# Inspect and query design tokens from the terminal
+npx --no-install porchlight tokens
+npx --no-install porchlight tokens radius
+npx --no-install porchlight tokens --group Fonts
+npx --no-install porchlight tokens --group Colors --json
+
+# Copy prebuilt CSS files to an asset directory
 npx --no-install porchlight copy --out public/porchlight --compat
 ```
 
@@ -97,18 +106,18 @@ npx --no-install porchlight copy --out public/porchlight --compat
 These URLs assume your server exposes `public/` at `/`; adjust them for your
 asset mount or deployment base path.
 
-For a smaller static slice, name the components you use:
+For a smaller static slice, name the components you use (and optionally request minified outputs):
 
 ```sh
-npx --no-install porchlight copy --out public/porchlight --components button,field --layout --utilities
+npx --no-install porchlight copy --out public/porchlight --components button,field --layout --utilities --min
 ```
 
 ```html
-<link rel="stylesheet" href="/porchlight/core.css" />
-<link rel="stylesheet" href="/porchlight/layout.css" />
-<link rel="stylesheet" href="/porchlight/components/button.css" />
-<link rel="stylesheet" href="/porchlight/components/field.css" />
-<link rel="stylesheet" href="/porchlight/utilities.css" />
+<link rel="stylesheet" href="/porchlight/core.min.css" />
+<link rel="stylesheet" href="/porchlight/layout.min.css" />
+<link rel="stylesheet" href="/porchlight/components/button.min.css" />
+<link rel="stylesheet" href="/porchlight/components/field.min.css" />
+<link rel="stylesheet" href="/porchlight/utilities.min.css" />
 <link rel="stylesheet" href="/app.css" />
 ```
 
@@ -158,7 +167,7 @@ or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-optio
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.2 and Porchlight 0.11.1**:
+Verified with **Bun 1.4.2 and Porchlight 0.12.1**:
 
 | Path                                                    | Result                                               |
 | ------------------------------------------------------- | ---------------------------------------------------- |
@@ -215,21 +224,30 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 
 ## Exports
 
-| Import path                                 | What you get                             |
-| ------------------------------------------- | ---------------------------------------- |
-| `@cawalch/porchlight`                       | Full prebuilt CSS bundle                 |
-| `@cawalch/porchlight/min.css`               | Minified full bundle                     |
-| `@cawalch/porchlight/compat.css`            | Bundle without the enhancement layer     |
-| `@cawalch/porchlight/core.css`              | Layer order, reset, tokens, themes, base |
-| `@cawalch/porchlight/layout.css`            | Layout primitives                        |
-| `@cawalch/porchlight/components.css`        | All component CSS                        |
-| `@cawalch/porchlight/components/button.css` | One component CSS file                   |
-| `@cawalch/porchlight/utilities.css`         | Utility classes                          |
-| `@cawalch/porchlight/enhancements.css`      | Progressive enhancement layer            |
-| `@cawalch/porchlight/tokens`                | Typed token metadata module              |
-| `@cawalch/porchlight/tokens.json`           | Token metadata JSON                      |
-| `@cawalch/porchlight/manifest.json`         | Static-copy manifest                     |
-| `@cawalch/porchlight/src/*`                 | Raw source escape hatch                  |
+| Import path                                | What you get                             |
+| ------------------------------------------ | ---------------------------------------- |
+| `@cawalch/porchlight`                      | Full prebuilt CSS bundle                 |
+| `@cawalch/porchlight/min.css`              | Minified full bundle                     |
+| `@cawalch/porchlight/compat.css`           | Bundle without the enhancement layer     |
+| `@cawalch/porchlight/compat.min.css`       | Minified compat bundle                   |
+| `@cawalch/porchlight/core.css`             | Layer order, reset, tokens, themes, base |
+| `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                 |
+| `@cawalch/porchlight/layout.css`           | Layout primitives                        |
+| `@cawalch/porchlight/layout.min.css`       | Minified layout primitives               |
+| `@cawalch/porchlight/components.css`       | All 51 component CSS files               |
+| `@cawalch/porchlight/components.min.css`   | Minified all-components bundle           |
+| `@cawalch/porchlight/components/*.css`     | Individual component CSS file            |
+| `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS file   |
+| `@cawalch/porchlight/utilities.css`        | Utility classes                          |
+| `@cawalch/porchlight/utilities.min.css`    | Minified utility classes                 |
+| `@cawalch/porchlight/enhancements.css`     | Progressive enhancement layer            |
+| `@cawalch/porchlight/enhancements.min.css` | Minified enhancement layer               |
+| `@cawalch/porchlight/tokens`               | Typed token metadata module              |
+| `@cawalch/porchlight/tokens.json`          | Token metadata JSON                      |
+| `@cawalch/porchlight/manifest.json`        | Static-copy manifest                     |
+| `@cawalch/porchlight/src/*`                | Raw source escape hatch                  |
+
+For a complete offline reference of all 51 components (primary selectors, dependencies, and imports), see [`COMPONENTS.md`](COMPONENTS.md).
 
 ## Layer Ordering
 

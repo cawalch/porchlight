@@ -107,28 +107,53 @@ Layout primitives use the same pattern:
 
 ## What Ships
 
-| Import path                            | Contents                            |
-| -------------------------------------- | ----------------------------------- |
-| `@cawalch/porchlight`                  | Full prebuilt CSS bundle            |
-| `@cawalch/porchlight/compat.css`       | Core, layout, components, utilities |
-| `@cawalch/porchlight/core.css`         | Layers, reset, tokens, themes, base |
-| `@cawalch/porchlight/layout.css`       | `.pl-l-*` layout primitives         |
-| `@cawalch/porchlight/components.css`   | All `.pl-c-*` component CSS         |
-| `@cawalch/porchlight/components/*.css` | One component CSS file              |
-| `@cawalch/porchlight/utilities.css`    | `.pl-u-*` helpers                   |
-| `@cawalch/porchlight/tokens`           | Typed token metadata                |
-| `@cawalch/porchlight/tokens.json`      | Token metadata JSON                 |
-| `@cawalch/porchlight/manifest.json`    | Static-copy manifest                |
+| Import path                                | Contents                                |
+| ------------------------------------------ | --------------------------------------- |
+| `@cawalch/porchlight`                      | Full prebuilt CSS bundle                |
+| `@cawalch/porchlight/min.css`              | Minified full bundle                    |
+| `@cawalch/porchlight/compat.css`           | Core, layout, components, utilities     |
+| `@cawalch/porchlight/compat.min.css`       | Minified compat bundle                  |
+| `@cawalch/porchlight/core.css`             | Layers, reset, tokens, themes, base     |
+| `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                |
+| `@cawalch/porchlight/layout.css`           | `.pl-l-*` layout primitives             |
+| `@cawalch/porchlight/layout.min.css`       | Minified layout primitives              |
+| `@cawalch/porchlight/components.css`       | All 51 `.pl-c-*` component stylesheets  |
+| `@cawalch/porchlight/components.min.css`   | Minified components bundle              |
+| `@cawalch/porchlight/components/*.css`     | Individual component CSS files          |
+| `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS files |
+| `@cawalch/porchlight/utilities.css`        | `.pl-u-*` helper classes                |
+| `@cawalch/porchlight/utilities.min.css`    | Minified utility classes                |
+| `@cawalch/porchlight/enhancements.css`     | Progressive enhancement layer           |
+| `@cawalch/porchlight/enhancements.min.css` | Minified enhancement layer              |
+| `@cawalch/porchlight/tokens`               | Typed token metadata module             |
+| `@cawalch/porchlight/tokens.json`          | Token metadata JSON                     |
+| `@cawalch/porchlight/manifest.json`        | Static-copy manifest                    |
 
-For static-file pipelines:
+Porchlight also packages a complete offline reference: [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md) documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions).
+
+## CLI Tools
+
+Porchlight ships a built-in CLI for scaffolding starter templates, inspecting design tokens, and copying static assets:
 
 ```sh
+# 1. Scaffold an accessible starter HTML page
+npx --no-install porchlight init
+# Or customize target path, title, or local stylesheet links:
+npx --no-install porchlight init --out public/index.html --local --title "My App"
+
+# 2. Inspect and query design tokens from the terminal
+npx --no-install porchlight tokens
+npx --no-install porchlight tokens radius
+npx --no-install porchlight tokens --group Fonts
+npx --no-install porchlight tokens --group Colors --json
+
+# 3. Copy static CSS files for non-bundler pipelines
 npx --no-install porchlight copy --out public/porchlight --compat
-# Or choose a smaller slice:
-npx --no-install porchlight copy --out public/porchlight --components button,field --layout --utilities
+# Or choose a smaller slice with minified files:
+npx --no-install porchlight copy --out public/porchlight --components button,field --layout --min
 ```
 
-After the selected-component command, load all the copied CSS files:
+After copying selected components, load all copied stylesheets in order:
 
 ```html
 <link rel="stylesheet" href="/porchlight/core.css" />
