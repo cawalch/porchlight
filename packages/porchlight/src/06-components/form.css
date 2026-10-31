@@ -121,7 +121,8 @@
           .pl-c-field {
             grid-template-columns: 1fr;
 
-            & > * {
+            & > *,
+            & > :not(.pl-c-field__label) {
               grid-column: 1;
             }
           }
@@ -133,7 +134,8 @@
           .pl-c-field {
             grid-template-columns: 1fr;
 
-            & > * {
+            & > *,
+            & > :not(.pl-c-field__label) {
               grid-column: 1;
             }
           }
