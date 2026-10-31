@@ -14,6 +14,9 @@
  *      [data-dividers] on .pl-l-grid, purely visual (no layout impact).
  *   4. Advanced typed attr(): a .pl-c-swatch that reads its color from a
  *      data-color attribute, type-checked as <color>.
+ *   5. View Transitions: opt-in cross-document page animations (Baseline 2026).
+ *   6. Style container queries: cascade density and tone tokens to descendants
+ *      via custom properties (--pl-density, --pl-tone) without DOM duplication.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
  * critical path; everything below is opt-in via @supports.
@@ -184,6 +187,165 @@
     @keyframes pl-fade-in {
       from {
         opacity: 0;
+      }
+    }
+  }
+
+  /* 6. Style Container Queries (CSS Level 5 / Baseline 2023-2026):
+     Token inheritance via custom properties on ancestor containers.
+     Allows setting `--pl-density: dense | compact` or `--pl-tone: brand | success | warning | danger`
+     on any parent container without needing `[data-pl-density]` or `[data-tone]` on every child. */
+  @supports (container-type: normal) {
+    /* Density style queries */
+    @container style(--pl-density: compact) {
+      :where(*) {
+        --pl-control-block-size: 2rem;
+        --pl-control-padding-inline: var(--pl-space-3);
+        --pl-control-gap: var(--pl-space-1);
+      }
+    }
+
+    @container style(--pl-density: dense) {
+      :where(*) {
+        --pl-control-block-size: 1.75rem;
+        --pl-control-padding-inline: var(--pl-space-2);
+        --pl-control-gap: var(--pl-space-1);
+        --pl-space-2: 0.375rem;
+        --pl-space-3: 0.5rem;
+        --pl-space-4: 0.75rem;
+        --pl-space-5: 0.875rem;
+        --pl-space-6: 1rem;
+        --pl-space-8: 1.5rem;
+        --pl-space-10: 1.75rem;
+        --pl-space-12: 2rem;
+        --pl-text-sm: 0.8125rem;
+        --pl-text-xs: 0.6875rem;
+      }
+    }
+
+    @container style(--pl-density: comfortable) {
+      :where(*) {
+        --pl-control-block-size: 2.5rem;
+      }
+    }
+
+    @container style(--pl-density: touch) {
+      :where(*) {
+        --pl-control-block-size: 2.75rem;
+        --pl-control-padding-inline: var(--pl-space-5);
+      }
+    }
+
+    /* Tone style queries: cascade semantic tones to badges, chips, progress, alerts, toasts, and empty states */
+    @container style(--pl-tone: brand) or style(--pl-tone: accent) {
+      :where(.pl-c-badge:not([data-tone])) {
+        background: var(--pl-color-brand-bg);
+        color: var(--pl-color-brand-text);
+      }
+
+      :where(.pl-c-chip:not([data-tone])) {
+        --pl-c-chip-text: var(--pl-color-brand-text);
+      }
+
+      :where(.pl-c-alert:not([data-tone])) {
+        --pl-c-alert-tone: var(--pl-color-accent);
+        --pl-c-alert-tone-bg: var(--pl-color-accent);
+      }
+
+      :where(.pl-c-progress:not([data-tone])) {
+        --pl-c-progress-tone: var(--pl-color-accent);
+      }
+
+      :where(.pl-c-toast:not([data-tone])) {
+        --pl-c-toast-tone: var(--pl-color-accent);
+      }
+
+      :where(.pl-c-empty:not([data-tone])) {
+        --pl-c-empty-tone: var(--pl-color-accent);
+      }
+    }
+
+    @container style(--pl-tone: success) {
+      :where(.pl-c-badge:not([data-tone])) {
+        background: var(--pl-color-success-bg);
+        color: var(--pl-color-success-text);
+      }
+
+      :where(.pl-c-chip:not([data-tone])) {
+        --pl-c-chip-text: var(--pl-color-success-text);
+      }
+
+      :where(.pl-c-alert:not([data-tone])) {
+        --pl-c-alert-tone: var(--pl-color-success);
+        --pl-c-alert-tone-bg: var(--pl-color-success-bg);
+      }
+
+      :where(.pl-c-progress:not([data-tone])) {
+        --pl-c-progress-tone: var(--pl-color-success);
+      }
+
+      :where(.pl-c-toast:not([data-tone])) {
+        --pl-c-toast-tone: var(--pl-color-success);
+      }
+
+      :where(.pl-c-empty:not([data-tone])) {
+        --pl-c-empty-tone: var(--pl-color-success);
+      }
+    }
+
+    @container style(--pl-tone: warning) {
+      :where(.pl-c-badge:not([data-tone])) {
+        background: var(--pl-color-warning-bg);
+        color: var(--pl-color-warning-text);
+      }
+
+      :where(.pl-c-chip:not([data-tone])) {
+        --pl-c-chip-text: var(--pl-color-warning-text);
+      }
+
+      :where(.pl-c-alert:not([data-tone])) {
+        --pl-c-alert-tone: var(--pl-color-warning);
+        --pl-c-alert-tone-bg: var(--pl-color-warning-bg);
+      }
+
+      :where(.pl-c-progress:not([data-tone])) {
+        --pl-c-progress-tone: var(--pl-color-warning);
+      }
+
+      :where(.pl-c-toast:not([data-tone])) {
+        --pl-c-toast-tone: var(--pl-color-warning);
+      }
+
+      :where(.pl-c-empty:not([data-tone])) {
+        --pl-c-empty-tone: var(--pl-color-warning);
+      }
+    }
+
+    @container style(--pl-tone: danger) {
+      :where(.pl-c-badge:not([data-tone])) {
+        background: var(--pl-color-danger-bg);
+        color: var(--pl-color-danger-text);
+      }
+
+      :where(.pl-c-chip:not([data-tone])) {
+        --pl-c-chip-text: var(--pl-color-danger-text);
+      }
+
+      :where(.pl-c-alert:not([data-tone])) {
+        --pl-c-alert-tone: var(--pl-color-danger);
+        --pl-c-alert-tone-bg: var(--pl-color-danger-bg);
+      }
+
+      :where(.pl-c-progress:not([data-tone])) {
+        --pl-c-progress-tone: var(--pl-color-danger);
+      }
+
+      :where(.pl-c-toast:not([data-tone])) {
+        --pl-c-toast-tone: var(--pl-color-danger);
+      }
+
+      :where(.pl-c-empty:not([data-tone])) {
+        --pl-c-empty-tone: var(--pl-color-danger);
       }
     }
   }

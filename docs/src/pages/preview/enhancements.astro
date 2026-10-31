@@ -54,6 +54,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <span class="pl-c-swatch" data-color="oklch(58% 0.2 25deg)"></span>
   </div>
 
+  <h2>Style container queries: density &amp; tone inheritance</h2>
+  <p>
+    Ancestor containers configure <code>style="--pl-density: dense|compact"</code> or <code>style="--pl-tone: success|warning|danger"</code>.
+    Descendants automatically inherit control scaling, compressed spacing, and tone colors without DOM attribute repetition.
+  </p>
+  <div class="demo-stack" id="style-query-density-demo" style="--pl-density: dense;">
+    <div class="pl-l-cluster">
+      <button class="pl-c-button">Dense Button</button>
+      <input class="pl-c-field__control" value="Dense Input" />
+      <span class="pl-c-badge">Dense Badge</span>
+    </div>
+  </div>
+
+  <div class="demo-stack" id="style-query-tone-demo" style="--pl-tone: success;">
+    <div class="pl-l-cluster">
+      <span class="pl-c-badge">Cascaded Success Badge</span>
+      <span class="pl-c-chip">Cascaded Success Chip</span>
+      <div class="pl-c-alert" role="status">
+        <p class="pl-c-alert__title">Cascaded Success Alert</p>
+      </div>
+    </div>
+  </div>
+
   <h2>text-box optical alignment</h2>
   <p>
     Buttons and badges trim the cap-height half-leading so single-line labels

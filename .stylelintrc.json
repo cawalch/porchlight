@@ -8,6 +8,12 @@
   "ignoreFiles": ["node_modules/**", "dist/**", "**/dist/**", ".astro/**"],
   "rules": {
     "at-rule-no-unknown": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["target-current"]
+      }
+    ],
     "property-no-unknown": [
       true,
       {

@@ -166,4 +166,58 @@
       outline-color: Highlight;
     }
   }
+
+  /* Progressive enhancement: CSS scroll markers for tab panels.
+     When supported, a scrollable panel group can track active state or
+     render marker pills/dots. */
+  @supports (scroll-marker-group: before) or (scroll-marker-group: before tabs) {
+    :where(.pl-c-tabs[data-markers="scroll"]) {
+      position: relative;
+    }
+
+    :where(.pl-c-tabs[data-markers="scroll"] .pl-c-tabs__panels) {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: inline mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      scroll-marker-group: after;
+    }
+
+    :where(.pl-c-tabs[data-markers="scroll"] [role="tabpanel"]) {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    :where(
+      .pl-c-tabs[data-markers="scroll"] .pl-c-tabs__panels
+    )::scroll-marker-group {
+      display: flex;
+      justify-content: center;
+      gap: var(--pl-space-2);
+      padding-block: var(--pl-space-3);
+    }
+
+    :where(.pl-c-tabs[data-markers="scroll"] [role="tabpanel"])::scroll-marker {
+      content: "";
+      inline-size: 0.625rem;
+      block-size: 0.625rem;
+      border-radius: var(--pl-radius-full);
+      background: var(--pl-color-border);
+      border: 0;
+      cursor: pointer;
+      transition: background var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
+    :is(
+      .pl-c-tabs[data-markers="scroll"]
+        [role="tabpanel"]::scroll-marker:checked,
+      .pl-c-tabs[data-markers="scroll"]
+        [role="tabpanel"]::scroll-marker:target-current
+    ) {
+      background: var(--pl-color-accent);
+    }
+  }
 }

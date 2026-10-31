@@ -82,6 +82,21 @@ const tabs = [
     </div>
     <div class="pl-c-tabs__panel" role="tabpanel"><p>Compact content.</p></div>
   </div>
+
+  <h2>Scroll-driven tab panels</h2>
+  <p>Opt in to native scroll markers via <code>data-markers="scroll"</code> for horizontal snapping panels with indicator dots where supported.</p>
+  <div class="pl-c-tabs" data-markers="scroll" id="scroll-tabs-demo">
+    <div class="pl-c-tabs__panels">
+      <div class="pl-c-tabs__panel" role="tabpanel" id="panel-scroll-1">
+        <h3>Panel 1: Cloud instances</h3>
+        <p>Horizontal swipeable panel synchronized via CSS scroll markers.</p>
+      </div>
+      <div class="pl-c-tabs__panel" role="tabpanel" id="panel-scroll-2">
+        <h3>Panel 2: Security firewalls</h3>
+        <p>Second panel automatically updates the active scroll marker.</p>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
 
 <script>
