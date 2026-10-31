@@ -51,5 +51,8 @@ export default defineConfig({
         url: "http://localhost:4321/porchlight/",
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,
+        env: {
+          ASTRO_PREVIEW_BACKGROUND: "1",
+        },
       },
 });
