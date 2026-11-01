@@ -57,6 +57,12 @@
       :scope {
         --pl-c-section-nav-current: LinkText;
       }
+
+      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Non-color cue for high-contrast accessibility. */
+      .pl-c-section-nav__link:target-current {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
     }
   }
 }
