@@ -436,6 +436,8 @@ claiming a new component stylesheet.
 
 ## Best first examples
 
+- /preview/app-audit-studio: financial risk and regulatory audit studio with Basel III capital KPIs, immutable audit ledger, subgrid counterparty inspector, and FRTB policy diffs
+- /preview/app-telemetry-cockpit: flagship enterprise operations cockpit with high-density KPI cards, SOC-2 audit stream, subgrid node inspector, and security policy diffs
 - /preview/app-list-detail: list/detail workspace with a persistent table and selected-record panel
 - /preview/app-queue-triage: queue triage workspace with SLA lanes, priority list, and decision fields
 - /preview/app-process-builder: process builder/admin shell with library, draft map, and inspector panel
@@ -458,6 +460,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/alert
 - /preview/app-approvals
 - /preview/app-asset-inventory
+- /preview/app-audit-studio
 - /preview/app-cases
 - /preview/app-command-workspace
 - /preview/app-dashboard

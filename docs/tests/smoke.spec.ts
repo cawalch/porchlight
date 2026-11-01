@@ -1529,6 +1529,37 @@ test.describe("docs scaffold", () => {
   });
 
   // -----------------------------------------------------------------------
+  // Financial Risk & Regulatory Audit Studio (Flagship 2026 Showcase)
+  // -----------------------------------------------------------------------
+  test("app-audit-studio renders capital adequacy KPIs, audit stream, subgrid property list, and policy diff", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-audit-studio");
+    await expect(
+      page.getByRole("heading", { name: "Apex Risk Studio" }),
+    ).toBeVisible();
+    await expect(
+      page.locator(".pl-c-banner[data-tone='warning']"),
+    ).toBeVisible();
+    // 4 KPI Cards
+    const kpis = page.locator(".pl-c-kpi-card");
+    expect(await kpis.count()).toBe(4);
+    // Audit stream with immutable entries
+    await expect(page.locator(".pl-c-audit-stream")).toBeVisible();
+    expect(
+      await page.locator(".pl-c-audit-stream__item").count(),
+    ).toBeGreaterThanOrEqual(5);
+    // Property list with subgrid
+    await expect(
+      page.locator('.pl-c-property-list[data-subgrid="true"]'),
+    ).toBeVisible();
+    // Regulatory YAML code block
+    await expect(page.locator(".pl-c-code-block")).toBeVisible();
+    // Tactile keycaps
+    expect(await page.locator(".pl-c-kbd").count()).toBeGreaterThanOrEqual(5);
+  });
+
+  // -----------------------------------------------------------------------
   // Case/Ticket Review (data-dense case management example)
   // -----------------------------------------------------------------------
   test("app-cases renders ticket list, filters, and detail drawer", async ({
