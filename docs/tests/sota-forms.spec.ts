@@ -26,7 +26,7 @@ test.describe("SOTA Form Capabilities (v0.15.0)", () => {
           const s = getComputedStyle(el);
           return {
             position: s.position,
-            positionArea: s.getPropertyValue("position-area") || s.positionArea,
+            positionArea: s.getPropertyValue("position-area"),
           };
         });
         expect(balloonStyle.position).toBe("fixed");
