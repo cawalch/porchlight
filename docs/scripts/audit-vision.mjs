@@ -14,7 +14,9 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
-const previewDir = fileURLToPath(new URL("../src/pages/preview", import.meta.url));
+const previewDir = fileURLToPath(
+  new URL("../src/pages/preview", import.meta.url),
+);
 const allRoutes = readdirSync(previewDir)
   .filter((f) => f.endsWith(".astro"))
   .map((f) => f.replace(/\.astro$/, ""));
@@ -34,7 +36,9 @@ const targetRoutes = args.includes("--all")
         "index",
       ];
 
-const outputDir = fileURLToPath(new URL("../dist/vision-audit", import.meta.url));
+const outputDir = fileURLToPath(
+  new URL("../dist/vision-audit", import.meta.url),
+);
 mkdirSync(outputDir, { recursive: true });
 
 const viewports = [
