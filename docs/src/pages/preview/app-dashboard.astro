@@ -40,7 +40,7 @@ const toneFor = (s: string) =>
     </header>
 
     <!-- Sidebar nav -->
-    <aside class="pl-l-app-shell__sidebar" id="app-sidebar">
+    <aside class="pl-l-app-shell__sidebar" id="app-sidebar" data-sidebar="expanded">
       <nav class="pl-c-nav" aria-label="Main navigation">
         <a href="#" class="pl-c-nav__item" aria-current="page">
           <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
@@ -243,8 +243,14 @@ const toneFor = (s: string) =>
     // Docs-only: toggle sidebar collapse.
     document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
       const sidebar = document.getElementById('app-sidebar');
+      const nav = sidebar?.querySelector('.pl-c-nav');
       const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
       sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+      if (collapsed) {
+        nav?.removeAttribute('data-variant');
+      } else {
+        nav?.setAttribute('data-variant', 'icons');
+      }
     });
     // Cmd+K shortcut.
     document.addEventListener('keydown', (e) => {

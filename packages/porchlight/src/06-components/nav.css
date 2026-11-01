@@ -380,28 +380,81 @@
       rotate: 90deg;
     }
 
-    /* Icons-only variant (collapsed sidebar). */
-    :scope[data-variant="icons"] .pl-c-nav__label,
-    :scope[data-variant="icons"] .pl-c-nav__action-label,
-    :scope[data-variant="icons"] .pl-c-nav__meta-body,
-    :scope[data-variant="icons"] .pl-c-nav__group-label,
-    :scope[data-variant="icons"] .pl-c-nav__chevron,
-    :scope[data-variant="icons"] .pl-c-nav__badge {
+    /* Icons-only variant (collapsed sidebar). Matches either explicit
+       [data-variant="icons"], ancestor [data-sidebar="collapsed"], or
+       container width < 5rem on the sidebar rail. */
+    :is(
+        :scope[data-variant="icons"],
+        :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
+      )
+      :is(
+        .pl-c-nav__label,
+        .pl-c-nav__action-label,
+        .pl-c-nav__meta-body,
+        .pl-c-nav__group-label,
+        .pl-c-nav__chevron,
+        .pl-c-nav__badge,
+        .pl-c-nav__section-trigger > :not(.pl-c-nav__icon),
+        .pl-c-nav__item--child
+      ) {
       display: none;
     }
 
-    :scope[data-variant="icons"] .pl-c-nav__item,
-    :scope[data-variant="icons"] .pl-c-nav__section-trigger,
-    :scope[data-variant="icons"] .pl-c-nav__menu .pl-c-menu__trigger,
-    :scope[data-variant="icons"] .pl-c-nav__action {
+    :is(
+        :scope[data-variant="icons"],
+        :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
+      )
+      :is(
+        .pl-c-nav__item,
+        .pl-c-nav__section-trigger,
+        .pl-c-nav__menu .pl-c-menu__trigger,
+        .pl-c-nav__action
+      ) {
       justify-content: center;
       padding: var(--pl-space-2);
     }
 
-    :scope[data-variant="icons"] .pl-c-nav__meta {
+    :is(
+        :scope[data-variant="icons"],
+        :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
+      )
+      .pl-c-nav__meta {
       grid-template-columns: 1fr;
       justify-items: center;
       padding: var(--pl-space-1);
+    }
+
+    @container pl-l-app-sidebar (inline-size < 5rem) {
+      :scope
+        :is(
+          .pl-c-nav__label,
+          .pl-c-nav__action-label,
+          .pl-c-nav__meta-body,
+          .pl-c-nav__group-label,
+          .pl-c-nav__chevron,
+          .pl-c-nav__badge,
+          .pl-c-nav__section-trigger > :not(.pl-c-nav__icon),
+          .pl-c-nav__item--child
+        ) {
+        display: none;
+      }
+
+      :scope
+        :is(
+          .pl-c-nav__item,
+          .pl-c-nav__section-trigger,
+          .pl-c-nav__menu .pl-c-menu__trigger,
+          .pl-c-nav__action
+        ) {
+        justify-content: center;
+        padding: var(--pl-space-2);
+      }
+
+      :scope .pl-c-nav__meta {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: var(--pl-space-1);
+      }
     }
   }
 

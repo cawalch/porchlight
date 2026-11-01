@@ -82,7 +82,7 @@ const activity = [
     </header>
 
     <!-- Sidebar -->
-    <aside class="pl-l-app-shell__sidebar" id="cases-sidebar">
+    <aside class="pl-l-app-shell__sidebar" id="cases-sidebar" data-sidebar="expanded">
       <nav class="pl-c-nav" aria-label="Case navigation">
         <a href="#" class="pl-c-nav__item">
           <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
@@ -185,7 +185,7 @@ const activity = [
 
         <!-- Case list (data table) -->
         <div class="pl-c-card cases-table-card" data-surface="app">
-          <div class="pl-c-table-wrap pl-c-scroll-region cases-table-wrap" tabindex="0" role="region" aria-label="Case queue">
+          <div class="pl-c-table-wrap cases-table-wrap" tabindex="0" role="region" aria-label="Case queue">
             <table class="pl-c-table">
               <thead>
                 <tr>
@@ -362,8 +362,14 @@ const activity = [
   <script>
     document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
       const sidebar = document.getElementById('cases-sidebar');
+      const nav = sidebar?.querySelector('.pl-c-nav');
       const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
       sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+      if (collapsed) {
+        nav?.removeAttribute('data-variant');
+      } else {
+        nav?.setAttribute('data-variant', 'icons');
+      }
     });
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -482,7 +488,6 @@ const activity = [
     }
     .cases-table-wrap {
       --pl-c-table-min: 52rem;
-      --pl-c-scroll-region-size: 26rem;
       border: 0;
       border-radius: 0;
     }
@@ -525,6 +530,15 @@ const activity = [
       margin-block-start: var(--pl-space-6);
       padding-block-start: var(--pl-space-4);
       border-block-start: 1px solid var(--pl-color-border);
+    }
+    #cases-sidebar[data-sidebar="collapsed"] .cases-workload__title,
+    #cases-sidebar[data-sidebar="collapsed"] .cases-workload__name,
+    #cases-sidebar[data-sidebar="collapsed"] .cases-workload .pl-c-badge {
+      display: none;
+    }
+    #cases-sidebar[data-sidebar="collapsed"] .cases-workload__item {
+      justify-content: center;
+      padding-inline: 0;
     }
     .cases-workload__title {
       font-size: var(--pl-text-xs);

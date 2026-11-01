@@ -147,6 +147,7 @@
     inline-size: var(--pl-app-sidebar-size, 16rem);
     overflow-inline: clip;
     transition: inline-size var(--pl-duration-2) var(--pl-ease-standard);
+    container: pl-l-app-sidebar / inline-size;
   }
 
   :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) {
