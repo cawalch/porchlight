@@ -85,6 +85,23 @@ token. Where unsupported, no swatch background is supplied by this rule.
 Define the swatch's dimensions/display and an unsupported-browser fallback in
 your app CSS; the preview's square geometry is docs-only styling.
 
+## Elastic IDE Form Controls (`field-sizing: content`)
+
+Inputs and query builder tokens automatically expand and shrink to fit their typed content with zero JavaScript measurement. Supported natively on `.pl-c-filter-builder__input`, `.pl-c-tag-input__input`, and any input with `data-elastic="true"`.
+
+```html
+<input
+  type="text"
+  class="pl-c-filter-builder__input"
+  data-elastic="true"
+  value="production-cluster-09"
+/>
+```
+
+## Anchor-Tethered Visibility (`position-visibility: anchors-visible`)
+
+Popovers, tooltips, and floating inspection brackets tethered to table rows automatically vanish when their anchor element scrolls outside the viewport bounds, preventing disconnected overlay artifacts.
+
 ## Checking browser support
 
 Each feature degrades independently. To see which enhancements are active
