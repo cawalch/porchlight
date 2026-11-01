@@ -1429,7 +1429,7 @@ test.describe("docs scaffold", () => {
     // Nav items exist.
     await expect(page.locator(".pl-c-nav__item").first()).toBeVisible();
     // KPI stat cards.
-    const stats = page.locator(".pl-c-stat");
+    const stats = page.locator(":is(.pl-c-kpi-card, .pl-c-stat)");
     expect(await stats.count()).toBeGreaterThanOrEqual(4);
     // Data table with toolbar.
     await expect(page.locator(".pl-c-table-wrap")).toBeVisible();
@@ -1438,8 +1438,10 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".pl-c-segmented").first()).toBeVisible();
     // Pagination.
     await expect(page.locator(".pl-c-pagination")).toBeVisible();
-    // Timeline.
-    await expect(page.locator(".pl-c-timeline").first()).toBeVisible();
+    // Timeline or audit stream.
+    await expect(
+      page.locator(":is(.pl-c-audit-stream, .pl-c-timeline)").first(),
+    ).toBeVisible();
   });
 
   test("app-inbox renders master-detail with sidebar collapse", async ({
@@ -1500,7 +1502,7 @@ test.describe("docs scaffold", () => {
       page.getByRole("heading", { name: "Security Operations" }),
     ).toBeVisible();
     // KPI tiles.
-    const stats = page.locator(".siem-kpi");
+    const stats = page.locator(":is(.pl-c-kpi-card, .siem-kpi)");
     expect(await stats.count()).toBeGreaterThanOrEqual(4);
     // Alert data table with rows.
     await expect(page.locator(".pl-c-table")).toBeVisible();
@@ -1510,9 +1512,13 @@ test.describe("docs scaffold", () => {
     expect(
       await page.locator(".pl-c-badge[data-tone='danger']").count(),
     ).toBeGreaterThanOrEqual(3);
-    // Live event timeline.
-    await expect(page.locator(".pl-c-timeline")).toBeVisible();
-    const events = page.locator(".pl-c-timeline__item");
+    // Live event audit stream or timeline.
+    await expect(
+      page.locator(":is(.pl-c-audit-stream, .pl-c-timeline)"),
+    ).toBeVisible();
+    const events = page.locator(
+      ":is(.pl-c-audit-stream__item, .pl-c-timeline__item)",
+    );
     expect(await events.count()).toBeGreaterThanOrEqual(6);
     // Sidebar nav.
     await expect(page.locator(".pl-c-nav")).toBeVisible();
