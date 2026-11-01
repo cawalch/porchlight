@@ -1525,7 +1525,27 @@ test.describe("docs scaffold", () => {
   test("app-siem renders alert queue, KPIs, and event stream", async ({
     page,
   }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("./preview/app-siem");
+
+    // Verify flush cards eliminate nested whitespace traps
+    const alertCard = page.locator(".siem-alert-card");
+    await expect(alertCard).toHaveAttribute("data-variant", "flush");
+    const eventCard = page.locator(".siem-event-card");
+    await expect(eventCard).toHaveAttribute("data-variant", "flush");
+
+    // Ensure computed padding on flush card is 0
+    const alertPad = await alertCard.evaluate(
+      (el) => window.getComputedStyle(el).paddingTop,
+    );
+    expect(alertPad).toBe("0px");
+
+    // Ensure audit stream nested inside flush card removes duplicate outer borders
+    const streamBorder = await page
+      .locator(".siem-event-card .pl-c-audit-stream")
+      .evaluate((el) => window.getComputedStyle(el).borderTopWidth);
+    expect(streamBorder).toBe("0px");
+
     await expect(
       page.getByRole("heading", { name: "Security Operations" }),
     ).toBeVisible();

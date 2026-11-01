@@ -49,11 +49,64 @@
       --pl-c-card-shadow: var(--pl-shadow-2);
     }
 
-    /* App surface  -  tighter corners for dense desktop products where a 24px
-       radius reads too soft. Keeps the default elevation and can combine with
-       status-driven rings or accent cards. */
+    /* App surface  -  tighter corners and disciplined padding for dense desktop products
+       where a 24px radius and 32px padding read too soft and bloated. */
     :scope[data-surface="app"] {
       --pl-c-card-radius: var(--pl-radius-lg);
+      --pl-c-card-padding: var(--pl-space-4);
+
+      gap: var(--pl-space-3);
+    }
+
+    /* Flush variant  -  edge-to-edge content container (data tables, toolbars,
+       audit streams, lists, tabs). Padding and gaps are zeroed so inner chrome
+       aligns seamlessly with the card's boundary without double-nesting. */
+    :scope:is([data-variant="flush"], [data-flush]) {
+      --pl-c-card-padding: 0;
+
+      gap: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    :scope:is([data-variant="flush"], [data-flush]) > .pl-c-card__header {
+      padding: var(--pl-space-3) var(--pl-space-4);
+      border-block-end: 1px solid var(--pl-c-card-border);
+    }
+
+    :scope:is([data-variant="flush"], [data-flush]) > .pl-c-card__body {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    :scope:is([data-variant="flush"], [data-flush]) > .pl-c-card__footer {
+      padding: var(--pl-space-3) var(--pl-space-4);
+      border-block-start: 1px solid var(--pl-c-card-border);
+    }
+
+    /* Density tiers */
+    :is(
+      :scope[data-pl-density="dense"],
+      :where([data-pl-density="dense"]) :scope
+    ):not([data-variant="flush"], [data-flush]) {
+      --pl-c-card-padding: var(--pl-space-3);
+
+      gap: var(--pl-space-2);
+    }
+
+    :is(
+      :scope[data-pl-density="compact"],
+      :where([data-pl-density="compact"]) :scope
+    ):not([data-variant="flush"], [data-flush]) {
+      --pl-c-card-padding: var(--pl-space-4);
+
+      gap: var(--pl-space-3);
+    }
+
+    /* Direct table child inside card sits flush */
+    :scope > .pl-c-table-wrap {
+      border: 0;
+      border-radius: 0;
     }
 
     /* Accent variant  -  inline-start brand bar + barely-there tinted surface.
@@ -208,9 +261,17 @@
     }
 
     /* Generous interior spacing on large tiles (wide dashboard cards,
-       hero panels). More padding at comfortable desktop widths. */
+       hero panels). Excludes app surfaces, flush containers, and compact/dense tiers. */
     @container pl-c-card (inline-size > 40rem) {
-      :scope {
+      :scope:not(
+        [data-surface="app"],
+        [data-variant="flush"],
+        [data-flush],
+        [data-pl-density="dense"],
+        [data-pl-density="compact"],
+        :where([data-pl-density="dense"]) :scope,
+        :where([data-pl-density="compact"]) :scope
+      ) {
         --pl-c-card-padding: var(--pl-space-6);
       }
     }

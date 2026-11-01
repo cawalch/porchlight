@@ -42,6 +42,32 @@
       overflow: hidden;
     }
 
+    /* Density modes */
+    :is(
+      :scope[data-pl-density="dense"],
+      :where([data-pl-density="dense"]) :scope
+    ) {
+      --pl-c-audit-gap: var(--pl-space-2);
+      --pl-c-audit-pad-block: var(--pl-space-2);
+      --pl-c-audit-pad-inline: var(--pl-space-3);
+    }
+
+    :is(
+      :scope[data-pl-density="compact"],
+      :where([data-pl-density="compact"]) :scope
+    ) {
+      --pl-c-audit-gap: var(--pl-space-2);
+      --pl-c-audit-pad-block: calc(var(--pl-space-2) * 1.25);
+      --pl-c-audit-pad-inline: var(--pl-space-3);
+    }
+
+    /* Seamless nesting inside cards: remove duplicate outer border and radius */
+    :is(:where(.pl-c-card) > :scope, :where(.pl-c-card__body) > :scope) {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
     .pl-c-audit-stream__item {
       display: flex;
       align-items: flex-start;

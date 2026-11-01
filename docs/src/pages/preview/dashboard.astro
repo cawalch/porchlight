@@ -58,7 +58,7 @@ const toneFor = (status: string) =>
   <!-- Data table with toolbar + tabs -->
   <section aria-labelledby="table-heading" class="table-section">
     <h2 id="table-heading" class="section-title">Accounts</h2>
-    <div class="pl-c-card">
+    <div class="pl-c-card" data-variant="flush">
       <!-- Toolbar above the table -->
       <div class="pl-c-toolbar">
         <div class="pl-c-toolbar__group">
@@ -139,12 +139,12 @@ const toneFor = (status: string) =>
   <section aria-labelledby="side-heading" class="side-section">
     <h2 id="side-heading" class="section-title">Activity &amp; loading states</h2>
     <div class="pl-l-grid">
-      <div class="pl-c-card">
+      <div class="pl-c-card" data-variant="flush">
         <div class="pl-c-toolbar dashboard-card-toolbar">
           <div class="pl-c-toolbar__group"><strong>Recent activity</strong></div>
           <div class="pl-c-toolbar__group"><button class="pl-c-button" data-variant="ghost">View all</button></div>
         </div>
-        <div class="pl-c-card__body">
+        <div class="pl-c-card__body dashboard-card-body">
           <div class="pl-l-stack">
             <div class="activity-item">
               <span class="pl-c-badge" data-tone="success">created</span>
@@ -165,11 +165,11 @@ const toneFor = (status: string) =>
         </div>
       </div>
 
-      <div class="pl-c-card">
+      <div class="pl-c-card" data-variant="flush">
         <div class="pl-c-toolbar dashboard-card-toolbar">
           <div class="pl-c-toolbar__group"><strong>Loading report…</strong></div>
         </div>
-        <div class="pl-c-card__body">
+        <div class="pl-c-card__body dashboard-card-body">
           <div class="pl-c-skeleton-group">
             <div class="pl-c-skeleton dashboard-skeleton-w-40" data-shape="text"></div>
             <div class="pl-c-skeleton" data-shape="text"></div>
@@ -202,10 +202,6 @@ const toneFor = (status: string) =>
 </script>
 
 <style>
-  .pl-c-card > .pl-c-toolbar {
-    padding-inline: 0;
-  }
-
   .section-title {
     margin-block: var(--pl-space-6) var(--pl-space-3);
     font-size: var(--pl-text-xl);
@@ -213,6 +209,12 @@ const toneFor = (status: string) =>
   }
   .table-section { margin-block-end: var(--pl-space-6); }
   .side-section { margin-block-end: var(--pl-space-6); }
+  .dashboard-card-body {
+    padding: var(--pl-space-4);
+  }
+  .dashboard-tabs .pl-c-tabs__list {
+    padding-inline: var(--pl-space-3);
+  }
   .dashboard-table-wrap {
     border: 0;
     border-radius: 0;
