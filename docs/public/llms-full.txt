@@ -362,6 +362,7 @@ Generated from docs/src/content/components and filtered by content kind so this
 list tracks CSS component contracts rather than composed application recipes.
 
 - accordion: /components/accordion
+- action-bar: /components/action-bar
 - alert: /components/alert
 - audit-stream: /components/audit-stream
 - avatar: /components/avatar
@@ -387,6 +388,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - file-upload: /components/file-upload
 - filter-builder: /components/filter-builder
 - form: /components/form
+- gauge: /components/gauge
 - inline-loading: /components/inline-loading
 - kbd: /components/kbd
 - kpi-card: /components/kpi-card
@@ -457,6 +459,7 @@ claiming a new component stylesheet.
 Generated from docs/src/pages/preview so this list tracks rendered examples.
 
 - /preview/accordion
+- /preview/action-bar
 - /preview/alert
 - /preview/app-approvals
 - /preview/app-asset-inventory
@@ -504,6 +507,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/file-upload
 - /preview/filter-builder
 - /preview/form
+- /preview/gauge
 - /preview/inline-loading
 - /preview/kbd
 - /preview/kpi-card
