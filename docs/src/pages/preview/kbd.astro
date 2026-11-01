@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Kbd (Keycap) · Porchlight">
+  <h1>Kbd (Keycap)</h1>
+  <p>
+    Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus.
+  </p>
+
+  <h2>Shortcut Combinations</h2>
+  <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3); max-inline-size: 32rem;">
+    <div class="pl-c-card">
+      <div class="pl-c-card__body">
+        <div class="pl-l-cluster" style="justify-content: space-between; align-items: center;">
+          <span>Command Palette</span>
+          <span>
+            <kbd class="pl-c-kbd">⌘</kbd> <kbd class="pl-c-kbd">K</kbd>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pl-c-card">
+      <div class="pl-c-card__body">
+        <div class="pl-l-cluster" style="justify-content: space-between; align-items: center;">
+          <span>Quick Inspect</span>
+          <span>
+            <kbd class="pl-c-kbd">⌘</kbd> <kbd class="pl-c-kbd">I</kbd>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pl-c-card">
+      <div class="pl-c-card__body">
+        <div class="pl-l-cluster" style="justify-content: space-between; align-items: center;">
+          <span>Full-Screen Horizon</span>
+          <span>
+            <kbd class="pl-c-kbd">Ctrl</kbd> <kbd class="pl-c-kbd">Shift</kbd> <kbd class="pl-c-kbd">F</kbd>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

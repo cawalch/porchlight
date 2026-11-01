@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="KPI Card · Porchlight">
+  <h1>KPI Card</h1>
+  <p>
+    High-density metric tile with comparison deltas, value prefixes, and sparkline slots
+    engineered for executive telemetry consoles.
+  </p>
+
+  <h2>Telemetry Tiles</h2>
+  <div class="pl-l-grid" style="--pl-l-grid-min: 16rem; gap: var(--pl-space-4);">
+    <div class="pl-c-kpi-card">
+      <div class="pl-c-kpi-card__header">
+        <span class="pl-c-kpi-card__label">Monthly Recurring Revenue</span>
+        <span class="pl-c-badge" data-tone="success">+14.2%</span>
+      </div>
+      <div class="pl-c-kpi-card__metric">
+        <span class="pl-c-kpi-card__prefix">$</span>
+        <span class="pl-c-kpi-card__value">148,290</span>
+        <span class="pl-c-kpi-card__suffix">/ mo</span>
+      </div>
+      <div class="pl-c-kpi-card__footer">
+        <span class="pl-c-kpi-card__comparison">vs. $129,850 last period</span>
+      </div>
+    </div>
+
+    <div class="pl-c-kpi-card">
+      <div class="pl-c-kpi-card__header">
+        <span class="pl-c-kpi-card__label">P99 Cluster Latency</span>
+        <span class="pl-c-badge" data-tone="warning">+2.4ms</span>
+      </div>
+      <div class="pl-c-kpi-card__metric">
+        <span class="pl-c-kpi-card__value">1.42</span>
+        <span class="pl-c-kpi-card__suffix">ms</span>
+      </div>
+      <div class="pl-c-kpi-card__footer">
+        <span class="pl-c-kpi-card__comparison">SLA threshold: 5.0ms</span>
+      </div>
+    </div>
+
+    <div class="pl-c-kpi-card">
+      <div class="pl-c-kpi-card__header">
+        <span class="pl-c-kpi-card__label">Error Budget</span>
+        <span class="pl-c-badge" data-tone="success">99.98%</span>
+      </div>
+      <div class="pl-c-kpi-card__metric">
+        <span class="pl-c-kpi-card__value">99.982</span>
+        <span class="pl-c-kpi-card__suffix">%</span>
+      </div>
+      <div class="pl-c-kpi-card__footer">
+        <span class="pl-c-kpi-card__comparison">18 min remaining burn</span>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 54 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 57 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -19,6 +19,7 @@ Porchlight components are authored in `@layer porchlight.components` and can be 
 | :------------------------------------ | :----------------------- | :----------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [accordion](#accordion)               | `.pl-c-accordion`        | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                           |
 | [alert](#alert)                       | `.pl-c-alert`            | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                      |
+| [audit-stream](#audit-stream)         | `.pl-c-audit-stream`     | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                         |
 | [avatar](#avatar)                     | `.pl-c-avatar`           | None         | A user identity chip - initials in a colored circle, or an image. Used in headers, lists, comments, and mentions. Three sizes via [data-size]: "sm" (1.5rem), default (2.5rem), "lg" (3rem).                                                                                                                                      |
 | [badge](#badge)                       | `.pl-c-badge`            | None         | A compact label for statuses, counts, and tags. Inline-flex pill; tones via [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/ danger) that were already made WCAG-AA, plus an accent and a neutral default.                                                                                               |
 | [banner](#banner)                     | `.pl-c-banner`           | None         | A full-width, top-level system announcement or incident bar - used for system degradations, scheduled maintenance, trial expirations, and global notices. Distinct from .pl-c-alert (an inline box with border-radius) and .pl-c-toast (a floating transient bubble).                                                             |
@@ -43,6 +44,8 @@ Porchlight components are authored in `@layer porchlight.components` and can be 
 | [filter-builder](#filter-builder)     | `.pl-c-filter-builder`   | None         | CSS-only UI contracts for query builders, query chips, and saved views. Apps own query grammar, validation, persistence, and execution.                                                                                                                                                                                           |
 | [form](#form)                         | `.pl-c-form`             | None         | SaaS form composition helpers built on native controls. These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>, <input>, <select>, and <textarea>; Porchlight only handles layout and chrome.                                                                                                 |
 | [inline-loading](#inline-loading)     | `.pl-c-inline-loading`   | None         | Local, indeterminate progress for actions and compact application regions.                                                                                                                                                                                                                                                        |
+| [kbd](#kbd)                           | `.pl-c-kbd`              | None         | Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus. Designed with subtle physical bevels, monospaced centering, and active press translation.                                                                                                                                                      |
+| [kpi-card](#kpi-card)                 | `.pl-c-kpi-card`         | None         | A multi-metric KPI dashboard tile - engineered for executive dashboards, telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat: .pl-c-kpi-card provides an architectural raised surface, integrated delta comparison badges, value prefixes/suffixes, and sparkline slots.                                   |
 | [miller-columns](#miller-columns)     | `.pl-c-miller-columns`   | None         | A CSS-only cascading column explorer for nested hierarchies (IAM roles, folder structures, taxonomies). Columns scroll inline with support for scroll snapping and fluid width control.                                                                                                                                           |
 | [nav](#nav)                           | `.pl-c-nav`              | None         | A vertical navigation list for sidebars. Icon + label items with active state via aria-current="page". Collapsible sub-sections via native <details> for zero-JS expand/collapse. Designed to compose with .pl-l-app-shell__sidebar.                                                                                              |
 | [page-header](#page-header)           | `.pl-c-page-header`      | None         | A title + actions row for the top of a page or panel section inside a container. Unlike .pl-c-toolbar (which is a shell-level bar designed to sit flush against an edge with padding, border, and a surface background), .pl-c-page-header is intentionally bare: no background, no border, no padding.                           |
@@ -102,6 +105,21 @@ An inline notification - contextual feedback within the page flow (not an overla
 
 ```css
 @import "@cawalch/porchlight/components/alert.css";
+```
+
+### audit-stream
+
+An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.
+
+- **Primary Selector**: `.pl-c-audit-stream`
+- **Import**: `@cawalch/porchlight/components/audit-stream.css`
+- **Minified Import**: `@cawalch/porchlight/components/audit-stream.min.css`
+- **Dist File**: `dist/components/audit-stream.css`
+- **Minified Dist File**: `dist/components/audit-stream.min.css`
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/audit-stream.css";
 ```
 
 ### avatar
@@ -462,6 +480,36 @@ Local, indeterminate progress for actions and compact application regions.
 
 ```css
 @import "@cawalch/porchlight/components/inline-loading.css";
+```
+
+### kbd
+
+Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus. Designed with subtle physical bevels, monospaced centering, and active press translation.
+
+- **Primary Selector**: `.pl-c-kbd`
+- **Import**: `@cawalch/porchlight/components/kbd.css`
+- **Minified Import**: `@cawalch/porchlight/components/kbd.min.css`
+- **Dist File**: `dist/components/kbd.css`
+- **Minified Dist File**: `dist/components/kbd.min.css`
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/kbd.css";
+```
+
+### kpi-card
+
+A multi-metric KPI dashboard tile - engineered for executive dashboards, telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat: .pl-c-kpi-card provides an architectural raised surface, integrated delta comparison badges, value prefixes/suffixes, and sparkline slots.
+
+- **Primary Selector**: `.pl-c-kpi-card`
+- **Import**: `@cawalch/porchlight/components/kpi-card.css`
+- **Minified Import**: `@cawalch/porchlight/components/kpi-card.min.css`
+- **Dist File**: `dist/components/kpi-card.css`
+- **Minified Dist File**: `dist/components/kpi-card.min.css`
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/kpi-card.css";
 ```
 
 ### miller-columns

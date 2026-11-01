@@ -1,0 +1,44 @@
+---
+title: KPI Card
+description: High-density metric dashboard tile with comparison deltas, sparklines, and target progress.
+status: stable
+since: 0.14.0
+---
+
+The `.pl-c-kpi-card` displays a structured metric tile for executive dashboards, cloud observability, and operational scorecards.
+
+Unlike `.pl-c-stat` (which focuses on a bare numerical label), `.pl-c-kpi-card` is a complete raised card tile with an uppercase label, semantic trend/delta badges, tabular prefix/suffix units, and a comparison baseline footer.
+
+## Semantic HTML
+
+```html
+<div class="pl-c-kpi-card">
+  <div class="pl-c-kpi-card__header">
+    <span class="pl-c-kpi-card__label">Monthly Recurring Revenue</span>
+    <span class="pl-c-badge" data-tone="success">+14.2%</span>
+  </div>
+  <div class="pl-c-kpi-card__metric">
+    <span class="pl-c-kpi-card__prefix">$</span>
+    <span class="pl-c-kpi-card__value">148,290</span>
+    <span class="pl-c-kpi-card__suffix">/ mo</span>
+  </div>
+  <div class="pl-c-kpi-card__footer">
+    <span class="pl-c-kpi-card__comparison">vs. $129,850 last month</span>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector                     | Role                                                                |
+| ---------------------------- | ------------------------------------------------------------------- |
+| `.pl-c-kpi-card`             | Card container with hairline border and specular highlight.         |
+| `.pl-c-kpi-card__header`     | Top row aligning label and trend badge.                             |
+| `.pl-c-kpi-card__label`      | Uppercase muted metric title.                                       |
+| `.pl-c-kpi-card__metric`     | Center metric row aligning prefix, value, and suffix.               |
+| `.pl-c-kpi-card__value`      | Primary bold tabular number (`font-variant-numeric: tabular-nums`). |
+| `.pl-c-kpi-card__prefix`     | Leading currency or unit symbol (`$`, `€`, `~`).                    |
+| `.pl-c-kpi-card__suffix`     | Trailing unit (`ms`, `%`, `/ sec`).                                 |
+| `.pl-c-kpi-card__footer`     | Baseline comparison row.                                            |
+| `.pl-c-kpi-card__comparison` | Secondary comparative metadata text.                                |
+| `.pl-c-kpi-card__spark`      | Optional sparkline slot.                                            |

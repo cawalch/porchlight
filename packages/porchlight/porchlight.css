@@ -71,6 +71,9 @@
 @import "src/06-components/banner.css";
 @import "src/06-components/property-list.css";
 @import "src/06-components/code-block.css";
+@import "src/06-components/kpi-card.css";
+@import "src/06-components/audit-stream.css";
+@import "src/06-components/kbd.css";
 @import "src/06-components/nav.css";
 @import "src/06-components/section-nav.css";
 @import "src/07-utilities.css";

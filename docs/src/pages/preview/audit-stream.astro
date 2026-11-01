@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Audit Stream · Porchlight">
+  <h1>Audit Stream</h1>
+  <p>
+    Compliance and security activity feed with millisecond-precision timestamps,
+    actor identity, and semantic action badges.
+  </p>
+
+  <h2>Recent Security Activity</h2>
+  <ul class="pl-c-audit-stream" role="list" style="max-inline-size: 42rem;">
+    <li class="pl-c-audit-stream__item">
+      <div class="pl-c-audit-stream__avatar">
+        <span class="pl-c-avatar" data-size="sm">CW</span>
+      </div>
+      <div class="pl-c-audit-stream__body">
+        <div class="pl-c-audit-stream__header">
+          <span class="pl-c-audit-stream__actor">Carl Walch</span>
+          <span class="pl-c-badge" data-tone="danger" data-size="sm">ROTATED_SECRET</span>
+          <time class="pl-c-audit-stream__time" datetime="2026-11-01T07:14:00Z">14:14:02.108</time>
+        </div>
+        <div class="pl-c-audit-stream__target">
+          Target: <code class="pl-c-audit-stream__mono">prod-database-primary</code>
+        </div>
+        <div class="pl-c-audit-stream__meta">
+          <span>IP: 198.51.100.42</span> · <span>CLI v0.14.0</span>
+        </div>
+      </div>
+    </li>
+
+    <li class="pl-c-audit-stream__item">
+      <div class="pl-c-audit-stream__avatar">
+        <span class="pl-c-avatar" data-size="sm">SA</span>
+      </div>
+      <div class="pl-c-audit-stream__body">
+        <div class="pl-c-audit-stream__header">
+          <span class="pl-c-audit-stream__actor">Sarah Adams</span>
+          <span class="pl-c-badge" data-tone="warning" data-size="sm">ELEVATED_ROLE</span>
+          <time class="pl-c-audit-stream__time" datetime="2026-11-01T07:05:00Z">14:05:22.842</time>
+        </div>
+        <div class="pl-c-audit-stream__target">
+          Target: <code class="pl-c-audit-stream__mono">iam:Role/BillingAdmin</code>
+        </div>
+        <div class="pl-c-audit-stream__meta">
+          <span>IP: 203.0.113.19</span> · <span>Console SSO</span>
+        </div>
+      </div>
+    </li>
+
+    <li class="pl-c-audit-stream__item">
+      <div class="pl-c-audit-stream__avatar">
+        <span class="pl-c-avatar" data-size="sm">SYS</span>
+      </div>
+      <div class="pl-c-audit-stream__body">
+        <div class="pl-c-audit-stream__header">
+          <span class="pl-c-audit-stream__actor">System Worker</span>
+          <span class="pl-c-badge" data-tone="success" data-size="sm">SETTLED_LEDGER</span>
+          <time class="pl-c-audit-stream__time" datetime="2026-11-01T06:58:00Z">13:58:11.002</time>
+        </div>
+        <div class="pl-c-audit-stream__target">
+          Target: <code class="pl-c-audit-stream__mono">ledger_batch_0912</code>
+        </div>
+        <div class="pl-c-audit-stream__meta">
+          <span>Cron Scheduler</span> · <span>Zero drift</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</BaseLayout>
