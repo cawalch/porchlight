@@ -109,18 +109,18 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     display: inline-flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    margin-block-end: 1.5rem;
-    padding: 0.75rem 1rem;
+    gap: var(--pl-space-2);
+    margin-block-end: var(--pl-space-5);
+    padding: var(--pl-space-3) var(--pl-space-4);
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-lg);
   }
   .toggles legend {
     font-weight: 600;
-    padding-inline: 0.25rem;
+    padding-inline: var(--pl-space-1);
   }
   .toggles button {
-    padding: 0.35rem 0.75rem;
+    padding: var(--pl-space-1) var(--pl-space-3);
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-lg);
     background: var(--pl-color-surface);
@@ -135,14 +135,14 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
   }
 
   .playground {
-    padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+    padding: clamp(var(--pl-space-5), 1rem + 1vw, var(--pl-space-6));
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-xl);
     background: var(--pl-color-bg);
     color: var(--pl-color-text);
   }
   .playground h2 {
-    margin-block-end: 0.5rem;
+    margin-block-end: var(--pl-space-2);
   }
 
   .control-mock {
@@ -156,13 +156,13 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     background: var(--pl-color-surface);
     color: var(--pl-color-text);
     font-size: var(--pl-text-sm);
-    margin-block: 1rem;
+    margin-block: var(--pl-space-4);
     transition: min-block-size var(--pl-duration-2) var(--pl-ease-standard);
   }
 
   .palette {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--pl-space-3);
     /* Wide enough that the longest token fits on one line (nowrap). */
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 11.5rem), 1fr));
     padding: 0;
@@ -173,7 +173,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     flex-direction: column;
     justify-content: space-between;
     min-block-size: 4rem;
-    padding: 0.6rem;
+    padding: var(--pl-space-2);
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-md);
     color: var(--pl-color-text);
@@ -182,14 +182,14 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     font-weight: 600;
     /* The swatch background is the token; keep its label readable on any hue. */
     background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
-    padding: 0.1rem 0.4rem;
+    padding: var(--pl-space-1) var(--pl-space-2);
     border-radius: var(--pl-radius-sm);
     align-self: flex-start;
   }
   .chip__token {
-    font-size: 0.75rem;
+    font-size: var(--pl-text-xs);
     background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
-    padding: 0.1rem 0.4rem;
+    padding: var(--pl-space-1) var(--pl-space-2);
     border-radius: var(--pl-radius-sm);
     /* Keep token names intact — the grid column is sized to fit them. */
     white-space: nowrap;

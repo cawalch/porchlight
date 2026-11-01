@@ -62,33 +62,33 @@ const { registered, groups } = parseTokens(tokensCss);
     border-collapse: collapse;
   }
   .tokens :where(th, td) {
-    padding: 0.5rem;
+    padding: var(--pl-space-2);
     border-block-end: 1px solid var(--pl-color-border);
     text-align: start;
     vertical-align: middle;
   }
   .tokens th {
     color: var(--pl-color-text-muted);
-    font-size: 0.875rem;
+    font-size: var(--pl-text-sm);
   }
   .token-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--pl-space-3);
     padding: 0;
-    margin-block-end: 2rem;
+    margin-block-end: var(--pl-space-6);
     list-style: none;
   }
   .kv {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.25rem 0.75rem;
+    gap: var(--pl-space-1) var(--pl-space-3);
   }
   .kv__name {
     font-weight: 600;
   }
   .kv__value {
     color: var(--pl-color-text-muted);
-    font-size: 0.8125rem;
+    font-size: var(--pl-text-xs);
     word-break: break-word;
   }
 </style>
