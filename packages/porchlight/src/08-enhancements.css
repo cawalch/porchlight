@@ -381,7 +381,12 @@
 
   /* 8. Pure-CSS keyword size interpolation: 60fps smooth height:auto transitions on expandable surfaces. */
   @supports (interpolate-size: allow-keywords) {
-    :where(.pl-c-banner, .pl-c-reveal, .pl-c-tree__children, .pl-c-drawer__panel) {
+    :where(
+      .pl-c-banner,
+      .pl-c-reveal,
+      .pl-c-tree__children,
+      .pl-c-drawer__panel
+    ) {
       interpolate-size: allow-keywords;
     }
   }
