@@ -38,15 +38,45 @@
       --pl-c-code-line-h: 1.6;
       --pl-c-code-pad-inline: var(--pl-space-4);
       --pl-c-code-pad-block: var(--pl-space-3);
+      --pl-c-code-radius: var(--pl-radius-md);
 
       display: flex;
       flex-direction: column;
       border: 1px solid var(--pl-c-code-border);
-      border-radius: var(--pl-radius-lg);
+      border-radius: var(--pl-c-code-radius);
       background: var(--pl-c-code-bg);
       box-shadow: var(--pl-shadow-inset);
       overflow: hidden;
       margin-block: var(--pl-space-3);
+    }
+
+    /* Flush variant: edge-to-edge inside cards, panels, and split-panes */
+    :scope:is([data-variant="flush"], [data-flush]) {
+      --pl-c-code-radius: 0;
+
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      margin-block: 0;
+    }
+
+    /* Seamless nesting inside flush cards and split-panes */
+    :is(
+      :where(.pl-c-card[data-variant="flush"]) > :scope,
+      :where(.pl-c-card[data-flush]) > :scope,
+      :where(.pl-c-card__body[data-flush]) > :scope,
+      :where(.pl-c-split-pane__pane[data-flush]) > :scope,
+      :where(.pl-c-split-pane__pane[data-variant="flush"]) > :scope,
+      :where(.pl-c-tabs__panel[data-flush]) > :scope
+    ) {
+      --pl-c-code-radius: 0;
+
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      margin-block: 0;
     }
 
     /* Milled header bar with specular top highlight */

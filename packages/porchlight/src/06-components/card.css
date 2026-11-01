@@ -104,9 +104,18 @@
     }
 
     /* Direct table child inside card sits flush */
-    :scope > .pl-c-table-wrap {
+    :is(:scope > .pl-c-table-wrap, .pl-c-card__body > .pl-c-table-wrap) {
       border: 0;
       border-radius: 0;
+    }
+
+    /* Nested flush components inside card or card body */
+    :scope:is([data-variant="flush"], [data-flush])
+      :is(.pl-c-code-block, .pl-c-audit-stream) {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     /* Accent variant  -  inline-start brand bar + barely-there tinted surface.

@@ -385,6 +385,7 @@
        container width < 5rem on the sidebar rail. */
     :is(
         :scope[data-variant="icons"],
+        :scope:where([data-sidebar="collapsed"] *),
         :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
       )
       :is(
@@ -394,7 +395,8 @@
         .pl-c-nav__group-label,
         .pl-c-nav__chevron,
         .pl-c-nav__badge,
-        .pl-c-nav__section-trigger > :not(.pl-c-nav__icon),
+        .pl-c-nav__section-trigger > :not(.pl-c-nav__icon, svg),
+        .pl-c-nav__item > :not(.pl-c-nav__icon, svg),
         .pl-c-nav__item--child
       ) {
       display: none;
@@ -402,6 +404,7 @@
 
     :is(
         :scope[data-variant="icons"],
+        :scope:where([data-sidebar="collapsed"] *),
         :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
       )
       :is(
@@ -416,6 +419,7 @@
 
     :is(
         :scope[data-variant="icons"],
+        :scope:where([data-sidebar="collapsed"] *),
         :where(.pl-l-app-shell__sidebar[data-sidebar="collapsed"]) :scope
       )
       .pl-c-nav__meta {
@@ -433,7 +437,8 @@
           .pl-c-nav__group-label,
           .pl-c-nav__chevron,
           .pl-c-nav__badge,
-          .pl-c-nav__section-trigger > :not(.pl-c-nav__icon),
+          .pl-c-nav__section-trigger > :not(.pl-c-nav__icon, svg),
+          .pl-c-nav__item > :not(.pl-c-nav__icon, svg),
           .pl-c-nav__item--child
         ) {
         display: none;

@@ -54,6 +54,16 @@
       box-shadow: none;
     }
 
+    /* Trailing toolbar inside a card or after a table seamlessly becomes a footer */
+    :is(
+      :where(.pl-c-card) > :scope:last-child,
+      :where(.pl-c-table-wrap) + :scope
+    ) {
+      border-block-start: 1px solid var(--pl-c-toolbar-border-color);
+      border-block-end: 0;
+      border-radius: 0;
+    }
+
     /* Leading group  -  search, filters, selection count. Grows to fill. */
     .pl-c-toolbar__group {
       display: flex;
