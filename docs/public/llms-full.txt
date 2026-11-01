@@ -472,6 +472,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-settings-console
 - /preview/app-shell
 - /preview/app-siem
+- /preview/app-telemetry-cockpit
 - /preview/audit-stream
 - /preview/avatar
 - /preview/badge
