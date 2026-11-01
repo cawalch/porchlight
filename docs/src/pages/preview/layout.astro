@@ -95,8 +95,8 @@ const rows = [
 
   <h2><code>.pl-l-scroll-area</code> — data pane</h2>
   <p>Independent scroll with a stable gutter (no layout shift when the bar appears) and contained overscroll.</p>
-  <div class="pl-l-scroll-area data-pane" tabindex="0">
-    <table>
+  <div class="pl-l-scroll-area pl-c-table-wrap data-pane" tabindex="0">
+    <table class="pl-c-table">
       <thead><tr><th>Account</th><th>Plan</th><th>Status</th><th>MRR</th></tr></thead>
       <tbody>
         {rows.map(([account, plan, status, mrr]) => (
@@ -153,8 +153,8 @@ const rows = [
   </div>
 
   <h2 id="layout-index-heading">Full layout index</h2>
-  <div class="pl-l-scroll-area layout-table-wrap" tabindex="0" aria-labelledby="layout-index-heading">
-    <table class="layout-table">
+  <div class="pl-l-scroll-area pl-c-table-wrap layout-table-wrap" tabindex="0" aria-labelledby="layout-index-heading">
+    <table class="pl-c-table layout-table">
       <thead>
         <tr><th>Primitive</th><th>Purpose</th><th>Tunable token</th></tr>
       </thead>
@@ -311,26 +311,6 @@ const rows = [
 
   .data-pane {
     max-block-size: 16rem;
-    background: var(--pl-color-surface);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-  }
-  .data-pane table {
-    inline-size: 100%;
-    border-collapse: collapse;
-  }
-  .data-pane :where(th, td) {
-    padding: var(--pl-space-2) var(--pl-space-3);
-    border-block-end: 1px solid var(--pl-color-border);
-    text-align: start;
-    white-space: nowrap;
-  }
-  .data-pane th {
-    position: sticky;
-    inset-block-start: 0;
-    background: var(--pl-color-surface);
-    color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
   }
 
   .prose {
@@ -389,21 +369,6 @@ const rows = [
   }
 
   .layout-table {
-    inline-size: 100%;
     min-inline-size: 34rem;
-    border-collapse: collapse;
-  }
-
-  .layout-table th,
-  .layout-table td {
-    padding: var(--pl-space-2) var(--pl-space-3);
-    border-block-end: 1px solid var(--pl-color-border);
-    text-align: start;
-  }
-
-  .layout-table th {
-    color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
-    font-weight: 600;
   }
 </style>

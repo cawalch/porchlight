@@ -38,8 +38,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>In context</h2>
   <p>Badges pair naturally with table cells, list items, and headers.</p>
-  <div class="context">
-    <table>
+  <div class="pl-c-table-wrap">
+    <table class="pl-c-table">
       <thead><tr><th>Account</th><th>Status</th></tr></thead>
       <tbody>
         <tr><td>Acme Ops</td><td><span class="pl-c-badge" data-tone="success">Active</span></td></tr>
@@ -53,24 +53,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <style>
   .row {
     margin-block-end: var(--pl-space-5);
-  }
-  .context {
-    padding: var(--pl-space-4);
-    background: var(--pl-color-surface);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-lg);
-  }
-  .context table {
-    inline-size: 100%;
-    border-collapse: collapse;
-  }
-  .context :where(th, td) {
-    padding: var(--pl-space-2) var(--pl-space-3);
-    border-block-end: 1px solid var(--pl-color-border);
-    text-align: start;
-  }
-  .context th {
-    color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
   }
 </style>

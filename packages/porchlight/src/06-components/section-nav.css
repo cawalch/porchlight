@@ -50,8 +50,6 @@
         background: var(--pl-color-surface-2);
         color: var(--pl-c-section-nav-current);
         font-weight: var(--pl-font-weight-semibold);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
       }
     }
 
