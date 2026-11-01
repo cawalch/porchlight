@@ -83,7 +83,7 @@ test("contents and search survive navigation and find CSS identifiers", async ({
     .evaluateAll((items) => items.map((item) => item.getAttribute("href")));
   await page.locator('.docs-sidebar a[href$="/components/field"]').click();
   await expect(page.locator("h1")).toHaveText("Field");
-  await expect(page.locator(".docs-contents .docs-toc a")).toHaveCount(18);
+  await expect(page.locator(".docs-contents .docs-toc a")).toHaveCount(19);
   expect(
     await page
       .locator(".docs-sidebar a")
