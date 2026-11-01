@@ -7,16 +7,19 @@
  *
  * Features:
  *   1. scroll-state container queries: logical overflow indicators, stuck table
- *      separators, and sticky-shell bar shadows, without scroll listeners.
+ *      separators, and sticky-shell/banner/toolbar elevation, without scroll listeners.
  *   2. text-box: trim-both cap alphabetic on buttons/badges, removing the
  *      cap-height half-leading for optically-centered labels.
- *   3. rule (CSS Gap Decorations): dividers between grid/flex items via
- *      [data-dividers] on .pl-l-grid, purely visual (no layout impact).
+ *   3. rule (CSS Gap Decorations): architectural dividers between grid/flex items via
+ *      [data-dividers] on .pl-l-grid, .pl-l-cluster, and .pl-c-split-pane.
  *   4. Advanced typed attr(): a .pl-c-swatch that reads its color from a
  *      data-color attribute, type-checked as <color>.
  *   5. View Transitions: opt-in cross-document page animations (Baseline 2026).
  *   6. Style container queries: cascade density and tone tokens to descendants
  *      via custom properties (--pl-density, --pl-tone) without DOM duplication.
+ *   7. Elastic IDE Form Controls: field-sizing: content on token inputs.
+ *   8. Pure-CSS keyword size interpolation: 60fps smooth height:auto transitions.
+ *   9. Anchor-tethered visibility: auto-hide popover when anchor scrolls offscreen.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
  * critical path; everything below is opt-in via @supports.
@@ -67,6 +70,8 @@
     }
 
     .pl-c-sticky-shell__bar,
+    .pl-c-banner[data-sticky="true"],
+    .pl-c-toolbar[data-sticky="true"],
     .pl-c-scroll-region .pl-c-table :where(th, .pl-c-table__sticky-col) {
       container: pl-c-stuck / scroll-state;
     }
@@ -81,6 +86,13 @@
 
     @container pl-c-stuck scroll-state(stuck: block-start) {
       .pl-c-sticky-shell__bar::after {
+        box-shadow: var(--pl-shadow-2);
+      }
+
+      .pl-c-banner[data-sticky="true"],
+      .pl-c-toolbar[data-sticky="true"] {
+        backdrop-filter: blur(var(--pl-backdrop-blur))
+          saturate(var(--pl-backdrop-saturate));
         box-shadow: var(--pl-shadow-2);
       }
 
@@ -127,7 +139,11 @@
      [data-dividers="true"] on .pl-l-grid. The `rule` properties are behind
      @supports so unsupported browsers just show the normal gap. */
   @supports (rule: 1px solid CanvasText) {
-    :where(.pl-l-grid[data-dividers="true"]) {
+    :where(
+      .pl-l-grid[data-dividers="true"],
+      .pl-l-cluster[data-dividers="true"],
+      .pl-c-split-pane[data-dividers="true"]
+    ) {
       rule: 1px solid var(--pl-color-border);
       rule-visibility-items: between;
     }
@@ -347,6 +363,38 @@
       :where(.pl-c-empty:not([data-tone])) {
         --pl-c-empty-tone: var(--pl-color-danger);
       }
+    }
+  }
+
+  /* 7. Elastic IDE Form Controls: field-sizing: content on token inputs. */
+  @supports (field-sizing: content) {
+    :where(
+      .pl-c-tag-input__input,
+      .pl-c-filter-builder__input,
+      input[data-elastic="true"]
+    ) {
+      field-sizing: content;
+      min-inline-size: 3rem;
+      max-inline-size: 100%;
+    }
+  }
+
+  /* 8. Pure-CSS keyword size interpolation: 60fps smooth height:auto transitions on expandable surfaces. */
+  @supports (interpolate-size: allow-keywords) {
+    :where(.pl-c-banner, .pl-c-reveal, .pl-c-tree__children, .pl-c-drawer__panel) {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  /* 9. Anchor-tethered visibility: auto-hide popover when anchor scrolls offscreen. */
+  @supports (position-visibility: anchors-visible) {
+    :where(
+      .pl-c-tooltip__body,
+      .pl-c-menu__popover,
+      .pl-c-inspector[data-tether="true"]
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      position-visibility: anchors-visible;
     }
   }
 }

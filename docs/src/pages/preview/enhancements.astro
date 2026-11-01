@@ -115,6 +115,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     for native disclosure/collapsible animations. (No visible demo here; it
     allows size interpolation where a component transitions an intrinsic size.)
   </p>
+
+  <h2>Elastic IDE Form Controls (field-sizing: content)</h2>
+  <p>
+    Inputs dynamically shrink and expand to fit their typed content with zero JavaScript.
+  </p>
+  <div class="pl-l-cluster" style="align-items: center;">
+    <span class="pl-u-muted">Filter:</span>
+    <input type="text" class="pl-c-field__input" data-elastic="true" value="env:production-us-east-1" aria-label="Elastic query filter" style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs);" />
+  </div>
 </BaseLayout>
 
 <style>
