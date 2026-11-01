@@ -14,6 +14,9 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
+const isDark = args.includes("--dark");
+const isRTL = args.includes("--rtl");
+const isDense = args.includes("--dense");
 const previewDir = fileURLToPath(
   new URL("../src/pages/preview", import.meta.url),
 );
@@ -70,9 +73,32 @@ for (const route of targetRoutes) {
     metrics: {},
   };
 
+  const suffixParts = [];
+  if (isDark) suffixParts.push("dark");
+  if (isRTL) suffixParts.push("rtl");
+  if (isDense) suffixParts.push("dense");
+  const suffix = suffixParts.length > 0 ? `-${suffixParts.join("-")}` : "";
+
   for (const vp of viewports) {
     await page.setViewportSize({ width: vp.width, height: vp.height });
     await page.goto(url, { waitUntil: "networkidle" });
+
+    if (isDark) {
+      await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
+      await page.evaluate(() =>
+        document.documentElement.setAttribute("data-pl-theme", "dark"),
+      );
+    }
+    if (isRTL) {
+      await page.evaluate(() =>
+        document.documentElement.setAttribute("dir", "rtl"),
+      );
+    }
+    if (isDense) {
+      await page.evaluate(() =>
+        document.documentElement.setAttribute("data-pl-density", "dense"),
+      );
+    }
 
     // Measure page spatial dynamics
     const pageMetrics = await page.evaluate(() => {
@@ -115,14 +141,15 @@ for (const route of targetRoutes) {
       };
     });
 
-    const snapshotPath = join(outputDir, `${route}-${vp.name}.png`);
+    const snapshotFilename = `${route}-${vp.name}${suffix}.png`;
+    const snapshotPath = join(outputDir, snapshotFilename);
     await page.screenshot({ path: snapshotPath, fullPage: true });
 
     routeResults.snapshots.push({
       viewport: vp.name,
       width: vp.width,
       height: vp.height,
-      file: `${route}-${vp.name}.png`,
+      file: snapshotFilename,
     });
 
     routeResults.metrics[vp.name] = pageMetrics;
