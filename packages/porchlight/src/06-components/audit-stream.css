@@ -1,0 +1,128 @@
+/*
+ * Porchlight  -  audit-stream component
+ * ===========================================================================
+ * An enterprise audit trail and security activity stream. Provides scannable,
+ * high-density rows with actor avatars, millisecond-precision timestamps,
+ * semantic action badges, and target entity references.
+ *
+ * Structure:
+ *   <ul class="pl-c-audit-stream" role="list">
+ *     <li class="pl-c-audit-stream__item">
+ *       <div class="pl-c-audit-stream__avatar">
+ *         <span class="pl-c-avatar" data-size="sm">CW</span>
+ *       </div>
+ *       <div class="pl-c-audit-stream__body">
+ *         <div class="pl-c-audit-stream__header">
+ *           <span class="pl-c-audit-stream__actor">Carl Walch</span>
+ *           <span class="pl-c-badge" data-tone="danger" data-size="sm">ROTATED_KEY</span>
+ *           <time class="pl-c-audit-stream__time" datetime="2026-11-01T07:14:00Z">12m ago</time>
+ *         </div>
+ *         <div class="pl-c-audit-stream__target">
+ *           Target: <code class="pl-c-audit-stream__mono">prod-database-primary</code>
+ *         </div>
+ *       </div>
+ *     </li>
+ *   </ul>
+ */
+@layer porchlight.components {
+  @scope (.pl-c-audit-stream) {
+    :scope {
+      --pl-c-audit-gap: var(--pl-space-3);
+      --pl-c-audit-pad-block: var(--pl-space-3);
+      --pl-c-audit-pad-inline: var(--pl-space-3);
+
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      overflow: hidden;
+    }
+
+    .pl-c-audit-stream__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--pl-c-audit-gap);
+      padding-block: var(--pl-c-audit-pad-block);
+      padding-inline: var(--pl-c-audit-pad-inline);
+      transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-audit-stream__item:not(:last-child) {
+      border-block-end: 1px solid var(--pl-color-border);
+    }
+
+    .pl-c-audit-stream__item:hover {
+      background: var(--pl-color-surface-2);
+    }
+
+    .pl-c-audit-stream__avatar {
+      flex-shrink: 0;
+    }
+
+    .pl-c-audit-stream__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-1);
+      flex: 1 1 auto;
+      min-inline-size: 0;
+    }
+
+    .pl-c-audit-stream__header {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      flex-wrap: wrap;
+      min-inline-size: 0;
+    }
+
+    .pl-c-audit-stream__actor {
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-audit-stream__time {
+      margin-inline-start: auto;
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .pl-c-audit-stream__target {
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      overflow-wrap: anywhere;
+    }
+
+    .pl-c-audit-stream__mono {
+      font-family: var(--pl-font-mono);
+      font-size: var(--pl-text-xs);
+      padding-inline: var(--pl-space-1);
+      padding-block: 0.125rem;
+      border-radius: var(--pl-radius-xs);
+      background: var(--pl-color-surface-2);
+      border: 1px solid var(--pl-color-border);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-audit-stream__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-audit-stream, .pl-c-audit-stream__item) {
+      border-color: CanvasText;
+    }
+  }
+}

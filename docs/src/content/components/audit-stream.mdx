@@ -1,0 +1,52 @@
+---
+title: Audit Stream
+description: Enterprise activity and compliance log stream with actor avatars and tabular timestamps.
+status: stable
+since: 0.14.0
+---
+
+The `.pl-c-audit-stream` renders structured activity logs for compliance tracking, security event feeds, and distributed workflow history.
+
+Provides scannable, high-density rows with actor identity avatars, millisecond-precision timestamps, semantic action chips, and target entity references.
+
+## Semantic HTML
+
+```html
+<ul class="pl-c-audit-stream" role="list">
+  <li class="pl-c-audit-stream__item">
+    <div class="pl-c-audit-stream__avatar">
+      <span class="pl-c-avatar" data-size="sm">CW</span>
+    </div>
+    <div class="pl-c-audit-stream__body">
+      <div class="pl-c-audit-stream__header">
+        <span class="pl-c-audit-stream__actor">Carl Walch</span>
+        <span class="pl-c-badge" data-tone="danger" data-size="sm"
+          >ROTATED_KEY</span
+        >
+        <time class="pl-c-audit-stream__time" datetime="2026-11-01T07:14:00Z"
+          >12m ago</time
+        >
+      </div>
+      <div class="pl-c-audit-stream__target">
+        Target:
+        <code class="pl-c-audit-stream__mono">prod-database-primary</code>
+      </div>
+    </div>
+  </li>
+</ul>
+```
+
+## Class contract
+
+| Selector                     | Role                                                  |
+| ---------------------------- | ----------------------------------------------------- |
+| `.pl-c-audit-stream`         | Root container list (`<ul>` with hairline border).    |
+| `.pl-c-audit-stream__item`   | Event row with hover highlight and bottom separator.  |
+| `.pl-c-audit-stream__avatar` | Leading avatar slot.                                  |
+| `.pl-c-audit-stream__body`   | Flexible column for event details.                    |
+| `.pl-c-audit-stream__header` | Row aligning actor name, action badge, and timestamp. |
+| `.pl-c-audit-stream__actor`  | Actor or system identity.                             |
+| `.pl-c-audit-stream__time`   | Timestamp with tabular numerals.                      |
+| `.pl-c-audit-stream__target` | Entity target description.                            |
+| `.pl-c-audit-stream__mono`   | Monospaced token for resource identifiers.            |
+| `.pl-c-audit-stream__meta`   | Secondary metadata row (IP address, client agent).    |

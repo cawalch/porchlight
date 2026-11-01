@@ -1,0 +1,129 @@
+/*
+ * Porchlight  -  kpi-card component
+ * ===========================================================================
+ * A multi-metric KPI dashboard tile  -  engineered for executive dashboards,
+ * telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat:
+ * .pl-c-kpi-card provides an architectural raised surface, integrated delta
+ * comparison badges, value prefixes/suffixes, and sparkline slots.
+ *
+ * Structure:
+ *   <div class="pl-c-kpi-card">
+ *     <div class="pl-c-kpi-card__header">
+ *       <span class="pl-c-kpi-card__label">Monthly Recurring Revenue</span>
+ *       <span class="pl-c-badge" data-tone="success">+14.2%</span>
+ *     </div>
+ *     <div class="pl-c-kpi-card__metric">
+ *       <span class="pl-c-kpi-card__prefix">$</span>
+ *       <span class="pl-c-kpi-card__value">148,290</span>
+ *       <span class="pl-c-kpi-card__suffix">/ mo</span>
+ *     </div>
+ *     <div class="pl-c-kpi-card__footer">
+ *       <span class="pl-c-kpi-card__comparison">vs. $129,850 last period</span>
+ *       <div class="pl-c-kpi-card__spark" aria-hidden="true">...</div>
+ *     </div>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.pl-c-kpi-card) {
+    :scope {
+      --pl-c-kpi-bg: var(--pl-color-surface);
+      --pl-c-kpi-border: var(--pl-color-border);
+      --pl-c-kpi-pad: var(--pl-space-4);
+      --pl-c-kpi-radius: var(--pl-radius-lg);
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--pl-space-2);
+      padding: var(--pl-c-kpi-pad);
+      background: var(--pl-c-kpi-bg);
+      border: 1px solid var(--pl-c-kpi-border);
+      border-radius: var(--pl-c-kpi-radius);
+      box-shadow: var(--pl-shadow-1);
+      container: pl-c-kpi-card / inline-size;
+      position: relative;
+    }
+
+    .pl-c-kpi-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .pl-c-kpi-card__label {
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-medium);
+      color: var(--pl-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pl-c-kpi-card__metric {
+      display: flex;
+      align-items: baseline;
+      gap: var(--pl-space-1);
+      min-inline-size: 0;
+    }
+
+    .pl-c-kpi-card__value {
+      font-size: clamp(1.75rem, 1.5rem + 1vi, 2.25rem);
+      font-weight: var(--pl-font-weight-bold);
+      line-height: var(--pl-leading-tight);
+      color: var(--pl-color-text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .pl-c-kpi-card__prefix,
+    .pl-c-kpi-card__suffix {
+      font-size: var(--pl-text-md);
+      font-weight: var(--pl-font-weight-medium);
+      color: var(--pl-color-text-muted);
+    }
+
+    .pl-c-kpi-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      margin-block-start: auto;
+      padding-block-start: var(--pl-space-2);
+      border-block-start: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
+    }
+
+    .pl-c-kpi-card__comparison {
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pl-c-kpi-card__spark {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Container query for small cards */
+    @container pl-c-kpi-card (inline-size < 14rem) {
+      .pl-c-kpi-card__value {
+        font-size: 1.5rem;
+      }
+
+      .pl-c-kpi-card__footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-kpi-card) {
+      border-color: CanvasText;
+    }
+  }
+}

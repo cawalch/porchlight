@@ -363,6 +363,7 @@ list tracks CSS component contracts rather than composed application recipes.
 
 - accordion: /components/accordion
 - alert: /components/alert
+- audit-stream: /components/audit-stream
 - avatar: /components/avatar
 - badge: /components/badge
 - banner: /components/banner
@@ -387,6 +388,8 @@ list tracks CSS component contracts rather than composed application recipes.
 - filter-builder: /components/filter-builder
 - form: /components/form
 - inline-loading: /components/inline-loading
+- kbd: /components/kbd
+- kpi-card: /components/kpi-card
 - miller-columns: /components/miller-columns
 - nav: /components/nav
 - page-header: /components/page-header
@@ -469,6 +472,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-settings-console
 - /preview/app-shell
 - /preview/app-siem
+- /preview/audit-stream
 - /preview/avatar
 - /preview/badge
 - /preview/banner
@@ -497,6 +501,8 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/filter-builder
 - /preview/form
 - /preview/inline-loading
+- /preview/kbd
+- /preview/kpi-card
 - /preview/layout
 - /preview/miller-columns
 - /preview/nav
