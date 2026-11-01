@@ -261,28 +261,48 @@ const activity = [
       </button>
     </div>
     <div class="pl-c-drawer__body">
-      <!-- Metadata grid -->
-      <div class="pl-l-grid cases-detail-meta">
-        <div>
-          <span class="pl-u-muted cases-text-xs">Priority</span>
-          <div class="cases-detail-value"><span class="pl-c-badge cases-capitalize" data-tone={priorityTone(detailCase.priority)}>{detailCase.priority}</span></div>
+      <!-- Metadata property list using CSS Subgrid -->
+      <dl
+        class="pl-c-property-list"
+        data-subgrid="true"
+        data-pl-density="dense"
+        style="margin-block-end: var(--pl-space-4);"
+      >
+        <div class="pl-c-property-list__item">
+          <dt class="pl-c-property-list__key">Priority</dt>
+          <dd class="pl-c-property-list__value">
+            <span class="pl-c-badge cases-capitalize" data-tone={priorityTone(detailCase.priority)}>
+              {detailCase.priority}
+            </span>
+          </dd>
         </div>
-        <div>
-          <span class="pl-u-muted cases-text-xs">Status</span>
-          <div class="cases-detail-value"><span class="pl-c-badge" data-tone={statusTone(detailCase.status)}>{statusLabel(detailCase.status)}</span></div>
+        <div class="pl-c-property-list__item">
+          <dt class="pl-c-property-list__key">Status</dt>
+          <dd class="pl-c-property-list__value">
+            <span class="pl-c-badge" data-tone={statusTone(detailCase.status)}>
+              {statusLabel(detailCase.status)}
+            </span>
+          </dd>
         </div>
-        <div>
-          <span class="pl-u-muted cases-text-xs">Assignee</span>
-          <div class="cases-assignee cases-detail-value">
-            <div class="pl-c-avatar cases-avatar-compact cases-avatar-accent" data-size="sm">{detailCase.initials}</div>
-            <span class="cases-text-sm">{detailCase.assignee}</span>
-          </div>
+        <div class="pl-c-property-list__item">
+          <dt class="pl-c-property-list__key">Assignee</dt>
+          <dd class="pl-c-property-list__value">
+            <div class="cases-assignee">
+              <div
+                class="pl-c-avatar cases-avatar-compact cases-avatar-accent"
+                data-size="sm"
+              >
+                {detailCase.initials}
+              </div>
+              <span class="cases-text-sm">{detailCase.assignee}</span>
+            </div>
+          </dd>
         </div>
-        <div>
-          <span class="pl-u-muted cases-text-xs">Updated</span>
-          <div class="cases-detail-value cases-text-sm">{detailCase.updated}</div>
+        <div class="pl-c-property-list__item">
+          <dt class="pl-c-property-list__key">Updated</dt>
+          <dd class="pl-c-property-list__value pl-u-tabular-nums">{detailCase.updated}</dd>
         </div>
-      </div>
+      </dl>
 
       <!-- Tags -->
       <div class="cases-detail-tags">
@@ -398,18 +418,8 @@ const activity = [
     .cases-code {
       font-size: var(--pl-text-xs);
     }
-    .cases-kbd {
-      font-family: var(--pl-font-mono);
-      font-size: var(--pl-text-xs);
-      padding: 0.1rem 0.3rem;
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-xs);
-      background: var(--pl-color-surface-2);
-      color: var(--pl-color-text-muted);
-    }
     @media (width < 40rem) {
-      .cases-team-label,
-      .cases-kbd {
+      .cases-team-label {
         display: none;
       }
       .cases-topbar__right {
@@ -485,7 +495,7 @@ const activity = [
     .cases-assignee {
       display: flex;
       align-items: center;
-      gap: 0.375rem;
+      gap: var(--pl-space-2);
     }
     .cases-avatar-compact {
       inline-size: 1.5rem;
@@ -498,12 +508,12 @@ const activity = [
     .cases-tag-list,
     .cases-detail-tags {
       display: flex;
-      gap: 0.25rem;
+      gap: var(--pl-space-1);
       flex-wrap: wrap;
     }
     .cases-tag {
       font-size: var(--pl-text-xs);
-      padding-inline: 0.4rem;
+      padding-inline: var(--pl-space-2);
       min-block-size: 1.25rem;
     }
     .cases-pagination-toolbar {
@@ -535,11 +545,6 @@ const activity = [
       font-size: var(--pl-text-sm);
     }
 
-    .cases-detail-meta {
-      --pl-l-grid-min: 8rem;
-      gap: var(--pl-space-3);
-      margin-block-end: var(--pl-space-2);
-    }
     .cases-detail-id {
       font-family: var(--pl-font-mono);
       font-size: var(--pl-text-xs);
@@ -548,9 +553,6 @@ const activity = [
     .cases-detail-title {
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-semibold);
-    }
-    .cases-detail-value {
-      margin-block-start: 0.25rem;
     }
     .cases-detail-tags {
       margin-block-start: var(--pl-space-4);

@@ -76,8 +76,8 @@ const navSections = [
         <span class="pl-c-badge" data-tone="success">● live</span>
       </div>
       <div class="dense-search">
-        <input class="pl-c-field__control" placeholder="Search events, IPs, hosts…" aria-label="Search" />
-        <kbd class="dense-kbd">⌘K</kbd>
+        <input class="pl-c-field__control pl-c-field__input" data-elastic="true" placeholder="Search events, IPs, hosts…" aria-label="Search" />
+        <kbd class="pl-c-kbd dense-kbd">⌘K</kbd>
       </div>
       <div class="dense-topbar__right">
         <span class="pl-c-badge" data-tone="danger">4 crit</span>
@@ -106,13 +106,25 @@ const navSections = [
 
       <main class="dense-main">
         <!-- KPI strip -->
-        <div class="dense-kpis">
+        <div class="dense-kpis pl-l-grid" style="--pl-l-grid-min: 130px; gap: var(--pl-space-2);">
           {metrics.map((m) => (
-            <div class="dense-kpi">
-              <span class="dense-kpi__label">{m.label}</span>
-              <span class="dense-kpi__value">{m.value}</span>
-              <span class="dense-kpi__delta" data-tone={m.tone}>{m.delta}</span>
-            </div>
+            <article class="pl-c-kpi-card dense-kpi" data-tone={m.tone}>
+              <header class="pl-c-kpi-card__header">
+                <span class="pl-c-kpi-card__label dense-kpi__label">{m.label}</span>
+              </header>
+              <div class="pl-c-kpi-card__metric">
+                <span class="pl-c-kpi-card__value dense-kpi__value">{m.value}</span>
+              </div>
+              <footer class="pl-c-kpi-card__footer">
+                <span
+                  class="pl-c-kpi-card__delta dense-kpi__delta"
+                  data-tone={m.tone}
+                  data-direction={m.direction}
+                >
+                  {m.delta}
+                </span>
+              </footer>
+            </article>
           ))}
         </div>
 
@@ -263,13 +275,6 @@ const navSections = [
     inset-inline-end: var(--pl-space-2);
     inset-block: 0;
     margin-block: auto;
-    font-family: var(--pl-font-mono);
-    font-size: var(--pl-text-xs);
-    padding: 0.1rem 0.25rem;
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-xs);
-    background: var(--pl-color-surface-2);
-    color: var(--pl-color-text-muted);
     block-size: fit-content;
   }
 
@@ -346,43 +351,15 @@ const navSections = [
   /* KPI strip */
   .dense-kpis {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: var(--pl-space-2);
   }
   @media (width < 80rem) {
-    .dense-kpis { grid-template-columns: repeat(4, 1fr); }
+    .dense-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
   @media (width < 48rem) {
-    .dense-kpis { grid-template-columns: repeat(2, 1fr); }
+    .dense-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  .dense-kpi {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-    padding: var(--pl-space-2) var(--pl-space-3);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-sm);
-    background: var(--pl-color-surface);
-  }
-  .dense-kpi__label {
-    font-size: var(--pl-text-xs);
-    color: var(--pl-color-text-muted);
-    white-space: nowrap;
-  }
-  .dense-kpi__value {
-    font-size: var(--pl-text-lg);
-    font-weight: var(--pl-font-weight-bold);
-    line-height: 1.2;
-    font-variant-numeric: tabular-nums;
-  }
-  .dense-kpi__delta {
-    font-size: var(--pl-text-xs);
-    font-weight: var(--pl-font-weight-medium);
-    color: var(--pl-color-text-muted);
-  }
-  .dense-kpi__delta[data-tone="success"] { color: var(--pl-color-success-text); }
-  .dense-kpi__delta[data-tone="danger"] { color: var(--pl-color-danger-text); }
-  .dense-kpi__delta[data-tone="warning"] { color: var(--pl-color-warning-text); }
 
   /* Toolbar */
   .dense-toolbar {
