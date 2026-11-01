@@ -4,29 +4,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="Telemetry Cockpit · Porchlight">
   <!-- Pinned Top Incident Banner with Scroll-State Active Horizon Elevation -->
-  <aside class="pl-c-banner" data-tone="warning" data-sticky="true" aria-label="Active migration warning">
-    <div class="pl-c-banner__icon" aria-hidden="true">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-        <line x1="12" y1="9" x2="12" y2="13" />
-        <line x1="12" y1="17" x2="12.01" y2="17" />
-      </svg>
-    </div>
+  <aside class="pl-c-banner" data-tone="warning" data-sticky="true" role="region" aria-label="Active migration warning">
     <div class="pl-c-banner__content">
-      <strong>Cluster Partition Advisory:</strong> Node pool <code class="pl-u-mono">np-compute-4</code> is undergoing automated drain &amp; rebalancing. Ingestion telemetry is running on secondary failover partition <span class="pl-u-tabular-nums">us-east-2b</span>.
+      <div class="pl-c-banner__main">
+        <span class="pl-c-banner__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </span>
+        <div class="pl-c-banner__message">
+          <strong>Cluster Partition Advisory:</strong> Node pool <code class="pl-u-mono">np-compute-4</code> is undergoing automated drain &amp; rebalancing. Ingestion telemetry is running on secondary failover partition <span class="pl-u-tabular-nums">us-east-2b</span>.
+        </div>
+      </div>
+      <div class="pl-c-banner__actions">
+        <button type="button" class="pl-c-banner__close" aria-label="Dismiss migration alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
     </div>
-    <button type="button" class="pl-c-banner__dismiss" aria-label="Dismiss migration alert">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
-      </svg>
-    </button>
   </aside>
 
   <!-- Sticky Cockpit Navigation Toolbar -->
-  <header class="pl-c-toolbar" data-sticky="true" data-surface="flush" style="border-block-end: 1px solid var(--pl-color-border); padding-inline: var(--pl-space-4); margin-block-end: var(--pl-space-4);">
-    <div class="pl-c-toolbar__group" style="align-items: center; gap: var(--pl-space-3);">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <header class="pl-c-toolbar" data-sticky="true" data-surface="flush" style="border-block-end: 1px solid var(--pl-color-border); margin-block-end: var(--pl-space-4);">
+    <div class="pl-c-toolbar__group" style="align-items: center; gap: var(--pl-space-2);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polygon points="12 2 2 7 12 12 22 7 12 2" />
         <polyline points="2 17 12 22 22 17" />
         <polyline points="2 12 12 17 22 12" />
@@ -43,9 +49,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Center: Elastic IDE Query Input -->
-    <div class="pl-c-toolbar__group" style="flex: 1 1 14rem; max-width: 480px; min-inline-size: 0;">
-      <div class="pl-l-cluster" style="align-items: center; width: 100%; gap: var(--pl-space-2);">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pl-u-muted" aria-hidden="true">
+    <div class="pl-c-toolbar__group" style="flex: 1 1 12rem; max-width: 440px; min-inline-size: 0;">
+      <div style="display: flex; align-items: center; width: 100%; gap: var(--pl-space-2); min-inline-size: 0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pl-u-muted" aria-hidden="true" style="flex-shrink: 0;">
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
@@ -56,15 +62,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           placeholder="Filter metrics, actors, policy (field-sizing: content)..."
           value="service:ingress status:quarantined"
           aria-label="Filter telemetry metrics and actors"
-          style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); padding: var(--pl-space-1) var(--pl-space-2); min-inline-size: 8rem; max-inline-size: 100%;"
+          style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); padding: var(--pl-space-1) var(--pl-space-2); min-inline-size: 0; width: 100%; max-inline-size: 100%;"
         />
       </div>
     </div>
 
     <!-- Right: Hotkey Trigger and Actions -->
     <div class="pl-c-toolbar__group" style="align-items: center; gap: var(--pl-space-2);">
-      <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">
-        <span class="pl-u-muted" style="font-size: var(--pl-text-xs); margin-inline-end: var(--pl-space-1);">Command</span>
+      <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Command palette">
         <kbd class="pl-c-kbd">⌘</kbd>
         <kbd class="pl-c-kbd">K</kbd>
       </button>
@@ -77,11 +82,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </header>
 
-  <main class="pl-l-flow" style="padding-inline: var(--pl-space-4); max-width: 1440px; margin-inline: auto;">
+  <div class="pl-l-flow" style="max-width: 1440px; margin-inline: auto;">
     <!-- Telemetry KPI Dashboard Tiles -->
     <section aria-labelledby="kpi-heading">
       <h2 id="kpi-heading" class="pl-u-sr-only">Telemetry Key Performance Indicators</h2>
-      <div class="pl-l-grid" data-min="240px" style="gap: var(--pl-space-3);">
+      <div class="pl-l-grid" style="--pl-l-grid-min: 220px; gap: var(--pl-space-3);">
         <!-- Metric 1: Error Budget -->
         <article class="pl-c-kpi-card" data-tone="accent">
           <header class="pl-c-kpi-card__header">
@@ -285,23 +290,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <!-- Property List using CSS Subgrid -->
             <dl class="pl-c-property-list" data-subgrid="true" data-pl-density="dense" style="margin-block-end: var(--pl-space-4);">
               <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__label">Host Identifier</dt>
+                <dt class="pl-c-property-list__key">Host Identifier</dt>
                 <dd class="pl-c-property-list__value pl-u-mono">prod-telemetry-worker-08</dd>
               </div>
               <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__label">Kernel Version</dt>
+                <dt class="pl-c-property-list__key">Kernel Version</dt>
                 <dd class="pl-c-property-list__value pl-u-mono pl-u-tabular-nums">Linux 6.8.12-hardened-x86_64</dd>
               </div>
               <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__label">Memory Allocation</dt>
+                <dt class="pl-c-property-list__key">Memory Allocation</dt>
                 <dd class="pl-c-property-list__value pl-u-tabular-nums">128.0 GiB (74.2% committed)</dd>
               </div>
               <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__label">Cipher Protocol</dt>
+                <dt class="pl-c-property-list__key">Cipher Protocol</dt>
                 <dd class="pl-c-property-list__value pl-u-mono">TLS_AES_256_GCM_SHA384</dd>
               </div>
               <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__label">Cryptographic Seal</dt>
+                <dt class="pl-c-property-list__key">Cryptographic Seal</dt>
                 <dd class="pl-c-property-list__value pl-u-mono" style="font-size: var(--pl-text-xs);">
                   <span>0x4f88e1a99b2c3d</span>
                   <button type="button" class="pl-c-property-list__copy" aria-label="Copy hash value">
@@ -343,7 +348,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </section>
 
     <!-- Tactile Keyboard Shortcuts Strip -->
-    <footer class="pl-c-card" data-variant="flat" style="padding: var(--pl-space-3); margin-block: var(--pl-space-4);">
+    <footer class="pl-c-card" data-variant="flat" style="padding: var(--pl-space-3); margin-block: var(--pl-space-4); overflow: hidden;">
       <div class="pl-l-cluster" style="justify-content: space-between; align-items: center; font-size: var(--pl-text-xs);">
         <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-3);">
           <span class="pl-u-muted" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Tactile Keycaps</span>
@@ -365,5 +370,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
       </div>
     </footer>
-  </main>
+  </div>
 </BaseLayout>
