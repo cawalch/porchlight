@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 57 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 59 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -18,6 +18,7 @@ Porchlight components are authored in `@layer porchlight.components` and can be 
 | Component                             | Primary Selector         | Dependencies | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | :------------------------------------ | :----------------------- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [accordion](#accordion)               | `.pl-c-accordion`        | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
+| [action-bar](#action-bar)             | `.pl-c-action-bar`       | None         | A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.                                                                                                                                                                                                                                      |
 | [alert](#alert)                       | `.pl-c-alert`            | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                                                                                                                             |
 | [audit-stream](#audit-stream)         | `.pl-c-audit-stream`     | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                                                                                                                                |
 | [avatar](#avatar)                     | `.pl-c-avatar`           | None         | A user identity chip - initials in a colored circle, or an image. Used in headers, lists, comments, and mentions. Three sizes via [data-size]: "sm" (1.5rem), default (2.5rem), "lg" (3rem).                                                                                                                                                                                                                                             |
@@ -43,6 +44,7 @@ Porchlight components are authored in `@layer porchlight.components` and can be 
 | [file-upload](#file-upload)           | `.pl-c-file-upload`      | None         | A drag-and-drop file upload zone. The native <input type="file"> is visually hidden; the zone is the click target. Uses :has() for the drag-over state (set [data-dragging] via JS) and disabled state.                                                                                                                                                                                                                                  |
 | [filter-builder](#filter-builder)     | `.pl-c-filter-builder`   | None         | CSS-only UI contracts for query builders, query chips, and saved views. Apps own query grammar, validation, persistence, and execution.                                                                                                                                                                                                                                                                                                  |
 | [form](#form)                         | `.pl-c-form`             | None         | SaaS form composition helpers built on native controls: sections, grids, subgrid alignment, pure-CSS conditional field disclosures (.pl-c-form__conditional), and reactive validation summary banners (.pl-c-form__summary) driven by form:has(:user-invalid). These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>, <input>, <select>, and <textarea>; Porchlight only handles layout and chrome. |
+| [gauge](#gauge)                       | `.pl-c-gauge`            | None         | A pure-CSS radial KPI dial and progress gauge for executive dashboards, capacity meters, system telemetry, and SLA uptime indicators.                                                                                                                                                                                                                                                                                                    |
 | [inline-loading](#inline-loading)     | `.pl-c-inline-loading`   | None         | Local, indeterminate progress for actions and compact application regions.                                                                                                                                                                                                                                                                                                                                                               |
 | [kbd](#kbd)                           | `.pl-c-kbd`              | None         | Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus. Designed with subtle physical bevels, monospaced centering, and active press translation.                                                                                                                                                                                                                                                             |
 | [kpi-card](#kpi-card)                 | `.pl-c-kpi-card`         | None         | A multi-metric KPI dashboard tile - engineered for executive dashboards, telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat: .pl-c-kpi-card provides an architectural raised surface, integrated delta comparison badges, value prefixes/suffixes, and sparkline slots.                                                                                                                                          |
@@ -90,6 +92,21 @@ A collapsible disclosure built on native <details>/<summary>. Animates open/clos
 
 ```css
 @import "@cawalch/porchlight/components/accordion.css";
+```
+
+### action-bar
+
+A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.
+
+- **Primary Selector**: `.pl-c-action-bar`
+- **Import**: `@cawalch/porchlight/components/action-bar.css`
+- **Minified Import**: `@cawalch/porchlight/components/action-bar.min.css`
+- **Dist File**: `dist/components/action-bar.css`
+- **Minified Dist File**: `dist/components/action-bar.min.css`
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/action-bar.css";
 ```
 
 ### alert
@@ -465,6 +482,21 @@ SaaS form composition helpers built on native controls: sections, grids, subgrid
 
 ```css
 @import "@cawalch/porchlight/components/form.css";
+```
+
+### gauge
+
+A pure-CSS radial KPI dial and progress gauge for executive dashboards, capacity meters, system telemetry, and SLA uptime indicators.
+
+- **Primary Selector**: `.pl-c-gauge`
+- **Import**: `@cawalch/porchlight/components/gauge.css`
+- **Minified Import**: `@cawalch/porchlight/components/gauge.min.css`
+- **Dist File**: `dist/components/gauge.css`
+- **Minified Dist File**: `dist/components/gauge.min.css`
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/gauge.css";
 ```
 
 ### inline-loading

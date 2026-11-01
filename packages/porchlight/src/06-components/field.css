@@ -129,7 +129,8 @@
       border-radius: var(--pl-radius-md);
       background: var(--pl-color-danger-bg);
       color: var(--pl-color-danger-text);
-      border: 1px solid color-mix(in oklab, var(--pl-color-danger) 40%, transparent);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-danger) 40%, transparent);
       font-size: var(--pl-text-xs);
       line-height: var(--pl-leading-tight);
       font-weight: var(--pl-font-weight-medium);

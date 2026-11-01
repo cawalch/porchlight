@@ -19,6 +19,7 @@
 @import "src/03-themes.css";
 @import "src/04-base.css";
 @import "src/05-layout.css";
+@import "src/06-components/action-bar.css";
 @import "src/06-components/button.css";
 @import "src/06-components/entity-inspector.css";
 @import "src/06-components/inline-loading.css";
@@ -41,6 +42,7 @@
 @import "src/06-components/stat.css";
 @import "src/06-components/alert.css";
 @import "src/06-components/progress.css";
+@import "src/06-components/gauge.css";
 @import "src/06-components/avatar.css";
 @import "src/06-components/tooltip.css";
 @import "src/06-components/accordion.css";

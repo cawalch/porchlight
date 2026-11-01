@@ -50,6 +50,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 
+  <h2>Trigger-Width Matching via anchor-size(self-inline)</h2>
+  <p class="pl-u-text-muted">
+    Wide dropdown buttons automatically expand their menus via CSS <code>anchor-size(self-inline)</code>,
+    preventing undersized or awkward alignments without runtime math.
+  </p>
+  <div style="max-inline-size: 28rem;">
+    <div class="pl-c-dropdown" style="inline-size: 100%;">
+      <button class="pl-c-dropdown__trigger" id="dd-trigger-3" popovertarget="dd-3" aria-haspopup="menu" aria-controls="dd-3" aria-expanded="false" style="inline-size: 100%;">
+        <span class="pl-c-dropdown__label">Filter: Production US-East-1 (Primary)</span>
+        <svg class="pl-c-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </button>
+      <div popover class="pl-c-dropdown__menu" id="dd-3" role="menu" aria-labelledby="dd-trigger-3">
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="true" data-label="Filter: Production US-East-1 (Primary)">Production US-East-1 (Primary)</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Filter: Staging EU-West-1">Staging EU-West-1</button>
+        <button class="pl-c-dropdown__option" type="button" role="menuitemradio" tabindex="-1" aria-checked="false" data-label="Filter: Development Sandbox">Development Sandbox</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     for (const dropdown of document.querySelectorAll('.pl-c-dropdown')) {
       const trigger = dropdown.querySelector('.pl-c-dropdown__trigger');

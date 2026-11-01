@@ -1,0 +1,170 @@
+/*
+ * Porchlight  -  gauge component
+ * ===========================================================================
+ * A pure-CSS radial KPI dial and progress gauge for executive dashboards,
+ * capacity meters, system telemetry, and SLA uptime indicators.
+ *
+ * Driven by CSS conic-gradient() and the registered @property --pl-gauge-value
+ * custom property for zero-JS, GPU-accelerated percentage transitions.
+ *
+ * Structure:
+ *   <div class="pl-c-gauge" style="--pl-gauge-value: 78%;" role="meter"
+ *        aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Uptime">
+ *     <div class="pl-c-gauge__track"></div>
+ *     <div class="pl-c-gauge__center">
+ *       <span class="pl-c-gauge__value">78%</span>
+ *       <span class="pl-c-gauge__label">Uptime</span>
+ *     </div>
+ *   </div>
+ *
+ * Variants:
+ *   - Tone: [data-tone="accent|success|warning|danger|brand"]
+ *   - Size: [data-size="sm|lg"] (default: 6rem / 96px)
+ *   - Form: [data-variant="arc"] (semi-circular speedometer arc)
+ */
+@layer porchlight.components {
+  @scope (.pl-c-gauge) {
+    :scope {
+      --pl-c-gauge-size: 6rem;
+      --pl-c-gauge-thickness: 0.5rem;
+      --pl-c-gauge-tone: var(--pl-color-accent);
+      --pl-c-gauge-track-color: var(--pl-color-surface-2);
+
+      display: inline-grid;
+      place-items: center;
+      position: relative;
+      inline-size: var(--pl-c-gauge-size);
+      block-size: var(--pl-c-gauge-size);
+      font-family: var(--pl-font-sans);
+    }
+
+    /* Size variants */
+    :scope[data-size="sm"] {
+      --pl-c-gauge-size: 4rem;
+      --pl-c-gauge-thickness: 0.375rem;
+    }
+
+    :scope[data-size="lg"] {
+      --pl-c-gauge-size: 8rem;
+      --pl-c-gauge-thickness: 0.625rem;
+    }
+
+    /* Tone variants */
+    :scope[data-tone="success"] {
+      --pl-c-gauge-tone: var(--pl-color-success);
+    }
+
+    :scope[data-tone="warning"] {
+      --pl-c-gauge-tone: var(--pl-color-warning);
+    }
+
+    :scope[data-tone="danger"] {
+      --pl-c-gauge-tone: var(--pl-color-danger);
+    }
+
+    :scope[data-tone="brand"] {
+      --pl-c-gauge-tone: var(--pl-color-brand-bg);
+    }
+
+    /* Radial track using conic-gradient + radial mask cutout */
+    .pl-c-gauge__track {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--pl-c-gauge-tone) 0 var(--pl-gauge-value, 0%),
+        var(--pl-c-gauge-track-color) var(--pl-gauge-value, 0%) 100%
+      );
+      mask: radial-gradient(
+        circle closest-side,
+        transparent calc(100% - var(--pl-c-gauge-thickness) * 2),
+        black calc(100% - var(--pl-c-gauge-thickness) * 2 + 0.5px)
+      );
+      -webkit-mask: radial-gradient(
+        circle closest-side,
+        transparent calc(100% - var(--pl-c-gauge-thickness) * 2),
+        black calc(100% - var(--pl-c-gauge-thickness) * 2 + 0.5px)
+      );
+      transition: --pl-gauge-value var(--pl-duration-enter)
+        var(--pl-ease-decelerate);
+    }
+
+    /* Semi-circular speedometer arc variant */
+    :scope[data-variant="arc"] {
+      block-size: calc(var(--pl-c-gauge-size) * 0.65);
+      overflow: hidden;
+    }
+
+    :scope[data-variant="arc"] .pl-c-gauge__track {
+      inset-block-start: 0;
+      block-size: var(--pl-c-gauge-size);
+      background: conic-gradient(
+        from 270deg,
+        var(--pl-c-gauge-tone) 0 calc(var(--pl-gauge-value, 0%) * 0.5),
+        var(--pl-c-gauge-track-color) calc(var(--pl-gauge-value, 0%) * 0.5)
+          180deg,
+        transparent 180deg 360deg
+      );
+    }
+
+    :scope[data-variant="arc"] .pl-c-gauge__center {
+      align-self: end;
+      padding-block-end: var(--pl-space-1);
+    }
+
+    /* Central content area */
+    .pl-c-gauge__center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: var(--pl-z-raised);
+      padding: var(--pl-space-1);
+    }
+
+    .pl-c-gauge__value {
+      font-size: 1.25rem;
+      font-weight: var(--pl-font-weight-bold);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-gauge__label {
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-medium);
+      color: var(--pl-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-block-start: 0.125rem;
+    }
+
+    :scope[data-size="sm"] .pl-c-gauge__value {
+      font-size: var(--pl-text-sm);
+    }
+
+    :scope[data-size="sm"] .pl-c-gauge__label {
+      font-size: 0.625rem;
+    }
+
+    :scope[data-size="lg"] .pl-c-gauge__value {
+      font-size: 1.75rem;
+    }
+
+    :scope[data-size="lg"] .pl-c-gauge__label {
+      font-size: var(--pl-text-sm);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-gauge__track) {
+      border: 2px solid Highlight;
+      background: transparent;
+    }
+
+    :where(.pl-c-gauge__value) {
+      color: CanvasText;
+    }
+  }
+}
