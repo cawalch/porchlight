@@ -267,16 +267,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </section>
 
     <!-- Financial Risk Workstation Split Pane with CSS Gap Dividers -->
-    <section aria-labelledby="studio-workstation-heading">
+    <section aria-labelledby="studio-workstation-heading" class="studio-workstation-section">
       <h2 id="studio-workstation-heading" class="pl-u-sr-only">
         Financial Audit Workstation: Trade Ledger and Counterparty Inspector
       </h2>
       <div
-        class="pl-c-split-pane"
+        class="pl-c-split-pane studio-split"
         data-orientation="horizontal"
         data-collapse="stack"
         data-dividers="true"
-        style="border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-md); background: var(--pl-color-surface);"
       >
         <!-- Left Pane: Immutable Regulatory & Trade Audit Ledger -->
         <section
@@ -420,7 +419,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               class="pl-c-property-list"
               data-subgrid="true"
               data-pl-density="dense"
-              style="margin-block-end: var(--pl-space-4);"
+              style="margin-block-end: var(--pl-space-4); --pl-c-property-key-w: minmax(10.5rem, 12.5rem);"
             >
               <div class="pl-c-property-list__item">
                 <dt class="pl-c-property-list__key">Legal Entity ID (LEI)</dt>
@@ -590,3 +589,32 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </footer>
   </div>
 </BaseLayout>
+
+<style>
+  .studio-workstation-section {
+    container-type: inline-size;
+  }
+  .studio-split {
+    --pl-c-split-pane-start-size: minmax(28rem, 1.35fr);
+    --pl-c-split-pane-end-size: minmax(24rem, 1fr);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+  }
+  @container (inline-size < 58rem) {
+    .studio-split {
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: minmax(18rem, auto) var(--pl-c-split-pane-separator-size) minmax(20rem, 1fr) !important;
+    }
+    .studio-split > .pl-c-split-pane__pane--start {
+      grid-area: 1 / 1 !important;
+    }
+    .studio-split > .pl-c-split-pane__separator {
+      grid-area: 2 / 1 !important;
+      cursor: row-resize !important;
+    }
+    .studio-split > .pl-c-split-pane__pane--end {
+      grid-area: 3 / 1 !important;
+    }
+  }
+</style>

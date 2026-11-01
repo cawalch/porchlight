@@ -123,6 +123,9 @@
     /* Code container & pre */
     .pl-c-code-block__pre {
       margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       padding-block: var(--pl-c-code-pad-block);
       padding-inline: 0;
       overflow-x: auto;

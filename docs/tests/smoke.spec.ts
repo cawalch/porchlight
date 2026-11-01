@@ -1583,6 +1583,24 @@ test.describe("docs scaffold", () => {
     ).toBeVisible();
     // Regulatory YAML code block
     await expect(page.locator(".pl-c-code-block")).toBeVisible();
+    // Verify code block pre does not inherit rogue nested borders, margins, or radius
+    const codePre = page
+      .locator(".pl-c-code-block .pl-c-code-block__pre")
+      .first();
+    await expect(codePre).toBeVisible();
+    const preStyles = await codePre.evaluate((el) => {
+      const s = window.getComputedStyle(el);
+      return {
+        borderTopWidth: s.borderTopWidth,
+        borderRadius: s.borderTopLeftRadius,
+        marginTop: s.marginTop,
+        marginBottom: s.marginBottom,
+      };
+    });
+    expect(preStyles.borderTopWidth).toBe("0px");
+    expect(preStyles.borderRadius).toBe("0px");
+    expect(preStyles.marginTop).toBe("0px");
+    expect(preStyles.marginBottom).toBe("0px");
     // Tactile keycaps
     expect(await page.locator(".pl-c-kbd").count()).toBeGreaterThanOrEqual(5);
   });
