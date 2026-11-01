@@ -27,6 +27,7 @@
     "dev": "pnpm --filter ./docs dev",
     "build": "pnpm namespace:check && pnpm --filter @cawalch/porchlight build && pnpm --filter ./docs build",
     "test": "pnpm --filter ./docs test",
+    "audit:vision": "pnpm --filter ./docs audit:vision",
     "namespace:check": "node scripts/check-namespace.mjs",
     "lint": "stylelint \"**/*.css\" --allow-empty-input",
     "lint:js": "biome lint .",
