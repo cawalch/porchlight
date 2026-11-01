@@ -619,13 +619,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
   .studio-workstation-section {
     container-type: inline-size;
+    margin-block-start: var(--pl-space-4);
   }
   .studio-split {
     --pl-c-split-pane-start-size: minmax(28rem, 1.35fr);
     --pl-c-split-pane-end-size: minmax(24rem, 1fr);
     border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-md);
+    border-radius: var(--pl-radius-xl);
     background: var(--pl-color-surface);
+    box-shadow: var(--pl-shadow-1);
   }
   @container (inline-size < 66rem) {
     .studio-split {
