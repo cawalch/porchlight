@@ -101,7 +101,8 @@
       background: conic-gradient(
         from 270deg,
         var(--pl-c-gauge-tone) 0 calc(var(--pl-gauge-value, 0%) * 0.5),
-        var(--pl-c-gauge-track-color) calc(var(--pl-gauge-value, 0%) * 0.5) 180deg,
+        var(--pl-c-gauge-track-color) calc(var(--pl-gauge-value, 0%) * 0.5)
+          180deg,
         transparent 180deg 360deg
       );
     }

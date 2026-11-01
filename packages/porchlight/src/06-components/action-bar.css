@@ -169,17 +169,18 @@
    *   - Opened via the native Popover API (:popover-open)
    */
   :where(
-    .pl-c-table-wrap,
-    .pl-c-table,
-    .pl-c-card,
-    form,
-    [data-selection-region]
-  ):has(tbody :checked, input[type="checkbox"]:checked) ~ .pl-c-action-bar,
-  :where(
-    .pl-c-table-wrap,
-    .pl-c-card,
-    [data-selection-region]
-  ):has(tbody :checked, input[type="checkbox"]:checked) .pl-c-action-bar,
+      .pl-c-table-wrap,
+      .pl-c-table,
+      .pl-c-card,
+      form,
+      [data-selection-region]
+    ):has(tbody :checked, input[type="checkbox"]:checked)
+    ~ .pl-c-action-bar,
+  :where(.pl-c-table-wrap, .pl-c-card, [data-selection-region]):has(
+      tbody :checked,
+      input[type="checkbox"]:checked
+    )
+    .pl-c-action-bar,
   .pl-c-action-bar:is([data-open], [data-open="true"]),
   .pl-c-action-bar:popover-open {
     opacity: 1;

@@ -24,7 +24,9 @@ test.describe("SOTA Action Bar & Radial KPI Gauge Capabilities", () => {
       await expect(actionBar).toHaveCSS("opacity", "1");
 
       // Verify action buttons inside are accessible
-      const exportButton = actionBar.getByRole("button", { name: "Export CSV" });
+      const exportButton = actionBar.getByRole("button", {
+        name: "Export CSV",
+      });
       await expect(exportButton).toBeVisible();
 
       // Uncheck row 1 -> stows away
@@ -50,10 +52,14 @@ test.describe("SOTA Action Bar & Radial KPI Gauge Capabilities", () => {
     });
 
     test("renders gauges with meter roles and values", async ({ page }) => {
-      const uptimeGauge = page.locator('.pl-c-gauge[aria-label="System Uptime"]');
+      const uptimeGauge = page.locator(
+        '.pl-c-gauge[aria-label="System Uptime"]',
+      );
       await expect(uptimeGauge).toBeVisible();
       await expect(uptimeGauge).toHaveAttribute("role", "meter");
-      await expect(uptimeGauge.locator(".pl-c-gauge__value")).toHaveText("99.8%");
+      await expect(uptimeGauge.locator(".pl-c-gauge__value")).toHaveText(
+        "99.8%",
+      );
       await expect(uptimeGauge.locator(".pl-c-gauge__label")).toHaveText("SLA");
     });
 
@@ -93,8 +99,10 @@ test.describe("SOTA Action Bar & Radial KPI Gauge Capabilities", () => {
     }) => {
       await page.goto("./preview/dropdown");
 
-      const hasAnchorSupport = await page.evaluate(() =>
-        CSS.supports("position-anchor: --x") && CSS.supports("min-inline-size: anchor-size(self-inline)"),
+      const hasAnchorSupport = await page.evaluate(
+        () =>
+          CSS.supports("position-anchor: --x") &&
+          CSS.supports("min-inline-size: anchor-size(self-inline)"),
       );
 
       const trigger = page.locator("#dd-trigger-3");
