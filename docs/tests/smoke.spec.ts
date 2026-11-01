@@ -108,15 +108,43 @@ test.describe("docs scaffold", () => {
     await expect(skip).toBeVisible();
   });
 
-  test("preview index page is reachable", async ({ page }) => {
-    await page.goto("./preview");
+  test("preview index page is reachable and search filters examples across router transitions", async ({
+    page,
+  }) => {
+    // Navigate via client router from components page
+    await page.goto("./components");
+    await page.locator('.site-nav a[href$="/preview"]').click();
     await expect(
       page.getByRole("heading", { name: "Examples", exact: true }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Components" }),
     ).toBeVisible();
-    await expect(page.getByPlaceholder("Search examples...")).toBeVisible();
+
+    const input = page.getByPlaceholder("Search examples...");
+    await expect(input).toBeVisible();
+
+    const totalStat = page.locator("[data-stat-total]");
+    const componentsStat = page.locator("[data-stat-components]");
+    const patternsStat = page.locator("[data-stat-patterns]");
+
+    await expect(totalStat).toHaveText("85");
+
+    // Filter by 'audit'
+    await input.fill("audit");
+    await expect(totalStat).toHaveText("3");
+    await expect(componentsStat).toHaveText("1");
+    await expect(patternsStat).toHaveText("0");
+
+    const visibleCards = page.locator("[data-preview-card]:not([hidden])");
+    await expect(visibleCards).toHaveCount(3);
+
+    // Clear with Escape
+    await input.press("Escape");
+    await expect(input).toHaveValue("");
+    await expect(totalStat).toHaveText("85");
+    await expect(componentsStat).toHaveText("57");
+    await expect(patternsStat).toHaveText("9");
   });
 
   test("reset preview page renders and lists the layers", async ({ page }) => {
