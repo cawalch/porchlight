@@ -11,6 +11,7 @@
     "test": "playwright test",
     "test:serve": "astro build && ASTRO_PREVIEW_BACKGROUND=1 astro preview --port 4321 --host",
     "astro:check": "astro check",
+    "audit:vision": "node scripts/audit-vision.mjs",
     "llms:generate": "node scripts/generate-llms.mjs",
     "llms:check": "node scripts/generate-llms.mjs --check"
   },
