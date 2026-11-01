@@ -255,7 +255,7 @@ const toneFor = (status: string) =>
           </aside>
         </div>
 
-        <section class="pl-c-card" data-surface="app" data-variant="flush" aria-labelledby="breakdown-title">
+        <section class="pl-c-card" data-surface="app" aria-labelledby="breakdown-title">
           <div class="pl-c-toolbar">
             <div class="pl-c-toolbar__group">
               <h2 class="pl-c-card__title" id="breakdown-title">Channel breakdown</h2>
@@ -327,6 +327,10 @@ const toneFor = (status: string) =>
 </BaseLayout>
 
 <style>
+  .pl-c-card > .pl-c-toolbar {
+    padding-inline: 0;
+  }
+
   .reporting-footer-toolbar {
     border-block-start: 1px solid var(--pl-color-border);
     border-block-end: 0;
