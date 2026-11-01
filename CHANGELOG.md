@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-11-01
+
+### Added
+
+- Add 2-line title clamping (`-webkit-line-clamp: 2`, `line-clamp: 2`, `overflow: hidden`, `--pl-leading-snug`) to `.pl-c-kpi-card__label`, allowing executive metric titles to wrap naturally without premature single-line character truncation (#194).
+- Realign `.pl-c-kpi-card__header` to `align-items: flex-start`, ensuring status badges and indicators pin cleanly to the top-right corner of multi-line titles (#194).
+- Add automated Vision & Visual Integrity Auditor tool (`pnpm audit:vision` / `docs/scripts/audit-vision.mjs`) supporting headless high-resolution viewport captures (desktop, tablet, mobile), cascade metrics extraction, and `--dark`, `--rtl`, and `--dense` modifier suites (#193, #195).
+- Add Concentric Corner Curvature Invariant ($R_{\text{inner}} \le \max(0, R_{\text{outer}} - P)$) asserting `0px` radius on nested children inside flush containers in CI (#193).
+- Add Multi-Viewport Silent Text Truncation Scanner asserting explicit `text-overflow: ellipsis` on all overflowing headings, labels, and table cells in CI (#193).
+- Add automated regression invariant asserting 2-line clamping, hidden overflow, and top-aligned accessories on all KPI cards repository-wide (#194).
+
+### Changed
+
+- Decouple design system integrity and styleguide contract audits across all 86 preview routes dynamically via `readdirSync` (#192).
+- Enforce `page.emulateMedia({ reducedMotion: "reduce" })` during automated snapshot audits, ensuring full visibility of below-the-fold content using scroll-driven reveal animations (#194).
+- Align marketing recipe cards (`.marketing-testimonial-columns`) to 3-column distribution for symmetry with the feature grid above (#194).
+- Upgrade CI workflow and `.nvmrc` to Node 24 for Astro 5 compatibility (#191).
+- Update component catalog documentation across `README.md` and `packages/porchlight/README.md` to reflect all 57 components.
+
+### Fixed
+
+- Eliminate nested corner radius bleed, redundant borders, and background clipping inside flush card and split-pane containers (#191, #193).
+- Restore missing styling to `.pl-c-chart__table` by scoping `.pl-c-table` rules under `@scope (.pl-c-table-wrap, .pl-c-chart__table)` (#191).
+- Remove global `text-decoration: underline` from `.pl-c-panel-deck__panel::scroll-marker` and `.pl-c-section-nav__link:target-current`, reserving underlines strictly for Windows High Contrast Mode under `@media (forced-colors: active)` (#191, #192).
+- Replace ad-hoc unstyled `<table>` elements with standard `.pl-c-table-wrap` and `.pl-c-table` across documentation preview pages (#192).
+
 ## [0.13.1] - 2026-10-31
 
 ### Changed

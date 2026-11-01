@@ -170,7 +170,7 @@ or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-optio
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.2 and Porchlight 0.13.1**:
+Verified with **Bun 1.4.2 and Porchlight 0.14.0**:
 
 | Path                                                    | Result                                               |
 | ------------------------------------------------------- | ---------------------------------------------------- |
@@ -239,7 +239,7 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 | `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                 |
 | `@cawalch/porchlight/layout.css`           | Layout primitives                        |
 | `@cawalch/porchlight/layout.min.css`       | Minified layout primitives               |
-| `@cawalch/porchlight/components.css`       | All 51 component CSS files               |
+| `@cawalch/porchlight/components.css`       | All 57 component CSS files               |
 | `@cawalch/porchlight/components.min.css`   | Minified all-components bundle           |
 | `@cawalch/porchlight/components/*.css`     | Individual component CSS file            |
 | `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS file   |
@@ -252,7 +252,7 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                     |
 | `@cawalch/porchlight/src/*`                | Raw source escape hatch                  |
 
-For an offline reference documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](COMPONENTS.md).
+For an offline reference documenting all 57 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](COMPONENTS.md).
 
 ## Layer ordering
 

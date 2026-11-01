@@ -119,7 +119,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                |
 | `@cawalch/porchlight/layout.css`           | `.pl-l-*` layout primitives             |
 | `@cawalch/porchlight/layout.min.css`       | Minified layout primitives              |
-| `@cawalch/porchlight/components.css`       | All 51 `.pl-c-*` component stylesheets  |
+| `@cawalch/porchlight/components.css`       | All 57 `.pl-c-*` component stylesheets  |
 | `@cawalch/porchlight/components.min.css`   | Minified components bundle              |
 | `@cawalch/porchlight/components/*.css`     | Individual component CSS files          |
 | `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS files |
@@ -131,7 +131,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/tokens.json`          | Token metadata JSON                     |
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                    |
 
-For an offline reference documenting all 51 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
+For an offline reference documenting all 57 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
 
 ## CLI tools
 
