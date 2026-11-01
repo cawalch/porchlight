@@ -11,9 +11,10 @@
 import { chromium } from "@playwright/test";
 import { readdirSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
-const previewDir = join(process.cwd(), "src/pages/preview");
+const previewDir = fileURLToPath(new URL("../src/pages/preview", import.meta.url));
 const allRoutes = readdirSync(previewDir)
   .filter((f) => f.endsWith(".astro"))
   .map((f) => f.replace(/\.astro$/, ""));
@@ -33,7 +34,7 @@ const targetRoutes = args.includes("--all")
         "index",
       ];
 
-const outputDir = join(process.cwd(), "dist/vision-audit");
+const outputDir = fileURLToPath(new URL("../dist/vision-audit", import.meta.url));
 mkdirSync(outputDir, { recursive: true });
 
 const viewports = [
@@ -51,6 +52,7 @@ console.log(
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
+await page.emulateMedia({ reducedMotion: "reduce" });
 
 const auditLog = [];
 

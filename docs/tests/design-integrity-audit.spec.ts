@@ -212,6 +212,38 @@ test.describe("decoupled design system integrity & styleguide contract audits", 
     }
   });
 
+  test("kpi card labels support 2-line clamping with top-aligned header accessories", async ({
+    page,
+  }) => {
+    const kpiRoutes = ["kpi-card", "app-telemetry-cockpit", "app-audit-studio", "app-siem"];
+
+    for (const route of kpiRoutes) {
+      await page.goto(`./preview/${route}`);
+      const kpis = await page.evaluate(() => {
+        const headers = Array.from(document.querySelectorAll(".pl-c-kpi-card__header"));
+        return headers.map((h) => {
+          const hStyle = getComputedStyle(h);
+          const label = h.querySelector(".pl-c-kpi-card__label");
+          const lStyle = label ? getComputedStyle(label) : null;
+          return {
+            headerAlign: hStyle.alignItems,
+            hasLabel: Boolean(label),
+            overflow: lStyle?.overflow,
+            lineClamp: lStyle?.webkitLineClamp ?? (lStyle as Record<string, unknown> | null)?.lineClamp,
+          };
+        });
+      });
+
+      for (const k of kpis) {
+        expect(k.headerAlign, `${route} kpi header must align accessories to flex-start`).toBe("flex-start");
+        if (k.hasLabel) {
+          expect(k.overflow, `${route} kpi label must have overflow: hidden`).toBe("hidden");
+          expect(k.lineClamp, `${route} kpi label must clamp at 2 lines`).toBe("2");
+        }
+      }
+    }
+  });
+
   test("concentric corner radius geometry formula is obeyed without corner bulging", async ({
     page,
   }) => {
