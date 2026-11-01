@@ -201,9 +201,9 @@ const eventFeed = [
         <div class="siem-content-grid">
           <!-- Alert Queue -->
           <div class="siem-alert-panel">
-            <div class="pl-c-card siem-alert-card" data-surface="app">
+            <div class="pl-c-card siem-alert-card" data-surface="app" data-variant="flush">
               <!-- Filter toolbar -->
-              <div class="pl-c-toolbar">
+              <div class="pl-c-toolbar siem-filter-toolbar">
                 <div class="pl-c-toolbar__group">
                   <span class="pl-c-chip" data-tone="danger">{severityCount('critical')} critical</span>
                   <span class="pl-c-chip" data-tone="warning">{severityCount('high')} high</span>
@@ -280,19 +280,26 @@ const eventFeed = [
 
           <!-- Live Event Stream using .pl-c-audit-stream -->
           <div class="siem-event-panel">
-            <div class="pl-c-card" data-surface="app">
-              <div class="pl-c-card__header">
-                <h2 class="pl-c-card__title">Live Event Stream</h2>
-                <span class="pl-c-badge" data-tone="success">
-                  <span class="siem-live-dot"></span> Live
+            <div class="pl-c-card siem-event-card" data-surface="app" data-variant="flush">
+              <div class="pl-c-card__header siem-event-header">
+                <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-2);">
+                  <h2 class="pl-c-card__title">Live Event Stream</h2>
+                  <span class="pl-c-badge" data-tone="success">
+                    <span class="siem-live-dot"></span> Live
+                  </span>
+                </div>
+                <span class="pl-u-muted pl-u-tabular-nums" style="font-size: var(--pl-text-xs); font-family: var(--pl-font-mono);">
+                  {eventFeed.length} events
                 </span>
               </div>
-              <div class="pl-c-card__body" style="padding: var(--pl-space-2);">
-                <ol class="pl-c-audit-stream" role="list" tabindex="0" aria-label="Security event feed" style="border: 0; max-block-size: 32rem; overflow-y: auto;">
+              <div class="pl-c-card__body siem-event-body">
+                <ol class="pl-c-audit-stream" role="list" tabindex="0" aria-label="Security event feed" data-pl-density="compact">
                   {eventFeed.map((e) => (
                     <li class="pl-c-audit-stream__item">
-                      <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm" style="font-size: 0.6875rem;">
-                        {e.tone === 'danger' ? 'CRIT' : e.tone === 'warning' ? 'WARN' : 'INFO'}
+                      <div class="pl-c-audit-stream__avatar">
+                        <div class="pl-c-avatar cases-avatar-xs" data-tone={e.tone} data-size="sm" style="inline-size: 1.75rem; block-size: 1.75rem; font-size: 0.6875rem;">
+                          {e.tone === 'danger' ? 'SEC' : e.tone === 'warning' ? 'NET' : e.tone === 'accent' ? 'VPN' : 'SYS'}
+                        </div>
                       </div>
                       <div class="pl-c-audit-stream__body">
                         <div class="pl-c-audit-stream__header">
@@ -301,7 +308,7 @@ const eventFeed = [
                           <time class="pl-c-audit-stream__time pl-u-tabular-nums">{e.time}</time>
                         </div>
                         <div class="pl-c-audit-stream__target">
-                          <code class="pl-c-audit-stream__mono" style="font-size: 0.6875rem;">{e.body}</code>
+                          <code class="pl-c-audit-stream__mono" style="font-size: var(--pl-text-xs);">{e.body}</code>
                         </div>
                       </div>
                     </li>
@@ -356,10 +363,6 @@ const eventFeed = [
   </script>
 
   <style>
-    .pl-c-card > .pl-c-toolbar {
-      padding-inline: 0;
-    }
-
     /* Layout override handled centrally in global.css. */
 
     .siem-topbar {
@@ -414,6 +417,9 @@ const eventFeed = [
     }
 
     .siem-main {
+      inline-size: 100%;
+      max-inline-size: 96rem;
+      margin-inline: auto;
       padding: var(--pl-space-4);
       display: flex;
       flex-direction: column;
@@ -431,15 +437,20 @@ const eventFeed = [
 
     .siem-content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 22rem;
-      gap: var(--pl-space-3);
+      grid-template-columns: minmax(0, 1.45fr) minmax(22rem, 1fr);
+      gap: var(--pl-space-4);
       align-items: start;
     }
     .siem-alert-panel {
       min-inline-size: 0;
     }
-    .siem-alert-card {
-      border: 0;
+    .siem-alert-card,
+    .siem-event-card {
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+    }
+    .siem-filter-toolbar {
+      border-block-end: 1px solid var(--pl-color-border);
     }
     .siem-filter-field {
       display: inline-flex;
@@ -469,6 +480,11 @@ const eventFeed = [
     .siem-pagination-toolbar {
       border-block-start: 1px solid var(--pl-color-border);
       border-block-end: 0;
+    }
+    .siem-event-body {
+      max-block-size: 38rem;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
     }
     @media (width < 80rem) {
       .siem-content-grid { grid-template-columns: 1fr; }

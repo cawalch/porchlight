@@ -300,7 +300,7 @@ const toneFor = (status: string) =>
               </tbody>
             </table>
           </div>
-          <div class="pl-c-toolbar">
+          <div class="pl-c-toolbar reporting-footer-toolbar">
             <div class="pl-c-toolbar__group">
               <span class="pl-u-muted-sm" aria-live="polite">Showing 4 matching channels for Executive.</span>
             </div>
@@ -329,6 +329,11 @@ const toneFor = (status: string) =>
 <style>
   .pl-c-card > .pl-c-toolbar {
     padding-inline: 0;
+  }
+
+  .reporting-footer-toolbar {
+    border-block-start: 1px solid var(--pl-color-border);
+    border-block-end: 0;
   }
 
   .reporting-shell {

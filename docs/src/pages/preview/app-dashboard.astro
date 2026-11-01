@@ -118,7 +118,7 @@ const toneFor = (s: string) =>
           </div>
 
           <!-- Data table with toolbar -->
-          <div class="pl-c-card" data-surface="app">
+          <div class="pl-c-card" data-surface="app" data-variant="flush">
             <div class="pl-c-toolbar">
               <div class="pl-c-toolbar__group">
                 <span class="pl-u-muted dashboard-text-sm">5 accounts</span>
@@ -262,10 +262,6 @@ const toneFor = (s: string) =>
   </script>
 
   <style>
-    .pl-c-card > .pl-c-toolbar {
-      padding-inline: 0;
-    }
-
     .app-topbar {
       display: flex;
       align-items: center;
@@ -298,10 +294,10 @@ const toneFor = (s: string) =>
     }
     .dashboard-shell {
       --pl-l-container-max: 80rem;
-      padding-block: var(--pl-space-6);
+      padding-block: var(--pl-space-4);
     }
     .dashboard-stack {
-      --pl-l-stack-gap: var(--pl-space-6);
+      --pl-l-stack-gap: var(--pl-space-4);
     }
     .dash-header h1 {
       margin-block: 0 var(--pl-space-1);
