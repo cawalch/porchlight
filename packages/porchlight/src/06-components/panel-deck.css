@@ -84,20 +84,17 @@
     }
 
     /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
-    .pl-c-panel-deck__panel::scroll-marker:target-current {
-      border-color: var(--pl-color-accent);
-      background: var(--pl-color-surface-2);
-      color: var(--pl-color-accent);
-      text-decoration: underline;
-      text-underline-offset: 0.2em;
-    }
-
+    .pl-c-panel-deck__panel::scroll-marker:target-current,
     .pl-c-panel-deck__panel::scroll-marker:checked {
       border-color: var(--pl-color-accent);
-      background: var(--pl-color-surface-2);
+      background: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-surface) 92%
+      );
       color: var(--pl-color-accent);
-      text-decoration: underline;
-      text-underline-offset: 0.2em;
+      font-weight: var(--pl-font-weight-semibold);
+      box-shadow: 0 0 0 1px var(--pl-color-accent);
     }
 
     /* Carousel dot markers variant via [data-markers="dots"] */

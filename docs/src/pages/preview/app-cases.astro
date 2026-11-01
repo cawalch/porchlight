@@ -184,7 +184,7 @@ const activity = [
         </div>
 
         <!-- Case list (data table) -->
-        <div class="pl-c-card cases-table-card" data-surface="app">
+        <div class="pl-c-card cases-table-card" data-surface="app" data-variant="flush">
           <div class="pl-c-table-wrap cases-table-wrap" tabindex="0" role="region" aria-label="Case queue">
             <table class="pl-c-table">
               <thead>
@@ -482,14 +482,8 @@ const activity = [
       inline-size: 14rem;
       max-inline-size: 100%;
     }
-    .cases-table-card {
-      padding: 0;
-      overflow: hidden;
-    }
     .cases-table-wrap {
       --pl-c-table-min: 52rem;
-      border: 0;
-      border-radius: 0;
     }
     .cases-row-action {
       cursor: pointer;
@@ -521,10 +515,6 @@ const activity = [
       padding-inline: var(--pl-space-2);
       min-block-size: 1.25rem;
     }
-    .cases-pagination-toolbar {
-      border-block-start: 1px solid var(--pl-color-border);
-      border-block-end: 0;
-    }
 
     .cases-workload {
       margin-block-start: var(--pl-space-6);
@@ -539,6 +529,17 @@ const activity = [
     #cases-sidebar[data-sidebar="collapsed"] .cases-workload__item {
       justify-content: center;
       padding-inline: 0;
+    }
+    @container pl-l-app-sidebar (inline-size < 5rem) {
+      .cases-workload__title,
+      .cases-workload__name,
+      .cases-workload .pl-c-badge {
+        display: none;
+      }
+      .cases-workload__item {
+        justify-content: center;
+        padding-inline: 0;
+      }
     }
     .cases-workload__title {
       font-size: var(--pl-text-xs);

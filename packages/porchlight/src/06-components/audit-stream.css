@@ -30,6 +30,7 @@
       --pl-c-audit-gap: var(--pl-space-3);
       --pl-c-audit-pad-block: var(--pl-space-3);
       --pl-c-audit-pad-inline: var(--pl-space-3);
+      --pl-c-audit-radius: var(--pl-radius-md);
 
       display: flex;
       flex-direction: column;
@@ -37,7 +38,7 @@
       margin: 0;
       padding: 0;
       border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-lg);
+      border-radius: var(--pl-c-audit-radius);
       background: var(--pl-color-surface);
       overflow: hidden;
     }
@@ -61,8 +62,20 @@
       --pl-c-audit-pad-inline: var(--pl-space-3);
     }
 
-    /* Seamless nesting inside cards: remove duplicate outer border and radius */
-    :is(:where(.pl-c-card) > :scope, :where(.pl-c-card__body) > :scope) {
+    /* Seamless nesting inside cards, panels, split panes, and flush containers */
+    :is(
+      :scope[data-variant="flush"],
+      :scope[data-flush],
+      :where(.pl-c-card) > :scope,
+      :where(.pl-c-card__body) > :scope,
+      :where(.pl-c-split-pane__pane) > :scope,
+      :where(.pl-c-split-pane__pane-inner) > :scope,
+      :where(.pl-c-tabs__panel) > :scope,
+      :where([data-variant="flush"]) :scope,
+      :where([data-flush]) :scope
+    ) {
+      --pl-c-audit-radius: 0;
+
       border: 0;
       border-radius: 0;
       background: transparent;

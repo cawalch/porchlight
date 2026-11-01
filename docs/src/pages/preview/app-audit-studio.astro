@@ -393,19 +393,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <section
           class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
           aria-label="Counterparty Position Inspector"
-          style="background: var(--pl-color-surface-2);"
         >
           <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
             <header
               class="pl-l-cluster"
-              style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);"
+              style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3); gap: var(--pl-space-2);"
             >
               <h3
-                style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;"
+                style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
               >
-                Counterparty Inspector // Subgrid Specs
+                Counterparty Inspector
               </h3>
-              <span class="pl-c-badge" data-tone="warning">STRESSED EXPOSURE</span>
+              <span class="pl-c-badge" data-tone="warning" style="flex-shrink: 0;">STRESSED EXPOSURE</span>
             </header>
 
             <!-- Property List using CSS Subgrid -->

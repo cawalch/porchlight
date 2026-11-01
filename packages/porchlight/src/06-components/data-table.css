@@ -20,7 +20,7 @@
  *   comfortable (default): standard spacing
  */
 @layer porchlight.components {
-  @scope (.pl-c-table-wrap) {
+  @scope (.pl-c-table-wrap, .pl-c-chart__table) {
     :scope {
       --pl-c-table-cell-pad: var(--pl-space-3) var(--pl-space-4);
       --pl-c-table-min: 48rem;
@@ -55,6 +55,27 @@
         color-mix(in oklab, var(--pl-color-border), transparent 20%);
       border-radius: var(--pl-c-table-radius);
       background: var(--pl-color-surface);
+    }
+
+    /* Inside charts, use chart radius token */
+    :scope:is(.pl-c-chart__table, :where(.pl-c-chart) *) {
+      --pl-c-table-radius: var(--pl-radius-md);
+    }
+
+    /* Flush variant and seamless nesting inside containers */
+    :is(
+      :scope[data-variant="flush"],
+      :scope[data-flush],
+      :where(.pl-c-card) > :scope,
+      :where(.pl-c-card__body) > :scope,
+      :where(.pl-c-tabs__panel) > :scope,
+      :where(.pl-c-split-pane__pane) > :scope
+    ) {
+      --pl-c-table-radius: 0;
+
+      border: 0;
+      border-radius: 0;
+      background: transparent;
     }
 
     /* Density modes. */
@@ -98,6 +119,45 @@
 
     .pl-c-table tbody tr:last-child td:last-child {
       border-end-end-radius: calc(var(--pl-c-table-radius) - 1px);
+    }
+
+    /* Inside flush containers or cards, cell corners stay flush with the container */
+    :is(
+        :scope[data-variant="flush"],
+        :scope[data-flush],
+        :where(.pl-c-card) :scope,
+        :where(.pl-c-tabs__panel) :scope,
+        :where(.pl-c-split-pane__pane) :scope
+      )
+      .pl-c-table
+      thead
+      tr:first-child
+      :is(th:first-child, th:last-child),
+    :is(
+        :scope[data-variant="flush"],
+        :scope[data-flush],
+        :where(.pl-c-card) :scope,
+        :where(.pl-c-tabs__panel) :scope,
+        :where(.pl-c-split-pane__pane) :scope
+      )
+      .pl-c-table
+      tbody
+      tr:last-child
+      :is(td:first-child, td:last-child) {
+      border-radius: 0;
+    }
+
+    /* When followed by a toolbar or footer, eliminate the double border seam */
+    :is(
+        :scope[data-variant="flush"],
+        :scope[data-flush],
+        :where(.pl-c-card) :scope
+      ):has(+ :is(.pl-c-toolbar, .pl-c-card__footer, footer))
+      .pl-c-table
+      tbody
+      tr:last-child
+      td {
+      border-block-end: 0;
     }
 
     .pl-c-table :where(th, td) {
@@ -495,7 +555,10 @@
   /* Opt-in zebra striping for extreme information density (financial data,
      log tables). Very subtle at 50% transparent surface-2 so it doesn't
      clash with hover/selection states. */
-  :where(.pl-c-table-wrap[data-zebra]) .pl-c-table tbody tr:nth-child(even) {
+  :where(.pl-c-table-wrap[data-zebra], .pl-c-chart__table[data-zebra])
+    .pl-c-table
+    tbody
+    tr:nth-child(even) {
     background: color-mix(in oklab, var(--pl-color-surface-2), transparent 50%);
   }
 

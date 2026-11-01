@@ -311,6 +311,9 @@ test.describe("modern app component contracts", () => {
     await expect(page.locator(".pl-c-chart[data-state='empty']")).toBeVisible();
     await expect(page.locator(".pl-c-chart[data-state='error']")).toBeVisible();
     await expect(page.locator(".pl-c-chart__table .pl-c-table")).toBeVisible();
+    await expect(
+      page.locator(".pl-c-chart__table th[data-align='end']").last(),
+    ).toHaveCSS("text-align", "end");
 
     await page.goto("./preview/filter-builder");
     await expect(

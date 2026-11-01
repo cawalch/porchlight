@@ -227,6 +227,8 @@
     }
 
     .pl-c-chart__table {
+      --pl-c-table-radius: var(--pl-radius-md);
+
       overflow: auto;
       border: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 20%);
