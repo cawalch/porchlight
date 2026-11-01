@@ -396,6 +396,7 @@
     :where(
       .pl-c-tooltip__body,
       .pl-c-menu__popover,
+      .pl-c-dropdown__menu,
       .pl-c-inspector[data-tether="true"]
     ) {
       /* stylelint-disable-next-line declaration-property-value-no-unknown */

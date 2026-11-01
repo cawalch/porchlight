@@ -1,0 +1,69 @@
+---
+title: Action Bar
+description: Floating batch action bar for tables, card grids, and mass-selection workflows with pure-CSS reactive auto-reveal.
+status: stable
+since: 0.15.0
+---
+
+The `.pl-c-action-bar` provides a floating batch action bar designed for enterprise tables, list views, and card grids. It surfaces context-sensitive bulk operations (such as Export, Tag, Archive, and Delete) without permanently occupying vertical viewport space.
+
+Built on SOTA CSS capabilities, `.pl-c-action-bar` features **pure-CSS reactive activation via `:has(:checked)`**: placing the bar adjacent to or inside any table or container with selectable checkboxes activates the bar seamlessly with zero runtime JavaScript. It also supports explicit display via `[data-open]` and top-layer invocation through the native HTML Popover API (`:popover-open`).
+
+## Semantic HTML
+
+```html
+<!-- Reactive auto-reveal with sibling table -->
+<div class="pl-c-table-wrap">
+  <table class="pl-c-table">
+    <thead>
+      <tr>
+        <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all"></th>
+        <th>Resource</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="pl-c-table__check"><input type="checkbox" aria-label="Select row"></td>
+        <td>prod-db-cluster-01</td>
+        <td><span class="pl-c-badge" data-tone="success">Healthy</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Pure-CSS floating batch bar triggers when any checkbox is checked -->
+<div class="pl-c-action-bar" role="toolbar" aria-label="Batch actions">
+  <div class="pl-c-action-bar__lead">
+    <span class="pl-c-action-bar__count">Selected</span>
+  </div>
+  <div class="pl-c-action-bar__divider" aria-hidden="true"></div>
+  <div class="pl-c-action-bar__actions">
+    <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Export CSV</button>
+    <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Archive</button>
+    <button type="button" class="pl-c-button" data-tone="danger" data-variant="ghost" data-size="sm">Delete</button>
+  </div>
+  <button type="button" class="pl-c-action-bar__dismiss" aria-label="Clear selection">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </button>
+</div>
+```
+
+## Class contract
+
+| Selector                     | Role                                                                          |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `.pl-c-action-bar`           | Floating action pill with liquid-glass backdrop blur and specular border.      |
+| `.pl-c-action-bar__lead`     | Leading area for selection context and counts.                                |
+| `.pl-c-action-bar__count`    | Semantic count pill or badge with accent tint.                                |
+| `.pl-c-action-bar__divider`  | Subtle vertical hairline separator between context and action buttons.       |
+| `.pl-c-action-bar__actions`  | Inline button cluster hosting batch actions.                                  |
+| `.pl-c-action-bar__dismiss`  | Accessible circular dismiss/deselect button.                                  |
+
+## Positioning & Variants
+
+- **Fixed floating pill (default)**: Anchors horizontally centered above the viewport bottom with `position: fixed`, `max-inline-size: min(calc(100vw - 2rem), 48rem)`, and high z-index elevation.
+- **Sticky container variant (`[data-position="sticky"]`)**: Sticks to the bottom edge of a scrollable table or workflow panel.
+- **Inline variant (`[data-position="inline"]`)**: Renders inline without fixed viewport positioning.

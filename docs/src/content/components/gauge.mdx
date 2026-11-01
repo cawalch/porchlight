@@ -1,0 +1,56 @@
+---
+title: Gauge
+description: Pure-CSS radial KPI dial and progress gauge driven by conic-gradient and registered @property percentage transitions.
+status: stable
+since: 0.15.0
+---
+
+The `.pl-c-gauge` component renders a circular or semi-circular KPI progress gauge for capacity monitors, telemetry cockpits, and SLA uptime dashboards.
+
+Unlike legacy SVG or Canvas approaches that require runtime calculation scripts, `.pl-c-gauge` is 100% native CSS. It combines modern `conic-gradient()` with a registered `@property --pl-gauge-value { syntax: '<percentage>'; }` token, enabling hardware-accelerated value transitions directly from CSS.
+
+## Semantic HTML
+
+```html
+<div
+  class="pl-c-gauge"
+  style="--pl-gauge-value: 84%;"
+  role="meter"
+  aria-valuenow="84"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-label="Storage quota"
+  data-tone="warning"
+>
+  <div class="pl-c-gauge__track"></div>
+  <div class="pl-c-gauge__center">
+    <span class="pl-c-gauge__value">84%</span>
+    <span class="pl-c-gauge__label">Quota</span>
+  </div>
+</div>
+```
+
+## Class contract
+
+| Selector                 | Role                                                                |
+| ------------------------ | ------------------------------------------------------------------- |
+| `.pl-c-gauge`            | Dial container establishing size, CSS variable scoping, and grid.  |
+| `.pl-c-gauge__track`     | Conic gradient track with radial cutout mask and smooth animation.  |
+| `.pl-c-gauge__center`    | Centered flexbox bay containing the readout and metric label.       |
+| `.pl-c-gauge__value`     | Primary tabular numeric readout with bold typographic weight.       |
+| `.pl-c-gauge__label`     | Uppercase secondary metric category or description label.           |
+
+## Variants & Customization
+
+- **Tones via `[data-tone]`**:
+  - `accent` (default): Framework accent color.
+  - `success`: System emerald tone for high health and compliance.
+  - `warning`: Amber tone for threshold breaches and capacity warnings.
+  - `danger`: Red tone for critical errors, low memory, or SLA violations.
+  - `brand`: Brand corporate color tone.
+- **Sizes via `[data-size]`**:
+  - `sm`: 4rem / 64px compact gauge for dense telemetry rows.
+  - Default: 6rem / 96px for standard dashboards.
+  - `lg`: 8rem / 128px for executive summary hero tiles.
+- **Speedometer Arc via `[data-variant="arc"]`**:
+  - Clips the lower half to render a 180° semi-circular dial gauge.

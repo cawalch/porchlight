@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add pure-CSS floating batch action bar component (`.pl-c-action-bar`) with liquid glass styling, responsive pill geometry, and zero-JS reactive auto-reveal via `:has(:checked)`.
+- Add pure-CSS circular and radial KPI dial gauge component (`.pl-c-gauge`) using `conic-gradient()` and registered `@property --pl-gauge-value { syntax: '<percentage>'; }` for GPU-accelerated value transitions.
+- Add CSS Anchor Positioning `anchor-size(self-inline)` trigger-width auto-matching to `.pl-c-dropdown__menu` and `.pl-c-popover-menu[data-match-trigger]`.
+- Add `position-visibility: anchors-visible` tethered auto-hiding to `.pl-c-dropdown__menu`.
+- Add preview routes and component documentation for `action-bar` and `gauge`.
+
 ## [0.14.0] - 2026-11-01
 
 ### Added

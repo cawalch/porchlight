@@ -128,7 +128,7 @@ test.describe("docs scaffold", () => {
     const componentsStat = page.locator("[data-stat-components]");
     const patternsStat = page.locator("[data-stat-patterns]");
 
-    await expect(totalStat).toHaveText("85");
+    await expect(totalStat).toHaveText("87");
 
     // Filter by 'audit'
     await input.fill("audit");
@@ -142,8 +142,8 @@ test.describe("docs scaffold", () => {
     // Clear with Escape
     await input.press("Escape");
     await expect(input).toHaveValue("");
-    await expect(totalStat).toHaveText("85");
-    await expect(componentsStat).toHaveText("57");
+    await expect(totalStat).toHaveText("87");
+    await expect(componentsStat).toHaveText("59");
     await expect(patternsStat).toHaveText("9");
   });
 

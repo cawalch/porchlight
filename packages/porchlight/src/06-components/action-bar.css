@@ -1,0 +1,222 @@
+/*
+ * Porchlight  -  action bar component
+ * ===========================================================================
+ * A floating batch action bar for tables, card grids, and mass-selection
+ * workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts
+ * without occupying permanent screen real estate.
+ *
+ * Activation modes:
+ *   1. Pure-CSS reactive reveal via :has()  -  triggers automatically when a sibling
+ *      or ancestor table/region has checked inputs:
+ *        :is(.pl-c-table-wrap, [data-selection-region]):has(:checked) ~ .pl-c-action-bar
+ *   2. Explicit visibility via [data-open="true"] or [data-open]
+ *   3. Native top-layer via the Popover API: <aside popover class="pl-c-action-bar">
+ *
+ * Structure:
+ *   <div class="pl-c-action-bar" role="toolbar" aria-label="Batch actions">
+ *     <div class="pl-c-action-bar__lead">
+ *       <span class="pl-c-action-bar__count">3 selected</span>
+ *     </div>
+ *     <div class="pl-c-action-bar__divider" aria-hidden="true"></div>
+ *     <div class="pl-c-action-bar__actions">
+ *       <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Export</button>
+ *       <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Archive</button>
+ *       <button type="button" class="pl-c-button" data-tone="danger" data-variant="ghost" data-size="sm">Delete</button>
+ *     </div>
+ *     <button type="button" class="pl-c-action-bar__dismiss" aria-label="Deselect all">
+ *       <svg aria-hidden="true" viewBox="0 0 16 16">...</svg>
+ *     </button>
+ *   </div>
+ */
+@layer porchlight.components {
+  @scope (.pl-c-action-bar) {
+    :scope {
+      --pl-c-action-bar-pad-inline: var(--pl-space-3);
+      --pl-c-action-bar-pad-block: var(--pl-space-2);
+      --pl-c-action-bar-gap: var(--pl-space-2);
+
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: var(--pl-c-action-bar-gap);
+      padding-block: var(--pl-c-action-bar-pad-block);
+      padding-inline: var(--pl-c-action-bar-pad-inline);
+
+      /* Floating pill layout anchored to bottom-center of viewport by default. */
+      position: fixed;
+      inset-block-end: var(--pl-space-6);
+      inset-inline: 0;
+      margin-inline: auto;
+      inline-size: fit-content;
+      max-inline-size: calc(100vw - var(--pl-space-4));
+      z-index: var(--pl-z-fixed);
+
+      /* Liquid Glass floating surface. */
+      border: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 30%);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-overlay-popover-bg);
+      backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
+        saturate(var(--pl-backdrop-saturate));
+      color: var(--pl-color-text);
+      box-shadow: var(--pl-shadow-4);
+
+      /* Default state: hidden and stowed below the fold. */
+      opacity: 0;
+      transform: translateY(1.25rem) scale(0.96);
+      pointer-events: none;
+      visibility: hidden;
+      transition:
+        opacity var(--pl-duration-exit) var(--pl-ease-accelerate),
+        transform var(--pl-duration-exit) var(--pl-ease-accelerate),
+        visibility 0s linear var(--pl-duration-exit);
+    }
+
+    /* Inline position variant for bounded containers or card footers. */
+    :scope[data-position="sticky"] {
+      position: sticky;
+      inset-block-end: var(--pl-space-3);
+      z-index: var(--pl-z-sticky);
+    }
+
+    :scope[data-position="inline"] {
+      position: relative;
+      inset: auto;
+      margin-inline: 0;
+      max-inline-size: 100%;
+      z-index: var(--pl-z-raised);
+    }
+
+    .pl-c-action-bar__lead {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+      white-space: nowrap;
+    }
+
+    .pl-c-action-bar__count {
+      display: inline-flex;
+      align-items: center;
+      padding-block: 0.125rem;
+      padding-inline: var(--pl-space-2);
+      border-radius: var(--pl-radius-pill);
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 85%);
+      color: var(--pl-color-accent);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pl-c-action-bar__divider {
+      inline-size: 1px;
+      block-size: 1.25rem;
+      background: color-mix(in oklab, var(--pl-color-border), transparent 40%);
+      flex-shrink: 0;
+    }
+
+    .pl-c-action-bar__actions {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-1);
+    }
+
+    .pl-c-action-bar__dismiss {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 1.75rem;
+      block-size: 1.75rem;
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-pill);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-action-bar__dismiss:hover {
+      background: color-mix(in oklab, var(--pl-color-text), transparent 90%);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-action-bar__dismiss:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .pl-c-action-bar__dismiss svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+   * Reactive Activation Contracts (OUTSIDE @scope)
+   * -------------------------------------------------------------------------
+   * The action bar animates into view when:
+   *   - A sibling table, card grid, or form contains checked inputs
+   *   - An ancestor selection region contains checked inputs
+   *   - Explicitly revealed via [data-open]
+   *   - Opened via the native Popover API (:popover-open)
+   */
+  :where(
+    .pl-c-table-wrap,
+    .pl-c-table,
+    .pl-c-card,
+    form,
+    [data-selection-region]
+  ):has(tbody :checked, input[type="checkbox"]:checked) ~ .pl-c-action-bar,
+  :where(
+    .pl-c-table-wrap,
+    .pl-c-card,
+    [data-selection-region]
+  ):has(tbody :checked, input[type="checkbox"]:checked) .pl-c-action-bar,
+  .pl-c-action-bar:is([data-open], [data-open="true"]),
+  .pl-c-action-bar:popover-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    visibility: visible;
+    transition:
+      opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+      transform var(--pl-duration-enter) var(--pl-ease-decelerate),
+      visibility 0s linear 0s;
+  }
+
+  @starting-style {
+    .pl-c-action-bar:is([data-open], [data-open="true"], :popover-open) {
+      opacity: 0;
+      transform: translateY(1.25rem) scale(0.96);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-action-bar) {
+      border-color: ButtonBorder;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    :where(.pl-c-action-bar__divider) {
+      background: ButtonBorder;
+    }
+
+    :where(.pl-c-action-bar__count) {
+      border: 1px solid Highlight;
+      color: Highlight;
+    }
+
+    :where(.pl-c-action-bar__dismiss):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

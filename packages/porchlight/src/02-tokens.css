@@ -36,6 +36,12 @@
     initial-value: 2px;
   }
 
+  @property --pl-gauge-value {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+  }
+
   :root {
     /* Fonts */
     --pl-font-sans:

@@ -29,6 +29,7 @@
 
       display: inline-block;
       position: relative;
+      anchor-scope: --pl-c-dropdown-anchor;
     }
 
     .pl-c-dropdown__trigger {
@@ -109,6 +110,10 @@
         position-area: block-end span-inline-end;
         position-try-fallbacks: flip-block;
         margin-block-start: var(--pl-space-1);
+        min-inline-size: max(
+          var(--pl-c-dropdown-min-inline),
+          anchor-size(self-inline)
+        );
       }
     }
 

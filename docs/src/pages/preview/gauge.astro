@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Gauge · Porchlight">
+  <h1>Gauge</h1>
+  <p>
+    Pure-CSS radial KPI dial and progress gauge driven by modern <code>conic-gradient()</code> and
+    the registered <code>@property --pl-gauge-value</code> token for zero-JS, GPU-accelerated percentage animations.
+  </p>
+
+  <h2>Standard KPI Dials</h2>
+  <div class="pl-l-grid" style="--pl-l-grid-min: 14rem; gap: var(--pl-space-4);">
+    <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
+      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">System Uptime</span>
+      <div
+        class="pl-c-gauge"
+        style="--pl-gauge-value: 99.8%;"
+        role="meter"
+        aria-valuenow="99.8"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-label="System Uptime"
+        data-tone="success"
+      >
+        <div class="pl-c-gauge__track"></div>
+        <div class="pl-c-gauge__center">
+          <span class="pl-c-gauge__value">99.8%</span>
+          <span class="pl-c-gauge__label">SLA</span>
+        </div>
+      </div>
+      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">Target: 99.5%</span>
+    </div>
+
+    <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
+      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">Memory Utilization</span>
+      <div
+        class="pl-c-gauge"
+        style="--pl-gauge-value: 78%;"
+        role="meter"
+        aria-valuenow="78"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-label="Memory Utilization"
+        data-tone="warning"
+      >
+        <div class="pl-c-gauge__track"></div>
+        <div class="pl-c-gauge__center">
+          <span class="pl-c-gauge__value">78%</span>
+          <span class="pl-c-gauge__label">RAM</span>
+        </div>
+      </div>
+      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">12.4 GB of 16 GB</span>
+    </div>
+
+    <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
+      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">Disk Space Left</span>
+      <div
+        class="pl-c-gauge"
+        style="--pl-gauge-value: 92%;"
+        role="meter"
+        aria-valuenow="92"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-label="Disk Space Left"
+        data-tone="danger"
+      >
+        <div class="pl-c-gauge__track"></div>
+        <div class="pl-c-gauge__center">
+          <span class="pl-c-gauge__value">92%</span>
+          <span class="pl-c-gauge__label">Full</span>
+        </div>
+      </div>
+      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">8 GB remaining</span>
+    </div>
+  </div>
+
+  <h2 style="margin-block-start: var(--pl-space-8);">Gauge Sizes</h2>
+  <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-6);">
+    <!-- Small -->
+    <div
+      class="pl-c-gauge"
+      data-size="sm"
+      style="--pl-gauge-value: 45%;"
+      role="meter"
+      aria-valuenow="45"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Small Gauge"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">45%</span>
+        <span class="pl-c-gauge__label">CPU</span>
+      </div>
+    </div>
+
+    <!-- Default -->
+    <div
+      class="pl-c-gauge"
+      style="--pl-gauge-value: 65%;"
+      role="meter"
+      aria-valuenow="65"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Medium Gauge"
+      data-tone="brand"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">65%</span>
+        <span class="pl-c-gauge__label">Bandwidth</span>
+      </div>
+    </div>
+
+    <!-- Large -->
+    <div
+      class="pl-c-gauge"
+      data-size="lg"
+      style="--pl-gauge-value: 88%;"
+      role="meter"
+      aria-valuenow="88"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Large Gauge"
+      data-tone="success"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">88%</span>
+        <span class="pl-c-gauge__label">Overall Health</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-block-start: var(--pl-space-8);">Speedometer Arc Variant</h2>
+  <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-6);">
+    <div
+      class="pl-c-gauge"
+      data-variant="arc"
+      style="--pl-gauge-value: 72%;"
+      role="meter"
+      aria-valuenow="72"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Speedometer Arc"
+      data-tone="success"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">72%</span>
+        <span class="pl-c-gauge__label">Throughput</span>
+      </div>
+    </div>
+
+    <div
+      class="pl-c-gauge"
+      data-variant="arc"
+      data-size="lg"
+      style="--pl-gauge-value: 85%;"
+      role="meter"
+      aria-valuenow="85"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Large Speedometer Arc"
+      data-tone="warning"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">85%</span>
+        <span class="pl-c-gauge__label">Pressure</span>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

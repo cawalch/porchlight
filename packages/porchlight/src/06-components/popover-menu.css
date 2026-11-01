@@ -26,6 +26,7 @@
       --pl-c-menu-offset-inline: 0;
 
       display: inline-block;
+      anchor-scope: --pl-c-menu-anchor;
     }
 
     :scope[data-placement="inline-end"] {
@@ -78,6 +79,11 @@
         position-try-fallbacks: var(--pl-c-menu-position-try-fallbacks);
         margin-block-start: var(--pl-c-menu-offset-block);
         margin-inline-start: var(--pl-c-menu-offset-inline);
+      }
+
+      :scope[data-match-trigger] .pl-c-menu__popover,
+      .pl-c-menu__popover[data-match-trigger] {
+        min-inline-size: max(12rem, anchor-size(self-inline));
       }
     }
 
