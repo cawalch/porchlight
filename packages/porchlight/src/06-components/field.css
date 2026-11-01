@@ -1,7 +1,8 @@
 /*
  * Porchlight  -  field component
  * ===========================================================================
- * A labeled form control: label, native input, and hint/messages. Wraps native
+ * A labeled form control: label, native input, hint/messages, and zero-JS
+ * anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native
  * <input>/<select>/<textarea> so we inherit all their behavior (constraint
  * validation, autofill, IME, spellcheck). No JS, no custom widgets.
  *
