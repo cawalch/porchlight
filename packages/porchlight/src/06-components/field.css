@@ -140,8 +140,9 @@
 
   /* Standalone search and composed controls also need field chrome. Wrapped
      controls inherit the wrapper's aliases; standalone controls fall back to
-     theme tokens. Later components can override their inner control chrome. */
-  .pl-c-field__control {
+     theme tokens. Later components can override their inner control chrome.
+     Supports both .pl-c-field__control and .pl-c-field__input aliases. */
+  :is(.pl-c-field__control, .pl-c-field__input) {
     /* appearance: none  -  we fully restyle the control; the UA's native
      input chrome (including its :focus border ring) would otherwise win
      over our border-color/box-shadow and freeze the border at the UA gray. */
@@ -259,14 +260,14 @@
     }
   }
 
-  .pl-c-field__control::placeholder {
+  :is(.pl-c-field__control, .pl-c-field__input)::placeholder {
     color: var(--pl-color-text-muted);
   }
 
   /* State rules apply to standalone and wrapped controls. */
 
   /* Focus uses the focus border and a translucent outer ring. */
-  .pl-c-field__control:focus-visible {
+  :is(.pl-c-field__control, .pl-c-field__input):focus-visible {
     outline: none;
     border-color: var(--pl-focus-color);
     box-shadow: 0 0 0 4px
@@ -279,7 +280,10 @@
 
   /* Invalid: the border and outer ring use danger. The hint still
      flips to danger-text via :has() on the wrapper (below). */
-  .pl-c-field__control:is(:user-invalid, [aria-invalid="true"]) {
+  :is(.pl-c-field__control, .pl-c-field__input):is(
+    :user-invalid,
+    [aria-invalid="true"]
+  ) {
     border-color: var(--pl-color-danger);
     box-shadow: 0 0 0 4px
       color-mix(
@@ -300,7 +304,10 @@
   }
 
   :where(.pl-c-field):has(
-      .pl-c-field__control:is(:user-invalid, [aria-invalid="true"])
+      :is(.pl-c-field__control, .pl-c-field__input):is(
+        :user-invalid,
+        [aria-invalid="true"]
+      )
     )
     .pl-c-field__hint:not([data-tone]) {
     color: var(--pl-color-danger-text);
@@ -310,8 +317,9 @@
      user interacts and satisfies constraints (:user-valid), flips border
      to success token. */
   :is(
-      :where([data-feedback="valid"]) .pl-c-field__control,
-      .pl-c-field__control[data-feedback="valid"]
+      :where([data-feedback="valid"])
+        :is(.pl-c-field__control, .pl-c-field__input),
+      :is(.pl-c-field__control, .pl-c-field__input)[data-feedback="valid"]
     ):user-valid:not(:placeholder-shown) {
     border-color: var(--pl-color-success);
     box-shadow: 0 0 0 4px
@@ -333,33 +341,37 @@
   }
 
   :where(.pl-c-field[data-feedback="valid"]):has(
-      .pl-c-field__control:user-valid:not(:placeholder-shown)
+      :is(.pl-c-field__control, .pl-c-field__input):user-valid:not(
+          :placeholder-shown
+        )
     )
     .pl-c-field__hint:not([data-tone]) {
     color: var(--pl-color-success-text);
   }
 
-  :where(.pl-c-field):has(.pl-c-field__control:disabled) {
+  :where(.pl-c-field):has(
+    :is(.pl-c-field__control, .pl-c-field__input):disabled
+  ) {
     opacity: var(--pl-opacity-disabled);
   }
 
-  .pl-c-field__control:disabled {
+  :is(.pl-c-field__control, .pl-c-field__input):disabled {
     opacity: var(--pl-opacity-disabled);
     cursor: not-allowed;
   }
 
   /* Wrapped fields already dim their label, control and hint together. */
-  :where(.pl-c-field) .pl-c-field__control:disabled {
+  :where(.pl-c-field) :is(.pl-c-field__control, .pl-c-field__input):disabled {
     opacity: 1;
   }
 
   @media (forced-colors: active) {
-    .pl-c-field__control {
+    :is(.pl-c-field__control, .pl-c-field__input) {
       border-color: ButtonBorder;
     }
 
     /* Forced colors suppresses box shadows; keep a keyboard focus outline. */
-    .pl-c-field__control:focus-visible {
+    :is(.pl-c-field__control, .pl-c-field__input):focus-visible {
       outline: 2px solid Highlight;
       outline-offset: var(--pl-focus-offset);
     }

@@ -49,20 +49,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Center: Elastic IDE Query Input -->
-    <div class="pl-c-toolbar__group" style="flex: 1 1 12rem; max-width: 440px; min-inline-size: 0;">
-      <div style="display: flex; align-items: center; width: 100%; gap: var(--pl-space-2); min-inline-size: 0;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pl-u-muted" aria-hidden="true" style="flex-shrink: 0;">
+    <div class="pl-c-toolbar__group cockpit-search-group">
+      <div class="cockpit-search">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="cockpit-search-icon"
+          aria-hidden="true"
+        >
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
         <input
           type="text"
-          class="pl-c-field__input"
+          class="pl-c-field__control pl-c-field__input cockpit-query-input"
           data-elastic="true"
           placeholder="Filter metrics, actors, policy (field-sizing: content)..."
           value="service:ingress status:quarantined"
           aria-label="Filter telemetry metrics and actors"
-          style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); padding: var(--pl-space-1) var(--pl-space-2); min-inline-size: 0; width: 100%; max-inline-size: 100%;"
         />
       </div>
     </div>
@@ -81,11 +91,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </header>
 
-  <div class="pl-l-flow" style="max-width: 1440px; margin-inline: auto;">
-    <!-- Telemetry KPI Dashboard Tiles -->
-    <section aria-labelledby="kpi-heading">
-      <h2 id="kpi-heading" class="pl-u-sr-only">Telemetry Key Performance Indicators</h2>
-      <div class="pl-l-grid" style="--pl-l-grid-min: 220px; gap: var(--pl-space-3);">
+  <div class="pl-l-container cockpit-container">
+    <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-4);">
+      <!-- Telemetry KPI Dashboard Tiles -->
+      <section aria-labelledby="kpi-heading">
+        <h2 id="kpi-heading" class="pl-u-sr-only">Telemetry Key Performance Indicators</h2>
+        <div class="pl-l-grid" style="--pl-l-grid-min: 15rem; gap: var(--pl-space-3);">
         <!-- Metric 1: Error Budget -->
         <article class="pl-c-kpi-card" data-tone="accent">
           <header class="pl-c-kpi-card__header">
@@ -180,10 +191,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <!-- Cockpit Workstation Split Pane with CSS Gap Decorations (rule) -->
-    <section aria-labelledby="cockpit-workstation-heading">
-      <h2 id="cockpit-workstation-heading" class="pl-u-sr-only">Cockpit Workstation: Audit Stream and Node Inspector</h2>
-      <div class="pl-c-split-pane" data-orientation="horizontal" data-collapse="stack" data-dividers="true" style="border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-md); background: var(--pl-color-surface);">
+      <!-- Cockpit Workstation Split Pane with CSS Gap Decorations (rule) -->
+      <section
+        aria-labelledby="cockpit-workstation-heading"
+        class="cockpit-workstation-section"
+      >
+        <h2 id="cockpit-workstation-heading" class="pl-u-sr-only">
+          Cockpit Workstation: Audit Stream and Node Inspector
+        </h2>
+        <div
+          class="pl-c-split-pane cockpit-split"
+          data-orientation="horizontal"
+          data-collapse="stack"
+          data-dividers="true"
+        >
         <!-- Left Pane: Enterprise Compliance Audit Ledger -->
         <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start" aria-label="Enterprise Audit Ledger">
           <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
@@ -287,7 +308,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             </header>
 
             <!-- Property List using CSS Subgrid -->
-            <dl class="pl-c-property-list" data-subgrid="true" data-pl-density="dense" style="margin-block-end: var(--pl-space-4);">
+            <dl
+              class="pl-c-property-list"
+              data-subgrid="true"
+              data-pl-density="dense"
+              style="margin-block-end: var(--pl-space-4); --pl-c-property-key-w: minmax(9.5rem, 11.5rem);"
+            >
               <div class="pl-c-property-list__item">
                 <dt class="pl-c-property-list__key">Host Identifier</dt>
                 <dd class="pl-c-property-list__value pl-u-mono">prod-telemetry-worker-08</dd>
@@ -346,28 +372,129 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <!-- Tactile Keyboard Shortcuts Strip -->
-    <footer class="pl-c-card" data-variant="flat" style="padding: var(--pl-space-3); margin-block: var(--pl-space-4); overflow: hidden;">
-      <div class="pl-l-cluster" style="justify-content: space-between; align-items: center; font-size: var(--pl-text-xs);">
-        <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-3);">
-          <span class="pl-u-muted" style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Tactile Keycaps</span>
-          <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-            <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd> Command Palette
-          </span>
-          <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-            <kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">D</kbd> Toggle Raw Diff
-          </span>
-          <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-            <kbd class="pl-c-kbd">⌥</kbd><kbd class="pl-c-kbd">L</kbd> Stream Tail
-          </span>
-          <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-            <kbd class="pl-c-kbd">Esc</kbd> Reset Focus
-          </span>
+      <!-- Tactile Keyboard Shortcuts Strip -->
+      <footer
+        class="pl-c-card"
+        data-variant="flat"
+        style="padding: var(--pl-space-3); margin-block: var(--pl-space-2) 0; overflow: hidden;"
+      >
+        <div
+          class="pl-l-cluster"
+          style="justify-content: space-between; align-items: center; font-size: var(--pl-text-xs);"
+        >
+          <div
+            class="pl-l-cluster"
+            style="align-items: center; gap: var(--pl-space-3);"
+          >
+            <span
+              class="pl-u-muted"
+              style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;"
+              >Tactile Keycaps</span
+            >
+            <span
+              class="pl-l-cluster"
+              style="align-items: center; gap: var(--pl-space-1);"
+            >
+              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd> Command
+              Palette
+            </span>
+            <span
+              class="pl-l-cluster"
+              style="align-items: center; gap: var(--pl-space-1);"
+            >
+              <kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">D</kbd> Toggle
+              Raw Diff
+            </span>
+            <span
+              class="pl-l-cluster"
+              style="align-items: center; gap: var(--pl-space-1);"
+            >
+              <kbd class="pl-c-kbd">⌥</kbd><kbd class="pl-c-kbd">L</kbd> Stream
+              Tail
+            </span>
+            <span
+              class="pl-l-cluster"
+              style="align-items: center; gap: var(--pl-space-1);"
+            >
+              <kbd class="pl-c-kbd">Esc</kbd> Reset Focus
+            </span>
+          </div>
+          <div
+            class="pl-u-muted"
+            style="font-family: var(--pl-font-mono);"
+          >
+            PORCHLIGHT INDUSTRIAL PRECISION V0.13.1
+          </div>
         </div>
-        <div class="pl-u-muted" style="font-family: var(--pl-font-mono);">
-          PORCHLIGHT INDUSTRIAL PRECISION V0.13.1
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
 </BaseLayout>
+
+<style>
+  .cockpit-container {
+    --pl-l-container-max: 90rem;
+    padding-inline: var(--pl-space-4);
+    padding-block-end: var(--pl-space-6);
+  }
+  .cockpit-search-group {
+    flex: 1 1 14rem;
+    max-inline-size: 28rem;
+    min-inline-size: 0;
+  }
+  .cockpit-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+  .cockpit-search-icon {
+    position: absolute;
+    inset-inline-start: var(--pl-space-3);
+    pointer-events: none;
+    color: var(--pl-color-text-muted);
+    flex-shrink: 0;
+  }
+  .cockpit-query-input {
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding-inline-start: calc(var(--pl-space-3) + 14px + var(--pl-space-2));
+    font-family: var(--pl-font-mono);
+    font-size: var(--pl-text-xs);
+  }
+  .cockpit-workstation-section {
+    container-type: inline-size;
+  }
+  .cockpit-split {
+    --pl-c-split-pane-start-size: minmax(28rem, 1.35fr);
+    --pl-c-split-pane-end-size: minmax(24rem, 1fr);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-color-surface);
+  }
+  @container (inline-size < 58rem) {
+    .cockpit-split {
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: minmax(18rem, auto) var(--pl-c-split-pane-separator-size) minmax(20rem, 1fr) !important;
+    }
+    .cockpit-split > .pl-c-split-pane__pane--start {
+      grid-area: 1 / 1 !important;
+    }
+    .cockpit-split > .pl-c-split-pane__separator {
+      grid-area: 2 / 1 !important;
+      cursor: row-resize !important;
+    }
+    .cockpit-split > .pl-c-split-pane__separator::before {
+      inline-size: 100% !important;
+      block-size: var(--pl-c-split-pane-separator-line-size, 1px) !important;
+    }
+    .cockpit-split > .pl-c-split-pane__separator::after {
+      inline-size: 2rem !important;
+      block-size: 0.1875rem !important;
+    }
+    .cockpit-split > .pl-c-split-pane__pane--end {
+      grid-area: 3 / 1 !important;
+    }
+  }
+</style>

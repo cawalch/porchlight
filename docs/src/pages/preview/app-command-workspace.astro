@@ -75,6 +75,7 @@ const groupedCommands = commands.reduce(
             data-size="sm"
             type="button"
             aria-label="Toggle sidebar"
+            data-toggle="sidebar"
           >
             <svg class="command-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"></path>
@@ -564,6 +565,18 @@ const groupedCommands = commands.reduce(
       });
     });
 
+    document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
+      const sidebar = document.querySelector('.command-sidebar');
+      const nav = sidebar?.querySelector('.pl-c-nav');
+      const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
+      sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+      if (collapsed) {
+        nav?.removeAttribute('data-variant');
+      } else {
+        nav?.setAttribute('data-variant', 'icons');
+      }
+    });
+
     document.querySelector('[data-toast-dismiss]')?.addEventListener('click', () => {
       document.querySelector('[data-toast]')?.removeAttribute('data-visible');
     });
@@ -586,6 +599,10 @@ const groupedCommands = commands.reduce(
     padding: var(--pl-space-3);
     border-inline-end: 1px solid var(--pl-color-border);
     background: var(--pl-color-surface);
+  }
+
+  .command-sidebar[data-sidebar="collapsed"] {
+    padding-inline: var(--pl-space-1);
   }
 
   .command-container {

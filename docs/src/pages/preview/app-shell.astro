@@ -209,6 +209,16 @@ const nav = [
     block-size: 0.875rem;
     color: var(--pl-color-text-muted);
   }
+  .sidebar[data-sidebar='collapsed'] .nav-item__label {
+    display: none;
+  }
+  .sidebar[data-sidebar='collapsed'] .nav-item {
+    justify-content: center;
+    padding-inline: 0;
+  }
+  .sidebar[data-sidebar='collapsed'] .sidebar__nav {
+    padding-inline: var(--pl-space-1);
+  }
 
   .main {
     padding: var(--pl-space-5);

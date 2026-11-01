@@ -1566,12 +1566,29 @@ test.describe("docs scaffold", () => {
     await expect(
       page.getByRole("heading", { name: "Apex Risk Studio" }),
     ).toBeVisible();
+
+    // Verify search query input is properly styled with Porchlight field chrome
+    const queryInput = page.locator(".studio-query-input");
+    await expect(queryInput).toBeVisible();
+    const inputStyles = await queryInput.evaluate((el) => {
+      const s = window.getComputedStyle(el);
+      return {
+        borderStyle: s.borderTopStyle,
+        borderRadius: s.borderTopLeftRadius,
+        backgroundColor: s.backgroundColor,
+      };
+    });
+    expect(inputStyles.borderStyle).toBe("solid");
+    expect(inputStyles.borderRadius).not.toBe("0px");
+
     await expect(
       page.locator(".pl-c-banner[data-tone='warning']"),
     ).toBeVisible();
     // 4 KPI Cards
     const kpis = page.locator(".pl-c-kpi-card");
     expect(await kpis.count()).toBe(4);
+    // Workstation split pane
+    await expect(page.locator(".studio-split")).toBeVisible();
     // Audit stream with immutable entries
     await expect(page.locator(".pl-c-audit-stream")).toBeVisible();
     expect(
@@ -1637,8 +1654,63 @@ test.describe("docs scaffold", () => {
     await expect(page.locator(".cases-workload")).toBeVisible();
     // Detail drawer exists (popover).
     await expect(page.locator("#case-detail")).toBeAttached();
-    // Pagination.
-    await expect(page.locator(".pl-c-pagination")).toBeVisible();
+    // Verify table wrapper does not have conflicting scroll region class
+    await expect(page.locator(".cases-table-wrap")).not.toHaveClass(
+      /pl-c-scroll-region/,
+    );
+
+    // Sidebar toggle test: collapse and assert labels hide
+    const sidebar = page.locator("#cases-sidebar");
+    await expect(sidebar).toHaveAttribute("data-sidebar", "expanded");
+    await page.locator('[data-toggle="sidebar"]').click();
+    await expect(sidebar).toHaveAttribute("data-sidebar", "collapsed");
+    await expect(sidebar.locator(".pl-c-nav__label").first()).toBeHidden();
+    await expect(sidebar.locator(".cases-workload__name").first()).toBeHidden();
+
+    // Toggle back
+    await page.locator('[data-toggle="sidebar"]').click();
+    await expect(sidebar).toHaveAttribute("data-sidebar", "expanded");
+    await expect(sidebar.locator(".pl-c-nav__label").first()).toBeVisible();
+    await expect(
+      sidebar.locator(".cases-workload__name").first(),
+    ).toBeVisible();
+  });
+
+  test("app-telemetry-cockpit renders flagship SaaS cockpit layout, styled search, KPIs, and responsive workstation", async ({
+    page,
+  }) => {
+    await page.goto("./preview/app-telemetry-cockpit");
+    await expect(
+      page.getByRole("heading", { name: "Telemetry Cockpit" }),
+    ).toBeVisible();
+
+    // Verify search query input is properly styled with Porchlight field chrome
+    const queryInput = page.locator(".cockpit-query-input");
+    await expect(queryInput).toBeVisible();
+    const inputStyles = await queryInput.evaluate((el) => {
+      const s = window.getComputedStyle(el);
+      return {
+        borderStyle: s.borderTopStyle,
+        borderRadius: s.borderTopLeftRadius,
+        backgroundColor: s.backgroundColor,
+      };
+    });
+    expect(inputStyles.borderStyle).toBe("solid");
+    expect(inputStyles.borderRadius).not.toBe("0px");
+
+    // 4 KPI Cards
+    const kpis = page.locator(".pl-c-kpi-card");
+    expect(await kpis.count()).toBe(4);
+
+    // Workstation Split Pane
+    const splitPane = page.locator(".cockpit-split");
+    await expect(splitPane).toBeVisible();
+    await expect(page.locator(".pl-c-audit-stream")).toBeVisible();
+    await expect(page.locator(".pl-c-property-list")).toBeVisible();
+    await expect(page.locator(".pl-c-code-block")).toBeVisible();
+
+    // Tactile keycaps
+    expect(await page.locator(".pl-c-kbd").count()).toBeGreaterThanOrEqual(4);
   });
 
   test("app-dense renders compact console with KPIs and event table", async ({

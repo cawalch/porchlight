@@ -111,7 +111,7 @@ const eventFeed = [
     </header>
 
     <!-- Sidebar -->
-    <aside class="pl-l-app-shell__sidebar" id="siem-sidebar">
+    <aside class="pl-l-app-shell__sidebar" id="siem-sidebar" data-sidebar="expanded">
       <nav class="pl-c-nav" aria-label="SIEM navigation">
         <a href="#" class="pl-c-nav__item" aria-current="page">
           <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/></svg>
@@ -338,8 +338,14 @@ const eventFeed = [
   <script>
     document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
       const sidebar = document.getElementById('siem-sidebar');
+      const nav = sidebar?.querySelector('.pl-c-nav');
       const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
       sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
+      if (collapsed) {
+        nav?.removeAttribute('data-variant');
+      } else {
+        nav?.setAttribute('data-variant', 'icons');
+      }
     });
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
