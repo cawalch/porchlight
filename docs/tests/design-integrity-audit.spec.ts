@@ -5,41 +5,43 @@ import { join } from "node:path";
 const previewDir = join(process.cwd(), "src/pages/preview");
 const previewRoutes = readdirSync(previewDir)
   .filter((file) => file.endsWith(".astro"))
-  .map((file) => file.replace(/\.astro$/, ""))
-  .filter((route) => route !== "index");
+  .map((file) => file.replace(/\.astro$/, ""));
 
-test.describe("design system integrity & styleguide contract audits", () => {
-  test("interactive controls never carry text-decoration: underline in default or active states", async ({
+test.describe("decoupled design system integrity & styleguide contract audits", () => {
+  test("interactive controls across all preview pages never carry text-decoration: underline", async ({
     page,
   }) => {
-    // Audit core control pages
-    const controlRoutes = [
-      "panel-deck",
-      "button",
-      "tabs",
-      "segmented",
-      "nav",
-      "chip",
-      "split-button",
-      "filter-builder",
-      "app-cases",
-      "app-audit-studio",
-      "app-telemetry-cockpit",
-      "app-siem",
-    ];
-
-    for (const route of controlRoutes) {
-      await page.goto(`./preview/${route}`);
+    // Audit every preview page for interactive control underline bleed
+    for (const route of previewRoutes) {
+      await page.goto(`./preview/${route === "index" ? "" : route}`);
       const decorations = await page.evaluate(() => {
-        const selector =
-          ":is(.pl-c-button, .pl-c-tabs__tab, .pl-c-nav__item, .pl-c-segmented__item, .pl-c-chip, .pl-c-split-button__action, .pl-c-saved-views__button, .pl-c-segmented label)";
+        const selector = `
+          button, 
+          [role="button"], 
+          [role="tab"], 
+          [role="menuitem"],
+          a[class*="button"], 
+          a[class*="nav"], 
+          a[class*="tab"], 
+          a[class*="item"],
+          a[class*="chip"],
+          .pl-c-button, 
+          .pl-c-nav__item, 
+          .pl-c-tabs__tab, 
+          .pl-c-segmented__item, 
+          .pl-c-chip,
+          .pl-c-section-nav__link,
+          .pl-c-split-button__action, 
+          .pl-c-saved-views__button, 
+          .pl-c-panel-deck__panel::scroll-marker
+        `;
         const elements = Array.from(document.querySelectorAll(selector));
         return elements.map((el) => {
           const style = getComputedStyle(el);
           return {
             tag: el.tagName,
             cls: el.className,
-            text: el.textContent?.trim().slice(0, 20),
+            text: el.textContent?.trim().slice(0, 25),
             decoration: style.textDecorationLine,
           };
         });
@@ -48,27 +50,22 @@ test.describe("design system integrity & styleguide contract audits", () => {
       for (const item of decorations) {
         expect(
           item.decoration,
-          `${route} > ${item.cls} ("${item.text}") must not have underline`,
+          `${route} > ${item.tag}.${item.cls} ("${item.text}") must not have underline`,
         ).toBe("none");
       }
     }
   });
 
-  test("tables inside containers or fallbacks receive full Porchlight styling and alignment", async ({
+  test("all rendered tables across documentation receive Porchlight table styling", async ({
     page,
   }) => {
-    const tableRoutes = [
-      "chart",
-      "data-table",
-      "app-cases",
-      "app-reporting-dashboard",
-      "app-dense",
-    ];
+    // Exclude the raw CSS reset demo which intentionally showcases unstyled browser defaults
+    const tableAuditRoutes = previewRoutes.filter((route) => route !== "reset");
 
-    for (const route of tableRoutes) {
-      await page.goto(`./preview/${route}`);
+    for (const route of tableAuditRoutes) {
+      await page.goto(`./preview/${route === "index" ? "" : route}`);
       const tables = await page.evaluate(() => {
-        const tbls = Array.from(document.querySelectorAll(".pl-c-table"));
+        const tbls = Array.from(document.querySelectorAll("table"));
         return tbls.map((tbl) => {
           const style = getComputedStyle(tbl);
           const th = tbl.querySelector("th");
@@ -79,6 +76,8 @@ test.describe("design system integrity & styleguide contract audits", () => {
           const tdStyle = td ? getComputedStyle(td) : null;
 
           return {
+            cls: tbl.className,
+            parentCls: tbl.parentElement?.className,
             borderCollapse: style.borderCollapse,
             thPadding: thStyle?.paddingInlineStart ?? "0px",
             tdPadding: tdStyle?.paddingInlineStart ?? "0px",
@@ -88,14 +87,10 @@ test.describe("design system integrity & styleguide contract audits", () => {
         });
       });
 
-      expect(
-        tables.length,
-        `${route} should have at least one table`,
-      ).toBeGreaterThan(0);
       for (const t of tables) {
         expect(
           t.borderCollapse,
-          `${route} table must use separate border collapse`,
+          `${route} table.${t.cls} inside ${t.parentCls} must use separate border collapse`,
         ).toBe("separate");
         expect(
           parseFloat(t.thPadding),
@@ -118,13 +113,9 @@ test.describe("design system integrity & styleguide contract audits", () => {
   test("flush containers and nested children eliminate corner radius bleed and double borders", async ({
     page,
   }) => {
-    const flushRoutes = [
-      "app-cases",
-      "app-siem",
-      "app-dashboard",
-      "app-audit-studio",
-      "app-telemetry-cockpit",
-    ];
+    const flushRoutes = previewRoutes.filter(
+      (r) => r.startsWith("app-") || ["split-pane", "card"].includes(r),
+    );
 
     for (const route of flushRoutes) {
       await page.goto(`./preview/${route}`);
@@ -178,17 +169,8 @@ test.describe("design system integrity & styleguide contract audits", () => {
   test("HTML [hidden] elements are strictly removed from rendering across preview pages", async ({
     page,
   }) => {
-    // Check key dynamic pages that toggle or declare hidden
-    const hiddenRoutes = [
-      "index",
-      "chart",
-      "combobox",
-      "command-palette",
-      "app-asset-inventory",
-    ];
-
-    for (const route of hiddenRoutes) {
-      await page.goto(`./preview/${route}`);
+    for (const route of previewRoutes) {
+      await page.goto(`./preview/${route === "index" ? "" : route}`);
       const hiddenStates = await page.evaluate(() => {
         const hiddenEls = Array.from(document.querySelectorAll("[hidden]"));
         return hiddenEls.map((el) => ({
@@ -208,23 +190,26 @@ test.describe("design system integrity & styleguide contract audits", () => {
     }
   });
 
-  test("all showcase app demos have zero involuntary horizontal overflow at desktop", async ({
+  test("all showcase app demos have zero involuntary horizontal overflow at desktop and tablet", async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-
     const appRoutes = previewRoutes.filter((r) => r.startsWith("app-"));
-    for (const route of appRoutes) {
-      await page.goto(`./preview/${route}`);
-      const overflow = await page.evaluate(() => {
-        const root = document.documentElement;
-        return root.scrollWidth - root.clientWidth;
-      });
 
-      expect(
-        overflow,
-        `${route} should not have horizontal page overflow at 1440px`,
-      ).toBeLessThanOrEqual(1);
+    for (const width of [1440, 1024]) {
+      await page.setViewportSize({ width, height: 900 });
+
+      for (const route of appRoutes) {
+        await page.goto(`./preview/${route}`);
+        const overflow = await page.evaluate(() => {
+          const root = document.documentElement;
+          return root.scrollWidth - root.clientWidth;
+        });
+
+        expect(
+          overflow,
+          `${route} should not have horizontal page overflow at ${width}px`,
+        ).toBeLessThanOrEqual(1);
+      }
     }
   });
 });

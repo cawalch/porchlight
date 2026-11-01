@@ -21,21 +21,23 @@ const { registered, groups } = parseTokens(tokensCss);
     <code>@property</code> gives these a type and initial value, so they animate
     cleanly and inherit predictably.
   </p>
-  <table class="tokens">
-    <thead>
-      <tr><th scope="col">Name</th><th scope="col">Syntax</th><th scope="col">Inherits</th><th scope="col">Initial</th></tr>
-    </thead>
-    <tbody>
-      {registered.map((p) => (
-        <tr>
-          <td><code>{p.name}</code></td>
-          <td><code>{p.syntax}</code></td>
-          <td>{p.inherits ? 'yes' : 'no'}</td>
-          <td><code>{p.initialValue}</code></td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+  <div class="pl-c-table-wrap">
+    <table class="pl-c-table">
+      <thead>
+        <tr><th scope="col">Name</th><th scope="col">Syntax</th><th scope="col">Inherits</th><th scope="col">Initial</th></tr>
+      </thead>
+      <tbody>
+        {registered.map((p) => (
+          <tr>
+            <td><code>{p.name}</code></td>
+            <td><code>{p.syntax}</code></td>
+            <td>{p.inherits ? 'yes' : 'no'}</td>
+            <td><code>{p.initialValue}</code></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 
   {groups.map((group) => (
     <section>
@@ -57,19 +59,8 @@ const { registered, groups } = parseTokens(tokensCss);
 </BaseLayout>
 
 <style>
-  .tokens {
-    inline-size: 100%;
-    border-collapse: collapse;
-  }
-  .tokens :where(th, td) {
-    padding: var(--pl-space-2);
-    border-block-end: 1px solid var(--pl-color-border);
-    text-align: start;
-    vertical-align: middle;
-  }
-  .tokens th {
-    color: var(--pl-color-text-muted);
-    font-size: var(--pl-text-sm);
+  .pl-c-table-wrap {
+    margin-block-end: var(--pl-space-8);
   }
   .token-grid {
     display: grid;
