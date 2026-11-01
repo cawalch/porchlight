@@ -81,6 +81,132 @@
       border-block-start: 1px solid var(--pl-color-border);
     }
 
+    /* Form-level validation summary: reactive alert banner driven by CSS :has() */
+    .pl-c-form__summary {
+      display: none;
+      align-items: center;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+      padding: var(--pl-space-3) var(--pl-space-4);
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-danger-bg);
+      border: 1px solid var(--pl-color-danger-border);
+      color: var(--pl-color-danger-text);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      font-weight: var(--pl-font-weight-medium);
+      opacity: 0;
+      transition:
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        display var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    .pl-c-form__summary-icon {
+      flex: 0 0 auto;
+      inline-size: 1.125rem;
+      block-size: 1.125rem;
+      color: var(--pl-color-danger);
+    }
+
+    /* Pure-CSS conditional fieldset disclosure: smooth height transition via interpolate-size */
+    .pl-c-form__conditional {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      visibility: hidden;
+      min-inline-size: 0;
+      transition:
+        grid-template-rows var(--pl-duration-2) var(--pl-ease-standard),
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        visibility var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    @supports (interpolate-size: allow-keywords) {
+      .pl-c-form__conditional {
+        interpolate-size: allow-keywords;
+      }
+    }
+
+    .pl-c-form__conditional-inner {
+      overflow: hidden;
+      display: grid;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+      padding-block-start: 0;
+      transition: padding-block-start var(--pl-duration-2)
+        var(--pl-ease-standard);
+    }
+
+    /* Expand when controlling switch, checkbox, or radio trigger is checked */
+    :is(
+        .pl-c-form__fieldset,
+        .pl-c-form__section,
+        .pl-c-form__row,
+        .pl-c-form__conditional-group
+      ):has(> :is(.pl-c-switch, label, .pl-c-choice, .pl-c-field) input:checked)
+      > .pl-c-form__conditional,
+    :is(
+        .pl-c-form__fieldset,
+        .pl-c-form__section,
+        .pl-c-form__row,
+        .pl-c-form__conditional-group
+      ):has([data-conditional-trigger]:checked)
+      .pl-c-form__conditional,
+    :is(.pl-c-switch, label, .pl-c-choice):has(:checked)
+      + .pl-c-form__conditional,
+    :is(.pl-c-switch, label, .pl-c-choice):has(:checked)
+      ~ .pl-c-form__conditional,
+    :where(.pl-c-form__conditional-group):has(:checked)
+      > .pl-c-form__conditional,
+    .pl-c-form__conditional:is([data-state="expanded"], [open]) {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      visibility: visible;
+
+      & > .pl-c-form__conditional-inner {
+        padding-block-start: var(--pl-space-3);
+      }
+    }
+
+    /* Reactive activation: when the form contains any :user-invalid or [aria-invalid="true"] input */
+    :scope:has(
+        :is(.pl-c-field__control, .pl-c-field__input):is(
+          :user-invalid,
+          [aria-invalid="true"]
+        )
+      )
+      :is(.pl-c-form__summary, .pl-c-form__summary--invalid),
+    .pl-c-form__summary:is([data-state="visible"], [data-visible="true"]) {
+      display: flex;
+      opacity: 1;
+    }
+
+    @starting-style {
+      :scope:has(
+          :is(.pl-c-field__control, .pl-c-field__input):is(
+            :user-invalid,
+            [aria-invalid="true"]
+          )
+        )
+        :is(.pl-c-form__summary, .pl-c-form__summary--invalid),
+      .pl-c-form__summary:is([data-state="visible"], [data-visible="true"]) {
+        opacity: 0;
+      }
+    }
+
+    /* Form actions submit indicator when form is invalid (opt-in via [data-reactive="invalid"]) */
+    :scope:has(
+        :is(.pl-c-field__control, .pl-c-field__input):is(
+          :user-invalid,
+          [aria-invalid="true"]
+        )
+      )
+      .pl-c-form__actions
+      :is(button, .pl-c-button)[data-reactive="invalid"] {
+      border-color: var(--pl-color-danger);
+      box-shadow: 0 0 0 1px var(--pl-color-danger);
+    }
+
     /* Aligned two-column form layout via CSS Subgrid (Baseline 2023).
        Labels size dynamically to the widest label in the form without
        hardcoded widths, and controls align cleanly in column 2. */
@@ -350,6 +476,62 @@
     }
   }
 
+  @scope (.pl-c-form__conditional-group) {
+    :scope {
+      display: grid;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .pl-c-form__conditional {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      visibility: hidden;
+      min-inline-size: 0;
+      transition:
+        grid-template-rows var(--pl-duration-2) var(--pl-ease-standard),
+        opacity var(--pl-duration-2) var(--pl-ease-standard),
+        visibility var(--pl-duration-2) var(--pl-ease-standard) allow-discrete;
+    }
+
+    @supports (interpolate-size: allow-keywords) {
+      .pl-c-form__conditional {
+        interpolate-size: allow-keywords;
+      }
+    }
+
+    .pl-c-form__conditional-inner {
+      overflow: hidden;
+      display: grid;
+      gap: var(--pl-space-3);
+      min-inline-size: 0;
+      padding-block-start: 0;
+      transition: padding-block-start var(--pl-duration-2)
+        var(--pl-ease-standard);
+    }
+
+    :scope:has(
+        > :is(.pl-c-switch, label, .pl-c-choice, .pl-c-field) input:checked
+      )
+      > .pl-c-form__conditional,
+    :scope:has([data-conditional-trigger]:checked) .pl-c-form__conditional,
+    :scope:has(:checked) > .pl-c-form__conditional,
+    :is(.pl-c-switch, label, .pl-c-choice):has(:checked)
+      + .pl-c-form__conditional,
+    :is(.pl-c-switch, label, .pl-c-choice):has(:checked)
+      ~ .pl-c-form__conditional,
+    .pl-c-form__conditional:is([data-state="expanded"], [open]) {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      visibility: visible;
+
+      & > .pl-c-form__conditional-inner {
+        padding-block-start: var(--pl-space-3);
+      }
+    }
+  }
+
   @media (forced-colors: active) {
     :where(.pl-c-input-group) {
       border-color: ButtonBorder;
@@ -359,6 +541,12 @@
       border-color: ButtonBorder;
       background: ButtonFace;
       color: ButtonText;
+    }
+
+    :where(.pl-c-form__summary) {
+      border: 2px solid CanvasText;
+      background: Canvas;
+      color: CanvasText;
     }
   }
 

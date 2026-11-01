@@ -53,25 +53,29 @@ HTML5 constraints, `aria-invalid`, `aria-describedby`, and optional
 
 ## Class contract
 
-| Selector                    | Role                                                 |
-| --------------------------- | ---------------------------------------------------- |
-| `.pl-c-form`                | Form root with vertical section rhythm.              |
-| `.pl-c-form__section`       | A logical form section.                              |
-| `.pl-c-form__header`        | Section heading and summary copy.                    |
-| `.pl-c-form__body`          | Field stack inside a section.                        |
-| `.pl-c-form__grid`          | Responsive field grid.                               |
-| `.pl-c-form__row`           | Wrapping row for filters and short fields.           |
-| `.pl-c-form__actions`       | Submit/cancel action row.                            |
-| `.pl-c-choice-group`        | Fieldset wrapper for checkbox/radio choices.         |
-| `.pl-c-choice-group__hint`  | Helper, warning, success, or error text for choices. |
-| `.pl-c-choice-list`         | Stacked or inline list of choices.                   |
-| `.pl-c-choice`              | Native checkbox/radio label row.                     |
-| `.pl-c-choice__input`       | Native checkbox/radio input.                         |
-| `.pl-c-choice__label`       | Primary choice text.                                 |
-| `.pl-c-choice__description` | Optional secondary choice text.                      |
-| `.pl-c-input-group`         | Prefix/suffix/action wrapper around a native field.  |
-| `.pl-c-input-group__addon`  | Non-interactive prefix or suffix.                    |
-| `.pl-c-input-group__action` | Button aligned inside the group.                     |
+| Selector                        | Role                                                 |
+| ------------------------------- | ---------------------------------------------------- |
+| `.pl-c-form`                    | Form root with vertical section rhythm.              |
+| `.pl-c-form__section`           | A logical form section.                              |
+| `.pl-c-form__header`            | Section heading and summary copy.                    |
+| `.pl-c-form__body`              | Field stack inside a section.                        |
+| `.pl-c-form__grid`              | Responsive field grid.                               |
+| `.pl-c-form__row`               | Wrapping row for filters and short fields.           |
+| `.pl-c-form__actions`           | Submit/cancel action row.                            |
+| `.pl-c-choice-group`            | Fieldset wrapper for checkbox/radio choices.         |
+| `.pl-c-choice-group__hint`      | Helper, warning, success, or error text for choices. |
+| `.pl-c-choice-list`             | Stacked or inline list of choices.                   |
+| `.pl-c-choice`                  | Native checkbox/radio label row.                     |
+| `.pl-c-choice__input`           | Native checkbox/radio input.                         |
+| `.pl-c-choice__label`           | Primary choice text.                                 |
+| `.pl-c-choice__description`     | Optional secondary choice text.                      |
+| `.pl-c-input-group`             | Prefix/suffix/action wrapper around a native field.  |
+| `.pl-c-input-group__addon`      | Non-interactive prefix or suffix.                    |
+| `.pl-c-input-group__action`     | Button aligned inside the group.                     |
+| `.pl-c-form__summary`           | Form-level validation alert banner driven by `:has`. |
+| `.pl-c-form__conditional`       | Pure-CSS expandable disclosure for dependent fields. |
+| `.pl-c-form__conditional-inner` | Overflow-hidden inner content wrapper.               |
+| `.pl-c-form__conditional-group` | Container for trigger switch and conditional fields. |
 
 ## Choice groups
 
@@ -187,6 +191,55 @@ Porchlight adapter:
     Current quota is valid.
   </span>
 </div>
+```
+
+## Pure-CSS conditional fields
+
+When dependent fields only apply if a toggle switch or checkbox is checked, wrap them in `.pl-c-form__conditional`. It collapses to `grid-template-rows: 0fr` with `visibility: hidden` when unchecked, preventing hidden controls from receiving tab focus. When the trigger switch or checkbox becomes `:checked`, it smoothly animates open to `grid-template-rows: 1fr` using `interpolate-size: allow-keywords` with zero JavaScript:
+
+```html
+<div class="pl-c-form__conditional-group">
+  <label class="pl-c-switch">
+    <input type="checkbox" role="switch" class="pl-c-switch__input" />
+    <span class="pl-c-switch__track"
+      ><span class="pl-c-switch__thumb"></span
+    ></span>
+    <span class="pl-c-switch__label">Enable Webhook Dispatch</span>
+  </label>
+  <div class="pl-c-form__conditional">
+    <div class="pl-c-form__conditional-inner">
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="endpoint">Endpoint URL</label>
+        <input id="endpoint" class="pl-c-field__control" type="url" />
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## Reactive validation summary
+
+Porchlight forms can reactively present a top validation alert banner (`.pl-c-form__summary`) whenever any child control enters an invalid state (`:user-invalid` or `[aria-invalid="true"]`). No JavaScript form listeners or state variables are required:
+
+```html
+<form class="pl-c-form">
+  <div class="pl-c-form__summary" role="alert">
+    Please correct the errors in the highlighted fields before submitting.
+  </div>
+
+  <!-- fields go here -->
+
+  <div class="pl-c-form__actions">
+    <button
+      type="submit"
+      class="pl-c-button"
+      data-variant="primary"
+      data-reactive="invalid"
+    >
+      Save changes
+    </button>
+  </div>
+</form>
 ```
 
 ## Tokens
