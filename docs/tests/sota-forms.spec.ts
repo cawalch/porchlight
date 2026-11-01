@@ -30,6 +30,25 @@ test.describe("SOTA Form Capabilities (v0.15.0)", () => {
           };
         });
         expect(balloonStyle.position).toBe("fixed");
+
+        await input.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(100);
+        const alignment = await balloon.evaluate((b) => {
+          const input = b.parentElement?.querySelector(".pl-c-field__control");
+          if (!input) return null;
+          const bRect = b.getBoundingClientRect();
+          const iRect = input.getBoundingClientRect();
+          return {
+            xDelta: Math.abs(bRect.left - iRect.left),
+            yDelta: Math.abs(bRect.top - iRect.bottom),
+          };
+        });
+        expect(alignment).not.toBeNull();
+        if (alignment) {
+          // Tethered directly beneath the control, aligned to the inline-start edge
+          expect(alignment.xDelta).toBeLessThan(10);
+          expect(alignment.yDelta).toBeLessThan(20);
+        }
       }
     });
 
@@ -50,6 +69,24 @@ test.describe("SOTA Form Capabilities (v0.15.0)", () => {
       // Balloon should now be visible
       await expect(balloon).toBeVisible();
       await expect(balloon).toContainText("at least 3 characters");
+
+      await input.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(100);
+      const subdomainAlignment = await balloon.evaluate((b) => {
+        const group = b.parentElement?.querySelector(".pl-c-input-group");
+        if (!group) return null;
+        const bRect = b.getBoundingClientRect();
+        const gRect = group.getBoundingClientRect();
+        return {
+          xDelta: Math.abs(bRect.left - gRect.left),
+          yDelta: Math.abs(bRect.top - gRect.bottom),
+        };
+      });
+      if (subdomainAlignment) {
+        // Tethered directly beneath its own input group, not wandering to other fields
+        expect(subdomainAlignment.xDelta).toBeLessThan(10);
+        expect(subdomainAlignment.yDelta).toBeLessThan(20);
+      }
 
       // Fill with valid input (>= 3 chars) and blur
       await input.fill("valid-subdomain");

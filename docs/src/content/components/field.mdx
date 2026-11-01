@@ -251,7 +251,7 @@ explicit visual tone.
 
 ### Anchor-positioned validation balloon
 
-When you want validation errors to overlay without pushing surrounding field layout downward, add `.pl-c-field__balloon`. It uses CSS Anchor Positioning (`position-anchor: --pl-field-anchor`, `position-area: block-end span-inline-start`, `position-try-fallbacks: flip-block`) to tether directly beneath the control and automatically flips above if near the viewport edge. It reveals automatically when the field matches `:user-invalid` or `aria-invalid="true"`.
+When you want validation errors to overlay without pushing surrounding field layout downward, add `.pl-c-field__balloon`. It uses CSS Anchor Positioning (`position-anchor: --pl-field-anchor`, `position-area: block-end span-inline-end`) scoped locally to the field component (`anchor-scope: --pl-field-anchor`) to tether directly beneath the control. It reveals automatically when the field matches `:user-invalid` or `[aria-invalid="true"]`, while automatically suppressing underlying hints to prevent text collisions without layout shift.
 
 ```html
 <div class="pl-c-field">
