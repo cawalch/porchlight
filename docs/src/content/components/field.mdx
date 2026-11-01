@@ -69,6 +69,7 @@ Use an explicit label when the field contains an input group:
 | `.pl-c-field__required`        | Optional visual required marker inside the label.                   |
 | `.pl-c-field__hint`            | Helper, warning, success, or error text below the control.          |
 | `.pl-c-field__messages`        | Optional stack for multiple `.pl-c-field__hint` messages.           |
+| `.pl-c-field__balloon`         | Zero-JS floating error callout tethered via CSS Anchor Positioning. |
 
 ## Common patterns
 
@@ -245,6 +246,27 @@ explicit visual tone.
       >Spaces are not allowed.</span
     >
   </span>
+</div>
+```
+
+### Anchor-positioned validation balloon
+
+When you want validation errors to overlay without pushing surrounding field layout downward, add `.pl-c-field__balloon`. It uses CSS Anchor Positioning (`position-anchor: --pl-field-anchor`, `position-area: block-end span-inline-start`, `position-try-fallbacks: flip-block`) to tether directly beneath the control and automatically flips above if near the viewport edge. It reveals automatically when the field matches `:user-invalid` or `aria-invalid="true"`.
+
+```html
+<div class="pl-c-field">
+  <label class="pl-c-field__label" for="api-token">API access token</label>
+  <input
+    id="api-token"
+    class="pl-c-field__control"
+    required
+    pattern="tok_[a-z0-9]{16}"
+    aria-describedby="api-token-balloon"
+  />
+  <div class="pl-c-field__balloon" id="api-token-balloon" role="alert">
+    Token must begin with "tok_" followed by 16 alphanumeric characters.
+  </div>
+  <span class="pl-c-field__hint">Generated from your developer console.</span>
 </div>
 ```
 

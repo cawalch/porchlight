@@ -290,6 +290,52 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </label>
   </div>
 
+  <h2>Anchor-positioned validation balloon</h2>
+  <p>
+    Zero-JS floating error callout tethered to the control via CSS Anchor Positioning
+    (<code>position-anchor</code>, <code>position-area: block-end span-inline-start</code>, <code>position-try-fallbacks: flip-block</code>).
+    Reveals when the field is <code>:user-invalid</code> or <code>[aria-invalid="true"]</code> without pushing surrounding content.
+  </p>
+  <div class="demo field-grid">
+    <div class="pl-c-field" data-preview-anchor-balloon>
+      <label class="pl-c-field__label" for="api-token">API access token</label>
+      <input
+        id="api-token"
+        class="pl-c-field__control"
+        type="text"
+        required
+        pattern="tok_[a-z0-9]{16}"
+        value="tok_invalid"
+        aria-invalid="true"
+        aria-describedby="api-token-balloon"
+      />
+      <div class="pl-c-field__balloon" id="api-token-balloon" role="alert">
+        Token must begin with "tok_" followed by 16 alphanumeric characters.
+      </div>
+      <span class="pl-c-field__hint">Static preview with aria-invalid="true".</span>
+    </div>
+
+    <div class="pl-c-field" data-preview-interactive-balloon>
+      <label class="pl-c-field__label" for="subdomain-slug">Subdomain</label>
+      <div class="pl-c-input-group">
+        <input
+          id="subdomain-slug"
+          class="pl-c-field__control"
+          type="text"
+          required
+          minlength="3"
+          placeholder="e.g. acme-ops"
+          aria-describedby="subdomain-balloon"
+        />
+        <span class="pl-c-input-group__addon">.porchlight.app</span>
+      </div>
+      <div class="pl-c-field__balloon" id="subdomain-balloon" role="alert">
+        Subdomain must contain at least 3 characters.
+      </div>
+      <span class="pl-c-field__hint">Type an invalid character and blur to inspect :user-invalid anchor popup.</span>
+    </div>
+  </div>
+
   <h2>Framework-neutral rendering</h2>
   <div class="demo field-grid">
     <div class="pl-c-field" data-preview-framework-contract>

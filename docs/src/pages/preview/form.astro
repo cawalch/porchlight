@@ -242,6 +242,102 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <button type="submit" class="pl-c-button" data-variant="primary">Save changes</button>
     </div>
   </form>
+
+  <h2>Pure-CSS conditional field disclosure</h2>
+  <p>
+    Dependent fields smoothly expand and collapse via <code>.pl-c-form__conditional</code> driven by
+    <code>interpolate-size: allow-keywords</code> and parent <code>:checked</code> state without JavaScript.
+  </p>
+  <form class="pl-c-form demo-form" data-preview-conditional-form>
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__header">
+        <h3>Outbound integrations</h3>
+        <p>Configure automated webhooks for deployment events.</p>
+      </div>
+      <div class="pl-c-form__body">
+        <div class="pl-c-form__conditional-group" data-preview-conditional-switch>
+          <label class="pl-c-switch">
+            <input type="checkbox" id="enable-webhook" role="switch" class="pl-c-switch__input" />
+            <span class="pl-c-switch__track">
+              <span class="pl-c-switch__thumb"></span>
+            </span>
+            <span class="pl-c-switch__label">Enable Webhook Dispatch</span>
+          </label>
+          <div class="pl-c-form__conditional" id="webhook-conditional">
+            <div class="pl-c-form__conditional-inner">
+              <div class="pl-c-form__grid">
+                <div class="pl-c-field">
+                  <label class="pl-c-field__label" for="webhook-url">Endpoint URL</label>
+                  <input
+                    id="webhook-url"
+                    class="pl-c-field__control"
+                    type="url"
+                    placeholder="https://api.acme.example/events"
+                  />
+                  <span class="pl-c-field__hint">Payloads are signed with HMAC-SHA256.</span>
+                </div>
+                <div class="pl-c-field">
+                  <label class="pl-c-field__label" for="webhook-secret">Signing secret</label>
+                  <input
+                    id="webhook-secret"
+                    class="pl-c-field__control"
+                    type="password"
+                    placeholder="whsec_••••••••••••"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <h2>Reactive form validation summary</h2>
+  <p>
+    Live warning alert banner (<code>.pl-c-form__summary</code>) driven entirely by <code>form:has(:user-invalid)</code>.
+    When any field becomes invalid, the summary illuminates and the submit button reflects warning feedback.
+  </p>
+  <form class="pl-c-form demo-form" data-preview-reactive-form>
+    <div class="pl-c-form__summary" role="alert" data-preview-summary>
+      <svg class="pl-c-form__summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>Please correct the errors in the highlighted fields before submitting.</span>
+    </div>
+
+    <section class="pl-c-form__section">
+      <div class="pl-c-form__body">
+        <div class="pl-c-field">
+          <label class="pl-c-field__label" for="org-handle">
+            Organization handle
+            <span class="pl-c-field__required">*</span>
+          </label>
+          <input
+            id="org-handle"
+            class="pl-c-field__control"
+            required
+            pattern="[a-z0-9-]{3,20}"
+            value="Org with spaces"
+            aria-invalid="true"
+            aria-describedby="org-handle-hint"
+          />
+          <span class="pl-c-field__hint" id="org-handle-hint">
+            Lowercase alphanumeric characters and hyphens only (3–20 chars).
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <div class="pl-c-form__actions">
+      <button type="button" class="pl-c-button" data-variant="ghost">Cancel</button>
+      <button type="submit" class="pl-c-button" data-variant="primary" data-reactive="invalid">
+        Create Organization
+      </button>
+    </div>
+  </form>
 </BaseLayout>
 
 <style>
