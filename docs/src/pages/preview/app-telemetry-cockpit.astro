@@ -43,7 +43,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <!-- Center: Elastic IDE Query Input -->
-    <div class="pl-c-toolbar__group" style="flex: 1; max-width: 480px; margin-inline: var(--pl-space-4);">
+    <div class="pl-c-toolbar__group" style="flex: 1 1 14rem; max-width: 480px; min-inline-size: 0;">
       <div class="pl-l-cluster" style="align-items: center; width: 100%; gap: var(--pl-space-2);">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pl-u-muted" aria-hidden="true">
           <circle cx="11" cy="11" r="8" />
@@ -56,7 +56,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           placeholder="Filter metrics, actors, policy (field-sizing: content)..."
           value="service:ingress status:quarantined"
           aria-label="Filter telemetry metrics and actors"
-          style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); padding: var(--pl-space-1) var(--pl-space-2); min-inline-size: 16rem;"
+          style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); padding: var(--pl-space-1) var(--pl-space-2); min-inline-size: 8rem; max-inline-size: 100%;"
         />
       </div>
     </div>
@@ -179,148 +179,154 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <!-- Cockpit Workstation Split Pane with CSS Gap Decorations (rule) -->
     <section aria-labelledby="cockpit-workstation-heading">
       <h2 id="cockpit-workstation-heading" class="pl-u-sr-only">Cockpit Workstation: Audit Stream and Node Inspector</h2>
-      <div class="pl-c-split-pane" data-orientation="horizontal" data-dividers="true" style="border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-md); background: var(--pl-color-surface);">
+      <div class="pl-c-split-pane" data-orientation="horizontal" data-collapse="stack" data-dividers="true" style="border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-md); background: var(--pl-color-surface);">
         <!-- Left Pane: Enterprise Compliance Audit Ledger -->
-        <div class="pl-c-split-pane__pane" style="flex: 1 1 55%; padding: var(--pl-space-4); min-width: 320px;">
-          <header class="pl-l-cluster" style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);">
-            <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-2);">
-              <h3 style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">
-                Enterprise Audit Ledger
-              </h3>
-              <span class="pl-c-badge" data-tone="accent">IMMUTABLE SOC-2</span>
-            </div>
-            <span class="pl-u-muted pl-u-tabular-nums" style="font-size: var(--pl-text-xs); font-family: var(--pl-font-mono);">
-              SYNC: 14:38:02.114 UTC
-            </span>
-          </header>
-
-          <ol class="pl-c-audit-stream">
-            <li class="pl-c-audit-stream__item">
-              <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">OP</div>
-              <div class="pl-c-audit-stream__body">
-                <div class="pl-c-audit-stream__header">
-                  <span class="pl-c-audit-stream__actor">k8s-operator/controller</span>
-                  <span class="pl-c-badge" data-tone="danger">QUARANTINE</span>
-                  <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:38:02.114</time>
-                </div>
-                <div class="pl-c-audit-stream__summary">
-                  Quarantined node container <code class="pl-u-mono">compute-pool-04-node-b</code> after detecting high burst signature anomaly matching rate limit trigger.
-                </div>
+        <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start" aria-label="Enterprise Audit Ledger">
+          <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
+            <header class="pl-l-cluster" style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);">
+              <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-2);">
+                <h3 style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">
+                  Enterprise Audit Ledger
+                </h3>
+                <span class="pl-c-badge" data-tone="accent">IMMUTABLE SOC-2</span>
               </div>
-            </li>
+              <span class="pl-u-muted pl-u-tabular-nums" style="font-size: var(--pl-text-xs); font-family: var(--pl-font-mono);">
+                SYNC: 14:38:02.114 UTC
+              </span>
+            </header>
 
-            <li class="pl-c-audit-stream__item">
-              <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">MP</div>
-              <div class="pl-c-audit-stream__body">
-                <div class="pl-c-audit-stream__header">
-                  <span class="pl-c-audit-stream__actor">sec-eng/m.patel</span>
-                  <span class="pl-c-badge" data-tone="warning">PERIMETER RULE</span>
-                  <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:35:19.450</time>
+            <ol class="pl-c-audit-stream">
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">OP</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">k8s-operator/controller</span>
+                    <span class="pl-c-badge" data-tone="danger">QUARANTINE</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:38:02.114</time>
+                  </div>
+                  <div class="pl-c-audit-stream__summary">
+                    Quarantined node container <code class="pl-u-mono">compute-pool-04-node-b</code> after detecting high burst signature anomaly matching rate limit trigger.
+                  </div>
                 </div>
-                <div class="pl-c-audit-stream__summary">
-                  Applied emergency perimeter CIDR isolation to inbound ingress routes on gateway <code class="pl-u-mono">gw-ingress-02</code>.
-                </div>
-              </div>
-            </li>
+              </li>
 
-            <li class="pl-c-audit-stream__item">
-              <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">CI</div>
-              <div class="pl-c-audit-stream__body">
-                <div class="pl-c-audit-stream__header">
-                  <span class="pl-c-audit-stream__actor">ci-bot/pipeline</span>
-                  <span class="pl-c-badge" data-tone="accent">CANARY DEPLOY</span>
-                  <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:31:00.892</time>
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">MP</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">sec-eng/m.patel</span>
+                    <span class="pl-c-badge" data-tone="warning">PERIMETER RULE</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:35:19.450</time>
+                  </div>
+                  <div class="pl-c-audit-stream__summary">
+                    Applied emergency perimeter CIDR isolation to inbound ingress routes on gateway <code class="pl-u-mono">gw-ingress-02</code>.
+                  </div>
                 </div>
-                <div class="pl-c-audit-stream__summary">
-                  Canary release <code class="pl-u-mono">v2.18.0-rc4</code> successfully validated across partition 09 with 0 synthetic test regression.
-                </div>
-              </div>
-            </li>
+              </li>
 
-            <li class="pl-c-audit-stream__item">
-              <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">VT</div>
-              <div class="pl-c-audit-stream__body">
-                <div class="pl-c-audit-stream__header">
-                  <span class="pl-c-audit-stream__actor">iam-service/vault</span>
-                  <span class="pl-c-badge" data-tone="success">KEY ROTATION</span>
-                  <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:26:44.205</time>
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">CI</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">ci-bot/pipeline</span>
+                    <span class="pl-c-badge" data-tone="accent">CANARY DEPLOY</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:31:00.892</time>
+                  </div>
+                  <div class="pl-c-audit-stream__summary">
+                    Canary release <code class="pl-u-mono">v2.18.0-rc4</code> successfully validated across partition 09 with 0 synthetic test regression.
+                  </div>
                 </div>
-                <div class="pl-c-audit-stream__summary">
-                  Auto-rotated mutual TLS client wildcards for cluster mesh communication. Re-handshake verified.
-                </div>
-              </div>
-            </li>
+              </li>
 
-            <li class="pl-c-audit-stream__item">
-              <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">CA</div>
-              <div class="pl-c-audit-stream__body">
-                <div class="pl-c-audit-stream__header">
-                  <span class="pl-c-audit-stream__actor">compliance/auditor</span>
-                  <span class="pl-c-badge" data-tone="default">LEDGER SEAL</span>
-                  <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:20:12.780</time>
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">VT</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">iam-service/vault</span>
+                    <span class="pl-c-badge" data-tone="success">KEY ROTATION</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:26:44.205</time>
+                  </div>
+                  <div class="pl-c-audit-stream__summary">
+                    Auto-rotated mutual TLS client wildcards for cluster mesh communication. Re-handshake verified.
+                  </div>
                 </div>
-                <div class="pl-c-audit-stream__summary">
-                  Sealed cryptographic audit epoch. Merkle tree root hash registered with corporate immutable ledger.
+              </li>
+
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">CA</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">compliance/auditor</span>
+                    <span class="pl-c-badge" data-tone="default">LEDGER SEAL</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">14:20:12.780</time>
+                  </div>
+                  <div class="pl-c-audit-stream__summary">
+                    Sealed cryptographic audit epoch. Merkle tree root hash registered with corporate immutable ledger.
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ol>
-        </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Vertical Separator -->
+        <div class="pl-c-split-pane__separator" role="separator" aria-orientation="vertical"></div>
 
         <!-- Right Pane: Active Node Inspector & Architectural Property List -->
-        <div class="pl-c-split-pane__pane" style="flex: 1 1 45%; padding: var(--pl-space-4); background: var(--pl-color-surface-2); min-width: 320px;">
-          <header class="pl-l-cluster" style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);">
-            <h3 style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">
-              Node Inspector // Subgrid Specs
-            </h3>
-            <span class="pl-c-badge" data-tone="warning">QUARANTINED</span>
-          </header>
+        <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end" aria-label="Active Node Inspector" style="background: var(--pl-color-surface-2);">
+          <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
+            <header class="pl-l-cluster" style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);">
+              <h3 style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">
+                Node Inspector // Subgrid Specs
+              </h3>
+              <span class="pl-c-badge" data-tone="warning">QUARANTINED</span>
+            </header>
 
-          <!-- Property List using CSS Subgrid -->
-          <dl class="pl-c-property-list" data-subgrid="true" data-pl-density="dense" style="margin-block-end: var(--pl-space-4);">
-            <div class="pl-c-property-list__item">
-              <dt class="pl-c-property-list__label">Host Identifier</dt>
-              <dd class="pl-c-property-list__value pl-u-mono">prod-telemetry-worker-08</dd>
-            </div>
-            <div class="pl-c-property-list__item">
-              <dt class="pl-c-property-list__label">Kernel Version</dt>
-              <dd class="pl-c-property-list__value pl-u-mono pl-u-tabular-nums">Linux 6.8.12-hardened-x86_64</dd>
-            </div>
-            <div class="pl-c-property-list__item">
-              <dt class="pl-c-property-list__label">Memory Allocation</dt>
-              <dd class="pl-c-property-list__value pl-u-tabular-nums">128.0 GiB (74.2% committed)</dd>
-            </div>
-            <div class="pl-c-property-list__item">
-              <dt class="pl-c-property-list__label">Cipher Protocol</dt>
-              <dd class="pl-c-property-list__value pl-u-mono">TLS_AES_256_GCM_SHA384</dd>
-            </div>
-            <div class="pl-c-property-list__item">
-              <dt class="pl-c-property-list__label">Cryptographic Seal</dt>
-              <dd class="pl-c-property-list__value pl-u-mono" style="font-size: var(--pl-text-xs);">
-                <span>0x4f88e1a99b2c3d</span>
-                <button type="button" class="pl-c-property-list__copy" aria-label="Copy hash value">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                </button>
-              </dd>
-            </div>
-          </dl>
-
-          <!-- Monospaced Code Block with Architectural Header and Diff Styling -->
-          <div class="pl-c-code-block" data-language="yaml" data-line-numbers="true">
-            <div class="pl-c-code-block__header">
-              <div class="pl-c-code-block__meta">
-                <span class="pl-c-code-block__title">security-policy-rule.yaml</span>
-                <span class="pl-c-badge" data-size="sm">YAML</span>
+            <!-- Property List using CSS Subgrid -->
+            <dl class="pl-c-property-list" data-subgrid="true" data-pl-density="dense" style="margin-block-end: var(--pl-space-4);">
+              <div class="pl-c-property-list__item">
+                <dt class="pl-c-property-list__label">Host Identifier</dt>
+                <dd class="pl-c-property-list__value pl-u-mono">prod-telemetry-worker-08</dd>
               </div>
-              <button type="button" class="pl-c-code-block__copy" aria-label="Copy security-policy-rule.yaml">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
-                <span>Copy</span>
-              </button>
-            </div>
-            <pre class="pl-c-code-block__pre" tabindex="0" aria-label="Security policy specification"><code class="pl-c-code-block__code"><span class="pl-c-code-block__line">apiVersion: telemetry.security/v2</span>
+              <div class="pl-c-property-list__item">
+                <dt class="pl-c-property-list__label">Kernel Version</dt>
+                <dd class="pl-c-property-list__value pl-u-mono pl-u-tabular-nums">Linux 6.8.12-hardened-x86_64</dd>
+              </div>
+              <div class="pl-c-property-list__item">
+                <dt class="pl-c-property-list__label">Memory Allocation</dt>
+                <dd class="pl-c-property-list__value pl-u-tabular-nums">128.0 GiB (74.2% committed)</dd>
+              </div>
+              <div class="pl-c-property-list__item">
+                <dt class="pl-c-property-list__label">Cipher Protocol</dt>
+                <dd class="pl-c-property-list__value pl-u-mono">TLS_AES_256_GCM_SHA384</dd>
+              </div>
+              <div class="pl-c-property-list__item">
+                <dt class="pl-c-property-list__label">Cryptographic Seal</dt>
+                <dd class="pl-c-property-list__value pl-u-mono" style="font-size: var(--pl-text-xs);">
+                  <span>0x4f88e1a99b2c3d</span>
+                  <button type="button" class="pl-c-property-list__copy" aria-label="Copy hash value">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                  </button>
+                </dd>
+              </div>
+            </dl>
+
+            <!-- Monospaced Code Block with Architectural Header and Diff Styling -->
+            <div class="pl-c-code-block" data-language="yaml" data-line-numbers="true">
+              <div class="pl-c-code-block__header">
+                <div class="pl-c-code-block__meta">
+                  <span class="pl-c-code-block__title">security-policy-rule.yaml</span>
+                  <span class="pl-c-badge" data-size="sm">YAML</span>
+                </div>
+                <button type="button" class="pl-c-code-block__copy" aria-label="Copy security-policy-rule.yaml">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre class="pl-c-code-block__pre" tabindex="0" aria-label="Security policy specification"><code class="pl-c-code-block__code"><span class="pl-c-code-block__line">apiVersion: telemetry.security/v2</span>
 <span class="pl-c-code-block__line">kind: DynamicIngressPolicy</span>
 <span class="pl-c-code-block__line">metadata:</span>
 <span class="pl-c-code-block__line">  name: cluster-perimeter-guard</span>
@@ -330,8 +336,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <span class="pl-c-code-block__line" data-diff="add">+  rateLimitWindowMs: 250</span>
 <span class="pl-c-code-block__line" data-diff="add">+  maxBurstConnections: 120</span>
 <span class="pl-c-code-block__line" data-diff="add">+  quarantineOnExceed: true</span></code></pre>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </section>
 
