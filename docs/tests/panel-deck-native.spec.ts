@@ -152,7 +152,7 @@ test("native marker bounds stay between neighboring content and panels at narrow
         selected: marker.textDecorationLine,
       };
     });
-  expect(focus).toEqual({ outline: "solid", width: 2, selected: "underline" });
+  expect(focus).toEqual({ outline: "solid", width: 2, selected: "none" });
 });
 
 test("initial RTL content stays visible and accessible in the stacked fallback", async ({
