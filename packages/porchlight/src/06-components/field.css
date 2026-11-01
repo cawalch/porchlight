@@ -1,7 +1,8 @@
 /*
  * Porchlight  -  field component
  * ===========================================================================
- * A labeled form control: label, native input, and hint/messages. Wraps native
+ * A labeled form control: label, native input, hint/messages, and zero-JS
+ * anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native
  * <input>/<select>/<textarea> so we inherit all their behavior (constraint
  * validation, autofill, IME, spellcheck). No JS, no custom widgets.
  *
@@ -27,6 +28,7 @@
       --pl-c-field-inline-label-size: 10rem;
       --pl-c-field-anchor: --pl-field-anchor;
 
+      anchor-scope: --pl-field-anchor;
       display: grid;
       gap: var(--pl-space-2);
       min-inline-size: 0;
@@ -146,10 +148,9 @@
       .pl-c-field__balloon {
         position: fixed;
         position-anchor: var(--pl-c-field-anchor);
-        position-area: block-end span-inline-start;
+        position-area: block-end span-inline-end;
         margin-block-start: var(--pl-space-1-5);
         margin-inline-start: var(--pl-space-1);
-        position-try-fallbacks: flip-block;
       }
     }
 
@@ -163,6 +164,16 @@
     .pl-c-field__balloon:is([data-state="visible"], [data-visible="true"]) {
       display: inline-flex;
       opacity: 1;
+    }
+
+    :scope:has(.pl-c-field__balloon):has(
+        :is(.pl-c-field__control, .pl-c-field__input):is(
+          :user-invalid,
+          [aria-invalid="true"]
+        )
+      )
+      .pl-c-field__hint {
+      visibility: hidden;
     }
 
     @starting-style {

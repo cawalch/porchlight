@@ -1,8 +1,10 @@
 /*
  * Porchlight  -  form component
  * ===========================================================================
- * SaaS form composition helpers built on native controls. These classes do not
- * replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>,
+ * SaaS form composition helpers built on native controls: sections, grids,
+ * subgrid alignment, pure-CSS conditional field disclosures (.pl-c-form__conditional),
+ * and reactive validation summary banners (.pl-c-form__summary) driven by form:has(:user-invalid).
+ * These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>,
  * <input>, <select>, and <textarea>; Porchlight only handles layout and chrome.
  */
 @layer porchlight.components {
