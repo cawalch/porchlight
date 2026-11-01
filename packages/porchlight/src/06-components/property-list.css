@@ -1,0 +1,192 @@
+/*
+ * Porchlight  -  property-list component
+ * ===========================================================================
+ * A high-density key-value inspector for enterprise records, cloud resources,
+ * telemetry entities, and user accounts. Distinct from .pl-c-description:
+ * .pl-c-property-list is optimized for technical metadata with integrated
+ * copy buttons, monospaced tabular tokens, subgrid track inheritance,
+ * and high-density inspection bays.
+ *
+ * Structure:
+ *   <dl class="pl-c-property-list" data-pl-density="compact">
+ *     <div class="pl-c-property-list__item">
+ *       <dt class="pl-c-property-list__key">Cluster ID</dt>
+ *       <dd class="pl-c-property-list__value">
+ *         <code class="pl-c-property-list__mono">cls-us-east-9021</code>
+ *         <button type="button" class="pl-c-property-list__copy" aria-label="Copy Cluster ID">
+ *           <svg aria-hidden="true" ...>...</svg>
+ *         </button>
+ *       </dd>
+ *     </div>
+ *     <div class="pl-c-property-list__item">
+ *       <dt class="pl-c-property-list__key">Status</dt>
+ *       <dd class="pl-c-property-list__value">
+ *         <span class="pl-c-badge" data-tone="success">Active</span>
+ *       </dd>
+ *     </div>
+ *   </dl>
+ *
+ * Density modes via [data-pl-density]: "dense" (1.75rem min row), "compact" (default,
+ * 2rem min row), and "comfortable" (2.5rem min row).
+ * Optional [data-dividers="true"] adds hairline row borders.
+ */
+@layer porchlight.components {
+  @scope (.pl-c-property-list) {
+    :scope {
+      --pl-c-property-key-w: minmax(7rem, 9rem);
+      --pl-c-property-row-min-h: 2rem;
+      --pl-c-property-row-gap: var(--pl-space-2);
+      --pl-c-property-col-gap: var(--pl-space-3);
+      --pl-c-property-key-color: var(--pl-color-text-muted);
+      --pl-c-property-key-size: var(--pl-text-xs);
+      --pl-c-property-val-size: var(--pl-text-sm);
+
+      display: grid;
+      grid-template-columns: var(--pl-c-property-key-w) minmax(0, 1fr);
+      gap: var(--pl-c-property-row-gap) var(--pl-c-property-col-gap);
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      container: pl-c-property-list / inline-size;
+    }
+
+    /* When wrapped in items, each item spans both columns */
+    .pl-c-property-list__item {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: subgrid;
+      align-items: center;
+      min-block-size: var(--pl-c-property-row-min-h);
+      padding-block: calc(var(--pl-space-1) * 0.5);
+    }
+
+    /* Fallback for browsers without subgrid */
+    @supports not (grid-template-columns: subgrid) {
+      .pl-c-property-list__item {
+        grid-template-columns: var(--pl-c-property-key-w) minmax(0, 1fr);
+        column-gap: var(--pl-c-property-col-gap);
+      }
+    }
+
+    .pl-c-property-list__key {
+      margin: 0;
+      font-size: var(--pl-c-property-key-size);
+      font-weight: var(--pl-font-weight-medium);
+      color: var(--pl-c-property-key-color);
+      line-height: var(--pl-leading-normal);
+      text-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+
+    .pl-c-property-list__value {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      font-size: var(--pl-c-property-val-size);
+      color: var(--pl-color-text);
+      line-height: var(--pl-leading-normal);
+      overflow-wrap: anywhere;
+    }
+
+    /* Monospaced technical data (IDs, hashes, IP addresses, dates) */
+    .pl-c-property-list__mono {
+      font-family: var(--pl-font-mono);
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+      padding-inline: var(--pl-space-1);
+      padding-block: 0.125rem;
+      border-radius: var(--pl-radius-xs);
+      background: var(--pl-color-surface-2);
+      border: 1px solid var(--pl-color-border);
+      box-shadow: var(--pl-shadow-inset);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Tactile inline copy button */
+    .pl-c-property-list__copy {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--pl-space-1);
+      border: 1px solid transparent;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      cursor: pointer;
+      line-height: 1;
+      flex-shrink: 0;
+      transition:
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        border-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-property-list__copy:hover {
+      color: var(--pl-color-text);
+      background: var(--pl-color-surface-2);
+      border-color: var(--pl-color-border);
+    }
+
+    .pl-c-property-list__copy:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .pl-c-property-list__copy svg {
+      inline-size: 0.875rem;
+      block-size: 0.875rem;
+    }
+
+    /* Optional hairline dividers between rows */
+    :scope[data-dividers="true"] .pl-c-property-list__item:not(:last-child) {
+      border-block-end: 1px solid var(--pl-color-border);
+      padding-block-end: calc(var(--pl-space-1) * 1.5);
+      margin-block-end: calc(var(--pl-space-1) * 0.5);
+    }
+
+    /* Density variants */
+    :scope[data-pl-density="dense"] {
+      --pl-c-property-row-min-h: 1.625rem;
+      --pl-c-property-row-gap: var(--pl-space-1);
+      --pl-c-property-key-size: 0.6875rem;
+      --pl-c-property-val-size: var(--pl-text-xs);
+    }
+
+    :scope[data-pl-density="comfortable"] {
+      --pl-c-property-row-min-h: 2.5rem;
+      --pl-c-property-row-gap: var(--pl-space-3);
+      --pl-c-property-key-size: var(--pl-text-sm);
+      --pl-c-property-val-size: var(--pl-text-md);
+    }
+
+    /* Container query for narrow widths: stack key above value */
+    @container pl-c-property-list (inline-size < 18rem) {
+      :scope {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .pl-c-property-list__item {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--pl-space-1);
+      }
+
+      .pl-c-property-list__key {
+        text-align: start;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(
+      .pl-c-property-list[data-dividers="true"] .pl-c-property-list__item
+    ) {
+      border-block-end-color: CanvasText;
+    }
+  }
+}

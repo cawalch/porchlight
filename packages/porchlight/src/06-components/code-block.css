@@ -1,0 +1,195 @@
+/*
+ * Porchlight  -  code-block component
+ * ===========================================================================
+ * A developer-grade code and diff viewer shell for API payloads, CLI terminal
+ * commands, config files, and audit changes. Distinct from bare <pre><code>:
+ * .pl-c-code-block provides an architectural header, integrated CSS-counter
+ * line numbers, unified diff highlights, and accessible copy actions.
+ *
+ * Structure:
+ *   <div class="pl-c-code-block" data-language="json" data-line-numbers="true">
+ *     <div class="pl-c-code-block__header">
+ *       <div class="pl-c-code-block__meta">
+ *         <span class="pl-c-code-block__title">iam-policy.json</span>
+ *         <span class="pl-c-badge" data-size="sm">JSON</span>
+ *       </div>
+ *       <button type="button" class="pl-c-code-block__copy" aria-label="Copy code">
+ *         <svg aria-hidden="true" ...>...</svg>
+ *         <span>Copy</span>
+ *       </button>
+ *     </div>
+ *     <pre class="pl-c-code-block__pre"><code class="pl-c-code-block__code"><span class="pl-c-code-block__line" data-line="1">  "resource": "cluster-09",</span>
+ * <span class="pl-c-code-block__line" data-line="2" data-diff="remove">- "access": "restricted",</span>
+ * <span class="pl-c-code-block__line" data-line="3" data-diff="add">+ "access": "authorized",</span>
+ * <span class="pl-c-code-block__line" data-line="4">  "timestamp": 1793516400</span></code></pre>
+ *   </div>
+ *
+ * Line numbers via [data-line-numbers="true"] on the container.
+ * Diff lines via [data-diff="add"] (green tint) and [data-diff="remove"] (rose tint).
+ */
+@layer porchlight.components {
+  @scope (.pl-c-code-block) {
+    :scope {
+      --pl-c-code-bg: var(--pl-color-bg);
+      --pl-c-code-header-bg: var(--pl-color-surface-2);
+      --pl-c-code-border: var(--pl-color-border);
+      --pl-c-code-font: var(--pl-font-mono);
+      --pl-c-code-font-size: 0.8125rem;
+      --pl-c-code-line-h: 1.6;
+      --pl-c-code-pad-inline: var(--pl-space-4);
+      --pl-c-code-pad-block: var(--pl-space-3);
+
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--pl-c-code-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-c-code-bg);
+      box-shadow: var(--pl-shadow-inset);
+      overflow: hidden;
+      margin-block: var(--pl-space-3);
+    }
+
+    /* Milled header bar with specular top highlight */
+    .pl-c-code-block__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      padding-block: var(--pl-space-2);
+      padding-inline: var(--pl-space-3);
+      background: var(--pl-c-code-header-bg);
+      border-block-end: 1px solid var(--pl-c-code-border);
+      box-shadow: var(--pl-shadow-bevel);
+    }
+
+    .pl-c-code-block__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+    }
+
+    .pl-c-code-block__title {
+      font-family: var(--pl-font-mono);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-medium);
+      color: var(--pl-color-text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Header copy trigger */
+    .pl-c-code-block__copy {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      padding-block: 0.25rem;
+      padding-inline: var(--pl-space-2);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-sm);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-medium);
+      cursor: pointer;
+      line-height: 1;
+      transition:
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        border-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-code-block__copy:hover {
+      color: var(--pl-color-text);
+      background: var(--pl-color-surface-2);
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        var(--pl-color-text) 20%
+      );
+    }
+
+    .pl-c-code-block__copy:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .pl-c-code-block__copy svg {
+      inline-size: 0.875rem;
+      block-size: 0.875rem;
+    }
+
+    /* Code container & pre */
+    .pl-c-code-block__pre {
+      margin: 0;
+      padding-block: var(--pl-c-code-pad-block);
+      padding-inline: 0;
+      overflow-x: auto;
+      scrollbar-gutter: stable;
+      font-family: var(--pl-c-code-font);
+      font-size: var(--pl-c-code-font-size);
+      line-height: var(--pl-c-code-line-h);
+      tab-size: 2;
+    }
+
+    .pl-c-code-block__code {
+      display: block;
+      min-inline-size: 100%;
+      font-family: inherit;
+      counter-reset: code-line;
+    }
+
+    /* Each line */
+    .pl-c-code-block__line {
+      display: flex;
+      padding-inline: var(--pl-c-code-pad-inline);
+      white-space: pre;
+    }
+
+    /* Pure-CSS line numbers */
+    :scope[data-line-numbers="true"] .pl-c-code-block__line::before {
+      counter-increment: code-line;
+      content: counter(code-line);
+      display: inline-block;
+      inline-size: 2.25rem;
+      margin-inline-end: var(--pl-space-3);
+      text-align: end;
+      color: var(--pl-color-text-muted);
+      opacity: 0.45;
+      user-select: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Unified diff highlights */
+    .pl-c-code-block__line[data-diff="add"] {
+      background: color-mix(
+        in oklab,
+        var(--pl-color-success-bg),
+        transparent 40%
+      );
+      color: var(--pl-color-success-text);
+      box-shadow: inset 3px 0 0 var(--pl-color-success);
+    }
+
+    .pl-c-code-block__line[data-diff="remove"] {
+      background: color-mix(
+        in oklab,
+        var(--pl-color-danger-bg),
+        transparent 40%
+      );
+      color: var(--pl-color-danger-text);
+      box-shadow: inset 3px 0 0 var(--pl-color-danger);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-code-block) {
+      border-color: CanvasText;
+    }
+
+    :where(.pl-c-code-block__header) {
+      border-block-end-color: CanvasText;
+    }
+  }
+}

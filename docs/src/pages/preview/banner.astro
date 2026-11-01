@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Banner · Porchlight">
+  <h1>Banner</h1>
+  <p>
+    Full-width system announcements and incident notifications. Designed to span
+    across layout headers or pin directly to the viewport top with sticky positioning.
+  </p>
+
+  <h2>Tones</h2>
+  <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
+    <aside class="pl-c-banner" data-tone="info" role="region" aria-label="Information Banner">
+      <div class="pl-c-banner__content">
+        <div class="pl-c-banner__main">
+          <span class="pl-c-banner__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" stroke-linecap="round" /></svg>
+          </span>
+          <div class="pl-c-banner__message">
+            <strong>System Update:</strong> New cluster telemetry metrics are now available across all regions.
+          </div>
+        </div>
+        <div class="pl-c-banner__actions">
+          <a href="#docs" class="pl-c-button" data-variant="secondary" data-size="sm">Release Notes</a>
+          <button type="button" class="pl-c-banner__close" aria-label="Dismiss banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <aside class="pl-c-banner" data-tone="warning" role="region" aria-label="Warning Banner">
+      <div class="pl-c-banner__content">
+        <div class="pl-c-banner__main">
+          <span class="pl-c-banner__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4M12 17h.01" stroke-linecap="round" /></svg>
+          </span>
+          <div class="pl-c-banner__message">
+            <strong>Scheduled Maintenance:</strong> Database failover test scheduled for Sunday at 04:00 UTC.
+          </div>
+        </div>
+        <div class="pl-c-banner__actions">
+          <a href="#status" class="pl-c-button" data-variant="secondary" data-size="sm">Status Page</a>
+          <button type="button" class="pl-c-banner__close" aria-label="Dismiss banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <aside class="pl-c-banner" data-tone="danger" role="region" aria-label="Critical Incident Banner">
+      <div class="pl-c-banner__content">
+        <div class="pl-c-banner__main">
+          <span class="pl-c-banner__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4M12 16h.01" stroke-linecap="round" /></svg>
+          </span>
+          <div class="pl-c-banner__message">
+            <strong>Active Incident:</strong> Elevated API error rates detected in us-east-1. Incident team investigating.
+          </div>
+        </div>
+        <div class="pl-c-banner__actions">
+          <a href="#incident" class="pl-c-button" data-variant="secondary" data-size="sm">Live Incident</a>
+          <button type="button" class="pl-c-banner__close" aria-label="Dismiss banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <aside class="pl-c-banner" data-tone="success" role="region" aria-label="Success Banner">
+      <div class="pl-c-banner__content">
+        <div class="pl-c-banner__main">
+          <span class="pl-c-banner__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </span>
+          <div class="pl-c-banner__message">
+            <strong>Deployment Complete:</strong> All services running v0.14.0 across global clusters.
+          </div>
+        </div>
+        <div class="pl-c-banner__actions">
+          <button type="button" class="pl-c-banner__close" aria-label="Dismiss banner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

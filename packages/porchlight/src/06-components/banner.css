@@ -1,0 +1,183 @@
+/*
+ * Porchlight  -  banner component
+ * ===========================================================================
+ * A full-width, top-level system announcement or incident bar  -  used for
+ * system degradations, scheduled maintenance, trial expirations, and global
+ * notices. Distinct from .pl-c-alert (an inline box with border-radius) and
+ * .pl-c-toast (a floating transient bubble).
+ *
+ * Structure:
+ *   <aside class="pl-c-banner" data-tone="warning" role="region" aria-label="System Notice">
+ *     <div class="pl-c-banner__content">
+ *       <div class="pl-c-banner__main">
+ *         <span class="pl-c-banner__icon" aria-hidden="true">...</span>
+ *         <div class="pl-c-banner__message">
+ *           <strong>Maintenance Notice:</strong> Scheduled upgrade planned for 02:00 UTC.
+ *         </div>
+ *       </div>
+ *       <div class="pl-c-banner__actions">
+ *         <a href="/status" class="pl-c-button" data-variant="secondary" data-size="sm">Status Page</a>
+ *         <button type="button" class="pl-c-banner__close" aria-label="Dismiss banner">
+ *           <svg aria-hidden="true" ...>...</svg>
+ *         </button>
+ *       </div>
+ *     </div>
+ *   </aside>
+ *
+ * Tones via [data-tone]: "info" (default accent), "warning", "danger",
+ * "success", and "neutral".
+ * Optional [data-sticky="true"] pins the banner to the viewport or container top.
+ */
+@layer porchlight.components {
+  @scope (.pl-c-banner) {
+    :scope {
+      --pl-c-banner-tone: var(--pl-color-accent);
+      --pl-c-banner-tone-bg: var(--pl-color-accent);
+      --pl-c-banner-pad-block: var(--pl-space-2);
+      --pl-c-banner-pad-inline: var(--pl-space-4);
+      --pl-c-banner-gap: var(--pl-space-3);
+
+      display: block;
+      inline-size: 100%;
+      padding-block: var(--pl-c-banner-pad-block);
+      padding-inline: var(--pl-c-banner-pad-inline);
+      background: color-mix(
+        in oklab,
+        var(--pl-c-banner-tone-bg),
+        var(--pl-color-surface) 90%
+      );
+      color: var(--pl-color-text);
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-c-banner-tone), var(--pl-color-border) 40%);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      container: pl-c-banner / inline-size;
+      position: relative;
+    }
+
+    :scope[data-sticky="true"] {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: var(--pl-z-sticky);
+    }
+
+    /* Inner layout: flexible content row */
+    .pl-c-banner__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-c-banner-gap);
+      max-inline-size: 100%;
+      margin-inline: auto;
+    }
+
+    .pl-c-banner__main {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      min-inline-size: 0;
+      flex: 1 1 auto;
+    }
+
+    .pl-c-banner__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--pl-c-banner-tone);
+      flex-shrink: 0;
+    }
+
+    .pl-c-banner__icon svg {
+      inline-size: 1.125rem;
+      block-size: 1.125rem;
+    }
+
+    .pl-c-banner__message {
+      min-inline-size: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .pl-c-banner__message strong {
+      font-weight: var(--pl-font-weight-semibold);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-banner__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--pl-space-2);
+      flex-shrink: 0;
+    }
+
+    .pl-c-banner__close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--pl-space-1);
+      border: 0;
+      border-radius: var(--pl-radius-sm);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      cursor: pointer;
+      line-height: 1;
+      transition:
+        color var(--pl-duration-1) var(--pl-ease-standard),
+        background-color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-banner__close:hover {
+      color: var(--pl-color-text);
+      background: color-mix(in oklab, var(--pl-color-text), transparent 90%);
+    }
+
+    .pl-c-banner__close:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    .pl-c-banner__close svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+
+    /* Tone variants */
+    :scope[data-tone="warning"] {
+      --pl-c-banner-tone: var(--pl-color-warning);
+      --pl-c-banner-tone-bg: var(--pl-color-warning-bg);
+    }
+
+    :scope[data-tone="danger"] {
+      --pl-c-banner-tone: var(--pl-color-danger);
+      --pl-c-banner-tone-bg: var(--pl-color-danger-bg);
+    }
+
+    :scope[data-tone="success"] {
+      --pl-c-banner-tone: var(--pl-color-success);
+      --pl-c-banner-tone-bg: var(--pl-color-success-bg);
+    }
+
+    :scope[data-tone="neutral"] {
+      --pl-c-banner-tone: var(--pl-color-text-muted);
+      --pl-c-banner-tone-bg: var(--pl-color-surface-2);
+    }
+
+    /* Container query responsive wrap on narrow widths */
+    @container pl-c-banner (inline-size < 40rem) {
+      .pl-c-banner__content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--pl-space-2);
+      }
+
+      .pl-c-banner__actions {
+        align-self: flex-end;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-banner) {
+      border-block-end-color: CanvasText;
+    }
+  }
+}
