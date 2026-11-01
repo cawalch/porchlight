@@ -29,6 +29,14 @@ const primaryLinks = [
 
 const bestExamples = [
   [
+    "/preview/app-audit-studio",
+    "financial risk and regulatory audit studio with Basel III capital KPIs, immutable audit ledger, subgrid counterparty inspector, and FRTB policy diffs",
+  ],
+  [
+    "/preview/app-telemetry-cockpit",
+    "flagship enterprise operations cockpit with high-density KPI cards, SOC-2 audit stream, subgrid node inspector, and security policy diffs",
+  ],
+  [
     "/preview/app-list-detail",
     "list/detail workspace with a persistent table and selected-record panel",
   ],
