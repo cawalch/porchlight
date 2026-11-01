@@ -1,0 +1,61 @@
+---
+title: Banner
+description: Full-width system-level announcement and incident bar with semantic tones and actions.
+status: stable
+since: 0.14.0
+---
+
+The `.pl-c-banner` renders a full-width announcement bar at the top of an application shell or container. Used for maintenance windows, service incidents, trial expirations, and regulatory notices.
+
+Unlike `.pl-c-alert` (an in-page contextual card) and `.pl-c-toast` (a transient floating bubble), banners span 100% width with a flush hairline border and can pin to the viewport top via `[data-sticky="true"]`.
+
+## Semantic HTML
+
+```html
+<aside
+  class="pl-c-banner"
+  data-tone="warning"
+  role="region"
+  aria-label="System Notice"
+>
+  <div class="pl-c-banner__content">
+    <div class="pl-c-banner__main">
+      <span class="pl-c-banner__icon" aria-hidden="true"><svg>…</svg></span>
+      <div class="pl-c-banner__message">
+        <strong>Scheduled Maintenance:</strong> Database upgrades planned for
+        Saturday at 02:00 UTC.
+      </div>
+    </div>
+    <div class="pl-c-banner__actions">
+      <a
+        href="/status"
+        class="pl-c-button"
+        data-variant="secondary"
+        data-size="sm"
+        >Status Page</a
+      >
+      <button
+        type="button"
+        class="pl-c-banner__close"
+        aria-label="Dismiss banner"
+      >
+        <svg aria-hidden="true">…</svg>
+      </button>
+    </div>
+  </div>
+</aside>
+```
+
+## Class contract
+
+| Selector                | Role                                                         |
+| ----------------------- | ------------------------------------------------------------ |
+| `.pl-c-banner`          | Root container (full width, hairline bottom border).         |
+| `.pl-c-banner__content` | Flex wrapper aligning main message and trailing actions.     |
+| `.pl-c-banner__main`    | Flex cluster for icon and text message.                      |
+| `.pl-c-banner__icon`    | Leading icon container.                                      |
+| `.pl-c-banner__message` | Text container supporting bold prefixes and links.           |
+| `.pl-c-banner__actions` | Trailing cluster for buttons and dismiss trigger.            |
+| `.pl-c-banner__close`   | Accessible dismiss button.                                   |
+| `[data-tone]`           | `info` (default), `warning`, `danger`, `success`, `neutral`. |
+| `[data-sticky="true"]`  | Pins the banner to the top of the viewport/container.        |

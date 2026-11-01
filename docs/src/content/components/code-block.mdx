@@ -1,0 +1,47 @@
+---
+title: Code Block
+description: Developer-grade code and diff viewer shell with line numbering and copy action.
+status: stable
+since: 0.14.0
+---
+
+The `.pl-c-code-block` renders styled syntax, CLI terminal commands, API payloads, and code diffs. Built with an architectural header bar, sunken well background, integrated CSS-counter line numbers, and unified diff line highlights.
+
+## Semantic HTML
+
+```html
+<div class="pl-c-code-block" data-language="json" data-line-numbers="true">
+  <div class="pl-c-code-block__header">
+    <div class="pl-c-code-block__meta">
+      <span class="pl-c-code-block__title">iam-policy.json</span>
+      <span class="pl-c-badge" data-size="sm">JSON</span>
+    </div>
+    <button type="button" class="pl-c-code-block__copy" aria-label="Copy code">
+      <svg aria-hidden="true">…</svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre
+    class="pl-c-code-block__pre"
+  ><code class="pl-c-code-block__code"><span class="pl-c-code-block__line" data-line="1">  "role": "reader",</span>
+<span class="pl-c-code-block__line" data-line="2" data-diff="remove">- "action": "deny",</span>
+<span class="pl-c-code-block__line" data-line="3" data-diff="add">+ "action": "allow",</span>
+<span class="pl-c-code-block__line" data-line="4">  "status": "active"</span></code></pre>
+</div>
+```
+
+## Class contract
+
+| Selector                     | Role                                                    |
+| ---------------------------- | ------------------------------------------------------- |
+| `.pl-c-code-block`           | Outer container (sunken well with 1px border).          |
+| `.pl-c-code-block__header`   | Architectural top bar with specular highlight.          |
+| `.pl-c-code-block__meta`     | Cluster for title and language badge.                   |
+| `.pl-c-code-block__title`    | Filename or snippet heading.                            |
+| `.pl-c-code-block__copy`     | Accessible copy-to-clipboard button.                    |
+| `.pl-c-code-block__pre`      | Scrollable code wrapper.                                |
+| `.pl-c-code-block__code`     | Semantic `<code>` block hosting CSS counter reset.      |
+| `.pl-c-code-block__line`     | Individual code line row.                               |
+| `[data-line-numbers="true"]` | Enables automatic pure-CSS line numbers via `::before`. |
+| `[data-diff="add"]`          | Highlights an added line in soft green.                 |
+| `[data-diff="remove"]`       | Highlights a removed line in soft rose.                 |

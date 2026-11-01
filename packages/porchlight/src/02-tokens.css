@@ -251,8 +251,12 @@
        The inset top-highlight on shadow-2/3 gives elevated surfaces the
        "lifted from the page" quality common in Linear, Vercel, Notion.
        Hue 40° in the shadow tint reads as warm ambient light. */
+    --pl-shadow-bevel: inset 0 1px 0
+      light-dark(oklch(100% 0 0deg / 70%), oklch(100% 0 0deg / 8%));
+    --pl-shadow-inset: inset 0 1px 2px oklch(0% 0 0deg / 8%);
     --pl-shadow-1:
-      0 1px 2px oklch(0% 0 0deg / 8%), 0 1px 4px oklch(30% 0.04 40deg / 6%);
+      0 1px 2px oklch(0% 0 0deg / 8%), 0 1px 4px oklch(30% 0.04 40deg / 6%),
+      var(--pl-shadow-bevel);
     --pl-shadow-2:
       0 4px 8px oklch(0% 0 0deg / 8%), 0 8px 24px oklch(25% 0.06 40deg / 12%),
       inset 0 1px 0 oklch(100% 0 0deg / 6%);

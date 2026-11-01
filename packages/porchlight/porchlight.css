@@ -68,6 +68,9 @@
 @import "src/06-components/filter-builder.css";
 @import "src/06-components/workflow-board.css";
 @import "src/06-components/chart.css";
+@import "src/06-components/banner.css";
+@import "src/06-components/property-list.css";
+@import "src/06-components/code-block.css";
 @import "src/06-components/nav.css";
 @import "src/06-components/section-nav.css";
 @import "src/07-utilities.css";

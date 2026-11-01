@@ -1,0 +1,57 @@
+---
+title: Property List
+description: High-density key-value metadata inspector for cloud resources, accounts, and telemetry.
+status: stable
+since: 0.14.0
+---
+
+The `.pl-c-property-list` displays structured, high-density key-value pairs for entity inspection panels, resource overviews, and configuration summaries.
+
+Unlike `.pl-c-description` (which is oriented toward long-form prose and descriptions), `.pl-c-property-list` is engineered for technical instrumentation with CSS subgrid track alignment, monospaced tabular values, tactile inline copy buttons, and density modes.
+
+## Semantic HTML
+
+```html
+<dl class="pl-c-property-list" data-pl-density="compact" data-dividers="true">
+  <div class="pl-c-property-list__item">
+    <dt class="pl-c-property-list__key">Resource ID</dt>
+    <dd class="pl-c-property-list__value">
+      <code class="pl-c-property-list__mono">res_99201f8a</code>
+      <button
+        type="button"
+        class="pl-c-property-list__copy"
+        aria-label="Copy Resource ID"
+      >
+        <svg aria-hidden="true">…</svg>
+      </button>
+    </dd>
+  </div>
+  <div class="pl-c-property-list__item">
+    <dt class="pl-c-property-list__key">Status</dt>
+    <dd class="pl-c-property-list__value">
+      <span class="pl-c-badge" data-tone="success">Healthy</span>
+    </dd>
+  </div>
+  <div class="pl-c-property-list__item">
+    <dt class="pl-c-property-list__key">Created At</dt>
+    <dd class="pl-c-property-list__value">
+      <time datetime="2026-11-01T07:00:00Z" class="pl-c-property-list__mono"
+        >2026-11-01 07:00:00 UTC</time
+      >
+    </dd>
+  </div>
+</dl>
+```
+
+## Class contract
+
+| Selector                     | Role                                                                  |
+| ---------------------------- | --------------------------------------------------------------------- |
+| `.pl-c-property-list`        | Root definition list (`<dl>`), grid container.                        |
+| `.pl-c-property-list__item`  | Key-value row spanning subgrid tracks.                                |
+| `.pl-c-property-list__key`   | Property label (`<dt>`), muted and right-aligned to gutter.           |
+| `.pl-c-property-list__value` | Property value (`<dd>`), flexible content slot.                       |
+| `.pl-c-property-list__mono`  | Styled monospaced token for IDs, hashes, and dates.                   |
+| `.pl-c-property-list__copy`  | Accessible copy-to-clipboard button.                                  |
+| `[data-pl-density]`          | `dense` (1.625rem), `compact` (2rem default), `comfortable` (2.5rem). |
+| `[data-dividers="true"]`     | Adds hairline horizontal dividers between items.                      |

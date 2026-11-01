@@ -365,12 +365,14 @@ list tracks CSS component contracts rather than composed application recipes.
 - alert: /components/alert
 - avatar: /components/avatar
 - badge: /components/badge
+- banner: /components/banner
 - breadcrumb: /components/breadcrumb
 - button: /components/button
 - calendar: /components/calendar
 - card: /components/card
 - chart: /components/chart
 - chip: /components/chip
+- code-block: /components/code-block
 - combobox: /components/combobox
 - command-palette: /components/command-palette
 - data-table: /components/data-table
@@ -392,6 +394,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - panel-deck: /components/panel-deck
 - popover-menu: /components/popover-menu
 - progress: /components/progress
+- property-list: /components/property-list
 - reveal: /components/reveal
 - scroll-progress: /components/scroll-progress
 - scroll-region: /components/scroll-region
@@ -468,6 +471,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-siem
 - /preview/avatar
 - /preview/badge
+- /preview/banner
 - /preview/base
 - /preview/breadcrumb
 - /preview/button
@@ -475,6 +479,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/card
 - /preview/chart
 - /preview/chip
+- /preview/code-block
 - /preview/combobox
 - /preview/command-palette
 - /preview/css-modules
@@ -500,6 +505,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/panel-deck
 - /preview/popover-menu
 - /preview/progress
+- /preview/property-list
 - /preview/reset
 - /preview/reveal
 - /preview/scroll-progress

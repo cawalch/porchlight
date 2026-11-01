@@ -139,6 +139,16 @@
     margin-inline: calc(50% - 50vi);
   }
 
+  /* Tabular numbers: ensure monospaced numerical figures in stats, counters, and telemetry tables. */
+  :where(.pl-u-tabular-nums) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Monospace font utility for IDs, hashes, keys, and code tokens. */
+  :where(.pl-u-mono) {
+    font-family: var(--pl-font-mono);
+  }
+
   /* Opt-in boundary for Element.startViewTransition(); the application owns
      updates, feature detection, focus, and reduced-motion bypass. */
   :where(.pl-u-transition-scope) {
