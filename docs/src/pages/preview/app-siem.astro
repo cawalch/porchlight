@@ -62,6 +62,32 @@ const eventFeed = [
 ---
 
 <BaseLayout title="SIEM Console · Porchlight">
+  <!-- Pinned Security Incident Banner -->
+  <aside class="pl-c-banner" data-tone="danger" data-sticky="true" role="region" aria-label="Active Security Incident">
+    <div class="pl-c-banner__content">
+      <div class="pl-c-banner__main">
+        <span class="pl-c-banner__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </span>
+        <div class="pl-c-banner__message">
+          <strong>Active Threat Mitigation:</strong> 7 critical intrusion events detected targeting cluster perimeter. Automated CIDR quarantine engaged.
+        </div>
+      </div>
+      <div class="pl-c-banner__actions">
+        <button type="button" class="pl-c-banner__close" aria-label="Dismiss security banner">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
   <div class="pl-l-app-shell">
     <!-- Topbar -->
     <header class="pl-l-app-shell__topbar siem-topbar">
@@ -77,7 +103,7 @@ const eventFeed = [
         <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="siem-cmdk">
           <svg class="siem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span class="pl-u-muted siem-search-label">Search alerts…</span>
-          <kbd class="siem-kbd">⌘K</kbd>
+          <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
         </button>
         <span class="pl-u-muted siem-role-label">SOC Analyst</span>
         <div class="pl-c-avatar siem-avatar" data-size="sm">AR</div>
@@ -144,21 +170,30 @@ const eventFeed = [
           </div>
         </div>
 
-        <!-- Compact KPI strip -->
-        <div class="siem-kpis">
+        <!-- Modern KPI Cards -->
+        <div class="pl-l-grid" style="--pl-l-grid-min: 220px; gap: var(--pl-space-3);">
           {kpis.map((k) => (
-            <div class="siem-kpi">
-              <div class="siem-kpi__info">
-                <span class="siem-kpi__label">{k.label}</span>
-                <span class="siem-kpi__value">{k.value}<span class="siem-kpi__unit">{k.unit}</span></span>
-                <span class="siem-kpi__trend" data-direction={k.direction}>{k.trend}</span>
+            <article class="pl-c-kpi-card" data-tone={k.tone}>
+              <header class="pl-c-kpi-card__header">
+                <span class="pl-c-kpi-card__label">{k.label}</span>
+                <span class="pl-c-badge" data-tone={k.tone}>{k.direction === 'up' ? 'Elevated' : 'Nominal'}</span>
+              </header>
+              <div class="pl-c-kpi-card__metric">
+                <span class="pl-c-kpi-card__value pl-u-tabular-nums">{k.value}</span>
+                {k.unit && <span class="pl-c-kpi-card__suffix">{k.unit}</span>}
               </div>
-              <div class="siem-kpi__spark">
-                <svg viewBox="0 0 70 36" width="48" height="32" preserveAspectRatio="none" aria-hidden="true">
-                  <path d={k.spark} fill="none" stroke={k.tone === 'danger' ? 'var(--pl-color-danger)' : k.tone === 'success' ? 'var(--pl-color-success)' : k.tone === 'accent' ? 'var(--pl-color-accent)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+              <footer class="pl-c-kpi-card__footer">
+                <span class="pl-c-kpi-card__delta" data-tone={k.tone} data-direction={k.direction}>
+                  {k.trend}
+                </span>
+                <span class="pl-c-kpi-card__comparison">vs 24h baseline</span>
+              </footer>
+              <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
+                <svg viewBox="0 0 70 36" preserveAspectRatio="none" style="width: 100%; height: 28px; fill: none; stroke: currentColor; stroke-width: 2;">
+                  <path d={k.spark} stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
@@ -243,7 +278,7 @@ const eventFeed = [
             </div>
           </div>
 
-          <!-- Live Event Stream -->
+          <!-- Live Event Stream using .pl-c-audit-stream -->
           <div class="siem-event-panel">
             <div class="pl-c-card" data-surface="app">
               <div class="pl-c-card__header">
@@ -252,17 +287,22 @@ const eventFeed = [
                   <span class="siem-live-dot"></span> Live
                 </span>
               </div>
-              <div class="pl-c-card__body siem-event-body">
-                <ol class="pl-c-timeline siem-timeline" tabindex="0" aria-label="Security event feed">
+              <div class="pl-c-card__body" style="padding: var(--pl-space-2);">
+                <ol class="pl-c-audit-stream" role="list" tabindex="0" aria-label="Security event feed" style="border: 0; max-block-size: 32rem; overflow-y: auto;">
                   {eventFeed.map((e) => (
-                    <li class="pl-c-timeline__item" data-tone={e.tone}>
-                      <span class="pl-c-timeline__dot"></span>
-                      <div class="pl-c-timeline__content">
-                        <div class="pl-c-timeline__header">
-                          <span class="pl-c-timeline__title">{e.title}</span>
-                          <time class="pl-c-timeline__time siem-event-time">{e.time}</time>
+                    <li class="pl-c-audit-stream__item">
+                      <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm" style="font-size: 0.6875rem;">
+                        {e.tone === 'danger' ? 'CRIT' : e.tone === 'warning' ? 'WARN' : 'INFO'}
+                      </div>
+                      <div class="pl-c-audit-stream__body">
+                        <div class="pl-c-audit-stream__header">
+                          <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">{e.title}</span>
+                          <span class="pl-c-badge" data-tone={e.tone} data-size="sm">{e.tone.toUpperCase()}</span>
+                          <time class="pl-c-audit-stream__time pl-u-tabular-nums">{e.time}</time>
                         </div>
-                        <p class="pl-c-timeline__body siem-event-copy">{e.body}</p>
+                        <div class="pl-c-audit-stream__target">
+                          <code class="pl-c-audit-stream__mono" style="font-size: 0.6875rem;">{e.body}</code>
+                        </div>
                       </div>
                     </li>
                   ))}
@@ -357,19 +397,9 @@ const eventFeed = [
       color: var(--pl-color-accent-text);
       flex-shrink: 0;
     }
-    .siem-kbd {
-      font-family: var(--pl-font-mono);
-      font-size: var(--pl-text-xs);
-      padding: 0.1rem 0.3rem;
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-xs);
-      background: var(--pl-color-surface-2);
-      color: var(--pl-color-text-muted);
-    }
     @media (width < 40rem) {
       .siem-search-label,
-      .siem-role-label,
-      .siem-kbd {
+      .siem-role-label {
         display: none;
       }
       .siem-topbar__right {
@@ -393,65 +423,9 @@ const eventFeed = [
     .siem-header h1 { font-size: var(--pl-text-xl); margin: 0; }
     .siem-header p { margin: 0; }
 
-    /* Compact KPI strip: horizontal row, not tall cards. */
-    .siem-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--pl-space-3);
-    }
-    .siem-kpi {
-      display: flex;
-      align-items: center;
-      gap: var(--pl-space-3);
-      min-inline-size: 0;
-      padding: var(--pl-space-3);
-      border: 1px solid var(--pl-color-border);
-      border-radius: var(--pl-radius-lg);
-      background: var(--pl-color-surface);
-    }
-    .siem-kpi__info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-      min-inline-size: 0;
-    }
-    .siem-kpi__label {
-      font-size: var(--pl-text-xs);
-      color: var(--pl-color-text-muted);
-      white-space: nowrap;
-    }
-    .siem-kpi__value {
-      font-size: var(--pl-text-lg);
-      font-weight: var(--pl-font-weight-bold);
-      line-height: 1.2;
-    }
-    .siem-kpi__unit {
-      font-size: var(--pl-text-sm);
-      color: var(--pl-color-text-muted);
-    }
-    .siem-kpi__trend {
-      font-size: var(--pl-text-xs);
-      font-weight: var(--pl-font-weight-medium);
-    }
-    .siem-kpi__trend[data-direction="up"] { color: var(--pl-color-danger); }
-    .siem-kpi__trend[data-direction="down"] { color: var(--pl-color-success); }
-    .siem-kpi__trend[data-direction="flat"] { color: var(--pl-color-text-muted); }
-    .siem-kpi__spark { flex-shrink: 0; }
-    @media (width < 60rem) {
-      .siem-kpis { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (width < 30rem) {
-      .siem-kpi {
-        gap: var(--pl-space-2);
-      }
-      .siem-kpi__spark svg {
-        inline-size: 2.5rem;
-      }
-    }
-
     .siem-content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 20rem;
+      grid-template-columns: minmax(0, 1fr) 22rem;
       gap: var(--pl-space-3);
       align-items: start;
     }
@@ -494,15 +468,6 @@ const eventFeed = [
       .siem-content-grid { grid-template-columns: 1fr; }
     }
     .siem-event-panel { position: sticky; inset-block-start: var(--pl-space-4); }
-
-    /* Timeline body: give dots inline-start padding so they aren't clipped. */
-    .siem-event-body { padding: var(--pl-space-3) var(--pl-space-4); }
-    .siem-timeline {
-      max-block-size: 26rem;
-      overflow-y: auto;
-    }
-    .siem-timeline .pl-c-timeline__item { padding-block-end: var(--pl-space-3); }
-    .siem-event-time { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); }
 
     .siem-live-dot {
       display: inline-block;

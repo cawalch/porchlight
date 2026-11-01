@@ -30,9 +30,10 @@ const toneFor = (s: string) =>
         <strong>Porchlight</strong>
       </div>
       <div class="app-topbar__right">
-        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo" aria-label="Cmd+K - Search">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo">
           <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="pl-u-muted dashboard-shortcut-label">Cmd+K</span>
+          <span class="pl-u-muted dashboard-shortcut-label">Search</span>
+          <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
         </button>
         <div class="pl-c-avatar dashboard-avatar" data-size="sm">JD</div>
       </div>
@@ -87,23 +88,32 @@ const toneFor = (s: string) =>
             </div>
           </div>
 
-          <!-- KPI grid: auto-fits from 4 columns down to 1 -->
-          <div class="pl-l-grid dashboard-kpi-grid">
+          <!-- Modern KPI Cards -->
+          <div class="pl-l-grid dashboard-kpi-grid" style="--pl-l-grid-min: 220px; gap: var(--pl-space-3);">
             {stats.map((s) => (
-              <div class="pl-c-card" data-surface="app">
-                <div class="pl-c-card__body">
-                  <div class="pl-c-stat">
-                    <span class="pl-c-stat__label">{s.label}</span>
-                    <div class="pl-c-stat__value">{s.value}<span class="pl-c-stat__unit">{s.unit}</span></div>
-                    <span class="pl-c-stat__trend" data-direction={s.direction}>{s.trend}</span>
-                    <div class="pl-c-stat__spark">
-                      <svg viewBox="0 0 70 36" width="100%" height="36" preserveAspectRatio="none" aria-hidden="true">
-                        <path d={s.spark} fill="none" stroke={s.direction === 'up' ? 'var(--pl-color-success)' : s.direction === 'down' ? 'var(--pl-color-danger)' : 'var(--pl-color-text-muted)'} stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-                      </svg>
-                    </div>
-                  </div>
+              <article class="pl-c-kpi-card" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
+                <header class="pl-c-kpi-card__header">
+                  <span class="pl-c-kpi-card__label">{s.label}</span>
+                  <span class="pl-c-badge" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
+                    {s.direction === 'up' ? 'Growth' : s.direction === 'down' ? 'Dip' : 'Stable'}
+                  </span>
+                </header>
+                <div class="pl-c-kpi-card__metric">
+                  <span class="pl-c-kpi-card__value pl-u-tabular-nums">{s.value}</span>
+                  {s.unit && <span class="pl-c-kpi-card__suffix">{s.unit}</span>}
                 </div>
-              </div>
+                <footer class="pl-c-kpi-card__footer">
+                  <span class="pl-c-kpi-card__delta" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'} data-direction={s.direction}>
+                    {s.trend}
+                  </span>
+                  <span class="pl-c-kpi-card__comparison">vs prev 7d</span>
+                </footer>
+                <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
+                  <svg viewBox="0 0 70 36" preserveAspectRatio="none" style="width: 100%; height: 28px; fill: none; stroke: currentColor; stroke-width: 2;">
+                    <path d={s.spark} stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </article>
             ))}
           </div>
 
@@ -140,8 +150,8 @@ const toneFor = (s: string) =>
                       <td class="pl-c-table__sticky-col">{a.name}</td>
                       <td>{a.plan}</td>
                       <td><span class="pl-c-badge" data-tone={toneFor(a.status)}>{a.status}</span></td>
-                      <td data-align="end">{a.seats}</td>
-                      <td data-align="end">{a.mrr}</td>
+                      <td data-align="end" class="pl-u-tabular-nums">{a.seats}</td>
+                      <td data-align="end" class="pl-u-tabular-nums">{a.mrr}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -163,30 +173,48 @@ const toneFor = (s: string) =>
             </div>
           </div>
 
-          <!-- Activity timeline -->
+          <!-- Activity Audit Stream -->
           <div class="pl-c-card" data-surface="app">
-            <div class="pl-c-card__header"><h2 class="pl-c-card__title">Recent activity</h2></div>
-            <div class="pl-c-card__body">
-              <ol class="pl-c-timeline">
-                <li class="pl-c-timeline__item" data-tone="success">
-                  <span class="pl-c-timeline__dot"></span>
-                  <div class="pl-c-timeline__content">
-                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">New account created</span><time class="pl-c-timeline__time">2m ago</time></div>
-                    <p class="pl-c-timeline__body">Umbrella Corp signed up for Enterprise plan.</p>
+            <div class="pl-c-card__header"><h2 class="pl-c-card__title">Recent Activity Audit</h2></div>
+            <div class="pl-c-card__body" style="padding: var(--pl-space-2);">
+              <ol class="pl-c-audit-stream" role="list" aria-label="Recent activity stream" style="border: 0;">
+                <li class="pl-c-audit-stream__item">
+                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">UC</div>
+                  <div class="pl-c-audit-stream__body">
+                    <div class="pl-c-audit-stream__header">
+                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Umbrella Corp</span>
+                      <span class="pl-c-badge" data-tone="success" data-size="sm">UPGRADE</span>
+                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">2m ago</time>
+                    </div>
+                    <div class="pl-c-audit-stream__target">
+                      Subscribed to <code class="pl-c-audit-stream__mono">Enterprise Tier (60 seats)</code>
+                    </div>
                   </div>
                 </li>
-                <li class="pl-c-timeline__item">
-                  <span class="pl-c-timeline__dot"></span>
-                  <div class="pl-c-timeline__content">
-                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">API key rotated</span><time class="pl-c-timeline__time">1h ago</time></div>
-                    <p class="pl-c-timeline__body">Acme Ops generated a new production API key.</p>
+                <li class="pl-c-audit-stream__item">
+                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">AO</div>
+                  <div class="pl-c-audit-stream__body">
+                    <div class="pl-c-audit-stream__header">
+                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Acme Ops</span>
+                      <span class="pl-c-badge" data-tone="accent" data-size="sm">KEY ROTATION</span>
+                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">1h ago</time>
+                    </div>
+                    <div class="pl-c-audit-stream__target">
+                      Generated new production API key <code class="pl-c-audit-stream__mono">pk_live_***84f</code>
+                    </div>
                   </div>
                 </li>
-                <li class="pl-c-timeline__item" data-tone="warning">
-                  <span class="pl-c-timeline__dot"></span>
-                  <div class="pl-c-timeline__content">
-                    <div class="pl-c-timeline__header"><span class="pl-c-timeline__title">Payment failed</span><time class="pl-c-timeline__time">3h ago</time></div>
-                    <p class="pl-c-timeline__body">Initech's payment method was declined.</p>
+                <li class="pl-c-audit-stream__item">
+                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">IT</div>
+                  <div class="pl-c-audit-stream__body">
+                    <div class="pl-c-audit-stream__header">
+                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Initech</span>
+                      <span class="pl-c-badge" data-tone="danger" data-size="sm">PAYMENT FAILED</span>
+                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">3h ago</time>
+                    </div>
+                    <div class="pl-c-audit-stream__target">
+                      Primary payment method was declined on recurring invoice <code class="pl-c-audit-stream__mono">inv-2026-110</code>
+                    </div>
                   </div>
                 </li>
               </ol>

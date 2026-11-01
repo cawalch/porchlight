@@ -25,8 +25,22 @@ const assets = [
       <header class="pl-c-page-header">
         <div class="pl-c-page-header__heading"><h1 class="pl-c-page-header__title">Asset inventory</h1><p class="pl-c-page-header__subtitle">Know what you own, who owns it, and what needs attention.</p></div>
       </header>
-      <div class="pl-l-grid" id="coverage" style="--pl-l-grid-min: 12rem;">
-        {[['Assets tracked', '5'], ['Flagged by policy', '2'], ['Owners assigned', '100%']].map(([label, value]) => <article class="pl-c-card"><div class="pl-c-card__body"><span>{label}</span><strong class="inventory-stat">{value}</strong></div></article>)}
+      <div class="pl-l-grid" id="coverage" style="--pl-l-grid-min: 14rem; gap: var(--pl-space-3);">
+        {[
+          ['Assets tracked', '5', 'success', 'All monitored'],
+          ['Flagged by policy', '2', 'danger', 'Attention required'],
+          ['Owners assigned', '100%', 'accent', 'Fully allocated'],
+        ].map(([label, value, tone, sub]) => (
+          <article class="pl-c-kpi-card" data-tone={tone}>
+            <header class="pl-c-kpi-card__header">
+              <span class="pl-c-kpi-card__label">{label}</span>
+              <span class="pl-c-badge" data-tone={tone}>{sub}</span>
+            </header>
+            <div class="pl-c-kpi-card__metric">
+              <span class="pl-c-kpi-card__value pl-u-tabular-nums">{value}</span>
+            </div>
+          </article>
+        ))}
       </div>
       <section class="pl-c-card" aria-labelledby="assets-title">
         <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="assets-title">Workspace assets</h2><span class="pl-c-badge">5 records</span></header>
