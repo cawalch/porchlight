@@ -44,13 +44,17 @@ Unlike legacy SVG or Canvas approaches that require runtime calculation scripts,
 
 - **Tones via `[data-tone]`**:
   - `accent` (default): Framework accent color.
+  - `brand`: Brand corporate warm amber tone.
   - `success`: System emerald tone for high health and compliance.
   - `warning`: Amber tone for threshold breaches and capacity warnings.
   - `danger`: Red tone for critical errors, low memory, or SLA violations.
-  - `brand`: Brand corporate color tone.
+  - `info`: Informational accent tone.
+  - `neutral`: Muted tone for inactive or baseline metrics.
 - **Sizes via `[data-size]`**:
-  - `sm`: 4rem / 64px compact gauge for dense telemetry rows.
-  - Default: 6rem / 96px for standard dashboards.
-  - `lg`: 8rem / 128px for executive summary hero tiles.
-- **Speedometer Arc via `[data-variant="arc"]`**:
-  - Clips the lower half to render a 180° semi-circular dial gauge.
+  - `sm`: Compact gauge for dense telemetry tables and sidebars.
+  - Default: Standard size for dashboards and monitoring grids.
+  - `lg`: Hero gauge for executive summary tiles.
+- **Forms & Geometries via `[data-variant]`**:
+  - Default: Full 360° circular progress ring.
+  - `arc`: Semi-circular 180° speedometer arch with GPU-clipped conic gradient and unconstrained typographic clearance.
+  - `meter`: 240° symmetrical open telemetry dial providing an open bottom viewport for maximum metric legibility.
