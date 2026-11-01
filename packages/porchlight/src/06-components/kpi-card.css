@@ -45,7 +45,7 @@
 
     .pl-c-kpi-card__header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: var(--pl-space-2);
       min-inline-size: 0;
@@ -57,9 +57,12 @@
       color: var(--pl-color-text-muted);
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      line-height: var(--pl-leading-snug);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .pl-c-kpi-card__metric {
