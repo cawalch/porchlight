@@ -123,13 +123,13 @@
     .pl-c-field__balloon {
       display: none;
       align-items: center;
-      gap: var(--pl-space-1-5);
+      gap: var(--pl-space-2);
       position: static;
-      padding: var(--pl-space-1) var(--pl-space-2-5);
+      padding: var(--pl-space-1) var(--pl-space-3);
       border-radius: var(--pl-radius-md);
       background: var(--pl-color-danger-bg);
       color: var(--pl-color-danger-text);
-      border: 1px solid var(--pl-color-danger-border);
+      border: 1px solid color-mix(in oklab, var(--pl-color-danger) 40%, transparent);
       font-size: var(--pl-text-xs);
       line-height: var(--pl-leading-tight);
       font-weight: var(--pl-font-weight-medium);
@@ -142,6 +142,21 @@
       transition:
         opacity var(--pl-duration-1) var(--pl-ease-standard),
         display var(--pl-duration-1) var(--pl-ease-standard) allow-discrete;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset-block-start: -5px;
+        inset-inline-start: var(--pl-space-3);
+        inline-size: 8px;
+        block-size: 8px;
+        background: var(--pl-color-danger-bg);
+        border-inline-start: 1px solid
+          color-mix(in oklab, var(--pl-color-danger) 40%, transparent);
+        border-block-start: 1px solid
+          color-mix(in oklab, var(--pl-color-danger) 40%, transparent);
+        transform: rotate(45deg);
+      }
     }
 
     @supports (position-anchor: --x) {
@@ -149,7 +164,7 @@
         position: fixed;
         position-anchor: var(--pl-c-field-anchor);
         position-area: block-end span-inline-end;
-        margin-block-start: var(--pl-space-1-5);
+        margin-block-start: var(--pl-space-2);
         margin-inline-start: var(--pl-space-1);
       }
     }
@@ -459,6 +474,10 @@
       border: 2px solid CanvasText;
       background: Canvas;
       color: CanvasText;
+
+      &::before {
+        display: none;
+      }
     }
   }
 }
