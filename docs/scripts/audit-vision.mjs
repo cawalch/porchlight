@@ -159,5 +159,8 @@ report += `3. **Typography Rhythm**: Header hierarchies follow standard font-siz
 const reportPath = join(outputDir, "report.md");
 writeFileSync(reportPath, report, "utf8");
 
+const metricsPath = join(outputDir, "metrics.json");
+writeFileSync(metricsPath, JSON.stringify(auditLog, null, 2), "utf8");
+
 console.log(`\n✓ Vision snapshots and analysis written to ${outputDir}/`);
 console.log(`✓ Report summary generated at ${reportPath}\n`);
