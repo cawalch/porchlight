@@ -47,7 +47,13 @@ const messages = [
         <div class="msg-list__toolbar">
           <label class="pl-c-field pl-c-field--inline inbox-search-field">
             <span class="pl-u-sr-only">Search messages</span>
-            <input class="pl-c-field__control" type="search" placeholder="Search inbox..."/>
+            <input
+              class="pl-c-field__control pl-c-field__input"
+              data-elastic="true"
+              type="search"
+              placeholder="Search inbox..."
+              aria-label="Search inbox"
+            />
           </label>
         </div>
         <div class="msg-list__items">
