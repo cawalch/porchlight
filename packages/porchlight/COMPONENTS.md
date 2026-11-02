@@ -21,13 +21,13 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
-| `core.min.css`                        | 8.6 KB   | 2.6 KB  | 2.2 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `core.min.css`                        | 12.0 KB  | 3.2 KB  | 2.7 KB  | Layers, reset, design tokens, themes, base styles                   |
 | `layout.min.css`                      | 2.8 KB   | 960 B   | 797 B   | Primitives: stack, cluster, grid, sidebar, center                   |
 | `utilities.min.css`                   | 2.8 KB   | 885 B   | 755 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 4.6 KB   | 1.1 KB  | 928 B   | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.1 KB   | 608 B   | 511 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 216.6 KB | 31.1 KB | 24.7 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 221.1 KB | 31.8 KB | 25.2 KB | Full framework (all 59 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 221.5 KB | 31.8 KB | 25.4 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 226.0 KB | 32.5 KB | 25.8 KB | Full framework (all 59 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -35,10 +35,10 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 
 | Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
 | :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
-| **Minimal Controls**          | `core` + `button` + `field`                                                | 20.7 KB | **4.9 KB** | **4.3 KB** | **-65% smaller**  |
-| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 31.0 KB | **6.8 KB** | **6.0 KB** | **-52% smaller**  |
-| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 29.7 KB | **6.4 KB** | **5.6 KB** | **-54% smaller**  |
-| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 27.7 KB | **6.1 KB** | **5.4 KB** | **-56% smaller**  |
+| **Minimal Controls**          | `core` + `button` + `field`                                                | 24.0 KB | **5.5 KB** | **4.7 KB** | **-61% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 34.4 KB | **7.3 KB** | **6.4 KB** | **-48% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 34.6 KB | **7.1 KB** | **6.2 KB** | **-49% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 31.1 KB | **6.7 KB** | **5.8 KB** | **-52% smaller**  |
 
 ```css
 /* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */
@@ -73,7 +73,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [code-block](#code-block)             | `.pl-c-code-block`       | 3.9 KB   | 1.1 KB | 999 B  | None         | A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.                                                                                                                                     |
 | [combobox](#combobox)                 | `.pl-c-combobox`         | 7.1 KB   | 1.7 KB | 1.4 KB | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
 | [command-palette](#command-palette)   | `.pl-c-command`          | 4.1 KB   | 1.1 KB | 999 B  | None         | A Cmd+K quick-action search overlay. Search input at top, grouped action list below, keyboard navigation (JS responsibility). Uses the Popover API for top-layer rendering + @starting-style for enter animation.                                                                                                                                                                                                                        |
-| [data-table](#data-table)             | `.pl-c-table-wrap`       | 8.8 KB   | 2.0 KB | 1.8 KB | None         | An enterprise data table: sticky headers, horizontal scroll with a stable scrollbar gutter, container-query padding, hover/selection affordances, sortable columns, row selection (checkbox column), expandable detail rows, sticky first column, and density modes.                                                                                                                                                                     |
+| [data-table](#data-table)             | `.pl-c-table-wrap`       | 10.4 KB  | 2.2 KB | 2.0 KB | None         | An enterprise data table: sticky headers, horizontal scroll with a stable scrollbar gutter, container-query padding, hover/selection affordances, sortable columns, row selection (checkbox column), expandable detail rows, sticky first column, and density modes.                                                                                                                                                                     |
 | [description-list](#description-list) | `.pl-c-description`      | 1.8 KB   | 611 B  | 525 B  | None         | A label + value grid for detail panels, metadata displays, and summary cards. Wraps the native <dl> element so semantics and accessibility come for free. The #1 most-rebuilt pattern in SaaS apps after page headers.                                                                                                                                                                                                                   |
 | [dialog](#dialog)                     | `.pl-c-dialog`           | 3.3 KB   | 1.0 KB | 877 B  | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element with showModal() (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                              |
 | [drawer](#drawer)                     | `.pl-c-drawer`           | 2.4 KB   | 764 B  | 644 B  | None         | An off-canvas panel that slides in from a viewport edge. Uses the native Popover API for top-layer rendering + light-dismiss, combined with @starting-style for a smooth enter/exit animation (mirrors the dialog and popover-menu pattern).                                                                                                                                                                                             |
@@ -384,7 +384,7 @@ An enterprise data table: sticky headers, horizontal scroll with a stable scroll
 - **Minified Import**: `@cawalch/porchlight/components/data-table.min.css`
 - **Dist File**: `dist/components/data-table.css`
 - **Minified Dist File**: `dist/components/data-table.min.css`
-- **Sizes**: 8.8 KB minified, 2.0 KB gzip, 1.8 KB brotli
+- **Sizes**: 10.4 KB minified, 2.2 KB gzip, 2.0 KB brotli
 - **Dependencies**: None
 
 ```css

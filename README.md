@@ -196,8 +196,7 @@ docs/src/pages/preview/*.astro
 
 Chromium is the primary test target; Firefox and WebKit have limited smoke
 coverage. Component styles require `@scope` (Firefox 146+, not 135).
-`compat.css` omits the enhancement layer to help CSS parsers; it is not an
-old-browser polyfill. See the [support guide](https://cawalch.github.io/porchlight/guides/browser-support).
+Both `porchlight.css` and `full.css` include progressive enhancements and build cleanly under Bun 1.4.4; `compat.css` is an optional minimal bundle omitting enhancements. See the [support guide](https://cawalch.github.io/porchlight/guides/browser-support).
 
 ## Status
 

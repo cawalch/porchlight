@@ -142,6 +142,86 @@ button toggles `aria-expanded` and the detail row.
 <td class="pl-c-table__sticky-col">Acme Corp</td>
 ```
 
+### Dual-axis frozen columns
+
+Pin key identification columns (left) and action/menu columns (right) while allowing data columns in between to scroll smoothly horizontally:
+
+```html
+<div class="pl-c-table-wrap" tabindex="0">
+  <table class="pl-c-table">
+    <thead>
+      <tr>
+        <th data-frozen="start">Account Name</th>
+        <th>Region</th>
+        <th>Tier</th>
+        <th>ARR</th>
+        <th>Status</th>
+        <th data-frozen="end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-frozen="start">Acme Global</td>
+        <td>US-East</td>
+        <td>Enterprise</td>
+        <td data-align="end">$120,000</td>
+        <td><span class="pl-c-badge" data-tone="success">Active</span></td>
+        <td data-frozen="end">
+          <button class="pl-c-button" data-variant="ghost" type="button">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+Pinned cells receive elevated `z-index` and subtle edge drop-shadow dividers indicating content scrolls underneath. In high-contrast/forced-colors mode, hairline borders are rendered automatically.
+
+### Subgrid column track alignment
+
+For composite tables where headers or detail rows need to participate in shared column track sizes without rigid table structure:
+
+```html
+<table
+  class="pl-c-table"
+  data-subgrid="columns"
+  style="--pl-c-table-columns: 2fr 1fr 1fr 120px;"
+>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Owner</th>
+      <th>Priority</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Porchlight Core</td>
+      <td>Design Ops</td>
+      <td>P0</td>
+      <td>Review</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Virtualization primitive for large datasets
+
+Porchlight tables render rows with `content-visibility: auto` by default, skipping offscreen rendering for massive tables (1,000+ rows). You can tune the estimated row height:
+
+```html
+<table
+  class="pl-c-table"
+  data-virtual="true"
+  style="--pl-c-table-virtual-size: 2.75rem;"
+>
+  ...
+</table>
+```
+
 ### Density modes
 
 ```html
@@ -267,6 +347,10 @@ built-in `.pl-u-truncate` utility class:
 | `.pl-c-table__detail-content`    | Inner content (padding + overflow).               |
 | `.pl-c-table__expand`            | Expand/collapse toggle button (chevron).          |
 | `.pl-c-table__sticky-col`        | Sticky first column (pinned during scroll).       |
+| `[data-frozen="start"]`          | Sticky start column with trailing shadow divider. |
+| `[data-frozen="end"]`            | Sticky end column with leading shadow divider.    |
+| `[data-subgrid="columns"]`       | CSS Subgrid track alignment across rows.          |
+| `[data-virtual="true"]`          | Virtualization hint with configurable row size.   |
 | `[data-pl-density="compact"]`    | Tighter row padding on `.pl-c-table-wrap`.        |
 | `tbody[data-loading]`            | Suppresses hover during loading state.            |
 

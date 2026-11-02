@@ -94,3 +94,43 @@ This means you can override component tokens from plain selectors in
 If an override is not working, check the layer order, selector, and target
 element. Component-local tokens must be set on the component root: a value
 on an ancestor cannot override a default declared directly on the component.
+
+## Coexistence with Tailwind CSS, Bootstrap, and vendor styles
+
+When integrating Porchlight into an existing product with other design systems or utility frameworks, use explicit cascade layer ordering at the top of your main CSS entrypoint:
+
+```css
+/* app.css - Define explicit layer priority before any imports */
+@layer reset, vendor, tailwind, porchlight, app, overrides;
+
+/* 1. Import vendor or legacy frameworks inside their layer */
+@import "bootstrap/dist/css/bootstrap.min.css" layer(vendor);
+
+/* 2. Import Tailwind utilities */
+@import "tailwindcss";
+
+/* 3. Import Porchlight (Porchlight self-declares within @layer porchlight) */
+@import "@cawalch/porchlight";
+
+/* 4. Product-level application styles */
+@layer app {
+  .my-dashboard-card {
+    --pl-c-card-padding: var(--pl-space-5);
+  }
+}
+```
+
+### Specificity isolation
+
+Because all Porchlight rules reside in `@layer porchlight`, any normal declaration in `@layer app` or `@layer overrides` wins over Porchlight styles, regardless of selector complexity. Even a single-class selector in `@layer app` overrides multi-class or scoped Porchlight rules:
+
+```css
+@layer app {
+  /* Wins over Porchlight's internal rules without needing !important */
+  .pl-c-button {
+    font-weight: 600;
+  }
+}
+```
+
+Unlayered CSS always has the highest precedence in CSS Cascade Layers (for normal declarations). If an unbundled script or legacy stylesheet injects unlayered CSS, it will override layered styles. Wrapping legacy vendor bundles in `@layer vendor;` ensures they never unintentionally overwrite Porchlight components.

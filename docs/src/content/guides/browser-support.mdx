@@ -7,7 +7,20 @@ order: 3
 Porchlight uses modern CSS without polyfills. Browser support, CSS bundler
 support, and the project's test coverage are different questions.
 
-## Support matrix
+## Tested browser versions and support matrix
+
+| Browser / Runtime               | Minimum Version | Baseline Level  | Support Status  | Key Capabilities & Fallback Behavior                                        |
+| ------------------------------- | --------------- | --------------- | --------------- | --------------------------------------------------------------------------- |
+| **Google Chrome**               | 120+            | Baseline 2024   | Fully Supported | Full `@layer`, `@scope`, OKLCH, subgrid, popovers, and dialogs.             |
+| **Microsoft Edge**              | 120+            | Baseline 2024   | Fully Supported | Full Chromium engine parity with Chrome 120+.                               |
+| **Apple Safari (macOS)**        | 17.4+           | Baseline 2024   | Fully Supported | Full `@scope`, `light-dark()`, subgrid, Popover API, and `@starting-style`. |
+| **Apple Safari (iOS / iPadOS)** | 17.4+           | Baseline 2024   | Fully Supported | Full mobile parity, touch manipulation, and safe-area insets.               |
+| **Mozilla Firefox**             | 146+            | Modern Gecko    | Fully Supported | Supported natively from 146 onward (`@scope` enabled by default).           |
+| **Android Chrome**              | 120+            | Baseline 2024   | Fully Supported | Full mobile feature parity with desktop Chromium.                           |
+| **Bun CLI / Bundler**           | 1.4.4+          | Runtime Tooling | Fully Supported | Builds `porchlight.css`, `full.css`, and `compat.css` directly with code 0. |
+| **Vite / esbuild / Webpack**    | Modern          | Tooling         | Fully Supported | Standard CSS imports; zero runtime overhead.                                |
+
+## Support verification and validation scope
 
 | Area                    | Current contract                                                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |

@@ -178,6 +178,41 @@ const toneFor = (s: string) =>
     </table>
   </div>
 
+  <h2>Dual-axis frozen columns</h2>
+  <p>
+    Pin the start identifier column (left) and the end action column (right) while data columns in between scroll horizontally.
+  </p>
+  <div class="pl-c-table-wrap" tabindex="0" style="max-inline-size: 38rem;">
+    <table class="pl-c-table" style="--pl-c-table-min: 52rem;">
+      <thead>
+        <tr>
+          <th data-frozen="start">Account</th>
+          <th>Plan</th>
+          <th>Created</th>
+          <th>Region</th>
+          <th data-align="end">Seats</th>
+          <th data-align="end">MRR</th>
+          <th data-frozen="end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td data-frozen="start"><strong>{r.name}</strong></td>
+            <td><span class="pl-c-badge" data-tone={toneFor(r.status)}>{r.plan}</span></td>
+            <td>{r.created}</td>
+            <td>US-East</td>
+            <td data-align="end">{r.seats}</td>
+            <td data-align="end">{r.mrr}</td>
+            <td data-frozen="end">
+              <button class="pl-c-button" data-variant="ghost" type="button">Edit</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
   <h2>Loading state</h2>
   <p>Skeleton rows while data is fetching.</p>
   <div class="pl-c-table-wrap" tabindex="0">

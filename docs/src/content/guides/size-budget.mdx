@@ -1,0 +1,156 @@
+---
+title: Size budget & payload
+description: Production size budgets, Brotli and Gzip payload tables, and core + N component recipes.
+order: 0.7
+---
+
+Porchlight provides a deterministic CSS size budget. While the full 59-component monolithic bundle is ~32.5 KB gzipped (~25.7 KB Brotli), production applications do not need to ship all 59 components.
+
+By combining Porchlight's `core.css` with only the components required for a specific surface, production payloads typically measure between **4.9 KB and 6.8 KB gzipped** (-52% to -65% smaller than traditional 14 KB monolithic CSS frameworks).
+
+## Core and foundation bundles
+
+Every Porchlight composition starts with `core.css` (which contains layer ordering, CSS reset, design tokens, color themes, and HTML element defaults).
+
+| Bundle                                 | Raw Minified | Gzip    | Brotli  | Description                                                               |
+| -------------------------------------- | ------------ | ------- | ------- | ------------------------------------------------------------------------- |
+| `@cawalch/porchlight/core.css`         | 8.8 KB       | 2.7 KB  | 2.3 KB  | Layer order, reset, tokens, themes, and base element defaults.            |
+| `@cawalch/porchlight/layout.css`       | 2.9 KB       | 0.96 KB | 0.80 KB | Stack, cluster, grid, center, and app-shell layouts.                      |
+| `@cawalch/porchlight/utilities.css`    | 2.9 KB       | 0.88 KB | 0.75 KB | Typography, tabular lining numbers, and spacing utilities.                |
+| `@cawalch/porchlight/enhancements.css` | 4.7 KB       | 1.1 KB  | 0.93 KB | Progressive enhancement rules (`text-box-trim`, style container queries). |
+| `@cawalch/porchlight/compat.css`       | 221.7 KB     | 31.8 KB | 25.3 KB | Monolithic bundle excluding progressive enhancements.                     |
+| `@cawalch/porchlight/full.css`         | 226.4 KB     | 32.5 KB | 25.8 KB | Canonical full bundle including all 59 components and enhancements.       |
+
+## Production recipes: core + N components
+
+Production applications achieve the smallest payloads by loading `core.css` plus their required component stylesheets.
+
+### Recipe 1: Minimal Form & Controls (5.0 KB gzip)
+
+Ideal for authentication screens, modal dialogs, and basic form inputs:
+
+| Component / Bundle      | Gzip        | Brotli      |
+| ----------------------- | ----------- | ----------- |
+| `core.css`              | 2.70 KB     | 2.28 KB     |
+| `components/button.css` | 1.09 KB     | 0.94 KB     |
+| `components/field.css`  | 2.25 KB     | 1.83 KB     |
+| **Combined Bundle**     | **5.05 KB** | **4.38 KB** |
+
+### Recipe 2: SaaS Admin & Settings Console (6.9 KB gzip)
+
+Covers complete administrative screens, user profiles, configuration forms, and status cards:
+
+| Component / Bundle      | Gzip        | Brotli      |
+| ----------------------- | ----------- | ----------- |
+| `core.css`              | 2.70 KB     | 2.28 KB     |
+| `layout.css`            | 0.96 KB     | 0.80 KB     |
+| `components/button.css` | 1.09 KB     | 0.94 KB     |
+| `components/field.css`  | 2.25 KB     | 1.83 KB     |
+| `components/card.css`   | 1.48 KB     | 1.25 KB     |
+| `components/badge.css`  | 0.52 KB     | 0.44 KB     |
+| `components/alert.css`  | 0.62 KB     | 0.51 KB     |
+| **Combined Bundle**     | **6.93 KB** | **6.11 KB** |
+
+### Recipe 3: Telemetry, Metrics & KPI Dashboard (6.5 KB gzip)
+
+Optimized for real-time monitoring cockpits, metric dials, and tabular data tables:
+
+| Component / Bundle          | Gzip        | Brotli      |
+| --------------------------- | ----------- | ----------- |
+| `core.css`                  | 2.70 KB     | 2.28 KB     |
+| `layout.css`                | 0.96 KB     | 0.80 KB     |
+| `components/stat.css`       | 0.69 KB     | 0.59 KB     |
+| `components/kpi-card.css`   | 0.81 KB     | 0.68 KB     |
+| `components/gauge.css`      | 1.15 KB     | 0.99 KB     |
+| `components/data-table.css` | 2.37 KB     | 1.95 KB     |
+| `components/badge.css`      | 0.52 KB     | 0.44 KB     |
+| **Combined Bundle**         | **6.54 KB** | **5.78 KB** |
+
+### Recipe 4: Documentation & Content Site (6.3 KB gzip)
+
+Covers rich documentation, tabs, collapsible accordions, code blocks, and contextual banners:
+
+| Component / Bundle          | Gzip        | Brotli      |
+| --------------------------- | ----------- | ----------- |
+| `core.css`                  | 2.70 KB     | 2.28 KB     |
+| `layout.css`                | 0.96 KB     | 0.80 KB     |
+| `components/card.css`       | 1.48 KB     | 1.25 KB     |
+| `components/tabs.css`       | 1.14 KB     | 0.93 KB     |
+| `components/accordion.css`  | 0.84 KB     | 0.67 KB     |
+| `components/alert.css`      | 0.62 KB     | 0.51 KB     |
+| `components/code-block.css` | 1.12 KB     | 0.94 KB     |
+| **Combined Bundle**         | **6.28 KB** | **5.53 KB** |
+
+## Per-component size registry (minified, gzip, brotli)
+
+The following metrics are generated directly from `@cawalch/porchlight/dist/size-budget.json` on every build. All sizes reflect isolated minified component files:
+
+| Component          | Raw Minified | Gzip    | Brotli  |
+| ------------------ | ------------ | ------- | ------- |
+| `accordion`        | 2,552 B      | 844 B   | 672 B   |
+| `action-bar`       | 4,230 B      | 1,199 B | 1,010 B |
+| `alert`            | 1,707 B      | 616 B   | 508 B   |
+| `audit-stream`     | 2,901 B      | 825 B   | 698 B   |
+| `avatar`           | 2,085 B      | 603 B   | 500 B   |
+| `badge`            | 1,349 B      | 524 B   | 441 B   |
+| `banner`           | 2,991 B      | 884 B   | 733 B   |
+| `breadcrumb`       | 1,616 B      | 586 B   | 473 B   |
+| `button`           | 3,192 B      | 1,085 B | 935 B   |
+| `calendar`         | 10,204 B     | 2,126 B | 1,714 B |
+| `card`             | 5,179 B      | 1,484 B | 1,247 B |
+| `chart`            | 5,417 B      | 1,402 B | 1,180 B |
+| `chip`             | 2,763 B      | 842 B   | 703 B   |
+| `code-block`       | 4,014 B      | 1,120 B | 940 B   |
+| `combobox`         | 7,248 B      | 1,774 B | 1,438 B |
+| `command-palette`  | 4,175 B      | 1,215 B | 1,016 B |
+| `data-table`       | 9,038 B      | 2,374 B | 1,947 B |
+| `description-list` | 1,834 B      | 569 B   | 468 B   |
+| `dialog`           | 3,383 B      | 967 B   | 800 B   |
+| `drawer`           | 2,445 B      | 772 B   | 639 B   |
+| `dropdown`         | 3,715 B      | 1,059 B | 894 B   |
+| `empty-state`      | 1,260 B      | 487 B   | 405 B   |
+| `entity-inspector` | 1,923 B      | 682 B   | 572 B   |
+| `field`            | 9,343 B      | 2,251 B | 1,831 B |
+| `file-upload`      | 1,729 B      | 585 B   | 485 B   |
+| `filter-builder`   | 11,183 B     | 2,238 B | 1,807 B |
+| `form`             | 10,809 B     | 2,525 B | 2,058 B |
+| `gauge`            | 4,582 B      | 1,149 B | 988 B   |
+| `inline-loading`   | 1,024 B      | 451 B   | 363 B   |
+| `kbd`              | 1,204 B      | 496 B   | 403 B   |
+| `kpi-card`         | 2,269 B      | 807 B   | 679 B   |
+| `miller-columns`   | 5,516 B      | 1,402 B | 1,148 B |
+| `nav`              | 8,460 B      | 2,126 B | 1,757 B |
+| `page-header`      | 1,124 B      | 483 B   | 407 B   |
+| `pagination`       | 1,904 B      | 647 B   | 545 B   |
+| `panel-deck`       | 3,905 B      | 1,173 B | 973 B   |
+| `popover-menu`     | 5,668 B      | 1,496 B | 1,250 B |
+| `progress`         | 1,813 B      | 622 B   | 522 B   |
+| `property-list`    | 3,650 B      | 1,034 B | 861 B   |
+| `reveal`           | 917 B        | 417 B   | 338 B   |
+| `scroll-progress`  | 1,066 B      | 436 B   | 358 B   |
+| `scroll-region`    | 869 B        | 396 B   | 316 B   |
+| `section-nav`      | 1,379 B      | 548 B   | 449 B   |
+| `segmented`        | 1,910 B      | 685 B   | 574 B   |
+| `skeleton`         | 961 B        | 435 B   | 363 B   |
+| `split-button`     | 3,873 B      | 1,068 B | 896 B   |
+| `split-pane`       | 6,238 B      | 1,664 B | 1,363 B |
+| `stat`             | 2,124 B      | 694 B   | 586 B   |
+| `stepper`          | 2,989 B      | 890 B   | 733 B   |
+| `switch`           | 2,379 B      | 749 B   | 613 B   |
+| `tabs`             | 3,914 B      | 1,140 B | 933 B   |
+| `tag-input`        | 1,297 B      | 543 B   | 442 B   |
+| `textarea-auto`    | 1,493 B      | 536 B   | 444 B   |
+| `timeline`         | 2,287 B      | 719 B   | 588 B   |
+| `toast`            | 3,771 B      | 1,162 B | 965 B   |
+| `toolbar`          | 1,695 B      | 613 B   | 507 B   |
+| `tooltip`          | 2,097 B      | 674 B   | 561 B   |
+| `tree`             | 6,391 B      | 1,625 B | 1,328 B |
+| `workflow-board`   | 7,825 B      | 1,921 B | 1,570 B |
+
+## Size budget enforcement in CI
+
+Porchlight maintains a continuous integration size budget gate:
+
+1. Every release build generates `dist/size-budget.json` via `packages/porchlight/scripts/build.mjs`.
+2. Any unintentional regression in individual component payloads or monolithic bundles is detected automatically before merge.
+3. Bundle metadata is exported under `@cawalch/porchlight/size-budget.json` for consumption by external packaging bots and dashboard analysis.

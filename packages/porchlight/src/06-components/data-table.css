@@ -468,38 +468,87 @@
       rotate: 180deg;
     }
 
-    /* Sticky first column  -  outward drop-shadow communicates "content scrolls
-       behind this column" (vs. the old inset-border which pointed inward and
-       read as a cell divider, not a depth separator). */
-    .pl-c-table .pl-c-table__sticky-col {
+    /* Pinned frozen columns: dual-axis horizontal pinning.
+       Supports data-frozen="start" | "end" as well as BEM modifiers.
+       Outward drop-shadow communicates that content scrolls underneath. */
+    .pl-c-table
+      :where(th, td):is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        [data-frozen="start"]
+      ) {
       position: sticky;
-      inset-inline-start: 0;
+      inset-inline-start: var(--pl-c-table-frozen-start-offset, 0);
       z-index: calc(var(--pl-z-raised) + 1);
       background: var(--pl-color-surface);
     }
 
-    /* Sticky header + sticky column intersection needs higher z-index. */
-    .pl-c-table th.pl-c-table__sticky-col {
-      z-index: calc(var(--pl-z-raised) + 2);
+    .pl-c-table
+      :where(th, td):is(.pl-c-table__col--frozen-end, [data-frozen="end"]) {
+      position: sticky;
+      inset-inline-end: var(--pl-c-table-frozen-end-offset, 0);
+      z-index: calc(var(--pl-z-raised) + 1);
+      background: var(--pl-color-surface);
+    }
 
-      /* Sticky col header: inherit the surface-2 header background so the
-         intersection cell matches the header row, not the body. */
+    /* Sticky header + frozen column intersection needs higher z-index so corners
+       stay pinned above horizontally scrolled cells and normal sticky headers. */
+    .pl-c-table
+      th:is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        .pl-c-table__col--frozen-end,
+        [data-frozen]
+      ) {
+      z-index: calc(var(--pl-z-raised) + 2);
       background: var(--pl-color-surface-2);
     }
 
-    /* Outward drop-shadow on the trailing edge: fades inline-end to show
-       that body content scrolls underneath. */
-    .pl-c-table .pl-c-table__sticky-col:not(:last-child) {
+    /* Outward drop-shadow on the trailing edge of start-pinned columns */
+    .pl-c-table
+      :where(th, td):is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        [data-frozen="start"]
+      ):not(:last-child) {
       box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
-    .pl-c-table:dir(rtl) .pl-c-table__sticky-col:not(:last-child) {
+    .pl-c-table:dir(rtl)
+      :where(th, td):is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        [data-frozen="start"]
+      ):not(:last-child) {
       box-shadow: -4px 0 8px -2px oklch(0% 0 0deg / 10%);
+    }
+
+    /* Outward drop-shadow on the leading edge of end-pinned columns */
+    .pl-c-table
+      :where(th, td):is(.pl-c-table__col--frozen-end, [data-frozen="end"]):not(
+        :first-child
+      ) {
+      box-shadow: -4px 0 8px -2px oklch(0% 0 0deg / 10%);
+    }
+
+    .pl-c-table:dir(rtl)
+      :where(th, td):is(.pl-c-table__col--frozen-end, [data-frozen="end"]):not(
+        :first-child
+      ) {
+      box-shadow: 4px 0 8px -2px oklch(0% 0 0deg / 10%);
     }
 
     /* Sticky cells need opaque hover/selection fills; translucent row
        backgrounds let horizontally scrolled cells show through underneath. */
-    :where(.pl-c-table) tbody tr:hover .pl-c-table__sticky-col {
+    :where(.pl-c-table)
+      tbody
+      tr:hover
+      :is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        .pl-c-table__col--frozen-end,
+        [data-frozen]
+      ) {
       background: color-mix(
         in oklab,
         var(--pl-color-surface-2),
@@ -507,12 +556,42 @@
       );
     }
 
-    :where(.pl-c-table) tbody tr[aria-selected="true"] .pl-c-table__sticky-col {
+    :where(.pl-c-table)
+      tbody
+      tr[aria-selected="true"]
+      :is(
+        .pl-c-table__sticky-col,
+        .pl-c-table__col--frozen-start,
+        .pl-c-table__col--frozen-end,
+        [data-frozen]
+      ) {
       background: color-mix(
         in oklab,
         var(--pl-color-surface),
         var(--pl-color-accent) 16%
       );
+    }
+
+    /* Subgrid column track alignment */
+    @supports (grid-template-columns: subgrid) {
+      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid) {
+        display: grid;
+        grid-template-columns: var(
+          --pl-c-table-columns,
+          repeat(auto-fit, minmax(8rem, 1fr))
+        );
+      }
+
+      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid)
+        :is(thead, tbody, tr) {
+        display: contents;
+      }
+
+      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid) tr {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+      }
     }
   }
 
@@ -522,7 +601,7 @@
      rows near the viewport. */
   :where(.pl-c-table) tbody tr {
     content-visibility: auto;
-    contain-intrinsic-size: auto 2.5rem;
+    contain-intrinsic-size: auto var(--pl-c-table-virtual-size, 2.5rem);
     transition: background-color var(--pl-duration-1) var(--pl-ease-standard);
   }
 
@@ -574,8 +653,22 @@
       border-block-end-color: CanvasText;
     }
 
-    :where(.pl-c-table__sticky-col) {
+    :where(
+      .pl-c-table
+        :where(th, td):is(
+          .pl-c-table__sticky-col,
+          .pl-c-table__col--frozen-start,
+          [data-frozen="start"]
+        )
+    ) {
       border-inline-end: 1px solid CanvasText;
+    }
+
+    :where(
+      .pl-c-table
+        :where(th, td):is(.pl-c-table__col--frozen-end, [data-frozen="end"])
+    ) {
+      border-inline-start: 1px solid CanvasText;
     }
 
     :where(.pl-c-table) tbody tr[aria-selected="true"] {

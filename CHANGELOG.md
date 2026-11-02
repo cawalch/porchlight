@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add modern data grid primitives to `.pl-c-table`:
+  - Dual-axis horizontal frozen columns (`[data-frozen="start"]` and `[data-frozen="end"]`, `.pl-c-table__col--frozen-start`, `.pl-c-table__col--frozen-end`) with sticky positioning, elevated `z-index`, trailing/leading shadow dividers, and high-contrast borders.
+  - CSS Subgrid column track alignment via `[data-subgrid="columns"]` and `.pl-c-table--subgrid`.
+  - Large dataset virtualization primitive via `content-visibility: auto` with configurable `--pl-c-table-virtual-size`.
+- Add four pre-baked enterprise theme palettes (`data-pl-palette="slate"`, `"zinc"`, `"midnight"`, `"emerald"`) in `03-themes.css`, providing full WCAG AA contrast color ramps across light and dark modes.
+- Add dedicated documentation guides addressing client integration readiness:
+  - `guides/size-budget`: Complete raw, gzip, and brotli tables for all 59 components and core + N recipes (4.9 KB – 6.8 KB gzip).
+  - `guides/dialog-and-popover`: Architectural reference comparing `<dialog>` and the Popover API, focus trapping, top layer mechanics, and anchor positioning.
+  - `guides/layering`: In-depth cascade layering model and coexistence recipes for Tailwind CSS, Bootstrap, and CSS Modules.
+  - `guides/deprecation-policy`: SemVer guarantees, public API scope, 2-minor/6-month deprecation grace periods, and automated migration commitments.
+- Add explicit Browser Support Matrix table to `guides/browser-support` detailing minimum versions (Chrome 120+, Safari 17.4+, Firefox 146+, Edge 120+, Bun 1.4.4+) and CSS capability fallbacks.
+- Inline 4 copy-pasteable production HTMX 2.0+ recipes directly in `guides/integrations` (inline row edit, debounced filter builder, infinite scroll sentinel, modal drawer with out-of-band toasts).
+- Clarify Bun 1.4.4 and `enhancements.css` compatibility in `getting-started.mdx` and `README.md`, confirming `full.css` and `porchlight.css` build cleanly without excluding enhancements.
 - Add pure-CSS floating batch action bar component (`.pl-c-action-bar`) with liquid glass styling, responsive pill geometry, and zero-JS reactive auto-reveal via `:has(:checked)`.
 - Add pure-CSS circular and radial KPI dial gauge component (`.pl-c-gauge`) using `conic-gradient()` and registered `@property --pl-gauge-value { syntax: '<percentage>'; }` for GPU-accelerated value transitions.
 - Add Enterprise SaaS typography scale tokens (`--pl-text-2xs` for micro-type), letter-spacing tracking tokens (`--pl-tracking-tighter`, `--pl-tracking-tight`, `--pl-tracking-normal`, `--pl-tracking-wide`, `--pl-tracking-wider`), and OpenType numeric disambiguation (`--pl-font-feature-numeric: "tnum" 1, "lnum" 1, "zero" 1`).

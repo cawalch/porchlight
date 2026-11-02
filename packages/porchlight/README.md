@@ -187,6 +187,8 @@ Verified with **Bun 1.4.4 and Porchlight 0.15.0**:
 | Bleeding-edge Chrome 133+ `scroll-state()` queries   | Isolated in `@cawalch/porchlight/experimental.css`   |
 | Copy prebuilt CSS and serve it directly              | Preserves the full CSS without parser transformation |
 
+> **Bun build note:** Consumers do **not** need to exclude `enhancements.css`. Both `full.css` and `porchlight.css` include `08-enhancements.css` and build cleanly under Bun 1.4.4. Bleeding-edge syntax (`scroll-state()`) is isolated in `experimental.css`.
+
 For Bun's CSS bundler, put this in `app.css`, then run
 `bun build ./app.css --outdir ./dist`:
 

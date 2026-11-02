@@ -44,16 +44,33 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     ))}
   </fieldset>
 
+  <fieldset class="toggles">
+    <legend>Enterprise Palette</legend>
+    <button type="button" data-toggle="palette" data-value="" aria-pressed="true">default (amber)</button>
+    <button type="button" data-toggle="palette" data-value="slate">slate</button>
+    <button type="button" data-toggle="palette" data-value="zinc">zinc</button>
+    <button type="button" data-toggle="palette" data-value="midnight">midnight</button>
+    <button type="button" data-toggle="palette" data-value="emerald">emerald</button>
+  </fieldset>
+
   <section class="playground" data-pl-theme="light" data-pl-density="comfortable">
     <h2>Live preview</h2>
     <p>
       This whole panel uses <code>--pl-color-bg</code>,
       <code>--pl-color-text</code>, and <code>--pl-color-border</code>. The
       control below uses <code>--pl-control-block-size</code> — change density
-      to see it resize.
+      to see it resize. Change palette to see full theme color ramp steering.
     </p>
 
     <div class="control-mock">A control-height bar</div>
+
+    <div class="pl-l-cluster" style="margin-block: var(--pl-space-4); --pl-l-cluster-gap: var(--pl-space-3);">
+      <button class="pl-c-button" data-tone="primary" type="button">Primary Button</button>
+      <button class="pl-c-button" data-variant="secondary" type="button">Secondary</button>
+      <button class="pl-c-button" data-variant="ghost" type="button">Ghost</button>
+      <span class="pl-c-badge" data-tone="accent">Accent Badge</span>
+      <span class="pl-c-badge" data-tone="success">Success</span>
+    </div>
 
     <h3>Palette</h3>
     <ul class="palette">
@@ -87,7 +104,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
       const value = btn.getAttribute('data-value') ?? '';
       if (!root || !kind) return;
       const attribute =
-        kind === 'theme' || kind === 'density'
+        kind === 'theme' || kind === 'density' || kind === 'palette'
           ? `data-pl-${kind}`
           : `data-${kind}`;
       root.removeAttribute(`data-${kind}`);
