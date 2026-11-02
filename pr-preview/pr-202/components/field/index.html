@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/porchlight/pr-preview/pr-202/favicon.svg" type="image/svg+xml"><title>Field · Porchlight</title><meta name="description" content="A labeled native form control with stacked and inline layouts, required markers, messages, validation, and input-group composition."><meta name="generator" content="Astro v7.4.2"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/porchlight/pr-preview/pr-202/_astro/ClientRouter.astro_astro_type_script_index_0_lang.BDCjmQ8c.js"></script><script data-astro-rerun>
+      document.documentElement.toggleAttribute('data-docs-embed', new URL(location.href).searchParams.get('embed') === '1');
+    </script><link rel="stylesheet" href="/porchlight/pr-preview/pr-202/_astro/BaseLayout.RV-oflJZ.css"><link rel="stylesheet" href="/porchlight/pr-preview/pr-202/_astro/DocsLayout.BjNkEcev.css"><style>.demo[data-astro-cid-4zubhpl3]{padding:var(--pl-space-5);margin-block:var(--pl-space-4);background:var(--pl-color-surface);border:1px solid var(--pl-color-border);border-radius:var(--pl-radius-lg);gap:var(--pl-space-4)}
+</style></head><body class="docs-page"><a class="skip-link" href="#docs-article">Skip to content</a><header class="site-header"><a class="site-header__brand" href="/porchlight/pr-preview/pr-202/"><span class="site-header__mark" aria-hidden="true">P</span><span class="site-header__brand-copy"><strong>Porchlight</strong><small>Documentation</small></span></a><div class="site-header__tools"><button type="button" class="site-search" aria-haspopup="dialog" aria-controls="docs-search-dialog" data-docs-command-open>Search docs <kbd aria-hidden="true">⌘ K</kbd></button><nav class="site-nav" aria-label="Primary"><ul><li><a href="/porchlight/pr-preview/pr-202/guides">Guides</a></li><li><a href="/porchlight/pr-preview/pr-202/components" aria-current="page">Components</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens">Tokens</a></li><li><a href="/porchlight/pr-preview/pr-202/preview">Examples</a></li><li><a href="https://github.com/cawalch/porchlight" rel="noopener noreferrer">GitHub</a></li></ul></nav><details class="site-menu"><summary>Menu</summary><nav aria-label="Primary"><ul><li><a href="/porchlight/pr-preview/pr-202/guides">Guides</a></li><li><a href="/porchlight/pr-preview/pr-202/components" aria-current="page">Components</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens">Tokens</a></li><li><a href="/porchlight/pr-preview/pr-202/preview">Examples</a></li><li><a href="https://github.com/cawalch/porchlight">GitHub</a></li></ul></nav></details></div></header><main id="main"><div class="docs-layout"><aside class="docs-sidebar"><nav class="docs-nav" aria-label="Documentation"><section><h2>Guides</h2><ul><li><a href="/porchlight/pr-preview/pr-202/guides/getting-started">Getting started</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/integrations">HTMX, Alpine, and CSS Modules</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/naming-migration">Naming migration</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/theming">Theming</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/browser-support">Browser support</a></li></ul></section><section><h2>Foundations</h2><ul><li><a href="/porchlight/pr-preview/pr-202/guides/architecture">Architecture and layer model</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/layout">Layout and page building</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/composition-recipes">Composition recipes</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/utilities">Utilities</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/enhancements">Enhancements</a></li></ul></section><section><h2>Tokens</h2><ul><li><a href="/porchlight/pr-preview/pr-202/tokens/color">Color</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens/spacing">Spacing, radius, and motion</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens/typography">Typography</a></li></ul></section><section><h2>Components</h2><ul><li><a href="/porchlight/pr-preview/pr-202/components/accordion">Accordion</a></li><li><a href="/porchlight/pr-preview/pr-202/components/action-bar">Action Bar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/alert">Alert</a></li><li><a href="/porchlight/pr-preview/pr-202/components/audit-stream">Audit Stream</a></li><li><a href="/porchlight/pr-preview/pr-202/components/textarea-auto">Auto-growing textarea</a></li><li><a href="/porchlight/pr-preview/pr-202/components/avatar">Avatar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/badge">Badge</a></li><li><a href="/porchlight/pr-preview/pr-202/components/banner">Banner</a></li><li><a href="/porchlight/pr-preview/pr-202/components/breadcrumb">Breadcrumb</a></li><li><a href="/porchlight/pr-preview/pr-202/components/button">Button</a></li><li><a href="/porchlight/pr-preview/pr-202/components/calendar">Calendar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/card">Card</a></li><li><a href="/porchlight/pr-preview/pr-202/components/chart">Chart shell</a></li><li><a href="/porchlight/pr-preview/pr-202/components/chip">Chip</a></li><li><a href="/porchlight/pr-preview/pr-202/components/code-block">Code Block</a></li><li><a href="/porchlight/pr-preview/pr-202/components/combobox">Combobox</a></li><li><a href="/porchlight/pr-preview/pr-202/components/command-palette">Command palette</a></li><li><a href="/porchlight/pr-preview/pr-202/components/data-table">Data table</a></li><li><a href="/porchlight/pr-preview/pr-202/components/description-list">Description list</a></li><li><a href="/porchlight/pr-preview/pr-202/components/dialog">Dialog</a></li><li><a href="/porchlight/pr-preview/pr-202/components/drawer">Drawer</a></li><li><a href="/porchlight/pr-preview/pr-202/components/dropdown">Dropdown</a></li><li><a href="/porchlight/pr-preview/pr-202/components/empty-state">Empty state</a></li><li><a href="/porchlight/pr-preview/pr-202/components/entity-inspector">Entity inspector</a></li><li><a href="/porchlight/pr-preview/pr-202/components/field" aria-current="page">Field</a></li><li><a href="/porchlight/pr-preview/pr-202/components/file-upload">File upload</a></li><li><a href="/porchlight/pr-preview/pr-202/components/filter-builder">Filter builder</a></li><li><a href="/porchlight/pr-preview/pr-202/components/form">Form</a></li><li><a href="/porchlight/pr-preview/pr-202/components/gauge">Gauge</a></li><li><a href="/porchlight/pr-preview/pr-202/components/inline-loading">Inline loading</a></li><li><a href="/porchlight/pr-preview/pr-202/components/kbd">Kbd (Keycap)</a></li><li><a href="/porchlight/pr-preview/pr-202/components/kpi-card">KPI Card</a></li><li><a href="/porchlight/pr-preview/pr-202/components/miller-columns">Miller columns</a></li><li><a href="/porchlight/pr-preview/pr-202/components/nav">Nav</a></li><li><a href="/porchlight/pr-preview/pr-202/components/page-header">Page header</a></li><li><a href="/porchlight/pr-preview/pr-202/components/pagination">Pagination</a></li><li><a href="/porchlight/pr-preview/pr-202/components/panel-deck">Panel deck</a></li><li><a href="/porchlight/pr-preview/pr-202/components/popover-menu">Popover menu</a></li><li><a href="/porchlight/pr-preview/pr-202/components/progress">Progress</a></li><li><a href="/porchlight/pr-preview/pr-202/components/property-list">Property List</a></li><li><a href="/porchlight/pr-preview/pr-202/components/reveal">Reveal</a></li><li><a href="/porchlight/pr-preview/pr-202/components/scroll-progress">Scroll progress</a></li><li><a href="/porchlight/pr-preview/pr-202/components/scroll-region">Scroll region</a></li><li><a href="/porchlight/pr-preview/pr-202/components/section-nav">Section navigation</a></li><li><a href="/porchlight/pr-preview/pr-202/components/segmented">Segmented control</a></li><li><a href="/porchlight/pr-preview/pr-202/components/skeleton">Skeleton</a></li><li><a href="/porchlight/pr-preview/pr-202/components/split-button">Split button</a></li><li><a href="/porchlight/pr-preview/pr-202/components/split-pane">Split pane</a></li><li><a href="/porchlight/pr-preview/pr-202/components/stat">Stat</a></li><li><a href="/porchlight/pr-preview/pr-202/components/stepper">Stepper</a></li><li><a href="/porchlight/pr-preview/pr-202/components/switch">Switch</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tabs">Tabs</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tag-input">Tag input</a></li><li><a href="/porchlight/pr-preview/pr-202/components/timeline">Timeline</a></li><li><a href="/porchlight/pr-preview/pr-202/components/toast">Toast</a></li><li><a href="/porchlight/pr-preview/pr-202/components/toolbar">Toolbar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tooltip">Tooltip</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tree">Tree view</a></li><li><a href="/porchlight/pr-preview/pr-202/components/workflow-board">Workflow board</a></li></ul></section><section><h2>Patterns</h2><ul><li><a href="/porchlight/pr-preview/pr-202/components/app-process-builder">App process builder</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-approvals">Approvals inbox</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-command-workspace">Command-driven workspace</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-dense">Data-dense mode</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-list-detail">List/detail workspace</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-queue-triage">Queue triage kit</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-record-detail">Record detail</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-reporting-dashboard">Reporting dashboard</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-settings-console">Settings console</a></li></ul></section></nav></aside><div class="docs-content" data-docs-content><details class="docs-mobile-navigation"><summary>Browse docs</summary><nav class="docs-nav" aria-label="Documentation"><section><h2>Guides</h2><ul><li><a href="/porchlight/pr-preview/pr-202/guides/getting-started">Getting started</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/integrations">HTMX, Alpine, and CSS Modules</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/naming-migration">Naming migration</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/theming">Theming</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/browser-support">Browser support</a></li></ul></section><section><h2>Foundations</h2><ul><li><a href="/porchlight/pr-preview/pr-202/guides/architecture">Architecture and layer model</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/layout">Layout and page building</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/composition-recipes">Composition recipes</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/utilities">Utilities</a></li><li><a href="/porchlight/pr-preview/pr-202/guides/enhancements">Enhancements</a></li></ul></section><section><h2>Tokens</h2><ul><li><a href="/porchlight/pr-preview/pr-202/tokens/color">Color</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens/spacing">Spacing, radius, and motion</a></li><li><a href="/porchlight/pr-preview/pr-202/tokens/typography">Typography</a></li></ul></section><section><h2>Components</h2><ul><li><a href="/porchlight/pr-preview/pr-202/components/accordion">Accordion</a></li><li><a href="/porchlight/pr-preview/pr-202/components/action-bar">Action Bar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/alert">Alert</a></li><li><a href="/porchlight/pr-preview/pr-202/components/audit-stream">Audit Stream</a></li><li><a href="/porchlight/pr-preview/pr-202/components/textarea-auto">Auto-growing textarea</a></li><li><a href="/porchlight/pr-preview/pr-202/components/avatar">Avatar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/badge">Badge</a></li><li><a href="/porchlight/pr-preview/pr-202/components/banner">Banner</a></li><li><a href="/porchlight/pr-preview/pr-202/components/breadcrumb">Breadcrumb</a></li><li><a href="/porchlight/pr-preview/pr-202/components/button">Button</a></li><li><a href="/porchlight/pr-preview/pr-202/components/calendar">Calendar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/card">Card</a></li><li><a href="/porchlight/pr-preview/pr-202/components/chart">Chart shell</a></li><li><a href="/porchlight/pr-preview/pr-202/components/chip">Chip</a></li><li><a href="/porchlight/pr-preview/pr-202/components/code-block">Code Block</a></li><li><a href="/porchlight/pr-preview/pr-202/components/combobox">Combobox</a></li><li><a href="/porchlight/pr-preview/pr-202/components/command-palette">Command palette</a></li><li><a href="/porchlight/pr-preview/pr-202/components/data-table">Data table</a></li><li><a href="/porchlight/pr-preview/pr-202/components/description-list">Description list</a></li><li><a href="/porchlight/pr-preview/pr-202/components/dialog">Dialog</a></li><li><a href="/porchlight/pr-preview/pr-202/components/drawer">Drawer</a></li><li><a href="/porchlight/pr-preview/pr-202/components/dropdown">Dropdown</a></li><li><a href="/porchlight/pr-preview/pr-202/components/empty-state">Empty state</a></li><li><a href="/porchlight/pr-preview/pr-202/components/entity-inspector">Entity inspector</a></li><li><a href="/porchlight/pr-preview/pr-202/components/field" aria-current="page">Field</a></li><li><a href="/porchlight/pr-preview/pr-202/components/file-upload">File upload</a></li><li><a href="/porchlight/pr-preview/pr-202/components/filter-builder">Filter builder</a></li><li><a href="/porchlight/pr-preview/pr-202/components/form">Form</a></li><li><a href="/porchlight/pr-preview/pr-202/components/gauge">Gauge</a></li><li><a href="/porchlight/pr-preview/pr-202/components/inline-loading">Inline loading</a></li><li><a href="/porchlight/pr-preview/pr-202/components/kbd">Kbd (Keycap)</a></li><li><a href="/porchlight/pr-preview/pr-202/components/kpi-card">KPI Card</a></li><li><a href="/porchlight/pr-preview/pr-202/components/miller-columns">Miller columns</a></li><li><a href="/porchlight/pr-preview/pr-202/components/nav">Nav</a></li><li><a href="/porchlight/pr-preview/pr-202/components/page-header">Page header</a></li><li><a href="/porchlight/pr-preview/pr-202/components/pagination">Pagination</a></li><li><a href="/porchlight/pr-preview/pr-202/components/panel-deck">Panel deck</a></li><li><a href="/porchlight/pr-preview/pr-202/components/popover-menu">Popover menu</a></li><li><a href="/porchlight/pr-preview/pr-202/components/progress">Progress</a></li><li><a href="/porchlight/pr-preview/pr-202/components/property-list">Property List</a></li><li><a href="/porchlight/pr-preview/pr-202/components/reveal">Reveal</a></li><li><a href="/porchlight/pr-preview/pr-202/components/scroll-progress">Scroll progress</a></li><li><a href="/porchlight/pr-preview/pr-202/components/scroll-region">Scroll region</a></li><li><a href="/porchlight/pr-preview/pr-202/components/section-nav">Section navigation</a></li><li><a href="/porchlight/pr-preview/pr-202/components/segmented">Segmented control</a></li><li><a href="/porchlight/pr-preview/pr-202/components/skeleton">Skeleton</a></li><li><a href="/porchlight/pr-preview/pr-202/components/split-button">Split button</a></li><li><a href="/porchlight/pr-preview/pr-202/components/split-pane">Split pane</a></li><li><a href="/porchlight/pr-preview/pr-202/components/stat">Stat</a></li><li><a href="/porchlight/pr-preview/pr-202/components/stepper">Stepper</a></li><li><a href="/porchlight/pr-preview/pr-202/components/switch">Switch</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tabs">Tabs</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tag-input">Tag input</a></li><li><a href="/porchlight/pr-preview/pr-202/components/timeline">Timeline</a></li><li><a href="/porchlight/pr-preview/pr-202/components/toast">Toast</a></li><li><a href="/porchlight/pr-preview/pr-202/components/toolbar">Toolbar</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tooltip">Tooltip</a></li><li><a href="/porchlight/pr-preview/pr-202/components/tree">Tree view</a></li><li><a href="/porchlight/pr-preview/pr-202/components/workflow-board">Workflow board</a></li></ul></section><section><h2>Patterns</h2><ul><li><a href="/porchlight/pr-preview/pr-202/components/app-process-builder">App process builder</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-approvals">Approvals inbox</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-command-workspace">Command-driven workspace</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-dense">Data-dense mode</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-list-detail">List/detail workspace</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-queue-triage">Queue triage kit</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-record-detail">Record detail</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-reporting-dashboard">Reporting dashboard</a></li><li><a href="/porchlight/pr-preview/pr-202/components/app-settings-console">Settings console</a></li></ul></section></nav></details><article id="docs-article" class="docs-article" tabindex="-1"><header class="docs-title"><p class="docs-section-label">Component</p><h1>Field</h1><p class="docs-description">A labeled native form control with stacked and inline layouts, required markers, messages, validation, and input-group composition.</p><p class="docs-meta"><span class="pl-c-badge">stable</span><span>Since 0.1.0</span></p><a href="/porchlight/pr-preview/pr-202/preview/field" class="docs-example-link">Open full example →</a></header><details class="docs-mobile-contents"><summary>On this page</summary><ol class="docs-toc" data-docs-toc><li data-depth="2"><a href="#semantic-html">Semantic HTML</a></li><li data-depth="2"><a href="#class-contract">Class contract</a></li><li data-depth="2"><a href="#common-patterns">Common patterns</a></li><li data-depth="3"><a href="#stacked-field">Stacked field</a></li><li data-depth="3"><a href="#inline-field">Inline field</a></li><li data-depth="3"><a href="#customizable-native-select">Customizable native select</a></li><li data-depth="3"><a href="#hidden-label-search">Hidden label search</a></li><li data-depth="3"><a href="#standalone-control">Standalone control</a></li><li data-depth="3"><a href="#html5-validation">HTML5 validation</a></li><li data-depth="3"><a href="#required-marker">Required marker</a></li><li data-depth="3"><a href="#message-tones">Message tones</a></li><li data-depth="3"><a href="#anchor-positioned-validation-balloon">Anchor-positioned validation balloon</a></li><li data-depth="3"><a href="#server-or-framework-validation">Server or framework validation</a></li><li data-depth="3"><a href="#framework-agnostic-contract">Framework-agnostic contract</a></li><li data-depth="2"><a href="#tokens-consumed">Tokens consumed</a></li><li data-depth="2"><a href="#tokens-exposed-component-local">Tokens exposed (component-local)</a></li><li data-depth="2"><a href="#states">States</a></li><li data-depth="2"><a href="#accessibility">Accessibility</a></li><li data-depth="2"><a href="#theme-density-rtl-motion">Theme, density, RTL, motion</a></li></ol></details><article class="prose"><p>The <code>.pl-c-field</code> is a labeled form control. It pairs a visible label with a
+<strong>native</strong> <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, or <code>&lt;textarea&gt;</code> so you inherit constraint
+validation, autofill, IME, spellcheck, and platform conventions.</p>
+<p>State is driven by native pseudos and ARIA, then reflected onto the control and
+messages - no Porchlight runtime, no class toggles, no framework adapter. Use
+the wrapper <code>&lt;label&gt;</code> form for simple fields; use <code>for</code>/<code>id</code> when the field
+contains grouped chrome or an action button.</p>
+<div class="demo pl-l-stack" data-astro-cid-4zubhpl3><label class="pl-c-field" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Workspace name<span class="pl-c-field__required" aria-hidden="true" data-astro-cid-4zubhpl3>*</span></span><input class="pl-c-field__control" required placeholder="Acme Ops" aria-describedby="preview-name-help" data-astro-cid-4zubhpl3><span class="pl-c-field__hint" id="preview-name-help" data-astro-cid-4zubhpl3>Use a name your team recognizes.</span></label><label class="pl-c-field" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Storage limit</span><input class="pl-c-field__control" type="number" value="92" aria-describedby="preview-storage-warning" data-astro-cid-4zubhpl3><span class="pl-c-field__hint" id="preview-storage-warning" data-tone="warning" data-astro-cid-4zubhpl3>Approaching the plan limit.</span></label><label class="pl-c-field" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Workspace URL</span><input class="pl-c-field__control" required value="acme ops" aria-invalid="true" aria-describedby="preview-slug-help preview-slug-error" data-astro-cid-4zubhpl3><span class="pl-c-field__messages" data-astro-cid-4zubhpl3><span class="pl-c-field__hint" id="preview-slug-help" data-astro-cid-4zubhpl3>Use lowercase letters, numbers, and hyphens.</span><span class="pl-c-field__hint" id="preview-slug-error" data-tone="danger" role="alert" data-astro-cid-4zubhpl3>Spaces are not allowed.</span></span></label><label class="pl-c-field" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Invite status</span><input class="pl-c-field__control" type="email" value="ops@example.com" aria-describedby="preview-invite-success" data-astro-cid-4zubhpl3><span class="pl-c-field__hint" id="preview-invite-success" data-tone="success" data-astro-cid-4zubhpl3>Ready to invite.</span></label><label class="pl-c-field" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Notes</span><textarea class="pl-c-field__control" rows="3" placeholder="Add context..." data-astro-cid-4zubhpl3></textarea><span class="pl-c-field__hint" data-astro-cid-4zubhpl3>Textarea uses the same field surface.</span></label><label class="pl-c-field pl-c-field--inline" data-astro-cid-4zubhpl3><span class="pl-c-field__label" data-astro-cid-4zubhpl3>Region</span><select class="pl-c-field__control" data-astro-cid-4zubhpl3><option data-astro-cid-4zubhpl3>US Central</option><option data-astro-cid-4zubhpl3>EU West</option></select><span class="pl-c-field__hint" data-astro-cid-4zubhpl3>Inline labels stack on narrow screens.</span></label><div class="pl-c-field" data-astro-cid-4zubhpl3><label class="pl-c-field__label" for="preview-slug" data-astro-cid-4zubhpl3>Workspace URL</label><div class="pl-c-input-group" data-astro-cid-4zubhpl3><input id="preview-slug" class="pl-c-field__control" required placeholder="acme-ops" data-astro-cid-4zubhpl3><span class="pl-c-input-group__addon" data-astro-cid-4zubhpl3>.porchlight.app</span></div><span class="pl-c-field__hint" data-astro-cid-4zubhpl3>Input groups preserve native input behavior.</span></div></div>
+<h2 id="semantic-html">Semantic HTML</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    Workspace name</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__required&quot;</span><span style="color:#B392F0"> aria-hidden</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;*&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#B392F0">    placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Acme Ops&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-describedby</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-name-help&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-name-help&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &gt;Use a name your team recognizes.&lt;/</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Use an explicit label when the field contains an input group:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#B392F0"> for</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug&quot;</span><span style="color:#E1E4E8">&gt;Workspace URL&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-input-group&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">      id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug&quot;</span></span>
+<span class="line"><span style="color:#B392F0">      class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">      placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;acme-ops&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-input-group__addon&quot;</span><span style="color:#E1E4E8">&gt;.porchlight.app&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &gt;Use lowercase letters, numbers, and hyphens.&lt;/</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h2 id="class-contract">Class contract</h2>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.pl-c-field</code></td>
+<td>Field wrapper: usually a <code>&lt;label&gt;</code>, or a container with <code>for</code>/<code>id</code>.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field--inline</code></td>
+<td>Two-column label/control layout that stacks on narrow viewports.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__label</code></td>
+<td>The visible label text.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__control</code></td>
+<td>The native input/select/textarea.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__control--select</code></td>
+<td>Opt-in themed native picker; add alongside the control class.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__required</code></td>
+<td>Optional visual required marker inside the label.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__hint</code></td>
+<td>Helper, warning, success, or error text below the control.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__messages</code></td>
+<td>Optional stack for multiple <code>.pl-c-field__hint</code> messages.</td>
+</tr>
+<tr>
+<td><code>.pl-c-field__balloon</code></td>
+<td>Zero-JS floating error callout tethered via CSS Anchor Positioning.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-patterns">Common patterns</h2>
+<h3 id="stacked-field">Stacked field</h3>
+<p>Use the default stacked layout for most create/edit forms, settings pages, and
+dialog forms.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;Billing email&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;ops@example.com&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#E1E4E8">&gt;Invoices and receipts are sent here.&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="inline-field">Inline field</h3>
+<p>Use <code>.pl-c-field--inline</code> when labels should scan in a vertical gutter, such as
+admin metadata forms or dense settings panels.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field pl-c-field--inline&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;Region&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">select</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;US Central&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;EU West&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">select</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#E1E4E8">&gt;Controls default data residency.&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="customizable-native-select">Customizable native select</h3>
+<p>Add <code>.pl-c-field__control--select</code> alongside <code>.pl-c-field__control</code> to opt into
+Porchlight’s themed picker, options, groups, and selected checkmark. It uses the
+same field colors, sizing, density, focus, disabled and validation states.
+No script, replacement button, or custom ARIA roles are needed.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;Priority&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">select</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control pl-c-field__control--select&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    name</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;priority&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;&quot;</span><span style="color:#E1E4E8">&gt;Choose a priority&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">optgroup</span><span style="color:#B392F0"> label</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Active queue&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;normal&quot;</span><span style="color:#E1E4E8">&gt;Normal&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;urgent&quot;</span><span style="color:#E1E4E8">&gt;Urgent&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &lt;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;critical&quot;</span><span style="color:#B392F0"> disabled</span><span style="color:#E1E4E8">&gt;Critical (restricted)&lt;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;/</span><span style="color:#85E89D">optgroup</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">select</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Keep explicit option values and text labels. Selection, keyboard navigation,
+<code>change</code> events, form submission/reset and required validation stay native.
+<code>aria-invalid</code> describes server errors; it does not change native validity.
+Selects do not support <code>readonly</code>; use <code>disabled</code> only when omission from form
+submission is intended.</p>
+<p>The enhancement requires <code>appearance: base-select</code> and <code>::picker(select)</code>
+(<a href="https://developer.chrome.com/blog/a-customizable-select">Chrome 135+</a>);
+unsupported browsers retain the ordinary field select. Only single selects
+with no <code>size</code> attribute or <code>size=&quot;1&quot;</code> opt in. Keep <code>multiple</code> and listbox-sized
+selects native; use the <a href="/porchlight/pr-preview/pr-202/components/combobox">combobox</a> for application-managed search
+or asynchronous options.</p>
+<p><strong>Mobile tradeoff:</strong> the enhanced picker renders inside the browser viewport
+instead of opening the operating system picker. Remove the modifier to retain
+the platform picker. Long option labels wrap; the popup scrolls within a bounded
+height. Test your option lengths and application overrides at narrow widths.</p>
+<h3 id="hidden-label-search">Hidden label search</h3>
+<p>Search boxes in toolbars still need a label. Keep it visually hidden and use the
+native <code>type=&quot;search&quot;</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field pl-c-field--inline&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-u-sr-only&quot;</span><span style="color:#E1E4E8">&gt;Search accounts&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;search&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Search accounts...&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="standalone-control">Standalone control</h3>
+<p>Use <code>.pl-c-field__control</code> without a <code>.pl-c-field</code> wrapper when another component
+owns the layout, as in command dialogs or toolbar searches. Keep an accessible
+label. The control still receives theme tokens, density, validation, disabled
+styling, and keyboard focus; use the wrapper for label/hint layout.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-u-sr-only&quot;</span><span style="color:#E1E4E8">&gt;Search docs&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;search&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;Search docs...&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="html5-validation">HTML5 validation</h3>
+<p>Use native constraints first: <code>required</code>, <code>type</code>, <code>minlength</code>, <code>pattern</code>,
+<code>min</code>, <code>max</code>, and friends. Porchlight styles <code>:user-invalid</code>, so fields do not
+show as invalid until the browser considers the user to have interacted.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;Workspace URL&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;url&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#B392F0">    placeholder</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;https://&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#E1E4E8">&gt;Must be a valid URL.&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="required-marker">Required marker</h3>
+<p>Use <code>.pl-c-field__required</code> for a visible marker when the product needs one. The
+native <code>required</code> attribute stays the semantic source of truth.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    Workspace name</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__required&quot;</span><span style="color:#B392F0"> aria-hidden</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span><span style="color:#E1E4E8">&gt;*&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span><span style="color:#B392F0"> required</span><span style="color:#E1E4E8"> /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="message-tones">Message tones</h3>
+<p>Use <code>.pl-c-field__hint</code> for one message, or <code>.pl-c-field__messages</code> when helper,
+warning, success, and error messages need to stack. Add
+<code>data-tone=&quot;warning&quot;</code>, <code>data-tone=&quot;danger&quot;</code>, or <code>data-tone=&quot;success&quot;</code> for an
+explicit visual tone.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#B392F0"> for</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug&quot;</span><span style="color:#E1E4E8">&gt;Workspace slug&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#B392F0">    aria-invalid</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-describedby</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug-help workspace-slug-error&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__messages&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug-help&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &gt;Use lowercase letters, numbers, and hyphens.&lt;/</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#E1E4E8">    &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    &lt;</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#B392F0">      class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span></span>
+<span class="line"><span style="color:#B392F0">      id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;workspace-slug-error&quot;</span></span>
+<span class="line"><span style="color:#B392F0">      data-tone</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;danger&quot;</span></span>
+<span class="line"><span style="color:#B392F0">      role</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;alert&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">      &gt;Spaces are not allowed.&lt;/</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#E1E4E8">    &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="anchor-positioned-validation-balloon">Anchor-positioned validation balloon</h3>
+<p>When you want validation errors to overlay without pushing surrounding field layout downward, add <code>.pl-c-field__balloon</code>. It uses CSS Anchor Positioning (<code>position-anchor: --pl-field-anchor</code>, <code>position-area: block-end span-inline-end</code>) scoped locally to the field component (<code>anchor-scope: --pl-field-anchor</code>) to tether directly beneath the control. It reveals automatically when the field matches <code>:user-invalid</code> or <code>[aria-invalid=&quot;true&quot;]</code>, while automatically suppressing underlying hints to prevent text collisions without layout shift.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#B392F0"> for</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;api-token&quot;</span><span style="color:#E1E4E8">&gt;API access token&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;api-token&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#B392F0">    pattern</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;tok_[a-z0-9]{16}&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-describedby</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;api-token-balloon&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__balloon&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;api-token-balloon&quot;</span><span style="color:#B392F0"> role</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;alert&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    Token must begin with &quot;tok_&quot; followed by 16 alphanumeric characters.</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#E1E4E8">&gt;Generated from your developer console.&lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="server-or-framework-validation">Server or framework validation</h3>
+<p>For errors returned by a server, hypermedia swap, reactive state, or component
+framework, set <code>aria-invalid=&quot;true&quot;</code> on the native control and connect the
+message with <code>aria-describedby</code>. Porchlight treats that state the same as
+<code>:user-invalid</code>. Set <code>aria-invalid=&quot;false&quot;</code> or remove the attribute for a valid
+server state.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#B392F0"> for</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;invite-email&quot;</span><span style="color:#E1E4E8">&gt;Invite email&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;invite-email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    value</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;already-used@example.com&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-invalid</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-describedby</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;invite-email-error&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span><span style="color:#B392F0"> id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;invite-email-error&quot;</span><span style="color:#B392F0"> role</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;alert&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    That email is already invited.</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<h3 id="framework-agnostic-contract">Framework-agnostic contract</h3>
+<p>Porchlight does not care which tool rendered the field. Plain HTML,
+server-rendered HATEOAS fragments, htmx-style swaps, Alpine-style attribute
+bindings, Vue, React, and heavier app frameworks should all emit the same
+native HTML contract:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&lt;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field&quot;</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__label&quot;</span><span style="color:#B392F0"> for</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span><span style="color:#E1E4E8">&gt;Email&lt;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">    id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__control&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    name</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    type</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    required</span></span>
+<span class="line"><span style="color:#B392F0">    aria-invalid</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;true&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    aria-describedby</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email-error&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  /&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;</span><span style="color:#85E89D">span</span></span>
+<span class="line"><span style="color:#B392F0">    class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;pl-c-field__hint&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    id</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;email-error&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    data-tone</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;danger&quot;</span></span>
+<span class="line"><span style="color:#B392F0">    role</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">&quot;alert&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">  &gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">    Enter a valid email address.</span></span>
+<span class="line"><span style="color:#E1E4E8">  &lt;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">&lt;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">&gt;</span></span></code></pre>
+<p>Framework-specific attributes may exist in application markup, but Porchlight
+selectors do not depend on them. Dynamic applications own validation timing and
+DOM updates; Porchlight only styles the resulting semantic HTML.</p>
+<h2 id="tokens-consumed">Tokens consumed</h2>
+<p><code>--pl-color-{border,surface,text,text-muted,danger,danger-text,success-text,warning-text}</code>,
+<code>--pl-focus-color</code>, <code>--pl-focus-size</code>,
+<code>--pl-control-{block-size,padding-inline,radius,border-width}</code>,
+<code>--pl-duration-1</code>, <code>--pl-ease-standard</code>.</p>
+<h2 id="tokens-exposed-component-local">Tokens exposed (component-local)</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--pl-c-field-border</code></td>
+<td><code>--pl-color-border</code></td>
+<td>Control border; overridden on focus/invalid.</td>
+</tr>
+<tr>
+<td><code>--pl-c-field-bg</code></td>
+<td><code>--pl-color-surface</code></td>
+<td>Control fill.</td>
+</tr>
+<tr>
+<td><code>--pl-c-field-fg</code></td>
+<td><code>--pl-color-text</code></td>
+<td>Control text.</td>
+</tr>
+<tr>
+<td><code>--pl-c-field-inline-label-size</code></td>
+<td><code>10rem</code></td>
+<td>Label column size for <code>.pl-c-field--inline</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="states">States</h2>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Selector</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>focus</td>
+<td><code>:focus-visible</code> (control)</td>
+<td>crisp accent ring + soft glow (box-shadow)</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td><code>:user-invalid</code>, <code>[aria-invalid=&quot;true&quot;]</code></td>
+<td>danger ring + glow, untoned hint -&gt; danger-text</td>
+</tr>
+<tr>
+<td>focused invalid</td>
+<td>invalid + <code>:focus-visible</code></td>
+<td>danger border/hint + standard focus glow</td>
+</tr>
+<tr>
+<td>disabled</td>
+<td><code>:disabled</code> (control)</td>
+<td>field muted (0.55 opacity), not-allowed</td>
+</tr>
+<tr>
+<td>placeholder</td>
+<td><code>::placeholder</code></td>
+<td>text-muted</td>
+</tr>
+<tr>
+<td>message tone</td>
+<td><code>.pl-c-field__hint[data-tone]</code></td>
+<td>success, warning, or danger message color</td>
+</tr>
+</tbody>
+</table>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li><strong>Label association:</strong> the wrapper is a <code>&lt;label&gt;</code>, so clicking the label
+focuses the control. When the field contains an action button or multiple
+focusable elements, use <code>&lt;label for&gt;</code> and a matching control <code>id</code> instead.</li>
+<li><strong>Required marker:</strong> <code>.pl-c-field__required</code> is visual only and should be
+<code>aria-hidden</code>; the native <code>required</code> attribute is what browsers and assistive
+technology use.</li>
+<li><strong>Focus:</strong> the control draws a <strong>crisp 2px accent ring with a soft blurred
+glow</strong> (a layered <code>box-shadow</code>). The border is intentionally NOT recolored -
+recoloring it alongside a ring produced a “double blue stroke” (solid border
+<ul>
+<li>translucent ring). The ring is the single focus indicator; the border
+stays as the neutral field edge. This reads as a modern SaaS input rather
+than a browser default outline.</li>
+</ul>
+</li>
+<li><strong>Invalidity:</strong> uses <code>:user-invalid</code> (Baseline 2024) for HTML5 constraints and
+<code>[aria-invalid=&quot;true&quot;]</code> for server/framework errors. Never rely on color
+alone: the hint text also changes to <code>danger-text</code>. When an invalid control
+has keyboard focus, the ring uses the standard focus color so the active
+typing target does not flash a destructive halo.</li>
+<li><strong>Error text association:</strong> for screen-reader users, add <code>aria-describedby</code>
+on the control pointing at the hint’s <code>id</code> (the wrapper-label association
+covers the label; the hint needs the explicit link).</li>
+<li><strong>Framework agnostic:</strong> hypermedia, htmx, Alpine, Vue, React,
+server-rendered HTML, and plain forms all use the same DOM contract: native
+controls, constraints, <code>aria-invalid</code>, and <code>aria-describedby</code>.</li>
+<li><strong>Read-only vs disabled:</strong> use <code>readonly</code> when the value can be selected or
+copied, and <code>disabled</code> when the control is unavailable and should be skipped
+by form submission.</li>
+</ul>
+<h2 id="theme-density-rtl-motion">Theme, density, RTL, motion</h2>
+<ul>
+<li><strong>Light/dark:</strong> all colors via tokens (<code>light-dark()</code>).</li>
+<li><strong>Density:</strong> sizing from <code>--pl-control-block-size</code>; <code>[data-pl-density]</code> on an
+ancestor.</li>
+<li><strong>RTL:</strong> logical properties throughout (<code>padding-inline</code>, <code>inline-size</code>,
+<code>min-block-size</code>).</li>
+<li><strong>Reduced motion:</strong> the border/box-shadow transitions are zeroed by the
+themes layer.</li>
+<li><strong>Forced colors:</strong> the border uses <code>ButtonBorder</code>; keyboard focus retains a
+two-pixel <code>Highlight</code> outline when box shadows are suppressed.</li>
+</ul></article><footer class="docs-page-links" aria-label="Page links"><a href="/porchlight/pr-preview/pr-202/preview/field">Open full example</a><a href="https://github.com/cawalch/porchlight/edit/main/docs/src/content/components/field.mdx">Edit this page</a><a href="https://github.com/cawalch/porchlight/blob/main/packages/porchlight/src/06-components/field.css">CSS source</a></footer></article></div><aside class="docs-contents"><nav aria-label="On this page"><h2>On this page</h2><ol class="docs-toc" data-docs-toc><li data-depth="2"><a href="#semantic-html">Semantic HTML</a></li><li data-depth="2"><a href="#class-contract">Class contract</a></li><li data-depth="2"><a href="#common-patterns">Common patterns</a></li><li data-depth="3"><a href="#stacked-field">Stacked field</a></li><li data-depth="3"><a href="#inline-field">Inline field</a></li><li data-depth="3"><a href="#customizable-native-select">Customizable native select</a></li><li data-depth="3"><a href="#hidden-label-search">Hidden label search</a></li><li data-depth="3"><a href="#standalone-control">Standalone control</a></li><li data-depth="3"><a href="#html5-validation">HTML5 validation</a></li><li data-depth="3"><a href="#required-marker">Required marker</a></li><li data-depth="3"><a href="#message-tones">Message tones</a></li><li data-depth="3"><a href="#anchor-positioned-validation-balloon">Anchor-positioned validation balloon</a></li><li data-depth="3"><a href="#server-or-framework-validation">Server or framework validation</a></li><li data-depth="3"><a href="#framework-agnostic-contract">Framework-agnostic contract</a></li><li data-depth="2"><a href="#tokens-consumed">Tokens consumed</a></li><li data-depth="2"><a href="#tokens-exposed-component-local">Tokens exposed (component-local)</a></li><li data-depth="2"><a href="#states">States</a></li><li data-depth="2"><a href="#accessibility">Accessibility</a></li><li data-depth="2"><a href="#theme-density-rtl-motion">Theme, density, RTL, motion</a></li></ol></nav></aside></div><dialog class="docs-search-dialog" id="docs-search-dialog" aria-labelledby="docs-search-title" data-docs-command-dialog data-search-url="/porchlight/pr-preview/pr-202/search.json"><header><h2 id="docs-search-title">Search Porchlight</h2><button class="pl-c-button" type="button" data-docs-command-close>Close</button></header><label for="docs-command-filter">Search docs</label><input id="docs-command-filter" class="pl-c-field__control" type="search" placeholder="Search pages, CSS classes, and tokens" autocomplete="off" data-docs-command-filter><p class="docs-search-status" role="status" data-docs-search-status></p><nav aria-label="Search results"><ul class="docs-search-results" data-docs-search-results></ul></nav></dialog></main><footer class="site-footer"><p>Porchlight · <a href="https://github.com/cawalch/porchlight">GitHub</a> · MIT</p></footer></body></html><script type="module">var e;function t(){e?.disconnect();let t=document.querySelector(`.site-header`);if(!t)return;let n=()=>document.documentElement.style.setProperty(`--doc-header-size`,`${t.getBoundingClientRect().height}px`);n(),e=new ResizeObserver(n),e.observe(t)}t(),document.addEventListener(`astro:page-load`,t),document.addEventListener(`astro:before-swap`,()=>e?.disconnect());</script><script type="module">var e;function t(){return{dialog:document.querySelector(`[data-docs-command-dialog]`),input:document.querySelector(`[data-docs-command-filter]`),status:document.querySelector(`[data-docs-search-status]`),results:document.querySelector(`[data-docs-search-results]`)}}async function n(){let{dialog:n,input:r,status:i,results:a}=t();if(!n||!r||!i||!a)return;let o=r.value.trim().toLowerCase(),s=o.split(/\s+/).filter(Boolean);i.textContent=`Loading search…`;try{e??=fetch(n.dataset.searchUrl).then(e=>{if(!e.ok)throw Error(`Search index unavailable`);return e.json()});let t=await e;if(!n.isConnected||r.value.trim().toLowerCase()!==o)return;let c=t.filter(e=>{let t=`${e.title} ${e.text}`.toLowerCase();return s.every(e=>t.includes(e))}).sort((e,t)=>{let n=o.match(/^\.pl-c-([a-z0-9-]+)(?:__|$)/)?.[1],r=e=>e.title.toLowerCase()===o||n&&e.href.endsWith(`/components/${n}`)?0:n&&e.href.includes(`/components/${n}#`)||s.every(t=>e.title.toLowerCase().includes(t))?1:2;return r(e)-r(t)||e.title.localeCompare(t.title)});a.replaceChildren();for(let e of c.slice(0,30)){let t=document.createElement(`li`),r=document.createElement(`a`);r.href=e.href,r.setAttribute(`aria-label`,e.title),r.dataset.docsCommandLink=``;let i=document.createElement(`span`);i.textContent=e.title;let o=document.createElement(`small`);o.id=`docs-search-detail-${a.childElementCount}`,r.setAttribute(`aria-describedby`,o.id),o.textContent=e.title.includes(` — `)?`${e.kind} section`:e.text.replace(/<[^>]+>|[`#*]/g,``).slice(0,140),r.append(i,o),r.addEventListener(`click`,()=>n.close()),t.append(r),a.append(t)}i.textContent=c.length===0?`No docs pages match that search.`:`${c.length} results${c.length>30?`; showing the first 30`:``}`}catch{e=void 0,i.textContent=`Search could not load. Use Browse docs to find a page.`}}function r(){let{dialog:e,input:r}=t();e&&r&&(e.open||e.showModal(),r.value=``,r.focus(),n())}function i(){document.querySelectorAll(`[data-docs-command-open]`).forEach(e=>{e.dataset.searchBound||(e.dataset.searchBound=`true`,e.addEventListener(`click`,r))});let{dialog:e,input:i}=t();e&&!e.dataset.searchBound&&(e.dataset.searchBound=`true`,e.querySelector(`[data-docs-command-close]`)?.addEventListener(`click`,()=>e.close()),e.addEventListener(`click`,t=>{let n=e.getBoundingClientRect();(t.clientX<n.left||t.clientX>n.right||t.clientY<n.top||t.clientY>n.bottom)&&e.close()}),i?.addEventListener(`input`,()=>void n()));for(let e of document.querySelectorAll(`.prose table`))e.scrollWidth>e.clientWidth?(e.tabIndex=0,e.setAttribute(`aria-label`,e.caption?.textContent?.trim()||`Scrollable table`)):(e.removeAttribute(`tabindex`),e.removeAttribute(`aria-label`))}i(),document.addEventListener(`astro:page-load`,i),window.addEventListener(`resize`,i),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&t().dialog?.open?(e.preventDefault(),t().dialog?.close()):(e.metaKey||e.ctrlKey)&&e.key.toLowerCase()===`k`&&t().dialog&&(e.preventDefault(),r())});</script>
