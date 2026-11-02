@@ -116,7 +116,7 @@
       color: var(--pl-color-text);
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-semibold);
-      letter-spacing: 0.04em;
+      letter-spacing: var(--pl-tracking-wide);
       line-height: var(--pl-leading-tight);
       text-transform: uppercase;
       text-overflow: ellipsis;

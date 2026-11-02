@@ -109,7 +109,7 @@
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-bold);
-      letter-spacing: 0.06em;
+      letter-spacing: var(--pl-tracking-wider);
       text-transform: uppercase;
     }
 
@@ -127,7 +127,7 @@
       color: var(--pl-color-text-muted);
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-bold);
-      letter-spacing: 0.04em;
+      letter-spacing: var(--pl-tracking-wide);
       text-transform: uppercase;
     }
 

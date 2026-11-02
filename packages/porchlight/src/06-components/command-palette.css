@@ -111,7 +111,7 @@
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-semibold);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: var(--pl-tracking-wide);
       color: var(--pl-color-text-muted);
     }
 

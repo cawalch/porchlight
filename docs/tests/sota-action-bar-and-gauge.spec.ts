@@ -64,7 +64,7 @@ test.describe("SOTA Action Bar & Radial KPI Gauge Capabilities", () => {
     });
 
     test("applies size modifiers correctly", async ({ page }) => {
-      const smGauge = page.locator('.pl-c-gauge[data-size="sm"]');
+      const smGauge = page.locator('.pl-c-gauge[data-size="sm"]').first();
       const lgGauge = page.locator('.pl-c-gauge[data-size="lg"]').first();
 
       const smBox = await smGauge.boundingBox();
@@ -87,9 +87,21 @@ test.describe("SOTA Action Bar & Radial KPI Gauge Capabilities", () => {
       const box = await arcGauge.boundingBox();
       expect(box).not.toBeNull();
       if (box) {
-        // In arc mode, block-size is compressed to ~65% of inline-size
+        // In arc mode, block-size is compressed to ~56% of inline-size
         expect(box.height).toBeLessThan(box.width);
       }
+    });
+
+    test("renders telemetry dial variant with 240-degree sweep", async ({
+      page,
+    }) => {
+      const meterGauge = page
+        .locator('.pl-c-gauge[data-variant="meter"]')
+        .first();
+      await expect(meterGauge).toBeVisible();
+      await expect(meterGauge).toHaveAttribute("role", "meter");
+      await expect(meterGauge.locator(".pl-c-gauge__value")).toHaveText("40%");
+      await expect(meterGauge.locator(".pl-c-gauge__label")).toHaveText("Load");
     });
   });
 

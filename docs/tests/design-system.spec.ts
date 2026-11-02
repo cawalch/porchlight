@@ -52,6 +52,7 @@ test("type scale uses a consistent ratio", async ({ page }) => {
   // resolved font-size (ground truth, accounts for clamp).
   const sizes = await page.evaluate(() => {
     const tokens = [
+      "--pl-text-2xs",
       "--pl-text-xs",
       "--pl-text-sm",
       "--pl-text-md",
@@ -85,6 +86,55 @@ test("type scale uses a consistent ratio", async ({ page }) => {
     maxDev,
     "type ratios must be consistent (within 12% of each other)",
   ).toBeLessThan(0.12);
+});
+
+test("tracking tokens and enterprise typography utilities are properly wired", async ({
+  page,
+}) => {
+  await page.goto("./preview/tokens");
+
+  const results = await page.evaluate(() => {
+    const host = document.querySelector("main") as HTMLElement;
+
+    // Check tracking tokens
+    const trackingTokens = [
+      "--pl-tracking-tighter",
+      "--pl-tracking-tight",
+      "--pl-tracking-normal",
+      "--pl-tracking-wide",
+      "--pl-tracking-wider",
+    ];
+    const trackingValues = trackingTokens.map((t) => {
+      const el = document.createElement("div");
+      el.style.letterSpacing = `var(${t})`;
+      host.append(el);
+      const val = getComputedStyle(el).letterSpacing;
+      el.remove();
+      return val;
+    });
+
+    // Check tabular numeric utility
+    const numEl = document.createElement("span");
+    numEl.className = "pl-u-num-tabular";
+    host.append(numEl);
+    const numComputed = getComputedStyle(numEl);
+    const fontVariantNumeric = numComputed.fontVariantNumeric;
+    numEl.remove();
+
+    // Check micro typography utility
+    const microEl = document.createElement("span");
+    microEl.className = "pl-u-text-2xs";
+    host.append(microEl);
+    const microFontSize = parseFloat(getComputedStyle(microEl).fontSize);
+    microEl.remove();
+
+    return { trackingValues, fontVariantNumeric, microFontSize };
+  });
+
+  expect(results.trackingValues.length).toBe(5);
+  expect(results.fontVariantNumeric).toContain("tabular-nums");
+  expect(results.microFontSize).toBeLessThan(12.5);
+  expect(results.microFontSize).toBeGreaterThan(9.5);
 });
 
 // ---------------------------------------------------------------------------

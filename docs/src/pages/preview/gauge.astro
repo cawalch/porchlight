@@ -11,10 +11,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <h2>Standard KPI Dials</h2>
   <div class="pl-l-grid" style="--pl-l-grid-min: 14rem; gap: var(--pl-space-4);">
     <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
-      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">System Uptime</span>
+      <div class="pl-c-kpi-card__header" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__label">System Uptime</span>
+      </div>
       <div
         class="pl-c-gauge"
-        style="--pl-gauge-value: 99.8%;"
+        style="--pl-gauge-value: 99.8%; margin-block: var(--pl-space-2);"
         role="meter"
         aria-valuenow="99.8"
         aria-valuemin="0"
@@ -28,14 +30,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span class="pl-c-gauge__label">SLA</span>
         </div>
       </div>
-      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">Target: 99.5%</span>
+      <div class="pl-c-kpi-card__footer" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__comparison">Target: 99.5%</span>
+      </div>
     </div>
 
     <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
-      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">Memory Utilization</span>
+      <div class="pl-c-kpi-card__header" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__label">Memory Utilization</span>
+      </div>
       <div
         class="pl-c-gauge"
-        style="--pl-gauge-value: 78%;"
+        style="--pl-gauge-value: 78%; margin-block: var(--pl-space-2);"
         role="meter"
         aria-valuenow="78"
         aria-valuemin="0"
@@ -49,14 +55,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span class="pl-c-gauge__label">RAM</span>
         </div>
       </div>
-      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">12.4 GB of 16 GB</span>
+      <div class="pl-c-kpi-card__footer" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__comparison">12.4 GB of 16 GB</span>
+      </div>
     </div>
 
     <div class="pl-c-kpi-card" style="align-items: center; text-align: center;">
-      <span class="pl-c-kpi-card__label" style="margin-block-end: var(--pl-space-3);">Disk Space Left</span>
+      <div class="pl-c-kpi-card__header" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__label">Disk Space Left</span>
+      </div>
       <div
         class="pl-c-gauge"
-        style="--pl-gauge-value: 92%;"
+        style="--pl-gauge-value: 92%; margin-block: var(--pl-space-2);"
         role="meter"
         aria-valuenow="92"
         aria-valuemin="0"
@@ -70,7 +80,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span class="pl-c-gauge__label">Full</span>
         </div>
       </div>
-      <span class="pl-c-kpi-card__comparison" style="margin-block-start: var(--pl-space-3);">8 GB remaining</span>
+      <div class="pl-c-kpi-card__footer" style="justify-content: center; inline-size: 100%;">
+        <span class="pl-c-kpi-card__comparison">8 GB remaining</span>
+      </div>
     </div>
   </div>
 
@@ -86,6 +98,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       aria-valuemin="0"
       aria-valuemax="100"
       aria-label="Small Gauge"
+      data-tone="warning"
     >
       <div class="pl-c-gauge__track"></div>
       <div class="pl-c-gauge__center">
@@ -103,7 +116,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       aria-valuemin="0"
       aria-valuemax="100"
       aria-label="Medium Gauge"
-      data-tone="brand"
+      data-tone="accent"
     >
       <div class="pl-c-gauge__track"></div>
       <div class="pl-c-gauge__center">
@@ -133,7 +146,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </div>
 
   <h2 style="margin-block-start: var(--pl-space-8);">Speedometer Arc Variant</h2>
-  <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-6);">
+  <p class="pl-c-text-muted" style="margin-block-end: var(--pl-space-4);">
+    Semi-circular 180° arch with GPU-clipped conic gradient and unconstrained typographic clearance.
+  </p>
+  <div class="pl-l-cluster" style="align-items: flex-end; gap: var(--pl-space-6);">
+    <div
+      class="pl-c-gauge"
+      data-variant="arc"
+      data-size="sm"
+      style="--pl-gauge-value: 58%;"
+      role="meter"
+      aria-valuenow="58"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Small Speedometer Arc"
+      data-tone="accent"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">58%</span>
+        <span class="pl-c-gauge__label">IOPS</span>
+      </div>
+    </div>
+
     <div
       class="pl-c-gauge"
       data-variant="arc"
@@ -168,6 +203,68 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="pl-c-gauge__center">
         <span class="pl-c-gauge__value">85%</span>
         <span class="pl-c-gauge__label">Pressure</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-block-start: var(--pl-space-8);">Telemetry Dial Variant (240° Open Sweep)</h2>
+  <p class="pl-c-text-muted" style="margin-block-end: var(--pl-space-4);">
+    240° open gauge meter providing an open bottom viewport for maximum metric legibility.
+  </p>
+  <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-6);">
+    <div
+      class="pl-c-gauge"
+      data-variant="meter"
+      data-size="sm"
+      style="--pl-gauge-value: 40%;"
+      role="meter"
+      aria-valuenow="40"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Small Telemetry Meter"
+      data-tone="accent"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">40%</span>
+        <span class="pl-c-gauge__label">Load</span>
+      </div>
+    </div>
+
+    <div
+      class="pl-c-gauge"
+      data-variant="meter"
+      style="--pl-gauge-value: 68%;"
+      role="meter"
+      aria-valuenow="68"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Medium Telemetry Meter"
+      data-tone="success"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">68%</span>
+        <span class="pl-c-gauge__label">Battery</span>
+      </div>
+    </div>
+
+    <div
+      class="pl-c-gauge"
+      data-variant="meter"
+      data-size="lg"
+      style="--pl-gauge-value: 91%;"
+      role="meter"
+      aria-valuenow="91"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Large Telemetry Meter"
+      data-tone="danger"
+    >
+      <div class="pl-c-gauge__track"></div>
+      <div class="pl-c-gauge__center">
+        <span class="pl-c-gauge__value">91%</span>
+        <span class="pl-c-gauge__label">Thermal</span>
       </div>
     </div>
   </div>

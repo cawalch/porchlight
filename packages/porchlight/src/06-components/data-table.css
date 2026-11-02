@@ -242,6 +242,7 @@
       background: var(--pl-color-surface-2);
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-semibold);
+      letter-spacing: var(--pl-tracking-wide);
       color: var(--pl-color-text-muted);
 
       /* 1px (not 2px)  -  the surface-2/surface step does the visual separation;
@@ -273,9 +274,10 @@
     }
 
     /* Numeric columns. */
-    .pl-c-table :where([data-align="end"]) {
+    .pl-c-table :where([data-align="end"], [data-numeric]) {
       text-align: end;
-      font-variant-numeric: tabular-nums;
+      font-variant-numeric: tabular-nums lining-nums slashed-zero;
+      font-feature-settings: var(--pl-font-feature-numeric);
     }
 
     .pl-c-table :where([data-align="center"]) {
