@@ -188,6 +188,46 @@ The `dense` tier goes further: it also compresses the `--pl-space-*` scale
 (~30% reduction) and small text sizes (`--pl-text-sm`, `--pl-text-xs`) for
 maximum information density. See the <a href={`${import.meta.env.BASE_URL}components/app-dense`}>Data-dense mode</a> reference for details.
 
+## Built-in enterprise palette presets
+
+Porchlight provides four pre-baked enterprise palette presets via the `data-pl-palette` attribute. Each preset configures brand ramps, surfaces, text, borders, and accent colors with tested WCAG AA contrast in both light and dark modes:
+
+| Palette    | Aesthetic                | Best Suited For                                        | Accent Tone                                |
+| ---------- | ------------------------ | ------------------------------------------------------ | ------------------------------------------ |
+| `slate`    | Cool neutral gray        | B2B SaaS, developer tooling, workflow engines          | Indigo steel (`oklch(46% 0.1 250deg)`)     |
+| `zinc`     | Crisp monochromatic      | Technical analytics, hardware consoles, terminal views | High-contrast neutral                      |
+| `midnight` | Deep nocturnal blue-gray | SOC/SIEM cockpits, dark-first monitoring dashboards    | Electric cobalt (`oklch(60% 0.19 275deg)`) |
+| `emerald`  | Warm emerald green       | Fintech, banking, sustainability, wealth management    | Emerald green (`oklch(61% 0.16 155deg)`)   |
+
+### Applying a palette globally
+
+Set `data-pl-palette` on the `<html>` or `<body>` element:
+
+```html
+<html data-pl-palette="slate" data-pl-theme="dark">
+  ...
+</html>
+```
+
+### Scoping a palette to a sub-tree
+
+Palettes can be scoped to any container or card to highlight specific operational domains:
+
+```html
+<!-- Sustainability widget using the emerald palette -->
+<section class="pl-c-card" data-pl-palette="emerald">
+  <header class="pl-c-card__header">
+    <h3 class="pl-c-card__title">Carbon Offset Metrics</h3>
+    <span class="pl-c-badge" data-tone="success">Optimal</span>
+  </header>
+  <div class="pl-c-card__body">
+    <button class="pl-c-button" data-tone="primary" type="button">
+      View Allocation
+    </button>
+  </div>
+</section>
+```
+
 ## Reduced motion
 
 Porchlight respects `prefers-reduced-motion: reduce` automatically:

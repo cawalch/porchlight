@@ -1,0 +1,59 @@
+---
+title: Deprecation policy and SemVer stability
+description: SemVer stability contract, public API scope, deprecation grace periods, and breaking change guarantees.
+order: 5.5
+---
+
+Porchlight adheres strictly to [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html). Because CSS lacks traditional compiler-enforced types, breaking changes in class names or custom properties can silently degrade client interfaces.
+
+This policy defines Porchlight's stability commitments for enterprise adopters.
+
+## Public API boundary
+
+The public API contract encompasses:
+
+1. **Class Selectors**: All component (`.pl-c-*`), layout (`.pl-l-*`), and utility (`.pl-u-*`) selectors documented in component references.
+2. **Design Tokens**: All public CSS custom properties (`--pl-*`), including spacing, typography, colors, radii, shadows, and motion scales.
+3. **Component Token Hooks**: Documented component-scoped custom properties (`--pl-c-*`).
+4. **Data Attributes**: State, variant, tone, density, and theme hooks (`data-tone`, `data-variant`, `data-pl-density`, `data-pl-theme`, `data-pl-palette`, `data-frozen`).
+5. **Package Exports**: Documented entrypoints declared in `package.json` (`./porchlight.css`, `./full.css`, `./compat.css`, `./core.css`, `./size-budget.json`, etc.).
+
+Any selector prefixed with an internal underscore or not documented in public guides is private and subject to change without deprecation notices.
+
+## SemVer stability rules
+
+| Release Type                  | Contract Guarantee       | Allowed Changes                                                                                |
+| ----------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| **Patch (`0.x.Y` / `X.Y.Z`)** | 100% Backward Compatible | Bug fixes, visual polish, contrast improvements, test enhancements.                            |
+| **Minor (`0.X.0` / `X.Y.0`)** | 100% Backward Compatible | New components, new tokens, optional variants, performance optimizations, deprecation notices. |
+| **Major (`X.0.0`)**           | Breaking Changes Allowed | Removal of deprecated selectors/tokens, restructuring of cascade layers.                       |
+
+During the initial development phase (`0.x.y`), minor versions (`0.15.0`, `0.16.0`) introduce new capabilities while preserving backward compatibility for existing selectors and tokens.
+
+## Deprecation lifecycle
+
+When a selector, token, or HTML pattern is slated for replacement, it follows a 4-stage lifecycle:
+
+```
+[ Active Stable ] ──> [ Deprecated Notice ] ──> [ Grace Period: 2 Minors / 6 Months ] ──> [ Major Release Removal ]
+```
+
+### Stage 1: Deprecation Announcement
+
+- The item is flagged in `CHANGELOG.md` under a dedicated `### Deprecated` section.
+- The documentation page for the component or token displays a prominent deprecation warning banner linking to the recommended replacement.
+- The CSS source retains the selector alongside its replacement to prevent runtime breakage.
+
+### Stage 2: Grace Period
+
+- The deprecated feature remains functional in all standard bundles for a minimum of **2 minor releases** or **6 calendar months** (whichever duration is longer).
+- Both old and new selectors continue to receive necessary security and critical bug fixes during the grace period.
+
+### Stage 3: Automated Migration Tooling
+
+- Ahead of removal in a major version bump, the Porchlight team provides an automated codemod script or explicit regex migration guide to update markup in consumer codebases.
+
+### Stage 4: Removal
+
+- Removal only occurs in a major semver bump (`v1.0.0`, `v2.0.0`).
+- Major release notes outline every removed selector with side-by-side before/after snippets.

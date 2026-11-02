@@ -1,0 +1,113 @@
+---
+title: Cascade layering and coexistence
+description: Deep-dive into Porchlight's nine cascade layers, layer precedence rules, and coexistence recipes with Tailwind, Bootstrap, and CSS Modules.
+order: 1.5
+---
+
+Porchlight is built entirely on native [CSS Cascade Layers](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@layer). Cascade layers provide deterministic styling precedence and completely eliminate specificity wars between framework components and host application overrides.
+
+Every rule authored in Porchlight lives inside a top-level `@layer porchlight`.
+
+## The nine internal sublayers
+
+Inside `@layer porchlight`, nine sublayers define an exact priority ordering:
+
+```css
+@layer porchlight {
+  @layer reset, tokens, themes, base, layout, components, utilities, enhancements, print;
+}
+```
+
+For standard CSS declarations, **later layers win**:
+
+1. `reset`: Minimal normalization to establish a consistent cross-browser baseline. All reset selectors use `:where()` for zero specificity.
+2. `tokens`: CSS custom properties and registered `@property` definitions for colors, spacing, typography, radii, motion, and elevations.
+3. `themes`: Theme steering (`data-pl-theme="light|dark"`), density modes (`data-pl-density`), palettes (`data-pl-palette`), and accessibility media queries (`prefers-reduced-motion`, `prefers-contrast`, `forced-colors`).
+4. `base`: Sensible typography and element styling for unclassed standard HTML tags (`h1`-`h6`, `p`, `table`, `code`).
+5. `layout`: Layout primitives and page shells (`.pl-l-stack`, `.pl-l-cluster`, `.pl-l-grid`, `.pl-l-app-shell`).
+6. `components`: The 59 modular component classes (`.pl-c-button`, `.pl-c-card`, `.pl-c-table`, `.pl-c-gauge`, etc.).
+7. `utilities`: Micro helper classes (`.pl-u-num-tabular`, `.pl-u-text-center`, spacing and display utilities).
+8. `enhancements`: Progressive `@supports`-gated styling (`text-box-trim`, CSS gap decorations, style container queries).
+9. `print`: Media print optimizations, hiding interactive navigation and unrolling cards for physical printing.
+
+## Cascade layer precedence rules
+
+Understanding three fundamental rules of CSS Cascade Layers makes stylesheet debugging straightforward:
+
+1. **Declared Order Wins for Normal Rules**: When two layered rules match an element, the layer declared later in the stylesheet takes precedence, regardless of selector specificity.
+2. **Unlayered CSS Beats Layered CSS**: Normal declarations outside any `@layer` have higher priority than declarations inside any layer.
+3. **`!important` Inverts Precedence**: Important declarations in earlier layers override important declarations in later layers. Porchlight uses `!important` strictly for critical accessibility and visibility guarantees (`[hidden]`, `prefers-reduced-motion`).
+
+## Coexistence recipes
+
+### Coexistence with Tailwind CSS
+
+To use Porchlight components alongside Tailwind CSS utility classes, declare the layer ordering at the very top of your global stylesheet:
+
+```css
+/* app.css */
+@layer reset, tailwind, porchlight, app, overrides;
+
+/* Import Tailwind utilities */
+@import "tailwindcss";
+
+/* Import Porchlight full or modular bundle */
+@import "@cawalch/porchlight";
+
+/* Host application styling */
+@layer app {
+  .hero-banner {
+    background: var(--pl-color-surface-2);
+    border-radius: var(--pl-radius-xl);
+  }
+}
+```
+
+Because `app` is ordered after `porchlight` and `tailwind`:
+
+- Tailwind utility classes can be freely applied alongside Porchlight classes.
+- Any custom styles in `@layer app` will cleanly override both Tailwind utilities and Porchlight defaults without requiring `!important`.
+
+### Coexistence with Bootstrap, Bulma, or legacy vendor CSS
+
+When modernizing an existing application that depends on a heavy legacy framework, isolate the vendor stylesheet inside a dedicated `@layer vendor`:
+
+```css
+/* app.css */
+@layer reset, vendor, porchlight, app;
+
+/* Wrap legacy framework in the vendor layer */
+@import "bootstrap/dist/css/bootstrap.min.css" layer(vendor);
+
+/* Import Porchlight */
+@import "@cawalch/porchlight";
+```
+
+Because `porchlight` is ordered after `vendor`:
+
+- High-specificity Bootstrap class selectors (e.g. `.table-striped > tbody > tr:nth-of-type(odd)`) will never overpower Porchlight table styles (`.pl-c-table`).
+- Porchlight components render cleanly without accidental leakage from legacy styles.
+
+### Coexistence with CSS Modules
+
+CSS Modules provide scoped selector class names, while cascade layers control style precedence:
+
+```css
+/* button.module.css */
+@layer porchlight, app;
+
+@layer app {
+  .customAction {
+    --pl-c-button-pad-inline: var(--pl-space-6);
+    text-transform: uppercase;
+    letter-spacing: var(--pl-tracking-wider);
+  }
+}
+```
+
+```html
+<!-- Combined in template -->
+<button class="pl-c-button ${styles.customAction}" type="button">Submit</button>
+```
+
+By placing the module styles inside `@layer app`, the scoped class overrides the component's internal default properties effortlessly.

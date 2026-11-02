@@ -1,0 +1,137 @@
+---
+title: Dialog and Popover reference
+description: Architectural reference comparing native dialog and the Popover API, focus trapping, top layer mechanics, and anchor positioning.
+order: 2.5
+---
+
+Porchlight uses native browser primitives for overlays rather than custom JavaScript portal managers. Modern browsers provide two complementary standards in Baseline: the `<dialog>` element and the HTML Popover API (`popover="auto"` / `popover="manual"`).
+
+Understanding when to choose `<dialog>` versus `popover` ensures accessible, high-performance overlays with zero runtime JavaScript overhead.
+
+## Architecture comparison: Dialog vs Popover
+
+| Architectural Capability  | Native `<dialog>`                                                       | Popover API (`popover="auto"`)                                 | Popover API (`popover="manual"`)                                        |
+| ------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Primary Use Case**      | Disruptive workflows, form confirmations, modal wizards, sheet drawers. | Dropdown menus, command palettes, non-modal toolbars, flyouts. | Persistent floating action bars, live toasts, pinned status inspectors. |
+| **Top Layer Placement**   | Yes (when opened with `.showModal()`).                                  | Yes (automatically placed in top layer).                       | Yes (automatically placed in top layer).                                |
+| **Focus Trapping**        | Native, engine-enforced inert document trap.                            | No focus trap; document stays interactive.                     | No focus trap.                                                          |
+| **Light Dismiss**         | No default click-outside dismiss (cancel via Escape key).               | Built-in click-outside and Escape key dismissal.               | Explicit trigger or timer dismissal required.                           |
+| **Auto-Closing Siblings** | No (multiple dialogs stack in top layer).                               | Auto-dismisses other auto-popovers unless nested.              | Persists independently of other popovers.                               |
+| **Anchor Positioning**    | Possible, but typically viewport-centered.                              | First-class integration (`position-anchor`).                   | First-class integration (`position-anchor`).                            |
+
+## The Top Layer and z-index isolation
+
+Both `<dialog>` (in modal mode) and elements with `popover` are rendered in the browser's native **Top Layer**:
+
+- Overlays render above all normal stacking contexts, irrespective of any `z-index` in the parent DOM tree.
+- Top layer overlays eliminate z-index competition with sticky navigation bars, headers, and iframe embeds.
+- Stacking order within the top layer is strictly determined by the order in which elements enter the top layer (last opened appears on top).
+
+## Backdrop styling and `@starting-style` transitions
+
+Porchlight provides smooth 60fps entry and exit animations using CSS `@starting-style` and discrete transition properties.
+
+### Dialog modal transition
+
+```css
+@layer porchlight.components {
+  .pl-c-dialog {
+    border: 0;
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-surface);
+    box-shadow: var(--pl-shadow-3);
+    opacity: 0;
+    scale: 0.96;
+    transition:
+      opacity var(--pl-duration-exit) var(--pl-ease-standard),
+      scale var(--pl-duration-exit) var(--pl-ease-standard),
+      overlay var(--pl-duration-exit) allow-discrete,
+      display var(--pl-duration-exit) allow-discrete;
+  }
+
+  .pl-c-dialog[open] {
+    opacity: 1;
+    scale: 1;
+    transition-duration: var(--pl-duration-enter);
+
+    @starting-style {
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+
+  .pl-c-dialog::backdrop {
+    background: oklch(0% 0 0deg / 0.45);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition:
+      opacity var(--pl-duration-exit) var(--pl-ease-standard),
+      overlay var(--pl-duration-exit) allow-discrete,
+      display var(--pl-duration-exit) allow-discrete;
+  }
+
+  .pl-c-dialog[open]::backdrop {
+    opacity: 1;
+    transition-duration: var(--pl-duration-enter);
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+```
+
+## Popover API and anchor positioning
+
+Porchlight couples the Popover API with CSS Anchor Positioning to tether menus and tooltips to triggers without layout shifts or JavaScript bounding box calculations:
+
+```html
+<!-- Trigger Anchor -->
+<button
+  id="options-trigger"
+  class="pl-c-button"
+  type="button"
+  popovertarget="options-menu"
+  style="anchor-name: --menu-trigger;"
+>
+  Options
+</button>
+
+<!-- Tethered Popover Menu -->
+<div
+  id="options-menu"
+  class="pl-c-popover-menu"
+  popover="auto"
+  style="position-anchor: --menu-trigger; position-area: bottom span-right;"
+>
+  <button class="pl-c-popover-menu__item" type="button">Edit</button>
+  <button class="pl-c-popover-menu__item" type="button">Duplicate</button>
+  <hr class="pl-c-popover-menu__divider" />
+  <button class="pl-c-popover-menu__item" data-tone="danger" type="button">
+    Delete
+  </button>
+</div>
+```
+
+### Tethered auto-hiding with `position-visibility`
+
+When an anchor button scrolls offscreen inside a table or container, the attached popover or tooltip should not hover orphaned in the viewport. Porchlight uses `position-visibility: anchors-visible`:
+
+```css
+@supports (position-visibility: anchors-visible) {
+  :where(.pl-c-tooltip__body, .pl-c-menu__popover, .pl-c-dropdown__menu) {
+    position-visibility: anchors-visible;
+  }
+}
+```
+
+## Accessibility requirements and focus management
+
+1. **Modal Dialogs**:
+   - Must use `.showModal()` rather than setting the `open` attribute manually. Calling `.showModal()` enables the browser's native inert focus trapping and Escape key cancellation.
+   - Dialogs must contain an accessible name (`aria-labelledby` pointing to the title heading).
+   - Closing a dialog automatically returns keyboard focus to the triggering element.
+2. **Popovers**:
+   - Use `popover="auto"` for transient dropdowns where clicking outside should dismiss the menu.
+   - For keyboard navigation in action menus, ensure items are accessible buttons or links.
+   - Use `popover="manual"` for floating bars or toasts where dismissals are driven by timers or form submit completions.

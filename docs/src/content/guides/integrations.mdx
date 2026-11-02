@@ -146,6 +146,259 @@ History restoration must receive a full page; follow HTMX's
 [history configuration](https://htmx.org/docs/#history-support) before adding
 `hx-push-url` or boosted navigation.
 
+## Four production HTMX recipes
+
+These four patterns combine Porchlight's pure-CSS components with HTMX 2.0+ primitives. They require zero custom JavaScript beyond standard HTMX attributes.
+
+### Recipe 1: Inline table row edit and save
+
+Allows editing a single row in place without full page reloads. The edit state swaps the `<tr>` with an editable form row, and save/cancel swaps back:
+
+```html
+<!-- Read view -->
+<tr id="user-row-42" class="pl-c-table__row">
+  <td class="pl-c-table__cell">Alex Morgan</td>
+  <td class="pl-c-table__cell">alex@example.com</td>
+  <td class="pl-c-table__cell">
+    <span class="pl-c-badge" data-tone="success">Active</span>
+  </td>
+  <td class="pl-c-table__cell pl-u-text-end">
+    <button
+      class="pl-c-button"
+      data-variant="ghost"
+      hx-get="/users/42/edit"
+      hx-target="#user-row-42"
+      hx-swap="outerHTML"
+    >
+      Edit
+    </button>
+  </td>
+</tr>
+
+<!-- Edit fragment returned by GET /users/42/edit -->
+<tr
+  id="user-row-42"
+  class="pl-c-table__row"
+  style="background: var(--pl-color-surface-2);"
+>
+  <td class="pl-c-table__cell">
+    <input
+      class="pl-c-field__control"
+      name="name"
+      value="Alex Morgan"
+      required
+    />
+  </td>
+  <td class="pl-c-table__cell">
+    <input
+      class="pl-c-field__control"
+      name="email"
+      type="email"
+      value="alex@example.com"
+      required
+    />
+  </td>
+  <td class="pl-c-table__cell">
+    <select class="pl-c-field__control" name="status">
+      <option value="active" selected>Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </td>
+  <td class="pl-c-table__cell pl-u-text-end">
+    <div
+      class="pl-l-cluster"
+      style="justify-content: flex-end; --pl-l-cluster-gap: var(--pl-space-2);"
+    >
+      <button
+        class="pl-c-button"
+        data-tone="primary"
+        hx-put="/users/42"
+        hx-include="closest tr"
+        hx-target="#user-row-42"
+        hx-swap="outerHTML"
+      >
+        Save
+      </button>
+      <button
+        class="pl-c-button"
+        data-variant="ghost"
+        hx-get="/users/42"
+        hx-target="#user-row-42"
+        hx-swap="outerHTML"
+      >
+        Cancel
+      </button>
+    </div>
+  </td>
+</tr>
+```
+
+### Recipe 2: Dynamic live filter builder with debounce
+
+A real-time search facet that updates a results table as the user types, with a native loading indicator:
+
+```html
+<form
+  class="pl-c-filter-builder pl-l-stack"
+  hx-get="/api/audit-logs"
+  hx-target="#audit-table-body"
+  hx-trigger="input changed delay:250ms, change from:select"
+  hx-indicator="#filter-indicator"
+>
+  <div
+    class="pl-l-cluster"
+    style="--pl-l-cluster-gap: var(--pl-space-3); align-items: flex-end;"
+  >
+    <label class="pl-c-field" style="flex: 1; min-inline-size: 14rem;">
+      <span class="pl-c-field__label">Search events</span>
+      <input
+        class="pl-c-field__control"
+        name="q"
+        type="search"
+        placeholder="Filter by actor, IP, or action..."
+      />
+    </label>
+
+    <label class="pl-c-field" style="min-inline-size: 10rem;">
+      <span class="pl-c-field__label">Severity</span>
+      <select class="pl-c-field__control" name="severity">
+        <option value="">All severities</option>
+        <option value="info">Info</option>
+        <option value="warning">Warning</option>
+        <option value="danger">Critical</option>
+      </select>
+    </label>
+
+    <div
+      id="filter-indicator"
+      class="pl-c-inline-loading htmx-indicator"
+      role="status"
+      aria-label="Updating results..."
+    >
+      <span class="pl-c-inline-loading__spinner"></span>
+    </div>
+  </div>
+</form>
+```
+
+```css
+.htmx-indicator {
+  display: none;
+}
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  display: inline-flex;
+}
+```
+
+### Recipe 3: Infinite scroll with sentinel row
+
+Infinite scroll appending new rows to a table when the sentinel row enters the viewport:
+
+```html
+<tbody id="telemetry-rows">
+  <!-- Initial rows -->
+  <tr class="pl-c-table__row">
+    <td>Row 1</td>
+  </tr>
+
+  <!-- Sentinel Row -->
+  <tr
+    class="pl-c-table__row"
+    hx-get="/api/telemetry?page=2"
+    hx-trigger="revealed"
+    hx-swap="afterend"
+  >
+    <td colspan="4" class="pl-c-table__cell pl-u-text-center">
+      <div class="pl-c-inline-loading" role="status">
+        <span class="pl-c-inline-loading__spinner"></span>
+        <span>Loading older events...</span>
+      </div>
+    </td>
+  </tr>
+</tbody>
+```
+
+### Recipe 4: Modal drawer with out-of-band alerts
+
+A native `<dialog>` drawer that submits a form, closes upon success, and injects an out-of-band flash notification into a global toast container without a page reload:
+
+```html
+<!-- Global layout container for system toasts -->
+<div
+  id="system-toasts"
+  class="pl-c-toast-shelf"
+  aria-live="polite"
+  aria-atomic="true"
+></div>
+
+<!-- Native Dialog Drawer -->
+<dialog
+  id="new-api-key-dialog"
+  class="pl-c-drawer"
+  aria-labelledby="dialog-title"
+>
+  <div class="pl-c-drawer__panel">
+    <header class="pl-c-drawer__header">
+      <h2 id="dialog-title" class="pl-c-drawer__title">Create API Token</h2>
+      <button
+        class="pl-c-button"
+        data-variant="ghost"
+        type="button"
+        onclick="this.closest('dialog').close()"
+        aria-label="Close"
+      >
+        ✕
+      </button>
+    </header>
+
+    <form
+      class="pl-c-form pl-l-stack"
+      hx-post="/api/keys"
+      hx-target="#key-list-tbody"
+      hx-swap="afterbegin"
+      hx-on::after-request="if(event.detail.successful) document.getElementById('new-api-key-dialog').close()"
+    >
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Token name</span>
+        <input class="pl-c-field__control" name="name" type="text" required />
+      </label>
+
+      <footer class="pl-l-cluster" style="justify-content: flex-end;">
+        <button
+          class="pl-c-button"
+          data-variant="plain"
+          type="button"
+          onclick="this.closest('dialog').close()"
+        >
+          Cancel
+        </button>
+        <button class="pl-c-button" data-tone="primary" type="submit">
+          Generate token
+        </button>
+      </footer>
+    </form>
+  </div>
+</dialog>
+```
+
+```html
+<!-- Server response (HTTP 201 Created) containing new row + Out-of-Band Toast -->
+<tr id="key-row-89" class="pl-c-table__row">
+  <td class="pl-c-table__cell">Production Worker</td>
+  <td class="pl-c-table__cell pl-u-num-tabular">tok_live_7a8f...</td>
+  <td class="pl-c-table__cell">
+    <span class="pl-c-badge" data-tone="success">Active</span>
+  </td>
+</tr>
+
+<div id="system-toasts" hx-swap-oob="beforeend">
+  <div class="pl-c-toast" data-tone="success" role="status">
+    <div class="pl-c-toast__body">API token created successfully.</div>
+  </div>
+</div>
+```
+
 ## Alpine: local state around native controls
 
 Load [Alpine](https://alpinejs.dev/essentials/installation) once: use a deferred

@@ -201,6 +201,10 @@ Verified with **Bun 1.4.4 and Porchlight 0.15.0**:
 | Bleeding-edge Chrome 133+ `scroll-state()` queries   | Isolated in `@cawalch/porchlight/experimental.css`                   |
 | Copy prebuilt CSS and serve it directly              | Preserves the full CSS without parser transformation                 |
 
+> **Do consumers need to exclude `enhancements.css` when building with Bun?**
+>
+> **No.** Both `porchlight.css` and `full.css` include `08-enhancements.css` and build cleanly with Bun 1.4.4 (exit code 0). The single grammar construct that previously failed Bun's CSS parser (`scroll-state(...)`) was moved into `@cawalch/porchlight/experimental.css`. Standard `08-enhancements.css` contains only safe `@supports`-gated progressive enhancements (`text-box-trim`, CSS gap decorations, style container queries, `field-sizing: content`), which Bun accepts without error. Consumers do **not** need to exclude enhancements or switch to `compat.css` unless targeting older environments.
+
 For Bun's CSS bundler, put this in `app.css`, then run
 `bun build ./app.css --outdir ./dist`:
 
@@ -289,6 +293,7 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 | `@cawalch/porchlight`                       | Full prebuilt CSS bundle (minified)      |
 | `@cawalch/porchlight/min.css`               | Minified full bundle alias               |
 | `@cawalch/porchlight/porchlight.css`        | Full unminified CSS bundle               |
+| `@cawalch/porchlight/full.css`              | Canonical full bundle with enhancements  |
 | `@cawalch/porchlight/unminified.css`        | Full unminified CSS bundle alias         |
 | `@cawalch/porchlight/compat.css`            | Bundle without the enhancement layer     |
 | `@cawalch/porchlight/core.css`              | Layer order, reset, tokens, themes, base |
@@ -297,6 +302,8 @@ import tokens from "@cawalch/porchlight/tokens.json" with { type: "json" };
 | `@cawalch/porchlight/components/button.css` | One component CSS file                   |
 | `@cawalch/porchlight/utilities.css`         | Utility classes                          |
 | `@cawalch/porchlight/enhancements.css`      | Progressive enhancement layer            |
+| `@cawalch/porchlight/experimental.css`      | Bleeding-edge CSS experimental queries   |
+| `@cawalch/porchlight/size-budget.json`      | Component & bundle size budget data      |
 | `@cawalch/porchlight/tokens`                | Typed token metadata module              |
 | `@cawalch/porchlight/tokens.json`           | Token metadata JSON                      |
 | `@cawalch/porchlight/manifest.json`         | Static-copy manifest                     |

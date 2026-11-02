@@ -26,6 +26,142 @@
     color-scheme: dark;
   }
 
+  /* Enterprise Theme Palette Presets
+   * ===========================================================================
+   * Pre-baked colorways steer brand and surface tokens across light and dark modes.
+   * Can be declared on :root, <html>, <body>, or scoped to any subtree container
+   * (e.g. <div data-pl-palette="emerald">).
+   *
+   *   - slate    - cool neutral gray SaaS, high precision, steel indigo accent
+   *   - zinc     - technical neutral, clean monochromatic surfaces
+   *   - midnight - deep nocturnal blue-gray surfaces with electric cobalt accent
+   *   - emerald  - fintech, sustainability, and accounting green ramp
+   */
+  :where([data-pl-palette="slate"]) {
+    --pl-brand-1: oklch(97% 0.015 250deg);
+    --pl-brand-2: oklch(89% 0.035 250deg);
+    --pl-brand-3: oklch(80% 0.065 250deg);
+    --pl-brand-4: oklch(70% 0.1 250deg);
+    --pl-brand-5: oklch(62% 0.12 250deg);
+    --pl-brand-6: oklch(54% 0.12 250deg);
+    --pl-brand-7: oklch(46% 0.1 250deg);
+    --pl-brand-8: oklch(37% 0.07 250deg);
+    --pl-brand-9: oklch(27% 0.04 250deg);
+    --pl-color-bg: light-dark(
+      oklch(97.5% 0.006 250deg),
+      oklch(14% 0.015 250deg)
+    );
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(18% 0.018 250deg));
+    --pl-color-surface-2: light-dark(
+      oklch(94% 0.01 250deg),
+      oklch(22% 0.022 250deg)
+    );
+    --pl-color-text: light-dark(
+      oklch(20% 0.015 250deg),
+      oklch(96% 0.008 250deg)
+    );
+    --pl-color-text-muted: light-dark(
+      oklch(46% 0.018 250deg),
+      oklch(72% 0.015 250deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(80% 0.015 250deg / 75%),
+      oklch(45% 0.015 250deg / 30%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(16% 0.01 250deg));
+  }
+
+  :where([data-pl-palette="zinc"]) {
+    --pl-brand-1: oklch(97% 0.005 285deg);
+    --pl-brand-2: oklch(89% 0.01 285deg);
+    --pl-brand-3: oklch(80% 0.015 285deg);
+    --pl-brand-4: oklch(68% 0.02 285deg);
+    --pl-brand-5: oklch(58% 0.025 285deg);
+    --pl-brand-6: oklch(48% 0.025 285deg);
+    --pl-brand-7: oklch(38% 0.02 285deg);
+    --pl-brand-8: oklch(28% 0.015 285deg);
+    --pl-brand-9: oklch(18% 0.01 285deg);
+    --pl-color-bg: light-dark(oklch(98% 0 0deg), oklch(13% 0 0deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0 0deg));
+    --pl-color-surface-2: light-dark(oklch(93.5% 0 0deg), oklch(21% 0 0deg));
+    --pl-color-text: light-dark(oklch(18% 0 0deg), oklch(96% 0 0deg));
+    --pl-color-text-muted: light-dark(oklch(44% 0 0deg), oklch(72% 0 0deg));
+    --pl-color-border: light-dark(
+      oklch(78% 0 0deg / 75%),
+      oklch(42% 0 0deg / 35%)
+    );
+    --pl-color-accent: light-dark(oklch(22% 0 0deg), oklch(92% 0 0deg));
+    --pl-color-accent-text: light-dark(white, oklch(15% 0 0deg));
+  }
+
+  :where([data-pl-palette="midnight"]) {
+    --pl-brand-1: oklch(97% 0.02 275deg);
+    --pl-brand-2: oklch(88% 0.05 275deg);
+    --pl-brand-3: oklch(78% 0.09 275deg);
+    --pl-brand-4: oklch(68% 0.15 275deg);
+    --pl-brand-5: oklch(60% 0.19 275deg);
+    --pl-brand-6: oklch(52% 0.18 275deg);
+    --pl-brand-7: oklch(44% 0.15 275deg);
+    --pl-brand-8: oklch(34% 0.1 275deg);
+    --pl-brand-9: oklch(24% 0.06 275deg);
+    --pl-color-bg: light-dark(oklch(97% 0.01 270deg), oklch(11% 0.022 265deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(15% 0.025 265deg));
+    --pl-color-surface-2: light-dark(
+      oklch(93% 0.015 270deg),
+      oklch(19% 0.03 265deg)
+    );
+    --pl-color-text: light-dark(oklch(18% 0.02 270deg), oklch(96% 0.01 270deg));
+    --pl-color-text-muted: light-dark(
+      oklch(44% 0.025 270deg),
+      oklch(74% 0.02 270deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(78% 0.02 270deg / 75%),
+      oklch(40% 0.025 265deg / 35%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(14% 0.02 275deg));
+  }
+
+  :where([data-pl-palette="emerald"]) {
+    --pl-brand-1: oklch(97% 0.025 155deg);
+    --pl-brand-2: oklch(90% 0.055 155deg);
+    --pl-brand-3: oklch(81% 0.09 155deg);
+    --pl-brand-4: oklch(71% 0.13 155deg);
+    --pl-brand-5: oklch(61% 0.16 155deg);
+    --pl-brand-6: oklch(52% 0.15 155deg);
+    --pl-brand-7: oklch(43% 0.12 155deg);
+    --pl-brand-8: oklch(34% 0.08 155deg);
+    --pl-brand-9: oklch(24% 0.04 155deg);
+    --pl-color-bg: light-dark(
+      oklch(98% 0.006 155deg),
+      oklch(13.5% 0.012 155deg)
+    );
+    --pl-color-surface: light-dark(
+      oklch(100% 0 0deg),
+      oklch(17.5% 0.014 155deg)
+    );
+    --pl-color-surface-2: light-dark(
+      oklch(94% 0.01 155deg),
+      oklch(21.5% 0.018 155deg)
+    );
+    --pl-color-text: light-dark(
+      oklch(19% 0.015 155deg),
+      oklch(96% 0.008 155deg)
+    );
+    --pl-color-text-muted: light-dark(
+      oklch(44% 0.02 155deg),
+      oklch(73% 0.015 155deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(79% 0.015 155deg / 75%),
+      oklch(42% 0.015 155deg / 32%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(14% 0.02 155deg));
+  }
+
   /* Density tiers.
    *
    * compact  -  control geometry only (2rem). Spacing/type/radius unchanged.
