@@ -93,7 +93,7 @@
       border-radius: var(--pl-c-toast-radius);
       background: light-dark(
         oklch(100% 0 0deg / 96%),
-        oklch(17% 0.04 250deg / 94%)
+        oklch(19% 0.01 55deg / 96%)
       );
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));

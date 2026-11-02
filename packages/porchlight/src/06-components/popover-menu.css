@@ -42,13 +42,12 @@
 
     .pl-c-menu__popover {
       margin: 0;
-      padding: var(--pl-space-2);
-      min-inline-size: 12rem;
+      padding: var(--pl-space-1);
+      min-inline-size: 13rem;
 
-      /* Floating surface: softened border + Liquid Glass. */
-      border: 1px solid
-        color-mix(in oklab, var(--pl-color-border), transparent 30%);
-      border-radius: var(--pl-radius-xl);
+      /* Floating surface: crisp boundary + solid elevated surface. */
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
       background: var(--pl-overlay-popover-bg);
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
@@ -117,11 +116,12 @@
     gap: var(--pl-space-2);
     inline-size: 100%;
     min-block-size: var(--pl-menu-row-min-block-size);
+    padding-block: var(--pl-space-1);
     padding-inline: var(--pl-menu-row-padding-inline);
     border: 0;
     border-radius: var(--pl-menu-row-radius);
     background: transparent;
-    color: inherit;
+    color: var(--pl-color-text);
     font: inherit;
     text-align: start;
     text-decoration: none;
@@ -131,6 +131,7 @@
   :where(.pl-c-menu__popover)
     > :is(a, button, .pl-c-menu__item):is(:hover, :focus-visible) {
     background: var(--pl-menu-row-hover-bg);
+    color: var(--pl-color-text);
   }
 
   :where(.pl-c-menu__popover) > :is(a, button, .pl-c-menu__item):focus-visible {
@@ -144,10 +145,27 @@
       [aria-selected="true"],
       [data-selected]
     ) {
-    background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+    background: light-dark(
+      color-mix(in oklab, var(--pl-color-accent), transparent 90%),
+      color-mix(in oklab, var(--pl-color-accent), transparent 86%)
+    );
     color: var(--pl-color-accent);
     font-weight: var(--pl-font-weight-semibold);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
     box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
+  }
+
+  :where(.pl-c-menu__popover)
+    > :is(a, button, .pl-c-menu__item):is(
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-selected]
+    ):is(:hover, :focus-visible) {
+    background: light-dark(
+      color-mix(in oklab, var(--pl-color-accent), transparent 82%),
+      color-mix(in oklab, var(--pl-color-accent), transparent 78%)
+    );
   }
 
   :where(.pl-c-menu__popover)
@@ -160,11 +178,23 @@
       var(--pl-color-accent);
   }
 
-  :where(.pl-c-menu__item-icon) {
+  :where(.pl-c-menu__popover)
+    > :is(a, button, .pl-c-menu__item)
+    > :is(svg, .pl-c-menu__item-icon) {
     inline-size: var(--pl-menu-row-icon-size);
     block-size: var(--pl-menu-row-icon-size);
     flex-shrink: 0;
     color: var(--pl-color-text-muted);
+  }
+
+  :where(.pl-c-menu__popover)
+    > :is(a, button, .pl-c-menu__item):is(
+      [aria-current]:not([aria-current="false"]),
+      [aria-selected="true"],
+      [data-selected]
+    )
+    > :is(svg, .pl-c-menu__item-icon) {
+    color: var(--pl-color-accent);
   }
 
   :where(.pl-c-menu__item-body) {
@@ -178,6 +208,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: inherit;
   }
 
   :where(.pl-c-menu__item-description) {
@@ -192,11 +223,12 @@
     padding: 0.125rem var(--pl-space-1);
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-sm);
-    background: var(--pl-color-surface);
+    background: var(--pl-color-surface-2);
     color: var(--pl-color-text-muted);
     font-family: var(--pl-font-mono);
-    font-size: var(--pl-text-xs);
-    font-weight: var(--pl-font-weight-normal);
+    font-size: var(--pl-text-2xs);
+    letter-spacing: var(--pl-tracking-wide);
+    font-feature-settings: var(--pl-font-feature-code);
     line-height: var(--pl-leading-tight);
   }
 

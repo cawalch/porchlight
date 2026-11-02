@@ -43,8 +43,8 @@
       border: none;
       border-radius: var(--pl-radius-2xl);
       background: light-dark(
-        oklch(100% 0 0deg / 94%),
-        oklch(17% 0.04 250deg / 92%)
+        oklch(100% 0 0deg / 96%),
+        oklch(19% 0.01 55deg / 96%)
       );
       backdrop-filter: blur(var(--pl-backdrop-blur-strong))
         saturate(var(--pl-backdrop-saturate-strong));
