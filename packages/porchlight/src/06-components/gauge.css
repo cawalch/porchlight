@@ -186,9 +186,10 @@
     .pl-c-gauge__value {
       font-size: 1.375rem;
       font-weight: var(--pl-font-weight-bold);
-      font-variant-numeric: tabular-nums;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
       line-height: 1;
-      letter-spacing: -0.02em;
+      letter-spacing: var(--pl-tracking-tight);
       color: var(--pl-color-text);
     }
 
@@ -197,7 +198,7 @@
       font-weight: var(--pl-font-weight-semibold);
       color: var(--pl-color-text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: var(--pl-tracking-wide);
       margin-block-start: 0.1875rem;
       line-height: 1.15;
       text-wrap: balance;
@@ -209,14 +210,14 @@
     }
 
     :scope[data-size="sm"] .pl-c-gauge__label {
-      font-size: 0.5rem;
-      letter-spacing: 0.04em;
+      font-size: var(--pl-text-2xs);
+      letter-spacing: var(--pl-tracking-wide);
       margin-block-start: 0.125rem;
     }
 
     :scope[data-size="lg"] .pl-c-gauge__value {
       font-size: 2rem;
-      letter-spacing: -0.03em;
+      letter-spacing: var(--pl-tracking-tighter);
     }
 
     :scope[data-size="lg"] .pl-c-gauge__label {

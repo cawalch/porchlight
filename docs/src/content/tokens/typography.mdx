@@ -5,8 +5,9 @@ category: type
 
 import TokenTable from "../../components/TokenTable.astro";
 
-Use the font, type-size, and line-height tokens to keep application text
-consistent. Values below come from the framework CSS at build time.
+Use the font, type-size, line-height, and tracking tokens to keep application text
+consistent across enterprise SaaS and corporate applications. Values below come from
+the framework CSS at build time.
 
 ## Font stacks and weights
 
@@ -21,6 +22,9 @@ The fluid sizes use `clamp()` to scale between small and large viewports.
 `vi` is one percent of the viewport's inline size. The `rem` limits still
 respect the reader's root font size.
 
+The micro tier `--pl-text-2xs` (~10.5px–11.5px) is engineered specifically for
+high-density data tables, keyboard shortcuts, sparkline labels, and timeline metadata.
+
 <TokenTable prefix="--pl-text-" caption="Type sizes" />
 
 ## Line height
@@ -29,6 +33,20 @@ Use tighter line height for headings and labels, normal line height for body
 text, and loose line height for longer prose.
 
 <TokenTable prefix="--pl-leading-" caption="Line-height values" />
+
+## Letter spacing (tracking)
+
+Optical letter spacing tokens provide systematic optical tuning for display headlines,
+uppercase column labels, micro badges, and telemetry tags.
+
+<TokenTable prefix="--pl-tracking-" caption="Letter spacing (tracking)" />
+
+## OpenType feature profiles
+
+Enterprise SaaS applications require unambiguous character representation (distinguishing
+`0` from `O`, and `1` from `l` and `I`) and tabular numerals for ledgers and financial tables.
+
+<TokenTable prefix="--pl-font-feature-" caption="OpenType feature profiles" />
 
 ## Text wrapping
 

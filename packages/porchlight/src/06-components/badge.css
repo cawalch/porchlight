@@ -24,12 +24,20 @@
          labels; pill is the framework's "fully rounded" token. */
       font-size: var(--pl-text-xs);
       font-weight: var(--pl-font-weight-semibold);
+      letter-spacing: var(--pl-tracking-wide);
       line-height: 1;
 
       /* Optical alignment so the label sits centered without inline overshoot. */
       text-wrap: nowrap;
       background: var(--pl-color-surface-2);
       color: var(--pl-color-text);
+    }
+
+    /* Compact / micro badge for high-density matrices */
+    :scope[data-size="sm"] {
+      min-block-size: calc(var(--pl-space-5) - 0.125rem);
+      padding-inline: calc(var(--pl-space-2) - 0.125rem);
+      font-size: var(--pl-text-2xs);
     }
 
     /* Accent  -  for primary/brand counts (unread, new). */

@@ -62,6 +62,7 @@
     /* Type scale  -  fluid via clamp(). Values are hand-tuned (not a
        pure modular ratio) to hit optical targets at the min/max ends.
        The fluid slope between them scales smoothly with the viewport. */
+    --pl-text-2xs: clamp(0.65rem, 0.62rem + 0.08vi, 0.7188rem);
     --pl-text-xs: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
     --pl-text-sm: clamp(0.875rem, 0.84rem + 0.1vi, 0.9375rem);
     --pl-text-md: 1rem;
@@ -76,6 +77,17 @@
     --pl-leading-snug: 1.3;
     --pl-leading-normal: 1.5;
     --pl-leading-loose: 1.7;
+
+    /* Letter-spacing (tracking) */
+    --pl-tracking-tighter: -0.03em;
+    --pl-tracking-tight: -0.015em;
+    --pl-tracking-normal: 0em;
+    --pl-tracking-wide: 0.04em;
+    --pl-tracking-wider: 0.06em;
+
+    /* Font features */
+    --pl-font-feature-numeric: "tnum" 1, "lnum" 1, "zero" 1;
+    --pl-font-feature-code: "zero" 1, "cv02" 1, "cv11" 1;
 
     /* Spacing */
     --pl-space-0: 0;
@@ -153,6 +165,10 @@
     --pl-color-text-muted: light-dark(
       oklch(46% 0.015 55deg),
       oklch(72% 0.012 55deg)
+    );
+    --pl-color-text-faint: light-dark(
+      oklch(48% 0.015 55deg),
+      oklch(68% 0.012 55deg)
     );
 
     /* Border: reduced opacity so it reads as a hint, not a cage.

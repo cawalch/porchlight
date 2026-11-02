@@ -24,9 +24,11 @@
       padding-inline: var(--pl-c-kbd-pad-inline);
       padding-block: var(--pl-c-kbd-pad-block);
       font-family: var(--pl-font-mono);
-      font-size: 0.75rem;
+      font-size: var(--pl-text-2xs);
       font-weight: var(--pl-font-weight-medium);
-      font-variant-numeric: tabular-nums;
+      font-variant-numeric: tabular-nums lining-nums slashed-zero;
+      font-feature-settings: var(--pl-font-feature-code);
+      letter-spacing: var(--pl-tracking-wide);
       line-height: 1.2;
       color: var(--pl-c-kbd-color);
       background: var(--pl-c-kbd-bg);

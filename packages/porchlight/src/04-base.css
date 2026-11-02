@@ -51,17 +51,17 @@
     line-height: var(--pl-leading-tight);
     text-wrap: balance;
     margin-block: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--pl-tracking-tight);
   }
 
   :where(h1) {
     font-weight: var(--pl-font-weight-black, 900);
-    letter-spacing: -0.03em;
+    letter-spacing: var(--pl-tracking-tighter);
   }
 
   :where(h2) {
     font-weight: var(--pl-font-weight-bold, 700);
-    letter-spacing: -0.025em;
+    letter-spacing: var(--pl-tracking-tight);
   }
 
   :where(p) {
@@ -74,6 +74,7 @@
 
   :where(code, kbd, samp, pre) {
     font-family: var(--pl-font-mono);
+    font-feature-settings: var(--pl-font-feature-code);
   }
 
   :where(::selection) {

@@ -56,7 +56,7 @@
       font-weight: var(--pl-font-weight-medium);
       color: var(--pl-color-text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: var(--pl-tracking-wide);
       line-height: var(--pl-leading-snug);
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -77,8 +77,9 @@
       font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
       color: var(--pl-color-text);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
+      letter-spacing: var(--pl-tracking-tight);
     }
 
     .pl-c-kpi-card__prefix,

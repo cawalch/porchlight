@@ -114,6 +114,23 @@
     line-height: var(--pl-leading-snug);
   }
 
+  /* Faint text: tertiary metadata, timestamps, and subtle counters. */
+  :where(.pl-u-faint) {
+    color: var(--pl-color-text-faint);
+  }
+
+  /* Micro typography (10.5px - 11.5px) for dense tables, chips, and timestamps. */
+  :where(.pl-u-text-2xs) {
+    font-size: var(--pl-text-2xs);
+    line-height: var(--pl-leading-snug);
+  }
+
+  /* Tabular lining numerals with slashed zeros for ledgers and telemetry. */
+  :where(.pl-u-num-tabular) {
+    font-variant-numeric: tabular-nums lining-nums slashed-zero;
+    font-feature-settings: var(--pl-font-feature-numeric);
+  }
+
   /* Leading icon + title pattern. Keeps the icon with the first line while
      allowing the text node to wrap or truncate inside flex/grid parents. */
   :where(.pl-u-icon-title) {

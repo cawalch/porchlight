@@ -40,8 +40,9 @@
       font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
       color: var(--pl-color-text);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
+      letter-spacing: var(--pl-tracking-tight);
     }
 
     /* Scale the value by container width, not viewport width. A stat in a

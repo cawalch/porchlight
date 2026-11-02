@@ -66,11 +66,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 
-  <h2><code>.pl-u-muted</code></h2>
-  <p>Secondary/caption text color.</p>
+  <h2><code>.pl-u-muted</code> and <code>.pl-u-faint</code></h2>
+  <p>Secondary and tertiary text hierarchy for SaaS consoles.</p>
   <div class="demo">
-    <p>Primary text. <span class="pl-u-muted">Secondary, muted text.</span></p>
+    <p>Primary text. <span class="pl-u-muted">Secondary muted text.</span> <span class="pl-u-faint">Tertiary faint metadata.</span></p>
     <p><span class="pl-u-muted-sm">Small muted metadata text.</span></p>
+  </div>
+
+  <h2><code>.pl-u-text-2xs</code> and <code>.pl-u-num-tabular</code></h2>
+  <p>Micro typography and lining tabular numerals with slashed zeros for ledgers and metrics.</p>
+  <div class="demo">
+    <div style="display: flex; gap: var(--pl-space-4); align-items: baseline;">
+      <span class="pl-u-text-2xs pl-u-faint">TIMESTAMP: 2026-11-01 18:14:00 UTC</span>
+      <span class="pl-u-num-tabular" style="font-size: var(--pl-text-lg); font-weight: var(--pl-font-weight-bold);">$148,290.00</span>
+      <code class="pl-u-text-2xs">api_key_01JZ8Y_O0_l1I</code>
+    </div>
   </div>
 
   <h2><code>.pl-u-icon-title</code></h2>
