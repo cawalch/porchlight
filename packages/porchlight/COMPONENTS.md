@@ -13,69 +13,109 @@ Porchlight components are authored in `@layer porchlight.components` and can be 
 @import "@cawalch/porchlight/components/card.css";
 ```
 
+## Size Budget & Production Recipes
+
+Porchlight is engineered for modular efficiency. Instead of shipping a monolithic 30 KB+ gzip stylesheet, applications can import `core.css` alongside only the components they actually render.
+
+### Bundle Sizes (Minified)
+
+| Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
+| :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
+| `core.min.css`                        | 8.6 KB   | 2.6 KB  | 2.2 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `layout.min.css`                      | 2.8 KB   | 960 B   | 797 B   | Primitives: stack, cluster, grid, sidebar, center                   |
+| `utilities.min.css`                   | 2.8 KB   | 885 B   | 755 B   | Accessibility, typography, tabular nums, flow                       |
+| `enhancements.min.css`                | 4.6 KB   | 1.1 KB  | 928 B   | Opt-in Progressive Enhancements (@supports)                         |
+| `experimental.min.css`                | 2.1 KB   | 608 B   | 511 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
+| `compat.min.css`                      | 216.6 KB | 31.1 KB | 24.7 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 221.1 KB | 31.8 KB | 25.2 KB | Full framework (all 59 components, layout, utilities, enhancements) |
+
+### "Core + N Components" Real-World Recipes
+
+When bundled together with your application bundler (or pre-bundled via LightningCSS/esbuild/Vite), shared layer directives and token definitions compress together. Real applications import far less than 14 KB:
+
+| Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
+| :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
+| **Minimal Controls**          | `core` + `button` + `field`                                                | 20.7 KB | **4.9 KB** | **4.3 KB** | **-65% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 31.0 KB | **6.8 KB** | **6.0 KB** | **-52% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 29.7 KB | **6.4 KB** | **5.6 KB** | **-54% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 27.7 KB | **6.1 KB** | **5.4 KB** | **-56% smaller**  |
+
+```css
+/* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */
+@layer porchlight, app;
+
+@import "@cawalch/porchlight/core.css";
+@import "@cawalch/porchlight/layout.css";
+@import "@cawalch/porchlight/components/button.css";
+@import "@cawalch/porchlight/components/field.css";
+@import "@cawalch/porchlight/components/card.css";
+@import "@cawalch/porchlight/components/badge.css";
+@import "@cawalch/porchlight/components/alert.css";
+```
+
 ## Component Index
 
-| Component                             | Primary Selector         | Dependencies | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| :------------------------------------ | :----------------------- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [accordion](#accordion)               | `.pl-c-accordion`        | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
-| [action-bar](#action-bar)             | `.pl-c-action-bar`       | None         | A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.                                                                                                                                                                                                                                      |
-| [alert](#alert)                       | `.pl-c-alert`            | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                                                                                                                             |
-| [audit-stream](#audit-stream)         | `.pl-c-audit-stream`     | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                                                                                                                                |
-| [avatar](#avatar)                     | `.pl-c-avatar`           | None         | A user identity chip - initials in a colored circle, or an image. Used in headers, lists, comments, and mentions. Three sizes via [data-size]: "sm" (1.5rem), default (2.5rem), "lg" (3rem).                                                                                                                                                                                                                                             |
-| [badge](#badge)                       | `.pl-c-badge`            | None         | A compact label for statuses, counts, and tags. Inline-flex pill; tones via [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/ danger) that were already made WCAG-AA, plus an accent and a neutral default.                                                                                                                                                                                                      |
-| [banner](#banner)                     | `.pl-c-banner`           | None         | A full-width, top-level system announcement or incident bar - used for system degradations, scheduled maintenance, trial expirations, and global notices. Distinct from .pl-c-alert (an inline box with border-radius) and .pl-c-toast (a floating transient bubble).                                                                                                                                                                    |
-| [breadcrumb](#breadcrumb)             | `.pl-c-breadcrumb`       | None         | A trail of navigation links showing the user's location in the site/app hierarchy. The last item has aria-current="page" and is not a link.                                                                                                                                                                                                                                                                                              |
-| [button](#button)                     | `.pl-c-button`           | None         | The canonical action control. Native <button> (or <a> when it is genuinely navigation). Token-driven via component-local --pl-c-button-* aliases that default to framework semantic tokens, so an app can theme one button or all of them without leaving the component.                                                                                                                                                                 |
-| [calendar](#calendar)                 | `.pl-c-calendar`         | None         | Date, date-range, and time picker surfaces for SaaS/BPM apps. CSS-only: app code owns date math, locale, roving tabindex, keyboard commands, validation timing, and popover open state. Porchlight styles the semantic HTML contract emitted by SSR, hypermedia fragments, or component frameworks.                                                                                                                                      |
-| [card](#card)                         | `.pl-c-card`             | None         | A raised surface grouping related content - the workhorse of SaaS dashboards (KPI tiles, list items, settings sections, detail panels). Header + body slots; the header adapts to the card's OWN width via a container query (not the viewport), so a card in a narrow split pane stacks its header even on a wide screen.                                                                                                               |
-| [chart](#chart)                       | `.pl-c-chart`            | None         | An accessible frame for app-owned charts. Porchlight provides metric headers, legends, plotting slots, loading/empty/error states, and a table fallback container. It does not draw charts or prescribe a charting engine.                                                                                                                                                                                                               |
-| [chip](#chip)                         | `.pl-c-chip`             | None         | A compact tag/pill with an optional remove button. Uses relative color syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.                                                                                                                                                                                                                                                                                      |
-| [code-block](#code-block)             | `.pl-c-code-block`       | None         | A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.                                                                                                                                     |
-| [combobox](#combobox)                 | `.pl-c-combobox`         | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
-| [command-palette](#command-palette)   | `.pl-c-command`          | None         | A Cmd+K quick-action search overlay. Search input at top, grouped action list below, keyboard navigation (JS responsibility). Uses the Popover API for top-layer rendering + @starting-style for enter animation.                                                                                                                                                                                                                        |
-| [data-table](#data-table)             | `.pl-c-table-wrap`       | None         | An enterprise data table: sticky headers, horizontal scroll with a stable scrollbar gutter, container-query padding, hover/selection affordances, sortable columns, row selection (checkbox column), expandable detail rows, sticky first column, and density modes.                                                                                                                                                                     |
-| [description-list](#description-list) | `.pl-c-description`      | None         | A label + value grid for detail panels, metadata displays, and summary cards. Wraps the native <dl> element so semantics and accessibility come for free. The #1 most-rebuilt pattern in SaaS apps after page headers.                                                                                                                                                                                                                   |
-| [dialog](#dialog)                     | `.pl-c-dialog`           | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element with showModal() (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                              |
-| [drawer](#drawer)                     | `.pl-c-drawer`           | None         | An off-canvas panel that slides in from a viewport edge. Uses the native Popover API for top-layer rendering + light-dismiss, combined with @starting-style for a smooth enter/exit animation (mirrors the dialog and popover-menu pattern).                                                                                                                                                                                             |
-| [dropdown](#dropdown)                 | `.pl-c-dropdown`         | None         | A button-triggered option menu using the Popover API + anchor positioning. Use it for sort/filter/action choices that need richer rendering than a native select. For form submission, keep a native select or sync a hidden input in app JavaScript.                                                                                                                                                                                    |
-| [empty-state](#empty-state)           | `.pl-c-empty`            | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
-| [entity-inspector](#entity-inspector) | `.pl-c-entity-inspector` | None         | A native non-modal record popover. popovertarget provides the implicit anchor; repeated instances need unique HTML ids, never per-instance CSS anchor names.                                                                                                                                                                                                                                                                             |
-| [field](#field)                       | `.pl-c-field`            | None         | A labeled form control: label, native input, hint/messages, and zero-JS anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native <input>/<select>/<textarea> so we inherit all their behavior (constraint validation, autofill, IME, spellcheck). No JS, no custom widgets.                                                                                                                                            |
-| [file-upload](#file-upload)           | `.pl-c-file-upload`      | None         | A drag-and-drop file upload zone. The native <input type="file"> is visually hidden; the zone is the click target. Uses :has() for the drag-over state (set [data-dragging] via JS) and disabled state.                                                                                                                                                                                                                                  |
-| [filter-builder](#filter-builder)     | `.pl-c-filter-builder`   | None         | CSS-only UI contracts for query builders, query chips, and saved views. Apps own query grammar, validation, persistence, and execution.                                                                                                                                                                                                                                                                                                  |
-| [form](#form)                         | `.pl-c-form`             | None         | SaaS form composition helpers built on native controls: sections, grids, subgrid alignment, pure-CSS conditional field disclosures (.pl-c-form__conditional), and reactive validation summary banners (.pl-c-form__summary) driven by form:has(:user-invalid). These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>, <input>, <select>, and <textarea>; Porchlight only handles layout and chrome. |
-| [gauge](#gauge)                       | `.pl-c-gauge`            | None         | A pure-CSS radial KPI dial and progress gauge for executive dashboards, capacity meters, system telemetry, and SLA uptime indicators.                                                                                                                                                                                                                                                                                                    |
-| [inline-loading](#inline-loading)     | `.pl-c-inline-loading`   | None         | Local, indeterminate progress for actions and compact application regions.                                                                                                                                                                                                                                                                                                                                                               |
-| [kbd](#kbd)                           | `.pl-c-kbd`              | None         | Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus. Designed with subtle physical bevels, monospaced centering, and active press translation.                                                                                                                                                                                                                                                             |
-| [kpi-card](#kpi-card)                 | `.pl-c-kpi-card`         | None         | A multi-metric KPI dashboard tile - engineered for executive dashboards, telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat: .pl-c-kpi-card provides an architectural raised surface, integrated delta comparison badges, value prefixes/suffixes, and sparkline slots.                                                                                                                                          |
-| [miller-columns](#miller-columns)     | `.pl-c-miller-columns`   | None         | A CSS-only cascading column explorer for nested hierarchies (IAM roles, folder structures, taxonomies). Columns scroll inline with support for scroll snapping and fluid width control.                                                                                                                                                                                                                                                  |
-| [nav](#nav)                           | `.pl-c-nav`              | None         | A vertical navigation list for sidebars. Icon + label items with active state via aria-current="page". Collapsible sub-sections via native <details> for zero-JS expand/collapse. Designed to compose with .pl-l-app-shell__sidebar.                                                                                                                                                                                                     |
-| [page-header](#page-header)           | `.pl-c-page-header`      | None         | A title + actions row for the top of a page or panel section inside a container. Unlike .pl-c-toolbar (which is a shell-level bar designed to sit flush against an edge with padding, border, and a surface background), .pl-c-page-header is intentionally bare: no background, no border, no padding.                                                                                                                                  |
-| [pagination](#pagination)             | `.pl-c-pagination`       | None         | Navigation control for paginated data - the bar below a table or list. Previous / Next buttons flank a row of page number buttons. A compact [data-size="sm"] variant shrinks the controls for embedded use (inside a toolbar or table footer).                                                                                                                                                                                          |
-| [panel-deck](#panel-deck)             | `.pl-c-panel-deck`       | None         | Native, fixed-content panels. The complete tabs mode is the enhancement gate: older marker implementations must keep the readable stacked fallback.                                                                                                                                                                                                                                                                                      |
-| [popover-menu](#popover-menu)         | `.pl-c-menu`             | None         | A dropdown menu anchored to its trigger - account menus, action menus, context menus. Uses the native Popover API (top-layer, light-dismiss, focus management) + CSS anchor positioning (tethered to the trigger) + @starting-style for a native enter/exit animation.                                                                                                                                                                   |
-| [progress](#progress)                 | `.pl-c-progress`         | None         | A linear progress indicator for task completion, uploads, or capacity. Supports both semantic <progress> elements and <div> structures.                                                                                                                                                                                                                                                                                                  |
-| [property-list](#property-list)       | `.pl-c-property-list`    | None         | A high-density key-value inspector for enterprise records, cloud resources, telemetry entities, and user accounts. Distinct from .pl-c-description: .pl-c-property-list is optimized for technical metadata with integrated copy buttons, monospaced tabular tokens, subgrid track inheritance, and high-density inspection bays.                                                                                                        |
-| [reveal](#reveal)                     | `.pl-c-reveal`           | None         | Elements that fade/slide in as they enter the viewport. Uses scroll-driven animations (animation-timeline: view()) - zero JavaScript, no IntersectionObserver.                                                                                                                                                                                                                                                                           |
-| [scroll-progress](#scroll-progress)   | `.pl-c-scroll-progress`  | None         | A fixed bar at the viewport top that fills as the user scrolls the page. Uses scroll-driven animations (animation-timeline: scroll()) - zero JavaScript for the progress tracking.                                                                                                                                                                                                                                                       |
-| [scroll-region](#scroll-region)       | `.pl-c-scroll-region`    | None         | Bounded, keyboard-operable scrollport. State indicators live in enhancements so compat.css and this component remain consumable by older CSS parsers.                                                                                                                                                                                                                                                                                    |
-| [section-nav](#section-nav)           | `.pl-c-section-nav`      | None         | In-page navigation stays ordinary fragment links without scroll-target-group. Applications own sticky positioning and scroll offsets for their headers.                                                                                                                                                                                                                                                                                  |
-| [segmented](#segmented)               | `.pl-c-segmented`        | None         | A compact inline switcher for binary/ternary toggles (list/grid/table view, day/week/month). Built on native radio inputs - CSS-only, keyboard accessible, no JavaScript.                                                                                                                                                                                                                                                                |
-| [skeleton](#skeleton)                 | `.pl-c-skeleton`         | None         | Loading placeholders that mimic the shape of real content. A pulsing shimmer communicates "something is loading" without a spinner (which implies an indeterminate wait). Used in cards, lists, and tables while data fetches.                                                                                                                                                                                                           |
-| [split-button](#split-button)         | `.pl-c-split`            | `button`     | A composite action control: a primary button (the default action) paired with a dropdown toggle that opens a menu of alternative actions. The canonical "Save ▼" pattern - click the label to do the default, click the chevron to pick a variant.                                                                                                                                                                                       |
-| [split-pane](#split-pane)             | `.pl-c-split-pane`       | None         | CSS-only split panes for app shells, object explorers, editors, inspectors, and process builders. Apps own pointer/keyboard resize behavior and persist sizes by updating custom properties or data attributes.                                                                                                                                                                                                                          |
-| [stat](#stat)                         | `.pl-c-stat`             | None         | A KPI / metric tile - the workhorse of SaaS dashboards. Displays a single number with a label, an optional unit, a trend indicator (up/down/flat), and an optional sparkline slot. Designed to sit inside .pl-l-grid (auto-fitting dashboard widgets) or inside .pl-c-card bodies.                                                                                                                                                       |
-| [stepper](#stepper)                   | `.pl-c-stepper`          | None         | A horizontal (default) or vertical (container-query collapse) multi-step indicator. Each step has a visual marker (circle with number or check) and a label. Connectors between steps are CSS-only (no SVG).                                                                                                                                                                                                                             |
-| [switch](#switch)                     | `.pl-c-switch`           | None         | A CSS-only toggle switch built on a native checkbox. No JavaScript for the toggle itself: <input type="checkbox" role="switch"> + <label>.                                                                                                                                                                                                                                                                                               |
-| [tabs](#tabs)                         | `.pl-c-tabs`             | None         | A tabbed region: a [role="tablist"] of [role="tab"] controls that switch between [role="tabpanel"]s. The canonical master-detail / settings / dashboard-sectioning primitive. Wraps real <button> tabs.                                                                                                                                                                                                                                  |
-| [tag-input](#tag-input)               | `.pl-c-tag-input`        | None         | A text input that accepts multiple values as removable chips. The CSS handles the layout (wrapping chips + inline input); JS handles tokenization (enter/comma to add, backspace to remove).                                                                                                                                                                                                                                             |
-| [textarea-auto](#textarea-auto)       | `.pl-c-textarea-auto`    | None         | A textarea that grows to fit its content automatically using field-sizing: content (Chrome 123+). No JavaScript auto-resize needed.                                                                                                                                                                                                                                                                                                      |
-| [timeline](#timeline)                 | `.pl-c-timeline`         | None         | A vertical activity feed with markers, connector lines, and per-item content. Each item has a dot/marker on a vertical line, with the content to the side.                                                                                                                                                                                                                                                                               |
-| [toast](#toast)                       | `.pl-c-toast`            | None         | A transient notification that slides in from a screen edge. Unlike alerts (inline), toasts are overlay-level and auto-dismiss (via JS timer; the CSS handles the visual entrance/exit).                                                                                                                                                                                                                                                  |
-| [toolbar](#toolbar)                   | `.pl-c-toolbar`          | None         | A horizontal bar grouping actions above a data region - the SaaS "action bar" on top of tables, lists, and canvases. Pairs a leading cluster (search, filters, bulk actions) with a trailing cluster (primary actions, overflow menu). On narrow containers the two halves wrap independently.                                                                                                                                           |
-| [tooltip](#tooltip)                   | `.pl-c-tooltip`          | None         | A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning. Zero JavaScript for positioning. Auto-flips when near viewport edges via position-try-fallbacks.                                                                                                                                                                                                                                                             |
-| [tree](#tree)                         | `.pl-c-tree`             | None         | A CSS-only tree view for app navigation, object explorers, process folders, rule libraries, and other nested SaaS/BPM structures.                                                                                                                                                                                                                                                                                                        |
-| [workflow-board](#workflow-board)     | `.pl-c-workflow-board`   | None         | A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/count metadata, and visual state hooks for app-owned drag/drop.                                                                                                                                                                                                                                                                                            |
+| Component                             | Primary Selector         | Minified | Gzip   | Brotli | Dependencies | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| :------------------------------------ | :----------------------- | :------- | :----- | :----- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [accordion](#accordion)               | `.pl-c-accordion`        | 2.5 KB   | 844 B  | 672 B  | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
+| [action-bar](#action-bar)             | `.pl-c-action-bar`       | 4.1 KB   | 1.2 KB | 1010 B | None         | A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.                                                                                                                                                                                                                                      |
+| [alert](#alert)                       | `.pl-c-alert`            | 1.7 KB   | 616 B  | 508 B  | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                                                                                                                             |
+| [audit-stream](#audit-stream)         | `.pl-c-audit-stream`     | 2.8 KB   | 825 B  | 698 B  | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                                                                                                                                |
+| [avatar](#avatar)                     | `.pl-c-avatar`           | 2.0 KB   | 603 B  | 500 B  | None         | A user identity chip - initials in a colored circle, or an image. Used in headers, lists, comments, and mentions. Three sizes via [data-size]: "sm" (1.5rem), default (2.5rem), "lg" (3rem).                                                                                                                                                                                                                                             |
+| [badge](#badge)                       | `.pl-c-badge`            | 1.3 KB   | 524 B  | 428 B  | None         | A compact label for statuses, counts, and tags. Inline-flex pill; tones via [data-tone]. Tones consume the semantic -bg/-text pairs (success/warning/ danger) that were already made WCAG-AA, plus an accent and a neutral default.                                                                                                                                                                                                      |
+| [banner](#banner)                     | `.pl-c-banner`           | 2.9 KB   | 909 B  | 746 B  | None         | A full-width, top-level system announcement or incident bar - used for system degradations, scheduled maintenance, trial expirations, and global notices. Distinct from .pl-c-alert (an inline box with border-radius) and .pl-c-toast (a floating transient bubble).                                                                                                                                                                    |
+| [breadcrumb](#breadcrumb)             | `.pl-c-breadcrumb`       | 1.6 KB   | 639 B  | 500 B  | None         | A trail of navigation links showing the user's location in the site/app hierarchy. The last item has aria-current="page" and is not a link.                                                                                                                                                                                                                                                                                              |
+| [button](#button)                     | `.pl-c-button`           | 3.1 KB   | 995 B  | 807 B  | None         | The canonical action control. Native <button> (or <a> when it is genuinely navigation). Token-driven via component-local --pl-c-button-* aliases that default to framework semantic tokens, so an app can theme one button or all of them without leaving the component.                                                                                                                                                                 |
+| [calendar](#calendar)                 | `.pl-c-calendar`         | 10.0 KB  | 2.1 KB | 1.8 KB | None         | Date, date-range, and time picker surfaces for SaaS/BPM apps. CSS-only: app code owns date math, locale, roving tabindex, keyboard commands, validation timing, and popover open state. Porchlight styles the semantic HTML contract emitted by SSR, hypermedia fragments, or component frameworks.                                                                                                                                      |
+| [card](#card)                         | `.pl-c-card`             | 5.1 KB   | 1.3 KB | 1.2 KB | None         | A raised surface grouping related content - the workhorse of SaaS dashboards (KPI tiles, list items, settings sections, detail panels). Header + body slots; the header adapts to the card's OWN width via a container query (not the viewport), so a card in a narrow split pane stacks its header even on a wide screen.                                                                                                               |
+| [chart](#chart)                       | `.pl-c-chart`            | 5.3 KB   | 1.4 KB | 1.2 KB | None         | An accessible frame for app-owned charts. Porchlight provides metric headers, legends, plotting slots, loading/empty/error states, and a table fallback container. It does not draw charts or prescribe a charting engine.                                                                                                                                                                                                               |
+| [chip](#chip)                         | `.pl-c-chip`             | 2.7 KB   | 887 B  | 725 B  | None         | A compact tag/pill with an optional remove button. Uses relative color syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.                                                                                                                                                                                                                                                                                      |
+| [code-block](#code-block)             | `.pl-c-code-block`       | 3.9 KB   | 1.1 KB | 999 B  | None         | A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.                                                                                                                                     |
+| [combobox](#combobox)                 | `.pl-c-combobox`         | 7.1 KB   | 1.7 KB | 1.4 KB | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
+| [command-palette](#command-palette)   | `.pl-c-command`          | 4.1 KB   | 1.1 KB | 999 B  | None         | A Cmd+K quick-action search overlay. Search input at top, grouped action list below, keyboard navigation (JS responsibility). Uses the Popover API for top-layer rendering + @starting-style for enter animation.                                                                                                                                                                                                                        |
+| [data-table](#data-table)             | `.pl-c-table-wrap`       | 8.8 KB   | 2.0 KB | 1.8 KB | None         | An enterprise data table: sticky headers, horizontal scroll with a stable scrollbar gutter, container-query padding, hover/selection affordances, sortable columns, row selection (checkbox column), expandable detail rows, sticky first column, and density modes.                                                                                                                                                                     |
+| [description-list](#description-list) | `.pl-c-description`      | 1.8 KB   | 611 B  | 525 B  | None         | A label + value grid for detail panels, metadata displays, and summary cards. Wraps the native <dl> element so semantics and accessibility come for free. The #1 most-rebuilt pattern in SaaS apps after page headers.                                                                                                                                                                                                                   |
+| [dialog](#dialog)                     | `.pl-c-dialog`           | 3.3 KB   | 1.0 KB | 877 B  | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element with showModal() (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                              |
+| [drawer](#drawer)                     | `.pl-c-drawer`           | 2.4 KB   | 764 B  | 644 B  | None         | An off-canvas panel that slides in from a viewport edge. Uses the native Popover API for top-layer rendering + light-dismiss, combined with @starting-style for a smooth enter/exit animation (mirrors the dialog and popover-menu pattern).                                                                                                                                                                                             |
+| [dropdown](#dropdown)                 | `.pl-c-dropdown`         | 3.6 KB   | 1.1 KB | 950 B  | None         | A button-triggered option menu using the Popover API + anchor positioning. Use it for sort/filter/action choices that need richer rendering than a native select. For form submission, keep a native select or sync a hidden input in app JavaScript.                                                                                                                                                                                    |
+| [empty-state](#empty-state)           | `.pl-c-empty`            | 1.2 KB   | 490 B  | 397 B  | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
+| [entity-inspector](#entity-inspector) | `.pl-c-entity-inspector` | 1.9 KB   | 671 B  | 552 B  | None         | A native non-modal record popover. popovertarget provides the implicit anchor; repeated instances need unique HTML ids, never per-instance CSS anchor names.                                                                                                                                                                                                                                                                             |
+| [field](#field)                       | `.pl-c-field`            | 9.1 KB   | 2.1 KB | 1.8 KB | None         | A labeled form control: label, native input, hint/messages, and zero-JS anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native <input>/<select>/<textarea> so we inherit all their behavior (constraint validation, autofill, IME, spellcheck). No JS, no custom widgets.                                                                                                                                            |
+| [file-upload](#file-upload)           | `.pl-c-file-upload`      | 1.7 KB   | 680 B  | 536 B  | None         | A drag-and-drop file upload zone. The native <input type="file"> is visually hidden; the zone is the click target. Uses :has() for the drag-over state (set [data-dragging] via JS) and disabled state.                                                                                                                                                                                                                                  |
+| [filter-builder](#filter-builder)     | `.pl-c-filter-builder`   | 10.9 KB  | 2.2 KB | 1.9 KB | None         | CSS-only UI contracts for query builders, query chips, and saved views. Apps own query grammar, validation, persistence, and execution.                                                                                                                                                                                                                                                                                                  |
+| [form](#form)                         | `.pl-c-form`             | 10.6 KB  | 2.0 KB | 1.8 KB | None         | SaaS form composition helpers built on native controls: sections, grids, subgrid alignment, pure-CSS conditional field disclosures (.pl-c-form__conditional), and reactive validation summary banners (.pl-c-form__summary) driven by form:has(:user-invalid). These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>, <input>, <select>, and <textarea>; Porchlight only handles layout and chrome. |
+| [gauge](#gauge)                       | `.pl-c-gauge`            | 4.5 KB   | 1.2 KB | 1.0 KB | None         | A pure-CSS radial KPI dial and progress gauge for executive dashboards, capacity meters, system telemetry, and SLA uptime indicators.                                                                                                                                                                                                                                                                                                    |
+| [inline-loading](#inline-loading)     | `.pl-c-inline-loading`   | 1.0 KB   | 470 B  | 400 B  | None         | Local, indeterminate progress for actions and compact application regions.                                                                                                                                                                                                                                                                                                                                                               |
+| [kbd](#kbd)                           | `.pl-c-kbd`              | 1.2 KB   | 558 B  | 457 B  | None         | Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menus. Designed with subtle physical bevels, monospaced centering, and active press translation.                                                                                                                                                                                                                                                             |
+| [kpi-card](#kpi-card)                 | `.pl-c-kpi-card`         | 2.2 KB   | 785 B  | 644 B  | None         | A multi-metric KPI dashboard tile - engineered for executive dashboards, telemetry monitoring, and financial risk metrics. Distinct from .pl-c-stat: .pl-c-kpi-card provides an architectural raised surface, integrated delta comparison badges, value prefixes/suffixes, and sparkline slots.                                                                                                                                          |
+| [miller-columns](#miller-columns)     | `.pl-c-miller-columns`   | 5.4 KB   | 1.3 KB | 1.1 KB | None         | A CSS-only cascading column explorer for nested hierarchies (IAM roles, folder structures, taxonomies). Columns scroll inline with support for scroll snapping and fluid width control.                                                                                                                                                                                                                                                  |
+| [nav](#nav)                           | `.pl-c-nav`              | 8.3 KB   | 1.6 KB | 1.4 KB | None         | A vertical navigation list for sidebars. Icon + label items with active state via aria-current="page". Collapsible sub-sections via native <details> for zero-JS expand/collapse. Designed to compose with .pl-l-app-shell__sidebar.                                                                                                                                                                                                     |
+| [page-header](#page-header)           | `.pl-c-page-header`      | 1.1 KB   | 473 B  | 378 B  | None         | A title + actions row for the top of a page or panel section inside a container. Unlike .pl-c-toolbar (which is a shell-level bar designed to sit flush against an edge with padding, border, and a surface background), .pl-c-page-header is intentionally bare: no background, no border, no padding.                                                                                                                                  |
+| [pagination](#pagination)             | `.pl-c-pagination`       | 1.9 KB   | 640 B  | 519 B  | None         | Navigation control for paginated data - the bar below a table or list. Previous / Next buttons flank a row of page number buttons. A compact [data-size="sm"] variant shrinks the controls for embedded use (inside a toolbar or table footer).                                                                                                                                                                                          |
+| [panel-deck](#panel-deck)             | `.pl-c-panel-deck`       | 3.8 KB   | 985 B  | 827 B  | None         | Native, fixed-content panels. The complete tabs mode is the enhancement gate: older marker implementations must keep the readable stacked fallback.                                                                                                                                                                                                                                                                                      |
+| [popover-menu](#popover-menu)         | `.pl-c-menu`             | 5.5 KB   | 1.4 KB | 1.2 KB | None         | A dropdown menu anchored to its trigger - account menus, action menus, context menus. Uses the native Popover API (top-layer, light-dismiss, focus management) + CSS anchor positioning (tethered to the trigger) + @starting-style for a native enter/exit animation.                                                                                                                                                                   |
+| [progress](#progress)                 | `.pl-c-progress`         | 1.8 KB   | 550 B  | 440 B  | None         | A linear progress indicator for task completion, uploads, or capacity. Supports both semantic <progress> elements and <div> structures.                                                                                                                                                                                                                                                                                                  |
+| [property-list](#property-list)       | `.pl-c-property-list`    | 3.6 KB   | 1.0 KB | 894 B  | None         | A high-density key-value inspector for enterprise records, cloud resources, telemetry entities, and user accounts. Distinct from .pl-c-description: .pl-c-property-list is optimized for technical metadata with integrated copy buttons, monospaced tabular tokens, subgrid track inheritance, and high-density inspection bays.                                                                                                        |
+| [reveal](#reveal)                     | `.pl-c-reveal`           | 917 B    | 375 B  | 296 B  | None         | Elements that fade/slide in as they enter the viewport. Uses scroll-driven animations (animation-timeline: view()) - zero JavaScript, no IntersectionObserver.                                                                                                                                                                                                                                                                           |
+| [scroll-progress](#scroll-progress)   | `.pl-c-scroll-progress`  | 1.0 KB   | 426 B  | 329 B  | None         | A fixed bar at the viewport top that fills as the user scrolls the page. Uses scroll-driven animations (animation-timeline: scroll()) - zero JavaScript for the progress tracking.                                                                                                                                                                                                                                                       |
+| [scroll-region](#scroll-region)       | `.pl-c-scroll-region`    | 869 B    | 393 B  | 318 B  | None         | Bounded, keyboard-operable scrollport. State indicators live in enhancements so compat.css and this component remain consumable by older CSS parsers.                                                                                                                                                                                                                                                                                    |
+| [section-nav](#section-nav)           | `.pl-c-section-nav`      | 1.3 KB   | 544 B  | 414 B  | None         | In-page navigation stays ordinary fragment links without scroll-target-group. Applications own sticky positioning and scroll offsets for their headers.                                                                                                                                                                                                                                                                                  |
+| [segmented](#segmented)               | `.pl-c-segmented`        | 1.9 KB   | 679 B  | 557 B  | None         | A compact inline switcher for binary/ternary toggles (list/grid/table view, day/week/month). Built on native radio inputs - CSS-only, keyboard accessible, no JavaScript.                                                                                                                                                                                                                                                                |
+| [skeleton](#skeleton)                 | `.pl-c-skeleton`         | 961 B    | 427 B  | 355 B  | None         | Loading placeholders that mimic the shape of real content. A pulsing shimmer communicates "something is loading" without a spinner (which implies an indeterminate wait). Used in cards, lists, and tables while data fetches.                                                                                                                                                                                                           |
+| [split-button](#split-button)         | `.pl-c-split`            | 3.8 KB   | 1.1 KB | 1004 B | `button`     | A composite action control: a primary button (the default action) paired with a dropdown toggle that opens a menu of alternative actions. The canonical "Save ▼" pattern - click the label to do the default, click the chevron to pick a variant.                                                                                                                                                                                       |
+| [split-pane](#split-pane)             | `.pl-c-split-pane`       | 6.1 KB   | 1.3 KB | 1.1 KB | None         | CSS-only split panes for app shells, object explorers, editors, inspectors, and process builders. Apps own pointer/keyboard resize behavior and persist sizes by updating custom properties or data attributes.                                                                                                                                                                                                                          |
+| [stat](#stat)                         | `.pl-c-stat`             | 2.1 KB   | 674 B  | 570 B  | None         | A KPI / metric tile - the workhorse of SaaS dashboards. Displays a single number with a label, an optional unit, a trend indicator (up/down/flat), and an optional sparkline slot. Designed to sit inside .pl-l-grid (auto-fitting dashboard widgets) or inside .pl-c-card bodies.                                                                                                                                                       |
+| [stepper](#stepper)                   | `.pl-c-stepper`          | 2.9 KB   | 906 B  | 739 B  | None         | A horizontal (default) or vertical (container-query collapse) multi-step indicator. Each step has a visual marker (circle with number or check) and a label. Connectors between steps are CSS-only (no SVG).                                                                                                                                                                                                                             |
+| [switch](#switch)                     | `.pl-c-switch`           | 2.3 KB   | 767 B  | 623 B  | None         | A CSS-only toggle switch built on a native checkbox. No JavaScript for the toggle itself: <input type="checkbox" role="switch"> + <label>.                                                                                                                                                                                                                                                                                               |
+| [tabs](#tabs)                         | `.pl-c-tabs`             | 3.8 KB   | 1.1 KB | 971 B  | None         | A tabbed region: a [role="tablist"] of [role="tab"] controls that switch between [role="tabpanel"]s. The canonical master-detail / settings / dashboard-sectioning primitive. Wraps real <button> tabs.                                                                                                                                                                                                                                  |
+| [tag-input](#tag-input)               | `.pl-c-tag-input`        | 1.3 KB   | 563 B  | 465 B  | None         | A text input that accepts multiple values as removable chips. The CSS handles the layout (wrapping chips + inline input); JS handles tokenization (enter/comma to add, backspace to remove).                                                                                                                                                                                                                                             |
+| [textarea-auto](#textarea-auto)       | `.pl-c-textarea-auto`    | 1.5 KB   | 596 B  | 478 B  | None         | A textarea that grows to fit its content automatically using field-sizing: content (Chrome 123+). No JavaScript auto-resize needed.                                                                                                                                                                                                                                                                                                      |
+| [timeline](#timeline)                 | `.pl-c-timeline`         | 2.2 KB   | 759 B  | 612 B  | None         | A vertical activity feed with markers, connector lines, and per-item content. Each item has a dot/marker on a vertical line, with the content to the side.                                                                                                                                                                                                                                                                               |
+| [toast](#toast)                       | `.pl-c-toast`            | 3.7 KB   | 1.2 KB | 1.0 KB | None         | A transient notification that slides in from a screen edge. Unlike alerts (inline), toasts are overlay-level and auto-dismiss (via JS timer; the CSS handles the visual entrance/exit).                                                                                                                                                                                                                                                  |
+| [toolbar](#toolbar)                   | `.pl-c-toolbar`          | 1.7 KB   | 628 B  | 526 B  | None         | A horizontal bar grouping actions above a data region - the SaaS "action bar" on top of tables, lists, and canvases. Pairs a leading cluster (search, filters, bulk actions) with a trailing cluster (primary actions, overflow menu). On narrow containers the two halves wrap independently.                                                                                                                                           |
+| [tooltip](#tooltip)                   | `.pl-c-tooltip`          | 2.0 KB   | 691 B  | 560 B  | None         | A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning. Zero JavaScript for positioning. Auto-flips when near viewport edges via position-try-fallbacks.                                                                                                                                                                                                                                                             |
+| [tree](#tree)                         | `.pl-c-tree`             | 6.2 KB   | 1.5 KB | 1.3 KB | None         | A CSS-only tree view for app navigation, object explorers, process folders, rule libraries, and other nested SaaS/BPM structures.                                                                                                                                                                                                                                                                                                        |
+| [workflow-board](#workflow-board)     | `.pl-c-workflow-board`   | 7.6 KB   | 1.7 KB | 1.5 KB | None         | A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/count metadata, and visual state hooks for app-owned drag/drop.                                                                                                                                                                                                                                                                                            |
 
 ## Component Details
 
@@ -88,6 +128,7 @@ A collapsible disclosure built on native <details>/<summary>. Animates open/clos
 - **Minified Import**: `@cawalch/porchlight/components/accordion.min.css`
 - **Dist File**: `dist/components/accordion.css`
 - **Minified Dist File**: `dist/components/accordion.min.css`
+- **Sizes**: 2.5 KB minified, 844 B gzip, 672 B brotli
 - **Dependencies**: None
 
 ```css
@@ -103,6 +144,7 @@ A floating batch action bar for tables, card grids, and mass-selection workflows
 - **Minified Import**: `@cawalch/porchlight/components/action-bar.min.css`
 - **Dist File**: `dist/components/action-bar.css`
 - **Minified Dist File**: `dist/components/action-bar.min.css`
+- **Sizes**: 4.1 KB minified, 1.2 KB gzip, 1010 B brotli
 - **Dependencies**: None
 
 ```css
@@ -118,6 +160,7 @@ An inline notification - contextual feedback within the page flow (not an overla
 - **Minified Import**: `@cawalch/porchlight/components/alert.min.css`
 - **Dist File**: `dist/components/alert.css`
 - **Minified Dist File**: `dist/components/alert.min.css`
+- **Sizes**: 1.7 KB minified, 616 B gzip, 508 B brotli
 - **Dependencies**: None
 
 ```css
@@ -133,6 +176,7 @@ An enterprise audit trail and security activity stream. Provides scannable, high
 - **Minified Import**: `@cawalch/porchlight/components/audit-stream.min.css`
 - **Dist File**: `dist/components/audit-stream.css`
 - **Minified Dist File**: `dist/components/audit-stream.min.css`
+- **Sizes**: 2.8 KB minified, 825 B gzip, 698 B brotli
 - **Dependencies**: None
 
 ```css
@@ -148,6 +192,7 @@ A user identity chip - initials in a colored circle, or an image. Used in header
 - **Minified Import**: `@cawalch/porchlight/components/avatar.min.css`
 - **Dist File**: `dist/components/avatar.css`
 - **Minified Dist File**: `dist/components/avatar.min.css`
+- **Sizes**: 2.0 KB minified, 603 B gzip, 500 B brotli
 - **Dependencies**: None
 
 ```css
@@ -163,6 +208,7 @@ A compact label for statuses, counts, and tags. Inline-flex pill; tones via [dat
 - **Minified Import**: `@cawalch/porchlight/components/badge.min.css`
 - **Dist File**: `dist/components/badge.css`
 - **Minified Dist File**: `dist/components/badge.min.css`
+- **Sizes**: 1.3 KB minified, 524 B gzip, 428 B brotli
 - **Dependencies**: None
 
 ```css
@@ -178,6 +224,7 @@ A full-width, top-level system announcement or incident bar - used for system de
 - **Minified Import**: `@cawalch/porchlight/components/banner.min.css`
 - **Dist File**: `dist/components/banner.css`
 - **Minified Dist File**: `dist/components/banner.min.css`
+- **Sizes**: 2.9 KB minified, 909 B gzip, 746 B brotli
 - **Dependencies**: None
 
 ```css
@@ -193,6 +240,7 @@ A trail of navigation links showing the user's location in the site/app hierarch
 - **Minified Import**: `@cawalch/porchlight/components/breadcrumb.min.css`
 - **Dist File**: `dist/components/breadcrumb.css`
 - **Minified Dist File**: `dist/components/breadcrumb.min.css`
+- **Sizes**: 1.6 KB minified, 639 B gzip, 500 B brotli
 - **Dependencies**: None
 
 ```css
@@ -208,6 +256,7 @@ The canonical action control. Native <button> (or <a> when it is genuinely navig
 - **Minified Import**: `@cawalch/porchlight/components/button.min.css`
 - **Dist File**: `dist/components/button.css`
 - **Minified Dist File**: `dist/components/button.min.css`
+- **Sizes**: 3.1 KB minified, 995 B gzip, 807 B brotli
 - **Dependencies**: None
 
 ```css
@@ -223,6 +272,7 @@ Date, date-range, and time picker surfaces for SaaS/BPM apps. CSS-only: app code
 - **Minified Import**: `@cawalch/porchlight/components/calendar.min.css`
 - **Dist File**: `dist/components/calendar.css`
 - **Minified Dist File**: `dist/components/calendar.min.css`
+- **Sizes**: 10.0 KB minified, 2.1 KB gzip, 1.8 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -238,6 +288,7 @@ A raised surface grouping related content - the workhorse of SaaS dashboards (KP
 - **Minified Import**: `@cawalch/porchlight/components/card.min.css`
 - **Dist File**: `dist/components/card.css`
 - **Minified Dist File**: `dist/components/card.min.css`
+- **Sizes**: 5.1 KB minified, 1.3 KB gzip, 1.2 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -253,6 +304,7 @@ An accessible frame for app-owned charts. Porchlight provides metric headers, le
 - **Minified Import**: `@cawalch/porchlight/components/chart.min.css`
 - **Dist File**: `dist/components/chart.css`
 - **Minified Dist File**: `dist/components/chart.min.css`
+- **Sizes**: 5.3 KB minified, 1.4 KB gzip, 1.2 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -268,6 +320,7 @@ A compact tag/pill with an optional remove button. Uses relative color syntax (o
 - **Minified Import**: `@cawalch/porchlight/components/chip.min.css`
 - **Dist File**: `dist/components/chip.css`
 - **Minified Dist File**: `dist/components/chip.min.css`
+- **Sizes**: 2.7 KB minified, 887 B gzip, 725 B brotli
 - **Dependencies**: None
 
 ```css
@@ -283,6 +336,7 @@ A developer-grade code and diff viewer shell for API payloads, CLI terminal comm
 - **Minified Import**: `@cawalch/porchlight/components/code-block.min.css`
 - **Dist File**: `dist/components/code-block.css`
 - **Minified Dist File**: `dist/components/code-block.min.css`
+- **Sizes**: 3.9 KB minified, 1.1 KB gzip, 999 B brotli
 - **Dependencies**: None
 
 ```css
@@ -298,6 +352,7 @@ A framework-neutral combobox/autocomplete contract for entity lookup, async sear
 - **Minified Import**: `@cawalch/porchlight/components/combobox.min.css`
 - **Dist File**: `dist/components/combobox.css`
 - **Minified Dist File**: `dist/components/combobox.min.css`
+- **Sizes**: 7.1 KB minified, 1.7 KB gzip, 1.4 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -313,6 +368,7 @@ A Cmd+K quick-action search overlay. Search input at top, grouped action list be
 - **Minified Import**: `@cawalch/porchlight/components/command-palette.min.css`
 - **Dist File**: `dist/components/command-palette.css`
 - **Minified Dist File**: `dist/components/command-palette.min.css`
+- **Sizes**: 4.1 KB minified, 1.1 KB gzip, 999 B brotli
 - **Dependencies**: None
 
 ```css
@@ -328,6 +384,7 @@ An enterprise data table: sticky headers, horizontal scroll with a stable scroll
 - **Minified Import**: `@cawalch/porchlight/components/data-table.min.css`
 - **Dist File**: `dist/components/data-table.css`
 - **Minified Dist File**: `dist/components/data-table.min.css`
+- **Sizes**: 8.8 KB minified, 2.0 KB gzip, 1.8 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -343,6 +400,7 @@ A label + value grid for detail panels, metadata displays, and summary cards. Wr
 - **Minified Import**: `@cawalch/porchlight/components/description-list.min.css`
 - **Dist File**: `dist/components/description-list.css`
 - **Minified Dist File**: `dist/components/description-list.min.css`
+- **Sizes**: 1.8 KB minified, 611 B gzip, 525 B brotli
 - **Dependencies**: None
 
 ```css
@@ -358,6 +416,7 @@ A modal dialog for confirmations, forms, and detail views. Uses the native <dial
 - **Minified Import**: `@cawalch/porchlight/components/dialog.min.css`
 - **Dist File**: `dist/components/dialog.css`
 - **Minified Dist File**: `dist/components/dialog.min.css`
+- **Sizes**: 3.3 KB minified, 1.0 KB gzip, 877 B brotli
 - **Dependencies**: None
 
 ```css
@@ -373,6 +432,7 @@ An off-canvas panel that slides in from a viewport edge. Uses the native Popover
 - **Minified Import**: `@cawalch/porchlight/components/drawer.min.css`
 - **Dist File**: `dist/components/drawer.css`
 - **Minified Dist File**: `dist/components/drawer.min.css`
+- **Sizes**: 2.4 KB minified, 764 B gzip, 644 B brotli
 - **Dependencies**: None
 
 ```css
@@ -388,6 +448,7 @@ A button-triggered option menu using the Popover API + anchor positioning. Use i
 - **Minified Import**: `@cawalch/porchlight/components/dropdown.min.css`
 - **Dist File**: `dist/components/dropdown.css`
 - **Minified Dist File**: `dist/components/dropdown.min.css`
+- **Sizes**: 3.6 KB minified, 1.1 KB gzip, 950 B brotli
 - **Dependencies**: None
 
 ```css
@@ -403,6 +464,7 @@ The "no data yet" placeholder - what users see in a table, list, or chart before
 - **Minified Import**: `@cawalch/porchlight/components/empty-state.min.css`
 - **Dist File**: `dist/components/empty-state.css`
 - **Minified Dist File**: `dist/components/empty-state.min.css`
+- **Sizes**: 1.2 KB minified, 490 B gzip, 397 B brotli
 - **Dependencies**: None
 
 ```css
@@ -418,6 +480,7 @@ A native non-modal record popover. popovertarget provides the implicit anchor; r
 - **Minified Import**: `@cawalch/porchlight/components/entity-inspector.min.css`
 - **Dist File**: `dist/components/entity-inspector.css`
 - **Minified Dist File**: `dist/components/entity-inspector.min.css`
+- **Sizes**: 1.9 KB minified, 671 B gzip, 552 B brotli
 - **Dependencies**: None
 
 ```css
@@ -433,6 +496,7 @@ A labeled form control: label, native input, hint/messages, and zero-JS anchor-p
 - **Minified Import**: `@cawalch/porchlight/components/field.min.css`
 - **Dist File**: `dist/components/field.css`
 - **Minified Dist File**: `dist/components/field.min.css`
+- **Sizes**: 9.1 KB minified, 2.1 KB gzip, 1.8 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -448,6 +512,7 @@ A drag-and-drop file upload zone. The native <input type="file"> is visually hid
 - **Minified Import**: `@cawalch/porchlight/components/file-upload.min.css`
 - **Dist File**: `dist/components/file-upload.css`
 - **Minified Dist File**: `dist/components/file-upload.min.css`
+- **Sizes**: 1.7 KB minified, 680 B gzip, 536 B brotli
 - **Dependencies**: None
 
 ```css
@@ -463,6 +528,7 @@ CSS-only UI contracts for query builders, query chips, and saved views. Apps own
 - **Minified Import**: `@cawalch/porchlight/components/filter-builder.min.css`
 - **Dist File**: `dist/components/filter-builder.css`
 - **Minified Dist File**: `dist/components/filter-builder.min.css`
+- **Sizes**: 10.9 KB minified, 2.2 KB gzip, 1.9 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -478,6 +544,7 @@ SaaS form composition helpers built on native controls: sections, grids, subgrid
 - **Minified Import**: `@cawalch/porchlight/components/form.min.css`
 - **Dist File**: `dist/components/form.css`
 - **Minified Dist File**: `dist/components/form.min.css`
+- **Sizes**: 10.6 KB minified, 2.0 KB gzip, 1.8 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -493,6 +560,7 @@ A pure-CSS radial KPI dial and progress gauge for executive dashboards, capacity
 - **Minified Import**: `@cawalch/porchlight/components/gauge.min.css`
 - **Dist File**: `dist/components/gauge.css`
 - **Minified Dist File**: `dist/components/gauge.min.css`
+- **Sizes**: 4.5 KB minified, 1.2 KB gzip, 1.0 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -508,6 +576,7 @@ Local, indeterminate progress for actions and compact application regions.
 - **Minified Import**: `@cawalch/porchlight/components/inline-loading.min.css`
 - **Dist File**: `dist/components/inline-loading.css`
 - **Minified Dist File**: `dist/components/inline-loading.min.css`
+- **Sizes**: 1.0 KB minified, 470 B gzip, 400 B brotli
 - **Dependencies**: None
 
 ```css
@@ -523,6 +592,7 @@ Realistic 3D tactile mechanical keycaps for hotkeys, shortcuts, and command menu
 - **Minified Import**: `@cawalch/porchlight/components/kbd.min.css`
 - **Dist File**: `dist/components/kbd.css`
 - **Minified Dist File**: `dist/components/kbd.min.css`
+- **Sizes**: 1.2 KB minified, 558 B gzip, 457 B brotli
 - **Dependencies**: None
 
 ```css
@@ -538,6 +608,7 @@ A multi-metric KPI dashboard tile - engineered for executive dashboards, telemet
 - **Minified Import**: `@cawalch/porchlight/components/kpi-card.min.css`
 - **Dist File**: `dist/components/kpi-card.css`
 - **Minified Dist File**: `dist/components/kpi-card.min.css`
+- **Sizes**: 2.2 KB minified, 785 B gzip, 644 B brotli
 - **Dependencies**: None
 
 ```css
@@ -553,6 +624,7 @@ A CSS-only cascading column explorer for nested hierarchies (IAM roles, folder s
 - **Minified Import**: `@cawalch/porchlight/components/miller-columns.min.css`
 - **Dist File**: `dist/components/miller-columns.css`
 - **Minified Dist File**: `dist/components/miller-columns.min.css`
+- **Sizes**: 5.4 KB minified, 1.3 KB gzip, 1.1 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -568,6 +640,7 @@ A vertical navigation list for sidebars. Icon + label items with active state vi
 - **Minified Import**: `@cawalch/porchlight/components/nav.min.css`
 - **Dist File**: `dist/components/nav.css`
 - **Minified Dist File**: `dist/components/nav.min.css`
+- **Sizes**: 8.3 KB minified, 1.6 KB gzip, 1.4 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -583,6 +656,7 @@ A title + actions row for the top of a page or panel section inside a container.
 - **Minified Import**: `@cawalch/porchlight/components/page-header.min.css`
 - **Dist File**: `dist/components/page-header.css`
 - **Minified Dist File**: `dist/components/page-header.min.css`
+- **Sizes**: 1.1 KB minified, 473 B gzip, 378 B brotli
 - **Dependencies**: None
 
 ```css
@@ -598,6 +672,7 @@ Navigation control for paginated data - the bar below a table or list. Previous 
 - **Minified Import**: `@cawalch/porchlight/components/pagination.min.css`
 - **Dist File**: `dist/components/pagination.css`
 - **Minified Dist File**: `dist/components/pagination.min.css`
+- **Sizes**: 1.9 KB minified, 640 B gzip, 519 B brotli
 - **Dependencies**: None
 
 ```css
@@ -613,6 +688,7 @@ Native, fixed-content panels. The complete tabs mode is the enhancement gate: ol
 - **Minified Import**: `@cawalch/porchlight/components/panel-deck.min.css`
 - **Dist File**: `dist/components/panel-deck.css`
 - **Minified Dist File**: `dist/components/panel-deck.min.css`
+- **Sizes**: 3.8 KB minified, 985 B gzip, 827 B brotli
 - **Dependencies**: None
 
 ```css
@@ -628,6 +704,7 @@ A dropdown menu anchored to its trigger - account menus, action menus, context m
 - **Minified Import**: `@cawalch/porchlight/components/popover-menu.min.css`
 - **Dist File**: `dist/components/popover-menu.css`
 - **Minified Dist File**: `dist/components/popover-menu.min.css`
+- **Sizes**: 5.5 KB minified, 1.4 KB gzip, 1.2 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -643,6 +720,7 @@ A linear progress indicator for task completion, uploads, or capacity. Supports 
 - **Minified Import**: `@cawalch/porchlight/components/progress.min.css`
 - **Dist File**: `dist/components/progress.css`
 - **Minified Dist File**: `dist/components/progress.min.css`
+- **Sizes**: 1.8 KB minified, 550 B gzip, 440 B brotli
 - **Dependencies**: None
 
 ```css
@@ -658,6 +736,7 @@ A high-density key-value inspector for enterprise records, cloud resources, tele
 - **Minified Import**: `@cawalch/porchlight/components/property-list.min.css`
 - **Dist File**: `dist/components/property-list.css`
 - **Minified Dist File**: `dist/components/property-list.min.css`
+- **Sizes**: 3.6 KB minified, 1.0 KB gzip, 894 B brotli
 - **Dependencies**: None
 
 ```css
@@ -673,6 +752,7 @@ Elements that fade/slide in as they enter the viewport. Uses scroll-driven anima
 - **Minified Import**: `@cawalch/porchlight/components/reveal.min.css`
 - **Dist File**: `dist/components/reveal.css`
 - **Minified Dist File**: `dist/components/reveal.min.css`
+- **Sizes**: 917 B minified, 375 B gzip, 296 B brotli
 - **Dependencies**: None
 
 ```css
@@ -688,6 +768,7 @@ A fixed bar at the viewport top that fills as the user scrolls the page. Uses sc
 - **Minified Import**: `@cawalch/porchlight/components/scroll-progress.min.css`
 - **Dist File**: `dist/components/scroll-progress.css`
 - **Minified Dist File**: `dist/components/scroll-progress.min.css`
+- **Sizes**: 1.0 KB minified, 426 B gzip, 329 B brotli
 - **Dependencies**: None
 
 ```css
@@ -703,6 +784,7 @@ Bounded, keyboard-operable scrollport. State indicators live in enhancements so 
 - **Minified Import**: `@cawalch/porchlight/components/scroll-region.min.css`
 - **Dist File**: `dist/components/scroll-region.css`
 - **Minified Dist File**: `dist/components/scroll-region.min.css`
+- **Sizes**: 869 B minified, 393 B gzip, 318 B brotli
 - **Dependencies**: None
 
 ```css
@@ -718,6 +800,7 @@ In-page navigation stays ordinary fragment links without scroll-target-group. Ap
 - **Minified Import**: `@cawalch/porchlight/components/section-nav.min.css`
 - **Dist File**: `dist/components/section-nav.css`
 - **Minified Dist File**: `dist/components/section-nav.min.css`
+- **Sizes**: 1.3 KB minified, 544 B gzip, 414 B brotli
 - **Dependencies**: None
 
 ```css
@@ -733,6 +816,7 @@ A compact inline switcher for binary/ternary toggles (list/grid/table view, day/
 - **Minified Import**: `@cawalch/porchlight/components/segmented.min.css`
 - **Dist File**: `dist/components/segmented.css`
 - **Minified Dist File**: `dist/components/segmented.min.css`
+- **Sizes**: 1.9 KB minified, 679 B gzip, 557 B brotli
 - **Dependencies**: None
 
 ```css
@@ -748,6 +832,7 @@ Loading placeholders that mimic the shape of real content. A pulsing shimmer com
 - **Minified Import**: `@cawalch/porchlight/components/skeleton.min.css`
 - **Dist File**: `dist/components/skeleton.css`
 - **Minified Dist File**: `dist/components/skeleton.min.css`
+- **Sizes**: 961 B minified, 427 B gzip, 355 B brotli
 - **Dependencies**: None
 
 ```css
@@ -763,6 +848,7 @@ A composite action control: a primary button (the default action) paired with a 
 - **Minified Import**: `@cawalch/porchlight/components/split-button.min.css`
 - **Dist File**: `dist/components/split-button.css`
 - **Minified Dist File**: `dist/components/split-button.min.css`
+- **Sizes**: 3.8 KB minified, 1.1 KB gzip, 1004 B brotli
 - **Dependencies**: `button`
 
 ```css
@@ -778,6 +864,7 @@ CSS-only split panes for app shells, object explorers, editors, inspectors, and 
 - **Minified Import**: `@cawalch/porchlight/components/split-pane.min.css`
 - **Dist File**: `dist/components/split-pane.css`
 - **Minified Dist File**: `dist/components/split-pane.min.css`
+- **Sizes**: 6.1 KB minified, 1.3 KB gzip, 1.1 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -793,6 +880,7 @@ A KPI / metric tile - the workhorse of SaaS dashboards. Displays a single number
 - **Minified Import**: `@cawalch/porchlight/components/stat.min.css`
 - **Dist File**: `dist/components/stat.css`
 - **Minified Dist File**: `dist/components/stat.min.css`
+- **Sizes**: 2.1 KB minified, 674 B gzip, 570 B brotli
 - **Dependencies**: None
 
 ```css
@@ -808,6 +896,7 @@ A horizontal (default) or vertical (container-query collapse) multi-step indicat
 - **Minified Import**: `@cawalch/porchlight/components/stepper.min.css`
 - **Dist File**: `dist/components/stepper.css`
 - **Minified Dist File**: `dist/components/stepper.min.css`
+- **Sizes**: 2.9 KB minified, 906 B gzip, 739 B brotli
 - **Dependencies**: None
 
 ```css
@@ -823,6 +912,7 @@ A CSS-only toggle switch built on a native checkbox. No JavaScript for the toggl
 - **Minified Import**: `@cawalch/porchlight/components/switch.min.css`
 - **Dist File**: `dist/components/switch.css`
 - **Minified Dist File**: `dist/components/switch.min.css`
+- **Sizes**: 2.3 KB minified, 767 B gzip, 623 B brotli
 - **Dependencies**: None
 
 ```css
@@ -838,6 +928,7 @@ A tabbed region: a [role="tablist"] of [role="tab"] controls that switch between
 - **Minified Import**: `@cawalch/porchlight/components/tabs.min.css`
 - **Dist File**: `dist/components/tabs.css`
 - **Minified Dist File**: `dist/components/tabs.min.css`
+- **Sizes**: 3.8 KB minified, 1.1 KB gzip, 971 B brotli
 - **Dependencies**: None
 
 ```css
@@ -853,6 +944,7 @@ A text input that accepts multiple values as removable chips. The CSS handles th
 - **Minified Import**: `@cawalch/porchlight/components/tag-input.min.css`
 - **Dist File**: `dist/components/tag-input.css`
 - **Minified Dist File**: `dist/components/tag-input.min.css`
+- **Sizes**: 1.3 KB minified, 563 B gzip, 465 B brotli
 - **Dependencies**: None
 
 ```css
@@ -868,6 +960,7 @@ A textarea that grows to fit its content automatically using field-sizing: conte
 - **Minified Import**: `@cawalch/porchlight/components/textarea-auto.min.css`
 - **Dist File**: `dist/components/textarea-auto.css`
 - **Minified Dist File**: `dist/components/textarea-auto.min.css`
+- **Sizes**: 1.5 KB minified, 596 B gzip, 478 B brotli
 - **Dependencies**: None
 
 ```css
@@ -883,6 +976,7 @@ A vertical activity feed with markers, connector lines, and per-item content. Ea
 - **Minified Import**: `@cawalch/porchlight/components/timeline.min.css`
 - **Dist File**: `dist/components/timeline.css`
 - **Minified Dist File**: `dist/components/timeline.min.css`
+- **Sizes**: 2.2 KB minified, 759 B gzip, 612 B brotli
 - **Dependencies**: None
 
 ```css
@@ -898,6 +992,7 @@ A transient notification that slides in from a screen edge. Unlike alerts (inlin
 - **Minified Import**: `@cawalch/porchlight/components/toast.min.css`
 - **Dist File**: `dist/components/toast.css`
 - **Minified Dist File**: `dist/components/toast.min.css`
+- **Sizes**: 3.7 KB minified, 1.2 KB gzip, 1.0 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -913,6 +1008,7 @@ A horizontal bar grouping actions above a data region - the SaaS "action bar" on
 - **Minified Import**: `@cawalch/porchlight/components/toolbar.min.css`
 - **Dist File**: `dist/components/toolbar.css`
 - **Minified Dist File**: `dist/components/toolbar.min.css`
+- **Sizes**: 1.7 KB minified, 628 B gzip, 526 B brotli
 - **Dependencies**: None
 
 ```css
@@ -928,6 +1024,7 @@ A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning. Zero
 - **Minified Import**: `@cawalch/porchlight/components/tooltip.min.css`
 - **Dist File**: `dist/components/tooltip.css`
 - **Minified Dist File**: `dist/components/tooltip.min.css`
+- **Sizes**: 2.0 KB minified, 691 B gzip, 560 B brotli
 - **Dependencies**: None
 
 ```css
@@ -943,6 +1040,7 @@ A CSS-only tree view for app navigation, object explorers, process folders, rule
 - **Minified Import**: `@cawalch/porchlight/components/tree.min.css`
 - **Dist File**: `dist/components/tree.css`
 - **Minified Dist File**: `dist/components/tree.min.css`
+- **Sizes**: 6.2 KB minified, 1.5 KB gzip, 1.3 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -958,6 +1056,7 @@ A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/co
 - **Minified Import**: `@cawalch/porchlight/components/workflow-board.min.css`
 - **Dist File**: `dist/components/workflow-board.css`
 - **Minified Dist File**: `dist/components/workflow-board.min.css`
+- **Sizes**: 7.6 KB minified, 1.7 KB gzip, 1.5 KB brotli
 - **Dependencies**: None
 
 ```css

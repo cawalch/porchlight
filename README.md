@@ -48,11 +48,11 @@ Or import only the parts you use:
 @import "@cawalch/porchlight/utilities.css";
 ```
 
-`core.css` includes layer order, reset, tokens, themes, and base styles.
-Component files expect it to load first. Bun's CSS bundler needs `compat.css`
-or selected imports; the full bundle requires the static-copy path. See the
-[installation and Bun guide](https://cawalch.github.io/porchlight/guides/getting-started).
-Bun can install the package independently of which CSS bundler you use.
+`core.css` includes layer order, reset, tokens, themes, and base styles (only **2.6 KB gzip**).
+When bundled with your app bundler, selective imports ship between **4.9 KB and 6.8 KB gzip**
+(less than half of legacy 14 KB monolithic stylesheets).
+The full stylesheet and modular entries build cleanly under Bun 1.4.4, Vite, Webpack, and esbuild.
+See the [Enterprise Integration & Recipes guide](https://cawalch.github.io/porchlight/guides/upstream-integration).
 
 ## Use it
 

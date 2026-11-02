@@ -5,15 +5,31 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.15.0] - 2026-11-02
 
 ### Added
 
 - Add pure-CSS floating batch action bar component (`.pl-c-action-bar`) with liquid glass styling, responsive pill geometry, and zero-JS reactive auto-reveal via `:has(:checked)`.
 - Add pure-CSS circular and radial KPI dial gauge component (`.pl-c-gauge`) using `conic-gradient()` and registered `@property --pl-gauge-value { syntax: '<percentage>'; }` for GPU-accelerated value transitions.
+- Add Enterprise SaaS typography scale tokens (`--pl-text-2xs` for micro-type), letter-spacing tracking tokens (`--pl-tracking-tighter`, `--pl-tracking-tight`, `--pl-tracking-normal`, `--pl-tracking-wide`, `--pl-tracking-wider`), and OpenType numeric disambiguation (`--pl-font-feature-numeric: "tnum" 1, "lnum" 1, "zero" 1`).
+- Add tabular lining numbers utility class (`.pl-u-num-tabular`) ensuring rock-solid tabular data alignment without digit shifting.
+- Add component size budget registry (`@cawalch/porchlight/size-budget.json` and `COMPONENTS.md`) documenting Raw, Gzip, and Brotli sizes for all 59 components and bundles.
+- Add documented "Core + N Components" production recipes demonstrating application payloads between 4.9 KB and 6.8 KB gzip (-52% to -65% smaller than monolithic 14 KB stylesheets).
+- Add comprehensive Enterprise Integration & Upstream Recipes guide (`docs/src/content/guides/upstream-integration.mdx`) with 4 complete HTMX 2.0+ production patterns, cascade layer coexistence specifications, dialog/popover references, and bundler content-hashing recipes.
+- Add package exports for `./full.css`, `./full.min.css`, `./experimental.css`, `./experimental.min.css`, and `./size-budget.json`.
 - Add CSS Anchor Positioning `anchor-size(self-inline)` trigger-width auto-matching to `.pl-c-dropdown__menu` and `.pl-c-popover-menu[data-match-trigger]`.
 - Add `position-visibility: anchors-visible` tethered auto-hiding to `.pl-c-dropdown__menu`.
 - Add preview routes and component documentation for `action-bar` and `gauge`.
+
+### Changed
+
+- Total component catalog expanded from 57 components in published v0.14.0 to **59 components** in v0.15.0 with the addition of `action-bar` and `gauge`.
+- Decouple bleeding-edge `scroll-state(...)` queries from `08-enhancements.css` into dedicated `09-experimental.css` (`@cawalch/porchlight/experimental.css`), enabling `porchlight.css`, `porchlight.min.css`, `full.css`, and `compat.css` to build cleanly under Bun 1.4.4 with exit code 0.
+- Regenerate `COMPONENTS.md` with full Raw, Gzip, and Brotli size columns and recipe budgets.
+
+### Fixed
+
+- Fix popover-menu contrast degradation and translucent backdrop bleed across light and dark modes: replaced translucent fills with solid elevated surfaces (`--pl-color-surface`), adjusted active rail indicators to respect high-contrast and dark modes, and eliminated hover latency.
 
 ## [0.14.0] - 2026-11-01
 

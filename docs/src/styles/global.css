@@ -15,6 +15,7 @@
  * specificity.
  */
 @import "../../../packages/porchlight/porchlight.css";
+@import "../../../packages/porchlight/src/09-experimental.css";
 
 :root {
   --doc-max-inline: 76rem;

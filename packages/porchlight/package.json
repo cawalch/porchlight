@@ -1,6 +1,6 @@
 {
   "name": "@cawalch/porchlight",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "A no-dependency, native-CSS framework for building accessible, themeable web applications.",
   "license": "MIT",
   "type": "module",
@@ -38,6 +38,8 @@
   "exports": {
     ".": "./dist/porchlight.min.css",
     "./porchlight.css": "./dist/porchlight.css",
+    "./full.css": "./dist/full.css",
+    "./full.min.css": "./dist/full.min.css",
     "./unminified.css": "./dist/porchlight.css",
     "./min.css": "./dist/porchlight.min.css",
     "./compat.css": "./dist/compat.css",
@@ -54,6 +56,8 @@
     "./utilities.min.css": "./dist/utilities.min.css",
     "./enhancements.css": "./dist/enhancements.css",
     "./enhancements.min.css": "./dist/enhancements.min.css",
+    "./experimental.css": "./dist/experimental.css",
+    "./experimental.min.css": "./dist/experimental.min.css",
     "./tokens": {
       "types": "./dist/tokens.d.ts",
       "import": "./dist/tokens.js",
@@ -61,6 +65,7 @@
     },
     "./tokens.json": "./dist/tokens.json",
     "./manifest.json": "./dist/porchlight.manifest.json",
+    "./size-budget.json": "./dist/size-budget.json",
     "./src/*": "./src/*"
   },
   "files": [

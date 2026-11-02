@@ -33,10 +33,9 @@ these bare package names directly; use Static HTML below without a bundler.
 }
 ```
 
-## Smaller bundles
+## Smaller bundles and size budgets
 
-If your app only uses a few components, start with `core.css`, then import
-the pieces you need.
+Instead of shipping a monolithic stylesheet, applications can import `core.css` alongside only the components they actually render.
 
 ```css
 @layer porchlight, app;
@@ -49,15 +48,23 @@ the pieces you need.
 @import "@cawalch/porchlight/utilities.css";
 ```
 
-`core.css` includes layer order, reset, tokens, themes, and base styles.
+`core.css` includes layer order, reset, tokens, themes, and base styles (only **2.6 KB gzip**).
 Component files depend on those tokens, so load `core.css` first.
-For a split button, also load `button.css` before `split-button.css`; its two
-segments use the button component. `porchlight copy --components split-button`
-includes `button.css` automatically, while CSS `@import` stays explicit.
 
-If you want the whole practical framework without experimental enhancement
-syntax, use `compat.css`. It includes core, layout, all components, and
-utilities, but leaves out `enhancements.css`.
+### Real-World Production Recipes
+
+When bundled together with your app bundler, shared cascade layer headers and design token references compress together. Real applications import far less than a 14 KB legacy stylesheet:
+
+| Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
+| :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
+| **Minimal Controls**          | `core` + `button` + `field`                                                | 20.7 KB | **4.9 KB** | **4.3 KB** | **-65% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 31.0 KB | **6.8 KB** | **6.0 KB** | **-52% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 29.7 KB | **6.4 KB** | **5.6 KB** | **-54% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 27.7 KB | **6.1 KB** | **5.4 KB** | **-56% smaller**  |
+
+See [`COMPONENTS.md`](COMPONENTS.md) and `@cawalch/porchlight/size-budget.json` for per-component sizes across all 59 components.
+
+If you want the whole practical framework without experimental enhancement syntax, use `compat.css`. It includes core, layout, all components, and utilities, but leaves out `enhancements.css`.
 
 ```css
 @layer porchlight, app;
@@ -170,40 +177,38 @@ or minifiers; see [Vite's CSS target option](https://vite.dev/config/build-optio
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.2 and Porchlight 0.14.0**:
+Verified with **Bun 1.4.4 and Porchlight 0.15.0**:
 
-| Path                                                    | Result                                               |
-| ------------------------------------------------------- | ---------------------------------------------------- |
-| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                   |
-| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal `@property` warnings         |
-| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`              |
-| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation |
+| Path                                                 | Result                                               |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| `bun add @cawalch/porchlight`                        | Installs the package and local CLI                   |
+| Bundle `full.css`, `porchlight.css`, or `compat.css` | Builds cleanly (code 0); emits non-fatal warnings    |
+| Bundle `core.css` + selected components              | Builds cleanly (code 0) with smallest bundle size    |
+| Bleeding-edge Chrome 133+ `scroll-state()` queries   | Isolated in `@cawalch/porchlight/experimental.css`   |
+| Copy prebuilt CSS and serve it directly              | Preserves the full CSS without parser transformation |
 
 For Bun's CSS bundler, put this in `app.css`, then run
 `bun build ./app.css --outdir ./dist`:
 
 ```css
 @layer porchlight, app;
-@import "@cawalch/porchlight/compat.css";
+@import "@cawalch/porchlight/full.css";
 ```
 
 Load the emitted stylesheet in your page; a CSS build alone does not attach it
 to the DOM. Basic button/card colors were checked in light and dark themes;
 this is not a guarantee for every component or future Bun release.
 
-For the full bundle, run the installed CLI with Bun's runtime explicitly:
+For the full bundle static copy, run the installed CLI with Bun's runtime explicitly:
 
 ```sh
 bunx --bun --no-install porchlight copy --out public/porchlight --full
 ```
 
 ```html
-<link rel="stylesheet" href="/porchlight/porchlight.css" />
+<link rel="stylesheet" href="/porchlight/full.css" />
 ```
 
-Serve that directory as static files. Feeding the copied CSS back into Bun's
-HTML/CSS bundler reintroduces the parser limitation. `--bun` avoids the CLI's
-Node shebang; `--no-install` uses the locally installed package.
 See [Bun's CSS bundler](https://bun.com/docs/bundler/css) and
 [bunx runtime selection](https://bun.com/docs/pm/bunx#shebangs).
 
