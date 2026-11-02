@@ -191,41 +191,39 @@ target browsers after changing targets or minifiers; see
 Bun can install Porchlight and run its copy helper. Using Bun as a package
 manager is separate from sending CSS through `bun build`.
 
-Verified with **Bun 1.4.3 and a packed Porchlight 0.12.0 consumer**:
+Verified with **Bun 1.4.4 and Porchlight 0.15.0**:
 
-| Path                                                    | Result                                                        |
-| ------------------------------------------------------- | ------------------------------------------------------------- |
-| `bun add @cawalch/porchlight`                           | Installs the package and local CLI                            |
-| Bundle `compat.css` or `core.css` + selected components | Builds; emits non-fatal warnings for newer at-rules/selectors |
-| Bundle the default export or `enhancements.css`         | Fails at `@container scroll-state(...)`                       |
-| Copy prebuilt CSS and serve it directly                 | Preserves the full CSS without parser transformation          |
+| Path                                                 | Result                                                               |
+| ---------------------------------------------------- | -------------------------------------------------------------------- |
+| `bun add @cawalch/porchlight`                        | Installs the package and local CLI                                   |
+| Bundle `full.css`, `porchlight.css`, or `compat.css` | Builds cleanly (code 0); emits non-fatal warnings for newer at-rules |
+| Bundle `core.css` + selected components              | Builds cleanly (code 0) with smallest possible bundle size           |
+| Bleeding-edge Chrome 133+ `scroll-state()` queries   | Isolated in `@cawalch/porchlight/experimental.css`                   |
+| Copy prebuilt CSS and serve it directly              | Preserves the full CSS without parser transformation                 |
 
 For Bun's CSS bundler, put this in `app.css`, then run
 `bun build ./app.css --outdir ./dist`:
 
 ```css
 @layer porchlight, app;
-@import "@cawalch/porchlight/compat.css";
+@import "@cawalch/porchlight/full.css";
 ```
 
 Load the emitted stylesheet in your page; a CSS build alone does not attach it
-to the DOM. Basic button/card styles from Bun's `compat.css` output were checked
-in Chromium; the warnings do not establish that every newer CSS feature works
-after bundling. Check those features in your target browsers.
+to the DOM. Basic button/card styles from Bun's output were checked
+in Chromium; non-fatal warnings do not establish that every newer CSS feature works
+identically across all browsers. Check advanced features in your target browsers.
 
-For the full bundle, run the installed CLI with Bun's runtime explicitly:
+For copying prebuilt assets, run the installed CLI with Bun's runtime explicitly:
 
 ```sh
 bunx --bun --no-install porchlight copy --out public/porchlight --full
 ```
 
 ```html
-<link rel="stylesheet" href="/porchlight/porchlight.css" />
+<link rel="stylesheet" href="/porchlight/full.css" />
 ```
 
-Serve that directory as static files. Feeding the copied CSS back into Bun's
-HTML/CSS bundler reintroduces the parser limitation. `--bun` avoids the CLI's
-Node shebang; `--no-install` uses the locally installed package.
 See [Bun's CSS bundler](https://bun.com/docs/bundler/css) and
 [bunx runtime selection](https://bun.com/docs/pm/bunx#shebangs).
 

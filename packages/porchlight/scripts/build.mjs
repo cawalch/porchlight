@@ -12,6 +12,7 @@ import {
 } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { brotliCompressSync, constants, gzipSync } from "node:zlib";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
@@ -41,6 +42,7 @@ const moduleEntries = {
   layout: [layerOrder, "src/05-layout.css"],
   utilities: [layerOrder, "src/07-utilities.css"],
   enhancements: [layerOrder, "src/08-enhancements.css"],
+  experimental: [layerOrder, "src/09-experimental.css"],
 };
 // Only stylesheet dependencies required by a component's own markup contract.
 // Optional compositions (for example, a menu with a styled button trigger)
@@ -279,6 +281,8 @@ async function emitManifest(componentNames) {
     files: {
       full: "dist/porchlight.css",
       minified: "dist/porchlight.min.css",
+      fullAlias: "dist/full.css",
+      fullAliasMinified: "dist/full.min.css",
       compat: "dist/compat.css",
       compatMinified: "dist/compat.min.css",
       core: "dist/core.css",
@@ -291,11 +295,14 @@ async function emitManifest(componentNames) {
       utilitiesMinified: "dist/utilities.min.css",
       enhancements: "dist/enhancements.css",
       enhancementsMinified: "dist/enhancements.min.css",
+      experimental: "dist/experimental.css",
+      experimentalMinified: "dist/experimental.min.css",
       tokens: {
         json: "dist/tokens.json",
         module: "dist/tokens.js",
         types: "dist/tokens.d.ts",
       },
+      sizeBudget: "dist/size-budget.json",
     },
     components: componentNames.map((name) => ({
       name,
@@ -322,7 +329,42 @@ async function emitManifest(componentNames) {
   return manifest;
 }
 
-async function emitComponentsDoc(componentNames) {
+function formatBytes(bytes) {
+  if (bytes === undefined || bytes === null) return "-";
+  if (bytes < 1024) return `${bytes} B`;
+  return `${(bytes / 1024).toFixed(1)} KB`;
+}
+
+function measureBuffer(buf) {
+  return {
+    raw: buf.length,
+    gzip: gzipSync(buf, { level: 9 }).length,
+    brotli: brotliCompressSync(buf, {
+      params: { [constants.BROTLI_PARAM_QUALITY]: 11 },
+    }).length,
+  };
+}
+
+async function measureRecipe(name, files) {
+  const tmpFile = resolve(entriesDir, `recipe-${name}.css`);
+  const imports = files.map((f) => `@import "../../${f}";`).join("\n");
+  await writeFile(tmpFile, `${imports}\n`);
+  const { code } = await bundle({
+    filename: tmpFile,
+    targets,
+    minify: true,
+    drafts: { customMedia: true },
+    nonStandard: { deepSelectorCombinator: true },
+    errorRecovery: false,
+  });
+  return {
+    name,
+    files,
+    ...measureBuffer(Buffer.from(code)),
+  };
+}
+
+async function emitComponentsDoc(componentNames, sizeBudget = null) {
   const components = [];
   for (const name of componentNames) {
     const file = `src/06-components/${name}.css`;
@@ -359,12 +401,14 @@ async function emitComponentsDoc(componentNames) {
         : `.pl-c-${name}`;
 
     const deps = componentDependencies[name] ?? [];
+    const sizes = sizeBudget?.components?.[name] ?? null;
 
     components.push({
       name,
       primarySelector,
       description,
       dependencies: deps,
+      sizes,
       cssFile: `dist/components/${name}.css`,
       minifiedFile: `dist/components/${name}.min.css`,
       importPath: `@cawalch/porchlight/components/${name}.css`,
@@ -388,20 +432,77 @@ async function emitComponentsDoc(componentNames) {
     '@import "@cawalch/porchlight/components/card.css";',
     "```",
     "",
+  ];
+
+  if (sizeBudget) {
+    lines.push(
+      "## Size Budget & Production Recipes",
+      "",
+      "Porchlight is engineered for modular efficiency. Instead of shipping a monolithic 30 KB+ gzip stylesheet, applications can import `core.css` alongside only the components they actually render.",
+      "",
+      "### Bundle Sizes (Minified)",
+      "",
+      "| Bundle | Raw | Gzip | Brotli | Contents / Purpose |",
+      "| :--- | :--- | :--- | :--- | :--- |",
+      `| \`core.min.css\` | ${formatBytes(sizeBudget.bundles.core?.raw)} | ${formatBytes(sizeBudget.bundles.core?.gzip)} | ${formatBytes(sizeBudget.bundles.core?.brotli)} | Layers, reset, design tokens, themes, base styles |`,
+      `| \`layout.min.css\` | ${formatBytes(sizeBudget.bundles.layout?.raw)} | ${formatBytes(sizeBudget.bundles.layout?.gzip)} | ${formatBytes(sizeBudget.bundles.layout?.brotli)} | Primitives: stack, cluster, grid, sidebar, center |`,
+      `| \`utilities.min.css\` | ${formatBytes(sizeBudget.bundles.utilities?.raw)} | ${formatBytes(sizeBudget.bundles.utilities?.gzip)} | ${formatBytes(sizeBudget.bundles.utilities?.brotli)} | Accessibility, typography, tabular nums, flow |`,
+      `| \`enhancements.min.css\` | ${formatBytes(sizeBudget.bundles.enhancements?.raw)} | ${formatBytes(sizeBudget.bundles.enhancements?.gzip)} | ${formatBytes(sizeBudget.bundles.enhancements?.brotli)} | Opt-in Progressive Enhancements (@supports) |`,
+      `| \`experimental.min.css\` | ${formatBytes(sizeBudget.bundles.experimental?.raw)} | ${formatBytes(sizeBudget.bundles.experimental?.gzip)} | ${formatBytes(sizeBudget.bundles.experimental?.brotli)} | Bleeding-edge Chrome 133+ scroll-state queries |`,
+      `| \`compat.min.css\` | ${formatBytes(sizeBudget.bundles.compat?.raw)} | ${formatBytes(sizeBudget.bundles.compat?.gzip)} | ${formatBytes(sizeBudget.bundles.compat?.brotli)} | Complete framework without experimental enhancement syntax |`,
+      `| \`porchlight.min.css\` / \`full.min.css\` | ${formatBytes(sizeBudget.bundles.porchlight?.raw)} | ${formatBytes(sizeBudget.bundles.porchlight?.gzip)} | ${formatBytes(sizeBudget.bundles.porchlight?.brotli)} | Full framework (all 59 components, layout, utilities, enhancements) |`,
+      "",
+      '### "Core + N Components" Real-World Recipes',
+      "",
+      "When bundled together with your application bundler (or pre-bundled via LightningCSS/esbuild/Vite), shared layer directives and token definitions compress together. Real applications import far less than 14 KB:",
+      "",
+      "| Recipe / Use Case | Modules & Components Included | Raw | Gzip | Brotli | vs 14 KB Monolith |",
+      "| :--- | :--- | :--- | :--- | :--- | :--- |",
+    );
+
+    for (const r of sizeBudget.recipes) {
+      const vs14 = ((1 - r.gzip / 14336) * 100).toFixed(0);
+      lines.push(
+        `| **${r.name}** | \`${r.files.map((f) => f.replace(/^dist\/(components\/)?/, "").replace(/\.css$/, "")).join("` + `")}\` | ${formatBytes(r.raw)} | **${formatBytes(r.gzip)}** | **${formatBytes(r.brotli)}** | **-${vs14}% smaller** |`,
+      );
+    }
+
+    lines.push(
+      "",
+      "```css",
+      "/* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */",
+      "@layer porchlight, app;",
+      "",
+      '@import "@cawalch/porchlight/core.css";',
+      '@import "@cawalch/porchlight/layout.css";',
+      '@import "@cawalch/porchlight/components/button.css";',
+      '@import "@cawalch/porchlight/components/field.css";',
+      '@import "@cawalch/porchlight/components/card.css";',
+      '@import "@cawalch/porchlight/components/badge.css";',
+      '@import "@cawalch/porchlight/components/alert.css";',
+      "```",
+      "",
+    );
+  }
+
+  lines.push(
     "## Component Index",
     "",
-    "| Component | Primary Selector | Dependencies | Description |",
-    "| :--- | :--- | :--- | :--- |",
-  ];
+    "| Component | Primary Selector | Minified | Gzip | Brotli | Dependencies | Description |",
+    "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+  );
 
   for (const c of components) {
     const depStr =
       c.dependencies.length > 0
         ? c.dependencies.map((d) => `\`${d}\``).join(", ")
         : "None";
+    const minStr = c.sizes ? formatBytes(c.sizes.raw) : "-";
+    const gzStr = c.sizes ? formatBytes(c.sizes.gzip) : "-";
+    const brStr = c.sizes ? formatBytes(c.sizes.brotli) : "-";
     const tableDesc = c.description.replaceAll("|", "\\|");
     lines.push(
-      `| [${c.name}](#${c.name}) | \`${c.primarySelector}\` | ${depStr} | ${tableDesc} |`,
+      `| [${c.name}](#${c.name}) | \`${c.primarySelector}\` | ${minStr} | ${gzStr} | ${brStr} | ${depStr} | ${tableDesc} |`,
     );
   }
 
@@ -415,6 +516,11 @@ async function emitComponentsDoc(componentNames) {
     lines.push(`- **Minified Import**: \`${c.importMinifiedPath}\``);
     lines.push(`- **Dist File**: \`${c.cssFile}\``);
     lines.push(`- **Minified Dist File**: \`${c.minifiedFile}\``);
+    if (c.sizes) {
+      lines.push(
+        `- **Sizes**: ${formatBytes(c.sizes.raw)} minified, ${formatBytes(c.sizes.gzip)} gzip, ${formatBytes(c.sizes.brotli)} brotli`,
+      );
+    }
     if (c.dependencies.length > 0) {
       lines.push(
         `- **Dependencies**: ${c.dependencies.map((d) => `\`${d}\``).join(", ")}`,
@@ -550,9 +656,115 @@ for (const file of componentFiles) {
   });
 }
 
+await copyFile(resolve(outDir, "porchlight.css"), resolve(outDir, "full.css"));
+await copyFile(
+  resolve(outDir, "porchlight.min.css"),
+  resolve(outDir, "full.min.css"),
+);
+emitted.push({ file: "dist/full.css", bytes: emitted[0].bytes });
+emitted.push({ file: "dist/full.min.css", bytes: emitted[1].bytes });
+
+const sizeBudget = {
+  version: packageJson.version,
+  bundles: {},
+  recipes: [],
+  components: {},
+};
+
+for (const b of [
+  "core",
+  "layout",
+  "utilities",
+  "enhancements",
+  "experimental",
+  "components",
+  "compat",
+  "porchlight",
+  "full",
+]) {
+  const buf = await readFile(resolve(outDir, `${b}.min.css`));
+  sizeBudget.bundles[b] = measureBuffer(buf);
+}
+
+for (const name of componentNames) {
+  const buf = await readFile(resolve(outDir, `components/${name}.min.css`));
+  sizeBudget.components[name] = measureBuffer(buf);
+}
+
+const recipeConfigs = [
+  {
+    name: "Minimal Controls",
+    description: "Core form inputs and buttons",
+    files: [
+      "dist/core.css",
+      "dist/components/button.css",
+      "dist/components/field.css",
+    ],
+  },
+  {
+    name: "SaaS CRUD / Form Admin",
+    description: "Admin dashboards, settings consoles, and forms",
+    files: [
+      "dist/core.css",
+      "dist/layout.css",
+      "dist/components/button.css",
+      "dist/components/field.css",
+      "dist/components/card.css",
+      "dist/components/badge.css",
+      "dist/components/alert.css",
+    ],
+  },
+  {
+    name: "Analytics & KPI Dashboard",
+    description: "Telemetry, metrics, gauges, and tabular data",
+    files: [
+      "dist/core.css",
+      "dist/layout.css",
+      "dist/components/stat.css",
+      "dist/components/kpi-card.css",
+      "dist/components/badge.css",
+      "dist/components/data-table.css",
+      "dist/components/gauge.css",
+    ],
+  },
+  {
+    name: "Docs & Marketing Content",
+    description: "Documentation hubs, marketing pages, and content sites",
+    files: [
+      "dist/core.css",
+      "dist/layout.css",
+      "dist/components/card.css",
+      "dist/components/tabs.css",
+      "dist/components/accordion.css",
+      "dist/components/alert.css",
+      "dist/components/code-block.css",
+    ],
+  },
+];
+
+for (const r of recipeConfigs) {
+  const m = await measureRecipe(
+    r.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    r.files,
+  );
+  sizeBudget.recipes.push({
+    name: r.name,
+    description: r.description,
+    files: r.files,
+    raw: m.raw,
+    gzip: m.gzip,
+    brotli: m.brotli,
+  });
+}
+
+await writeFile(
+  resolve(outDir, "size-budget.json"),
+  `${JSON.stringify(sizeBudget, null, 2)}\n`,
+);
+
 const tokenDoc = await emitTokens();
 await emitManifest(componentNames);
-await emitComponentsDoc(componentNames);
+await emitComponentsDoc(componentNames, sizeBudget);
 await copyFile(
   resolve(repoRoot, "CHANGELOG.md"),
   resolve(root, "CHANGELOG.md"),
