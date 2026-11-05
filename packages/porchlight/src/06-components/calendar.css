@@ -384,8 +384,6 @@
         position-anchor: var(--pl-c-date-picker-anchor, auto);
         position-area: block-end span-inline-start;
         position-try-fallbacks: flip-block, flip-inline;
-        /* stylelint-disable-next-line declaration-property-value-no-unknown */
-        position-try-order: most-block-size;
         margin-block-start: var(--pl-space-2);
       }
     }
