@@ -27,7 +27,7 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `enhancements.min.css`                | 4.6 KB   | 1.1 KB  | 928 B   | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.1 KB   | 608 B   | 511 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
 | `compat.min.css`                      | 225.0 KB | 32.2 KB | 25.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 229.6 KB | 32.8 KB | 26.1 KB | Full framework (all 59 components, layout, utilities, enhancements) |
+| `porchlight.min.css` / `full.min.css` | 229.5 KB | 32.8 KB | 26.0 KB | Full framework (all 59 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -57,7 +57,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 
 | Component                             | Primary Selector         | Minified | Gzip   | Brotli | Dependencies | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | :------------------------------------ | :----------------------- | :------- | :----- | :----- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [accordion](#accordion)               | `.pl-c-accordion`        | 2.9 KB   | 908 B  | 737 B  | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
+| [accordion](#accordion)               | `.pl-c-accordion`        | 2.8 KB   | 901 B  | 730 B  | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
 | [action-bar](#action-bar)             | `.pl-c-action-bar`       | 4.1 KB   | 1.2 KB | 1010 B | None         | A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.                                                                                                                                                                                                                                      |
 | [alert](#alert)                       | `.pl-c-alert`            | 1.7 KB   | 616 B  | 508 B  | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                                                                                                                             |
 | [audit-stream](#audit-stream)         | `.pl-c-audit-stream`     | 2.8 KB   | 825 B  | 698 B  | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                                                                                                                                |
@@ -128,7 +128,7 @@ A collapsible disclosure built on native <details>/<summary>. Animates open/clos
 - **Minified Import**: `@cawalch/porchlight/components/accordion.min.css`
 - **Dist File**: `dist/components/accordion.css`
 - **Minified Dist File**: `dist/components/accordion.min.css`
-- **Sizes**: 2.9 KB minified, 908 B gzip, 737 B brotli
+- **Sizes**: 2.8 KB minified, 901 B gzip, 730 B brotli
 - **Dependencies**: None
 
 ```css
