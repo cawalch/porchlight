@@ -89,3 +89,28 @@ test("the contained app-shell demo retains the framework sticky topbar", async (
     page.locator("[data-app-shell] > .pl-l-app-shell__topbar"),
   ).toHaveCSS("position", "sticky");
 });
+
+test("enhancements preview sticky bar does not obstruct the docs header when page is scrolled", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 600 });
+  await page.goto("./preview/enhancements");
+  const siteHeader = page.locator(".site-header");
+  const stickyDemo = page.locator(".sticky-demo");
+  const demoBox = (await stickyDemo.boundingBox())!;
+
+  // Scroll page so the sticky demo passes directly under the docs site-header
+  await page.evaluate((y) => window.scrollTo(0, y), demoBox.y + 40);
+
+  const headerUnobstructed = await siteHeader.evaluate((header) => {
+    const box = header.getBoundingClientRect();
+    for (let x = box.left + 8; x < box.right; x += 16) {
+      for (let y = box.top + 8; y < box.bottom; y += 16) {
+        const el = document.elementFromPoint(x, y);
+        if (!header.contains(el)) return false;
+      }
+    }
+    return true;
+  });
+  expect(headerUnobstructed).toBe(true);
+});

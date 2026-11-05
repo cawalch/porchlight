@@ -13,6 +13,11 @@
     border: 1px solid var(--pl-color-border);
     border-radius: var(--pl-radius-lg);
     background: var(--pl-color-surface);
+    isolation: isolate;
+  }
+
+  .pl-c-sticky-shell {
+    isolation: isolate;
   }
 
   .pl-c-scroll-region > * {
