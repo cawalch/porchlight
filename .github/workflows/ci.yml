@@ -17,8 +17,10 @@ permissions:
   contents: read
 
 jobs:
-  ci:
+  lint:
+    name: Lint & Typecheck
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -42,6 +44,51 @@ jobs:
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level=high
 
+      - name: Lint CSS
+        run: pnpm lint
+
+      - name: Lint JS/TS
+        run: pnpm lint:js
+
+      - name: Check namespace contracts
+        run: pnpm namespace:check
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Check LLM docs
+        run: node docs/scripts/generate-llms.mjs --check
+
+      - name: Type-check docs
+        run: pnpm --filter ./docs astro:check
+
+      - name: Build framework (single-file dist)
+        run: pnpm --filter @cawalch/porchlight build
+
+  test:
+    name: Playwright Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Get Playwright version
         id: pw-version
         run: |
@@ -57,33 +104,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      - name: Lint CSS
-        run: pnpm lint
-
-      - name: Lint JS/TS
-        run: pnpm lint:js
-
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Check LLM docs
-        run: node docs/scripts/generate-llms.mjs --check
-
-      - name: Type-check docs
-        run: pnpm --filter ./docs astro:check
-
       - name: Build framework (single-file dist)
         run: pnpm --filter @cawalch/porchlight build
 
-      - name: Build docs
-        run: pnpm --filter ./docs build
-
-      - name: Install Playwright browsers
-        run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit
-
-      # Stable Chrome 154+ verifies native marker tabs; Firefox/WebKit exercise fallback.
-      - name: Install Chrome stable
-        run: pnpm --filter ./docs exec playwright install --with-deps chrome
+      # Single consolidated installation step avoids duplicate apt-get updates and mirror stalls.
+      - name: Install Playwright browsers and dependencies
+        timeout-minutes: 6
+        run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit chrome
 
       - name: Run tests
         run: pnpm --filter ./docs test
@@ -116,7 +143,7 @@ jobs:
   # Then create a GitHub environment named `main` (Settings → Environments).
   release:
     name: Publish to npm & GitHub Release
-    needs: ci
+    needs: [lint, test]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     environment: main
