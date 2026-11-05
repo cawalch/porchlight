@@ -22,12 +22,12 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
 | `core.min.css`                        | 12.0 KB  | 3.2 KB  | 2.7 KB  | Layers, reset, design tokens, themes, base styles                   |
-| `layout.min.css`                      | 2.8 KB   | 960 B   | 797 B   | Primitives: stack, cluster, grid, sidebar, center                   |
+| `layout.min.css`                      | 3.2 KB   | 1.0 KB  | 866 B   | Primitives: stack, cluster, grid, sidebar, center                   |
 | `utilities.min.css`                   | 2.8 KB   | 885 B   | 755 B   | Accessibility, typography, tabular nums, flow                       |
-| `enhancements.min.css`                | 4.6 KB   | 1.1 KB  | 928 B   | Opt-in Progressive Enhancements (@supports)                         |
-| `experimental.min.css`                | 2.1 KB   | 608 B   | 511 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 225.0 KB | 32.2 KB | 25.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 229.5 KB | 32.8 KB | 26.0 KB | Full framework (all 59 components, layout, utilities, enhancements) |
+| `enhancements.min.css`                | 6.4 KB   | 1.5 KB  | 1.3 KB  | Opt-in Progressive Enhancements (@supports)                         |
+| `experimental.min.css`                | 2.3 KB   | 669 B   | 563 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
+| `compat.min.css`                      | 225.6 KB | 32.3 KB | 25.7 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 231.9 KB | 33.3 KB | 26.3 KB | Full framework (all 59 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -36,9 +36,9 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
 | :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
 | **Minimal Controls**          | `core` + `button` + `field`                                                | 24.3 KB | **5.5 KB** | **4.8 KB** | **-61% smaller**  |
-| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 34.7 KB | **7.3 KB** | **6.4 KB** | **-48% smaller**  |
-| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 34.6 KB | **7.1 KB** | **6.2 KB** | **-49% smaller**  |
-| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 31.4 KB | **6.7 KB** | **5.9 KB** | **-52% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 35.1 KB | **7.4 KB** | **6.5 KB** | **-47% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 35.0 KB | **7.2 KB** | **6.3 KB** | **-49% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 31.8 KB | **6.8 KB** | **6.0 KB** | **-51% smaller**  |
 
 ```css
 /* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */
@@ -115,7 +115,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [toolbar](#toolbar)                   | `.pl-c-toolbar`          | 1.7 KB   | 628 B  | 526 B  | None         | A horizontal bar grouping actions above a data region - the SaaS "action bar" on top of tables, lists, and canvases. Pairs a leading cluster (search, filters, bulk actions) with a trailing cluster (primary actions, overflow menu). On narrow containers the two halves wrap independently.                                                                                                                                           |
 | [tooltip](#tooltip)                   | `.pl-c-tooltip`          | 3.3 KB   | 810 B  | 669 B  | None         | A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning. Zero JavaScript for positioning. Auto-flips when near viewport edges via position-try-fallbacks.                                                                                                                                                                                                                                                             |
 | [tree](#tree)                         | `.pl-c-tree`             | 6.2 KB   | 1.5 KB | 1.3 KB | None         | A CSS-only tree view for app navigation, object explorers, process folders, rule libraries, and other nested SaaS/BPM structures.                                                                                                                                                                                                                                                                                                        |
-| [workflow-board](#workflow-board)     | `.pl-c-workflow-board`   | 7.6 KB   | 1.7 KB | 1.5 KB | None         | A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/count metadata, and visual state hooks for app-owned drag/drop.                                                                                                                                                                                                                                                                                            |
+| [workflow-board](#workflow-board)     | `.pl-c-workflow-board`   | 7.8 KB   | 1.8 KB | 1.5 KB | None         | A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/count metadata, and visual state hooks for app-owned drag/drop.                                                                                                                                                                                                                                                                                            |
 
 ## Component Details
 
@@ -1056,7 +1056,7 @@ A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/co
 - **Minified Import**: `@cawalch/porchlight/components/workflow-board.min.css`
 - **Dist File**: `dist/components/workflow-board.css`
 - **Minified Dist File**: `dist/components/workflow-board.min.css`
-- **Sizes**: 7.6 KB minified, 1.7 KB gzip, 1.5 KB brotli
+- **Sizes**: 7.8 KB minified, 1.8 KB gzip, 1.5 KB brotli
 - **Dependencies**: None
 
 ```css

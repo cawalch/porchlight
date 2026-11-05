@@ -115,6 +115,20 @@
       min-inline-size: 0;
     }
 
+    /* Reading flow (Chrome 137+ / CSS Display Level 4): ensures keyboard tab navigation
+       flows visually along lanes whether arranged in rows or horizontal scroll columns. */
+    @supports (reading-flow: grid-rows) {
+      .pl-c-workflow-board__lanes:not([data-scroll="inline"]) {
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        reading-flow: grid-rows;
+      }
+
+      .pl-c-workflow-board__lanes[data-scroll="inline"] {
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        reading-flow: grid-columns;
+      }
+    }
+
     .pl-c-workflow-board__lanes[data-scroll="inline"] {
       grid-auto-columns: var(--pl-c-workflow-board-lane-size);
       grid-auto-flow: column;

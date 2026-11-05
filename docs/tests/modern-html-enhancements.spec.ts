@@ -89,4 +89,77 @@ test.describe("modern HTML platform enhancements", () => {
     });
     expect(optionStyle.length).toBeGreaterThan(0);
   });
+
+  test("enhancements preview exposes reading-flow, pure-CSS stagger, and calc-size", async ({
+    page,
+  }) => {
+    await page.goto("./preview/enhancements");
+
+    // Reading flow grid
+    const readingGrid = page.locator("#reading-flow-grid");
+    await expect(readingGrid).toBeVisible();
+    await expect(readingGrid).toHaveAttribute("data-reading-flow", "rows");
+
+    // Pure-CSS sibling stagger container and items
+    const staggerGroup = page.locator("#stagger-demo-container");
+    await expect(staggerGroup).toBeVisible();
+    const staggerItems = staggerGroup.locator(".demo-stagger-item");
+    await expect(staggerItems).toHaveCount(5);
+
+    // calc-size demo
+    const calcSizeDemo = page.locator("#calc-size-demo");
+    await expect(calcSizeDemo).toBeVisible();
+    await expect(calcSizeDemo).toHaveAttribute("data-calc-size", "intrinsic");
+  });
+
+  test("anchored menus and tooltips support position-try-order and view-transition-class", async ({
+    page,
+  }) => {
+    await page.goto("./preview/dropdown");
+
+    const result = await page.evaluate(() => {
+      const supportsPositionTryOrder = CSS.supports(
+        "position-try-order",
+        "most-block-size",
+      );
+      const supportsViewTransitionClass = CSS.supports(
+        "view-transition-class",
+        "pl-c-card",
+      );
+      const supportsReadingFlow = CSS.supports("reading-flow", "grid-rows");
+
+      // Verify rule definitions in loaded stylesheets
+      let foundPositionTryOrder = false;
+      let foundViewTransitionClass = false;
+      let foundReadingFlow = false;
+
+      for (const sheet of Array.from(document.styleSheets)) {
+        try {
+          for (const rule of Array.from(sheet.cssRules)) {
+            const cssText = rule.cssText;
+            if (cssText.includes("position-try-order"))
+              foundPositionTryOrder = true;
+            if (cssText.includes("view-transition-class"))
+              foundViewTransitionClass = true;
+            if (cssText.includes("reading-flow")) foundReadingFlow = true;
+          }
+        } catch {
+          // Cross-origin sheets ignored
+        }
+      }
+
+      return {
+        supportsPositionTryOrder,
+        supportsViewTransitionClass,
+        supportsReadingFlow,
+        foundPositionTryOrder,
+        foundViewTransitionClass,
+        foundReadingFlow,
+      };
+    });
+
+    expect(result.foundPositionTryOrder).toBe(true);
+    expect(result.foundViewTransitionClass).toBe(true);
+    expect(result.foundReadingFlow).toBe(true);
+  });
 });
