@@ -5,12 +5,12 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.16.0] - 2026-11-05
 
 ### Added
 
 - Add modern CSS Level 4/5 enhancements for visual navigation, anchor placement, and dynamic sequence delays:
-  - Add Reading Flow (`reading-flow: grid-rows` and `reading-flow: flex-visual`, Chrome 137+) to `.pl-l-grid`, `.pl-l-cluster`, and `.pl-c-workflow-board__lanes`, reconciling visual order with keyboard focus order (<kbd>Tab</kbd> navigation) when items are visually placed or wrapped.
+  - Add Reading Flow (`reading-flow: grid-rows`, `reading-flow: grid-columns`, and `reading-flow: flex-visual`, Chrome 137+) to `.pl-l-grid`, `.pl-l-cluster`, and `.pl-c-workflow-board__lanes`, reconciling visual order with keyboard focus order (<kbd>Tab</kbd> navigation) when items are visually placed or wrapped.
   - Add Pure-CSS Dynamic Stagger via `sibling-index()` & `sibling-count()` (Chrome 138+ Baseline) for `[data-stagger]`, generating dynamic staggered animation delays without runtime JavaScript or hardcoded `:nth-child` loops.
   - Add Anchor Fallback Space Maximization (`position-try-order: most-block-size`, Chrome 129+) across anchored surfaces (`.pl-c-dropdown__menu`, `.pl-c-menu__popover`, `.pl-c-tooltip__body`, `.pl-c-split__menu`, `.pl-c-calendar__popover`, `.pl-c-date-picker__popover`), choosing the position fallback that affords the most vertical block-size to avoid truncated menus in cramped viewports.
   - Add Intrinsic Math (`calc-size()`, Chrome 129+) on expandable surfaces (`[data-calc-size="intrinsic"]`, `.pl-c-banner`, `.pl-c-drawer__panel`, `.pl-c-reveal`, `.pl-c-accordion__item`), enabling mathematical expressions directly on intrinsic keywords (`auto`, `max-content`).
@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for custom `<button>` and `<selectedcontent>` inside `select.pl-c-field__control--select`, enabling rich option faces (icons, badges, avatars) with native accessibility.
   - Add zero-JS carousel arrow navigation (`::scroll-button(inline-start)` and `::scroll-button(inline-end)`) to `.pl-c-panel-deck[data-controls="buttons"]`.
   - Add native switch attribute support (`<input type="checkbox" switch>`) to `.pl-c-switch`.
+
+### Changed
+
+- Parallelize CI pipeline into concurrent `Lint & Typecheck` (~30s) and `Playwright Tests` jobs in `.github/workflows/ci.yml`, consolidating Playwright browser/system dependency installation into a single run to prevent Ubuntu mirror apt hangs.
+- Streamline Stylelint configuration in `.stylelintrc.json` using native RegExp patterns for modern CSS properties and values, eliminating inline disable comments across all components.
+- Upgrade Astro content collection schema definitions in `docs/src/content.config.ts` to `astro/zod`, eliminating deprecation warnings.
 
 ## [0.15.0] - 2026-11-02
 
