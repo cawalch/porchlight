@@ -5,6 +5,13 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.1] - 2026-11-05
+
+### Fixed
+
+- Add `isolation: isolate` to `.pl-c-scroll-region` and `.pl-c-sticky-shell`, preventing internal sticky headers and pseudo-element stuck indicators from bleeding out into outer parent layers.
+- Elevate documentation `.site-header` to `z-index: 500` and isolate `#main` / `#docs-article`, preventing in-page sticky demo bars from overlapping global site navigation on page scroll.
+
 ## [0.16.0] - 2026-11-05
 
 ### Added
