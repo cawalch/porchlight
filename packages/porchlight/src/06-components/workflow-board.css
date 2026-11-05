@@ -119,12 +119,10 @@
        flows visually along lanes whether arranged in rows or horizontal scroll columns. */
     @supports (reading-flow: grid-rows) {
       .pl-c-workflow-board__lanes:not([data-scroll="inline"]) {
-        /* stylelint-disable-next-line declaration-property-value-no-unknown */
         reading-flow: grid-rows;
       }
 
       .pl-c-workflow-board__lanes[data-scroll="inline"] {
-        /* stylelint-disable-next-line declaration-property-value-no-unknown */
         reading-flow: grid-columns;
       }
     }

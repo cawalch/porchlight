@@ -44,7 +44,6 @@
         scroll-target-group: auto;
       }
 
-      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native current fragment target. */
       .pl-c-section-nav__link:target-current {
         border-inline-start-color: var(--pl-c-section-nav-current);
         background: var(--pl-color-surface-2);
@@ -58,7 +57,6 @@
         --pl-c-section-nav-current: LinkText;
       }
 
-      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Non-color cue for high-contrast accessibility. */
       .pl-c-section-nav__link:target-current {
         text-decoration: underline;
         text-underline-offset: 0.2em;
