@@ -210,7 +210,6 @@
       transition: background var(--pl-duration-1) var(--pl-ease-standard);
     }
 
-    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
     .pl-c-tabs[data-markers="scroll"]
       [role="tabpanel"]::scroll-marker:target-current {
       background: var(--pl-color-accent);

@@ -344,7 +344,6 @@
       .pl-c-dropdown__menu,
       .pl-c-inspector[data-tether="true"]
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       position-visibility: anchors-visible;
     }
   }
@@ -381,7 +380,6 @@
       .pl-c-calendar__popover,
       .pl-c-date-picker__popover
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       position-try-order: most-block-size;
     }
   }
@@ -395,12 +393,10 @@
       .pl-l-grid[data-reading-flow="true"],
       .pl-l-grid[data-reading-flow]
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: grid-rows;
     }
 
     :where(.pl-l-grid[data-reading-flow="columns"]) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: grid-columns;
     }
   }
@@ -413,7 +409,6 @@
       .pl-c-workflow-board[data-reading-flow],
       .pl-c-workflow-board__lanes[data-reading-flow]
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: flex-visual;
     }
   }

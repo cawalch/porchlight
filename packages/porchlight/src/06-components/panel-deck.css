@@ -83,7 +83,6 @@
       background: var(--pl-color-surface-2);
     }
 
-    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
     .pl-c-panel-deck__panel::scroll-marker:target-current,
     .pl-c-panel-deck__panel::scroll-marker:checked {
       border-color: var(--pl-color-accent);
@@ -126,7 +125,6 @@
       background: var(--pl-color-text-muted);
     }
 
-    /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
     .pl-c-panel-deck[data-markers="dots"]
       > .pl-c-panel-deck__panel::scroll-marker:target-current {
       background: var(--pl-color-accent);
@@ -189,7 +187,6 @@
     }
 
     @media (forced-colors: active) {
-      /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
       .pl-c-panel-deck__panel::scroll-marker:target-current {
         border-color: Highlight;
         color: Highlight;

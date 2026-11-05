@@ -40,7 +40,6 @@
       .pl-l-cluster[data-reading-flow="true"],
       .pl-l-cluster[data-reading-flow]
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: flex-visual;
     }
   }
@@ -65,12 +64,10 @@
       .pl-l-grid[data-reading-flow="true"],
       .pl-l-grid[data-reading-flow]
     ) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: grid-rows;
     }
 
     :where(.pl-l-grid[data-reading-flow="columns"]) {
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       reading-flow: grid-columns;
     }
   }

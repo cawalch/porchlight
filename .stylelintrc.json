@@ -58,15 +58,15 @@
       {
         "ignoreProperties": {
           "transform-origin": ["/^inline-/", "/^block-/"],
-          "reading-flow": [".*"],
-          "position-try-order": [".*"],
-          "view-transition-class": [".*"],
-          "position-visibility": [".*"],
-          "animation-delay": [".*sibling-index.*", ".*sibling-count.*"],
-          "block-size": [".*calc-size.*"],
-          "max-block-size": [".*calc-size.*"],
-          "max-inline-size": [".*calc-size.*"],
-          "grid-template-rows": [".*masonry.*"]
+          "reading-flow": ["/.*/"],
+          "position-try-order": ["/.*/"],
+          "view-transition-class": ["/.*/"],
+          "position-visibility": ["/.*/"],
+          "animation-delay": ["/.*sibling-index.*/", "/.*sibling-count.*/"],
+          "block-size": ["/.*calc-size.*/"],
+          "max-block-size": ["/.*calc-size.*/"],
+          "max-inline-size": ["/.*calc-size.*/"],
+          "grid-template-rows": ["/.*masonry.*/"]
         }
       }
     ],
