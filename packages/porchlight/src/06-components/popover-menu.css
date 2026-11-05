@@ -76,6 +76,8 @@
         position-anchor: var(--pl-c-menu-anchor, auto);
         position-area: var(--pl-c-menu-position-area);
         position-try-fallbacks: var(--pl-c-menu-position-try-fallbacks);
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        position-try-order: most-block-size;
         margin-block-start: var(--pl-c-menu-offset-block);
         margin-inline-start: var(--pl-c-menu-offset-inline);
       }

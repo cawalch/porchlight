@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add modern CSS Level 4/5 enhancements for visual navigation, anchor placement, and dynamic sequence delays:
+  - Add Reading Flow (`reading-flow: grid-rows` and `reading-flow: flex-visual`, Chrome 137+) to `.pl-l-grid`, `.pl-l-cluster`, and `.pl-c-workflow-board__lanes`, reconciling visual order with keyboard focus order (<kbd>Tab</kbd> navigation) when items are visually placed or wrapped.
+  - Add Pure-CSS Dynamic Stagger via `sibling-index()` & `sibling-count()` (Chrome 138+ Baseline) for `[data-stagger]`, generating dynamic staggered animation delays without runtime JavaScript or hardcoded `:nth-child` loops.
+  - Add Anchor Fallback Space Maximization (`position-try-order: most-block-size`, Chrome 129+) across anchored surfaces (`.pl-c-dropdown__menu`, `.pl-c-menu__popover`, `.pl-c-tooltip__body`, `.pl-c-split__menu`, `.pl-c-calendar__popover`, `.pl-c-date-picker__popover`), choosing the position fallback that affords the most vertical block-size to avoid truncated menus in cramped viewports.
+  - Add Intrinsic Math (`calc-size()`, Chrome 129+) on expandable surfaces (`[data-calc-size="intrinsic"]`, `.pl-c-banner`, `.pl-c-drawer__panel`, `.pl-c-reveal`, `.pl-c-accordion__item`), enabling mathematical expressions directly on intrinsic keywords (`auto`, `max-content`).
+  - Add Batch View Transition Classes (`view-transition-class: pl-c-card`, Chrome 125+) for `.pl-c-card[data-transition]` and `.pl-c-workflow-card[data-transition]`, allowing unified multi-element page and layout transitions without per-element name enumeration.
+  - Add Native CSS Grid Masonry (`grid-template-rows: masonry`) to `experimental.css` on `.pl-l-grid[data-masonry="true"]`.
 - Support modern HTML platform enhancements and zero-JS declarative component contracts:
   - Add HTML Invoker Commands (`commandfor` and `command="show-modal"` / `command="close"`) and declarative light-dismiss (`<dialog closedby="any">`) to `.pl-c-dialog`.
   - Add progressive enhancement for `::details-content` to `.pl-c-accordion`, eliminating the need for intermediate `.pl-c-accordion__panel` wrapper elements in modern browsers (Chrome 131+, Safari 18.4+).

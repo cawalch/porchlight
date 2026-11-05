@@ -14,12 +14,15 @@
  *      [data-dividers] on .pl-l-grid, .pl-l-cluster, and .pl-c-split-pane.
  *   4. Advanced typed attr(): a .pl-c-swatch that reads its color from a
  *      data-color attribute, type-checked as <color>.
- *   5. View Transitions: opt-in cross-document page animations (Baseline 2026).
+ *   5. View Transitions: opt-in cross-document page animations and view-transition-class.
  *   6. Style container queries: cascade density and tone tokens to descendants
  *      via custom properties (--pl-density, --pl-tone) without DOM duplication.
  *   7. Elastic IDE Form Controls: field-sizing: content on token inputs.
- *   8. Pure-CSS keyword size interpolation: 60fps smooth height:auto transitions.
+ *   8. Pure-CSS keyword size interpolation & intrinsic math (calc-size): 60fps smooth height:auto transitions.
  *   9. Anchor-tethered visibility: auto-hide popover when anchor scrolls offscreen.
+ *  10. Pure-CSS sibling stagger: sibling-index() & sibling-count() dynamic delay sequences.
+ *  11. Anchor space-maximization: position-try-order: most-block-size for floating surfaces.
+ *  12. Reading flow reconciliation: reading-flow: grid-rows | flex-visual for keyboard navigation.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
  * critical path; everything below is opt-in via @supports.
@@ -111,6 +114,29 @@
       from {
         opacity: 0;
       }
+    }
+  }
+
+  /* 5b. View Transition Classes (CSS View Transitions Level 2 / Chrome 125+):
+     Batch styling of card and component transitions without repetitive per-name selectors. */
+  @supports (view-transition-class: pl-c-card) {
+    :where(.pl-c-card[data-transition], .pl-c-workflow-card[data-transition]) {
+      view-transition-class: pl-c-card;
+    }
+
+    ::view-transition-group(*.pl-c-card) {
+      animation-duration: var(--pl-duration-enter);
+      animation-timing-function: var(--pl-ease-standard);
+    }
+
+    ::view-transition-old(*.pl-c-card) {
+      animation: var(--pl-duration-exit) var(--pl-ease-accelerate) both
+        pl-fade-out;
+    }
+
+    ::view-transition-new(*.pl-c-card) {
+      animation: var(--pl-duration-enter) var(--pl-ease-decelerate) both
+        pl-fade-in;
     }
   }
 
@@ -286,15 +312,27 @@
     }
   }
 
-  /* 8. Pure-CSS keyword size interpolation: 60fps smooth height:auto transitions on expandable surfaces. */
+  /* 8. Pure-CSS keyword size interpolation & intrinsic math (Chrome 129+):
+     60fps smooth height:auto transitions on expandable surfaces and intrinsic sizing calculations. */
   @supports (interpolate-size: allow-keywords) {
     :where(
       .pl-c-banner,
       .pl-c-reveal,
       .pl-c-tree__children,
-      .pl-c-drawer__panel
+      .pl-c-drawer__panel,
+      .pl-c-accordion__item
     ) {
       interpolate-size: allow-keywords;
+    }
+  }
+
+  @supports (block-size: calc-size(auto, size)) {
+    :where([data-calc-size="intrinsic"]) {
+      block-size: calc-size(auto, size);
+    }
+
+    :where([data-calc-size="intrinsic-padded"]) {
+      max-inline-size: calc-size(max-content, size + var(--pl-space-4));
     }
   }
 
@@ -308,6 +346,75 @@
     ) {
       /* stylelint-disable-next-line declaration-property-value-no-unknown */
       position-visibility: anchors-visible;
+    }
+  }
+
+  /* 10. Pure-CSS sibling stagger: sibling-index() & sibling-count() (Chrome 138+ Baseline).
+     Calculates dynamic animation delays for items in grids, lists, workflow boards,
+     and menus without client-side scripts or brittle :nth-child loops. */
+  @supports (animation-delay: calc(sibling-index() * 1ms)) {
+    :where([data-stagger]) > * {
+      --pl-stagger-step: 35ms;
+      --pl-stagger-base: 0ms;
+
+      animation-delay: calc(
+        var(--pl-stagger-base) + (sibling-index() - 1) * var(--pl-stagger-step)
+      );
+    }
+
+    :where([data-stagger="reverse"]) > * {
+      animation-delay: calc(
+        var(--pl-stagger-base) + (sibling-count() - sibling-index()) *
+          var(--pl-stagger-step)
+      );
+    }
+  }
+
+  /* 11. Anchor space-maximization (Chrome 129+): position-try-order picks the fallback
+     offering the most vertical block-size to avoid truncated menus in cramped viewports. */
+  @supports (position-try-order: most-block-size) {
+    :where(
+      .pl-c-tooltip__body,
+      .pl-c-menu__popover,
+      .pl-c-dropdown__menu,
+      .pl-c-split__menu,
+      .pl-c-calendar__popover,
+      .pl-c-date-picker__popover
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      position-try-order: most-block-size;
+    }
+  }
+
+  /* 12. Reading flow reconciliation (Chrome 137+ / CSS Display Level 4):
+     Ensures sequential keyboard navigation (<kbd>Tab</kbd>) matches visual order
+     when items are visually reordered in grids or flex layouts. */
+  @supports (reading-flow: grid-rows) {
+    :where(
+      .pl-l-grid[data-reading-flow="rows"],
+      .pl-l-grid[data-reading-flow="true"],
+      .pl-l-grid[data-reading-flow]
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: grid-rows;
+    }
+
+    :where(.pl-l-grid[data-reading-flow="columns"]) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: grid-columns;
+    }
+  }
+
+  @supports (reading-flow: flex-visual) {
+    :where(
+      .pl-l-cluster[data-reading-flow="visual"],
+      .pl-l-cluster[data-reading-flow="true"],
+      .pl-l-cluster[data-reading-flow],
+      .pl-c-workflow-board[data-reading-flow],
+      .pl-c-workflow-board__lanes[data-reading-flow]
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: flex-visual;
     }
   }
 }

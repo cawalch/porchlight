@@ -98,9 +98,63 @@ Inputs and query builder tokens automatically expand and shrink to fit their typ
 />
 ```
 
-## Anchor-Tethered Visibility (`position-visibility: anchors-visible`)
+## Anchor-Tethered Visibility & Space Maximization (`position-visibility` & `position-try-order`)
 
-Popovers, tooltips, and floating inspection brackets tethered to table rows automatically vanish when their anchor element scrolls outside the viewport bounds, preventing disconnected overlay artifacts.
+Popovers, tooltips, and floating inspection brackets automatically adapt to viewport boundaries using native anchor positioning enhancements:
+
+- `position-visibility: anchors-visible`: Automatically conceals the overlay when its anchor element scrolls outside viewport bounds, preventing orphan floating artifacts.
+- `position-try-order: most-block-size`: Instructs the layout engine to evaluate position fallbacks and pick the one providing the largest vertical block-size, maximizing visible menu rows in cramped viewports.
+
+## Pure-CSS Dynamic Stagger (`sibling-index()` & `sibling-count()`)
+
+Children of containers marked with `[data-stagger]` dynamically compute their animation delays using CSS Values & Units Level 5 functions without JavaScript or rigid `:nth-child` loops:
+
+```html
+<div class="pl-l-grid" data-stagger="true">
+  <div class="pl-c-card">Card 1</div>
+  <div class="pl-c-card">Card 2</div>
+  <div class="pl-c-card">Card 3</div>
+</div>
+```
+
+The base delay formula calculates:
+`calc(var(--pl-stagger-base, 0ms) + (sibling-index() - 1) * var(--pl-stagger-step, 35ms))`.
+Use `data-stagger="reverse"` to stagger from bottom to top using `sibling-count()`.
+
+## Reading Flow Reconciliation (`reading-flow`)
+
+Reconciles visual grid or flex layout order with keyboard sequential navigation (<kbd>Tab</kbd> order) and assistive technology reading paths:
+
+- `.pl-l-grid[data-reading-flow="rows"]` (or `[data-reading-flow]`): Navigates cell-by-cell along visual horizontal rows.
+- `.pl-l-grid[data-reading-flow="columns"]`: Navigates column-by-column along visual tracks.
+- `.pl-l-cluster[data-reading-flow="visual"]`: Navigates in visual order across wrapped flex lines.
+- `.pl-c-workflow-board__lanes`: Seamlessly aligns navigation direction with horizontal board scrolling vs stacked lane rows.
+
+## Intrinsic Math (`calc-size()`)
+
+Enables mathematical expressions on intrinsic sizing keywords alongside `interpolate-size: allow-keywords`:
+
+```html
+<div class="pl-c-banner" data-calc-size="intrinsic">
+  <!-- Smoothly interpolates and sizes to content + offset -->
+</div>
+```
+
+## Batch View Transition Classes (`view-transition-class`)
+
+Applies uniform view transition motion across multiple elements without per-element name enumeration:
+
+```css
+::view-transition-group(*.pl-c-card) {
+  animation-duration: var(--pl-duration-enter);
+}
+```
+
+Components with `[data-transition]` (such as `.pl-c-card` and `.pl-c-workflow-card`) automatically bind to `view-transition-class: pl-c-card`.
+
+## Native Grid Masonry (`experimental.css`)
+
+For bleeding-edge runtimes supporting CSS Grid Level 3 Masonry (`grid-template-rows: masonry`), `.pl-l-grid[data-masonry="true"]` automatically packs cards into gapless columns without multi-column DOM partitioning.
 
 ## Checking browser support
 

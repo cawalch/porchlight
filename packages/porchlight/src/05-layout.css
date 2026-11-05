@@ -32,6 +32,19 @@
     gap: var(--pl-l-cluster-gap, var(--pl-space-3));
   }
 
+  /* Visual reading flow (Chrome 137+ / CSS Display Level 4): keeps sequential
+     keyboard navigation (<kbd>Tab</kbd>) in sync with visual wrapping order. */
+  @supports (reading-flow: flex-visual) {
+    :where(
+      .pl-l-cluster[data-reading-flow="visual"],
+      .pl-l-cluster[data-reading-flow="true"],
+      .pl-l-cluster[data-reading-flow]
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: flex-visual;
+    }
+  }
+
   /* Auto-fitting grid  -  dashboard widgets, KPI cards, result tiles. Each
      track is at least --pl-l-grid-min wide (clamped to 100% so a single item
      never overflows) and grows to fill. */
@@ -42,6 +55,24 @@
       auto-fit,
       minmax(min(var(--pl-l-grid-min, 16rem), 100%), 1fr)
     );
+  }
+
+  /* Visual reading flow (Chrome 137+ / CSS Display Level 4): keeps sequential
+     keyboard navigation (<kbd>Tab</kbd>) in sync with visual rows/columns. */
+  @supports (reading-flow: grid-rows) {
+    :where(
+      .pl-l-grid[data-reading-flow="rows"],
+      .pl-l-grid[data-reading-flow="true"],
+      .pl-l-grid[data-reading-flow]
+    ) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: grid-rows;
+    }
+
+    :where(.pl-l-grid[data-reading-flow="columns"]) {
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      reading-flow: grid-columns;
+    }
   }
 
   /* Subgrid rows  -  when items (such as .pl-c-card) span multiple rows, the

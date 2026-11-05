@@ -92,6 +92,8 @@
         margin-block-end: var(--pl-space-2);
         margin-inline: var(--pl-space-2);
         position-try-fallbacks: flip-block;
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        position-try-order: most-block-size;
       }
     }
 
@@ -148,6 +150,8 @@
       margin-block-end: var(--pl-space-2);
       margin-inline: var(--pl-space-2);
       position-try-fallbacks: flip-block;
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      position-try-order: most-block-size;
     }
   }
 

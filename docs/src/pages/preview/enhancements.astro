@@ -124,6 +124,39 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <span class="pl-u-muted">Filter:</span>
     <input type="text" class="pl-c-field__control pl-c-field__input" data-elastic="true" value="env:production-us-east-1" aria-label="Elastic query filter" style="font-family: var(--pl-font-mono); font-size: var(--pl-text-xs);" />
   </div>
+
+  <h2>Pure-CSS Sibling Stagger (sibling-index() &amp; sibling-count())</h2>
+  <p>
+    Child elements inside <code>[data-stagger]</code> calculate staggered animation delays
+    automatically with zero JavaScript and no <code>:nth-child</code> loops.
+  </p>
+  <div id="stagger-demo-container" class="pl-l-cluster demo-stagger-group" data-stagger="true">
+    <div class="demo-stagger-item">Staggered Card 1</div>
+    <div class="demo-stagger-item">Staggered Card 2</div>
+    <div class="demo-stagger-item">Staggered Card 3</div>
+    <div class="demo-stagger-item">Staggered Card 4</div>
+    <div class="demo-stagger-item">Staggered Card 5</div>
+  </div>
+
+  <h2>Reading Flow (reading-flow: grid-rows)</h2>
+  <p>
+    Reconciles visual grid layout with keyboard <kbd>Tab</kbd> navigation.
+    Sequential navigation follows visual row order rather than source DOM order.
+  </p>
+  <div id="reading-flow-grid" class="pl-l-grid demo-reading-flow" data-reading-flow="rows" style="--pl-l-grid-min: 8rem;">
+    <button class="pl-c-button" data-variant="secondary">Flow 1</button>
+    <button class="pl-c-button" data-variant="secondary">Flow 2</button>
+    <button class="pl-c-button" data-variant="secondary">Flow 3</button>
+    <button class="pl-c-button" data-variant="secondary">Flow 4</button>
+  </div>
+
+  <h2>calc-size() Intrinsic Math</h2>
+  <p>
+    Permits mathematical expressions on intrinsic sizing keywords (such as <code>auto</code> or <code>max-content</code>).
+  </p>
+  <div id="calc-size-demo" class="demo-calc-size" data-calc-size="intrinsic">
+    <span class="pl-c-badge" data-tone="brand">calc-size(auto, size) active</span>
+  </div>
 </BaseLayout>
 
 <style>
@@ -157,5 +190,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     block-size: 3rem;
     border-radius: var(--pl-radius-md);
     border: 1px solid var(--pl-color-border);
+  }
+  .demo-stagger-item {
+    padding: var(--pl-space-2) var(--pl-space-3);
+    background: var(--pl-color-surface-2);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
   }
 </style>

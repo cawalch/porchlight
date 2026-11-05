@@ -17,7 +17,25 @@
     "property-no-unknown": [
       true,
       {
-        "ignoreProperties": ["rule", "rule-visibility-items"]
+        "ignoreProperties": [
+          "rule",
+          "rule-visibility-items",
+          "reading-flow",
+          "position-try-order",
+          "view-transition-class"
+        ]
+      }
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": [
+          "sibling-index",
+          "sibling-count",
+          "calc-size",
+          "anchor-size",
+          "anchor"
+        ]
       }
     ],
     "no-descending-specificity": null,
@@ -39,7 +57,16 @@
       true,
       {
         "ignoreProperties": {
-          "transform-origin": ["/^inline-/", "/^block-/"]
+          "transform-origin": ["/^inline-/", "/^block-/"],
+          "reading-flow": [".*"],
+          "position-try-order": [".*"],
+          "view-transition-class": [".*"],
+          "position-visibility": [".*"],
+          "animation-delay": [".*sibling-index.*", ".*sibling-count.*"],
+          "block-size": [".*calc-size.*"],
+          "max-block-size": [".*calc-size.*"],
+          "max-inline-size": [".*calc-size.*"],
+          "grid-template-rows": [".*masonry.*"]
         }
       }
     ],
