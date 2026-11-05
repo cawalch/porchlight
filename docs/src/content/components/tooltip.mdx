@@ -12,6 +12,8 @@ hover or keyboard focus. Positioning uses CSS Anchor Positioning
 
 ## Semantic HTML
 
+### Wrapper form (Universal anchor positioning)
+
 ```html
 <span class="pl-c-tooltip" style="--pl-c-tooltip-anchor: --tip-1;">
   <span class="pl-c-tooltip__trigger">
@@ -21,6 +23,31 @@ hover or keyboard focus. Positioning uses CSS Anchor Positioning
     Helpful context here.
   </span>
 </span>
+```
+
+### Top-layer declarative form (`popover="hint"` & `interestfor`)
+
+In modern browsers supporting `popover="hint"` (Chrome 133+) and Interest Invokers (`interestfor`, Chrome 142+), tooltips can be hoisted to the top layer. This completely eliminates clipping from overflow containers without closing active menus or dialogs:
+
+```html
+<button
+  class="pl-c-button"
+  interestfor="tip-metrics"
+  aria-describedby="tip-metrics"
+  style="anchor-name: --tip-metrics;"
+>
+  Throughput
+</button>
+
+<div
+  popover="hint"
+  class="pl-c-tooltip__body"
+  role="tooltip"
+  id="tip-metrics"
+  style="position-anchor: --tip-metrics;"
+>
+  Real-time cluster events over the last 24h.
+</div>
 ```
 
 Each tooltip instance needs a unique `--pl-c-tooltip-anchor` value.

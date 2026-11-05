@@ -47,10 +47,12 @@ decks. The browser supplies tab roles and selection; do not add `hidden`,
 
 ## Class contract and spacing
 
-| Selector                  | Role                                                    |
-| ------------------------- | ------------------------------------------------------- |
-| `.pl-c-panel-deck`        | Named region; stacked layout or native inline scroller. |
-| `.pl-c-panel-deck__panel` | Direct child panel, with `data-label` and a heading.    |
+| Selector                    | Role                                                           |
+| --------------------------- | -------------------------------------------------------------- |
+| `.pl-c-panel-deck`          | Named region; stacked layout or native inline scroller.        |
+| `.pl-c-panel-deck__panel`   | Direct child panel, with `data-label` and a heading.           |
+| `[data-markers="dots"]`     | Switched from tab labels to carousel dot markers.              |
+| `[data-controls="buttons"]` | Renders zero-JS previous/next buttons via `::scroll-button()`. |
 
 `--pl-c-panel-deck-gap` defaults to `--pl-space-3`, separating panels and navigation.
 `--pl-c-panel-deck-padding` defaults to `--pl-control-padding-inline`. Override

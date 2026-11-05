@@ -2,16 +2,25 @@
  * Porchlight  -  dialog component
  * ===========================================================================
  * A modal dialog for confirmations, forms, and detail views. Uses the native
- * <dialog> element with showModal() (top-layer, modal focus trap, Esc to
- * close). The ::backdrop pseudo-element provides the scrim.
+ * <dialog> element (top-layer, modal focus trap, Esc to close).
+ * The ::backdrop pseudo-element provides the scrim.
  *
- * Open state is styled via [open] (or :modal for showModal). Entry/exit
+ * Zero-JS Invoker Commands: Open and close modals declaratively without JS:
+ *   <button class="pl-c-button" commandfor="my-dialog" command="show-modal">Open</button>
+ *   <dialog class="pl-c-dialog" id="my-dialog" closedby="any">
+ *     ...
+ *     <button class="pl-c-dialog__close" commandfor="my-dialog" command="close" aria-label="Close">✕</button>
+ *   </dialog>
+ * The `closedby="any"` attribute enables native backdrop click-to-dismiss.
+ * In older browsers, wire triggers via `el.showModal()` and `el.close()`.
+ *
+ * Open state is styled via [open] (or :modal for showModal / command). Entry/exit
  * animation uses @starting-style + transition-behavior: allow-discrete on
  * overlay/display  -  the same pattern as .pl-c-menu, so the EXIT transition runs
  * (display: none normally kills transitions instantly).
  *
  * Header + body + footer slots (like .pl-c-card). The close button in the header
- * is a standard pattern. Open the dialog with el.showModal() in your app JS.
+ * is a standard pattern.
  *
  * Token-driven via --pl-c-dialog-* aliases. Responsive by default:
  * inline-size is min(100% - 2rem, --pl-c-dialog-size) so it never overflows.

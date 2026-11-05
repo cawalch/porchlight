@@ -145,6 +145,49 @@
       outline-offset: calc(-1 * var(--pl-focus-size));
     }
 
+    /* Zero-JS Prev/Next navigation buttons via CSS Carousel ::scroll-button */
+    @supports selector(::scroll-button(inline-start)) {
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+        inline-start
+      ),
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+        inline-end
+      ) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        block-size: var(--pl-control-block-size);
+        inline-size: var(--pl-control-block-size);
+        border: 1px solid var(--pl-color-border);
+        border-radius: var(--pl-control-radius);
+        background: var(--pl-color-surface);
+        color: var(--pl-color-text);
+        cursor: pointer;
+        transition: background-color var(--pl-duration-1)
+          var(--pl-ease-standard);
+      }
+
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+          inline-start
+        ):hover,
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+          inline-end
+        ):hover {
+        background: var(--pl-color-surface-2);
+      }
+
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+          inline-start
+        ):disabled,
+      :where(.pl-c-panel-deck[data-controls="buttons"])::scroll-button(
+          inline-end
+        ):disabled {
+        opacity: var(--pl-opacity-disabled);
+        cursor: not-allowed;
+      }
+    }
+
     @media (forced-colors: active) {
       /* stylelint-disable-next-line selector-pseudo-class-no-unknown -- Native scroll-marker selection. */
       .pl-c-panel-deck__panel::scroll-marker:target-current {

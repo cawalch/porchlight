@@ -10,8 +10,8 @@
  * anchor-name/position-anchor. Without anchor positioning support
  * (@supports gate), the tooltip is hidden (no misleading placement).
  *
- * Structure: .pl-c-tooltip wraps a trigger element. The tooltip body is a child
- * with role="tooltip" and an id referenced by aria-describedby on the trigger.
+ * Structure (Wrapper form): .pl-c-tooltip wraps a trigger element. The tooltip
+ * body is a child with role="tooltip" and an id referenced by aria-describedby:
  *
  *   <span class="pl-c-tooltip">
  *     <span class="pl-c-tooltip__trigger">
@@ -19,6 +19,16 @@
  *     </span>
  *     <span class="pl-c-tooltip__body" role="tooltip" id="tip-1">Tooltip text</span>
  *   </span>
+ *
+ * Declarative Top-Layer Form (Chrome 133+ popover="hint" / Chrome 142+ interestfor):
+ * Promotes the tooltip to the top layer, eliminating overflow-clipping risks:
+ *
+ *   <button class="pl-c-button" interestfor="tip-2" aria-describedby="tip-2" style="anchor-name: --tip-2;">
+ *     Help
+ *   </button>
+ *   <div popover="hint" class="pl-c-tooltip__body" role="tooltip" id="tip-2" style="position-anchor: --tip-2;">
+ *     Tooltip text
+ *   </div>
  *
  * Each instance needs a unique anchor name  -  set --pl-c-tooltip-anchor.
  */
@@ -67,6 +77,12 @@
         display var(--pl-duration-1) var(--pl-ease-standard) allow-discrete;
     }
 
+    /* Top-layer popover support inside scope */
+    .pl-c-tooltip__body[popover] {
+      border: 0;
+      inset: auto;
+    }
+
     /* Anchor positioning: tether above the trigger, try flipping below. */
     @supports (position-anchor: --x) {
       .pl-c-tooltip__body {
@@ -79,10 +95,11 @@
       }
     }
 
-    /* Show on trigger hover or keyboard focus within the trigger wrapper. */
+    /* Show on trigger hover or keyboard focus within the trigger wrapper, or when popover is open */
     :scope:has(.pl-c-tooltip__trigger:hover) .pl-c-tooltip__body,
     :scope:has(.pl-c-tooltip__trigger:focus-visible) .pl-c-tooltip__body,
-    :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body {
+    :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body,
+    .pl-c-tooltip__body:popover-open {
       opacity: 1;
       display: block;
     }
@@ -91,9 +108,57 @@
     @starting-style {
       :scope:has(.pl-c-tooltip__trigger:hover) .pl-c-tooltip__body,
       :scope:has(.pl-c-tooltip__trigger:focus-visible) .pl-c-tooltip__body,
-      :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body {
+      :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body,
+      .pl-c-tooltip__body:popover-open {
         opacity: 0;
       }
+    }
+  }
+
+  /* Standalone top-layer tooltip with popover="hint" and interestfor (outside .pl-c-tooltip) */
+  :where(.pl-c-tooltip__body[popover]) {
+    border: 0;
+    inset: auto;
+    padding: var(--pl-c-tooltip-pad, var(--pl-space-2) var(--pl-space-3));
+    border-radius: var(--pl-c-tooltip-radius, var(--pl-radius-lg));
+    background: var(--pl-c-tooltip-bg, var(--pl-color-text));
+    color: var(--pl-c-tooltip-text, var(--pl-color-bg));
+    font-size: var(--pl-c-tooltip-font-size, var(--pl-text-sm));
+    line-height: var(--pl-leading-tight);
+    inline-size: max-content;
+    max-inline-size: min(
+      var(--pl-c-tooltip-max-inline, 20rem),
+      calc(100vw - var(--pl-space-8))
+    );
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    box-shadow: var(--pl-shadow-2);
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      opacity var(--pl-duration-1) var(--pl-ease-standard),
+      display var(--pl-duration-1) var(--pl-ease-standard) allow-discrete,
+      overlay var(--pl-duration-1) var(--pl-ease-standard) allow-discrete;
+  }
+
+  @supports (position-anchor: --x) {
+    :where(.pl-c-tooltip__body[popover]) {
+      position: fixed;
+      position-area: block-start;
+      margin-block-end: var(--pl-space-2);
+      margin-inline: var(--pl-space-2);
+      position-try-fallbacks: flip-block;
+    }
+  }
+
+  :where(.pl-c-tooltip__body:popover-open) {
+    opacity: 1;
+    display: block;
+  }
+
+  @starting-style {
+    :where(.pl-c-tooltip__body:popover-open) {
+      opacity: 0;
     }
   }
 

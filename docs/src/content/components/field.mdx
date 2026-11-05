@@ -121,6 +121,9 @@ No script, replacement button, or custom ARIA roles are needed.
     name="priority"
     required
   >
+    <button>
+      <selectedcontent></selectedcontent>
+    </button>
     <option value="">Choose a priority</option>
     <optgroup label="Active queue">
       <option value="normal">Normal</option>
@@ -139,7 +142,9 @@ submission is intended.
 
 The enhancement requires `appearance: base-select` and `::picker(select)`
 ([Chrome 135+](https://developer.chrome.com/blog/a-customizable-select));
-unsupported browsers retain the ordinary field select. Only single selects
+unsupported browsers retain the ordinary field select. Custom `<button>` and
+`<selectedcontent>` elements allow cloning rich option contents (icons, tags,
+avatars) directly into the closed control button face. Only single selects
 with no `size` attribute or `size="1"` opt in. Keep `multiple` and listbox-sized
 selects native; use the <a href={`${import.meta.env.BASE_URL}components/combobox`}>combobox</a> for application-managed search
 or asynchronous options.
