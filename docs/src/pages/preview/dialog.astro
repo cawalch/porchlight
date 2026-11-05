@@ -14,7 +14,13 @@ import Icon from '../../components/Icon.astro';
   <h2>Confirmation dialog</h2>
   <p>The canonical SaaS pattern — a destructive confirmation.</p>
   <div class="demo-row">
-    <button class="pl-c-button" data-variant="danger" data-open="confirm-dialog">
+    <button
+      class="pl-c-button"
+      data-variant="danger"
+      data-open="confirm-dialog"
+      commandfor="confirm-dialog"
+      command="show-modal"
+    >
       Delete account
     </button>
   </div>
@@ -22,29 +28,49 @@ import Icon from '../../components/Icon.astro';
   <h2>Form dialog</h2>
   <p>A modal form — create/edit flows that don't deserve a full page.</p>
   <div class="demo-row">
-    <button class="pl-c-button" data-variant="primary" data-open="form-dialog">
+    <button
+      class="pl-c-button"
+      data-variant="primary"
+      data-open="form-dialog"
+      commandfor="form-dialog"
+      command="show-modal"
+    >
       <Icon name="plus" /> New workspace
     </button>
   </div>
 
-  <dialog class="pl-c-dialog" id="confirm-dialog">
+  <dialog class="pl-c-dialog" id="confirm-dialog" closedby="any">
     <header class="pl-c-dialog__header">
       <h2 class="pl-c-dialog__title">Delete account?</h2>
-      <button class="pl-c-dialog__close" type="button" aria-label="Close" data-close>✕</button>
+      <button
+        class="pl-c-dialog__close"
+        type="button"
+        aria-label="Close"
+        data-close
+        commandfor="confirm-dialog"
+        command="close"
+      >✕</button>
     </header>
     <div class="pl-c-dialog__body">
       <p>This will permanently delete the workspace and all its data. This action cannot be undone.</p>
     </div>
     <footer class="pl-c-dialog__footer">
-      <button class="pl-c-button" data-variant="ghost" data-close>Cancel</button>
-      <button class="pl-c-button" data-variant="danger" data-close>Delete</button>
+      <button class="pl-c-button" data-variant="ghost" data-close commandfor="confirm-dialog" command="close">Cancel</button>
+      <button class="pl-c-button" data-variant="danger" data-close commandfor="confirm-dialog" command="close">Delete</button>
     </footer>
   </dialog>
 
-  <dialog class="pl-c-dialog" id="form-dialog" style="--pl-c-dialog-size: 36rem;">
+  <dialog class="pl-c-dialog" id="form-dialog" style="--pl-c-dialog-size: 36rem;" closedby="any">
     <header class="pl-c-dialog__header">
       <h2 class="pl-c-dialog__title">New workspace</h2>
-      <button class="pl-c-dialog__close" type="button" aria-label="Close" data-close>✕</button>
+      <button
+        class="pl-c-dialog__close"
+        type="button"
+        aria-label="Close"
+        data-close
+        commandfor="form-dialog"
+        command="close"
+      >✕</button>
     </header>
     <div class="pl-c-dialog__body">
       <div class="pl-l-stack">
@@ -59,8 +85,8 @@ import Icon from '../../components/Icon.astro';
       </div>
     </div>
     <footer class="pl-c-dialog__footer">
-      <button class="pl-c-button" data-variant="ghost" data-close>Cancel</button>
-      <button class="pl-c-button" data-variant="primary" data-close>Create</button>
+      <button class="pl-c-button" data-variant="ghost" data-close commandfor="form-dialog" command="close">Cancel</button>
+      <button class="pl-c-button" data-variant="primary" data-close commandfor="form-dialog" command="close">Create</button>
     </footer>
   </dialog>
 

@@ -145,6 +145,29 @@
         }
       }
     }
+
+    /* Native ::details-content: eliminates the mandatory .pl-c-accordion__panel wrapper.
+       Where supported, .pl-c-accordion__panel unwraps gracefully so both markup forms work. */
+    @supports selector(::details-content) {
+      &::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size var(--pl-duration-3) var(--pl-ease-standard),
+          content-visibility var(--pl-duration-3) allow-discrete;
+        interpolate-size: allow-keywords;
+      }
+
+      :scope[open]::details-content {
+        block-size: auto;
+      }
+
+      @starting-style {
+        :scope[open]::details-content {
+          block-size: 0;
+        }
+      }
+    }
   }
 
   /* Single-open behavior:

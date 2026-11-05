@@ -94,4 +94,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
     </details>
   </div>
+
+  <h2>Streamlined markup (native ::details-content)</h2>
+  <p>In modern browsers supporting <code>::details-content</code>, the panel wrapper is optional.</p>
+  <div class="pl-c-accordion" style="margin-block-start: var(--pl-space-4);">
+    <details class="pl-c-accordion__item">
+      <summary class="pl-c-accordion__header">
+        <span>Streamlined Item</span>
+        <svg class="pl-c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </summary>
+      <div class="pl-c-accordion__content">
+        Direct content inside the item without intermediate wrapper divs.
+      </div>
+    </details>
+  </div>
 </BaseLayout>

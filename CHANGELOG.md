@@ -5,6 +5,18 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Support modern HTML platform enhancements and zero-JS declarative component contracts:
+  - Add HTML Invoker Commands (`commandfor` and `command="show-modal"` / `command="close"`) and declarative light-dismiss (`<dialog closedby="any">`) to `.pl-c-dialog`.
+  - Add progressive enhancement for `::details-content` to `.pl-c-accordion`, eliminating the need for intermediate `.pl-c-accordion__panel` wrapper elements in modern browsers (Chrome 131+, Safari 18.4+).
+  - Add top-layer `popover="hint"` and Interest Invokers (`interestfor`) support to `.pl-c-tooltip__body`, preventing container overflow clipping without auto-dismissing active popovers or dialogs.
+  - Add support for custom `<button>` and `<selectedcontent>` inside `select.pl-c-field__control--select`, enabling rich option faces (icons, badges, avatars) with native accessibility.
+  - Add zero-JS carousel arrow navigation (`::scroll-button(inline-start)` and `::scroll-button(inline-end)`) to `.pl-c-panel-deck[data-controls="buttons"]`.
+  - Add native switch attribute support (`<input type="checkbox" switch>`) to `.pl-c-switch`.
+
 ## [0.15.0] - 2026-11-02
 
 ### Added

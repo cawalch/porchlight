@@ -12,11 +12,18 @@ drives the on/off styling. No JavaScript required for the toggle itself.
 ## Semantic HTML
 
 ```html
+<!-- Cross-browser track + thumb pattern -->
 <label class="pl-c-switch">
   <input type="checkbox" role="switch" class="pl-c-switch__input" />
   <span class="pl-c-switch__track">
     <span class="pl-c-switch__thumb"></span>
   </span>
+  <span class="pl-c-switch__label">Enable feature</span>
+</label>
+
+<!-- Native switch attribute progressive enhancement (Safari 17.4+ / Chromium) -->
+<label class="pl-c-switch">
+  <input type="checkbox" switch class="pl-c-switch__control" />
   <span class="pl-c-switch__label">Enable feature</span>
 </label>
 ```

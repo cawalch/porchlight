@@ -35,18 +35,18 @@ test("accordion closed panels do not expose panel content", async ({
       (item) => {
         const panel = item.querySelector(
           ".pl-c-accordion__panel",
-        ) as HTMLElement;
+        ) as HTMLElement | null;
         const content = item.querySelector(
           ".pl-c-accordion__content",
         ) as HTMLElement;
-        const panelStyle = getComputedStyle(panel);
+        const panelStyle = panel ? getComputedStyle(panel) : null;
         const contentStyle = getComputedStyle(content);
         return {
           contentRect: rect(content),
           contentVisibility: contentStyle.visibility,
           open: item.hasAttribute("open"),
-          panelOverflow: panelStyle.overflow,
-          panelRect: rect(panel),
+          panelOverflow: panelStyle?.overflow ?? "hidden",
+          panelRect: panel ? rect(panel) : { height: 0, width: 0, x: 0, y: 0 },
         };
       },
     );

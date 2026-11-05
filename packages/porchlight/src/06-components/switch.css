@@ -53,6 +53,15 @@
       border: 0;
     }
 
+    /* Native switch input progressive enhancement (where input[switch] is used directly) */
+    .pl-c-switch__control[switch] {
+      inline-size: var(--pl-c-switch-track-w);
+      block-size: var(--pl-c-switch-track-h);
+      accent-color: var(--pl-c-switch-on);
+      cursor: pointer;
+      margin: 0;
+    }
+
     /* Track: the pill background. */
     .pl-c-switch__track {
       position: relative;
