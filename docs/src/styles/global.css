@@ -35,7 +35,7 @@ body {
   position: absolute;
   inset-inline-start: 1rem;
   inset-block-start: 1rem;
-  z-index: 100;
+  z-index: 520;
   padding: 0.5rem 0.75rem;
   background: var(--pl-color-accent);
   color: var(--pl-color-accent-text);
@@ -48,11 +48,12 @@ body {
   transform: none;
 }
 
-/* Sticky header with a translucent app-bar backdrop. */
+/* Sticky header with a translucent app-bar backdrop.
+   Elevated above all in-page content and sticky demo bars (which use --pl-z-sticky: 100). */
 .site-header {
   position: sticky;
   inset-block-start: 0;
-  z-index: 10;
+  z-index: 500;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   flex-wrap: wrap;
@@ -210,7 +211,7 @@ body {
     position: absolute;
     inset-inline-end: 0;
     inset-block-start: calc(100% + var(--pl-space-2));
-    z-index: 20;
+    z-index: 510;
     inline-size: 12rem;
     padding: var(--pl-space-3);
     border: 1px solid var(--pl-color-border);
@@ -314,9 +315,9 @@ html[data-docs-embed] :where(#main) > h1:first-child + p {
   block-size: auto;
 }
 
-/* Keep sample table cells and pane headers beneath the docs header, even
-   when they use the framework's raised/sticky z-index tokens. */
-:where(#main):has(> .pl-l-app-shell) {
+/* Keep sample table cells, sticky bars, and pane headers beneath the docs header,
+   even when they use the framework's raised/sticky z-index tokens. */
+:where(#main, #docs-article) {
   isolation: isolate;
 }
 
