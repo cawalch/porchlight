@@ -61,3 +61,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  // Docs-only interactive demo script for chip removal.
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.pl-c-chip__remove');
+    if (btn) {
+      btn.closest('.pl-c-chip')?.remove();
+    }
+  });
+</script>

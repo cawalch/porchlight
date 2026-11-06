@@ -43,3 +43,48 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  // Docs-only interactive demo script for tag-input.
+  document.querySelectorAll<HTMLElement>('.pl-c-tag-input').forEach((container) => {
+    const input = container.querySelector<HTMLInputElement>('.pl-c-tag-input__field');
+    if (!input) return;
+
+    container.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('.pl-c-chip__remove')) return;
+      input.focus();
+    });
+
+    container.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.pl-c-chip__remove');
+      if (btn) {
+        btn.closest('.pl-c-chip')?.remove();
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const value = input.value.trim().replace(/^,|,$/g, '');
+        if (value) {
+          const chip = document.createElement('span');
+          chip.className = 'pl-c-chip';
+          chip.textContent = `${value} `;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'pl-c-chip__remove';
+          btn.setAttribute('aria-label', `Remove ${value}`);
+          btn.textContent = 'x';
+          chip.appendChild(btn);
+          container.insertBefore(chip, input);
+          input.value = '';
+        }
+      } else if (e.key === 'Backspace' && input.value === '') {
+        const chips = container.querySelectorAll('.pl-c-chip');
+        if (chips.length > 0) {
+          chips[chips.length - 1].remove();
+        }
+      }
+    });
+  });
+</script>

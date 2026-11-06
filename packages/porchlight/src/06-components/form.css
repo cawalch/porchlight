@@ -206,7 +206,6 @@
       .pl-c-form__actions
       :is(button, .pl-c-button)[data-reactive="invalid"] {
       border-color: var(--pl-color-danger);
-      box-shadow: 0 0 0 1px var(--pl-color-danger);
     }
 
     /* Aligned two-column form layout via CSS Subgrid (Baseline 2023).

@@ -93,7 +93,6 @@
       );
       color: var(--pl-color-accent);
       font-weight: var(--pl-font-weight-semibold);
-      box-shadow: 0 0 0 1px var(--pl-color-accent);
     }
 
     /* Carousel dot markers variant via [data-markers="dots"] */

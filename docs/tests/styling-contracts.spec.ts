@@ -327,3 +327,73 @@ test("chip filter bar uses the supported wrapping toolbar group", async ({
   await expect(group).toHaveCSS("display", "flex");
   await expect(page.locator(".pl-c-toolbar__leading")).toHaveCount(0);
 });
+
+test("popover-menu selected item has concentric uniform border radius", async ({
+  page,
+}) => {
+  await page.goto("./preview/popover-menu");
+  const popoverButton = page.locator('[popovertarget="account-menu"]');
+  await popoverButton.click();
+  const selectedItem = page.locator('#account-menu .pl-c-menu__item[aria-current="page"]');
+  await expect(selectedItem).toBeVisible();
+  const radii = await selectedItem.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return {
+      bottomLeft: Number.parseFloat(s.borderBottomLeftRadius),
+      bottomRight: Number.parseFloat(s.borderBottomRightRadius),
+      topLeft: Number.parseFloat(s.borderTopLeftRadius),
+      topRight: Number.parseFloat(s.borderTopRightRadius),
+    };
+  });
+  expect(radii.topLeft).toBeGreaterThan(0);
+  expect(radii.topRight).toBeGreaterThan(0);
+  expect(radii.bottomLeft).toBeGreaterThan(0);
+  expect(radii.bottomRight).toBeGreaterThan(0);
+  expect(radii.topLeft).toEqual(radii.bottomLeft);
+});
+
+test("reveal preview renders standalone content with delays and no redirect", async ({
+  page,
+}) => {
+  const response = await page.goto("./preview/reveal");
+  expect(response?.status()).toBe(200);
+  expect(page.url()).toContain("/preview/reveal");
+  const delayedCards = page.locator(".pl-c-reveal[data-delay]");
+  expect(await delayedCards.count()).toBeGreaterThanOrEqual(3);
+});
+
+test("tag-input preview interactively adds and removes tags", async ({
+  page,
+}) => {
+  await page.goto("./preview/tag-input");
+  const container = page.locator(".pl-c-tag-input").first();
+  const input = container.locator(".pl-c-tag-input__field");
+  const initialChipsCount = await container.locator(".pl-c-chip").count();
+
+  await input.fill("audit-verified");
+  await input.press("Enter");
+  await expect(container.locator(".pl-c-chip")).toHaveCount(
+    initialChipsCount + 1,
+  );
+
+  const lastChipRemove = container.locator(".pl-c-chip__remove").last();
+  await lastChipRemove.click();
+  await expect(container.locator(".pl-c-chip")).toHaveCount(
+    initialChipsCount,
+  );
+});
+
+test("chip preview interactively removes chips when remove button clicked", async ({
+  page,
+}) => {
+  await page.goto("./preview/chip");
+  const removableChips = page.locator(".pl-c-chip:has(.pl-c-chip__remove)");
+  const initialCount = await removableChips.count();
+  expect(initialCount).toBeGreaterThan(0);
+
+  const firstRemove = page.locator(".pl-c-chip__remove").first();
+  await firstRemove.click();
+  await expect(
+    page.locator(".pl-c-chip:has(.pl-c-chip__remove)"),
+  ).toHaveCount(initialCount - 1);
+});

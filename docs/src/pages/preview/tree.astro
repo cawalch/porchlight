@@ -285,3 +285,29 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
     }
   }
 </style>
+
+<script>
+  // Docs-only interactive demo script for tree expansion and selection.
+  document.querySelectorAll<HTMLElement>('.pl-c-tree').forEach((tree) => {
+    tree.addEventListener('click', (e) => {
+      const row = (e.target as HTMLElement).closest<HTMLElement>('.pl-c-tree__item-row');
+      if (!row) return;
+
+      const item = row.parentElement as HTMLElement | null;
+      if (!item || !item.classList.contains('pl-c-tree__item')) return;
+
+      const hasGroup = !!item.querySelector(':scope > .pl-c-tree__group');
+      if (hasGroup) {
+        const isExpanded = item.getAttribute('aria-expanded') === 'true';
+        item.setAttribute('aria-expanded', String(!isExpanded));
+      }
+
+      tree.querySelectorAll('.pl-c-tree__item[aria-selected="true"]').forEach((selected) => {
+        selected.setAttribute('aria-selected', 'false');
+        selected.setAttribute('tabindex', '-1');
+      });
+      item.setAttribute('aria-selected', 'true');
+      item.setAttribute('tabindex', '0');
+    });
+  });
+</script>
