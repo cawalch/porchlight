@@ -334,7 +334,9 @@ test("popover-menu selected item has concentric uniform border radius", async ({
   await page.goto("./preview/popover-menu");
   const popoverButton = page.locator('[popovertarget="account-menu"]');
   await popoverButton.click();
-  const selectedItem = page.locator('#account-menu .pl-c-menu__item[aria-current="page"]');
+  const selectedItem = page.locator(
+    '#account-menu .pl-c-menu__item[aria-current="page"]',
+  );
   await expect(selectedItem).toBeVisible();
   const radii = await selectedItem.evaluate((el) => {
     const s = getComputedStyle(el);
@@ -378,9 +380,7 @@ test("tag-input preview interactively adds and removes tags", async ({
 
   const lastChipRemove = container.locator(".pl-c-chip__remove").last();
   await lastChipRemove.click();
-  await expect(container.locator(".pl-c-chip")).toHaveCount(
-    initialChipsCount,
-  );
+  await expect(container.locator(".pl-c-chip")).toHaveCount(initialChipsCount);
 });
 
 test("chip preview interactively removes chips when remove button clicked", async ({
@@ -393,7 +393,7 @@ test("chip preview interactively removes chips when remove button clicked", asyn
 
   const firstRemove = page.locator(".pl-c-chip__remove").first();
   await firstRemove.click();
-  await expect(
-    page.locator(".pl-c-chip:has(.pl-c-chip__remove)"),
-  ).toHaveCount(initialCount - 1);
+  await expect(page.locator(".pl-c-chip:has(.pl-c-chip__remove)")).toHaveCount(
+    initialCount - 1,
+  );
 });
