@@ -334,3 +334,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
   }
 </style>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as Element)?.closest?.('.pl-c-chip__remove');
+    if (!btn) return;
+    const chip = btn.closest('.pl-c-chip');
+    if (chip) chip.remove();
+  });
+</script>

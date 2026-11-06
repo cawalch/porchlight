@@ -1,4 +1,58 @@
 ---
-// Reveal shares its demo with scroll-progress. Redirect there.
-return Astro.redirect(import.meta.env.BASE_URL + 'preview/scroll-progress');
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const cards = [
+  { delay: undefined, title: 'Real-time telemetry', desc: 'Continuous metrics collection with zero runtime script overhead.' },
+  { delay: '1', title: 'Automated remediation', desc: 'Trigger corrective workflows instantly upon threshold breaches.' },
+  { delay: '2', title: 'Audit compliance', desc: 'Immutable, tamper-evident audit logs streamed across systems.' },
+  { delay: '3', title: 'Policy governance', desc: 'Declarative access control policies enforced across all environments.' },
+];
+
+const sections = [
+  {
+    title: 'Intelligent pipeline automation',
+    body: 'Porchlight components load instantly and gracefully animate into view without JavaScript bundle cost or IntersectionObserver listeners.',
+  },
+  {
+    title: 'Edge resilience & telemetry',
+    body: 'Native CSS view timelines trigger entry animations relative to the viewport scroll offset, ensuring smooth 60fps compositor-driven motion.',
+  },
+  {
+    title: 'Declarative enterprise standards',
+    body: 'Full accessibility fallback: when prefers-reduced-motion or forced-colors is active, animations cleanly degrade to immediate visibility.',
+  },
+];
 ---
+<BaseLayout title="Reveal · Porchlight">
+  <h1>Reveal</h1>
+  <p>
+    Elements that smoothly fade and slide in as they enter the viewport. Powered by
+    native scroll-driven animations (<code>animation-timeline: view()</code>) with
+    zero JavaScript. Where unsupported or under reduced motion, content stays fully
+    visible.
+  </p>
+
+  <p class="pl-u-muted">Scroll down to observe elements revealing as they enter the viewport.</p>
+
+  <h2>Staggered grid with delay variants</h2>
+  <p>Apply <code>data-delay="1"</code>, <code>data-delay="2"</code>, or <code>data-delay="3"</code> to stagger entrances.</p>
+
+  <div class="pl-l-grid" style="--pl-l-grid-min: 15rem; gap: var(--pl-space-4); margin-block: var(--pl-space-6);">
+    {cards.map((c) => (
+      <div class="pl-c-card pl-c-reveal" data-delay={c.delay}>
+        <div class="pl-c-card__body">
+          <h3 style="margin-block-start: 0; font-size: var(--pl-text-md);">{c.title}</h3>
+          <p class="pl-u-muted" style="margin-block-end: 0; font-size: var(--pl-text-sm);">{c.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>Full section reveal</h2>
+  {sections.map((s, i) => (
+    <section class="pl-c-reveal" style="margin-block: var(--pl-space-8); padding: var(--pl-space-6); border: 1px solid var(--pl-color-border); border-radius: var(--pl-radius-lg); background: var(--pl-color-surface);">
+      <h3 style="margin-block-start: 0;">{i + 1}. {s.title}</h3>
+      <p style="margin-block-end: 0; color: var(--pl-color-text-muted); line-height: var(--pl-leading-relaxed);">{s.body}</p>
+    </section>
+  ))}
+</BaseLayout>
