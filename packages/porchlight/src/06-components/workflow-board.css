@@ -136,7 +136,7 @@
       scroll-snap-type: inline proximity;
       padding-block-end: var(--pl-space-2);
 
-      & > .pl-c-workflow-lane {
+      & > :is(.pl-c-workflow-lane, .pl-c-workflow-board__lane) {
         scroll-snap-align: start;
       }
     }
@@ -152,7 +152,7 @@
         padding-block-end: var(--pl-space-2);
       }
 
-      .pl-c-workflow-lane {
+      :is(.pl-c-workflow-lane, .pl-c-workflow-board__lane) {
         scroll-snap-align: start;
       }
     }

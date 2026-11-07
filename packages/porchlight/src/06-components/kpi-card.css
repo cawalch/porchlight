@@ -77,9 +77,14 @@
       font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
       color: var(--pl-color-text);
-      font-variant-numeric: tabular-nums lining-nums;
+      font-variant-numeric: tabular-nums;
       font-feature-settings: var(--pl-font-feature-numeric);
       letter-spacing: var(--pl-tracking-tight);
+    }
+
+    .pl-c-kpi-card__delta {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
     }
 
     .pl-c-kpi-card__prefix,
@@ -104,6 +109,7 @@
       font-size: var(--pl-text-xs);
       color: var(--pl-color-text-muted);
       font-variant-numeric: tabular-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
     }
 
     .pl-c-kpi-card__spark {

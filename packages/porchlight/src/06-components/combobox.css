@@ -27,6 +27,10 @@
  *       </button>
  *     </div>
  *   </div>
+ *
+ * Anchor positioning: In supported browsers, `.pl-c-combobox__listbox` (or
+ * `.pl-c-combobox__popup`) anchors directly to `.pl-c-combobox__control` using
+ * CSS Anchor Positioning with automatic flip fallbacks (`flip-block, flip-inline`).
  */
 @layer porchlight.components {
   @scope (.pl-c-combobox) {
@@ -35,6 +39,7 @@
       --pl-c-combobox-popup-max-block: min(18rem, 50dvb);
       --pl-c-combobox-popup-offset: var(--pl-space-1);
       --pl-c-combobox-option-gap: var(--pl-space-1);
+      --pl-c-combobox-anchor: --pl-combobox-control;
 
       position: relative;
       display: grid;
@@ -42,6 +47,7 @@
       inline-size: 100%;
       min-inline-size: 0;
       color: var(--pl-color-text);
+      anchor-scope: --pl-combobox-control;
     }
 
     .pl-c-combobox__control {
@@ -58,6 +64,7 @@
       color: var(--pl-color-text);
       font: inherit;
       font-size: var(--pl-text-sm);
+      anchor-name: var(--pl-c-combobox-anchor);
       transition:
         border-color var(--pl-duration-1) var(--pl-ease-standard),
         box-shadow var(--pl-duration-1) var(--pl-ease-standard);
@@ -120,7 +127,7 @@
       rotate: 180deg;
     }
 
-    .pl-c-combobox__popup {
+    :is(.pl-c-combobox__popup, .pl-c-combobox__listbox) {
       position: absolute;
       z-index: var(--pl-z-overlay);
       inset-block-start: calc(100% + var(--pl-c-combobox-popup-offset));
@@ -137,8 +144,21 @@
       overscroll-behavior: contain;
     }
 
-    .pl-c-combobox__popup[hidden] {
+    :is(.pl-c-combobox__popup, .pl-c-combobox__listbox)[hidden] {
       display: none;
+    }
+
+    @supports (position-anchor: --x) {
+      .pl-c-combobox__listbox,
+      .pl-c-combobox__popup {
+        inset: auto;
+        position: fixed;
+        position-anchor: var(--pl-c-combobox-anchor);
+        position-area: block-end span-inline-end;
+        position-try-fallbacks: flip-block, flip-inline;
+        inline-size: anchor-size(self-inline);
+        margin-block-start: var(--pl-space-1);
+      }
     }
 
     .pl-c-combobox__list {
@@ -353,7 +373,11 @@
   }
 
   @media (forced-colors: active) {
-    :where(.pl-c-combobox__control, .pl-c-combobox__popup) {
+    :where(
+      .pl-c-combobox__control,
+      .pl-c-combobox__popup,
+      .pl-c-combobox__listbox
+    ) {
       border-color: ButtonBorder;
       background: Canvas;
     }

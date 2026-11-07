@@ -230,7 +230,7 @@
 
     /* Subgrid rows  -  when cards participate in row subgrid (either explicitly
        via [data-subgrid] or via an ancestor [data-subgrid="rows"]), header, body,
-       and footer tracks align across cards.
+       metadata, and footer tracks align across cards.
        Note: container-type must be normal because container size query and subgrid
        are mutually exclusive on the same element across browser engines. */
     @supports (grid-template-rows: subgrid) {
@@ -238,7 +238,7 @@
         :where([data-subgrid="rows"], [data-subgrid]) > :scope,
         :scope:is([data-subgrid="rows"], [data-subgrid])
       ) {
-        grid-row: span var(--pl-c-card-subgrid-rows, 3);
+        grid-row: span var(--pl-c-card-subgrid-rows, 4);
         grid-template-rows: subgrid;
         align-content: stretch;
         container-type: normal;
@@ -251,13 +251,29 @@
           grid-row: 2;
         }
 
+        & > :is(.pl-c-card__meta, .pl-c-card__metadata) {
+          grid-row: 3;
+        }
+
         & > .pl-c-card__footer {
+          grid-row: 4;
+        }
+
+        &:not(:has(:is(.pl-c-card__meta, .pl-c-card__metadata)))
+          > .pl-c-card__footer {
           grid-row: 3;
         }
 
         &:not(:has(.pl-c-card__footer)) > .pl-c-card__body {
           grid-row: 2 / -1;
         }
+      }
+
+      :is(
+        :where([data-subgrid="rows"]) > :scope,
+        :scope[data-subgrid="rows"]
+      ):not(:has(:is(.pl-c-card__meta, .pl-c-card__metadata))) {
+        grid-row: span var(--pl-c-card-subgrid-rows, 3);
       }
     }
 
@@ -326,6 +342,14 @@
   @media (forced-colors: active) {
     :where(.pl-c-card) {
       border-color: ButtonBorder;
+    }
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    :where(.pl-l-grid[data-subgrid] > .pl-c-card, .pl-c-card[data-subgrid]) {
+      grid-row: span 4;
+      display: grid;
+      grid-template-rows: subgrid;
     }
   }
 }

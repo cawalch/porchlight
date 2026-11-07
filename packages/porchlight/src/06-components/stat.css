@@ -40,7 +40,7 @@
       font-weight: var(--pl-font-weight-bold);
       line-height: var(--pl-leading-tight);
       color: var(--pl-color-text);
-      font-variant-numeric: tabular-nums lining-nums;
+      font-variant-numeric: tabular-nums;
       font-feature-settings: var(--pl-font-feature-numeric);
       letter-spacing: var(--pl-tracking-tight);
     }
@@ -81,6 +81,7 @@
       color: var(--pl-color-text-muted);
     }
 
+    .pl-c-stat__delta,
     .pl-c-stat__trend {
       display: inline-flex;
       align-items: center;
@@ -88,34 +89,41 @@
       font-size: var(--pl-text-sm);
       font-weight: var(--pl-font-weight-semibold);
       font-variant-numeric: tabular-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
       color: var(--pl-color-text-muted);
     }
 
     /* Trend directions  -  semantic colors. The arrow glyph is always present
        so color is not the sole signal (colorblind-safe). */
+    .pl-c-stat__delta[data-direction="up"],
     .pl-c-stat__trend[data-direction="up"] {
       color: var(--pl-color-success-text);
     }
 
+    .pl-c-stat__delta[data-direction="down"],
     .pl-c-stat__trend[data-direction="down"] {
       color: var(--pl-color-danger-text);
     }
 
     /* The arrow lives in a ::before so app HTML doesn't need a glyph icon. */
+    .pl-c-stat__delta::before,
     .pl-c-stat__trend::before {
       display: inline-block;
       font-size: 0.7em;
       line-height: 1;
     }
 
+    .pl-c-stat__delta[data-direction="up"]::before,
     .pl-c-stat__trend[data-direction="up"]::before {
       content: "▲";
     }
 
+    .pl-c-stat__delta[data-direction="down"]::before,
     .pl-c-stat__trend[data-direction="down"]::before {
       content: "▼";
     }
 
+    .pl-c-stat__delta[data-direction="flat"]::before,
     .pl-c-stat__trend[data-direction="flat"]::before {
       content: "▶";
       transform: rotate(-90deg);
@@ -128,11 +136,11 @@
   }
 
   @media (forced-colors: active) {
-    :where(.pl-c-stat__trend)[data-direction="up"] {
+    :where(.pl-c-stat__trend, .pl-c-stat__delta)[data-direction="up"] {
       color: CanvasText;
     }
 
-    :where(.pl-c-stat__trend)[data-direction="down"] {
+    :where(.pl-c-stat__trend, .pl-c-stat__delta)[data-direction="down"] {
       color: CanvasText;
     }
   }

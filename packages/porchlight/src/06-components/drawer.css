@@ -1,23 +1,35 @@
 /*
  * Porchlight  -  drawer (slide-over panel) component
  * ===========================================================================
- * An off-canvas panel that slides in from a viewport edge. Uses the native
- * Popover API for top-layer rendering + light-dismiss, combined with
- * @starting-style for a smooth enter/exit animation (mirrors the dialog
- * and popover-menu pattern).
+ * An off-canvas panel that slides in from a viewport edge. Supports both
+ * declarative Popover API (<aside popover="auto"> or <div popover>) and
+ * native modal dialogs (<dialog closedby="any">) with zero-JS Invoker Commands:
  *
- * The drawer element MUST have the `popover` attribute in HTML:
- *   <div popover class="pl-c-drawer" id="my-drawer" data-side="end">
- *     <header class="pl-c-drawer__header">...</header>
+ * Popover drawer:
+ *   <button class="pl-c-button" commandfor="my-drawer" command="toggle-popover">Open</button>
+ *   <aside popover="auto" class="pl-c-drawer" id="my-drawer" data-side="end">
+ *     <header class="pl-c-drawer__header">
+ *       <h2 class="pl-c-drawer__title">Title</h2>
+ *       <button class="pl-c-drawer__close" commandfor="my-drawer" command="toggle-popover" aria-label="Close">✕</button>
+ *     </header>
  *     <div class="pl-c-drawer__body">...</div>
- *   </div>
- * The trigger uses `popovertarget="my-drawer"` to open it declaratively.
+ *   </aside>
+ *
+ * Modal dialog drawer:
+ *   <button class="pl-c-button" commandfor="my-dialog-drawer" command="show-modal">Open</button>
+ *   <dialog class="pl-c-drawer" id="my-dialog-drawer" closedby="any" data-side="end">
+ *     <header class="pl-c-drawer__header">
+ *       <h2 class="pl-c-drawer__title">Title</h2>
+ *       <button class="pl-c-drawer__close" commandfor="my-dialog-drawer" command="close" aria-label="Close">✕</button>
+ *     </header>
+ *     <div class="pl-c-drawer__body">...</div>
+ *   </dialog>
  *
  * [data-side="start"] slides from the inline-start edge (left in LTR).
  * [data-side="end"] slides from the inline-end edge (right in LTR).
  * Default is "end".
  *
- * A backdrop scrim is created via ::backdrop pseudo-element on the popover.
+ * A backdrop scrim is created via ::backdrop pseudo-element on the popover/dialog.
  */
 @layer porchlight.components {
   @scope (.pl-c-drawer) {
@@ -38,6 +50,8 @@
       /* No hard side border  -  shadow-3 defines the edge cleanly. */
       inline-size: var(--pl-c-drawer-inline);
       block-size: var(--pl-c-drawer-block);
+      max-inline-size: 100vi;
+      max-block-size: 100vb;
 
       /* Liquid Glass: translucent surface with blur. */
       background: light-dark(
@@ -48,6 +62,7 @@
         saturate(var(--pl-backdrop-saturate));
       -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
+      color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
       /* Animation: slide + fade. Asymmetric: enters deliberately, exits snappily. */
@@ -75,21 +90,26 @@
       --pl-c-drawer-translate: 100%;
     }
 
-    /* Open state: visible + settled. */
-    :scope:popover-open {
+    /* Open state: visible + settled. Supports Popover API (:popover-open)
+       and native modal dialogs (:modal, [open]). */
+    :scope:popover-open,
+    :scope:modal,
+    :scope[open] {
       opacity: 1;
       transform: translateX(0);
     }
 
     /* Enter: initial state before the open transition starts. */
     @starting-style {
-      :scope:popover-open {
+      :scope:popover-open,
+      :scope:modal,
+      :scope[open] {
         opacity: 0;
         transform: translateX(var(--pl-c-drawer-translate));
       }
     }
 
-    /* Backdrop scrim (native ::backdrop on popovers). Stronger tint + blur
+    /* Backdrop scrim (native ::backdrop on popovers and dialogs). Stronger tint + blur
        contrasts against the translucent drawer surface. Animates opacity on
        enter and exit with allow-discrete to avoid harsh popping. */
     :scope::backdrop {
@@ -103,12 +123,16 @@
         display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
-    :scope:popover-open::backdrop {
+    :scope:popover-open::backdrop,
+    :scope:modal::backdrop,
+    :scope[open]::backdrop {
       opacity: 1;
     }
 
     @starting-style {
-      :scope:popover-open::backdrop {
+      :scope:popover-open::backdrop,
+      :scope:modal::backdrop,
+      :scope[open]::backdrop {
         opacity: 0;
       }
     }
@@ -129,6 +153,55 @@
     .pl-c-drawer__title {
       font-size: var(--pl-text-lg);
       font-weight: var(--pl-font-weight-semibold);
+    }
+
+    /* Close button  -  a ghost-icon button for invoker command="close" or toggle-popover. */
+    .pl-c-drawer__close {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      inline-size: var(--pl-control-block-size);
+      block-size: var(--pl-control-block-size);
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-md);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: 0;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    .pl-c-drawer__close::before,
+    .pl-c-drawer__close::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: 1rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .pl-c-drawer__close::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .pl-c-drawer__close:hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-drawer__close:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
     }
 
     .pl-c-drawer__body {
@@ -152,5 +225,14 @@
         background: Canvas;
       }
     }
+  }
+
+  /* Drawer triggers: button with commandfor/command or .pl-c-drawer__trigger */
+  :where(
+    .pl-c-drawer__trigger,
+    button[command="show-modal"],
+    button[command="toggle-popover"]
+  ) {
+    cursor: pointer;
   }
 }

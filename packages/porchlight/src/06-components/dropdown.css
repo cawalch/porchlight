@@ -108,8 +108,9 @@
         position: absolute;
         position-anchor: var(--pl-c-dropdown-anchor, auto);
         position-area: block-end span-inline-end;
-        position-try-fallbacks: flip-block;
+        position-try-fallbacks: flip-block, flip-inline;
         margin-block-start: var(--pl-space-1);
+        inline-size: max(anchor-size(self-inline), max-content);
         min-inline-size: max(
           var(--pl-c-dropdown-min-inline),
           anchor-size(self-inline)

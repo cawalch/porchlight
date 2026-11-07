@@ -2,14 +2,17 @@
  * Porchlight  -  command palette component
  * ===========================================================================
  * A Cmd+K quick-action search overlay. Search input at top, grouped action
- * list below, keyboard navigation (JS responsibility). Uses the Popover API
- * for top-layer rendering + @starting-style for enter animation.
+ * list below, keyboard navigation (JS responsibility). Supports both declarative
+ * Popover API (<div popover class="pl-c-command">) and native modal dialogs
+ * (<dialog class="pl-c-command-palette" closedby="any">) with zero-JS Invoker Commands:
  *
- * The palette is centered in the viewport (not anchored to a trigger).
- *
- * Structure:
- *   <div popover class="pl-c-command" id="cmdk">
- *     <input class="pl-c-command__search" role="combobox" aria-controls="cmd-list" />
+ * Invoker Commands API (dialog modal):
+ *   <button class="pl-c-button" commandfor="my-palette" command="show-modal">Open Palette</button>
+ *   <dialog class="pl-c-command-palette" id="my-palette" closedby="any">
+ *     <div class="pl-c-command__header">
+ *       <input class="pl-c-command__search" role="combobox" aria-controls="cmd-list" />
+ *       <button class="pl-c-command__close" commandfor="my-palette" command="close" aria-label="Close">✕</button>
+ *     </div>
  *     <div class="pl-c-command__body" id="cmd-list" role="listbox">
  *       <div class="pl-c-command__group">
  *         <h3 class="pl-c-command__heading">Actions</h3>
@@ -24,12 +27,18 @@
  *       <span>↵ to select</span>
  *       <span>esc to close</span>
  *     </footer>
- *   </div>
+ *   </dialog>
  *
- * Open via: <button popovertarget="cmdk">Cmd+K</button>
+ * Popover API invocation:
+ *   <button class="pl-c-button" popovertarget="cmdk">Cmd+K</button>
+ *   <div popover class="pl-c-command" id="cmdk">...</div>
+ *
+ * The `closedby="any"` attribute enables native backdrop click-to-dismiss on <dialog>.
+ * Open state is styled via :modal, [open], and :popover-open with @starting-style
+ * and allow-discrete transitions matching dialog.css.
  */
 @layer porchlight.components {
-  @scope (.pl-c-command) {
+  @scope (.pl-c-command, .pl-c-command-palette) {
     :scope {
       --pl-c-command-inline: min(36rem, calc(100vi - 2 * var(--pl-space-4)));
       --pl-c-command-max-block: 28rem;
@@ -50,6 +59,7 @@
         saturate(var(--pl-backdrop-saturate-strong));
       -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong))
         saturate(var(--pl-backdrop-saturate-strong));
+      color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
       overflow: hidden;
 
@@ -63,20 +73,118 @@
         display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
     }
 
-    /* Center in viewport (override popover's default). */
+    /* Open: settled state. :modal covers showModal() / command="show-modal";
+       [open] covers show(); :popover-open covers Popover API. */
+    :scope:modal,
+    :scope[open],
     :scope:popover-open {
       opacity: 1;
       transform: scale(1) translateY(0);
     }
 
+    /* Enter: the initial state BEFORE the open transition. */
     @starting-style {
+      :scope:modal,
+      :scope[open],
       :scope:popover-open {
         opacity: 0;
         transform: scale(0.97) translateY(-10px);
       }
     }
 
-    .pl-c-command__search {
+    /* Scrim  -  dim the page behind the palette. Stronger tint + blur
+       for contrast against the Liquid Glass surface. Animates opacity on
+       enter and exit with allow-discrete to avoid harsh popping. */
+    :scope::backdrop {
+      opacity: 0;
+      background: var(--pl-color-scrim);
+      backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
+        saturate(var(--pl-backdrop-saturate-scrim));
+      transition:
+        opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
+        overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
+        display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
+    }
+
+    :scope:modal::backdrop,
+    :scope[open]::backdrop,
+    :scope:popover-open::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      :scope:modal::backdrop,
+      :scope[open]::backdrop,
+      :scope:popover-open::backdrop {
+        opacity: 0;
+      }
+    }
+
+    :is(.pl-c-command__header, .pl-c-command-palette__header) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-2);
+      border-block-end: 1px solid
+        color-mix(in oklab, var(--pl-color-border), transparent 40%);
+    }
+
+    :is(.pl-c-command__header, .pl-c-command-palette__header)
+      :is(.pl-c-command__search, .pl-c-command-palette__search) {
+      border-block-end: 0;
+    }
+
+    /* Close button  -  a ghost-icon button for invoker command="close". */
+    :is(.pl-c-command__close, .pl-c-command-palette__close) {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      inline-size: var(--pl-control-block-size);
+      block-size: var(--pl-control-block-size);
+      margin-inline-end: var(--pl-space-2);
+      padding: 0;
+      border: 0;
+      border-radius: var(--pl-radius-md);
+      background: transparent;
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: 0;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
+    }
+
+    :is(.pl-c-command__close, .pl-c-command-palette__close)::before,
+    :is(.pl-c-command__close, .pl-c-command-palette__close)::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      inline-size: 1rem;
+      block-size: 0.0938rem;
+      border-radius: var(--pl-radius-pill);
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    :is(.pl-c-command__close, .pl-c-command-palette__close)::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    :is(.pl-c-command__close, .pl-c-command-palette__close):hover {
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    :is(.pl-c-command__close, .pl-c-command-palette__close):focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    :is(.pl-c-command__search, .pl-c-command-palette__search) {
       inline-size: 100%;
       padding: var(--pl-space-4);
       border: 0;
@@ -91,21 +199,22 @@
       outline: none;
     }
 
-    .pl-c-command__search::placeholder {
+    :is(.pl-c-command__search, .pl-c-command-palette__search)::placeholder {
       color: var(--pl-color-text-muted);
     }
 
-    .pl-c-command__body {
+    :is(.pl-c-command__body, .pl-c-command-palette__body) {
       max-block-size: calc(var(--pl-c-command-max-block) - 4rem);
       overflow-y: auto;
       padding: var(--pl-space-2);
     }
 
-    .pl-c-command__group + .pl-c-command__group {
+    :is(.pl-c-command__group, .pl-c-command-palette__group)
+      + :is(.pl-c-command__group, .pl-c-command-palette__group) {
       margin-block-start: var(--pl-space-2);
     }
 
-    .pl-c-command__heading {
+    :is(.pl-c-command__heading, .pl-c-command-palette__heading) {
       margin-block: var(--pl-space-2) var(--pl-space-1);
       padding-inline: var(--pl-space-3);
       font-size: var(--pl-text-xs);
@@ -115,7 +224,7 @@
       color: var(--pl-color-text-muted);
     }
 
-    .pl-c-command__item {
+    :is(.pl-c-command__item, .pl-c-command-palette__item) {
       display: flex;
       align-items: center;
       gap: var(--pl-space-3);
@@ -131,34 +240,43 @@
       cursor: pointer;
     }
 
-    .pl-c-command__item:hover,
-    .pl-c-command__item:is([data-selected], [aria-selected="true"]) {
+    :is(.pl-c-command__item, .pl-c-command-palette__item):hover,
+    :is(.pl-c-command__item, .pl-c-command-palette__item):is(
+      [data-selected],
+      [aria-selected="true"]
+    ) {
       background: var(--pl-color-surface-2);
     }
 
-    .pl-c-command__item:is([data-selected], [aria-selected="true"]) {
+    :is(.pl-c-command__item, .pl-c-command-palette__item):is(
+      [data-selected],
+      [aria-selected="true"]
+    ) {
       box-shadow: inset var(--pl-accent-bar-width) 0 0 var(--pl-color-accent);
       color: var(--pl-color-accent);
     }
 
-    .pl-c-command__item:is([data-selected], [aria-selected="true"]):dir(rtl) {
+    :is(.pl-c-command__item, .pl-c-command-palette__item):is(
+        [data-selected],
+        [aria-selected="true"]
+      ):dir(rtl) {
       box-shadow: inset calc(-1 * var(--pl-accent-bar-width)) 0 0
         var(--pl-color-accent);
     }
 
-    .pl-c-command__item:focus-visible {
+    :is(.pl-c-command__item, .pl-c-command-palette__item):focus-visible {
       outline: var(--pl-focus-size) solid var(--pl-focus-color);
       outline-offset: calc(var(--pl-focus-offset) * -1);
     }
 
-    .pl-c-command__icon {
+    :is(.pl-c-command__icon, .pl-c-command-palette__icon) {
       inline-size: 1rem;
       block-size: 1rem;
       color: var(--pl-color-text-muted);
       flex-shrink: 0;
     }
 
-    .pl-c-command__shortcut {
+    :is(.pl-c-command__shortcut, .pl-c-command-palette__shortcut) {
       margin-inline-start: auto;
       padding: 0.125rem var(--pl-space-1);
       border-radius: var(--pl-radius-sm);
@@ -169,7 +287,7 @@
       font-family: var(--pl-font-mono);
     }
 
-    .pl-c-command__footer {
+    :is(.pl-c-command__footer, .pl-c-command-palette__footer) {
       display: flex;
       gap: var(--pl-space-4);
       padding: var(--pl-space-2) var(--pl-space-4);
@@ -189,31 +307,20 @@
     }
   }
 
-  /* Backdrop scrim. Stronger tint + blur for contrast against Liquid Glass surface.
-     Animates opacity on enter and exit with allow-discrete to avoid harsh popping. */
-  :where(.pl-c-command)::backdrop {
-    opacity: 0;
-    background: var(--pl-color-scrim);
-    backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
-      saturate(var(--pl-backdrop-saturate-scrim));
-    transition:
-      opacity var(--pl-duration-enter) var(--pl-ease-decelerate),
-      overlay var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete,
-      display var(--pl-duration-exit) var(--pl-ease-accelerate) allow-discrete;
-  }
-
-  :where(.pl-c-command:popover-open)::backdrop {
-    opacity: 1;
-  }
-
-  @starting-style {
-    :where(.pl-c-command:popover-open)::backdrop {
-      opacity: 0;
-    }
+  /* Command palette triggers: button with commandfor/command="show-modal" or .pl-c-command__trigger */
+  :where(
+    .pl-c-command__trigger,
+    .pl-c-command-palette__trigger,
+    button[command="show-modal"]
+  ) {
+    cursor: pointer;
   }
 
   @media (forced-colors: active) {
-    .pl-c-command__item:is([data-selected], [aria-selected="true"]) {
+    :is(.pl-c-command__item, .pl-c-command-palette__item):is(
+      [data-selected],
+      [aria-selected="true"]
+    ) {
       border-inline-start: 2px solid Highlight;
       box-shadow: none;
       color: Highlight;

@@ -47,7 +47,7 @@
     outline-offset: var(--pl-focus-offset);
   }
 
-  :where(h1, h2, h3, h4) {
+  :where(h1, h2, h3, h4, h5, h6) {
     line-height: var(--pl-leading-tight);
     text-wrap: balance;
     margin-block: 0;
@@ -64,7 +64,7 @@
     letter-spacing: var(--pl-tracking-tight);
   }
 
-  :where(p) {
+  :where(p, li, dd, blockquote) {
     text-wrap: pretty;
   }
 
