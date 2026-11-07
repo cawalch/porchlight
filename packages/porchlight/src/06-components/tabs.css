@@ -170,7 +170,8 @@
   /* Progressive enhancement: CSS scroll markers for tab panels.
      When supported, a scrollable panel group can track active state or
      render marker pills/dots. */
-  @supports (scroll-marker-group: before) or (scroll-marker-group: before tabs) {
+  @supports selector(::scroll-marker) or (scroll-marker-group: before) or
+    (scroll-marker-group: before tabs) {
     :where(.pl-c-tabs[data-markers="scroll"]) {
       position: relative;
     }

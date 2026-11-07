@@ -107,10 +107,13 @@
       font-weight: var(--pl-font-weight-semibold);
     }
 
-    .pl-c-timeline__time {
+    .pl-c-timeline__time,
+    .pl-c-timeline__date {
       font-size: var(--pl-text-xs);
       color: var(--pl-color-text-muted);
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: var(--pl-font-feature-numeric);
     }
 
     .pl-c-timeline__body {

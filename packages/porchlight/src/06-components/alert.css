@@ -54,6 +54,7 @@
       flex-direction: column;
       gap: var(--pl-space-1);
       min-inline-size: 0;
+      text-wrap: pretty;
     }
 
     .pl-c-alert__title {
@@ -62,9 +63,11 @@
       color: var(--pl-color-text);
     }
 
+    .pl-c-alert__description,
     .pl-c-alert__body {
       font-size: var(--pl-text-sm);
       color: var(--pl-color-text-muted);
+      text-wrap: pretty;
     }
 
     /* Tone variants. */

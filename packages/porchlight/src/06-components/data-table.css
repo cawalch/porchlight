@@ -574,7 +574,11 @@
 
     /* Subgrid column track alignment */
     @supports (grid-template-columns: subgrid) {
-      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid) {
+      .pl-c-table:is(
+        [data-subgrid="columns"],
+        [data-subgrid],
+        .pl-c-table--subgrid
+      ) {
         display: grid;
         grid-template-columns: var(
           --pl-c-table-columns,
@@ -582,12 +586,21 @@
         );
       }
 
-      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid)
+      .pl-c-table:is(
+          [data-subgrid="columns"],
+          [data-subgrid],
+          .pl-c-table--subgrid
+        )
         :is(thead, tbody, tr) {
         display: contents;
       }
 
-      .pl-c-table:is([data-subgrid="columns"], .pl-c-table--subgrid) tr {
+      .pl-c-table:is(
+          [data-subgrid="columns"],
+          [data-subgrid],
+          .pl-c-table--subgrid
+        )
+        tr {
         display: grid;
         grid-column: 1 / -1;
         grid-template-columns: subgrid;

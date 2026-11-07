@@ -36,6 +36,9 @@
    *   - zinc     - technical neutral, clean monochromatic surfaces
    *   - midnight - deep nocturnal blue-gray surfaces with electric cobalt accent
    *   - emerald  - fintech, sustainability, and accounting green ramp
+   *   - amethyst - AI / LLM observability and data science purple ramp
+   *   - crimson  - security, incident response, and high-risk SOC ruby ramp
+   *   - cyan     - cloud infrastructure, Kubernetes, and telemetry cyan ramp
    */
   :where([data-pl-palette="slate"]) {
     --pl-brand-1: oklch(97% 0.015 250deg);
@@ -160,6 +163,133 @@
     );
     --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
     --pl-color-accent-text: light-dark(white, oklch(14% 0.02 155deg));
+  }
+
+  :where([data-pl-palette="amethyst"]) {
+    --pl-brand-1: oklch(97% 0.02 305deg);
+    --pl-brand-2: oklch(89% 0.05 305deg);
+    --pl-brand-3: oklch(80% 0.09 305deg);
+    --pl-brand-4: oklch(71% 0.14 305deg);
+    --pl-brand-5: oklch(62% 0.18 305deg);
+    --pl-brand-6: oklch(53% 0.17 305deg);
+    --pl-brand-7: oklch(44% 0.14 305deg);
+    --pl-brand-8: oklch(35% 0.09 305deg);
+    --pl-brand-9: oklch(25% 0.05 305deg);
+    --pl-color-bg: light-dark(oklch(98% 0.006 305deg), oklch(13% 0.018 305deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0.022 305deg));
+    --pl-color-surface-2: light-dark(
+      oklch(94% 0.01 305deg),
+      oklch(21% 0.025 305deg)
+    );
+    --pl-color-text: light-dark(
+      oklch(19% 0.015 305deg),
+      oklch(96% 0.008 305deg)
+    );
+    --pl-color-text-muted: light-dark(
+      oklch(45% 0.02 305deg),
+      oklch(73% 0.015 305deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(80% 0.015 305deg / 75%),
+      oklch(42% 0.018 305deg / 35%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(14% 0.02 305deg));
+  }
+
+  :where([data-pl-palette="crimson"]) {
+    --pl-brand-1: oklch(97% 0.02 25deg);
+    --pl-brand-2: oklch(89% 0.05 25deg);
+    --pl-brand-3: oklch(80% 0.09 25deg);
+    --pl-brand-4: oklch(71% 0.15 25deg);
+    --pl-brand-5: oklch(61% 0.2 25deg);
+    --pl-brand-6: oklch(52% 0.19 25deg);
+    --pl-brand-7: oklch(43% 0.15 25deg);
+    --pl-brand-8: oklch(34% 0.1 25deg);
+    --pl-brand-9: oklch(24% 0.05 25deg);
+    --pl-color-bg: light-dark(oklch(98% 0.006 25deg), oklch(13% 0.016 25deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0.018 25deg));
+    --pl-color-surface-2: light-dark(
+      oklch(94% 0.01 25deg),
+      oklch(21% 0.022 25deg)
+    );
+    --pl-color-text: light-dark(oklch(19% 0.015 25deg), oklch(96% 0.008 25deg));
+    --pl-color-text-muted: light-dark(
+      oklch(45% 0.02 25deg),
+      oklch(73% 0.015 25deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(80% 0.015 25deg / 75%),
+      oklch(42% 0.018 25deg / 35%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(14% 0.02 25deg));
+  }
+
+  :where([data-pl-palette="cyan"]) {
+    --pl-brand-1: oklch(97% 0.025 195deg);
+    --pl-brand-2: oklch(89% 0.055 195deg);
+    --pl-brand-3: oklch(80% 0.09 195deg);
+    --pl-brand-4: oklch(71% 0.12 195deg);
+    --pl-brand-5: oklch(61% 0.14 195deg);
+    --pl-brand-6: oklch(52% 0.13 195deg);
+    --pl-brand-7: oklch(42% 0.11 195deg);
+    --pl-brand-8: oklch(34% 0.08 195deg);
+    --pl-brand-9: oklch(24% 0.05 195deg);
+    --pl-color-bg: light-dark(oklch(98% 0.006 195deg), oklch(13% 0.016 195deg));
+    --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(17% 0.018 195deg));
+    --pl-color-surface-2: light-dark(
+      oklch(94% 0.01 195deg),
+      oklch(21% 0.022 195deg)
+    );
+    --pl-color-text: light-dark(
+      oklch(19% 0.015 195deg),
+      oklch(96% 0.008 195deg)
+    );
+    --pl-color-text-muted: light-dark(
+      oklch(45% 0.02 195deg),
+      oklch(73% 0.015 195deg)
+    );
+    --pl-color-border: light-dark(
+      oklch(80% 0.015 195deg / 75%),
+      oklch(42% 0.018 195deg / 35%)
+    );
+    --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
+    --pl-color-accent-text: light-dark(white, oklch(14% 0.02 195deg));
+  }
+
+  /* Relative Color Syntax enhancements where supported */
+  @supports (color: oklch(from red l c h)) {
+    :where([data-pl-palette]) {
+      --pl-color-accent-hover: oklch(
+        from var(--pl-color-accent) calc(l * 0.92) c h
+      );
+      --pl-color-accent-subtle: oklch(from var(--pl-color-accent) l c h / 15%);
+    }
+  }
+
+  /* Wide-gamut (P3) enhancements for vivid accents */
+  @media (color-gamut: p3) {
+    :where([data-pl-palette="amethyst"]) {
+      --pl-brand-4: oklch(71% 0.18 305deg);
+      --pl-brand-5: oklch(62% 0.22 305deg);
+      --pl-brand-6: oklch(53% 0.21 305deg);
+      --pl-brand-7: oklch(44% 0.18 305deg);
+    }
+
+    :where([data-pl-palette="crimson"]) {
+      --pl-brand-4: oklch(71% 0.2 25deg);
+      --pl-brand-5: oklch(61% 0.24 25deg);
+      --pl-brand-6: oklch(52% 0.23 25deg);
+      --pl-brand-7: oklch(43% 0.19 25deg);
+    }
+
+    :where([data-pl-palette="cyan"]) {
+      --pl-brand-4: oklch(71% 0.15 195deg);
+      --pl-brand-5: oklch(61% 0.17 195deg);
+      --pl-brand-6: oklch(52% 0.16 195deg);
+      --pl-brand-7: oklch(42% 0.13 195deg);
+    }
   }
 
   /* Density tiers.

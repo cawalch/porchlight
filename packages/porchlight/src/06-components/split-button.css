@@ -50,6 +50,7 @@
       display: inline-flex;
       align-items: stretch;
       vertical-align: middle;
+      anchor-scope: --pl-c-split-anchor;
     }
 
     /* Primary segment  -  square the trailing edge so it meets the toggle. */
@@ -137,7 +138,7 @@
       border-block-start: 1px solid var(--pl-color-border);
     }
 
-    /* Anchor positioning  -  tether to the toggle. @supports-gated; browsers
+    /* Anchor positioning  -  tether to the toggle (caret button trigger). @supports-gated; browsers
        without it fall back to the UA's default centering. */
     @supports (position-anchor: --x) {
       .pl-c-split__menu {
@@ -145,7 +146,7 @@
         position: absolute;
         position-anchor: var(--pl-c-split-anchor, auto);
         position-area: block-end span-inline-end;
-        position-try-fallbacks: flip-block;
+        position-try-fallbacks: flip-block, flip-inline;
         margin-block-start: var(--pl-space-1);
       }
     }

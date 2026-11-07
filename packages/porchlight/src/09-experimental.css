@@ -62,11 +62,13 @@
     .pl-c-sticky-shell__bar,
     .pl-c-banner[data-sticky="true"],
     .pl-c-toolbar[data-sticky="true"],
+    .pl-c-table :where(th, .pl-c-table__sticky-col),
     .pl-c-scroll-region .pl-c-table :where(th, .pl-c-table__sticky-col) {
       container: pl-c-stuck / scroll-state;
     }
 
     .pl-c-sticky-shell__bar::after,
+    .pl-c-table th::after,
     .pl-c-scroll-region .pl-c-table th::after {
       content: "";
       position: absolute;
@@ -86,8 +88,13 @@
         box-shadow: var(--pl-shadow-2);
       }
 
+      .pl-c-table th::after {
+        box-shadow: var(--pl-shadow-1);
+      }
+
       .pl-c-scroll-region .pl-c-table th::after {
         border-block-end: 2px solid var(--pl-c-scroll-region-indicator);
+        box-shadow: var(--pl-shadow-1);
       }
     }
 

@@ -108,6 +108,16 @@
       font-size: 0.6875rem;
     }
 
+    /* Optical alignment: trim the cap-height half-leading so the tag label
+       sits optically centered with zero cap-height overshoot. Progressive only. */
+    @supports (text-box: trim-both cap alphabetic) or (text-box-trim: trim-both) {
+      :scope {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+        text-box: trim-both cap alphabetic;
+      }
+    }
+
     /* Remove button. */
     .pl-c-chip__remove {
       position: relative;

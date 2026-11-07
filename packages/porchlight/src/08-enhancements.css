@@ -23,6 +23,8 @@
  *  10. Pure-CSS sibling stagger: sibling-index() & sibling-count() dynamic delay sequences.
  *  11. Anchor space-maximization: position-try-order: most-block-size for floating surfaces.
  *  12. Reading flow reconciliation: reading-flow: grid-rows | flex-visual for keyboard navigation.
+ *  13. CSS Carousel & Scroll Markers (Chrome 135+ Baseline): scroll-marker pagination
+ *      dots for workflow board lanes on mobile and pure-CSS scroll buttons for overflowing tab lists.
  *
  * Each block stands alone and degrades cleanly. Nothing here is in the
  * critical path; everything below is opt-in via @supports.
@@ -410,6 +412,134 @@
       .pl-c-workflow-board__lanes[data-reading-flow]
     ) {
       reading-flow: flex-visual;
+    }
+  }
+
+  /* 13. CSS Carousel & Scroll Markers (Chrome 135+ Baseline):
+     Pagination dots for workflow board lanes on mobile viewports and
+     pure-CSS scroll buttons for overflowing tab lists. */
+  @supports selector(::scroll-marker) {
+    :where(.pl-c-workflow-board__lanes) {
+      scroll-marker-group: after;
+    }
+
+    :where(.pl-c-workflow-board__lanes)::scroll-marker-group {
+      display: none;
+    }
+
+    @container pl-c-workflow-board (inline-size < 44rem) {
+      :where(.pl-c-workflow-board__lanes)::scroll-marker-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--pl-space-2);
+        padding-block: var(--pl-space-2);
+      }
+    }
+
+    @media (width < 44rem) {
+      :where(.pl-c-workflow-board__lanes)::scroll-marker-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--pl-space-2);
+        padding-block: var(--pl-space-2);
+      }
+    }
+
+    :where(.pl-c-workflow-board__lane, .pl-c-workflow-lane)::scroll-marker {
+      content: "";
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      border: 0;
+      border-radius: var(--pl-radius-full);
+      background: var(--pl-color-border);
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-enter) var(--pl-ease-standard),
+        transform var(--pl-duration-enter) var(--pl-ease-standard);
+    }
+
+    :where(
+        .pl-c-workflow-board__lane,
+        .pl-c-workflow-lane
+      )::scroll-marker:target-current {
+      background: var(--pl-color-accent);
+      transform: scale(1.25);
+    }
+
+    :where(
+        .pl-c-workflow-board__lane,
+        .pl-c-workflow-lane
+      )::scroll-marker:focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    :where(.pl-c-tabs__list) {
+      scroll-behavior: smooth;
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-start),
+    :where(.pl-c-tabs__list)::scroll-button(inline-end) {
+      align-self: center;
+      flex-shrink: 0;
+      inline-size: 1.75rem;
+      block-size: 1.75rem;
+      padding: 0;
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-md);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+      line-height: 1;
+      cursor: pointer;
+      transition:
+        background-color var(--pl-duration-enter) var(--pl-ease-standard),
+        color var(--pl-duration-enter) var(--pl-ease-standard),
+        border-color var(--pl-duration-enter) var(--pl-ease-standard);
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-start) {
+      content: "‹";
+      margin-inline-end: var(--pl-space-1);
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-end) {
+      content: "›";
+      margin-inline-start: var(--pl-space-1);
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-start):hover,
+    :where(.pl-c-tabs__list)::scroll-button(inline-end):hover {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-border),
+        var(--pl-color-text) 15%
+      );
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text);
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-start):focus-visible,
+    :where(.pl-c-tabs__list)::scroll-button(inline-end):focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: var(--pl-focus-offset);
+    }
+
+    :where(.pl-c-tabs__list)::scroll-button(inline-start):disabled,
+    :where(.pl-c-tabs__list)::scroll-button(inline-end):disabled {
+      opacity: 0;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media (forced-colors: active) {
+      :where(.pl-c-tabs__list)::scroll-button(inline-start),
+      :where(.pl-c-tabs__list)::scroll-button(inline-end) {
+        border-color: ButtonBorder;
+        color: ButtonText;
+      }
     }
   }
 }
