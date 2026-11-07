@@ -68,7 +68,7 @@ const appPreviews: PreviewPage[] = [
   },
   {
     path: "./preview/app-reporting-dashboard",
-    heading: "Revenue performance",
+    heading: "Treasury & Capital Operations",
     root: ".pl-c-chart",
   },
   {

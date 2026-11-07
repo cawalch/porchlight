@@ -83,8 +83,8 @@ const standalonePreviewMeta: Record<string, { title: string; description: string
     description: 'Flagship enterprise risk and compliance studio featuring Basel III / FRTB capital adequacy KPIs, immutable audit ledger, subgrid counterparty inspectors, and Dodd-Frank policy diffs.',
   },
   'app-asset-inventory': {
-    title: 'Asset Inventory',
-    description: 'Searchable records with native entity inspectors and review actions.',
+    title: 'Asset Inventory & Cloud IAM Infrastructure',
+    description: 'Searchable multi-cloud IAM role and resource explorer with miller columns, subgrid property list, and policy inspector.',
   },
   'app-cases': {
     title: 'Case Review',
@@ -111,7 +111,7 @@ const standalonePreviewMeta: Record<string, { title: string; description: string
     description: 'Security operations console with dense data regions.',
   },
   'app-telemetry-cockpit': {
-    title: 'Telemetry Cockpit',
+    title: 'Cloud Telemetry & Incident War Room',
     description: 'Flagship enterprise SaaS operations cockpit with Industrial & Editorial Precision styling, KPI cards, audit stream, code diffs, property list, and Chrome 2026 CSS features.',
   },
   dashboard: {
@@ -123,6 +123,81 @@ const standalonePreviewMeta: Record<string, { title: string; description: string
     description: 'SaaS settings page with sidebar navigation, forms, and tabs.',
   },
 };
+
+const featuredArchetypes = [
+  {
+    title: 'Fintech Treasury & Capital Operations',
+    slug: 'app-reporting-dashboard',
+    domain: 'Fintech · Treasury',
+    palette: 'Emerald',
+    density: 'Compact',
+    paletteKey: 'emerald',
+    description: 'Multi-currency cash desk with dual capital dials, filter builder, and ISO wire batch actions.',
+  },
+  {
+    title: 'Cloud Telemetry & Incident War Room',
+    slug: 'app-telemetry-cockpit',
+    domain: 'Cloud Ops · SRE',
+    palette: 'Midnight',
+    density: 'Dense',
+    paletteKey: 'midnight',
+    description: 'Mission-critical telemetry console with dark mode, cluster saturation gauges, incident banner, and YAML diffs.',
+  },
+  {
+    title: 'Quantitative Trading Terminal',
+    slug: 'app-dense',
+    domain: 'Quant · HFT Trading',
+    palette: 'Zinc',
+    density: 'Dense',
+    paletteKey: 'zinc',
+    description: 'High-frequency order routing terminal with depth order book, tactile hotkeys, and batch split-buttons.',
+  },
+  {
+    title: 'AI Agent Pipeline Studio',
+    slug: 'app-process-builder',
+    domain: 'AI · Orchestration',
+    palette: 'Zinc',
+    density: 'Compact',
+    paletteKey: 'zinc',
+    description: 'Multi-agent evaluation workflow studio with stepper gates, auto-expanding textarea, and tag-input.',
+  },
+  {
+    title: 'Cloud IAM & Asset Explorer',
+    slug: 'app-asset-inventory',
+    domain: 'Security · Cloud IAM',
+    palette: 'Slate',
+    density: 'Compact',
+    paletteKey: 'slate',
+    description: 'Multi-cloud identity hierarchy explorer with 3-column miller columns and subgrid property list.',
+  },
+  {
+    title: 'Customer 360 & Renewal Hub',
+    slug: 'app-record-detail',
+    domain: 'Enterprise CRM · CS',
+    palette: 'Amber',
+    density: 'Comfortable',
+    paletteKey: 'default',
+    description: 'Strategic account health workspace with KPI stats, touchpoint timeline, and contract accordion.',
+  },
+  {
+    title: 'Regulatory Risk & Audit Studio',
+    slug: 'app-audit-studio',
+    domain: 'GRC · Basel III',
+    palette: 'Slate',
+    density: 'Compact',
+    paletteKey: 'slate',
+    description: 'Capital adequacy risk studio with immutable regulatory ledger and subgrid counterparty inspector.',
+  },
+  {
+    title: 'Enterprise Settings Console',
+    slug: 'app-settings-console',
+    domain: 'Enterprise · Admin',
+    palette: 'Zinc',
+    density: 'Compact',
+    paletteKey: 'zinc',
+    description: 'Multi-tenant administrative console with domain allowlist tag-input, security switches, and feedback toasts.',
+  },
+];
 
 const standalonePreviews = previewSlugs
   .filter((slug) => !documentedSlugSet.has(slug) && !foundationSlugSet.has(slug))
@@ -174,6 +249,38 @@ const plannedCount = components.filter((component) => component.data.status === 
         </div>
       </dl>
     </aside>
+  </section>
+
+  <section class="preview-spotlight" aria-labelledby="spotlight-title" data-preview-spotlight>
+    <header class="preview-spotlight__header">
+      <div>
+        <p class="preview-eyebrow">Production-Grade Compositions</p>
+        <h2 id="spotlight-title">Featured Application Archetypes</h2>
+      </div>
+      <span class="preview-spotlight__count">8 Reimagined Archetypes</span>
+    </header>
+    <div class="preview-archetypes-grid">
+      {featuredArchetypes.map((arch) => (
+        <article class="preview-archetype-card">
+          <div class="preview-archetype-card__top">
+            <span class="preview-archetype-card__domain">{arch.domain}</span>
+            <div class="preview-archetype-card__badges">
+              <span class="pl-c-badge" data-tone="neutral" data-size="sm">{arch.palette}</span>
+              <span class="pl-c-badge" data-tone="neutral" data-size="sm">{arch.density}</span>
+            </div>
+          </div>
+          <h3 class="preview-archetype-card__title">
+            <a href={`${b}preview/${arch.slug}`}>{arch.title}</a>
+          </h3>
+          <p class="preview-archetype-card__desc">{arch.description}</p>
+          <div class="preview-archetype-card__footer">
+            <a class="preview-archetype-card__cta" href={`${b}preview/${arch.slug}`}>
+              Launch Archetype &rarr;
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
   </section>
 
   <p class="preview-empty" data-preview-empty hidden>No preview pages match that search.</p>
@@ -315,6 +422,7 @@ const plannedCount = components.filter((component) => component.data.status === 
     const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-card]'));
     const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-preview-section]'));
     const empty = document.querySelector<HTMLElement>('[data-preview-empty]');
+    const spotlight = document.querySelector<HTMLElement>('[data-preview-spotlight]');
     const totalEl = document.querySelector<HTMLElement>('[data-stat-total]');
     const componentsEl = document.querySelector<HTMLElement>('[data-stat-components]');
     const patternsEl = document.querySelector<HTMLElement>('[data-stat-patterns]');
@@ -329,6 +437,10 @@ const plannedCount = components.filter((component) => component.data.status === 
       let visibleTotal = 0;
       let visibleComponents = 0;
       let visiblePatterns = 0;
+
+      if (spotlight) {
+        spotlight.hidden = query.length > 0;
+      }
 
       for (const card of cards) {
         const text = card.dataset.previewSearch?.toLowerCase() ?? '';
@@ -487,6 +599,130 @@ const plannedCount = components.filter((component) => component.data.status === 
   [data-preview-card][hidden],
   [data-preview-section][hidden] {
     display: none !important;
+  }
+
+  .preview-spotlight {
+    margin-block-start: var(--pl-space-8);
+  }
+
+  .preview-spotlight[hidden] {
+    display: none !important;
+  }
+
+  .preview-spotlight__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--pl-space-3);
+    align-items: end;
+    justify-content: space-between;
+    margin-block-end: var(--pl-space-4);
+  }
+
+  .preview-spotlight__header h2,
+  .preview-spotlight__header p {
+    margin-block: 0;
+  }
+
+  .preview-spotlight__count {
+    color: var(--pl-color-text-muted);
+    font-size: var(--pl-text-sm);
+    font-weight: 500;
+  }
+
+  .preview-archetypes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--pl-space-4);
+  }
+
+  .preview-archetype-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--pl-space-4);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-xl);
+    background: var(--pl-color-surface);
+    box-shadow: var(--pl-shadow-1);
+    transition:
+      transform var(--pl-duration-1) ease,
+      border-color var(--pl-duration-1) ease,
+      box-shadow var(--pl-duration-1) ease;
+  }
+
+  .preview-archetype-card:hover {
+    border-color: color-mix(in oklab, var(--pl-color-accent), var(--pl-color-border) 60%);
+    box-shadow: var(--pl-shadow-2);
+    transform: translateY(-2px);
+  }
+
+  .preview-archetype-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pl-space-2);
+    margin-block-end: var(--pl-space-2);
+  }
+
+  .preview-archetype-card__domain {
+    font-size: var(--pl-text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pl-color-accent);
+  }
+
+  .preview-archetype-card__badges {
+    display: inline-flex;
+    gap: var(--pl-space-1);
+  }
+
+  .preview-archetype-card__title {
+    margin: 0;
+    margin-block-end: var(--pl-space-2);
+    font-size: var(--pl-text-md);
+    font-weight: 700;
+    line-height: var(--pl-leading-tight);
+  }
+
+  .preview-archetype-card__title a {
+    color: var(--pl-color-text);
+    text-decoration: none;
+  }
+
+  .preview-archetype-card__title a:hover {
+    color: var(--pl-color-accent);
+  }
+
+  .preview-archetype-card__desc {
+    margin: 0;
+    font-size: var(--pl-text-sm);
+    color: var(--pl-color-text-muted);
+    line-height: var(--pl-leading-normal);
+    flex: 1 0 auto;
+    margin-block-end: var(--pl-space-3);
+  }
+
+  .preview-archetype-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-block-start: var(--pl-space-2);
+    border-block-start: 1px solid var(--pl-color-border);
+  }
+
+  .preview-archetype-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-1);
+    font-size: var(--pl-text-xs);
+    font-weight: 700;
+    color: var(--pl-color-accent);
+    text-decoration: none;
+  }
+
+  .preview-archetype-card__cta:hover {
+    text-decoration: underline;
   }
 
   .preview-section {

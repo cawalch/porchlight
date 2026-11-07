@@ -24,8 +24,8 @@ const kpis = [
   },
   {
     label: 'FX hedge coverage',
-    value: '94.2',
-    unit: '%',
+    value: '94.2%',
+    unit: '',
     direction: 'up',
     trend: '+4.1 pts',
     spark: 'M0 24 L10 23 L20 18 L30 20 L40 15 L50 12 L60 8 L70 6',
@@ -61,23 +61,32 @@ const channels = [
 const toneFor = (status: string) =>
   ({ Ahead: 'success', 'On track': 'accent', Watch: 'warning', 'Pending Approval': 'warning', 'CFO Dual-Auth': 'danger' }[status] ?? 'accent');
 ---
-<BaseLayout title="Revenue performance & treasury operations · Porchlight" palette="emerald" density="compact">
+<BaseLayout title="Treasury & Capital Operations · Porchlight" palette="emerald" density="compact">
   <PreviewToolbar palette="emerald" density="compact" title="Fintech Treasury & Capital Operations" />
 
   <div class="pl-l-stack reporting-shell" data-pl-palette="emerald" data-pl-density="compact">
     <section class="pl-l-stack reporting-header-stack" aria-labelledby="report-title">
       <div class="pl-c-page-header">
         <div class="pl-c-page-header__heading">
-          <h1 class="pl-c-page-header__title" id="report-title">Revenue performance</h1>
+          <h1 class="pl-c-page-header__title" id="report-title">Treasury & Capital Operations</h1>
           <span class="pl-c-page-header__subtitle">
             Global Multi-Currency Cash & Liquidity Desk · Value Date: <time datetime="2026-06-29T09:42:00">Jun 29, 2026 at 9:42 AM</time>
           </span>
         </div>
         <div class="pl-c-page-header__actions">
-          <div class="pl-c-segmented" role="group" aria-label="Reporting timeline intervals">
-            <button class="pl-c-segmented__item" aria-pressed="true" type="button">Q2 2026</button>
-            <button class="pl-c-segmented__item" aria-pressed="false" type="button">June</button>
-            <button class="pl-c-segmented__item" aria-pressed="false" type="button">W26</button>
+          <div class="pl-c-segmented" role="radiogroup" aria-label="Reporting timeline intervals">
+            <label class="pl-c-segmented__item">
+              <input type="radio" name="reporting-interval" value="q2" checked />
+              <span>Q2 2026</span>
+            </label>
+            <label class="pl-c-segmented__item">
+              <input type="radio" name="reporting-interval" value="june" />
+              <span>June</span>
+            </label>
+            <label class="pl-c-segmented__item">
+              <input type="radio" name="reporting-interval" value="w26" />
+              <span>W26</span>
+            </label>
           </div>
           <button class="pl-c-button" data-variant="secondary">Refresh</button>
           <button class="pl-c-button" data-variant="primary">
@@ -92,7 +101,7 @@ const toneFor = (status: string) =>
         <ul class="pl-c-saved-views__list">
           <li class="pl-c-saved-views__item">
             <button class="pl-c-saved-views__button" aria-current="true">
-              Treasury Executive <span class="pl-c-saved-views__count">12</span>
+              All Desks <span class="pl-c-saved-views__count">12</span>
             </button>
           </li>
           <li class="pl-c-saved-views__item">
@@ -107,7 +116,7 @@ const toneFor = (status: string) =>
           </li>
           <li class="pl-c-saved-views__item">
             <button class="pl-c-saved-views__button">
-              Liquidity At Risk <span class="pl-c-saved-views__count">2</span>
+              High-Risk Exposure <span class="pl-c-saved-views__count">2</span>
             </button>
           </li>
         </ul>
@@ -186,11 +195,11 @@ const toneFor = (status: string) =>
         </section>
 
         <div class="pl-l-sidebar reporting-sidebar">
-          <section class="pl-c-chart" aria-labelledby="revenue-trend-title" aria-describedby="revenue-trend-description">
+          <section class="pl-c-chart" aria-labelledby="liquidity-trend-title" aria-describedby="liquidity-trend-description">
             <header class="pl-c-chart__header">
               <div>
-                <h2 class="pl-c-chart__title" id="revenue-trend-title">Revenue trend</h2>
-                <p class="pl-c-chart__description" id="revenue-trend-description">
+                <h2 class="pl-c-chart__title" id="liquidity-trend-title">Liquidity flow trend</h2>
+                <p class="pl-c-chart__description" id="liquidity-trend-description">
                   Weekly recurring liquidity flows with treasury forecast overlay.
                 </p>
               </div>
@@ -290,7 +299,7 @@ const toneFor = (status: string) =>
             <div class="pl-c-toolbar__group">
               <label class="pl-c-field">
                 <span class="pl-u-sr-only">Search settlements</span>
-                <input class="pl-c-field__control" type="search" placeholder="Search beneficiary or ID..." />
+                <input class="pl-c-field__control reporting-search-control" type="search" placeholder="Search beneficiary or ID..." />
               </label>
               <button class="pl-c-button" data-variant="secondary" data-size="sm">
                 <Icon name="download" />
@@ -363,7 +372,7 @@ const toneFor = (status: string) =>
                 <tr>
                   <th class="pl-c-table__sticky-col" data-sort="asc">Channel <span class="pl-c-table__sort-icon"></span></th>
                   <th>Segment</th>
-                  <th data-align="end" data-sort="desc">Revenue <span class="pl-c-table__sort-icon"></span></th>
+                  <th data-align="end" data-sort="desc">Liquidity Flow <span class="pl-c-table__sort-icon"></span></th>
                   <th data-align="end">Growth</th>
                   <th data-align="end">Conversion</th>
                   <th>Status</th>
@@ -423,6 +432,7 @@ const toneFor = (status: string) =>
 
   .reporting-shell {
     --pl-l-stack-gap: var(--pl-space-5);
+    padding-block-end: var(--pl-space-12);
   }
 
   .reporting-header-stack,
@@ -440,6 +450,17 @@ const toneFor = (status: string) =>
 
   .reporting-sidebar {
     --pl-l-sidebar-size: 20rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--pl-l-sidebar-size, 20rem));
+  }
+
+  @media (width < 48rem) {
+    .reporting-sidebar {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .reporting-search-control {
+    min-inline-size: 13rem;
   }
 
   .reporting-swatch-actual {
