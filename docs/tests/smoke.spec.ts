@@ -2089,7 +2089,7 @@ test.describe("docs scaffold", () => {
       },
       {
         route: "./preview/app-reporting-dashboard",
-        heading: "Revenue performance",
+        heading: "Treasury & Capital Operations",
         selector: ".pl-c-chart",
       },
       {

@@ -166,9 +166,9 @@ const assets = [
           </div>
         </div>
 
-        <div class="pl-l-grid" style="--pl-l-grid-min: min(100%, 20rem); gap: var(--pl-space-4); margin-block-start: var(--pl-space-2);">
+        <div class="pl-l-grid" style="--pl-l-grid-min: min(100%, 20rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--pl-space-4); margin-block-start: var(--pl-space-2);">
           <!-- Property List for Role Details -->
-          <section class="pl-c-card" data-surface="app">
+          <section class="pl-c-card" data-surface="app" style="min-inline-size: 0;">
             <header class="pl-c-card__header">
               <h3 class="pl-c-card__title">Selected role specifications</h3>
               <span class="pl-c-badge" data-tone="accent">Active Policy</span>
@@ -201,14 +201,14 @@ const assets = [
           </section>
 
           <!-- Code Block for JSON Policy Document -->
-          <section class="pl-c-card" data-surface="app">
+          <section class="pl-c-card" data-surface="app" style="min-inline-size: 0; overflow: hidden;">
             <header class="pl-c-card__header">
               <h3 class="pl-c-card__title">IAM JSON Policy Document</h3>
               <span class="pl-c-badge" data-size="sm">JSON</span>
             </header>
-            <div class="pl-c-card__body" style="padding: 0;">
-              <div class="pl-c-code-block" data-language="json">
-                <pre class="pl-c-code-block__pre"><code class="pl-c-code-block__code">&#123;
+            <div class="pl-c-card__body" style="padding: 0; overflow-x: auto; min-inline-size: 0;">
+              <div class="pl-c-code-block" data-language="json" style="margin: 0; border: 0; min-inline-size: 0;">
+                <pre class="pl-c-code-block__pre" style="padding: var(--pl-space-3);"><code class="pl-c-code-block__code">&#123;
   "Version": "2012-10-17",
   "Statement": [
     &#123;
@@ -318,6 +318,15 @@ const assets = [
   }
   .inventory .pl-c-miller-columns {
     max-inline-size: 100%;
+  }
+  .inventory .pl-c-card {
+    min-inline-size: 0;
+  }
+  .inventory .pl-c-code-block,
+  .inventory .pl-c-code-block__pre {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-x: auto;
   }
   @media (width < 48rem) { .inventory .pl-l-app-shell__main { padding: var(--pl-space-4); } }
   .inventory-stat { display: block; margin-block-start: var(--pl-space-2); font-size: var(--pl-text-2xl); }
