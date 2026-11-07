@@ -5,6 +5,38 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0] - 2026-11-07
+
+### Added
+
+- Add three new enterprise domain palettes in `03-themes.css`:
+  - `amethyst` (OKLCH hue 305°): AI / LLM Observability / Data Science, full purple brand ramp across `light-dark()` surfaces.
+  - `crimson` (OKLCH hue 25°): Security / Incident Response / High-Risk SOC, full ruby brand ramp across `light-dark()` surfaces.
+  - `cyan` (OKLCH hue 195°): Cloud Infrastructure / Kubernetes / Telemetry, electric cyan ramp across `light-dark()` surfaces.
+- Add CSS Relative Color Syntax enhancements via `@supports (color: oklch(from red l c h))` to dynamically compute `--pl-color-accent-hover` and `--pl-color-accent-subtle` across all palettes.
+- Add Display-P3 wide-gamut accents (`@media (color-gamut: p3)`) for high-vibrancy display environments.
+- Add HTML Invoker Commands (`commandfor` and `command="show-modal" / "close" / "toggle-popover"`) and declarative modal architecture (`<dialog closedby="any">`) for Command Palette (`command-palette.css`) and Drawer (`drawer.css`).
+- Add CSS Anchor Positioning auto-sizing (`inline-size: anchor-size(self-inline)`) and boundary flip-fallbacks (`position-try-fallbacks: flip-block, flip-inline`) for Combobox (`combobox.css`), Dropdown (`dropdown.css`), and Split Button (`split-button.css`).
+- Add typographic line balancing:
+  - `text-wrap: balance` on all headings (`h1`–`h6`) in `04-base.css` and empty state titles in `empty-state.css`.
+  - `text-wrap: pretty` on paragraphs, list items, alert descriptions (`alert.css`), and empty states (`empty-state.css`) to eliminate single-word typographic orphans across responsive breakpoints.
+- Add anti-jitter tabular figures (`font-variant-numeric: tabular-nums`, `font-feature-settings: var(--pl-font-feature-numeric)`) systematically on `.pl-c-kpi-card__value`, `.pl-c-kpi-card__delta`, `.pl-c-stat__value`, `.pl-c-stat__delta`, `.pl-c-gauge__value`, `.pl-c-gauge__label`, and `.pl-c-timeline__time`.
+- Add optical cap-height centering (`text-box: trim-both cap alphabetic`) on chip tags (`chip.css`).
+- Add CSS Subgrid (`grid-row: span 4; display: grid; grid-template-rows: subgrid;`) on `.pl-l-grid[data-subgrid] > .pl-c-card` for row-aligned card decks in `card.css`.
+- Add CSS Carousel & Scroll Markers (`scroll-marker-group: after;` and `::scroll-marker`) for mobile Kanban lane swipe pagination on `.pl-c-workflow-board__lanes` in `08-enhancements.css`.
+- Add pure-CSS scroll buttons (`::scroll-button(inline-start / inline-end)`) for horizontally overflowing tab lists on `.pl-c-tabs__list` in `08-enhancements.css`.
+- Add scroll-state sticky elevation shadow on `.pl-c-table` headers in `09-experimental.css`.
+- Add Featured Application Archetypes showcase gallery in `preview/index.astro`.
+
+### Fixed
+
+- Add missing `--pl-z-fixed: var(--pl-z-overlay)` (1000) token to `02-tokens.css`.
+- Reparent floating action bar outside card layout containment to prevent table sticky column slicing.
+- Replace invalid token `var(--pl-space-7)` with `var(--pl-space-8)` (2rem / 32px) in preview toolbar selects, guaranteeing a 12px breathing buffer before the caret.
+- Rebind preview toolbar controls on Astro view transition `astro:page-load` events.
+- Fix Stylelint 18 / `stylelint-config-standard` 41 `selector-no-unmatchable` errors by extracting pseudo-elements (`::selection`, `::before`, `::after`) outside `:where()`.
+- Add `tabindex="0" role="region" aria-label="IAM Policy Document JSON"` to scrollable code block in `app-asset-inventory.astro` for WCAG compliance.
+
 ## [0.16.1] - 2026-11-05
 
 ### Fixed
