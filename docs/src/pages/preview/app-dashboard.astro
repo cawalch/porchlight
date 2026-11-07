@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 const stats = [
   { label: 'Monthly revenue', value: '$48,200', unit: '/mo', direction: 'up', trend: '12.4%', spark: 'M0 32 L10 28 L20 30 L30 22 L40 24 L50 14 L60 10 L70 4' },
@@ -19,7 +20,8 @@ const accounts = [
 const toneFor = (s: string) =>
   ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[s] ?? 'accent');
 ---
-<BaseLayout title="Responsive dashboard · Porchlight">
+<BaseLayout title="Responsive dashboard · Porchlight" palette="emerald" density="compact">
+  <PreviewToolbar palette="emerald" theme="light" density="compact" title="SaaS Metrics & Revenue Dashboard" />
   <div class="pl-l-app-shell">
     <!-- Topbar -->
     <header class="pl-l-app-shell__topbar app-topbar">

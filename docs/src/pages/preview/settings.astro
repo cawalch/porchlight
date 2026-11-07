@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 const sections = [
   ['General', true],
@@ -11,6 +12,7 @@ const sections = [
 ] as const;
 ---
 <BaseLayout title="Settings · Porchlight">
+  <PreviewToolbar title="Legacy Workspace Settings" />
   <h1>Settings</h1>
   <p>
     A SaaS settings page composing sidebar navigation, tabs, form fields,

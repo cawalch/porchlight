@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 ---
 
-<BaseLayout title="Financial Risk & Regulatory Audit Studio · Porchlight">
+<BaseLayout title="Financial Risk & Regulatory Audit Studio · Porchlight" palette="slate" density="compact">
+  <PreviewToolbar palette="slate" theme="light" density="compact" title="Financial Risk & Regulatory Audit Studio" />
   <!-- Pinned Top Regulatory Advisory Banner with Scroll-State Active Horizon Elevation -->
   <aside
     class="pl-c-banner"
@@ -133,6 +135,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">
         <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
       </button>
+      <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm" id="btn-upload-evidence" commandfor="evidence-dialog" command="show-modal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        Evidence Pack
+      </button>
       <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">
         Export FINREP
       </button>
@@ -141,6 +151,40 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </button>
     </div>
   </header>
+
+  <!-- Evidence Upload & Attestation Modal Dialog -->
+  <dialog class="pl-c-dialog" id="evidence-dialog" closedby="any" aria-labelledby="dialog-evidence-title">
+    <div class="pl-c-dialog__header">
+      <h2 class="pl-c-dialog__title" id="dialog-evidence-title">Submit Regulatory Evidence Pack</h2>
+      <button type="button" class="pl-c-dialog__close" commandfor="evidence-dialog" command="close" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="pl-c-dialog__body pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
+      <p class="pl-u-muted" style="font-size: var(--pl-text-sm);">
+        Deposit cryptographically signed ISDA Master Agreement schedules, FINMA disclosure reports, or SWIFT MT569 collateral statements.
+      </p>
+      <label class="pl-c-file-upload">
+        <input type="file" class="pl-c-file-upload__input" multiple />
+        <span class="pl-c-file-upload__zone">
+          <svg class="pl-c-file-upload__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span class="pl-c-file-upload__text">
+            <strong>Drop audit evidence files here</strong> or click to browse
+          </span>
+        </span>
+      </label>
+      <div class="pl-c-field">
+        <label class="pl-c-field__label" for="attest-memo">Attestation Note</label>
+        <textarea id="attest-memo" class="pl-c-field__control pl-c-field__textarea" rows="2" placeholder="e.g. Verified by European Desk CRO - Hash committed to Merkle ledger"></textarea>
+      </div>
+    </div>
+    <div class="pl-c-dialog__footer pl-l-cluster" style="justify-content: flex-end; gap: var(--pl-space-2);">
+      <button type="button" class="pl-c-button" data-variant="ghost" commandfor="evidence-dialog" command="close">Cancel</button>
+      <button type="button" class="pl-c-button" data-variant="primary" commandfor="evidence-dialog" command="close">Commit to Ledger</button>
+    </div>
+  </dialog>
 
   <div class="pl-l-container studio-container">
     <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-4);">
@@ -653,3 +697,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
   }
 </style>
+
+<script>
+  // Ensure dialog works even in browsers without native commandfor support
+  const dialog = document.getElementById('evidence-dialog') as HTMLDialogElement | null;
+  document.getElementById('btn-upload-evidence')?.addEventListener('click', () => {
+    if (typeof dialog?.showModal === 'function') {
+      dialog.showModal();
+    }
+  });
+  dialog?.querySelectorAll('[command="close"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (typeof dialog?.close === 'function') {
+        dialog.close();
+      }
+    });
+  });
+</script>

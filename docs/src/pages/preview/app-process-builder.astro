@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 type ProcessCard = {
   id: string;
@@ -91,7 +92,8 @@ const steps: ProcessLane[] = [
 ];
 ---
 
-<BaseLayout title="Process Builder · Porchlight">
+<BaseLayout title="Vendor onboarding agent pipeline · Porchlight" palette="zinc" density="compact">
+  <PreviewToolbar palette="zinc" density="compact" title="AI Agent Orchestration & Workflow Studio" />
   <div class="pl-l-app-shell builder-shell">
     <header class="pl-l-app-shell__topbar pl-l-cluster builder-topbar">
       <div class="pl-l-cluster builder-topbar__brand">
@@ -226,18 +228,37 @@ const steps: ProcessLane[] = [
           <div class="pl-c-page-header__heading">
             <h1 class="pl-c-page-header__title">Vendor onboarding</h1>
             <span class="pl-c-page-header__subtitle">
-              Draft v12, staged for Procurement Ops
+              Autonomous verification pipeline · Draft v12
             </span>
           </div>
           <div class="pl-c-page-header__actions">
             <button class="pl-c-button" data-variant="secondary" type="button">
-              Preview
+              Run evaluation
             </button>
             <button class="pl-c-button" data-variant="primary" type="button">
-              Publish
+              Publish agent
             </button>
           </div>
         </div>
+
+        <ol class="pl-c-stepper" aria-label="Pipeline deployment gates">
+          <li class="pl-c-stepper__step" data-state="completed">
+            <span class="pl-c-stepper__marker">1</span>
+            <span class="pl-c-stepper__label">Draft Spec</span>
+          </li>
+          <li class="pl-c-stepper__step" data-state="current">
+            <span class="pl-c-stepper__marker">2</span>
+            <span class="pl-c-stepper__label">Agent Eval</span>
+          </li>
+          <li class="pl-c-stepper__step" data-state="upcoming">
+            <span class="pl-c-stepper__marker">3</span>
+            <span class="pl-c-stepper__label">Shadow Run</span>
+          </li>
+          <li class="pl-c-stepper__step" data-state="upcoming">
+            <span class="pl-c-stepper__marker">4</span>
+            <span class="pl-c-stepper__label">Production Gate</span>
+          </li>
+        </ol>
 
         <div class="pl-c-toolbar" data-surface="panel" aria-label="Draft actions">
           <div class="pl-c-toolbar__group">
@@ -680,6 +701,16 @@ const steps: ProcessLane[] = [
                           Validation
                           <span class="pl-c-tabs__count">1</span>
                         </button>
+                        <button
+                          class="pl-c-tabs__tab"
+                          role="tab"
+                          aria-selected="false"
+                          id="tab-trace"
+                          aria-controls="panel-trace"
+                          tabindex="-1"
+                        >
+                          Execution Trace
+                        </button>
                       </div>
                       <div
                         class="pl-c-tabs__panel"
@@ -740,10 +771,20 @@ const steps: ProcessLane[] = [
                               <label class="pl-c-field">
                                 <span class="pl-c-field__label">Instructions</span>
                                 <textarea
-                                  class="pl-c-field__control"
+                                  class="pl-c-field__control pl-c-textarea-auto"
                                   name="instructions"
-                                  rows="4"
-                                >Review SOC 2 packet and data handling scope before finance approval.</textarea>
+                                  rows="3"
+                                >Review SOC 2 Type II packet and third-party data handling scope before triggering finance approval gate.</textarea>
+                              </label>
+
+                              <label class="pl-c-field">
+                                <span class="pl-c-field__label">Agent tool capabilities</span>
+                                <div class="pl-c-tag-input">
+                                  <span class="pl-c-chip" data-tone="success">tools: sec_audit <button type="button" class="pl-c-chip__remove" aria-label="Remove sec_audit">x</button></span>
+                                  <span class="pl-c-chip" data-tone="success">tools: search <button type="button" class="pl-c-chip__remove" aria-label="Remove search">x</button></span>
+                                  <span class="pl-c-chip" data-tone="accent">temp: 0.2 <button type="button" class="pl-c-chip__remove" aria-label="Remove temp">x</button></span>
+                                  <input class="pl-c-tag-input__field" placeholder="Add tool or parameter..." />
+                                </div>
                               </label>
                             </div>
                           </section>
@@ -781,6 +822,47 @@ const steps: ProcessLane[] = [
                             </div>
                           </div>
                         </div>
+                      </div>
+
+                      <div
+                        class="pl-c-tabs__panel"
+                        role="tabpanel"
+                        id="panel-trace"
+                        aria-labelledby="tab-trace"
+                        hidden
+                      >
+                        <ol class="pl-c-timeline" style="padding-block-start: var(--pl-space-3);">
+                          <li class="pl-c-timeline__item" data-tone="success">
+                            <span class="pl-c-timeline__dot"></span>
+                            <div class="pl-c-timeline__content">
+                              <div class="pl-c-timeline__header">
+                                <span class="pl-c-timeline__title">Intake Vector Search</span>
+                                <time class="pl-c-timeline__time pl-u-tabular-nums">14:02:18</time>
+                              </div>
+                              <p class="pl-c-timeline__body">Matched 2 candidate vendor records in PostgreSQL pgvector.</p>
+                            </div>
+                          </li>
+                          <li class="pl-c-timeline__item" data-tone="accent">
+                            <span class="pl-c-timeline__dot"></span>
+                            <div class="pl-c-timeline__content">
+                              <div class="pl-c-timeline__header">
+                                <span class="pl-c-timeline__title">Planner Tool Call</span>
+                                <time class="pl-c-timeline__time pl-u-tabular-nums">14:02:19</time>
+                              </div>
+                              <p class="pl-c-timeline__body">Executed tool <code>sec_audit.verify_soc2()</code> in WebAssembly sandbox.</p>
+                            </div>
+                          </li>
+                          <li class="pl-c-timeline__item" data-tone="warning">
+                            <span class="pl-c-timeline__dot"></span>
+                            <div class="pl-c-timeline__content">
+                              <div class="pl-c-timeline__header">
+                                <span class="pl-c-timeline__title">Human Approval Gate</span>
+                                <time class="pl-c-timeline__time pl-u-tabular-nums">14:02:22</time>
+                              </div>
+                              <p class="pl-c-timeline__body">Awaiting sign-off on third-party EU data residency addendum.</p>
+                            </div>
+                          </li>
+                        </ol>
                       </div>
                     </div>
                   </div>

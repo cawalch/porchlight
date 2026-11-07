@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 const requests = [
   {
@@ -59,7 +60,8 @@ const requests = [
 const selected = requests[0];
 ---
 
-<BaseLayout title="List/detail workspace · Porchlight">
+<BaseLayout title="List/detail workspace · Porchlight" palette="slate" density="compact">
+  <PreviewToolbar palette="slate" theme="light" density="compact" title="Procurement Review & List Detail Workspace" />
   <div class="pl-l-app-shell list-detail-shell">
     <header class="pl-l-app-shell__topbar pl-c-toolbar" data-surface="panel">
       <div class="pl-c-toolbar__group">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 const navItems = [
   ['Command center', '12', true],
@@ -64,7 +65,8 @@ const groupedCommands = commands.reduce(
 );
 ---
 
-<BaseLayout title="Command-driven workspace · Porchlight">
+<BaseLayout title="Command-driven workspace · Porchlight" palette="slate" density="compact">
+  <PreviewToolbar palette="slate" theme="light" density="compact" title="Command-Driven Operations Workspace" />
   <div class="pl-l-app-shell command-shell">
     <header class="pl-l-app-shell__topbar" data-glass>
       <div class="pl-c-toolbar" data-surface="flush">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 // --- Mock data: Security SIEM console -------------------------------------
 
@@ -61,7 +62,8 @@ const eventFeed = [
 ];
 ---
 
-<BaseLayout title="SIEM Console · Porchlight">
+<BaseLayout title="Security Operations · Porchlight" palette="midnight" theme="dark" density="compact">
+  <PreviewToolbar palette="midnight" theme="dark" density="compact" title="SIEM Threat Operations Center" />
   <!-- Pinned Security Incident Banner -->
   <aside class="pl-c-banner" data-tone="danger" data-sticky="true" role="region" aria-label="Active Security Incident">
     <div class="pl-c-banner__content">

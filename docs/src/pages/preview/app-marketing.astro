@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 import { getCollection } from 'astro:content';
 import { version } from '../../../../packages/porchlight/package.json';
 const entries = await getCollection('components');
@@ -24,6 +25,7 @@ const recipes = [
 ];
 ---
 <BaseLayout title="Marketing page · Porchlight">
+  <PreviewToolbar title="Porchlight Marketing Landing" />
   <!-- Scroll progress bar -->
   <div class="pl-c-scroll-progress"></div>
 

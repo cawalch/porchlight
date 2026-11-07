@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 interface SettingsNavItem {
   label: string;
@@ -16,7 +17,8 @@ const settingsNav: SettingsNavItem[] = [
   { label: 'Danger zone', href: '#danger-zone' },
 ] as const;
 ---
-<BaseLayout title="Settings console · Porchlight">
+<BaseLayout title="Settings console · Porchlight" palette="zinc" density="compact">
+  <PreviewToolbar palette="zinc" theme="light" density="compact" title="Enterprise Admin & Settings Console" />
   <div class="pl-l-app-shell settings-console-shell">
     <header class="pl-l-app-shell__topbar pl-c-toolbar">
       <div class="pl-c-toolbar__group">
@@ -206,6 +208,15 @@ const settingsNav: SettingsNavItem[] = [
                         </label>
                       </div>
                     </fieldset>
+                    <div class="pl-c-field" style="margin-block-start: var(--pl-space-3);">
+                      <span class="pl-c-field__label">Allowed domain whitelist</span>
+                      <div class="pl-c-tag-input">
+                        <span class="pl-c-chip" data-size="sm">northstar.io<button type="button" class="pl-c-chip__remove" aria-label="Remove northstar.io">×</button></span>
+                        <span class="pl-c-chip" data-size="sm">corp.northstar.com<button type="button" class="pl-c-chip__remove" aria-label="Remove corp.northstar.com">×</button></span>
+                        <input class="pl-c-tag-input__input" placeholder="Add domain and press Enter…" aria-label="Add domain" />
+                      </div>
+                      <span class="pl-c-field__hint">Teammates with matching email domains are automatically admitted to this workspace.</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -324,6 +335,11 @@ const settingsNav: SettingsNavItem[] = [
         </div>
       </div>
     </main>
+  </div>
+
+  <div class="pl-c-toast" data-tone="success" role="status" style="position: fixed; inset-block-end: var(--pl-space-4); inset-inline-end: var(--pl-space-4); z-index: 100;">
+    <span class="pl-c-toast__icon" aria-hidden="true">✓</span>
+    <span class="pl-c-toast__message">Workspace security baseline active</span>
   </div>
 </BaseLayout>
 
