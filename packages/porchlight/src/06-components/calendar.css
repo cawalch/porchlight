@@ -538,13 +538,13 @@
           [data-selected],
           [data-range-start],
           [data-range-end]
-        ):has(.pl-c-calendar__day-label)::after
-    ) {
+        ):has(.pl-c-calendar__day-label)
+    )::after {
       background: Highlight;
       box-shadow: none;
     }
 
-    :where(.pl-c-calendar__day:is([data-in-range])::before) {
+    :where(.pl-c-calendar__day:is([data-in-range]))::before {
       background: Mark;
     }
   }

@@ -77,7 +77,7 @@
     font-feature-settings: var(--pl-font-feature-code);
   }
 
-  :where(::selection) {
+  ::selection {
     background: color-mix(in oklab, var(--pl-color-accent), transparent 60%);
   }
 }

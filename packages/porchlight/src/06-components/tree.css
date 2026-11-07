@@ -288,7 +288,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.pl-c-tree__item[aria-busy="true"] .pl-c-tree__label::after) {
+    :where(.pl-c-tree__item[aria-busy="true"] .pl-c-tree__label)::after {
       animation: none;
     }
   }

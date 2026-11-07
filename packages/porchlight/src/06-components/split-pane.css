@@ -293,10 +293,8 @@
   }
 
   @media (forced-colors: active) {
-    :where(
-      .pl-c-split-pane__separator::before,
-      .pl-c-split-pane__separator::after
-    ) {
+    :where(.pl-c-split-pane__separator)::before,
+    :where(.pl-c-split-pane__separator)::after {
       background: CanvasText;
     }
 
