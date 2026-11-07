@@ -138,7 +138,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     font-size: var(--pl-text-xs);
     padding-block: 0.25rem;
     padding-inline-start: var(--pl-space-2);
-    padding-inline-end: var(--pl-space-7);
+    padding-inline-end: var(--pl-space-8);
     background-size: 0.75rem;
     background-position: right var(--pl-space-2) center;
   }
@@ -162,8 +162,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 <script>
   // Docs-only interactive toolbar script for live palette, theme, and density switching.
-  const toolbar = document.querySelector('.pl-preview-toolbar');
-  if (toolbar) {
+  const initToolbar = () => {
+    const toolbar = document.querySelector('.pl-preview-toolbar');
+    if (!toolbar) return;
+
     const paletteSelect = toolbar.querySelector<HTMLSelectElement>('[data-control="palette"]');
     const themeSelect = toolbar.querySelector<HTMLSelectElement>('[data-control="theme"]');
     const densitySelect = toolbar.querySelector<HTMLSelectElement>('[data-control="density"]');
@@ -195,5 +197,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     paletteSelect?.addEventListener('change', updateAttributes);
     themeSelect?.addEventListener('change', updateAttributes);
     densitySelect?.addEventListener('change', updateAttributes);
-  }
+  };
+
+  initToolbar();
+  document.addEventListener('astro:page-load', initToolbar);
 </script>

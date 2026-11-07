@@ -131,6 +131,7 @@
     --pl-z-raised: 10;
     --pl-z-sticky: 100;
     --pl-z-overlay: 1000;
+    --pl-z-fixed: var(--pl-z-overlay);
     --pl-z-toast: 1100;
 
     /* Brand  -  raw OKLCH ramp at hue 82 (porchlight amber-gold); scale 1

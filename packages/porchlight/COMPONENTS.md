@@ -21,12 +21,12 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
-| `core.min.css`                        | 12.0 KB  | 3.2 KB  | 2.7 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `core.min.css`                        | 12.0 KB  | 3.2 KB  | 2.6 KB  | Layers, reset, design tokens, themes, base styles                   |
 | `layout.min.css`                      | 3.2 KB   | 1.0 KB  | 866 B   | Primitives: stack, cluster, grid, sidebar, center                   |
 | `utilities.min.css`                   | 2.8 KB   | 885 B   | 755 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 6.4 KB   | 1.5 KB  | 1.3 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.3 KB   | 669 B   | 563 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 225.5 KB | 32.2 KB | 25.7 KB | Complete framework without experimental enhancement syntax          |
+| `compat.min.css`                      | 225.5 KB | 32.3 KB | 25.7 KB | Complete framework without experimental enhancement syntax          |
 | `porchlight.min.css` / `full.min.css` | 231.8 KB | 33.3 KB | 26.3 KB | Full framework (all 59 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
