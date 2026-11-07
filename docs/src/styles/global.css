@@ -246,7 +246,8 @@ html[data-docs-embed] :where(#main) > h1:first-child,
 html[data-docs-embed] :where(#main) > h1:first-child + p,
 html[data-docs-embed] #deck-start,
 html[data-docs-embed] .preview-deck-start,
-html[data-docs-embed] .preview-density-variants {
+html[data-docs-embed] .preview-density-variants,
+html[data-docs-embed] .pl-preview-toolbar {
   display: none;
 }
 

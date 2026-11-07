@@ -1,0 +1,198 @@
+---
+interface Props {
+  palette?: 'default' | 'emerald' | 'midnight' | 'slate' | 'zinc';
+  theme?: 'auto' | 'light' | 'dark';
+  density?: 'default' | 'compact' | 'dense' | 'comfortable';
+  title?: string;
+}
+
+const {
+  palette = 'default',
+  theme = 'auto',
+  density = 'default',
+  title = 'Application Pattern Preview',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<header class="pl-c-toolbar pl-preview-toolbar" role="toolbar" aria-label="Porchlight preview controls">
+  <div class="pl-c-toolbar__group pl-preview-toolbar__meta">
+    <a href={base} class="pl-preview-toolbar__home" title="Return to documentation">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Porchlight</span>
+    </a>
+    <span class="pl-preview-toolbar__divider" aria-hidden="true">/</span>
+    <span class="pl-preview-toolbar__title">{title}</span>
+    <span class="pl-c-badge" data-tone="neutral" data-size="sm">Preview</span>
+  </div>
+
+  <div class="pl-c-toolbar__group pl-preview-toolbar__controls">
+    <label class="pl-preview-control">
+      <span class="pl-preview-control__label">Palette</span>
+      <select class="pl-c-field__control pl-preview-select" data-control="palette" aria-label="Palette selection">
+        <option value="" selected={palette === 'default'}>Brand (Amber)</option>
+        <option value="emerald" selected={palette === 'emerald'}>Emerald (Fintech)</option>
+        <option value="midnight" selected={palette === 'midnight'}>Midnight (Ops)</option>
+        <option value="slate" selected={palette === 'slate'}>Slate (SaaS)</option>
+        <option value="zinc" selected={palette === 'zinc'}>Zinc (Studio)</option>
+      </select>
+    </label>
+
+    <label class="pl-preview-control">
+      <span class="pl-preview-control__label">Theme</span>
+      <select class="pl-c-field__control pl-preview-select" data-control="theme" aria-label="Color theme selection">
+        <option value="" selected={theme === 'auto'}>Auto (System)</option>
+        <option value="light" selected={theme === 'light'}>Light</option>
+        <option value="dark" selected={theme === 'dark'}>Dark</option>
+      </select>
+    </label>
+
+    <label class="pl-preview-control">
+      <span class="pl-preview-control__label">Density</span>
+      <select class="pl-c-field__control pl-preview-select" data-control="density" aria-label="Information density selection">
+        <option value="" selected={density === 'default'}>Default</option>
+        <option value="comfortable" selected={density === 'comfortable'}>Comfortable (2.5rem)</option>
+        <option value="compact" selected={density === 'compact'}>Compact (2rem)</option>
+        <option value="dense" selected={density === 'dense'}>Dense (1.75rem)</option>
+      </select>
+    </label>
+  </div>
+</header>
+
+<style>
+  .pl-preview-toolbar {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 100;
+    background: var(--pl-color-surface);
+    border-block-end: 1px solid var(--pl-color-border);
+    padding-block: var(--pl-space-2);
+    padding-inline: var(--pl-space-4);
+    gap: var(--pl-space-2);
+    max-inline-size: 100%;
+  }
+
+  .pl-preview-toolbar__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    font-size: var(--pl-text-sm);
+    color: var(--pl-color-text-muted);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    flex-wrap: wrap;
+  }
+
+  .pl-preview-toolbar__home {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-1);
+    color: var(--pl-color-text);
+    font-weight: var(--pl-font-weight-semibold);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .pl-preview-toolbar__home:hover {
+    color: var(--pl-color-accent);
+  }
+
+  .pl-preview-toolbar__divider {
+    color: var(--pl-color-border);
+    flex-shrink: 0;
+  }
+
+  .pl-preview-toolbar__title {
+    color: var(--pl-color-text);
+    font-weight: var(--pl-font-weight-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-inline-size: 18rem;
+  }
+
+  .pl-preview-toolbar__controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--pl-space-2);
+    max-inline-size: 100%;
+  }
+
+  .pl-preview-control {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    font-size: var(--pl-text-xs);
+    font-weight: var(--pl-font-weight-medium);
+    color: var(--pl-color-text-muted);
+    min-inline-size: 0;
+  }
+
+  .pl-preview-select {
+    inline-size: auto;
+    max-inline-size: 100%;
+    font-size: var(--pl-text-xs);
+    padding-block: 0.25rem;
+    padding-inline-start: var(--pl-space-2);
+    padding-inline-end: var(--pl-space-5);
+    background-size: 0.75rem;
+  }
+
+  @media (width < 48rem) {
+    .pl-preview-toolbar {
+      padding-inline: var(--pl-space-2);
+      padding-block: var(--pl-space-1);
+    }
+    .pl-preview-control__label {
+      display: none;
+    }
+    .pl-preview-toolbar__title {
+      max-inline-size: 9rem;
+    }
+    .pl-preview-select {
+      max-inline-size: 6.75rem;
+    }
+  }
+</style>
+
+<script>
+  // Docs-only interactive toolbar script for live palette, theme, and density switching.
+  const toolbar = document.querySelector('.pl-preview-toolbar');
+  if (toolbar) {
+    const paletteSelect = toolbar.querySelector<HTMLSelectElement>('[data-control="palette"]');
+    const themeSelect = toolbar.querySelector<HTMLSelectElement>('[data-control="theme"]');
+    const densitySelect = toolbar.querySelector<HTMLSelectElement>('[data-control="density"]');
+
+    const updateAttributes = () => {
+      const palette = paletteSelect?.value;
+      const theme = themeSelect?.value;
+      const density = densitySelect?.value;
+
+      if (palette) {
+        document.documentElement.setAttribute('data-pl-palette', palette);
+      } else {
+        document.documentElement.removeAttribute('data-pl-palette');
+      }
+
+      if (theme) {
+        document.documentElement.setAttribute('data-pl-theme', theme);
+      } else {
+        document.documentElement.removeAttribute('data-pl-theme');
+      }
+
+      if (density) {
+        document.documentElement.setAttribute('data-pl-density', density);
+      } else {
+        document.documentElement.removeAttribute('data-pl-density');
+      }
+    };
+
+    paletteSelect?.addEventListener('change', updateAttributes);
+    themeSelect?.addEventListener('change', updateAttributes);
+    densitySelect?.addEventListener('change', updateAttributes);
+  }
+</script>

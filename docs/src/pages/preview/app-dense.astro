@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
-// --- Mock data: dense monitoring/analytics console -------------------------
+// --- Mock data: High-density quantitative trading & execution console ------
 
 interface Metric {
   label: string;
@@ -12,76 +13,76 @@ interface Metric {
 }
 
 const metrics: Metric[] = [
-  { label: 'Requests', value: '847.2k', delta: '+12.4%', direction: 'up', tone: 'accent' },
-  { label: 'Error Rate', value: '0.03%', delta: '-0.01%', direction: 'down', tone: 'success' },
-  { label: 'p50 Latency', value: '14ms', delta: '-3ms', direction: 'down', tone: 'success' },
-  { label: 'p99 Latency', value: '287ms', delta: '+42ms', direction: 'up', tone: 'warning' },
-  { label: 'CPU', value: '67%', delta: '+8%', direction: 'up', tone: 'warning' },
-  { label: 'Memory', value: '4.2GB', delta: '+0.3GB', direction: 'up', tone: 'accent' },
-  { label: 'Active Conn', value: '12,847', delta: '+340', direction: 'up', tone: 'accent' },
-  { label: 'Queue Depth', value: '23', delta: 'stable', direction: 'flat', tone: 'success' },
+  { label: 'Net Delta', value: '+$4.82M', delta: '+8.4%', direction: 'up', tone: 'accent' },
+  { label: 'Gross Exp', value: '$42.8M', delta: '-1.2%', direction: 'down', tone: 'accent' },
+  { label: 'Fill Rate', value: '99.84%', delta: '+0.02%', direction: 'up', tone: 'success' },
+  { label: 'Latency p99', value: '14.2µs', delta: '-3.1µs', direction: 'down', tone: 'success' },
+  { label: 'VWAP Slip', value: '-0.42 bps', delta: '-0.15', direction: 'down', tone: 'success' },
+  { label: 'Sharpe (1D)', value: '3.42', delta: '+0.12', direction: 'up', tone: 'accent' },
+  { label: 'Open Orders', value: '1,284', delta: 'stable', direction: 'flat', tone: 'warning' },
+  { label: 'Reject Rate', value: '0.02%', delta: '-0.01%', direction: 'down', tone: 'success' },
 ];
 
-type Severity = 'crit' | 'high' | 'med' | 'low' | 'info';
-type Status = 'active' | 'ack' | 'resolved';
+type Side = 'BUY' | 'SELL';
+type OrderStatus = 'active' | 'ack' | 'resolved';
 
-interface Event {
+interface OrderRow {
   ts: string;
-  sev: Severity;
-  source: string;
-  host: string;
-  msg: string;
-  status: Status;
+  symbol: string;
+  side: Side;
+  type: string;
+  price: string;
+  qty: string;
+  filled: string;
+  venue: string;
+  status: OrderStatus;
+  statusText: string;
 }
 
-const events: Event[] = [
-  { ts: '14:32:07', sev: 'crit', source: 'firewall', host: 'fw-edge-01', msg: '47 blocked connections from 203.0.113.42 — brute force SSH', status: 'active' },
-  { ts: '14:31:54', sev: 'high', source: 'ids', host: 'prod-web-03', msg: 'SQL injection pattern detected in POST /api/search?q=', status: 'ack' },
-  { ts: '14:31:22', sev: 'crit', source: 'edr', host: 'ws-014', msg: 'Malware signature match: trojan.win32.emotet — quarantined', status: 'active' },
-  { ts: '14:30:48', sev: 'med', source: 'auth', host: 'vpn-gw-01', msg: 'j.martinez login from unrecognized geo (SG) — challenged', status: 'ack' },
-  { ts: '14:30:15', sev: 'low', source: 'cert', host: 'api.internal', msg: 'TLS cert for api.internal.corp expires in 48h', status: 'active' },
-  { ts: '14:29:33', sev: 'med', source: 'waf', host: 'edge-lb-01', msg: 'Rate limit triggered: 8.4k req/s from distributed sources', status: 'resolved' },
-  { ts: '14:28:51', sev: 'high', source: 'dlp', host: '10.0.4.18', msg: '2.3GB outbound transfer to ext-cdn.unknown — flagged', status: 'active' },
-  { ts: '14:28:14', sev: 'info', source: 'deploy', host: 'ci-runner-02', msg: 'Deploy v2.14.3 → prod-cluster completed (3m 42s)', status: 'resolved' },
-  { ts: '14:27:39', sev: 'crit', source: 'ransomware', host: 'fs-02', msg: 'LockBit 3.0 IOC match — mass encryption on file-server-02', status: 'ack' },
-  { ts: '14:26:58', sev: 'low', source: 'dns', host: '10.0.1.8', msg: 'Abnormally long DNS queries to suspect-domain.xyz — blocked', status: 'resolved' },
-  { ts: '14:26:12', sev: 'med', source: 'api', host: 'api-gw-01', msg: 'API key ak_7f3a***2b9 used from new IP 203.0.113.50', status: 'active' },
-  { ts: '14:25:33', sev: 'info', source: 'backup', host: 'db-cluster-03', msg: 'Scheduled snapshot completed: 847GB in 4m 12s', status: 'resolved' },
-  { ts: '14:24:47', sev: 'high', source: 'priv-esc', host: 'db-cluster-03', msg: 'svc_backup attempted GRANT ALL on production DB — quarantined', status: 'ack' },
-  { ts: '14:24:01', sev: 'low', source: 'policy', host: '10.0.3.22', msg: 'File uploaded to unsanctioned cloud storage — logged', status: 'resolved' },
-  { ts: '14:23:18', sev: 'med', source: 'ddos', host: 'edge-lb-01', msg: 'SYN flood 12k pps on ports 80/443 — mitigated', status: 'resolved' },
+const orders: OrderRow[] = [
+  { ts: '14:32:07.412', symbol: '$NVDA', side: 'BUY', type: 'LIMIT', price: '128.45', qty: '5,000', filled: '100%', venue: 'NASDAQ', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:31:54.108', symbol: '$AAPL', side: 'SELL', type: 'IOC', price: '224.18', qty: '12,500', filled: '65.6%', venue: 'ARCA', status: 'ack', statusText: 'PARTIAL' },
+  { ts: '14:31:22.890', symbol: '$MSFT', side: 'BUY', type: 'LIMIT', price: '428.10', qty: '3,200', filled: '0%', venue: 'IEX', status: 'active', statusText: 'WORKING' },
+  { ts: '14:30:48.331', symbol: 'BTC-PERP', side: 'BUY', type: 'ICEBERG', price: '68,420.50', qty: '40.0', filled: '100%', venue: 'DERIBIT', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:30:15.654', symbol: '$AMZN', side: 'SELL', type: 'LIMIT', price: '186.30', qty: '8,000', filled: '100%', venue: 'BATS', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:29:33.201', symbol: '$TSLA', side: 'SELL', type: 'FOK', price: '254.80', qty: '15,000', filled: '0%', venue: 'MEMX', status: 'active', statusText: 'WORKING' },
+  { ts: '14:28:51.912', symbol: '$META', side: 'BUY', type: 'LIMIT', price: '584.25', qty: '2,500', filled: '80.0%', venue: 'NASDAQ', status: 'ack', statusText: 'PARTIAL' },
+  { ts: '14:28:14.542', symbol: 'ETH-PERP', side: 'BUY', type: 'LIMIT', price: '2,640.80', qty: '350.0', filled: '100%', venue: 'DERIBIT', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:27:39.117', symbol: '$GOOGL', side: 'SELL', type: 'LIMIT', price: '168.90', qty: '6,400', filled: '100%', venue: 'ARCA', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:26:58.784', symbol: '$AVGO', side: 'BUY', type: 'POST-ONLY', price: '174.50', qty: '1,800', filled: '0%', venue: 'IEX', status: 'active', statusText: 'WORKING' },
+  { ts: '14:26:12.339', symbol: '$AMD', side: 'BUY', type: 'LIMIT', price: '152.40', qty: '7,500', filled: '100%', venue: 'NASDAQ', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:25:33.091', symbol: '$PLTR', side: 'SELL', type: 'IOC', price: '42.85', qty: '20,000', filled: '100%', venue: 'BATS', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:24:47.604', symbol: '$SMCI', side: 'SELL', type: 'LIMIT', price: '48.10', qty: '10,000', filled: '25.0%', venue: 'EDGX', status: 'ack', statusText: 'PARTIAL' },
+  { ts: '14:24:01.218', symbol: '$COIN', side: 'BUY', type: 'LIMIT', price: '214.60', qty: '4,500', filled: '100%', venue: 'ARCA', status: 'resolved', statusText: 'FILLED' },
+  { ts: '14:23:18.995', symbol: '$ARM', side: 'BUY', type: 'LIMIT', price: '146.20', qty: '3,800', filled: '0%', venue: 'IEX', status: 'active', statusText: 'WORKING' },
 ];
-
-const sevTone: Record<Severity, string> = {
-  crit: 'danger', high: 'warning', med: 'accent', low: '', info: '',
-};
-const sevLabel: Record<Severity, string> = {
-  crit: 'CRIT', high: 'HIGH', med: 'MED', low: 'LOW', info: 'INFO',
-};
 
 const navSections = [
-  { label: 'Monitor', items: ['Overview', 'Alerts', 'Events', 'Logs', 'Metrics', 'Traces'] },
-  { label: 'Investigate', items: ['Cases', 'Threat Intel', 'Hunt', 'Forensics'] },
-  { label: 'Manage', items: ['Rules', 'Assets', 'Users', 'Reports', 'Integrations'] },
+  { label: 'Execution', items: ['Order Book', 'Active Orders', 'Exec Fills', 'Algo Strategies', 'Smart Router'] },
+  { label: 'Risk & Margins', items: ['Position Matrix', 'VaR Monitor', 'Greeks & Skew', 'Liquidity Curves'] },
+  { label: 'Infrastructure', items: ['Colo Gateways', 'FIX Sessions', 'Clock Sync (PTP)', 'Audit Ledger'] },
 ];
 ---
-<BaseLayout title="Data-dense app · Porchlight">
+
+<BaseLayout title="High-Density Quantitative Execution Terminal · Porchlight" palette="zinc" theme="dark" density="dense">
+  <PreviewToolbar palette="zinc" theme="dark" density="dense" title="Quantitative Trading & Execution Terminal" />
+
   <div data-pl-density="dense" class="dense-app">
     <header class="dense-topbar">
       <div class="dense-topbar__left">
         <button class="pl-c-button" data-variant="ghost" data-icon-only aria-label="Toggle sidebar" data-toggle="sidebar">
           <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
         </button>
-        <strong class="dense-brand">SENTRY<span>OPS</span></strong>
-        <span class="pl-c-badge" data-tone="success">● live</span>
+        <strong class="dense-brand">QUANTUM<span>//EXEC</span></strong>
+        <span class="pl-c-badge" data-tone="success">● NASDAQ-L2 LIVE</span>
       </div>
       <div class="dense-search">
-        <input class="pl-c-field__control pl-c-field__input" data-elastic="true" placeholder="Search events, IPs, hosts…" aria-label="Search" />
+        <input class="pl-c-field__control pl-c-field__input" data-elastic="true" placeholder="Search orders, symbols, routing venues, CUSIP…" aria-label="Search" />
         <kbd class="pl-c-kbd dense-kbd">⌘K</kbd>
       </div>
       <div class="dense-topbar__right">
-        <span class="pl-c-badge" data-tone="danger">4 crit</span>
-        <span class="pl-c-badge" data-tone="warning">7 high</span>
+        <span class="pl-c-badge" data-tone="accent">14.2µs L2</span>
+        <span class="pl-c-badge" data-tone="danger">0 halts</span>
         <button class="pl-c-button" data-variant="ghost" aria-label="Notifications">
           <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -94,10 +95,11 @@ const navSections = [
           <div class="dense-nav-group">
             <span class="dense-nav-label">{section.label}</span>
             {section.items.map((item) => (
-              <a class="dense-nav-item" class:list={[{ 'is-active': item === 'Events' }]} href="#">
+              <a class="dense-nav-item" class:list={[{ 'is-active': item === 'Active Orders' }]} href="#">
                 <span>{item}</span>
-                {item === 'Alerts' && <span class="pl-c-badge pl-c-badge--mini" data-tone="danger">11</span>}
-                {item === 'Cases' && <span class="pl-c-badge pl-c-badge--mini" data-tone="accent">3</span>}
+                {item === 'Active Orders' && <span class="pl-c-badge pl-c-badge--mini" data-tone="warning">15</span>}
+                {item === 'Exec Fills' && <span class="pl-c-badge pl-c-badge--mini" data-tone="success">1.4k</span>}
+                {item === 'Colo Gateways' && <span class="pl-c-badge pl-c-badge--mini" data-tone="accent">4/4</span>}
               </a>
             ))}
           </div>
@@ -105,7 +107,7 @@ const navSections = [
       </nav>
 
       <main class="dense-main">
-        <!-- KPI strip -->
+        <!-- KPI strip (8 metrics) -->
         <div class="dense-kpis pl-l-grid" style="--pl-l-grid-min: 130px; gap: var(--pl-space-2);">
           {metrics.map((m) => (
             <article class="pl-c-kpi-card dense-kpi" data-tone={m.tone}>
@@ -128,61 +130,87 @@ const navSections = [
           ))}
         </div>
 
+        <!-- Hotkeys Quick Strip -->
+        <div class="dense-hotkeys">
+          <div class="dense-hotkeys__group">
+            <span class="dense-hotkeys__label">Direct Access Keys:</span>
+            <span class="dense-hotkeys__item"><kbd class="pl-c-kbd">F1</kbd> Buy Limit</span>
+            <span class="dense-hotkeys__item"><kbd class="pl-c-kbd">F2</kbd> Sell Limit</span>
+            <span class="dense-hotkeys__item"><kbd class="pl-c-kbd">F4</kbd> Flatten All</span>
+            <span class="dense-hotkeys__item"><kbd class="pl-c-kbd">Space</kbd> Center Depth</span>
+          </div>
+          <div class="dense-hotkeys__status">
+            <span class="dense-pulse"></span> Matching Core 0 (Secaucus NY4)
+          </div>
+        </div>
+
         <!-- Toolbar -->
         <div class="dense-toolbar">
           <div class="dense-toolbar__left">
-            <button class="pl-c-button" data-variant="ghost" data-size="sm">All</button>
-            <button class="pl-c-button" data-variant="ghost" data-size="sm">Critical</button>
-            <button class="pl-c-button" data-variant="ghost" data-size="sm">High</button>
-            <span class="dense-toolbar__count">15 events · last 15 min</span>
+            <button class="pl-c-button" data-variant="primary" data-size="sm">All Orders</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">Limit</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">Market / IOC</button>
+            <button class="pl-c-button" data-variant="ghost" data-size="sm">Iceberg</button>
+            <span class="dense-toolbar__count">15 orders · 1,482 fills/sec</span>
           </div>
           <div class="dense-toolbar__right">
             <button class="pl-c-button" data-variant="secondary">
               <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2" stroke-linecap="round"/></svg>
-              Filter
+              Filter Desks
             </button>
             <button class="pl-c-button" data-variant="secondary">
               <svg width="0.875em" height="0.875em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Export
+              Export FIX
             </button>
             <div class="pl-c-split" style="--pl-c-split-anchor: --dsb-1;">
-              <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">Ack all</button>
+              <button type="button" class="pl-c-button pl-c-split__primary" data-variant="primary">Route Batch (F9)</button>
               <button type="button" class="pl-c-button pl-c-split__toggle" data-variant="primary" popovertarget="dsb-1" aria-label="More actions">
                 <svg class="pl-c-split__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </button>
               <div popover class="pl-c-split__menu" id="dsb-1">
-                <button class="pl-c-split__option">Resolve all</button>
-                <button class="pl-c-split__option">Assign to me</button>
+                <button class="pl-c-split__option">Sweep Dark Pools</button>
+                <button class="pl-c-split__option">Rebalance Pegs</button>
                 <hr class="pl-c-menu__divider" />
-                <button class="pl-c-split__option" data-tone="danger">Suppress (24h)</button>
+                <button class="pl-c-split__option" data-tone="danger">Cancel All Working (Esc)</button>
+                <button class="pl-c-split__option" data-tone="danger">Emergency Kill Switch</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Event table -->
+        <!-- Orders Table -->
         <div class="pl-c-table-wrap dense-table" data-pl-density="dense" tabindex="0">
           <table class="pl-c-table">
             <thead>
               <tr>
-                <th data-sort="asc">Time</th>
-                <th>Sev</th>
-                <th>Source</th>
-                <th>Host</th>
-                <th>Message</th>
+                <th data-sort="desc">Timestamp</th>
+                <th>Symbol</th>
+                <th>Side</th>
+                <th>Type</th>
+                <th data-align="end">Price ($)</th>
+                <th data-align="end">Size / Qty</th>
+                <th data-align="end">Fill %</th>
+                <th>Venue</th>
                 <th data-align="end">Status</th>
               </tr>
             </thead>
             <tbody>
-              {events.map((e) => (
+              {orders.map((o) => (
                 <tr>
-                  <td class="dense-mono">{e.ts}</td>
-                  <td><span class="pl-c-badge" data-tone={sevTone[e.sev]}>{sevLabel[e.sev]}</span></td>
-                  <td class="dense-mono">{e.source}</td>
-                  <td class="dense-mono">{e.host}</td>
-                  <td class="dense-msg">{e.msg}</td>
+                  <td class="dense-mono">{o.ts}</td>
+                  <td class="dense-mono font-semibold"><strong>{o.symbol}</strong></td>
+                  <td>
+                    <span class="pl-c-badge" data-tone={o.side === 'BUY' ? 'success' : 'danger'}>
+                      {o.side}
+                    </span>
+                  </td>
+                  <td class="dense-mono">{o.type}</td>
+                  <td data-align="end" class="dense-mono">{o.price}</td>
+                  <td data-align="end" class="dense-mono">{o.qty}</td>
+                  <td data-align="end" class="dense-mono">{o.filled}</td>
+                  <td class="dense-mono"><span class="pl-u-tabular-nums">{o.venue}</span></td>
                   <td data-align="end">
-                    <span class:list={['dense-status', `dense-status--${e.status}`]}>{e.status}</span>
+                    <span class:list={['dense-status', `dense-status--${o.status}`]}>{o.statusText}</span>
                   </td>
                 </tr>
               ))}
@@ -192,14 +220,14 @@ const navSections = [
 
         <!-- Pagination -->
         <div class="dense-pager">
-          <span class="dense-toolbar__count">Showing 1–15 of 2,847</span>
+          <span class="dense-toolbar__count">Showing 1–15 of 1,284 open orders</span>
           <nav class="pl-c-pagination">
             <button class="pl-c-button" data-variant="ghost" aria-label="Previous">‹</button>
             <button class="pl-c-button" data-variant="ghost" aria-pressed="true">1</button>
             <button class="pl-c-button" data-variant="ghost">2</button>
             <button class="pl-c-button" data-variant="ghost">3</button>
             <span class="dense-pager__ellipsis">…</span>
-            <button class="pl-c-button" data-variant="ghost">190</button>
+            <button class="pl-c-button" data-variant="ghost">86</button>
             <button class="pl-c-button" data-variant="ghost" aria-label="Next">›</button>
           </nav>
         </div>
@@ -212,10 +240,11 @@ const navSections = [
   .dense-app {
     display: flex;
     flex-direction: column;
-    block-size: 100dvh;
+    min-block-size: calc(100dvh - 3.5rem);
     inline-size: calc(100% + (2 * var(--pl-space-8)));
     overflow: hidden;
-    margin: calc(-1 * var(--pl-space-8));
+    margin-inline: calc(-1 * var(--pl-space-8));
+    margin-block-end: calc(-1 * var(--pl-space-8));
     background: var(--pl-color-bg);
     font-size: var(--pl-text-sm);
   }
@@ -361,6 +390,48 @@ const navSections = [
     .dense-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
+  /* Hotkeys strip */
+  .dense-hotkeys {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--pl-space-1) var(--pl-space-2);
+    background: color-mix(in oklab, var(--pl-color-surface), transparent 50%);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-sm);
+    font-size: var(--pl-text-xs);
+  }
+  .dense-hotkeys__group {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-3);
+    flex-wrap: wrap;
+  }
+  .dense-hotkeys__label {
+    color: var(--pl-color-text-muted);
+    font-weight: var(--pl-font-weight-medium);
+  }
+  .dense-hotkeys__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-1);
+    color: var(--pl-color-text);
+  }
+  .dense-hotkeys__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pl-space-1);
+    color: var(--pl-color-text-muted);
+    font-family: var(--pl-font-mono);
+  }
+  .dense-pulse {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 50%;
+    background: var(--pl-color-success);
+    display: inline-block;
+  }
+
   /* Toolbar */
   .dense-toolbar {
     display: flex;
@@ -394,12 +465,6 @@ const navSections = [
     font-size: var(--pl-text-xs);
     white-space: nowrap;
   }
-  .dense-msg {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-inline-size: 32rem;
-  }
   .dense-status {
     font-size: var(--pl-text-xs);
     font-weight: var(--pl-font-weight-medium);
@@ -407,8 +472,8 @@ const navSections = [
     letter-spacing: 0.04em;
     color: var(--pl-color-text-muted);
   }
-  .dense-status--active { color: var(--pl-color-danger-text); }
-  .dense-status--ack { color: var(--pl-color-warning-text); }
+  .dense-status--active { color: var(--pl-color-warning-text); }
+  .dense-status--ack { color: var(--pl-color-accent); }
   .dense-status--resolved { color: var(--pl-color-success-text); }
 
   /* Pager */

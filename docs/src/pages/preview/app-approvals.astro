@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 const requests = [
   { id: 'access', title: 'Production analytics access', owner: 'Maya Chen · Data science', category: 'Access', amount: 'Read only · 30 days', reason: 'Investigate customer onboarding trends using the reporting replica.', review: 'Manager endorsement received. Access expires automatically after 30 days.' },
   { id: 'design', title: 'Design research subscription', owner: 'Alex Rivera · Product design', category: 'Purchase', amount: '$480 / year', reason: 'Renew the research library used for quarterly usability studies.', review: 'Within the team budget. No customer data is shared with the vendor.' },
   { id: 'hardware', title: 'Developer workstation', owner: 'Sam Okafor · Engineering', category: 'Purchase', amount: '$2,400 · one time', reason: 'Replace the workstation assigned to a new platform engineer.', review: 'Standard equipment configuration. Delivery is requested for October 5.' },
 ];
 ---
-<BaseLayout title="Approvals · Porchlight">
+<BaseLayout title="Approvals · Porchlight" palette="slate" density="comfortable">
+  <PreviewToolbar palette="slate" theme="light" density="comfortable" title="Approvals & Governance Workflow" />
   <div id="approvals-app" class="pl-l-stack" data-pl-density="comfortable">
     <header class="pl-c-page-header">
       <div class="pl-c-page-header__heading">

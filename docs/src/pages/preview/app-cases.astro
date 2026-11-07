@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 // --- Mock data: Case/Ticket Review ----------------------------------------
 
@@ -60,7 +61,8 @@ const activity = [
 ];
 ---
 
-<BaseLayout title="Case Review · Porchlight">
+<BaseLayout title="Case Review · Porchlight" palette="emerald" density="compact">
+  <PreviewToolbar palette="emerald" theme="light" density="compact" title="Support Operations & Case Triage" />
   <div class="pl-l-app-shell">
     <!-- Topbar -->
     <header class="pl-l-app-shell__topbar cases-topbar">

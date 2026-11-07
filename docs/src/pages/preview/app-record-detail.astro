@@ -1,53 +1,205 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
+
 const sections = ['Overview', 'Activity', 'Permissions', 'Billing'];
-const events = ['Production workspace created', 'Single sign-on enabled', 'Security review completed', 'Data retention policy approved', 'Operations team invited', 'Quarterly access review started'];
+const timelineEvents = [
+  { title: 'Executive sponsor QBR completed', time: 'Yesterday · 16:30', body: 'Maya Chen and VP Engineering reviewed H2 expansion roadmap. CSAT rated 5/5.', tone: 'success' },
+  { title: 'Single sign-on SAML certificate rotated', time: '3 days ago · 09:15', body: 'Azure AD federation handshake completed with 0 user session interruptions.', tone: 'accent' },
+  { title: 'Seat allocation threshold alert (84%)', time: '1 week ago', body: 'Active seats reached 420/500. Automated provisioning recommendation generated.', tone: 'warning' },
+  { title: 'Enterprise MSA & DPA signed', time: '1 month ago', body: 'Executed multi-year agreement with EU data processing addendum.', tone: 'success' },
+];
+
 const base = import.meta.env.BASE_URL;
 ---
-<BaseLayout title="Record detail · Porchlight">
+
+<BaseLayout title="Customer 360 & Renewal Hub · Porchlight" density="comfortable">
+  <PreviewToolbar palette="default" density="comfortable" title="Customer 360 & Renewal Hub" />
+
   <div class="pl-l-app-shell record-shell">
     <header class="pl-l-app-shell__topbar pl-c-toolbar">
-      <strong>Northstar Operations</strong>
-      <a class="pl-c-button" data-variant="ghost" href={`${base}preview/app-cases`}>All records</a>
+      <div class="pl-c-toolbar__group">
+        <strong>Customer 360 / Accounts</strong>
+        <span class="pl-c-badge" data-tone="success">Tier 1 Strategic</span>
+      </div>
+      <div class="pl-c-toolbar__group">
+        <a class="pl-c-button" data-variant="ghost" href={`${base}preview/app-cases`}>All accounts</a>
+        <button class="pl-c-button" data-variant="secondary">Generate renewal quote</button>
+      </div>
     </header>
+
     <div class="pl-l-app-shell__main record-main">
       <div class="pl-c-page-header">
-        <div class="pl-c-page-header__heading"><h1 class="pl-c-page-header__title">Acme Research</h1><p class="pl-c-page-header__subtitle">ORG-2048 · Enterprise workspace</p></div>
-        <div class="pl-c-page-header__actions"><span class="pl-c-badge" data-tone="success">Active</span><a class="pl-c-button" href="#record-permissions">Review access</a></div>
+        <div class="pl-c-page-header__heading">
+          <h1 class="pl-c-page-header__title">Acme Research</h1>
+          <p class="pl-c-page-header__subtitle">ORG-2048 · Enterprise account console &amp; renewal hub</p>
+        </div>
+        <div class="pl-c-page-header__actions">
+          <span class="pl-c-badge" data-tone="success">Healthy (94/100)</span>
+          <a class="pl-c-button" data-variant="primary" href="#record-permissions">Review access</a>
+        </div>
       </div>
+
       <div class="record-layout">
         <nav class="pl-c-section-nav record-nav" aria-label="Record sections">
-          <ul>{sections.map(label => <li><a class="pl-c-section-nav__link" href={`#record-${label.toLowerCase()}`}>{label}</a></li>)}</ul>
+          <ul>
+            {sections.map(label => (
+              <li>
+                <a class="pl-c-section-nav__link" href={`#record-${label.toLowerCase()}`}>{label}</a>
+              </li>
+            ))}
+          </ul>
         </nav>
+
         <div class="pl-l-stack record-content">
+          <!-- Section 1: Overview -->
           <section class="pl-c-card record-section" id="record-overview" tabindex="-1" aria-labelledby="overview-title">
-            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="overview-title">Overview</h2><p class="pl-c-card__subtitle">Workspace ownership and operational context</p></header>
+            <header class="pl-c-card__header">
+              <h2 class="pl-c-card__title" id="overview-title">Overview</h2>
+              <p class="pl-c-card__subtitle">Account health, primary stakeholders, and operational metrics</p>
+            </header>
             <div class="pl-c-card__body pl-l-stack">
-              <p>Acme Research coordinates incident response and compliance reviews across three regional teams. This record brings ownership, activity, access, and billing into one place.</p>
-              <dl class="pl-c-description" data-layout="stacked"><div class="pl-c-description__row"><dt class="pl-c-description__term">Workspace owner</dt><dd class="pl-c-description__detail">Maya Chen · Platform operations</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Region</dt><dd class="pl-c-description__detail">United States · Central</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Service tier</dt><dd class="pl-c-description__detail">Enterprise · 99.95% availability target</dd></div><div class="pl-c-description__row"><dt class="pl-c-description__term">Next review</dt><dd class="pl-c-description__detail">October 12, 2026</dd></div></dl>
-              <div class="pl-c-alert" data-tone="info"><div class="pl-c-alert__body"><strong>Review in progress</strong><p>The quarterly access review is open. Confirm ownership before approving new permissions.</p></div></div>
+              <div class="pl-l-grid" style="--pl-l-grid-min: 11rem; gap: var(--pl-space-3);">
+                <article class="pl-c-kpi-card" data-tone="success">
+                  <header class="pl-c-kpi-card__header">
+                    <span class="pl-c-kpi-card__label">Account Health</span>
+                    <span class="pl-c-badge" data-tone="success">Strong</span>
+                  </header>
+                  <div class="pl-c-kpi-card__metric"><span class="pl-c-kpi-card__value">94</span><span class="pl-c-kpi-card__suffix">/100</span></div>
+                </article>
+                <article class="pl-c-kpi-card" data-tone="accent">
+                  <header class="pl-c-kpi-card__header">
+                    <span class="pl-c-kpi-card__label">Net Expansion</span>
+                    <span class="pl-c-badge" data-tone="accent">ARR</span>
+                  </header>
+                  <div class="pl-c-kpi-card__metric"><span class="pl-c-kpi-card__value">124</span><span class="pl-c-kpi-card__suffix">%</span></div>
+                </article>
+                <article class="pl-c-kpi-card">
+                  <header class="pl-c-kpi-card__header">
+                    <span class="pl-c-kpi-card__label">Active Licenses</span>
+                    <span class="pl-c-badge" data-tone="neutral">Seats</span>
+                  </header>
+                  <div class="pl-c-kpi-card__metric"><span class="pl-c-kpi-card__value">420</span><span class="pl-c-kpi-card__suffix">/500</span></div>
+                </article>
+              </div>
+
+              <dl class="pl-c-description" data-layout="stacked">
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Executive Sponsor</dt>
+                  <dd class="pl-c-description__detail">Maya Chen · VP Platform Engineering</dd>
+                </div>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Primary Region</dt>
+                  <dd class="pl-c-description__detail">United States · Central (Chicago)</dd>
+                </div>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Contract Tier</dt>
+                  <dd class="pl-c-description__detail">Enterprise Platinum · 99.95% uptime SLA</dd>
+                </div>
+                <div class="pl-c-description__row">
+                  <dt class="pl-c-description__term">Next Milestone</dt>
+                  <dd class="pl-c-description__detail">Annual Renewal QBR · October 12, 2026</dd>
+                </div>
+              </dl>
+
+              <div class="pl-c-alert" data-tone="info">
+                <div class="pl-c-alert__body">
+                  <strong>Quarterly review in progress</strong>
+                  <p>Annual renewal window opens in 60 days. Executive sponsor requested additional seats preview.</p>
+                </div>
+              </div>
             </div>
           </section>
+
+          <!-- Section 2: Activity Timeline -->
           <section class="pl-c-card record-section" id="record-activity" tabindex="-1" aria-labelledby="activity-title">
-            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="activity-title">Activity</h2><p class="pl-c-card__subtitle">Recent changes to this workspace</p></header>
-            <div class="pl-c-card__body"><ol class="record-events">{events.map((event, i) => <li><strong>{event}</strong><p>September {27 - i}, 2026 · Operations team</p><span class="pl-u-muted">Recorded in the workspace audit log.</span></li>)}</ol></div>
-          </section>
-          <section class="pl-c-card record-section" id="record-permissions" tabindex="-1" aria-labelledby="permissions-title">
-            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="permissions-title">Permissions</h2><p class="pl-c-card__subtitle">Access follows least-privilege roles</p></header>
-            <div class="pl-c-card__body pl-l-stack">
-              {['Administrators · 3 members', 'Responders · 18 members', 'Auditors · 7 members'].map(role => <div class="record-role"><strong>{role}</strong><p>Managed through single sign-on. Role changes require approval from a workspace administrator.</p><span class="pl-c-badge" data-tone="success">Reviewed</span></div>)}
-              <p class="pl-u-muted">Last review completed September 20, 2026. External guests cannot access billing or workspace administration.</p>
+            <header class="pl-c-card__header">
+              <h2 class="pl-c-card__title" id="activity-title">Activity</h2>
+              <p class="pl-c-card__subtitle">Chronological customer journey touchpoints</p>
+            </header>
+            <div class="pl-c-card__body">
+              <ol class="pl-c-timeline">
+                {timelineEvents.map(event => (
+                  <li class="pl-c-timeline__item" data-tone={event.tone}>
+                    <span class="pl-c-timeline__dot"></span>
+                    <div class="pl-c-timeline__content">
+                      <div class="pl-c-timeline__header">
+                        <strong class="pl-c-timeline__title">{event.title}</strong>
+                        <time class="pl-c-timeline__time">{event.time}</time>
+                      </div>
+                      <p class="pl-c-timeline__body">{event.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </section>
+
+          <!-- Section 3: Permissions -->
+          <section class="pl-c-card record-section" id="record-permissions" tabindex="-1" aria-labelledby="permissions-title">
+            <header class="pl-c-card__header">
+              <h2 class="pl-c-card__title" id="permissions-title">Permissions</h2>
+              <p class="pl-c-card__subtitle">Role-based access control and identity governance</p>
+            </header>
+            <div class="pl-c-card__body pl-l-stack">
+              {[
+                { role: 'Global Administrators', count: '3 members', status: 'Certified', desc: 'Managed through Okta SCIM. Key operations require dual-approval.' },
+                { role: 'Platform Responders', count: '18 members', status: 'Active', desc: 'Can acknowledge incidents, trigger runbooks, and drain workers.' },
+                { role: 'Compliance Auditors', count: '7 members', status: 'Read-only', desc: 'Read-only access to immutable audit streams and evidence export.' },
+              ].map(item => (
+                <div class="record-role pl-c-card" data-surface="panel" style="padding: var(--pl-space-3);">
+                  <div class="pl-l-cluster" style="justify-content: space-between; align-items: center;">
+                    <strong>{item.role} · {item.count}</strong>
+                    <span class="pl-c-badge" data-tone="success">{item.status}</span>
+                  </div>
+                  <p class="pl-u-muted-sm" style="margin: 0;">{item.desc}</p>
+                </div>
+              ))}
+              <p class="pl-u-muted">Last certified September 20, 2026. External guests cannot access billing or user administration.</p>
+            </div>
+          </section>
+
+          <!-- Section 4: Billing & Accordion Contracts -->
           <section class="pl-c-card record-section" id="record-billing" tabindex="-1" aria-labelledby="billing-title">
-            <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="billing-title">Billing</h2></header>
-            <div class="pl-c-card__body"><p>Annual enterprise plan · Renewal January 15, 2027.</p><p class="pl-u-muted">Invoices go to the workspace owner. No payment details are shown in this sample.</p></div>
+            <header class="pl-c-card__header">
+              <h2 class="pl-c-card__title" id="billing-title">Billing</h2>
+              <p class="pl-c-card__subtitle">Annual enterprise subscription and master service agreement</p>
+            </header>
+            <div class="pl-c-card__body pl-l-stack">
+              <p>Annual enterprise plan ($180,000/yr) · Scheduled renewal on January 15, 2027.</p>
+              
+              <div class="pl-c-accordion" aria-label="Contract legal documents and terms">
+                <details class="pl-c-accordion__item" open>
+                  <summary class="pl-c-accordion__header">
+                    <span>Enterprise Master Services Agreement (MSA v4.2)</span>
+                    <svg class="pl-c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </summary>
+                  <div class="pl-c-accordion__panel">
+                    <div class="pl-c-accordion__content">
+                      <p class="pl-u-muted-sm">Covering 500 platform seats, 99.95% uptime commitment, and dedicated customer success architect with 1-hour priority response.</p>
+                    </div>
+                  </div>
+                </details>
+                <details class="pl-c-accordion__item">
+                  <summary class="pl-c-accordion__header">
+                    <span>Data Processing Addendum (GDPR &amp; CCPA Annex 1)</span>
+                    <svg class="pl-c-accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </summary>
+                  <div class="pl-c-accordion__panel">
+                    <div class="pl-c-accordion__content">
+                      <p class="pl-u-muted-sm">Standard contractual clauses for international data transfer and zero third-party telemetry sharing guarantees.</p>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
           </section>
         </div>
       </div>
     </div>
   </div>
 </BaseLayout>
+
 <style>
   .record-main { container-name: record-page; padding: var(--pl-space-6); }
   .record-layout { display: grid; gap: var(--pl-space-6); }
@@ -56,16 +208,15 @@ const base = import.meta.env.BASE_URL;
   .record-section { scroll-margin-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
   .record-section p { margin: 0; }
   .record-section > .pl-c-card__header { display: grid; gap: var(--pl-space-2); }
-  .record-role { justify-items: start; }
-  .record-events { display: grid; gap: var(--pl-space-5); padding-inline-start: var(--pl-space-5); margin: 0; }
-  .record-events li, .record-role { display: grid; gap: var(--pl-space-2); }
+  .record-role { display: grid; gap: var(--pl-space-1); }
   @container record-page (inline-size >= 48rem) {
     .record-layout { grid-template-columns: 12rem minmax(0, 1fr); }
     .record-nav { position: sticky; inset-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
   }
 </style>
+
 <script>
-  // Docs chrome can wrap or resize. This only measures its header; native CSS
+  // Docs chrome can wrap or resize. This measures its header; native CSS
   // owns current-section tracking and native fragment links own navigation.
   let observer: ResizeObserver | undefined;
   function measureDocsHeader() {

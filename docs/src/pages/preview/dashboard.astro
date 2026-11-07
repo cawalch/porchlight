@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 import Icon from '../../components/Icon.astro';
 
 // Realistic SaaS dashboard data.
@@ -24,6 +25,7 @@ const toneFor = (status: string) =>
   ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[status] ?? 'accent');
 ---
 <BaseLayout title="Enterprise dashboard · Porchlight">
+  <PreviewToolbar title="Enterprise Dashboard" />
   <h1>Enterprise dashboard</h1>
   <p>
     A complete SaaS dashboard composing every Porchlight component — stat tiles,

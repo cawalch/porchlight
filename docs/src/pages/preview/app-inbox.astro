@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 const folders = [
   { label: 'Inbox', icon: '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>', active: true, badge: '4' },
@@ -19,6 +20,7 @@ const messages = [
 ];
 ---
 <BaseLayout title="Responsive inbox · Porchlight">
+  <PreviewToolbar title="Responsive Communication Inbox" />
   <h1>Responsive inbox</h1>
   <p>
     A master-detail inbox layout. The <code>.pl-l-sidebar</code> collapses to

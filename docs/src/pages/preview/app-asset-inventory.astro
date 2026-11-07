@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 import EntityInspector from '../../components/EntityInspector.astro';
+
 const assets = [
   { id: 'AST-1042', name: 'Payroll production', owner: 'Mina Chen', kind: 'Cloud service', location: 'US Central', risk: true },
   { id: 'AST-2088', name: 'Design workstation', owner: 'Sam Rivera', kind: 'Managed laptop', location: 'London', risk: false },
@@ -9,23 +11,221 @@ const assets = [
   { id: 'AST-5073', name: 'Support knowledge base', owner: 'Casey Brooks', kind: 'Cloud service', location: 'US Central', risk: false },
 ];
 ---
-<BaseLayout title="Asset inventory · Porchlight">
+
+<BaseLayout title="Cloud IAM & Asset Infrastructure · Porchlight" palette="slate" density="compact">
+  <PreviewToolbar palette="slate" density="compact" title="Cloud IAM & Asset Infrastructure" />
+
   <div class="pl-l-app-shell inventory">
     <header class="pl-l-app-shell__topbar pl-c-toolbar">
-      <strong>Northstar / Operations</strong><span class="pl-c-badge" data-tone="success">Inventory synced</span>
+      <div class="pl-c-toolbar__group">
+        <nav class="pl-c-breadcrumb" aria-label="Cloud hierarchy breadcrumbs">
+          <ol class="pl-c-breadcrumb__list">
+            <li class="pl-c-breadcrumb__item"><a href="#root" class="pl-c-breadcrumb__link">Organization</a></li>
+            <li class="pl-c-breadcrumb__item"><a href="#aws-prod" class="pl-c-breadcrumb__link">AWS Production Core</a></li>
+            <li class="pl-c-breadcrumb__item"><a href="#iam" class="pl-c-breadcrumb__link">IAM Roles</a></li>
+            <li class="pl-c-breadcrumb__item"><span class="pl-c-breadcrumb__current" aria-current="page">DataAccessAdmin</span></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="pl-c-toolbar__group">
+        <span class="pl-c-badge" data-tone="success">Inventory synced</span>
+        <button class="pl-c-button" data-variant="ghost" data-size="sm"><kbd class="pl-c-kbd">⌘K</kbd> Quick jump</button>
+      </div>
     </header>
+
     <aside class="pl-l-app-shell__sidebar">
       <nav class="pl-c-nav" aria-label="Inventory navigation">
-        <a class="pl-c-nav__item" href="#inventory" aria-current="page">Asset inventory</a>
+        <a class="pl-c-nav__item" href="#iam-explorer" aria-current="page">IAM Hierarchy</a>
+        <a class="pl-c-nav__item" href="#inventory">Asset inventory</a>
         <a class="pl-c-nav__item" href="#review-plan">Review plan</a>
         <a class="pl-c-nav__item" href="#coverage">Coverage</a>
       </nav>
     </aside>
+
     <div class="pl-l-app-shell__main pl-l-stack" id="inventory">
       <header class="pl-c-page-header">
-        <div class="pl-c-page-header__heading"><h1 class="pl-c-page-header__title">Asset inventory</h1><p class="pl-c-page-header__subtitle">Know what you own, who owns it, and what needs attention.</p></div>
+        <div class="pl-c-page-header__heading">
+          <h1 class="pl-c-page-header__title">Asset inventory</h1>
+          <p class="pl-c-page-header__subtitle">Cloud IAM permissions, organizational hierarchies, and workspace assets.</p>
+        </div>
       </header>
-      <div class="pl-l-grid" id="coverage" style="--pl-l-grid-min: 14rem; gap: var(--pl-space-3);">
+
+      <section class="pl-l-stack" id="iam-explorer" aria-labelledby="iam-hierarchy-title" style="--pl-l-stack-gap: var(--pl-space-3);">
+        <div class="pl-c-toolbar" style="padding-inline: 0; border: none; background: transparent;">
+          <div class="pl-c-toolbar__group">
+            <h2 class="pl-c-card__title" id="iam-hierarchy-title">Multi-cloud identity hierarchy</h2>
+            <span class="pl-c-badge" data-tone="accent">Miller Columns</span>
+          </div>
+          <div class="pl-c-toolbar__group">
+            <span class="pl-u-muted-sm">Drill down across cloud accounts, roles, and attached policies.</span>
+          </div>
+        </div>
+
+        <div class="pl-c-miller-columns" data-scroll="inline" aria-label="Multi-cloud IAM structure">
+          <!-- Column 1: Cloud Accounts -->
+          <div class="pl-c-miller-columns__column">
+            <header class="pl-c-miller-columns__column-header">
+              <h3 class="pl-c-miller-columns__column-title">Cloud Accounts</h3>
+              <span class="pl-c-badge" data-size="sm">4</span>
+            </header>
+            <div class="pl-c-miller-columns__column-body">
+              <ul class="pl-c-miller-columns__list" role="listbox" aria-label="Cloud accounts">
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="true" tabindex="0">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">AWS Production Core</span>
+                    <span class="pl-c-miller-columns__item-badge">42</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">AWS Staging US-East</span>
+                    <span class="pl-c-miller-columns__item-badge">18</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">GCP Data Lake Hub</span>
+                    <span class="pl-c-miller-columns__item-badge">24</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">Azure AD Federation</span>
+                    <span class="pl-c-miller-columns__item-badge">12</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Column 2: Identity Tiers -->
+          <div class="pl-c-miller-columns__column">
+            <header class="pl-c-miller-columns__column-header">
+              <h3 class="pl-c-miller-columns__column-title">IAM Identity Tiers</h3>
+              <span class="pl-c-badge" data-size="sm">4</span>
+            </header>
+            <div class="pl-c-miller-columns__column-body">
+              <ul class="pl-c-miller-columns__list" role="listbox" aria-label="Identity tiers">
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="true" tabindex="0">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">Privileged Admin Roles</span>
+                    <span class="pl-c-miller-columns__item-badge">14</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">Workload Service Accounts</span>
+                    <span class="pl-c-miller-columns__item-badge">22</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">Instance Profiles</span>
+                    <span class="pl-c-miller-columns__item-badge">18</span>
+                    <svg class="pl-c-miller-columns__item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Column 3: Attached Policies -->
+          <div class="pl-c-miller-columns__column">
+            <header class="pl-c-miller-columns__column-header">
+              <h3 class="pl-c-miller-columns__column-title">Attached Policies</h3>
+              <span class="pl-c-badge" data-size="sm">4</span>
+            </header>
+            <div class="pl-c-miller-columns__column-body">
+              <ul class="pl-c-miller-columns__list" role="listbox" aria-label="Attached policies">
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="true" tabindex="0">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">S3FullDataLakeAccess</span>
+                    <span class="pl-c-badge" data-tone="danger" data-size="sm">HIGH RISK</span>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">KMSDecryptKeyAdmin</span>
+                    <span class="pl-c-badge" data-tone="warning" data-size="sm">ELEVATED</span>
+                  </div>
+                </li>
+                <li class="pl-c-miller-columns__item" role="option" aria-selected="false" tabindex="-1">
+                  <div class="pl-c-miller-columns__item-row">
+                    <span class="pl-c-miller-columns__item-label">CloudWatchMetricsSink</span>
+                    <span class="pl-c-badge" data-tone="neutral" data-size="sm">READ</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="pl-l-grid" style="--pl-l-grid-min: min(100%, 20rem); gap: var(--pl-space-4); margin-block-start: var(--pl-space-2);">
+          <!-- Property List for Role Details -->
+          <section class="pl-c-card" data-surface="app">
+            <header class="pl-c-card__header">
+              <h3 class="pl-c-card__title">Selected role specifications</h3>
+              <span class="pl-c-badge" data-tone="accent">Active Policy</span>
+            </header>
+            <div class="pl-c-card__body">
+              <dl class="pl-c-property-list" data-subgrid="true" data-pl-density="compact">
+                <div class="pl-c-property-list__item">
+                  <dt class="pl-c-property-list__key">Role Name</dt>
+                  <dd class="pl-c-property-list__value"><code>DataAccessAdmin</code></dd>
+                </div>
+                <div class="pl-c-property-list__item">
+                  <dt class="pl-c-property-list__key">Role ARN</dt>
+                  <dd class="pl-c-property-list__value pl-u-mono">
+                    <span>arn:aws:iam::1029384:role/DataAccessAdmin</span>
+                    <button type="button" class="pl-c-property-list__copy" aria-label="Copy ARN">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                    </button>
+                  </dd>
+                </div>
+                <div class="pl-c-property-list__item">
+                  <dt class="pl-c-property-list__key">Max Session Duration</dt>
+                  <dd class="pl-c-property-list__value">3600 seconds (1 hour)</dd>
+                </div>
+                <div class="pl-c-property-list__item">
+                  <dt class="pl-c-property-list__key">Boundary Policy</dt>
+                  <dd class="pl-c-property-list__value"><code>CorporateDataBoundary-v4</code></dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+          <!-- Code Block for JSON Policy Document -->
+          <section class="pl-c-card" data-surface="app">
+            <header class="pl-c-card__header">
+              <h3 class="pl-c-card__title">IAM JSON Policy Document</h3>
+              <span class="pl-c-badge" data-size="sm">JSON</span>
+            </header>
+            <div class="pl-c-card__body" style="padding: 0;">
+              <div class="pl-c-code-block" data-language="json">
+                <pre class="pl-c-code-block__pre"><code class="pl-c-code-block__code">&#123;
+  "Version": "2012-10-17",
+  "Statement": [
+    &#123;
+      "Sid": "AllowS3DataLake",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:ListBucket", "s3:PutObject"],
+      "Resource": ["arn:aws:s3:::apex-datalake-prod/*"]
+    &#125;
+  ]
+&#125;</code></pre>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div class="pl-l-grid" id="coverage" style="--pl-l-grid-min: 14rem; gap: var(--pl-space-3); margin-block-start: var(--pl-space-4);">
         {[
           ['Assets tracked', '5', 'success', 'All monitored'],
           ['Flagged by policy', '2', 'danger', 'Attention required'],
@@ -42,26 +242,57 @@ const assets = [
           </article>
         ))}
       </div>
+
       <section class="pl-c-card" aria-labelledby="assets-title">
-        <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="assets-title">Workspace assets</h2><span class="pl-c-badge">5 records</span></header>
+        <header class="pl-c-card__header">
+          <h2 class="pl-c-card__title" id="assets-title">Workspace assets</h2>
+          <span class="pl-c-badge">5 records</span>
+        </header>
         <div class="pl-c-card__body pl-l-stack">
-          <label class="pl-c-field"><span class="pl-c-field__label">Find an asset or owner</span><input class="pl-c-field__control" type="search" id="asset-search" placeholder="Search this inventory" /></label>
+          <label class="pl-c-field">
+            <span class="pl-c-field__label">Find an asset or owner</span>
+            <input class="pl-c-field__control" type="search" id="asset-search" placeholder="Search this inventory" />
+          </label>
           <p>Choose an asset name to inspect details. Reviews are saved only for this demo session.</p>
           <div class="pl-c-table-wrap" tabindex="0" role="region" aria-label="Asset records">
-            <table class="pl-c-table"><thead><tr><th scope="col">Asset</th><th scope="col">Owner</th><th scope="col">Type</th><th scope="col">Review</th></tr></thead>
-              <tbody>{assets.map(asset => <tr data-asset-id={asset.id} data-search={`${asset.name} ${asset.owner}`}><td><EntityInspector {...asset} /></td><td>{asset.owner}</td><td>{asset.kind}</td><td data-review-state>{asset.risk ? 'Needs review' : 'Current'}</td></tr>)}</tbody>
+            <table class="pl-c-table">
+              <thead>
+                <tr>
+                  <th scope="col">Asset</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Review</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assets.map(asset => (
+                  <tr data-asset-id={asset.id} data-search={`${asset.name} ${asset.owner}`}>
+                    <td><EntityInspector {...asset} /></td>
+                    <td>{asset.owner}</td>
+                    <td>{asset.kind}</td>
+                    <td data-review-state>{asset.risk ? 'Needs review' : 'Current'}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
           <p id="asset-count" role="status">5 assets shown</p>
         </div>
       </section>
+
       <section class="pl-c-card" id="review-plan" aria-labelledby="review-title">
-        <header class="pl-c-card__header"><h2 class="pl-c-card__title" id="review-title">Next review window</h2></header>
-        <div class="pl-c-card__body"><p>Start with Payroll production and Customer analytics. Confirm ownership, contact the owner if needed, and mark each asset reviewed.</p><p>Next scheduled review: October 1, 2026 · Operations team</p></div>
+        <header class="pl-c-card__header">
+          <h2 class="pl-c-card__title" id="review-title">Next review window</h2>
+        </header>
+        <div class="pl-c-card__body">
+          <p>Start with Payroll production and Customer analytics. Confirm ownership, contact the owner if needed, and mark each asset reviewed.</p>
+          <p>Next scheduled review: October 1, 2026 · Operations team</p>
+        </div>
       </section>
     </div>
   </div>
 </BaseLayout>
+
 <script>
   document.addEventListener('input', event => {
     const input = event.target as HTMLInputElement;
@@ -72,12 +303,22 @@ const assets = [
       row.hidden = !row.dataset.search?.toLowerCase().includes(query);
       if (!row.hidden) count++;
     });
-    document.querySelector('#asset-count')!.textContent = `${count} assets shown`;
+    const counter = document.querySelector('#asset-count');
+    if (counter) counter.textContent = `${count} assets shown`;
   });
 </script>
+
 <style>
   .inventory { min-block-size: 0; }
-  .inventory .pl-l-app-shell__main { padding: var(--pl-space-6); }
+  .inventory .pl-l-app-shell__main {
+    padding: var(--pl-space-6);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-x: clip;
+  }
+  .inventory .pl-c-miller-columns {
+    max-inline-size: 100%;
+  }
   @media (width < 48rem) { .inventory .pl-l-app-shell__main { padding: var(--pl-space-4); } }
   .inventory-stat { display: block; margin-block-start: var(--pl-space-2); font-size: var(--pl-text-2xl); }
   .inventory :global([hidden]) { display: none; }

@@ -14,6 +14,9 @@ interface Props {
   description?: string;
   search?: boolean;
   skipTarget?: string;
+  palette?: string;
+  theme?: string;
+  density?: string;
 }
 
 const {
@@ -21,6 +24,9 @@ const {
   description = 'A no-dependency, native-CSS framework.',
   search = false,
   skipTarget = 'main',
+  palette,
+  theme,
+  density,
 } = Astro.props;
 
 // Resolve internal links against the build-time base path so the site works
@@ -46,7 +52,12 @@ const isActive = (href: string) => {
 };
 ---
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  data-pl-palette={palette || undefined}
+  data-pl-theme={theme || undefined}
+  data-pl-density={density || undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -56,7 +67,11 @@ const isActive = (href: string) => {
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
     <script is:inline data-astro-rerun>
-      document.documentElement.toggleAttribute('data-docs-embed', new URL(location.href).searchParams.get('embed') === '1');
+      const params = new URL(location.href).searchParams;
+      document.documentElement.toggleAttribute('data-docs-embed', params.get('embed') === '1');
+      if (params.has('palette')) document.documentElement.setAttribute('data-pl-palette', params.get('palette'));
+      if (params.has('theme')) document.documentElement.setAttribute('data-pl-theme', params.get('theme'));
+      if (params.has('density')) document.documentElement.setAttribute('data-pl-density', params.get('density'));
     </script>
   </head>
   <body class:list={{ 'docs-page': search, 'preview-page': !search }}>

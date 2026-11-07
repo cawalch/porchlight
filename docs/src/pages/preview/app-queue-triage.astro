@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 type QueueTone = 'danger' | 'warning' | 'accent' | 'success' | 'default';
 
@@ -144,7 +145,8 @@ const timeline = [
 const selectedItem = queueItems[0];
 ---
 
-<BaseLayout title="Queue triage · Porchlight">
+<BaseLayout title="Queue triage · Porchlight" palette="emerald" density="compact">
+  <PreviewToolbar palette="emerald" theme="light" density="compact" title="Support Queue Triage & SLA Board" />
   <div class="pl-l-app-shell" data-pl-density="compact">
     <header class="pl-l-app-shell__topbar">
       <div class="pl-c-toolbar">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
 
 // A believable desktop SaaS app shell: sticky topbar with brand + actions,
 // persistent nav sidebar, scrolling main work area. Toggles below flip the
@@ -15,6 +16,7 @@ const nav = [
 ] as const;
 ---
 <BaseLayout title="App shell · Porchlight">
+  <PreviewToolbar title="SaaS App Shell Layout" />
   <h1>App shell</h1>
   <p>
     The desktop SaaS layout — sticky topbar, persistent sidebar, scrolling main
