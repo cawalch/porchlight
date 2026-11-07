@@ -64,7 +64,7 @@ const toneFor = (status: string) =>
 <BaseLayout title="Treasury & Capital Operations · Porchlight" palette="emerald" density="compact">
   <PreviewToolbar palette="emerald" density="compact" title="Fintech Treasury & Capital Operations" />
 
-  <div class="pl-l-stack reporting-shell" data-pl-palette="emerald" data-pl-density="compact">
+  <div class="pl-l-stack reporting-shell">
     <section class="pl-l-stack reporting-header-stack" aria-labelledby="report-title">
       <div class="pl-c-page-header">
         <div class="pl-c-page-header__heading">
@@ -339,18 +339,6 @@ const toneFor = (status: string) =>
               </tbody>
             </table>
           </div>
-
-          <aside class="pl-c-action-bar" role="toolbar" aria-label="Batch actions">
-            <div class="pl-c-action-bar__lead">
-              <span class="pl-c-action-bar__count">2 wire batches selected ($4,270,000)</span>
-            </div>
-            <div class="pl-c-action-bar__divider" aria-hidden="true"></div>
-            <div class="pl-c-action-bar__actions">
-              <button type="button" class="pl-c-button" data-variant="primary" data-size="sm">Approve wires (2)</button>
-              <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">Request CFO Dual-Auth</button>
-              <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Export ISO 20022</button>
-            </div>
-          </aside>
         </section>
 
         <section class="pl-c-card" data-surface="app" aria-labelledby="breakdown-title">
@@ -403,6 +391,18 @@ const toneFor = (status: string) =>
             </div>
           </div>
         </section>
+
+        <aside class="pl-c-action-bar" data-open="true" role="toolbar" aria-label="Batch actions">
+          <div class="pl-c-action-bar__lead">
+            <span class="pl-c-action-bar__count">2 wire batches selected ($4,270,000)</span>
+          </div>
+          <div class="pl-c-action-bar__divider" aria-hidden="true"></div>
+          <div class="pl-c-action-bar__actions">
+            <button type="button" class="pl-c-button" data-variant="primary" data-size="sm">Approve wires (2)</button>
+            <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">Request CFO Dual-Auth</button>
+            <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Export ISO 20022</button>
+          </div>
+        </aside>
       </div>
       <div class="pl-c-tabs__panel" role="tabpanel" id="panel-acquisition" aria-labelledby="tab-acquisition" hidden>
         <div class="pl-c-empty">
