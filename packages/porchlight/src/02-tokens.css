@@ -205,6 +205,11 @@
       oklch(36% 0.18 25deg),
       oklch(90% 0.06 25deg)
     );
+    --pl-color-danger-border: color-mix(
+      in oklab,
+      var(--pl-color-danger),
+      transparent 55%
+    );
     --pl-color-success: oklch(58% 0.18 150deg);
     --pl-color-success-bg: light-dark(
       oklch(96% 0.04 150deg),
@@ -295,6 +300,10 @@
       0 8px 16px oklch(0% 0 0deg / 10%),
       0 24px 64px oklch(20% 0.08 40deg / 18%),
       inset 0 1px 0 oklch(100% 0 0deg / 8%);
+    --pl-shadow-4:
+      0 12px 24px oklch(0% 0 0deg / 12%),
+      0 32px 80px oklch(20% 0.08 40deg / 24%),
+      inset 0 1px 0 oklch(100% 0 0deg / 10%);
 
     /* Glow: accent-hued ring for focused/active primary controls. */
     --pl-shadow-glow: 0 0 0 4px

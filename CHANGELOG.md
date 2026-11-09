@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Define `--pl-color-accent-subtle` in `02-tokens.css` and apply the relative-color `--pl-color-accent-hover` / `--pl-color-accent-subtle` enhancements at `:root`, so both tokens resolve without requiring a `data-pl-palette` attribute. Scoped palettes still recompute both values from their own `--pl-color-accent`.
+- Define missing `--pl-color-danger-border` and `--pl-shadow-4` tokens; replace undefined `--pl-radius-full` references with `--pl-radius-pill`; and point the brand tone style query at `--pl-color-accent` / `--pl-color-accent-text` instead of undefined `--pl-color-brand-*` tokens.
+- Re-declare `--pl-shadow-glow` on `[data-pl-palette]` so scoped palettes get an accent-matched focus glow, and remap `--pl-color-text-faint` per palette plus in forced-colors mode.
+- Add a build-time token reference check that fails when a `var(--pl-*)` without a fallback has no matching definition.
 
 ## [0.17.0] - 2026-11-07
 
