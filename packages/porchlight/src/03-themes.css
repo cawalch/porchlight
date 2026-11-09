@@ -67,6 +67,10 @@
       oklch(46% 0.018 250deg),
       oklch(72% 0.015 250deg)
     );
+    --pl-color-text-faint: light-dark(
+      oklch(48% 0.015 250deg),
+      oklch(68% 0.012 250deg)
+    );
     --pl-color-border: light-dark(
       oklch(80% 0.015 250deg / 75%),
       oklch(45% 0.015 250deg / 30%)
@@ -90,6 +94,7 @@
     --pl-color-surface-2: light-dark(oklch(93.5% 0 0deg), oklch(21% 0 0deg));
     --pl-color-text: light-dark(oklch(18% 0 0deg), oklch(96% 0 0deg));
     --pl-color-text-muted: light-dark(oklch(44% 0 0deg), oklch(72% 0 0deg));
+    --pl-color-text-faint: light-dark(oklch(46% 0 0deg), oklch(68% 0 0deg));
     --pl-color-border: light-dark(
       oklch(78% 0 0deg / 75%),
       oklch(42% 0 0deg / 35%)
@@ -118,6 +123,10 @@
     --pl-color-text-muted: light-dark(
       oklch(44% 0.025 270deg),
       oklch(74% 0.02 270deg)
+    );
+    --pl-color-text-faint: light-dark(
+      oklch(46% 0.02 270deg),
+      oklch(70% 0.018 270deg)
     );
     --pl-color-border: light-dark(
       oklch(78% 0.02 270deg / 75%),
@@ -157,6 +166,10 @@
       oklch(44% 0.02 155deg),
       oklch(73% 0.015 155deg)
     );
+    --pl-color-text-faint: light-dark(
+      oklch(46% 0.018 155deg),
+      oklch(69% 0.012 155deg)
+    );
     --pl-color-border: light-dark(
       oklch(79% 0.015 155deg / 75%),
       oklch(42% 0.015 155deg / 32%)
@@ -189,6 +202,10 @@
       oklch(45% 0.02 305deg),
       oklch(73% 0.015 305deg)
     );
+    --pl-color-text-faint: light-dark(
+      oklch(47% 0.018 305deg),
+      oklch(69% 0.012 305deg)
+    );
     --pl-color-border: light-dark(
       oklch(80% 0.015 305deg / 75%),
       oklch(42% 0.018 305deg / 35%)
@@ -217,6 +234,10 @@
     --pl-color-text-muted: light-dark(
       oklch(45% 0.02 25deg),
       oklch(73% 0.015 25deg)
+    );
+    --pl-color-text-faint: light-dark(
+      oklch(47% 0.018 25deg),
+      oklch(69% 0.012 25deg)
     );
     --pl-color-border: light-dark(
       oklch(80% 0.015 25deg / 75%),
@@ -250,6 +271,10 @@
       oklch(45% 0.02 195deg),
       oklch(73% 0.015 195deg)
     );
+    --pl-color-text-faint: light-dark(
+      oklch(47% 0.018 195deg),
+      oklch(69% 0.012 195deg)
+    );
     --pl-color-border: light-dark(
       oklch(80% 0.015 195deg / 75%),
       oklch(42% 0.018 195deg / 35%)
@@ -278,6 +303,8 @@
       var(--pl-color-accent) 15%,
       transparent
     );
+    --pl-shadow-glow: 0 0 0 4px
+      color-mix(in oklab, var(--pl-color-accent), transparent 72%);
   }
 
   /* Relative Color Syntax enhancements where supported. Targets :root as well
@@ -411,6 +438,7 @@
       --pl-color-surface-2: Canvas;
       --pl-color-text: CanvasText;
       --pl-color-text-muted: CanvasText;
+      --pl-color-text-faint: CanvasText;
       --pl-color-border: ButtonBorder;
       --pl-color-accent: Highlight;
       --pl-color-accent-text: HighlightText;
@@ -418,6 +446,7 @@
       --pl-shadow-1: none;
       --pl-shadow-2: none;
       --pl-shadow-3: none;
+      --pl-shadow-4: none;
     }
   }
 }

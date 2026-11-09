@@ -190,12 +190,12 @@
     /* Tone style queries: cascade semantic tones to badges, chips, progress, alerts, toasts, and empty states */
     @container style(--pl-tone: brand) or style(--pl-tone: accent) {
       :where(.pl-c-badge:not([data-tone])) {
-        background: var(--pl-color-brand-bg);
-        color: var(--pl-color-brand-text);
+        background: var(--pl-color-accent);
+        color: var(--pl-color-accent-text);
       }
 
       :where(.pl-c-chip:not([data-tone])) {
-        --pl-c-chip-text: var(--pl-color-brand-text);
+        --pl-c-chip-text: var(--pl-color-accent);
       }
 
       :where(.pl-c-alert:not([data-tone])) {
@@ -452,7 +452,7 @@
       inline-size: 0.5rem;
       block-size: 0.5rem;
       border: 0;
-      border-radius: var(--pl-radius-full);
+      border-radius: var(--pl-radius-pill);
       background: var(--pl-color-border);
       cursor: pointer;
       transition:

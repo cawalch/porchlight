@@ -103,6 +103,43 @@ function lineAndColumn(source, index) {
   };
 }
 
+async function assertTokenReferences(label, files) {
+  const defined = new Set();
+  const sources = [];
+
+  for (const file of files) {
+    const source = (await readFile(resolve(root, file), "utf8")).replace(
+      /\/\*[\s\S]*?\*\//g,
+      (comment) => comment.replace(/[^\n]/g, " "),
+    );
+    sources.push({ file, source });
+
+    for (const match of source.matchAll(/(--pl-[\w-]+)\s*:/g)) {
+      defined.add(match[1]);
+    }
+    for (const match of source.matchAll(/@property\s+(--pl-[\w-]+)/g)) {
+      defined.add(match[1]);
+    }
+  }
+
+  const violations = [];
+  for (const { file, source } of sources) {
+    for (const match of source.matchAll(/var\(\s*(--pl-[\w-]+)\s*(,)?/g)) {
+      if (match[2] || defined.has(match[1])) continue;
+      const { line, column } = lineAndColumn(source, match.index);
+      violations.push(
+        `${file}:${line}:${column} undefined token reference: var(${match[1]})`,
+      );
+    }
+  }
+
+  if (violations.length > 0) {
+    throw new Error(
+      `Porchlight token reference check failed in ${label}:\n${violations.join("\n")}`,
+    );
+  }
+}
+
 async function assertNamespaceClean(label, files) {
   const violations = [];
 
@@ -559,6 +596,7 @@ await assertNamespaceClean("package source", [
   "porchlight.css",
   ...(await collectFiles("src")),
 ]);
+await assertTokenReferences("package source", await collectFiles("src"));
 await rm(outDir, { recursive: true, force: true });
 await mkdir(entriesDir, { recursive: true });
 

@@ -111,7 +111,7 @@
       block-size: 0.625rem;
       min-inline-size: 0;
       padding: 0;
-      border-radius: var(--pl-radius-full);
+      border-radius: var(--pl-radius-pill);
       background: var(--pl-color-border);
       border: 0;
       transition:
