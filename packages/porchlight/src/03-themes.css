@@ -258,9 +258,32 @@
     --pl-color-accent-text: light-dark(white, oklch(14% 0.02 195deg));
   }
 
-  /* Relative Color Syntax enhancements where supported */
+  /* Derived accent states for scoped palettes.
+   *
+   * Custom properties are substituted where they are declared, so a derived
+   * token declared only on :root keeps the root accent's value even inside a
+   * subtree that re-declares --pl-color-accent. Re-declaring the derived tokens
+   * on [data-pl-palette] makes them recompute from that subtree's accent.
+   *
+   * This is the color-mix fallback (mirrors 02-tokens.css) for browsers without
+   * relative color syntax; the @supports block below upgrades it where available. */
+  :where([data-pl-palette]) {
+    --pl-color-accent-hover: color-mix(
+      in oklab,
+      var(--pl-color-accent),
+      oklch(16% 0.01 55deg) 10%
+    );
+    --pl-color-accent-subtle: color-mix(
+      in oklab,
+      var(--pl-color-accent) 15%,
+      transparent
+    );
+  }
+
+  /* Relative Color Syntax enhancements where supported. Targets :root as well
+     as palette containers so the default palette receives the same treatment. */
   @supports (color: oklch(from red l c h)) {
-    :where([data-pl-palette]) {
+    :where(:root, [data-pl-palette]) {
       --pl-color-accent-hover: oklch(
         from var(--pl-color-accent) calc(l * 0.92) c h
       );

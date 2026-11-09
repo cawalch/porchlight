@@ -187,6 +187,15 @@
       var(--pl-color-accent),
       oklch(16% 0.01 55deg) 10%
     );
+
+    /* 15% accent wash for selected/active backgrounds. Kept in the base token
+       layer so the token is always defined; 03-themes upgrades it to relative
+       color syntax where supported. */
+    --pl-color-accent-subtle: color-mix(
+      in oklab,
+      var(--pl-color-accent) 15%,
+      transparent
+    );
     --pl-color-danger: oklch(60% 0.22 25deg);
     --pl-color-danger-bg: light-dark(
       oklch(96% 0.04 25deg),
