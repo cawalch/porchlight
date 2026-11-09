@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Define missing `--pl-color-danger-border` and `--pl-shadow-4` tokens; replace undefined `--pl-radius-full` references with `--pl-radius-pill`; and point the brand tone style query at `--pl-color-accent` / `--pl-color-accent-text` instead of undefined `--pl-color-brand-*` tokens.
 - Re-declare `--pl-shadow-glow` on `[data-pl-palette]` so scoped palettes get an accent-matched focus glow, and remap `--pl-color-text-faint` per palette plus in forced-colors mode.
 - Add a build-time token reference check that fails when a `var(--pl-*)` without a fallback has no matching definition.
+- Derive the `prefers-contrast: more` surface and border tokens from the active palette instead of hardcoded warm hues, so global and scoped palette presets keep their color identity in high-contrast mode.
+- Re-derive `--pl-menu-row-padding-inline` inside dense density contexts (attribute and style-query paths) so menu rows follow the compressed spacing scale.
+- Restore a visible focus ring on the command palette search input, which previously removed its outline without a replacement.
+- Replace the remaining `100vw` size caps in tooltip and action-bar with logical `100vi` units.
+- Correct stale documentation for palette presets, control sizing tokens, the brand theme example, and the reveal preview line-height token.
 
 ## [0.17.0] - 2026-11-07
 

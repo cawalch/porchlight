@@ -199,6 +199,12 @@
       outline: none;
     }
 
+    /* Keep a visible keyboard focus ring on the palette's primary control. */
+    :is(.pl-c-command__search, .pl-c-command-palette__search):focus-visible {
+      outline: var(--pl-focus-size) solid var(--pl-focus-color);
+      outline-offset: calc(var(--pl-focus-offset) * -1);
+    }
+
     :is(.pl-c-command__search, .pl-c-command-palette__search)::placeholder {
       color: var(--pl-color-text-muted);
     }

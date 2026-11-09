@@ -184,6 +184,9 @@ test.describe("compact and dense browser coverage", () => {
         return {
           density,
           token: bodyStyle.getPropertyValue("--pl-control-block-size").trim(),
+          menuPad: bodyStyle
+            .getPropertyValue("--pl-menu-row-padding-inline")
+            .trim(),
           height: button.getBoundingClientRect().height,
         };
       });
@@ -197,11 +200,35 @@ test.describe("compact and dense browser coverage", () => {
     expect(byDensity.compact.token).toBe("2rem");
     expect(byDensity.dense.token).toBe("1.75rem");
     expect(byDensity.touch.token).toBe("2.75rem");
+    expect(parseFloat(byDensity.comfortable.menuPad)).toBe(0.75);
+    expect(parseFloat(byDensity.dense.menuPad)).toBe(0.5);
     expect(byDensity.compact.height).toBeLessThan(byDensity.comfortable.height);
     expect(byDensity.dense.height).toBeLessThan(byDensity.compact.height);
     expect(byDensity.touch.height).toBeGreaterThan(
       byDensity.comfortable.height,
     );
+  });
+
+  test("dense style-query re-derives menu row padding", async ({ page }) => {
+    await page.goto("./preview/button");
+    await expect(
+      page.getByRole("heading", { name: "Button", exact: true, level: 1 }),
+    ).toBeVisible();
+
+    const menuPad = await page.evaluate(() => {
+      const host = document.createElement("div");
+      host.style.setProperty("--pl-density", "dense");
+      const child = document.createElement("span");
+      host.append(child);
+      document.body.append(host);
+      const value = getComputedStyle(child)
+        .getPropertyValue("--pl-menu-row-padding-inline")
+        .trim();
+      host.remove();
+      return value;
+    });
+
+    expect(parseFloat(menuPad)).toBe(0.5);
   });
 
   for (const density of densities) {

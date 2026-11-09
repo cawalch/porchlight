@@ -144,8 +144,9 @@
 
   /* 6. Style Container Queries (CSS Level 5 / Baseline 2023-2026):
      Token inheritance via custom properties on ancestor containers.
-     Allows setting `--pl-density: dense | compact` or `--pl-tone: brand | success | warning | danger`
-     on any parent container without needing `[data-pl-density]` or `[data-tone]` on every child. */
+     Allows setting `--pl-density: dense | compact` or
+     `--pl-tone: brand | accent | success | warning | danger` on any parent
+     container without needing `[data-pl-density]` or `[data-tone]` on every child. */
   @supports (container-type: normal) {
     /* Density style queries */
     @container style(--pl-density: compact) {
@@ -161,6 +162,7 @@
         --pl-control-block-size: 1.75rem;
         --pl-control-padding-inline: var(--pl-space-2);
         --pl-control-gap: var(--pl-space-1);
+        --pl-menu-row-padding-inline: var(--pl-space-3);
         --pl-space-2: 0.375rem;
         --pl-space-3: 0.5rem;
         --pl-space-4: 0.75rem;

@@ -370,6 +370,10 @@
     --pl-control-padding-inline: var(--pl-space-2);
     --pl-control-gap: var(--pl-space-1);
 
+    /* Re-derive from the compressed scale: derived tokens declared on :root
+       would otherwise keep their comfortable value inside a dense subtree. */
+    --pl-menu-row-padding-inline: var(--pl-space-3);
+
     /* Compressed spacing scale: ~30% reduction across the board. */
     --pl-space-2: 0.375rem;
     --pl-space-3: 0.5rem;
@@ -416,14 +420,18 @@
   /* Contrast preference: make structural boundaries and focus affordances
      clearer without changing component contracts or forcing a new palette. */
   @media (prefers-contrast: more) {
-    :root {
+    /* Derive the stronger surface/border from the active surface and text
+       tokens instead of hardcoding warm hues. This keeps palette presets
+       intact (a global palette otherwise loses its hue in high-contrast
+       mode) and lets scoped palettes strengthen their own values. */
+    :where(:root, [data-pl-palette]) {
       --pl-color-surface-2: light-dark(
-        oklch(90% 0.012 60deg),
-        oklch(30% 0.014 55deg)
+        color-mix(in oklab, var(--pl-color-surface), var(--pl-color-text) 12%),
+        color-mix(in oklab, var(--pl-color-surface), var(--pl-color-text) 15%)
       );
       --pl-color-border: light-dark(
-        oklch(64% 0.018 55deg / 95%),
-        oklch(72% 0.014 55deg / 78%)
+        color-mix(in oklab, var(--pl-color-text), var(--pl-color-surface) 55%),
+        color-mix(in oklab, var(--pl-color-text), var(--pl-color-surface) 30%)
       );
       --pl-focus-size: 3px;
       --pl-focus-glow-opacity: 75%;
