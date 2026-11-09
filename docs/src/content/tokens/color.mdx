@@ -47,7 +47,7 @@ Porchlight provides seven pre-baked enterprise palette presets via the `data-pl-
 | `crimson`  | Vivid ruby/crimson       | Security, incident response, high-risk SOC triage         | Ruby crimson (`oklch(43% 0.15 25deg)` / `oklch(71% 0.15 25deg)`)      |
 | `cyan`     | Electric cyan/teal       | Cloud infrastructure, Kubernetes clusters, telemetry      | Electric cyan (`oklch(42% 0.11 195deg)` / `oklch(71% 0.12 195deg)`)   |
 
-Palettes automatically leverage CSS Relative Color Syntax where supported to derive dynamic `--pl-color-accent-hover` and `--pl-color-accent-subtle` values, and `@media (color-gamut: p3)` wide-gamut enhancements for vivid accents.
+`--pl-color-accent-hover` and `--pl-color-accent-subtle` are always derived from the active `--pl-color-accent`: a `color-mix()` fallback ships in `02-tokens.css`, and CSS Relative Color Syntax upgrades both values where supported. Palettes add `@media (color-gamut: p3)` wide-gamut enhancements for vivid accents.
 
 ## Override colors
 
