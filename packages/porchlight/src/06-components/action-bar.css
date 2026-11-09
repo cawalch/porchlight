@@ -49,7 +49,7 @@
       inset-inline: 0;
       margin-inline: auto;
       inline-size: fit-content;
-      max-inline-size: calc(100vw - var(--pl-space-4));
+      max-inline-size: calc(100vi - var(--pl-space-4));
       z-index: var(--pl-z-fixed);
 
       /* Liquid Glass floating surface. */

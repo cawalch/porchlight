@@ -29,6 +29,11 @@ const pairs = [
     fg: "var(--pl-color-text-muted)",
   },
   {
+    name: "text-faint on bg",
+    bg: "var(--pl-color-bg)",
+    fg: "var(--pl-color-text-faint)",
+  },
+  {
     name: "accent (link) on bg",
     bg: "var(--pl-color-bg)",
     fg: "var(--pl-color-accent)",
@@ -56,11 +61,17 @@ const pairs = [
 ] as const;
 
 /** Resolve a (bg, fg) token pair to [bgColor, fgColor] strings in a theme. */
-async function resolve(page: import("@playwright/test").Page, theme: string) {
+async function resolve(
+  page: import("@playwright/test").Page,
+  theme: string,
+  palette = "",
+) {
   return page.evaluate(
-    ([pairs, theme]) => {
+    ([pairs, theme, palette]) => {
       const root = document.querySelector(".playground") as HTMLElement;
       root.setAttribute("data-pl-theme", theme);
+      if (palette) root.setAttribute("data-pl-palette", palette);
+      else root.removeAttribute("data-pl-palette");
       return pairs.map((p) => {
         const host = document.createElement("div");
         host.style.background = p.bg;
@@ -76,23 +87,51 @@ async function resolve(page: import("@playwright/test").Page, theme: string) {
         return { name: p.name, colors: result };
       });
     },
-    [pairs, theme] as const,
+    [pairs, theme, palette] as const,
   );
 }
+
+async function expectPairsAA(
+  page: import("@playwright/test").Page,
+  theme: string,
+  palette: string,
+  label: string,
+) {
+  const results = await resolve(page, theme, palette);
+  for (const { name, colors } of results) {
+    const [bg, fg] = colors;
+    const ratio = contrast(fg, bg);
+    expect(
+      ratio,
+      `${name} in ${label}: ${ratio.toFixed(2)}:1`,
+    ).toBeGreaterThanOrEqual(AA);
+  }
+}
+
+const palettes = [
+  "slate",
+  "zinc",
+  "midnight",
+  "emerald",
+  "amethyst",
+  "crimson",
+  "cyan",
+] as const;
 
 for (const theme of ["light", "dark"] as const) {
   test(`semantic text pairs meet WCAG AA in ${theme}`, async ({ page }) => {
     await page.goto("./preview/themes");
-    const results = await resolve(page, theme);
-    for (const { name, colors } of results) {
-      const [bg, fg] = colors;
-      const ratio = contrast(fg, bg);
-      expect(
-        ratio,
-        `${name} in ${theme}: ${ratio.toFixed(2)}:1`,
-      ).toBeGreaterThanOrEqual(AA);
-    }
+    await expectPairsAA(page, theme, "", theme);
   });
+
+  for (const palette of palettes) {
+    test(`palette ${palette} text pairs meet WCAG AA in ${theme}`, async ({
+      page,
+    }) => {
+      await page.goto("./preview/themes");
+      await expectPairsAA(page, theme, palette, `${palette} ${theme}`);
+    });
+  }
 }
 
 test("selected theme toggle has readable text in dark mode", async ({

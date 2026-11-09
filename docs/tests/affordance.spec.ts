@@ -507,3 +507,33 @@ test("segmented checked is visually distinct from unchecked", async ({
   expect(states).not.toBeNull();
   expect(states!.checkedBg).not.toBe(states!.uncheckedBg);
 });
+
+/* ------------------------------------------------------------------
+ * Command palette: the search input is the primary keyboard target and
+ * must keep a visible focus ring after its native outline is removed.
+ * ------------------------------------------------------------------ */
+test("command palette search keeps a visible focus ring", async ({ page }) => {
+  await page.goto("./preview/command-palette");
+  await expect(
+    page.getByRole("heading", {
+      name: "Command palette",
+      exact: true,
+      level: 1,
+    }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: "Open command palette" }).click();
+  const search = page.getByRole("combobox", { name: "Search commands" });
+  await expect(search).toBeFocused();
+
+  const focusStyle = await search.evaluate((element) => {
+    const cs = getComputedStyle(element);
+    return {
+      style: cs.outlineStyle,
+      width: parseFloat(cs.outlineWidth),
+    };
+  });
+
+  expect(focusStyle.style).not.toBe("none");
+  expect(focusStyle.width).toBeGreaterThan(0);
+});

@@ -62,10 +62,10 @@ its text color need to meet WCAG-AA contrast (4.5:1 minimum):
     --pl-color-accent: oklch(55% 0.22 290deg);
     --pl-color-accent-text: oklch(98% 0.01 290deg);
 
-    /* The accent ramp is derived from these via color-mix().
-       Override individual steps if you need full control: */
-    /* --pl-color-accent-300: oklch(...); */
-    /* --pl-color-accent-700: oklch(...); */
+    /* For a full custom ramp, override the brand scale. Accent tokens
+       resolve from --pl-brand-7 (light) and --pl-brand-4 (dark). */
+    /* --pl-brand-7: oklch(48% 0.18 290deg); */
+    /* --pl-brand-4: oklch(70% 0.14 290deg); */
   }
 
   /* Dark theme brand override */
@@ -190,14 +190,17 @@ maximum information density. See the <a href={`${import.meta.env.BASE_URL}compon
 
 ## Built-in enterprise palette presets
 
-Porchlight provides four pre-baked enterprise palette presets via the `data-pl-palette` attribute. Each preset configures brand ramps, surfaces, text, borders, and accent colors with tested WCAG AA contrast in both light and dark modes:
+Porchlight provides seven pre-baked enterprise palette presets via the `data-pl-palette` attribute. Each preset configures brand ramps, surfaces, text, borders, and accent colors with tested WCAG AA contrast in both light and dark modes:
 
-| Palette    | Aesthetic                | Best Suited For                                        | Accent Tone                                |
-| ---------- | ------------------------ | ------------------------------------------------------ | ------------------------------------------ |
-| `slate`    | Cool neutral gray        | B2B SaaS, developer tooling, workflow engines          | Indigo steel (`oklch(46% 0.1 250deg)`)     |
-| `zinc`     | Crisp monochromatic      | Technical analytics, hardware consoles, terminal views | High-contrast neutral                      |
-| `midnight` | Deep nocturnal blue-gray | SOC/SIEM cockpits, dark-first monitoring dashboards    | Electric cobalt (`oklch(60% 0.19 275deg)`) |
-| `emerald`  | Warm emerald green       | Fintech, banking, sustainability, wealth management    | Emerald green (`oklch(61% 0.16 155deg)`)   |
+| Palette    | Aesthetic                | Best Suited For                                           | Accent Tone (Light / Dark)                                            |
+| ---------- | ------------------------ | --------------------------------------------------------- | --------------------------------------------------------------------- |
+| `slate`    | Cool neutral gray        | B2B SaaS, developer tooling, workflow engines             | Indigo steel (`oklch(46% 0.1 250deg)` / `oklch(70% 0.1 250deg)`)      |
+| `zinc`     | Crisp monochromatic      | Technical analytics, hardware consoles, terminal views    | High-contrast neutral (`oklch(22% 0 0deg)` / `oklch(92% 0 0deg)`)     |
+| `midnight` | Deep nocturnal blue-gray | SOC/SIEM cockpits, dark-first monitoring dashboards       | Electric cobalt (`oklch(44% 0.15 275deg)` / `oklch(68% 0.15 275deg)`) |
+| `emerald`  | Warm emerald green       | Fintech, banking, sustainability, wealth management       | Emerald green (`oklch(43% 0.12 155deg)` / `oklch(71% 0.13 155deg)`)   |
+| `amethyst` | Vibrant deep purple      | AI / LLM observability, data science, evaluation consoles | Vibrant purple (`oklch(44% 0.14 305deg)` / `oklch(71% 0.14 305deg)`)  |
+| `crimson`  | Vivid ruby/crimson       | Security, incident response, high-risk SOC triage         | Ruby crimson (`oklch(43% 0.15 25deg)` / `oklch(71% 0.15 25deg)`)      |
+| `cyan`     | Electric cyan/teal       | Cloud infrastructure, Kubernetes clusters, telemetry      | Electric cyan (`oklch(42% 0.11 195deg)` / `oklch(71% 0.12 195deg)`)   |
 
 ### Applying a palette globally
 

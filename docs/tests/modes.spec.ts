@@ -153,6 +153,45 @@ test("prefers-contrast strengthens boundary and focus tokens", async ({
   expect(after.glowOpacity, "field focus glow should strengthen").toBe("75%");
 });
 
+test("prefers-contrast keeps palette-specific surface and border tokens", async ({
+  page,
+  browserName,
+}) => {
+  test.skip(
+    browserName !== "chromium",
+    "prefers-contrast CDP emulation is Chromium-only",
+  );
+
+  await page.goto("./preview/themes");
+  await reach(page, "Themes & density");
+
+  const client = await page.context().newCDPSession(page);
+  await client.send("Emulation.setEmulatedMedia", {
+    features: [{ name: "prefers-contrast", value: "more" }],
+  });
+
+  const values = await page.evaluate(() => {
+    const read = () => {
+      const cs = getComputedStyle(document.documentElement);
+      return {
+        border: cs.getPropertyValue("--pl-color-border").trim(),
+        surface2: cs.getPropertyValue("--pl-color-surface-2").trim(),
+      };
+    };
+    document.documentElement.removeAttribute("data-pl-palette");
+    const base = read();
+    document.documentElement.setAttribute("data-pl-palette", "slate");
+    const slate = read();
+    document.documentElement.removeAttribute("data-pl-palette");
+    return { base, slate };
+  });
+
+  // The high-contrast values must derive from the active palette, not fall
+  // back to a hardcoded warm neutral.
+  expect(values.slate.surface2).not.toBe(values.base.surface2);
+  expect(values.slate.border).not.toBe(values.base.border);
+});
+
 // ---------------------------------------------------------------------------
 // Reduced motion. Two independent guards must fire: the :root motion-scale
 // token drops to 0, AND the universal `*` rule clamps every transition to 1ms
