@@ -5,6 +5,20 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Add `audit:modern-web` script using `@latest modern-web-guidance legacy-scan` to automate web platform modernization checks.
+
+### Fixed
+
+- Prevent background page scroll chaining under open modal dialogs by setting `overscroll-behavior: contain` on `:modal` and `overflow: hidden; overscroll-behavior: contain;` on `::backdrop` in `dialog.css`.
+- Restore active tab indicator visibility under Windows High Contrast / Forced Colors Mode by specifying `outline: 2px solid Highlight; outline-offset: -2px;` in `tabs.css`, replacing `box-shadow` which is stripped by forced-colors mode.
+- Ensure tooltips remain hoverable when moused over directly (`pointer-events: auto`) to satisfy WCAG 2.1 SC 1.4.13 in `tooltip.css`.
+- Add IME composition guard (`e.isComposing || e.keyCode === 229`) to tag-input Enter keydown handler to prevent premature tag creation during CJK text input.
+- Add declarative `closedby="any"` to docs search dialog, and guard imperative close listeners behind feature checks (`commandForElement`, `closedBy`).
+
 ## [0.17.1] - 2026-11-09
 
 ### Fixed

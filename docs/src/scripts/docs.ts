@@ -105,19 +105,23 @@ function bindDocs() {
   const { dialog, input } = elements();
   if (dialog && !dialog.dataset.searchBound) {
     dialog.dataset.searchBound = "true";
-    dialog
-      .querySelector("[data-docs-command-close]")
-      ?.addEventListener("click", () => dialog.close());
-    dialog.addEventListener("click", (event) => {
-      const rect = dialog.getBoundingClientRect();
-      if (
-        event.clientX < rect.left ||
-        event.clientX > rect.right ||
-        event.clientY < rect.top ||
-        event.clientY > rect.bottom
-      )
-        dialog.close();
-    });
+    if (!("commandForElement" in HTMLButtonElement.prototype)) {
+      dialog
+        .querySelector("[data-docs-command-close]")
+        ?.addEventListener("click", () => dialog.close());
+    }
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+      dialog.addEventListener("click", (event) => {
+        const rect = dialog.getBoundingClientRect();
+        if (
+          event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom
+        )
+          dialog.close();
+      });
+    }
     input?.addEventListener("input", () => void filterSearch());
   }
   for (const table of document.querySelectorAll<HTMLTableElement>(

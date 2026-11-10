@@ -99,21 +99,22 @@ import Icon from '../../components/Icon.astro';
 </BaseLayout>
 
 <script>
-  // Docs-only: wire triggers and close buttons. In a real app, use showModal()
-  // from your app's event handler — the framework itself has no JS.
-  document.querySelectorAll('[data-open]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-open');
-      if (!id) return;
-      const el = document.getElementById(id) as HTMLDialogElement | null;
-      el?.showModal();
+  // Progressive enhancement fallback for browsers without Invoker Commands (command / commandfor)
+  if (!('commandForElement' in HTMLButtonElement.prototype)) {
+    document.querySelectorAll('[data-open]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-open');
+        if (!id) return;
+        const el = document.getElementById(id) as HTMLDialogElement | null;
+        el?.showModal();
+      });
     });
-  });
-  document.querySelectorAll('[data-close]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      btn.closest('dialog')?.close();
+    document.querySelectorAll('[data-close]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.closest('dialog')?.close();
+      });
     });
-  });
+  }
 </script>
 
 <style>
