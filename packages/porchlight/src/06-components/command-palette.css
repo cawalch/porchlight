@@ -80,6 +80,7 @@
     :scope:popover-open {
       opacity: 1;
       transform: scale(1) translateY(0);
+      overscroll-behavior: contain;
     }
 
     /* Enter: the initial state BEFORE the open transition. */
@@ -97,6 +98,8 @@
        enter and exit with allow-discrete to avoid harsh popping. */
     :scope::backdrop {
       opacity: 0;
+      overflow: hidden;
+      overscroll-behavior: contain;
       background: var(--pl-color-scrim);
       backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
         saturate(var(--pl-backdrop-saturate-scrim));

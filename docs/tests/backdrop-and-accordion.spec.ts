@@ -127,4 +127,88 @@ test.describe("backdrop transitions", () => {
       })
       .toBeCloseTo(1, 1);
   });
+
+  test("command palette ::backdrop defines opacity transition and reaches full opacity when open", async ({
+    page,
+  }) => {
+    await page.goto("./preview/command-palette");
+
+    const cmdk = page.locator("#cmdk");
+    await page.locator('[popovertarget="cmdk"]').first().click();
+    await expect(cmdk).toBeVisible();
+
+    const transitionProperty = await cmdk.evaluate((el) => {
+      return getComputedStyle(el, "::backdrop").transitionProperty;
+    });
+    expect(transitionProperty).toContain("opacity");
+
+    await expect
+      .poll(async () => {
+        return await cmdk.evaluate((el) => {
+          return Number.parseFloat(getComputedStyle(el, "::backdrop").opacity);
+        });
+      })
+      .toBeCloseTo(1, 1);
+  });
+
+  test("dialog, drawer, and command palette contain overscroll on open surface and backdrop", async ({
+    page,
+  }) => {
+    // Dialog
+    await page.goto("./preview/dialog");
+    const dialog = page.locator("#confirm-dialog");
+    await page.locator('[data-open="confirm-dialog"]').click();
+    await expect(dialog).toBeVisible();
+
+    const dialogStyles = await dialog.evaluate((el) => {
+      const elStyle = getComputedStyle(el);
+      const backdropStyle = getComputedStyle(el, "::backdrop");
+      return {
+        overscroll: elStyle.overscrollBehavior,
+        backdropOverflow: backdropStyle.overflow,
+        backdropOverscroll: backdropStyle.overscrollBehavior,
+      };
+    });
+    expect(dialogStyles.overscroll).toBe("contain");
+    expect(dialogStyles.backdropOverflow).toBe("hidden");
+    expect(dialogStyles.backdropOverscroll).toBe("contain");
+
+    // Drawer
+    await page.goto("./preview/drawer");
+    const drawer = page.locator("#drawer-end");
+    await page.locator('[popovertarget="drawer-end"]').first().click();
+    await expect(drawer).toBeVisible();
+
+    const drawerStyles = await drawer.evaluate((el) => {
+      const elStyle = getComputedStyle(el);
+      const backdropStyle = getComputedStyle(el, "::backdrop");
+      return {
+        overscroll: elStyle.overscrollBehavior,
+        backdropOverflow: backdropStyle.overflow,
+        backdropOverscroll: backdropStyle.overscrollBehavior,
+      };
+    });
+    expect(drawerStyles.overscroll).toBe("contain");
+    expect(drawerStyles.backdropOverflow).toBe("hidden");
+    expect(drawerStyles.backdropOverscroll).toBe("contain");
+
+    // Command palette
+    await page.goto("./preview/command-palette");
+    const cmdk = page.locator("#cmdk");
+    await page.locator('[popovertarget="cmdk"]').first().click();
+    await expect(cmdk).toBeVisible();
+
+    const cmdkStyles = await cmdk.evaluate((el) => {
+      const elStyle = getComputedStyle(el);
+      const backdropStyle = getComputedStyle(el, "::backdrop");
+      return {
+        overscroll: elStyle.overscrollBehavior,
+        backdropOverflow: backdropStyle.overflow,
+        backdropOverscroll: backdropStyle.overscrollBehavior,
+      };
+    });
+    expect(cmdkStyles.overscroll).toBe("contain");
+    expect(cmdkStyles.backdropOverflow).toBe("hidden");
+    expect(cmdkStyles.backdropOverscroll).toBe("contain");
+  });
 });
