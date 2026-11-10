@@ -97,6 +97,7 @@
     :scope[open] {
       opacity: 1;
       transform: translateX(0);
+      overscroll-behavior: contain;
     }
 
     /* Enter: initial state before the open transition starts. */
@@ -114,6 +115,8 @@
        enter and exit with allow-discrete to avoid harsh popping. */
     :scope::backdrop {
       opacity: 0;
+      overflow: hidden;
+      overscroll-behavior: contain;
       background: var(--pl-color-scrim);
       backdrop-filter: blur(var(--pl-backdrop-blur-scrim))
         saturate(var(--pl-backdrop-saturate-scrim));

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Prevent background page scroll chaining under open modal dialogs by setting `overscroll-behavior: contain` on `:modal` and `overflow: hidden; overscroll-behavior: contain;` on `::backdrop` in `dialog.css`.
+- Prevent background page scroll chaining under open modal dialogs, drawers, and command palettes by setting `overscroll-behavior: contain` on open modal surfaces and `overflow: hidden; overscroll-behavior: contain;` on `::backdrop` in `dialog.css`, `drawer.css`, and `command-palette.css`.
 - Restore active tab indicator visibility under Windows High Contrast / Forced Colors Mode by specifying `outline: 2px solid Highlight; outline-offset: -2px;` in `tabs.css`, replacing `box-shadow` which is stripped by forced-colors mode.
 - Ensure tooltips remain hoverable when moused over directly (`pointer-events: auto`) to satisfy WCAG 2.1 SC 1.4.13 in `tooltip.css`.
 - Add IME composition guard (`e.isComposing || e.keyCode === 229`) to tag-input Enter keydown handler to prevent premature tag creation during CJK text input.
