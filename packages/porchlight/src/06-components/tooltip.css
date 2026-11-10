@@ -95,13 +95,15 @@
       }
     }
 
-    /* Show on trigger hover or keyboard focus within the trigger wrapper, or when popover is open */
+    /* Show on trigger hover or keyboard focus within the trigger wrapper, when hovered directly (WCAG 1.4.13), or when popover is open */
     :scope:has(.pl-c-tooltip__trigger:hover) .pl-c-tooltip__body,
     :scope:has(.pl-c-tooltip__trigger:focus-visible) .pl-c-tooltip__body,
     :scope:has(.pl-c-tooltip__trigger :focus-visible) .pl-c-tooltip__body,
+    :scope:has(.pl-c-tooltip__body:hover) .pl-c-tooltip__body,
     .pl-c-tooltip__body:popover-open {
       opacity: 1;
       display: block;
+      pointer-events: auto;
     }
 
     /* Enter animation. */

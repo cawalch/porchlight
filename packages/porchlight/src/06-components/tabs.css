@@ -159,7 +159,8 @@
 
     :where(.pl-c-tabs__tab)[aria-selected="true"] {
       color: Highlight;
-      box-shadow: inset 0 calc(var(--pl-c-tabs-indicator) * -1) 0 0 Highlight;
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
     }
 
     :where(.pl-c-tabs__tab):focus-visible {
