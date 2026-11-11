@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.18.0] - 2026-11-11
+
 ### Added
 
+- Add `.pl-c-toolbar__chips` in `toolbar.css` for standardized active filter chip sub-strips (both as an internal toolbar row and an adjacent sub-bar with surface-2 fill).
+- Add `.pl-c-field--search` modifier in `field.css` with responsive inline sizing for data-region search inputs.
+- Add seamless search input group support (`.pl-c-input-group--search`, `.pl-c-input-group--seamless`, `data-variant="seamless"`) in `form.css` to eliminate divider lines and tinting for integrated icon + input + shortcut layouts.
+- Add comprehensive Modern SaaS & LLM Design Guide (`docs/src/content/guides/saas-app-design.mdx`) with 2026 UI/UX patterns (GitHub PR readiness summaries, Linear quiet chrome, 4-zone responsive toolbar structure, and component decision matrix).
+- Add `AGENTS.md` at project root with anti-hallucination guardrails and copy-pasteable canonical archetypes for AI coding assistants.
 - Add `audit:modern-web` script using `@latest modern-web-guidance legacy-scan` to automate web platform modernization checks.
 
 ### Fixed
