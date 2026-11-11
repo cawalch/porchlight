@@ -1,0 +1,310 @@
+---
+title: Modern SaaS and LLM Design Guide
+description: Architecture rules, component selection trees, responsive search/filter patterns, and anti-hallucination guardrails for building modern 2026 SaaS applications.
+order: 1.7
+---
+
+Modern SaaS applications demand high information density, calm visual hierarchy, and keyboard accessibility. However, large language models (especially smaller or general-purpose models) often struggle to compose native CSS components—falling back into "freestyling" arbitrary inline styles, inventing non-existent utility classes, or mangling responsive search and filter layouts.
+
+This guide provides deterministic architectural rules, a component selection decision tree, canonical copy-pasteable archetypes (including patterns from GitHub's 2026 pull request overhaul), and strict guardrails to anchor implementation.
+
+---
+
+## The 2026 SaaS aesthetic: calm chrome & data density
+
+Amateur SaaS templates rely on heavy borders, oversized cards, and marketing-style whitespace. Modern power-user applications (Linear, GitHub, Stripe, Supabase) follow four principles:
+
+1. **Quiet chrome**: Borders use subtle low-opacity colors (`--pl-color-border`, which resolves to 30% alpha in dark mode) rather than stark outlines. Surface elevation (`--pl-color-bg` → `--pl-color-surface` → `--pl-color-surface-2`) structures depth without visual clutter.
+2. **Strict color discipline**: Saturated color is never decorative; it is strictly functional. Color indicates state: `danger` (critical incidents/failures), `warning` (SLA risk/approvals), `accent` (brand focus/active items), and `success` (healthy/merged).
+3. **Numeric tabular alignment**: All metrics, timestamps, IDs, and financial values must use right alignment (`data-align="end"`) and tabular figures (`.pl-u-tabular-nums` or `--pl-font-feature-numeric`).
+4. **Progressive disclosure**: Primary workflows remain visible on the canvas; secondary actions, advanced filters, and deep metadata live in popovers (`.pl-c-dropdown`, `.pl-c-popover-menu`) or slide-out inspector drawers (`.pl-c-drawer`).
+
+---
+
+## Component selection decision tree
+
+When choosing components for a screen, follow this decision matrix:
+
+| UI requirement                   | Use this Porchlight component                   | Never use (anti-pattern)              | Why                                                                                   |
+| :------------------------------- | :---------------------------------------------- | :------------------------------------ | :------------------------------------------------------------------------------------ |
+| **App shell & navigation**       | `.pl-l-app-shell` + `.pl-c-nav`                 | Custom `div` wrappers                 | The app shell manages sticky headers, 100dvb viewports, and sidebar collapse.         |
+| **Page title & primary actions** | `.pl-c-page-header`                             | Putting `<h1>` inside `.pl-c-toolbar` | Headers belong in page flow; toolbars frame data regions.                             |
+| **Search & filter controls**     | `.pl-c-toolbar` + `.pl-c-field`                 | Ad-hoc `display: flex; gap: 10px;`    | Toolbars provide container queries (`inline-size < 36rem`) and hairline dividers.     |
+| **Option filtering / sort**      | `.pl-c-dropdown` or native `<select>`           | Unstyled floating `div`s              | Built on the native Popover API with anchor positioning and keyboard dismiss.         |
+| **Entity lookup / autocomplete** | `.pl-c-combobox`                                | Giant custom select boxes             | Handles input filtering, async listbox popups, clear buttons, and multi-select chips. |
+| **Compound multi-rule queries**  | `.pl-c-filter-builder`                          | 10 stacked dropdowns                  | Provides boolean groups (AND/OR), operator selectors, and structured query trees.     |
+| **Active filter tags**           | `.pl-c-chip` with remove trigger                | Static `.pl-c-badge`                  | Chips provide dismiss geometry, hover states, and relative color tinting.             |
+| **Status / severity indicator**  | `.pl-c-badge`                                   | Inline colored spans                  | Badges use WCAG-compliant OKLCH color pairs that adapt to theme changes.              |
+| **View format switcher**         | `.pl-c-segmented`                               | Sibling buttons with active classes   | Enforces radio semantics, pill slider animations, and arrow key switching.            |
+| **Sub-views / tabs**             | `.pl-c-tabs`                                    | Custom `ul` lists                     | Native tablist semantics (`role="tablist"`), active underline, and container queries. |
+| **Detail inspection panel**      | `.pl-c-drawer` or `.pl-c-entity-inspector`      | Full-screen modal `<dialog>`          | Drawers keep the underlying list visible and interactive during triage.               |
+| **Destructive confirmation**     | `.pl-c-dialog` with `showModal()`               | `window.confirm()` or inline text     | Native `<dialog>` traps focus, dims backdrop, and handles `Escape` key cleanly.       |
+| **Key/value metadata**           | `.pl-c-description` or `.pl-c-property-list`    | Div-based two-column tables           | Semantic `<dl><dt><dd>` ensures screen readers announce associations correctly.       |
+| **Batch action bar**             | Scoped `.pl-c-toolbar` or `.pl-c-action-bar`    | Disabling 20 separate buttons         | Centralizes bulk operations into an explicit toolbar with live selection counts.      |
+| **KPI / metric card**            | `.pl-c-card` + `.pl-c-stat` or `.pl-c-kpi-card` | Divs with arbitrary large font sizes  | Formats label, large value, trend indicator (up/down arrow), and sparklines.          |
+
+---
+
+## Responsive search and multi-filter toolbar pattern
+
+The search and filter bar is the primary command center for SaaS data. To ensure responsive stability across desktop, tablet, and mobile, follow this 4-zone structure:
+
+```html
+<div class="pl-c-card" data-surface="app" style="overflow: visible;">
+  <!-- Primary Toolbar -->
+  <div class="pl-c-toolbar">
+    <!-- Zone 1 & 2: Search Input & Quick Filters -->
+    <div class="pl-c-toolbar__group">
+      <!-- Search Input with Keyboard Shortcut -->
+      <div class="pl-c-field pl-c-field--search">
+        <span class="pl-u-sr-only">Search tickets</span>
+        <div class="pl-c-input-group pl-c-input-group--search">
+          <span class="pl-c-input-group__addon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </span>
+          <input
+            type="search"
+            class="pl-c-field__control"
+            placeholder="Search tickets, IDs, or syntax (is:open)..."
+          />
+          <span class="pl-c-input-group__addon">
+            <kbd class="pl-c-kbd">⌘K</kbd>
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Filter: Status Dropdown -->
+      <div class="pl-c-dropdown">
+        <button
+          type="button"
+          class="pl-c-dropdown__trigger"
+          popovertarget="demo-status-menu"
+        >
+          <span>Status: <strong>Open</strong></span>
+          <svg
+            class="pl-c-dropdown__chevron"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div popover class="pl-c-dropdown__menu" id="demo-status-menu">
+          <button
+            class="pl-c-dropdown__option"
+            role="menuitemradio"
+            aria-checked="true"
+          >
+            Open
+          </button>
+          <button
+            class="pl-c-dropdown__option"
+            role="menuitemradio"
+            aria-checked="false"
+          >
+            In Review
+          </button>
+          <button
+            class="pl-c-dropdown__option"
+            role="menuitemradio"
+            aria-checked="false"
+          >
+            Resolved
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Filter: Priority Dropdown -->
+      <div class="pl-c-dropdown">
+        <button
+          type="button"
+          class="pl-c-dropdown__trigger"
+          popovertarget="demo-priority-menu"
+        >
+          <span>Priority</span>
+          <svg
+            class="pl-c-dropdown__chevron"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div popover class="pl-c-dropdown__menu" id="demo-priority-menu">
+          <button class="pl-c-dropdown__option" role="menuitemcheckbox">
+            <span class="pl-c-badge" data-tone="danger">Urgent (P0)</span>
+          </button>
+          <button class="pl-c-dropdown__option" role="menuitemcheckbox">
+            <span class="pl-c-badge" data-tone="warning">High (P1)</span>
+          </button>
+          <button class="pl-c-dropdown__option" role="menuitemcheckbox">
+            <span class="pl-c-badge" data-tone="accent">Medium (P2)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zone 3: View Switcher & Primary Action -->
+    <div class="pl-c-toolbar__group">
+      <div class="pl-c-segmented" role="radiogroup" aria-label="View format">
+        <label class="pl-c-segmented__item">
+          <input type="radio" name="view" value="list" checked />
+          <span>List</span>
+        </label>
+        <label class="pl-c-segmented__item">
+          <input type="radio" name="view" value="board" />
+          <span>Board</span>
+        </label>
+      </div>
+
+      <button type="button" class="pl-c-button" data-variant="primary">
+        + New ticket
+      </button>
+    </div>
+  </div>
+
+  <!-- Zone 4: Active Filter Chips Strip -->
+  <div class="pl-c-toolbar__chips">
+    <span
+      class="pl-u-muted-sm"
+      style="font-weight: var(--pl-font-weight-medium);"
+      >Active filters:</span
+    >
+
+    <span class="pl-c-chip" data-tone="accent">
+      <span>Status: <strong>Open</strong></span>
+      <button
+        type="button"
+        class="pl-c-chip__remove"
+        aria-label="Remove Status filter"
+      >
+        ✕
+      </button>
+    </span>
+
+    <span class="pl-c-chip" data-tone="danger">
+      <span>Priority: <strong>Urgent</strong></span>
+      <button
+        type="button"
+        class="pl-c-chip__remove"
+        aria-label="Remove Priority filter"
+      >
+        ✕
+      </button>
+    </span>
+
+    <button
+      type="button"
+      class="pl-c-button"
+      data-variant="ghost"
+      style="font-size: var(--pl-text-xs); padding-inline: var(--pl-space-2);"
+    >
+      Clear all (2)
+    </button>
+
+    <span class="pl-u-muted-sm" style="margin-inline-start: auto;">
+      Showing <strong>42</strong> of <strong>189</strong>
+    </span>
+  </div>
+</div>
+```
+
+---
+
+## 2026 GitHub pull request readiness pattern
+
+In 2026, GitHub re-engineered the pull request interface to combat alert fatigue and speed up review velocity. Rather than hiding merge readiness at the bottom of long comment streams, modern applications display a **distilled readiness summary** immediately below the header:
+
+```html
+<section
+  class="pl-c-card"
+  data-surface="app"
+  style="border-inline-start: 4px solid var(--pl-color-success);"
+>
+  <div
+    class="pl-c-card__body pl-l-cluster"
+    style="--pl-l-cluster-justify: space-between;"
+  >
+    <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-4);">
+      <!-- Checks Passed -->
+      <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+        <span class="pl-c-badge" data-tone="success">✓ 12/12</span>
+        <span
+          style="font-weight: var(--pl-font-weight-medium); font-size: var(--pl-text-sm);"
+          >Checks passing</span
+        >
+      </div>
+
+      <!-- Approvals -->
+      <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+        <span class="pl-c-badge" data-tone="success">2 Approvals</span>
+        <span class="pl-u-muted-sm">@sarah, @alex</span>
+      </div>
+
+      <!-- Conversations -->
+      <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+        <span class="pl-c-badge" data-tone="accent">0 Unresolved</span>
+        <span class="pl-u-muted-sm">All threads closed</span>
+      </div>
+    </div>
+
+    <!-- Immediate Action -->
+    <button class="pl-c-button" data-variant="primary" data-size="sm">
+      Squash and merge
+    </button>
+  </div>
+</section>
+```
+
+---
+
+## Anti-hallucination guardrails & token rules
+
+When generating or editing markup with Porchlight:
+
+1. **Never inject Tailwind utility classes**: Do not output `flex`, `items-center`, `justify-between`, `p-4`, `bg-gray-100`, `text-sm`, or `rounded-md`. Porchlight uses semantic component classes (`.pl-c-*`), layout primitives (`.pl-l-*`), and utilities (`.pl-u-*`).
+2. **Never write raw CSS colors or spacing in `style=""`**: Do not write `style="padding: 12px; background: #fff;"`. If inline tuning is needed, consume tokens: `style="padding: var(--pl-space-3); background: var(--pl-color-surface);"`.
+3. **Always use real table semantics**: Tables must be `<table>` wrapped inside `<div class="pl-c-table-wrap">`. Do not construct div-based tables.
+4. **Use density modes for power-user screens**: On triage views, logs, or multi-column data grids, add `data-pl-density="dense"` to the container.
+
+---
+
+## Useful references
+
+- <a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>
+    Composition recipes
+  </a>
+- <a href={`${import.meta.env.BASE_URL}guides/layout`}>Layout primitives</a>
+- <a href={`${import.meta.env.BASE_URL}components/toolbar`}>
+    Toolbar component
+  </a>
+- <a href={`${import.meta.env.BASE_URL}components/data-table`}>
+    Data table component
+  </a>
+- <a href={`${import.meta.env.BASE_URL}components/filter-builder`}>
+    Filter builder component
+  </a>
+- <a href={`${import.meta.env.BASE_URL}preview/app-cases`}>
+    Case review preview
+  </a>
+- <a href={`${import.meta.env.BASE_URL}preview/app-siem`}>
+    Security SIEM preview
+  </a>

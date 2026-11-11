@@ -417,6 +417,24 @@
       border-inline-start: 1px solid var(--pl-color-border);
     }
 
+    /* Seamless/search addon variant  -  removes internal dividers for integrated search boxes */
+    :is(
+      :scope.pl-c-input-group--search,
+      :scope.pl-c-input-group--seamless,
+      :scope[data-variant="seamless"]
+    ) {
+      .pl-c-input-group__addon {
+        background: transparent;
+        border-inline: 0;
+        padding-inline: var(--pl-space-2);
+      }
+
+      .pl-c-input-group__addon + .pl-c-field__control,
+      .pl-c-field__control + .pl-c-input-group__addon {
+        border-inline-start: 0;
+      }
+    }
+
     .pl-c-input-group__action {
       cursor: pointer;
       color: var(--pl-color-text);

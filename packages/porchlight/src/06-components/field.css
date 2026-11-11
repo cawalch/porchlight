@@ -53,6 +53,13 @@
       grid-template-columns: 1fr;
     }
 
+    /* Search field modifier  -  flexible inline measure for search and filter toolbars */
+    :scope.pl-c-field--search {
+      flex: 1 1 14rem;
+      max-inline-size: 26rem;
+      min-inline-size: 8rem;
+    }
+
     /* Column subgrid  -  participates in a parent multi-column grid, aligning its
        label in column 1 and control/messages in column 2. */
     @supports (grid-template-columns: subgrid) {

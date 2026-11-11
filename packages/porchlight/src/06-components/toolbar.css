@@ -91,6 +91,20 @@
       background: var(--pl-c-toolbar-border-color);
     }
 
+    /* Active filter chip sub-strip  -  renders active constraints directly below controls */
+    .pl-c-toolbar__chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2);
+      flex: 1 1 100%;
+      inline-size: 100%;
+      padding-block-start: var(--pl-space-2);
+      margin-block-start: var(--pl-space-1);
+      border-block-start: 1px solid var(--pl-c-toolbar-border-color);
+      font-size: var(--pl-text-xs);
+    }
+
     /* Tighten padding when the toolbar is narrow (container query). */
     @container pl-c-toolbar (inline-size < 36rem) {
       :scope {
@@ -98,6 +112,19 @@
         --pl-c-toolbar-gap: var(--pl-space-2);
       }
     }
+  }
+
+  /* Sub-toolbar chip row when placed as an immediate sibling following a toolbar */
+  :where(.pl-c-toolbar + .pl-c-toolbar__chips) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pl-space-2);
+    padding: var(--pl-space-2) var(--pl-space-3);
+    border-block-end: 1px solid
+      color-mix(in oklab, var(--pl-color-border), transparent 20%);
+    background: var(--pl-color-surface-2);
+    font-size: var(--pl-text-xs);
   }
 
   @media (forced-colors: active) {
