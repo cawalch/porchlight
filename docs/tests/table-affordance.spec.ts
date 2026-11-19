@@ -29,7 +29,7 @@ test("table row hover is perceptibly distinct", async ({ page }) => {
   const hoverColor = await row.evaluate(
     (el) => getComputedStyle(el).backgroundColor,
   );
-  // Composite over the surface — default row bg is transparent, so judge what
+  // Composite over the surface: default row bg is transparent, so judge what
   // the eye actually sees against the wrap background.
   const dl = deltaL(
     compositeOver(hoverColor, surface),
@@ -114,7 +114,7 @@ test("sticky header has an opaque background", async ({ page }) => {
     return getComputedStyle(th).backgroundColor;
   });
   console.log(`[table] header bg=${bg}`);
-  // Must be opaque — scrolling rows would show through a transparent header.
+  // Must be opaque: scrolling rows would show through a transparent header.
   expect(bg, "header bg must not be transparent").not.toMatch(
     /rgba?\([^)]*,\s*0\s*\)/,
   );

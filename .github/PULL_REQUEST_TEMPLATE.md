@@ -17,7 +17,7 @@
 
 - [ ] All CSS inside the correct `@layer` (no unlayered framework rules).
 - [ ] `pnpm lint` clean; no new `!important` outside the allow-list (a11y utilities, print hide).
-- [ ] No hard-coded colors in components — everything flows through tokens.
+- [ ] No hard-coded colors in components: everything flows through tokens.
 - [ ] Logical properties only (`inline` / `block` / `start` / `end`).
 - [ ] Docs page added/updated (component `.mdx` or regenerated token table).
 - [ ] Preview page added/updated and linked from `/preview`.

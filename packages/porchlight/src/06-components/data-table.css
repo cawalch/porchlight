@@ -176,10 +176,10 @@
      * an individual <td>/<th> for per-column control. Per-cell overrides
      * the table-level setting.
      *
-     *   (no attr)         nowrap — current behavior, fully backward-compatible
-     *   data-overflow="wrap"     — multi-line wrapping for description /
-     *                              comment / long-text columns
-     *   data-overflow="truncate" — single-line ellipsis for name / email /
+     *   (no attr)         nowrap: current behavior, fully backward-compatible
+     *   data-overflow="wrap": multi-line wrapping for description /
+     *                          comment / long-text columns
+     *   data-overflow="truncate": single-line ellipsis for name / email /
      *                              UUID columns with unpredictable lengths
      *
      * Cells with either mode get min-inline-size: 0 so they shrink within

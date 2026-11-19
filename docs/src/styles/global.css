@@ -10,7 +10,7 @@
  * radius, focus, and element defaults all come from the framework (--pl-*
  * tokens + @layer porchlight.base). Two genuinely docs-specific layout values
  * remain: --doc-max-inline and --doc-pad (there is no framework layout token
- * yet — those land with Phase 2). The framework is layered; this chrome is
+ * yet, those land with Phase 2). The framework is layered; this chrome is
  * intentionally UNLAYERED so it wins where it needs to without fighting
  * specificity.
  */
@@ -297,7 +297,7 @@ html[data-docs-embed] .pl-preview-toolbar {
   padding-block: clamp(2rem, 1rem + 4vi, 4rem);
 }
 
-/* App-shell pages use a full-bleed grid that owns its own layout — the
+/* App-shell pages use a full-bleed grid that owns its own layout: the
    content-width constraint and padding above must NOT apply.
    Only triggers when the app shell is a DIRECT child of main (a real
    full-bleed app page), not when it's nested inside a <section> demo. */
@@ -313,7 +313,7 @@ html[data-docs-embed] .pl-preview-toolbar {
    lives inside a flex-column <body> with a sticky header above and a footer
    below. block-size: 100dvb makes the shell TALLER than its flex parent
    (main), causing the footer to overlap the bottom of the shell content.
-   Override to auto so the shell flows naturally — the body's min-block-size:
+   Override to auto so the shell flows naturally: the body's min-block-size:
    100dvb + main's flex:1 still ensure the page fills the viewport. */
 :where(#main) > .pl-l-app-shell {
   block-size: auto;

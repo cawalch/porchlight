@@ -69,7 +69,7 @@ specificity to the rules inside it. **Layer order takes precedence over
 selector specificity and scope proximity** for normal stylesheet declarations.
 
 This means you can override component tokens from plain selectors in
-`@layer app` — no specificity hacks needed:
+`@layer app`, no specificity hacks needed:
 
 ```css
 @layer app {
@@ -85,7 +85,7 @@ This means you can override component tokens from plain selectors in
 1. All Porchlight rules are in `@layer porchlight.*`.
 2. Your rules are in `@layer app` (declared after `porchlight`).
 3. The cascade resolves layers in declared order. Since `app` comes after
-   `porchlight`, competing normal stylesheet declarations in `app` win —
+   `porchlight`, competing normal stylesheet declarations in `app` win,
    regardless of selector specificity or `@scope` proximity.
 4. You only need higher specificity if you're overriding **within the same
    layer** (e.g., overriding one Porchlight component from another Porchlight

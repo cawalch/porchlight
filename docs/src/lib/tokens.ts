@@ -1,8 +1,8 @@
 /**
- * Token parser — turns the raw primitive-token CSS into a structured doc.
+ * Token parser: turns the raw primitive-token CSS into a structured doc.
  *
  * Invoked at build time by the tokens reference page (the CSS is imported with
- * Vite's `?raw` suffix, so this always reflects the current source — no
+ * Vite's `?raw` suffix, so this always reflects the current source: no
  * hand-written token tables to drift).
  */
 export interface Token {

@@ -15,7 +15,7 @@ const scale = [
 <BaseLayout title="Base · Porchlight">
   <h1>Base layer</h1>
   <p>
-    Element defaults in <code>@layer porchlight.base</code> — bare HTML gets a
+    Element defaults in <code>@layer porchlight.base</code>: bare HTML gets a
     sensible, on-token appearance before any component class is applied. All
     rules are <code>:where()</code> (zero specificity), so they are trivially
     overridable. Color and type come from the token layers; theme/density/
@@ -26,14 +26,14 @@ const scale = [
   <ul>
     <li><code>html</code>/<code>body</code> get the sans stack, the semantic bg/text tokens, <code>--pl-text-md</code>, and normal leading.</li>
     <li>Links use the accent color with readable underline geometry; hover shifts to <code>--pl-color-accent-hover</code>.</li>
-    <li><code>:focus-visible</code> draws a token-driven outline (size, color, offset) — keyboard focus is never removed without a replacement.</li>
+    <li><code>:focus-visible</code> draws a token-driven outline (size, color, offset): keyboard focus is never removed without a replacement.</li>
     <li>Headings get tight leading and <code>text-wrap: balance</code>; block flow elements have their UA margins zeroed.</li>
     <li><code>code</code>/<code>kbd</code>/<code>samp</code>/<code>pre</code> use the mono stack.</li>
     <li><code>::selection</code> tints with a translucent accent.</li>
   </ul>
 
   <h2>Type scale (fluid)</h2>
-  <p>Each size uses <code>clamp()</code> with viewport-inline units — resize the window to see them flex.</p>
+  <p>Each size uses <code>clamp()</code> with viewport-inline units: resize the window to see them flex.</p>
   <dl class="scale">
     {scale.map(([token, label]) => (
       <div class="scale__row">

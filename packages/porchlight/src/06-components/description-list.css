@@ -6,10 +6,10 @@
  * for free. The #1 most-rebuilt pattern in SaaS apps after page headers.
  *
  * Two layout modes via [data-layout]:
- *   "grid"    (default): two-column grid — terms on the inline-start,
+ *   "grid"    (default): two-column grid, terms on the inline-start,
  *              details on the inline-end. Collapses to stacked on narrow
  *              containers via a container query.
- *   "stacked": single-column — term above, detail below. Use for
+ *   "stacked": single-column, term above, detail below. Use for
  *              long-form values or narrow sidebars.
  *
  * Optional [data-dividers] adds a hairline border between items.
@@ -34,7 +34,7 @@
 @layer porchlight.components {
   @scope (.pl-c-description) {
     :scope {
-      /* Term column width — auto by default so labels size to content.
+      /* Term column width: auto by default so labels size to content.
          Set to a fixed width (e.g. 12rem) for a uniform label gutter. */
       --pl-c-description-term-w: auto;
 

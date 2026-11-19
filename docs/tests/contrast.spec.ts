@@ -5,7 +5,7 @@ import { contrast } from "./lib/color";
  * WCAG 2.2 contrast guard for Porchlight's semantic color pairs.
  *
  * Reads RESOLVED colors from real elements styled by the --pl-* tokens on the
- * themes preview page, so a token edit that breaks contrast fails this test —
+ * themes preview page, so a token edit that breaks contrast fails this test:
  * no hand-maintained value list to drift. Verifies the key text pairs in BOTH
  * light and dark (PLAN §6 acceptance criterion: AA = 4.5:1).
  */

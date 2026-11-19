@@ -34,7 +34,7 @@ first column, density modes, and loading states.
 ```
 
 `tabindex="0"` on the wrap makes the horizontal scroll region keyboard
-operable (WCAG 2.1.1 — essential on mobile/tablet widths where the table
+operable (WCAG 2.1.1, essential on mobile/tablet widths where the table
 overflows). Omit it only when the table can never overflow horizontally.
 
 ### Sortable headers
@@ -266,7 +266,7 @@ height offset), set `data-pl-density="compact"` on `.pl-c-table-wrap` directly:
 
 ## Row selection
 
-Apply `aria-selected="true"` on `<tr>` for selected rows — Porchlight styles
+Apply `aria-selected="true"` on `<tr>` for selected rows: Porchlight styles
 these with an accent-tinted background and a left accent bar. This is the
 semantically correct pattern for keyboard-navigable row selection:
 
@@ -281,7 +281,7 @@ semantically correct pattern for keyboard-navigable row selection:
 </tbody>
 ```
 
-No custom `.is-selected` class is needed — `aria-selected` is built in.
+No custom `.is-selected` class is needed: `aria-selected` is built in.
 
 For multi-row workflows, place a `.pl-c-toolbar` immediately above the table,
 announce only the short selected count with `aria-live="polite"`, and keep the

@@ -66,7 +66,7 @@ async function filterSearch() {
       const detail = document.createElement("small");
       detail.id = `docs-search-detail-${results.childElementCount}`;
       link.setAttribute("aria-describedby", detail.id);
-      detail.textContent = entry.title.includes(" — ")
+      detail.textContent = entry.title.includes(": ")
         ? `${entry.kind} section`
         : entry.text.replace(/<[^>]+>|[`#*]/g, "").slice(0, 140);
       link.append(title, detail);

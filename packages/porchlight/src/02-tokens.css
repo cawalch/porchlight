@@ -154,8 +154,8 @@
        defined as pairs so contrast is intentional, not accidental.
 
        Dark mode surfaces carry a faint warm chroma (0.008–0.012 at hue 55°)
-       so the dark theme reads as warm charcoal — like a room lit by a
-       porchlight — not cold blue-gray. */
+       so the dark theme reads as warm charcoal, like a room lit by a
+       porchlight, not cold blue-gray. */
     --pl-color-bg: light-dark(oklch(98% 0.005 60deg), oklch(14% 0.008 55deg));
     --pl-color-surface: light-dark(oklch(100% 0 0deg), oklch(18% 0.008 55deg));
     --pl-color-surface-2: light-dark(
@@ -174,7 +174,7 @@
 
     /* Border: reduced opacity so it reads as a hint, not a cage.
        Overlay contexts (dialogs, drawers) use --pl-color-border-overlay
-       which resolves to transparent — shadow + backdrop do the job there. */
+       which resolves to transparent: shadow + backdrop do the job there. */
     --pl-color-border: light-dark(
       oklch(80% 0.015 55deg / 75%),
       oklch(45% 0.012 55deg / 30%)
@@ -229,20 +229,20 @@
       oklch(84% 0.15 75deg)
     );
 
-    /* Disabled state — uniform dimming for all disabled controls. */
+    /* Disabled state: uniform dimming for all disabled controls. */
     --pl-opacity-disabled: 0.5;
 
-    /* Accent bar — the left/inline-start indicator for active/selected states. */
+    /* Accent bar: the left/inline-start indicator for active/selected states. */
     --pl-accent-bar-width: 3px;
 
-    /* Overlay scrim — the modal/dialog backdrop tint. */
+    /* Overlay scrim: the modal/dialog backdrop tint. */
     --pl-color-scrim: oklch(0% 0 0deg / 55%);
     --pl-overlay-popover-bg: light-dark(
       oklch(100% 0 0deg),
       oklch(19% 0.01 55deg)
     );
 
-    /* Menu rows — shared by anchored menu-like surfaces. */
+    /* Menu rows: shared by anchored menu-like surfaces. */
     --pl-menu-row-min-block-size: 2.25rem;
     --pl-menu-row-padding-inline: var(--pl-space-3);
     --pl-menu-row-radius: var(--pl-radius-sm);
@@ -259,7 +259,7 @@
     --pl-control-border-width: 1px;
     --pl-control-radius: var(--pl-radius-control);
 
-    /* Focus — aligned with the warm brand hue for a cohesive ring. */
+    /* Focus: aligned with the warm brand hue for a cohesive ring. */
     --pl-focus-color: light-dark(oklch(52% 0.14 82deg), oklch(72% 0.13 82deg));
     --pl-focus-offset: 2px;
     --pl-focus-size: 2px;
@@ -279,7 +279,7 @@
     --pl-backdrop-saturate-strong: 180%;
 
     /* Scrim (::backdrop): weaker blur for the native top-layer backdrop behind
-       frosted panels — avoids double-blur with the panel's own backdrop-filter. */
+       frosted panels: avoids double-blur with the panel's own backdrop-filter. */
     --pl-backdrop-blur-scrim: 4px;
     --pl-backdrop-saturate-scrim: 80%;
 

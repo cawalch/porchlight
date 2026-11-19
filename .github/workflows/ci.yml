@@ -68,7 +68,7 @@ jobs:
   test:
     name: Playwright Tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -108,8 +108,10 @@ jobs:
         run: pnpm --filter @cawalch/porchlight build
 
       # Single consolidated installation step avoids duplicate apt-get updates and mirror stalls.
+      # Cold installs (forced once per Playwright version bump by the version-keyed
+      # browser cache) can exceed 6 minutes on a slow apt mirror, so allow 12.
       - name: Install Playwright browsers and dependencies
-        timeout-minutes: 6
+        timeout-minutes: 12
         run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit chrome
 
       - name: Run tests
@@ -127,7 +129,7 @@ jobs:
   # ── Publish @cawalch/porchlight to npm via OIDC trusted publishing ──────
   # Tokenless: no NPM_TOKEN secret. npm exchanges a short-lived, signed OIDC
   # token issued by GitHub Actions for each run. Requires npm CLI ≥ 11.5.1
-  # (Node ≥ 22.14.0) — handled by pinning this job to Node 24.
+  # (Node ≥ 22.14.0): handled by pinning this job to Node 24.
   #
   # Trigger: push a version tag  →  git tag v0.3.0 && git push --tags
   # The tag need not match package.json's version, but npm rejects publishing
@@ -148,7 +150,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: main
     permissions:
-      id-token: write # OIDC — required for trusted publishing & Sigstore
+      id-token: write # OIDC: required for trusted publishing & Sigstore
       contents: write # GitHub Release creation
       attestations: write # GitHub Artifact Attestation
     steps:
@@ -178,7 +180,7 @@ jobs:
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level=high
 
-      # `npm publish` (not pnpm) — only the npm CLI implements the OIDC
+      # `npm publish` (not pnpm): only the npm CLI implements the OIDC
       # trusted-publisher exchange. The package's `prepublishOnly` script
       # runs `pnpm build` first, so the dist tarball is always fresh.
       # Provenance attestation is published via OIDC + Sigstore.
