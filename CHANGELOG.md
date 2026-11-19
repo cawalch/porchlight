@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace em-dashes with `:`/`,`/`.` per context across framework CSS comments, docs guides, preview pages, test comments, and repo meta files (~145 lines in 59 files), closing the punctuation style debt flagged in project memory. Docs search index section titles change from `Page — Section` to `Page: Section`, with the command-palette detail heuristic (`includes(" — ")`) updated to match; the guides index separator and the layout preview's "not applicable" table cell change accordingly (`: `, `n/a`).
 - Bump dev dependencies to current minor/patch releases: `astro` 7.4.13, `@astrojs/mdx` 8.1.6, `@playwright/test` 1.65.1, `prettier` 3.10.1, `@biomejs/biome` 2.6.8 (including the `biome.json` `$schema` pin), `stylelint-declaration-strict-value` 1.13.0, and `stylelint-plugin-defensive-css` 2.10.0. TypeScript intentionally stays on 5.x; semver-major updates are ignored per the existing dependabot policy. Lint, format, build, and the QC suite all pass on the new versions.
+- Raise the CI Playwright browser-install step timeout (6 → 12 minutes) and the Playwright Tests job timeout (15 → 25 minutes). Each Playwright version bump invalidates the version-keyed browser cache and forces a one-time cold install, which a slow apt mirror can push past the old 6-minute cap.
 
 ## [0.18.0] - 2026-11-11
 

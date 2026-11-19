@@ -68,7 +68,7 @@ jobs:
   test:
     name: Playwright Tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -108,8 +108,10 @@ jobs:
         run: pnpm --filter @cawalch/porchlight build
 
       # Single consolidated installation step avoids duplicate apt-get updates and mirror stalls.
+      # Cold installs (forced once per Playwright version bump by the version-keyed
+      # browser cache) can exceed 6 minutes on a slow apt mirror, so allow 12.
       - name: Install Playwright browsers and dependencies
-        timeout-minutes: 6
+        timeout-minutes: 12
         run: pnpm --filter ./docs exec playwright install --with-deps chromium firefox webkit chrome
 
       - name: Run tests
