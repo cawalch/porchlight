@@ -244,10 +244,13 @@ test.describe("decoupled design system integrity & styleguide contract audits", 
       });
 
       for (const k of kpis) {
+        // Chromium >= 159 re-serializes flexbox alignment keywords in computed
+        // style: "flex-start" reads back as "flow-start". Both spellings mean
+        // top-aligned accessories; older engines still report "flex-start".
         expect(
           k.headerAlign,
           `${route} kpi header must align accessories to flex-start`,
-        ).toBe("flex-start");
+        ).toMatch(/^(flex|flow)-start$/);
         if (k.hasLabel) {
           expect(
             k.overflow,
