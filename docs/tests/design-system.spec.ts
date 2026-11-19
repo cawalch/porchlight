@@ -43,12 +43,12 @@ function tokenValue(name: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Type scale — consecutive sizes should share a consistent ratio (a fluid
+// Type scale: consecutive sizes should share a consistent ratio (a fluid
 // type scale that jumps unevenly looks broken at the boundary).
 // ---------------------------------------------------------------------------
 test("type scale uses a consistent ratio", async ({ page }) => {
   await page.goto("./preview/tokens");
-  // No rendered scale on the page — create probes with each token and read the
+  // No rendered scale on the page: create probes with each token and read the
   // resolved font-size (ground truth, accounts for clamp).
   const sizes = await page.evaluate(() => {
     const tokens = [
@@ -138,7 +138,7 @@ test("tracking tokens and enterprise typography utilities are properly wired", a
 });
 
 // ---------------------------------------------------------------------------
-// Spacing scale — steps should be even within each tier (the standard
+// Spacing scale: steps should be even within each tier (the standard
 // t-shirt pattern: small steps that optionally double at the top).
 // ---------------------------------------------------------------------------
 test("spacing scale steps are even within a tier", async () => {
@@ -158,7 +158,7 @@ test("spacing scale steps are even within a tier", async () => {
   const steps: number[] = [];
   for (let i = 1; i < values.length; i++) steps.push(values[i] - values[i - 1]);
   // A step may equal the previous OR be exactly 2x (the t-shirt doubling).
-  // Flag any step that is neither — a broken scale.
+  // Flag any step that is neither: a broken scale.
   const nonZeroSteps = steps.filter((s) => s > 0);
   const base = nonZeroSteps[0];
   const violations: string[] = [];
@@ -182,7 +182,7 @@ test("spacing scale steps are even within a tier", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Brand ramp — the 9-step OKLCH ramp should step evenly in lightness so each
+// Brand ramp: the 9-step OKLCH ramp should step evenly in lightness so each
 // adjacent pair is perceptually distinct by a similar amount.
 // ---------------------------------------------------------------------------
 test("brand ramp steps evenly in lightness", async () => {
@@ -210,11 +210,11 @@ test("brand ramp steps evenly in lightness", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Touch targets — WCAG 2.2 AA (2.5.8) requires 24px minimum; AAA (2.5.5)
+// Touch targets: WCAG 2.2 AA (2.5.8) requires 24px minimum; AAA (2.5.5)
 // recommends 44px. Assert the AA floor as a hard gate and report 44px coverage.
 // ---------------------------------------------------------------------------
-const AA_TARGET = 24; // WCAG 2.5.8 (Level AA, 2.2) — 24 CSS px
-const AAA_TARGET = 44; // WCAG 2.5.5 (Level AAA) — 44 CSS px
+const AA_TARGET = 24; // WCAG 2.5.8 (Level AA, 2.2): 24 CSS px
+const AAA_TARGET = 44; // WCAG 2.5.5 (Level AAA): 44 CSS px
 
 test("interactive controls meet the WCAG AA touch-target minimum (24px)", async ({
   page,

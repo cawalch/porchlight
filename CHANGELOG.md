@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Replace em-dashes with `:`/`,`/`.` per context across framework CSS comments, docs guides, preview pages, test comments, and repo meta files (~145 lines in 59 files), closing the punctuation style debt flagged in project memory. Docs search index section titles change from `Page — Section` to `Page: Section`, with the command-palette detail heuristic (`includes(" — ")`) updated to match; the guides index separator and the layout preview's "not applicable" table cell change accordingly (`: `, `n/a`).
+- Bump dev dependencies to current minor/patch releases: `astro` 7.4.13, `@astrojs/mdx` 8.1.6, `@playwright/test` 1.65.1, `prettier` 3.10.1, `@biomejs/biome` 2.6.8 (including the `biome.json` `$schema` pin), `stylelint-declaration-strict-value` 1.13.0, and `stylelint-plugin-defensive-css` 2.10.0. TypeScript intentionally stays on 5.x; semver-major updates are ignored per the existing dependabot policy. Lint, format, build, and the QC suite all pass on the new versions.
+
 ## [0.18.0] - 2026-11-11
 
 ### Added
@@ -433,7 +438,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Focused-invalid fields keep the calmer focus glow.** A focused invalid
   field previously re-showed the danger-colored halo, which reads as a harsh
   red ring around the active typing target. It now keeps the danger border
-  and hint text but uses the standard `--pl-focus-color` glow while focused —
+  and hint text but uses the standard `--pl-focus-color` glow while focused,
   so the error state stays visible without shouting at someone mid-correction.
   Applies to both `.c-field` and `.c-input-group`. (#73)
 
@@ -457,10 +462,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   new plugins: `stylelint-use-logical` (regression guard, 0 violations),
   `declaration-strict-value` (enforces token usage on colors, 0 violations),
   and a curated subset of `stylelint-plugin-defensive-css`
-  (`require-forced-colors-focus`, `require-focus-visible` — the rules that
+  (`require-forced-colors-focus`, `require-focus-visible`, the rules that
   surfaced the focus fixes above). (#76)
 - **Biome 2.5 added** as a JS/TS/JSON linter (CSS stays stylelint's domain).
-  Prettier kept as formatter — enforced in CI; it had been drifting 25 files
+  Prettier kept as formatter, enforced in CI; it had been drifting 25 files
   unenforced. (#76)
 
 ### Docs
@@ -483,7 +488,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`.c-badge-group`.** A wrapping flex container for laying out multiple
   compact badges with consistent spacing. (#71)
 - **Layout utilities.** `.u-min-0` (let a flex/grid child shrink below its
-  content width — pair with `.u-truncate`), `.u-wrap-anywhere` (break long
+  content width, pair with `.u-truncate`), `.u-wrap-anywhere` (break long
   tokens like UUIDs, paths, or URLs before they blow out a container),
   `.u-marginless` (zero block margins for dense chrome), `.u-muted-sm` (small
   muted caption text), and `.u-icon-title` (leading-icon + title that keeps
@@ -517,7 +522,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **`c-form` component.** SaaS form layout helpers built on native
-  `<form>` / `<fieldset>` / `<legend>` — Porchlight handles layout and chrome
+  `<form>` / `<fieldset>` / `<legend>`: Porchlight handles layout and chrome
   only, never the semantics. Sections (`.c-form__section`), header + body
   slots, an auto-fitting `.c-form__grid` (tunable via `--c-form-grid-min`),
   wrapping `.c-form__row`, and a right-aligned `.c-form__actions` bar. (#66)

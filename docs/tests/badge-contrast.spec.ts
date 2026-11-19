@@ -5,7 +5,7 @@ import { contrast } from "./lib/color";
  * Badge contrast guard.
  *
  * Every tone uses a -bg/-text token pair, which were made WCAG-AA in the token
- * layer. This asserts that contract holds per-badge in BOTH themes — reading
+ * layer. This asserts that contract holds per-badge in BOTH themes: reading
  * the RESOLVED colors so a token edit that breaks a tone fails here.
  */
 

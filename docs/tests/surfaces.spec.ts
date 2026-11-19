@@ -5,14 +5,14 @@ import { contrast, deltaL } from "./lib/color";
  * Adjacent-surface distinguishability guard.
  *
  * WCAG text contrast is the WRONG metric for "are two fills next to each other
- * distinguishable" — bg vs surface-2 can pass 4.5:1 for text yet be so close
+ * distinguishable": bg vs surface-2 can pass 4.5:1 for text yet be so close
  * in lightness that a secondary button disappears into the page. The right
  * metric is OKLab ∆L (a perceptual lightness step) plus a minimum contrast
  * ratio. Asserts the framework's neutral surfaces are visibly distinct in BOTH
  * themes, so a component placed on bg/surface/surface-2 always reads.
  */
 
-const MIN_DL = 0.03; // ~3% lightness — floor of "visibly distinct adjacent fills"
+const MIN_DL = 0.03; // ~3% lightness: floor of "visibly distinct adjacent fills"
 const MIN_RATIO = 1.1;
 
 const surfaces = [

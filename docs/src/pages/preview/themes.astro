@@ -26,7 +26,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     <code>data-pl-theme</code> and <code>data-pl-density</code> attributes. Setting
     <code>data-pl-theme</code> flips <code>color-scheme</code>, which drives the
     <code>light-dark()</code> tokens; <code>data-pl-density</code> resizes controls
-    via the control tokens. No JavaScript is needed in the framework — the
+    via the control tokens. No JavaScript is needed in the framework: the
     toggles here just change two attributes.
   </p>
 
@@ -61,7 +61,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     <p>
       This whole panel uses <code>--pl-color-bg</code>,
       <code>--pl-color-text</code>, and <code>--pl-color-border</code>. The
-      control below uses <code>--pl-control-block-size</code> — change density
+      control below uses <code>--pl-control-block-size</code>: change density
       to see it resize. Change palette to see full theme color ramp steering.
     </p>
 
@@ -211,7 +211,7 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     background: color-mix(in oklab, var(--pl-color-bg), transparent 15%);
     padding: var(--pl-space-1) var(--pl-space-2);
     border-radius: var(--pl-radius-sm);
-    /* Keep token names intact — the grid column is sized to fit them. */
+    /* Keep token names intact: the grid column is sized to fit them. */
     white-space: nowrap;
   }
 </style>

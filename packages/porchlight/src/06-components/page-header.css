@@ -71,7 +71,7 @@
     /* Clean stacking when the header is narrow (e.g. inside a split pane or
        sidebar). An element can't query its own container, so instead of
        changing the parent's flex-direction we force each child to take a
-       full line — flex-basis: 100% wraps the actions onto a new row. */
+       full line: flex-basis: 100% wraps the actions onto a new row. */
     @container pl-c-page-header (inline-size <= 48rem) {
       .pl-c-page-header__heading,
       .pl-c-page-header__actions {

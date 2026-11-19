@@ -30,7 +30,7 @@ Every module is pre-minified with Lightning CSS. Compression measurements below 
 
 ### "Core + N Components" Real-World Recipes
 
-When bundled together with your application bundler, duplicate `@layer` headers and design token references compress together. Notice that every practical recipe below ships **between 4.9 KB and 6.8 KB gzip**—**less than half** the size of a legacy 14 KB stylesheet!
+When bundled together with your application bundler, duplicate `@layer` headers and design token references compress together. Notice that every practical recipe below ships **between 4.9 KB and 6.8 KB gzip**, **less than half** the size of a legacy 14 KB stylesheet!
 
 | Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
 | :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
@@ -110,8 +110,8 @@ Porchlight maintains semantic versioning and strict backwards compatibility for 
 
 - **v0.14.0**: Shipped 57 components.
 - **v0.15.0**: Ships **59 components**.
-  - **New component**: `.pl-c-action-bar` — Pure-CSS floating batch action bar with liquid glass styling and zero-JS reactive auto-reveal via `:has(:checked)`.
-  - **New component**: `.pl-c-gauge` — Pure-CSS circular and speedometer KPI dials with registered `@property --pl-gauge-value { syntax: '<percentage>'; }` transitions.
+  - **New component**: `.pl-c-action-bar`, Pure-CSS floating batch action bar with liquid glass styling and zero-JS reactive auto-reveal via `:has(:checked)`.
+  - **New component**: `.pl-c-gauge`, Pure-CSS circular and speedometer KPI dials with registered `@property --pl-gauge-value { syntax: '<percentage>'; }` transitions.
 
 ### Key Enhancements & Invariants in v0.15.0
 

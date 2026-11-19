@@ -15,7 +15,7 @@
  *                                 bg so perceptual deltas reflect what the
  *                                 eye actually sees
  *
- * No browser dependency — pure math, so it's fast and deterministic.
+ * No browser dependency: pure math, so it's fast and deterministic.
  */
 
 const TAU = Math.PI * 2;
@@ -136,7 +136,7 @@ export function alpha(color: string): number {
 }
 
 /** Source-over composite of a (possibly translucent) fg over an opaque bg.
- * Returns an opaque oklch() string — what the eye actually sees. */
+ * Returns an opaque oklch() string: what the eye actually sees. */
 export function compositeOver(fg: string, bg: string): string {
   const f = toOklab(fg);
   const back = toOklab(bg);

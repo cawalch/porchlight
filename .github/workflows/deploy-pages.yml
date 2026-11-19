@@ -61,7 +61,7 @@ jobs:
 
           git fetch origin gh-pages:refs/remotes/origin/gh-pages 2>/dev/null || true
           if ! git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            echo "No existing gh-pages branch — skipping preview preservation"
+            echo "No existing gh-pages branch: skipping preview preservation"
             exit 0
           fi
 

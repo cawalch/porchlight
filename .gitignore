@@ -42,7 +42,7 @@ docs/reports/
 .cache/
 
 # ---------------------------------------------------------------------------
-# Planning & LLM working docs — local only, never version-controlled.
+# Planning & LLM working docs: local only, never version-controlled.
 # These are scratch/spec documents, not framework source.
 # ---------------------------------------------------------------------------
 PLAN.md

@@ -73,9 +73,9 @@ To reproduce Ubuntu screenshots in the matching Playwright container, install
 ## Branching & pull requests
 
 - Branch from `main`. Follow the repository's current branch protections and wait for required checks before merging.
-- Branch naming: `<type>/<phase>-<slug>` — e.g. `feat/03-button`, `docs/theming`, `fix/card-rtl`.
+- Branch naming: `<type>/<phase>-<slug>`, e.g. `feat/03-button`, `docs/theming`, `fix/card-rtl`.
 - `type` follows [Conventional Commits](https://www.conventionalcommits.org): `feat`, `fix`, `docs`, `chore`, `test`, `refactor`.
-- **Keep PRs around ~400 lines** of changed CSS + docs + tests combined. If a PR crosses ~500 lines it is probably doing two things — split it.
+- **Keep PRs around ~400 lines** of changed CSS + docs + tests combined. If a PR crosses ~500 lines it is probably doing two things: split it.
 - Squash-merge on merge; the squash title should be a Conventional Commits summary.
 
 ## Per-PR definition of done
@@ -84,7 +84,7 @@ Every PR description starts from `.github/PULL_REQUEST_TEMPLATE.md`. A PR is not
 
 - [ ] All CSS inside the correct `@layer` (no unlayered framework rules).
 - [ ] `pnpm lint` clean; no new `!important` outside the allow-list (a11y utilities, print hide).
-- [ ] No hard-coded colors in components — everything flows through tokens.
+- [ ] No hard-coded colors in components: everything flows through tokens.
 - [ ] Logical properties only (`inline` / `block` / `start` / `end`).
 - [ ] Docs page added/updated (component `.mdx` or regenerated token table).
 - [ ] Preview page added/updated and linked from `/preview`.
@@ -103,7 +103,7 @@ Every PR description starts from `.github/PULL_REQUEST_TEMPLATE.md`. A PR is not
 
 - Run `pnpm format` (Prettier) before committing.
 - Keep `CHANGELOG.md` updated under an `Unreleased` heading.
-- Never commit `PLAN.md`, `ROADMAP.md`, or other planning/LLM scratch docs — they are gitignored on purpose and stay local.
+- Never commit `PLAN.md`, `ROADMAP.md`, or other planning/LLM scratch docs: they are gitignored on purpose and stay local.
 
 ## Code of conduct
 

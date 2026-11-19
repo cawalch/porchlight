@@ -33,7 +33,7 @@ async function reach(page: import("@playwright/test").Page, heading: string) {
 }
 
 // ---------------------------------------------------------------------------
-// RTL — the framework uses logical properties throughout, so flipping the
+// RTL: the framework uses logical properties throughout, so flipping the
 // writing direction must not break layout (no physical left/right, no fixed
 // widths overflowing). Asserted on the two most overflow-prone pages: the
 // wide data table and the app-shell grid.

@@ -127,7 +127,7 @@ jobs:
   # ── Publish @cawalch/porchlight to npm via OIDC trusted publishing ──────
   # Tokenless: no NPM_TOKEN secret. npm exchanges a short-lived, signed OIDC
   # token issued by GitHub Actions for each run. Requires npm CLI ≥ 11.5.1
-  # (Node ≥ 22.14.0) — handled by pinning this job to Node 24.
+  # (Node ≥ 22.14.0): handled by pinning this job to Node 24.
   #
   # Trigger: push a version tag  →  git tag v0.3.0 && git push --tags
   # The tag need not match package.json's version, but npm rejects publishing
@@ -148,7 +148,7 @@ jobs:
     runs-on: ubuntu-24.04
     environment: main
     permissions:
-      id-token: write # OIDC — required for trusted publishing & Sigstore
+      id-token: write # OIDC: required for trusted publishing & Sigstore
       contents: write # GitHub Release creation
       attestations: write # GitHub Artifact Attestation
     steps:
@@ -178,7 +178,7 @@ jobs:
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level=high
 
-      # `npm publish` (not pnpm) — only the npm CLI implements the OIDC
+      # `npm publish` (not pnpm): only the npm CLI implements the OIDC
       # trusted-publisher exchange. The package's `prepublishOnly` script
       # runs `pnpm build` first, so the dist tarball is always fresh.
       # Provenance attestation is published via OIDC + Sigstore.

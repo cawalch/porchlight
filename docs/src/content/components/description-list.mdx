@@ -7,7 +7,7 @@ since: 0.3.0
 
 The `.pl-c-description` wraps a native `<dl>` as a two-column label + value grid.
 It is the workhorse of SaaS detail panels: account info, case metadata, user
-profiles, order summaries — anywhere you need to display structured key-value
+profiles, order summaries, anywhere you need to display structured key-value
 data read-only.
 
 Every app reimplements this pattern with ad-hoc grids and inline styles.
@@ -36,7 +36,7 @@ This component replaces all of that with a single semantic element.
 
 ### Rich detail values
 
-The detail slot accepts any content — badges, avatars, links:
+The detail slot accepts any content. Badges, avatars, links:
 
 ```html
 <div class="pl-c-description__row">
@@ -84,7 +84,7 @@ For narrow sidebars or long-form values, stack terms above details:
 
 The grid mode uses a **container query** (not a viewport media query), so it
 adapts to its container's width. A description list inside a 25rem-wide drawer
-panel stacks even on a wide-screen desktop — no viewport hack needed.
+panel stacks even on a wide-screen desktop: no viewport hack needed.
 
 ## Class contract
 

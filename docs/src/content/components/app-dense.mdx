@@ -9,20 +9,20 @@ since: 0.3.0
 The `data-pl-density="dense"` tier is the fourth and tightest density level,
 below `compact`. While `compact` only shrinks control geometry (button height,
 padding), `dense` also compresses the spacing scale, table row height, and
-small text sizes — maximizing information density for data-heavy screens.
+small text sizes, maximizing information density for data-heavy screens.
 
 ## When to use
 
 | Tier          | Control height     | Best for                                            |
 | ------------- | ------------------ | --------------------------------------------------- |
 | `touch`       | 2.75rem (44px)     | Mobile, tablets, kiosks                             |
-| `comfortable` | 2.5rem (40px)      | Default — most SaaS apps                            |
+| `comfortable` | 2.5rem (40px)      | Default: most SaaS apps                             |
 | `compact`     | 2rem (32px)        | Admin panels, settings, internal tools              |
 | **`dense`**   | **1.75rem (28px)** | **SIEM, analytics, log viewers, trading terminals** |
 
 ## Usage
 
-Set `data-pl-density="dense"` on a container — it cascades to all children:
+Set `data-pl-density="dense"` on a container, it cascades to all children:
 
 ```html
 <div data-pl-density="dense">
@@ -51,17 +51,17 @@ stays consistent at the tighter scale.
 
 The <a href={`${import.meta.env.BASE_URL}preview/app-dense`}>data-dense preview</a> demonstrates:
 
-- **KPI strip** — 8 metrics in one row, compact tiles with value + delta
-- **Tight event table** — `data-pl-density="dense"` on `.pl-c-table-wrap` for
+- **KPI strip**: 8 metrics in one row, compact tiles with value + delta
+- **Tight event table**: `data-pl-density="dense"` on `.pl-c-table-wrap` for
   minimal row padding
-- **Compact sidebar** — 12rem width, mini badges for alert counts
-- **Slim toolbar** — filter buttons, split button, inline count text
-- **Mono text** — `--pl-font-mono` for IPs, hostnames, timestamps
-- **Truncated messages** — `.pl-u-truncate` on long event descriptions
+- **Compact sidebar**: 12rem width, mini badges for alert counts
+- **Slim toolbar**: filter buttons, split button, inline count text
+- **Mono text**: `--pl-font-mono` for IPs, hostnames, timestamps
+- **Truncated messages**: `.pl-u-truncate` on long event descriptions
 
 ## Mixing tiers
 
-You can nest density tiers — a `dense` page with a `comfortable` modal:
+You can nest density tiers. A `dense` page with a `comfortable` modal:
 
 ```html
 <body data-pl-density="dense">

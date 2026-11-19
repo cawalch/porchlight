@@ -33,7 +33,7 @@ export const GET: APIRoute = async () => {
               )[headingIndex++];
               if (heading) {
                 section = {
-                  title: `${entry.data.title} — ${heading.text}`,
+                  title: `${entry.data.title}: ${heading.text}`,
                   href: `${route}#${heading.slug}`,
                   text: "",
                   kind: collection,

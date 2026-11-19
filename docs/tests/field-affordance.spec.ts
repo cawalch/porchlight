@@ -2,11 +2,11 @@ import { test, expect } from "@playwright/test";
 import { deltaL, toOklab } from "./lib/color";
 
 /**
- * Field affordance guard — same rigor as the button affordance test.
+ * Field affordance guard: same rigor as the button affordance test.
  *
  * The focus/invalid indicator is a box-shadow RING around the control (not a
  * border-color change). This asserts the ring is present and uses the focus /
- * danger color at a clearly perceptible lightness step from the page surface —
+ * danger color at a clearly perceptible lightness step from the page surface,
  * i.e. the indicator is actually visible, not a faint veil. It also guards
  * against the previous bug where `0 0 0 4px` (no blur) read as a hard
  * translucent "second stroke" beside the border.
@@ -65,7 +65,7 @@ test("field invalid draws a visible danger ring", async ({ page }) => {
   const surface = await page.evaluate(
     () => getComputedStyle(document.body).backgroundColor,
   );
-  // The page's URL field is type=url + required. Type invalid text and blur —
+  // The page's URL field is type=url + required. Type invalid text and blur,
   // :user-invalid fires on real interaction (checkValidity() alone won't set it).
   const urlField = page.locator(".pl-c-field__control[type='url']");
   await urlField.fill("not-a-url");

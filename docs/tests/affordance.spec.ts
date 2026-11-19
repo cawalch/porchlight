@@ -9,7 +9,7 @@ import { alpha, compositeOver, deltaL } from "./lib/color";
  * For each button variant, composites the default / hover / pressed fills over
  * the PAGE bg (so translucent hovers are measured as what the eye sees) and
  * asserts a minimum perceptual step. Also enforces an alpha floor on
- * translucent state fills — a ~7%-alpha veil reads as "barely there" even when
+ * translucent state fills: a ~7%-alpha veil reads as "barely there" even when
  * its composite ΔL scrapes past, so we require a clear wash instead.
  */
 
@@ -92,7 +92,7 @@ test("button hover/pressed are perceptibly distinct from default", async ({
     }
 
     // Translucent INTERACTIVE fills (hover/pressed) must be a clear wash, not
-    // a veil. Default is excluded — ghost's default is intentionally transparent.
+    // a veil. Default is excluded: ghost's default is intentionally transparent.
     for (const [name, color] of Object.entries(states)) {
       if (name === "default") continue;
       const a = alpha(color);

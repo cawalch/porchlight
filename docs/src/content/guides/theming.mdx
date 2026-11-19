@@ -121,15 +121,15 @@ lightness while keeping the same hue and chroma direction:
 
 When you change the brand hue, **three** tokens need attention:
 
-1. **Brand ramp** (`--pl-brand-1` through `--pl-brand-9`) — sets the accent.
-2. **Focus ring** (`--pl-focus-color`) — a separate token, not derived from
+1. **Brand ramp** (`--pl-brand-1` through `--pl-brand-9`): sets the accent.
+2. **Focus ring** (`--pl-focus-color`): a separate token, not derived from
    the brand ramp. It defaults to hue `82°` (amber). Override it to match:
 
    ```css
    --pl-focus-color: light-dark(oklch(50% 0.18 25deg), oklch(70% 0.15 25deg));
    ```
 
-3. **Danger hue** (`--pl-color-danger`) — defaults to `oklch(60% 0.22 25deg)`.
+3. **Danger hue** (`--pl-color-danger`): defaults to `oklch(60% 0.22 25deg)`.
    If your brand is red/orange (hue ~25°), the danger state will visually
    collide with primary actions. Shift danger to a different hue to maintain
    semantic clarity:
@@ -169,7 +169,7 @@ Four density presets control component geometry:
 | Tier          | Control height | Best for                     |
 | ------------- | -------------- | ---------------------------- |
 | `compact`     | 2rem (32px)    | Admin panels, settings       |
-| `comfortable` | 2.5rem (40px)  | Default — most SaaS apps     |
+| `comfortable` | 2.5rem (40px)  | Default: most SaaS apps      |
 | `touch`       | 2.75rem (44px) | Mobile, tablets, kiosks      |
 | `dense`       | 1.75rem (28px) | SIEM, analytics, log viewers |
 
@@ -182,7 +182,7 @@ Four density presets control component geometry:
 
 Set on any ancestor. `compact`, `comfortable`, and `touch` change only
 `--pl-control-block-size`, `--pl-control-padding-inline`, and
-`--pl-control-gap` — type, spacing, and radius are unchanged.
+`--pl-control-gap`: type, spacing, and radius are unchanged.
 
 The `dense` tier goes further: it also compresses the `--pl-space-*` scale
 (~30% reduction) and small text sizes (`--pl-text-sm`, `--pl-text-xs`) for
