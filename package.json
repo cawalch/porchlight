@@ -36,7 +36,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "contracts:generate": "node scripts/emit-component-contracts.mjs",
-    "contracts:check": "node scripts/emit-component-contracts.mjs --check"
+    "contracts:check": "node scripts/emit-component-contracts.mjs --check",
+    "preview:check": "node scripts/check-preview-contracts.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.8",

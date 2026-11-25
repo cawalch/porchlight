@@ -70,6 +70,11 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <option value="dense" selected={density === 'dense'}>Dense (1.75rem)</option>
       </select>
     </label>
+
+    <button class="pl-c-button" data-variant="secondary" data-size="sm" type="button" data-copy-preview>
+      Copy HTML
+    </button>
+    <span class="pl-u-sr-only" role="status" data-copy-status></span>
   </div>
 </header>
 
@@ -208,6 +213,28 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     paletteSelect?.addEventListener('change', updateAttributes);
     themeSelect?.addEventListener('change', updateAttributes);
     densitySelect?.addEventListener('change', updateAttributes);
+
+    const copyButton = toolbar.querySelector<HTMLButtonElement>('[data-copy-preview]');
+    const copyStatus = toolbar.querySelector<HTMLElement>('[data-copy-status]');
+    copyButton?.addEventListener('click', async () => {
+      const main = document.querySelector('main');
+      if (!main) return;
+      const clone = main.cloneNode(true) as HTMLElement;
+      clone
+        .querySelectorAll('.pl-preview-toolbar, script, style')
+        .forEach((node) => node.remove());
+      try {
+        await navigator.clipboard.writeText(clone.innerHTML.trim());
+        copyStatus!.textContent = 'Preview HTML copied to clipboard.';
+        copyButton.textContent = 'Copied';
+        window.setTimeout(() => {
+          copyButton.textContent = 'Copy HTML';
+        }, 2000);
+      } catch {
+        copyStatus!.textContent =
+          'Clipboard unavailable. Open the page source instead.';
+      }
+    });
   };
 
   initToolbar();

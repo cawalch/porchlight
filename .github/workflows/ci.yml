@@ -62,6 +62,9 @@ jobs:
       - name: Check component contracts
         run: pnpm contracts:check
 
+      - name: Check preview contracts
+        run: pnpm preview:check
+
       - name: Type-check docs
         run: pnpm --filter ./docs astro:check
 

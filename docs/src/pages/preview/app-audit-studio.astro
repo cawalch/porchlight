@@ -87,7 +87,7 @@ import PreviewToolbar from '../../components/PreviewToolbar.astro';
       </svg>
       <div>
         <h1
-          style="font-size: var(--pl-text-sm); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin: 0; line-height: 1.2;"
+          style="font-size: var(--pl-text-sm); font-weight: 700; letter-spacing: var(--pl-tracking-wider); text-transform: uppercase; margin: 0; line-height: 1.2;"
         >
           Apex Risk Studio
         </h1>
@@ -327,7 +327,7 @@ import PreviewToolbar from '../../components/PreviewToolbar.astro';
             >
               <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-2);">
                 <h3
-                  style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;"
+                  style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: var(--pl-tracking-wide);"
                 >
                   Immutable Regulatory Ledger
                 </h3>
@@ -444,7 +444,7 @@ import PreviewToolbar from '../../components/PreviewToolbar.astro';
               style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3); gap: var(--pl-space-2);"
             >
               <h3
-                style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 0.04em; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: var(--pl-tracking-wide); min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
               >
                 Counterparty Inspector
               </h3>
@@ -599,7 +599,7 @@ import PreviewToolbar from '../../components/PreviewToolbar.astro';
           <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-3);">
             <span
               class="pl-u-muted"
-              style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;"
+              style="font-weight: 700; text-transform: uppercase; letter-spacing: var(--pl-tracking-wider);"
             >
               Tactile Shortcuts
             </span>
@@ -629,6 +629,7 @@ import PreviewToolbar from '../../components/PreviewToolbar.astro';
 </BaseLayout>
 
 <style>
+  /* Demo-only chrome. Not part of the framework contract. */
   .studio-container {
     --pl-l-container-max: 90rem;
     padding-inline: var(--pl-space-4);
