@@ -71,3 +71,17 @@ test("assignee combobox filters, commits, and submits by keyboard", async ({
   await page.keyboard.press("Enter");
   await expect(result).toHaveText("assignee_id=usr_124");
 });
+
+test("assignee lookup works after returning through docs navigation", async ({
+  page,
+}) => {
+  await page.goto("./components/combobox/");
+  const input = page.getByRole("combobox", { name: "Assignee", exact: true });
+  await input.fill("Nia");
+  await expect(input).toHaveAttribute("aria-expanded", "true");
+  await page.getByRole("link", { name: "Field", exact: true }).first().click();
+  await expect(page).toHaveURL(/\/components\/field\/?$/);
+  await page.goBack();
+  await input.fill("Lee");
+  await expect(page.getByRole("option", { name: "Lee Chen" })).toBeVisible();
+});

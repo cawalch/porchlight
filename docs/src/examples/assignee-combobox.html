@@ -37,119 +37,123 @@
   </div>
 </form>
 
-<script type="module">
-  const people = [
-    { id: "usr_124", name: "Nia Gomez" },
-    { id: "usr_218", name: "Nia Patel" },
-    { id: "usr_305", name: "Lee Chen" },
-  ];
-  const form = document.getElementById("assign-case");
-  const input = form.querySelector('[role="combobox"]');
-  const list = form.querySelector('[role="listbox"]');
-  const field = form.elements.namedItem("assignee_id");
-  let selected;
-  let matches = [];
-  let active = -1;
+<script data-astro-rerun>
+  (() => {
+    const people = [
+      { id: "usr_124", name: "Nia Gomez" },
+      { id: "usr_218", name: "Nia Patel" },
+      { id: "usr_305", name: "Lee Chen" },
+    ];
+    const form = document.getElementById("assign-case");
+    const input = form.querySelector('[role="combobox"]');
+    const list = form.querySelector('[role="listbox"]');
+    const field = form.elements.namedItem("assignee_id");
+    let selected;
+    let matches = [];
+    let active = -1;
 
-  function highlight(index) {
-    list.children[active]?.removeAttribute("data-active");
-    active = index;
-    const option = matches[active] && list.children[active];
-    if (option) {
-      option.setAttribute("data-active", "");
-      input.setAttribute("aria-activedescendant", option.id);
-      option.scrollIntoView({ block: "nearest" });
-    } else {
-      input.removeAttribute("aria-activedescendant");
-    }
-  }
-
-  function open(query) {
-    highlight(-1);
-    matches = people.filter((person) =>
-      person.name.toLowerCase().includes(query.trim().toLowerCase()),
-    );
-    list.replaceChildren(
-      ...matches.map((person) => {
-        const row = document.createElement("li");
-        row.className = "pl-c-combobox__option";
-        row.id = "case-assignee-" + person.id;
-        row.setAttribute("role", "option");
-        row.setAttribute("aria-selected", String(person === selected));
-        row.textContent = person.name;
-        return row;
-      }),
-    );
-    if (!matches.length) {
-      const empty = document.createElement("li");
-      empty.className = "pl-c-combobox__status";
-      empty.setAttribute("role", "option");
-      empty.setAttribute("aria-disabled", "true");
-      empty.textContent = "No matching assignees";
-      list.append(empty);
-    }
-    list.hidden = false;
-    input.setAttribute("aria-expanded", "true");
-  }
-
-  function close() {
-    highlight(-1);
-    list.hidden = true;
-    input.setAttribute("aria-expanded", "false");
-    input.value = selected?.name ?? "";
-  }
-
-  function choose(person) {
-    selected = person;
-    field.value = person.id;
-    close();
-  }
-
-  input.addEventListener("input", () => open(input.value));
-  input.addEventListener("click", () => {
-    if (list.hidden) open("");
-  });
-  input.addEventListener("blur", close);
-  input.addEventListener("keydown", (event) => {
-    if (event.isComposing || event.ctrlKey || event.metaKey || event.shiftKey)
-      return;
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
-      const down = event.key === "ArrowDown";
-      if (list.hidden) {
-        open("");
-        if (selected) {
-          highlight(matches.indexOf(selected));
-          return;
-        }
+    function highlight(index) {
+      list.children[active]?.removeAttribute("data-active");
+      active = index;
+      const option = matches[active] && list.children[active];
+      if (option) {
+        option.setAttribute("data-active", "");
+        input.setAttribute("aria-activedescendant", option.id);
+        option.scrollIntoView({ block: "nearest" });
+      } else {
+        input.removeAttribute("aria-activedescendant");
       }
-      if (matches.length) {
-        if (down) {
-          highlight(Math.min(active + 1, matches.length - 1));
-        } else {
-          highlight(active < 0 ? matches.length - 1 : Math.max(active - 1, 0));
-        }
+    }
+
+    function open(query) {
+      highlight(-1);
+      matches = people.filter((person) =>
+        person.name.toLowerCase().includes(query.trim().toLowerCase()),
+      );
+      list.replaceChildren(
+        ...matches.map((person) => {
+          const row = document.createElement("li");
+          row.className = "pl-c-combobox__option";
+          row.id = "case-assignee-" + person.id;
+          row.setAttribute("role", "option");
+          row.setAttribute("aria-selected", String(person === selected));
+          row.textContent = person.name;
+          return row;
+        }),
+      );
+      if (!matches.length) {
+        const empty = document.createElement("li");
+        empty.className = "pl-c-combobox__status";
+        empty.setAttribute("role", "option");
+        empty.setAttribute("aria-disabled", "true");
+        empty.textContent = "No matching assignees";
+        list.append(empty);
       }
-    } else if (!list.hidden && event.key === "Enter") {
-      event.preventDefault();
-      if (matches[active]) choose(matches[active]);
-    } else if (!list.hidden && event.key === "Escape") {
-      event.preventDefault();
+      list.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+    }
+
+    function close() {
+      highlight(-1);
+      list.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+      input.value = selected?.name ?? "";
+    }
+
+    function choose(person) {
+      selected = person;
+      field.value = person.id;
       close();
     }
-  });
 
-  // Keep the input focused until the click commits the choice.
-  list.addEventListener("mousedown", (event) => event.preventDefault());
-  list.addEventListener("click", (event) => {
-    const index = Array.from(list.children).indexOf(event.target);
-    if (matches[index]) choose(matches[index]);
-  });
+    input.addEventListener("input", () => open(input.value));
+    input.addEventListener("click", () => {
+      if (list.hidden) open("");
+    });
+    input.addEventListener("blur", close);
+    input.addEventListener("keydown", (event) => {
+      if (event.isComposing || event.ctrlKey || event.metaKey || event.shiftKey)
+        return;
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const down = event.key === "ArrowDown";
+        if (list.hidden) {
+          open("");
+          if (selected) {
+            highlight(matches.indexOf(selected));
+            return;
+          }
+        }
+        if (matches.length) {
+          if (down) {
+            highlight(Math.min(active + 1, matches.length - 1));
+          } else {
+            highlight(
+              active < 0 ? matches.length - 1 : Math.max(active - 1, 0),
+            );
+          }
+        }
+      } else if (!list.hidden && event.key === "Enter") {
+        event.preventDefault();
+        if (matches[active]) choose(matches[active]);
+      } else if (!list.hidden && event.key === "Escape") {
+        event.preventDefault();
+        close();
+      }
+    });
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    form.querySelector("output").value = new URLSearchParams(
-      new FormData(form),
-    ).toString();
-  });
+    // Keep the input focused until the click commits the choice.
+    list.addEventListener("mousedown", (event) => event.preventDefault());
+    list.addEventListener("click", (event) => {
+      const index = Array.from(list.children).indexOf(event.target);
+      if (matches[index]) choose(matches[index]);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.querySelector("output").value = new URLSearchParams(
+        new FormData(form),
+      ).toString();
+    });
+  })();
 </script>
