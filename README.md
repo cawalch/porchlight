@@ -15,7 +15,7 @@ for those workflows and optional CSS Modules customization.
 ## Why Porchlight
 
 Porchlight is a native-CSS design system for desktop-class, server-rendered SaaS.
-It gives you dense app surfaces, 60 semantic components, token-driven theming, and
+It gives you dense app surfaces, 60+ semantic components, token-driven theming, and
 a tested accessibility floor without a JavaScript runtime or a build step.
 
 - **0 KB runtime JavaScript**, no hydration boundary, and no plugin lifecycle.
@@ -23,7 +23,7 @@ a tested accessibility floor without a JavaScript runtime or a build step.
   audit streams, command palette, and telemetry surfaces.
 - **Framework neutral**: use it with Rails, Django, Laravel, PHP, Astro, HTMX,
   Alpine, React, or plain HTML.
-- **Small and modular**: about 3.9 KB gzip for core, 35.6 KB gzip for the full
+- **Small and modular**: about 3.9 KB gzip for core, about 36 KB gzip for the full
   bundle, or core plus only the components you render.
 
 Read the [comparison with Bootstrap, Tailwind and shadcn, Pico, DaisyUI, Bulma,
@@ -136,7 +136,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                |
 | `@cawalch/porchlight/layout.css`           | `.pl-l-*` layout primitives             |
 | `@cawalch/porchlight/layout.min.css`       | Minified layout primitives              |
-| `@cawalch/porchlight/components.css`       | All 60 `.pl-c-*` component stylesheets  |
+| `@cawalch/porchlight/components.css`       | All `.pl-c-*` component stylesheets     |
 | `@cawalch/porchlight/components.min.css`   | Minified components bundle              |
 | `@cawalch/porchlight/components/*.css`     | Individual component CSS files          |
 | `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS files |
@@ -148,7 +148,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/tokens.json`          | Token metadata JSON                     |
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                    |
 
-For an offline reference documenting all 60 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
+For an offline reference documenting every component (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
 
 ## CLI tools
 

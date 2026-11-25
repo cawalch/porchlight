@@ -24,13 +24,55 @@ variants via `[data-tone]`.
 </div>
 ```
 
+## Activation variant
+
+Use `data-variant="activation"` when the empty state should teach the first
+action instead of only reporting that data is missing. It switches to a
+left-aligned setup surface with room for steps and a sample-data preview.
+
+```html
+<div class="pl-c-empty" data-variant="activation">
+  <div class="pl-c-empty__media"><svg>…</svg></div>
+  <h2 class="pl-c-empty__title">Bring your first signal in</h2>
+  <p class="pl-c-empty__description">
+    Connect a source, then route one real event to a channel. You can change
+    every step later.
+  </p>
+  <ol class="pl-c-empty__steps">
+    <li>
+      <span class="pl-c-empty__step-index">1</span
+      ><span>Connect a data source.</span>
+    </li>
+    <li>
+      <span class="pl-c-empty__step-index">2</span
+      ><span>Pick a destination channel.</span>
+    </li>
+    <li>
+      <span class="pl-c-empty__step-index">3</span
+      ><span>Send a test event.</span>
+    </li>
+  </ol>
+  <div class="pl-c-empty__sample">
+    Sample event: <code>checkout.completed</code> from <code>production</code>
+  </div>
+  <div class="pl-c-empty__actions">
+    <button class="pl-c-button" data-variant="primary">Connect a source</button>
+    <button class="pl-c-button" data-variant="ghost">Use sample data</button>
+  </div>
+</div>
+```
+
 ## Class contract
 
-| Selector                   | Role                                     |
-| -------------------------- | ---------------------------------------- |
-| `.pl-c-empty`              | The container (centered grid).           |
-| `.pl-c-empty__media`       | Icon or illustration slot.               |
-| `.pl-c-empty__title`       | Heading.                                 |
-| `.pl-c-empty__description` | Supporting text (max 36ch).              |
-| `.pl-c-empty__actions`     | CTA button row.                          |
-| `[data-tone]`              | `danger` (error), `success` (completed). |
+| Selector                      | Role                                     |
+| ----------------------------- | ---------------------------------------- |
+| `.pl-c-empty`                 | The container (centered grid).           |
+| `.pl-c-empty__media`          | Icon or illustration slot.               |
+| `.pl-c-empty__title`          | Heading.                                 |
+| `.pl-c-empty__description`    | Supporting text (max 36ch).              |
+| `.pl-c-empty__actions`        | CTA button row.                          |
+| `[data-tone]`                 | `danger` (error), `success` (completed). |
+| `[data-variant="activation"]` | Left-aligned setup variant.              |
+| `.pl-c-empty__steps`          | Optional ordered setup steps.            |
+| `.pl-c-empty__step-index`     | Numbered step marker.                    |
+| `.pl-c-empty__sample`         | Sample-data or preview slot.             |

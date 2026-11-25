@@ -373,6 +373,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - calendar: /components/calendar
 - card: /components/card
 - chart: /components/chart
+- checklist: /components/checklist
 - chip: /components/chip
 - code-block: /components/code-block
 - combobox: /components/combobox
@@ -491,6 +492,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/calendar
 - /preview/card
 - /preview/chart
+- /preview/checklist
 - /preview/chip
 - /preview/code-block
 - /preview/combobox

@@ -45,6 +45,34 @@ import Icon from '../../components/Icon.astro';
     </div>
   </div>
 
+  <h2>Activation variant</h2>
+  <div class="pl-c-card">
+    <div class="pl-c-empty" data-variant="activation">
+      <div class="pl-c-empty__media">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <h2 class="pl-c-empty__title">Bring your first signal in</h2>
+      <p class="pl-c-empty__description">
+        Connect a source, then route one real event to a channel. You can change
+        every step later.
+      </p>
+      <ol class="pl-c-empty__steps">
+        <li><span class="pl-c-empty__step-index">1</span><span>Connect a data source.</span></li>
+        <li><span class="pl-c-empty__step-index">2</span><span>Pick a destination channel.</span></li>
+        <li><span class="pl-c-empty__step-index">3</span><span>Send a test event.</span></li>
+      </ol>
+      <div class="pl-c-empty__sample">
+        Sample event: <code>checkout.completed</code> from <code>production</code>
+      </div>
+      <div class="pl-c-empty__actions">
+        <button class="pl-c-button" data-variant="primary">Connect a source</button>
+        <button class="pl-c-button" data-variant="ghost">Use sample data</button>
+      </div>
+    </div>
+  </div>
+
   <h2>Error tone</h2>
   <div class="pl-c-card">
     <div class="pl-c-empty" data-tone="danger">
