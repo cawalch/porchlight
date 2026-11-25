@@ -1,0 +1,132 @@
+---
+title: Checklist
+description: A persistent setup checklist with native checkboxes, progress, and optional current-step emphasis.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-checklist` is a persistent activation surface: connect a data source,
+invite a teammate, configure billing. It is not a multi-step wizard. It stays in
+the page and shows what is done, what is next, and how far the workspace has
+come.
+
+Use it with native checkboxes and a native `<progress>` element. The application
+owns completion state and persistence; the CSS owns the layout and affordances.
+
+## Semantic HTML
+
+```html
+<section class="pl-c-checklist" aria-labelledby="setup-checklist-title">
+  <header class="pl-c-checklist__header">
+    <div>
+      <h2 class="pl-c-checklist__title" id="setup-checklist-title">
+        Set up your workspace
+      </h2>
+      <p class="pl-c-checklist__description">2 of 4 complete</p>
+    </div>
+    <span class="pl-c-badge" data-tone="accent">2 / 4</span>
+  </header>
+
+  <ol class="pl-c-checklist__items">
+    <li class="pl-c-checklist__item" data-state="complete">
+      <input
+        class="pl-c-checklist__control"
+        type="checkbox"
+        id="setup-source"
+        checked
+      />
+      <label class="pl-c-checklist__label" for="setup-source">
+        Connect a data source
+        <span class="pl-c-checklist__hint"
+          >Production warehouse is connected.</span
+        >
+      </label>
+    </li>
+    <li class="pl-c-checklist__item" data-state="current">
+      <input
+        class="pl-c-checklist__control"
+        type="checkbox"
+        id="setup-invite"
+      />
+      <label class="pl-c-checklist__label" for="setup-invite">
+        Invite a teammate
+        <span class="pl-c-checklist__hint"
+          >At least one teammate helps you test the workflow.</span
+        >
+      </label>
+    </li>
+  </ol>
+
+  <footer class="pl-c-checklist__footer">
+    <progress class="pl-c-checklist__progress" value="2" max="4">
+      2 of 4 complete
+    </progress>
+    <div class="pl-c-checklist__actions">
+      <button class="pl-c-button" data-variant="primary" type="button">
+        Continue setup
+      </button>
+    </div>
+  </footer>
+</section>
+```
+
+## Current step
+
+Add `data-state="current"` to the item the user should do next. The CSS adds an
+accent wash and a leading accent marker. Keep the same item in the natural list
+order; do not reorder the checklist around it.
+
+## Completed items
+
+Native checkboxes are the source of truth. The component also accepts
+`data-state="complete"` for server-rendered summaries where the checkbox state
+may be restored later. When both are present, the label uses the muted,
+struck-through treatment.
+
+## Progress
+
+Use `<progress>` for the bar. Its text content is the accessible fallback, and
+the visible description should repeat the count. If the count changes without a
+page reload, announce the short summary with `aria-live="polite"` on the
+description, not on the whole checklist.
+
+## Class contract
+
+| Selector                       | Role                                     |
+| :----------------------------- | :--------------------------------------- |
+| `.pl-c-checklist`              | Root section.                            |
+| `.pl-c-checklist__header`      | Title, description, and trailing badge.  |
+| `.pl-c-checklist__title`       | Heading.                                 |
+| `.pl-c-checklist__description` | Short progress or setup summary.         |
+| `.pl-c-checklist__items`       | `<ol>` of setup items.                   |
+| `.pl-c-checklist__item`        | `<li>` row.                              |
+| `.pl-c-checklist__control`     | Native checkbox.                         |
+| `.pl-c-checklist__label`       | `<label>` for the checkbox.              |
+| `.pl-c-checklist__hint`        | Secondary explanation.                   |
+| `.pl-c-checklist__footer`      | Progress and actions.                    |
+| `.pl-c-checklist__progress`    | Native `<progress>` bar.                 |
+| `.pl-c-checklist__actions`     | Trailing action cluster.                 |
+| `[data-state="current"]`       | Emphasis for the next item.              |
+| `[data-state="complete"]`      | Optional server-rendered complete state. |
+
+## Tokens consumed
+
+`--pl-color-{surface,border,text,text-muted,accent,success}`,
+`--pl-space-{1,2,3,4}`, `--pl-radius-{sm,lg,pill}`, `--pl-text-{xs,sm,md}`,
+`--pl-leading-{tight,normal}`, and `--pl-font-weight-{medium,semibold}`.
+
+## Accessibility
+
+- Use a real checkbox and a real label. Do not make the row a clickable `<div>`.
+- Keep the native focus ring on the checkbox; do not remove it.
+- Give the checklist an accessible name with `aria-labelledby`.
+- Use `<progress>` so assistive technology gets the value and maximum.
+- Announce count changes with `aria-live="polite"` on the short description.
+- Do not use color alone for completion. The checked state and label treatment
+  carry the meaning.
+
+## Theme and RTL
+
+The component uses logical properties and framework tokens. The current-step
+marker uses an inline-start inset, so it follows RTL automatically. Forced-colors
+mode adds a system outline to the current item.

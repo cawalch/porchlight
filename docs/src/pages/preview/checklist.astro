@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Checklist · Porchlight">
+  <h1>Checklist</h1>
+  <p>
+    A persistent setup checklist with native checkboxes and progress. The
+    application owns completion state and persistence; the CSS owns the layout
+    and affordances.
+  </p>
+
+  <div class="pl-c-card" data-surface="app">
+    <section class="pl-c-checklist" aria-labelledby="setup-checklist-title">
+      <header class="pl-c-checklist__header">
+        <div>
+          <h2 class="pl-c-checklist__title" id="setup-checklist-title">Set up your workspace</h2>
+          <p class="pl-c-checklist__description" aria-live="polite">2 of 4 complete</p>
+        </div>
+        <span class="pl-c-badge" data-tone="accent">2 / 4</span>
+      </header>
+
+      <ol class="pl-c-checklist__items">
+        <li class="pl-c-checklist__item" data-state="complete">
+          <input class="pl-c-checklist__control" type="checkbox" id="setup-source" checked />
+          <label class="pl-c-checklist__label" for="setup-source">
+            Connect a data source
+            <span class="pl-c-checklist__hint">Production warehouse is connected.</span>
+          </label>
+        </li>
+        <li class="pl-c-checklist__item" data-state="complete">
+          <input class="pl-c-checklist__control" type="checkbox" id="setup-profile" checked />
+          <label class="pl-c-checklist__label" for="setup-profile">
+            Complete your profile
+            <span class="pl-c-checklist__hint">Name, role, and notification preferences.</span>
+          </label>
+        </li>
+        <li class="pl-c-checklist__item" data-state="current">
+          <input class="pl-c-checklist__control" type="checkbox" id="setup-invite" />
+          <label class="pl-c-checklist__label" for="setup-invite">
+            Invite a teammate
+            <span class="pl-c-checklist__hint">At least one teammate helps you test the workflow.</span>
+          </label>
+        </li>
+        <li class="pl-c-checklist__item">
+          <input class="pl-c-checklist__control" type="checkbox" id="setup-alert" />
+          <label class="pl-c-checklist__label" for="setup-alert">
+            Create your first alert
+            <span class="pl-c-checklist__hint">Route a real signal to the right channel.</span>
+          </label>
+        </li>
+      </ol>
+
+      <footer class="pl-c-checklist__footer">
+        <progress class="pl-c-checklist__progress" value="2" max="4">2 of 4 complete</progress>
+        <div class="pl-c-checklist__actions">
+          <button class="pl-c-button" data-variant="ghost" type="button">Dismiss</button>
+          <button class="pl-c-button" data-variant="primary" type="button">Continue setup</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+</BaseLayout>

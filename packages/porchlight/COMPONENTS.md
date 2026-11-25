@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 60 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 61 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 241.7 KB | 34.2 KB | 27.3 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 251.1 KB | 35.6 KB | 28.0 KB | Full framework (all 60 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 245.1 KB | 34.7 KB | 27.6 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 254.4 KB | 36.1 KB | 28.3 KB | Full framework (all 61 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -69,6 +69,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [calendar](#calendar)                 | `.pl-c-calendar`         | 10.2 KB  | 2.1 KB | 1.8 KB | None         | Date, date-range, and time picker surfaces for SaaS/BPM apps. CSS-only: app code owns date math, locale, roving tabindex, keyboard commands, validation timing, and popover open state. Porchlight styles the semantic HTML contract emitted by SSR, hypermedia fragments, or component frameworks.                                                                                                                                      |
 | [card](#card)                         | `.pl-c-card`             | 5.4 KB   | 1.4 KB | 1.2 KB | None         | A raised surface grouping related content - the workhorse of SaaS dashboards (KPI tiles, list items, settings sections, detail panels). Header + body slots; the header adapts to the card's OWN width via a container query (not the viewport), so a card in a narrow split pane stacks its header even on a wide screen.                                                                                                               |
 | [chart](#chart)                       | `.pl-c-chart`            | 5.3 KB   | 1.4 KB | 1.2 KB | None         | An accessible frame for app-owned charts. Porchlight provides metric headers, legends, plotting slots, loading/empty/error states, and a table fallback container. It does not draw charts or prescribe a charting engine.                                                                                                                                                                                                               |
+| [checklist](#checklist)               | `.pl-c-checklist`        | 2.3 KB   | 770 B  | 623 B  | None         | A persistent setup checklist for SaaS activation: native checkboxes, a progress summary, and optional current-step emphasis. The application owns completion state and persistence; the CSS owns the layout and affordances.                                                                                                                                                                                                             |
 | [chip](#chip)                         | `.pl-c-chip`             | 2.9 KB   | 938 B  | 769 B  | None         | A compact tag/pill with an optional remove button. Uses relative color syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.                                                                                                                                                                                                                                                                                      |
 | [code-block](#code-block)             | `.pl-c-code-block`       | 3.9 KB   | 1.1 KB | 999 B  | None         | A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.                                                                                                                                     |
 | [combobox](#combobox)                 | `.pl-c-combobox`         | 7.6 KB   | 1.8 KB | 1.6 KB | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
@@ -78,7 +79,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [dialog](#dialog)                     | `.pl-c-dialog`           | 3.4 KB   | 1.1 KB | 912 B  | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                                               |
 | [drawer](#drawer)                     | `.pl-c-drawer`           | 3.8 KB   | 1.1 KB | 972 B  | None         | An off-canvas panel that slides in from a viewport edge. Supports both declarative Popover API (<aside popover="auto"> or <div popover>) and native modal dialogs (<dialog closedby="any">) with zero-JS Invoker Commands:                                                                                                                                                                                                               |
 | [dropdown](#dropdown)                 | `.pl-c-dropdown`         | 3.7 KB   | 1.1 KB | 968 B  | None         | A button-triggered option menu using the Popover API + anchor positioning. Use it for sort/filter/action choices that need richer rendering than a native select. For form submission, keep a native select or sync a hidden input in app JavaScript.                                                                                                                                                                                    |
-| [empty-state](#empty-state)           | `.pl-c-empty`            | 1.2 KB   | 490 B  | 397 B  | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
+| [empty-state](#empty-state)           | `.pl-c-empty`            | 2.4 KB   | 793 B  | 663 B  | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
 | [entity-inspector](#entity-inspector) | `.pl-c-entity-inspector` | 1.9 KB   | 671 B  | 552 B  | None         | A native non-modal record popover. popovertarget provides the implicit anchor; repeated instances need unique HTML ids, never per-instance CSS anchor names.                                                                                                                                                                                                                                                                             |
 | [field](#field)                       | `.pl-c-field`            | 9.6 KB   | 2.2 KB | 1.9 KB | None         | A labeled form control: label, native input, hint/messages, and zero-JS anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native <input>/<select>/<textarea> so we inherit all their behavior (constraint validation, autofill, IME, spellcheck). No JS, no custom widgets.                                                                                                                                            |
 | [file-upload](#file-upload)           | `.pl-c-file-upload`      | 1.7 KB   | 680 B  | 536 B  | None         | A drag-and-drop file upload zone. The native <input type="file"> is visually hidden; the zone is the click target. Uses :has() for the drag-over state (set [data-dragging] via JS) and disabled state.                                                                                                                                                                                                                                  |
@@ -312,6 +313,22 @@ An accessible frame for app-owned charts. Porchlight provides metric headers, le
 @import "@cawalch/porchlight/components/chart.css";
 ```
 
+### checklist
+
+A persistent setup checklist for SaaS activation: native checkboxes, a progress summary, and optional current-step emphasis. The application owns completion state and persistence; the CSS owns the layout and affordances.
+
+- **Primary Selector**: `.pl-c-checklist`
+- **Import**: `@cawalch/porchlight/components/checklist.css`
+- **Minified Import**: `@cawalch/porchlight/components/checklist.min.css`
+- **Dist File**: `dist/components/checklist.css`
+- **Minified Dist File**: `dist/components/checklist.min.css`
+- **Sizes**: 2.3 KB minified, 770 B gzip, 623 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/checklist.css";
+```
+
 ### chip
 
 A compact tag/pill with an optional remove button. Uses relative color syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.
@@ -465,7 +482,7 @@ The "no data yet" placeholder - what users see in a table, list, or chart before
 - **Minified Import**: `@cawalch/porchlight/components/empty-state.min.css`
 - **Dist File**: `dist/components/empty-state.css`
 - **Minified Dist File**: `dist/components/empty-state.min.css`
-- **Sizes**: 1.2 KB minified, 490 B gzip, 397 B brotli
+- **Sizes**: 2.4 KB minified, 793 B gzip, 663 B brotli
 - **Dependencies**: None
 
 ```css

@@ -1,0 +1,136 @@
+/*
+ * Porchlight: checklist
+ * ===========================================================================
+ * A persistent setup checklist for SaaS activation: native checkboxes, a
+ * progress summary, and optional current-step emphasis. The application owns
+ * completion state and persistence; the CSS owns the layout and affordances.
+ *
+ * Structure: .pl-c-checklist > __header (title/description/badge) +
+ * __items (ol of __item with native checkbox + label/hint) + __footer
+ * (native progress + actions). Items expose [data-state="complete|current"].
+ */
+@layer porchlight.components {
+  @scope (.pl-c-checklist) {
+    :scope {
+      display: grid;
+      gap: var(--pl-space-4);
+      padding: var(--pl-space-4);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+    }
+
+    .pl-c-checklist__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+    }
+
+    .pl-c-checklist__title {
+      margin: 0;
+      font-size: var(--pl-text-md);
+      font-weight: var(--pl-font-weight-semibold);
+      line-height: var(--pl-leading-tight);
+    }
+
+    .pl-c-checklist__description {
+      margin: var(--pl-space-1) 0 0;
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-sm);
+    }
+
+    .pl-c-checklist__items {
+      display: grid;
+      gap: var(--pl-space-2);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pl-c-checklist__item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--pl-space-2);
+      align-items: start;
+      padding: var(--pl-space-2);
+      border-radius: var(--pl-radius-sm);
+    }
+
+    .pl-c-checklist__item[data-state="current"] {
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 92%);
+      box-shadow: inset 2px 0 0 var(--pl-color-accent);
+    }
+
+    .pl-c-checklist__control {
+      inline-size: 1rem;
+      block-size: 1rem;
+      margin-block-start: 0.15rem;
+      accent-color: var(--pl-color-accent);
+    }
+
+    .pl-c-checklist__label {
+      display: block;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-medium);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .pl-c-checklist__hint {
+      display: block;
+      margin-block-start: var(--pl-space-1);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .pl-c-checklist__item[data-state="complete"] .pl-c-checklist__label {
+      color: var(--pl-color-text-muted);
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+    }
+
+    .pl-c-checklist__footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-3);
+    }
+
+    .pl-c-checklist__progress {
+      flex: 1 1 12rem;
+      inline-size: 100%;
+      block-size: 0.5rem;
+      accent-color: var(--pl-color-success);
+    }
+
+    .pl-c-checklist__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--pl-space-2);
+      margin-inline-start: auto;
+    }
+  }
+
+  /* Live checked state cannot be relied on inside @scope; keep it outside with
+     low specificity so the default label styles still win when unchecked. */
+  :where(
+      .pl-c-checklist
+        .pl-c-checklist__item:has(.pl-c-checklist__control:checked)
+    )
+    .pl-c-checklist__label {
+    color: var(--pl-color-text-muted);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-checklist__item[data-state="current"]) {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+  }
+}

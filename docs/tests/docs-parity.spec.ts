@@ -17,6 +17,9 @@ const enhancementsSource = fileURLToPath(
 const layoutSource = fileURLToPath(
   new URL("../../packages/porchlight/src/05-layout.css", import.meta.url),
 );
+const frameworkEntry = fileURLToPath(
+  new URL("../../packages/porchlight/porchlight.css", import.meta.url),
+);
 
 const componentSlugs = readdirSync(componentSource)
   .filter((file) => file.endsWith(".css"))
@@ -69,4 +72,16 @@ test("desktop shell keeps the drag and Window Controls Overlay contract", () => 
   expect(source).toContain("window-drag: move");
   expect(source).toContain("env(titlebar-area-x");
   expect(source).toContain("display-mode: window-controls-overlay");
+});
+
+test("every component stylesheet is imported by the source entry", () => {
+  const source = readFileSync(frameworkEntry, "utf8");
+  const missing = componentSlugs.filter(
+    (slug) => !source.includes(`src/06-components/${slug}.css`),
+  );
+
+  expect(
+    missing,
+    "Add the component import to packages/porchlight/porchlight.css.",
+  ).toEqual([]);
 });
