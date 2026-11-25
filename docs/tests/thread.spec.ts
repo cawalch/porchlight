@@ -24,19 +24,19 @@ test("resolved threads and inline-edit states keep explicit status", async ({
 }) => {
   await page.goto("./preview/thread");
 
-  const resolved = page.locator('.pl-c-thread[data-resolved="true"]');
+  const resolved = page.locator('.pl-c-thread[data-pl-resolved="true"]');
   await expect(resolved).toBeVisible();
   await expect(resolved.locator('[data-state="resolved"]')).toHaveCount(1);
 
-  const saving = page.locator('[data-inline-edit][data-state="saving"]');
+  const saving = page.locator('[data-pl-inline-edit][data-state="saving"]');
   await expect(saving).toHaveAttribute("aria-busy", "true");
   await expect(saving.getByRole("status")).toContainText("Saving");
 
   await expect(
-    page.locator('[data-inline-edit][data-state="saved"]'),
+    page.locator('[data-pl-inline-edit][data-state="saved"]'),
   ).toBeVisible();
   await expect(
-    page.locator('[data-inline-edit][data-state="error"]'),
+    page.locator('[data-pl-inline-edit][data-state="error"]'),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Retry" })).toBeEnabled();
 });

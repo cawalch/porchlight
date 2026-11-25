@@ -30,7 +30,7 @@
       border-inline-start: 1px solid var(--pl-color-border);
     }
 
-    .pl-c-thread[data-resolved="true"] .pl-c-comment {
+    .pl-c-thread[data-pl-resolved="true"] .pl-c-comment {
       opacity: 0.82;
     }
   }
@@ -170,7 +170,7 @@
 
   /* Inline edit states are attribute hooks. Use aria-busy + inline-loading for
      the wait, and the normal badge/alert contract for saved and error. */
-  @scope ([data-inline-edit]) {
+  @scope ([data-pl-inline-edit]) {
     :scope[data-state="saving"] {
       cursor: progress;
     }

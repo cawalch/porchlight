@@ -77,19 +77,19 @@ The CSS owns the layout, surfaces, and state affordances.
 
 ## Resolved threads
 
-Add `data-resolved="true"` to `.pl-c-thread` to soften the thread, and
+Add `data-pl-resolved="true"` to `.pl-c-thread` to soften the thread, and
 `data-state="resolved"` to an individual comment when only one comment is
 resolved. Keep the resolved state visible in text too; do not rely on the
 muted color alone.
 
 ## Inline edit states
 
-Use `data-inline-edit` on the editable region and `data-state` for the action
+Use `data-pl-inline-edit` on the editable region and `data-state` for the action
 state. The CSS adds a progress cursor, a success outline, or a danger outline.
 The application still owns the real state and the rollback:
 
 ```html
-<div data-inline-edit data-state="saving" aria-busy="true">
+<div data-pl-inline-edit data-state="saving" aria-busy="true">
   <label class="pl-c-field">
     <span class="pl-c-field__label">Workspace name</span>
     <input class="pl-c-field__control" value="Acme Operations" />
@@ -104,11 +104,11 @@ The application still owns the real state and the rollback:
 For saved and error, keep the original value visible and use a short status:
 
 ```html
-<div data-inline-edit data-state="saved">
+<div data-pl-inline-edit data-state="saved">
   <p role="status">Workspace name saved.</p>
 </div>
 
-<div data-inline-edit data-state="error">
+<div data-pl-inline-edit data-state="error">
   <p role="alert">Could not save. Check the name and try again.</p>
   <button class="pl-c-button" data-variant="primary" data-size="sm">
     Retry
@@ -118,25 +118,25 @@ For saved and error, keep the original value visible and use a short status:
 
 ## Class contract
 
-| Selector                               | Role                                |
-| :------------------------------------- | :---------------------------------- |
-| `.pl-c-thread`                         | Root section.                       |
-| `.pl-c-thread__items`                  | Top-level `<ol>` of comments.       |
-| `.pl-c-thread__replies`                | Nested `<ol>` of replies.           |
-| `.pl-c-thread[data-resolved="true"]`   | Resolved thread treatment.          |
-| `.pl-c-comment`                        | One comment article.                |
-| `.pl-c-comment__avatar`                | Initials or avatar slot.            |
-| `.pl-c-comment__body`                  | Bordered comment surface.           |
-| `.pl-c-comment__header`                | Author and time row.                |
-| `.pl-c-comment__author`                | Author name.                        |
-| `.pl-c-comment__time`                  | Timestamp.                          |
-| `.pl-c-comment__content`               | Comment text.                       |
-| `.pl-c-comment__actions`               | Reactions and actions.              |
-| `.pl-c-comment[data-state="resolved"]` | Resolved comment border.            |
-| `.pl-c-mention`                        | Inline mention link.                |
-| `.pl-c-reaction`                       | Reaction toggle button.             |
-| `[data-inline-edit]`                   | Inline-edit region.                 |
-| `[data-inline-edit][data-state]`       | `saving`, `saved`, or `error` hook. |
+| Selector                                | Role                                |
+| :-------------------------------------- | :---------------------------------- |
+| `.pl-c-thread`                          | Root section.                       |
+| `.pl-c-thread__items`                   | Top-level `<ol>` of comments.       |
+| `.pl-c-thread__replies`                 | Nested `<ol>` of replies.           |
+| `.pl-c-thread[data-pl-resolved="true"]` | Resolved thread treatment.          |
+| `.pl-c-comment`                         | One comment article.                |
+| `.pl-c-comment__avatar`                 | Initials or avatar slot.            |
+| `.pl-c-comment__body`                   | Bordered comment surface.           |
+| `.pl-c-comment__header`                 | Author and time row.                |
+| `.pl-c-comment__author`                 | Author name.                        |
+| `.pl-c-comment__time`                   | Timestamp.                          |
+| `.pl-c-comment__content`                | Comment text.                       |
+| `.pl-c-comment__actions`                | Reactions and actions.              |
+| `.pl-c-comment[data-state="resolved"]`  | Resolved comment border.            |
+| `.pl-c-mention`                         | Inline mention link.                |
+| `.pl-c-reaction`                        | Reaction toggle button.             |
+| `[data-pl-inline-edit]`                 | Inline-edit region.                 |
+| `[data-pl-inline-edit][data-state]`     | `saving`, `saved`, or `error` hook. |
 
 ## Accessibility
 

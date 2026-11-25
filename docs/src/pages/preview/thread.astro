@@ -72,7 +72,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <h2>Resolved thread</h2>
-  <section class="pl-c-thread" data-resolved="true" aria-labelledby="thread-resolved">
+  <section class="pl-c-thread" data-pl-resolved="true" aria-labelledby="thread-resolved">
     <h2 class="pl-u-sr-only" id="thread-resolved">Resolved activity</h2>
     <ol class="pl-c-thread__items">
       <li>
@@ -92,7 +92,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <h2>Inline edit states</h2>
   <div class="pl-l-grid" style="--pl-l-grid-min: 16rem;">
-    <div class="pl-c-card" data-inline-edit data-state="saving" aria-busy="true">
+    <div class="pl-c-card" data-pl-inline-edit data-state="saving" aria-busy="true">
       <label class="pl-c-field">
         <span class="pl-c-field__label">Workspace name</span>
         <input class="pl-c-field__control" value="Acme Operations" />
@@ -103,12 +103,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </span>
     </div>
 
-    <div class="pl-c-card" data-inline-edit data-state="saved">
+    <div class="pl-c-card" data-pl-inline-edit data-state="saved">
       <span class="pl-c-badge" data-tone="success">Saved</span>
       <p class="pl-u-muted-sm">Workspace name saved.</p>
     </div>
 
-    <div class="pl-c-card" data-inline-edit data-state="error">
+    <div class="pl-c-card" data-pl-inline-edit data-state="error">
       <span class="pl-c-badge" data-tone="danger">Failed</span>
       <p class="pl-u-muted-sm">Could not save. Check the name and try again.</p>
       <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">Retry</button>
