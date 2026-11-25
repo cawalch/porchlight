@@ -13,7 +13,11 @@ test("checklist exposes native checkbox, progress, and current-step semantics", 
   );
 
   const progress = checklist.locator("progress");
-  expect(await progress.evaluate((element) => element.value)).toBe(2);
+  expect(
+    await progress.evaluate(
+      (element) => (element as HTMLProgressElement).value,
+    ),
+  ).toBe(2);
   await expect(progress).toHaveAttribute("max", "4");
   await expect(progress).toHaveText("2 of 4 complete");
   await expect(checklist.locator('[data-state="current"]')).toHaveCount(1);
