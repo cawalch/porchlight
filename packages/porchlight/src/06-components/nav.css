@@ -425,7 +425,9 @@
       .pl-c-nav__meta {
       grid-template-columns: 1fr;
       justify-items: center;
-      padding: var(--pl-space-1);
+      padding: 0;
+      border: 0;
+      background: transparent;
     }
 
     @container pl-l-app-sidebar (inline-size < 5rem) {
@@ -458,7 +460,9 @@
       :scope .pl-c-nav__meta {
         grid-template-columns: 1fr;
         justify-items: center;
-        padding: var(--pl-space-1);
+        padding: 0;
+        border: 0;
+        background: transparent;
       }
     }
   }
