@@ -1,0 +1,146 @@
+---
+title: Data visualization
+description: CSS-only sparkline, bar chart, and heatmap shells with accessible table fallbacks.
+status: stable
+since: 0.20.0
+---
+
+Porchlight provides small, CSS-only chart primitives for dashboards: a
+sparkline shell, a CSS grid bar chart, and a CSS grid heatmap. The application
+supplies the values and the accessible fallback. Porchlight supplies the
+geometry, tones, and layout.
+
+This is not a charting engine. There are no axes, tooltips, zoom, brushing, or
+large-dataset layout. Use a dedicated chart library when those are required.
+
+## Sparkline
+
+The sparkline is an inline SVG shell. The application supplies the path data
+and keeps the chart decorative:
+
+```html
+<span
+  class="pl-c-sparkline"
+  data-tone="success"
+  aria-hidden="true"
+  style="--pl-c-sparkline-size: 8rem; --pl-c-sparkline-height: 2rem;"
+>
+  <svg viewBox="0 0 100 32" preserveAspectRatio="none">
+    <path
+      class="pl-c-sparkline__area"
+      d="M0 28 L20 22 L40 24 L60 12 L80 16 L100 4 V32 H0 Z"
+    />
+    <path
+      class="pl-c-sparkline__line"
+      d="M0 28 L20 22 L40 24 L60 12 L80 16 L100 4"
+    />
+  </svg>
+</span>
+<span class="pl-u-sr-only">Revenue trend: up 12.4% over the last 7 days.</span>
+```
+
+## Bar chart
+
+Each bar is a grid item with `--pl-c-bar-value` between 0 and 100. The chart has
+a fixed block size, so the percentages resolve against the chart height:
+
+```html
+<div
+  class="pl-c-bar-chart"
+  aria-hidden="true"
+  style="--pl-c-bar-chart-height: 8rem;"
+>
+  <div class="pl-c-bar-chart__item">
+    <div class="pl-c-bar-chart__fill" style="--pl-c-bar-value: 42"></div>
+    <span class="pl-c-bar-chart__label">Mon</span>
+  </div>
+  <div class="pl-c-bar-chart__item">
+    <div class="pl-c-bar-chart__fill" style="--pl-c-bar-value: 68"></div>
+    <span class="pl-c-bar-chart__label">Tue</span>
+  </div>
+  <div class="pl-c-bar-chart__item">
+    <div class="pl-c-bar-chart__fill" style="--pl-c-bar-value: 54"></div>
+    <span class="pl-c-bar-chart__label">Wed</span>
+  </div>
+</div>
+
+<table class="pl-u-sr-only">
+  <caption>
+    Requests by day
+  </caption>
+  <tbody>
+    <tr>
+      <th scope="row">Mon</th>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th scope="row">Tue</th>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th scope="row">Wed</th>
+      <td>54</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+## Heatmap
+
+Set `--pl-c-heatmap-columns` on the grid and `--pl-c-heat-value` on each cell.
+The fill is mixed from the tone and the surface token, so it adapts to light,
+dark, and custom palettes:
+
+```html
+<div class="pl-c-heatmap" aria-hidden="true" style="--pl-c-heatmap-columns: 7;">
+  <span class="pl-c-heatmap__cell" style="--pl-c-heat-value: 20"></span>
+  <span class="pl-c-heatmap__cell" style="--pl-c-heat-value: 55"></span>
+  <span class="pl-c-heatmap__cell" style="--pl-c-heat-value: 90"></span>
+</div>
+```
+
+Pair the heatmap with a table when the exact values matter. Do not rely on the
+shade alone to communicate a threshold.
+
+## Tones
+
+`data-tone="success"`, `"warning"`, and `"danger"` recolor the chart through
+`--pl-c-data-tone`. Use color as a secondary signal. Keep the label, table, or
+summary text explicit.
+
+## Accessibility
+
+- Mark the visual chart `aria-hidden="true"` and provide a real table,
+  description list, or short summary next to it.
+- Do not put interactive controls inside a decorative chart.
+- Keep the fallback in the reading order, or use `.pl-u-sr-only` when the table
+  is redundant with nearby text.
+- Do not use color alone for a threshold. Add a label, icon, or text value.
+- Under forced colors, bars and cells keep a system border so the geometry
+  remains visible.
+
+## Class contract
+
+| Selector                  | Role                                    |
+| :------------------------ | :-------------------------------------- |
+| `.pl-c-sparkline`         | Inline SVG shell.                       |
+| `.pl-c-sparkline__line`   | Stroke-only trend line.                 |
+| `.pl-c-sparkline__area`   | Optional area fill.                     |
+| `.pl-c-sparkline__dot`    | Optional emphasis dot.                  |
+| `.pl-c-bar-chart`         | Flex chart with a fixed block size.     |
+| `.pl-c-bar-chart__item`   | One bar and label.                      |
+| `.pl-c-bar-chart__fill`   | Bar fill, sized by `--pl-c-bar-value`.  |
+| `.pl-c-bar-chart__label`  | Axis label under the bar.               |
+| `.pl-c-heatmap`           | CSS grid of cells.                      |
+| `.pl-c-heatmap__cell`     | One cell, sized by `--pl-c-heat-value`. |
+| `[data-tone]`             | `success`, `warning`, or `danger`.      |
+| `--pl-c-sparkline-size`   | Sparkline inline size.                  |
+| `--pl-c-sparkline-height` | Sparkline block size.                   |
+| `--pl-c-bar-chart-height` | Bar chart block size.                   |
+| `--pl-c-heatmap-columns`  | Heatmap column count.                   |
+
+## Limits
+
+Use a chart library when you need axes, tooltips, legends with interaction,
+time-series zoom, annotations, or virtualization for large datasets. These
+primitives are for small, inline signals inside cards, tables, and KPI tiles.
