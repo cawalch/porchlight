@@ -47,3 +47,18 @@ test("sidebar collapses to one column inside a narrow container", async ({
   // the container has a definite size; assert track count, not the literal.)
   expect(cols.trim().split(/\s+/).length).toBe(1);
 });
+
+test("app shell keeps a keyboard-reachable navigation target at 500px width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 500, height: 800 });
+  await page.goto("./preview/app-shell");
+
+  const sidebar = page.locator(".pl-l-app-shell__sidebar");
+  await expect(sidebar).toBeVisible();
+
+  const navTarget = sidebar.locator("a, button").first();
+  await expect(navTarget).toBeVisible();
+  await navTarget.focus();
+  await expect(navTarget).toBeFocused();
+});

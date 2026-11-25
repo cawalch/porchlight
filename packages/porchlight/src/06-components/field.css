@@ -479,10 +479,12 @@
   :where(.pl-c-field):has(
     :is(.pl-c-field__control, .pl-c-field__input):disabled
   ) {
+    color: var(--pl-color-text-disabled);
     opacity: var(--pl-opacity-disabled);
   }
 
   :is(.pl-c-field__control, .pl-c-field__input):disabled {
+    color: var(--pl-color-text-disabled);
     opacity: var(--pl-opacity-disabled);
     cursor: not-allowed;
   }

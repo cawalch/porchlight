@@ -497,6 +497,8 @@
       --pl-color-text: CanvasText;
       --pl-color-text-muted: CanvasText;
       --pl-color-text-faint: CanvasText;
+      --pl-color-text-disabled: GrayText;
+      --pl-opacity-disabled: 1;
       --pl-color-border: ButtonBorder;
       --pl-color-accent: Highlight;
       --pl-color-accent-text: HighlightText;

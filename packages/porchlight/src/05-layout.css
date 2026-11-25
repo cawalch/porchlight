@@ -193,28 +193,50 @@
     overscroll-behavior: contain;
   }
 
-  /* Viewport fallback: on a genuinely narrow viewport the sidebar is hidden
-     (the work surface takes priority). This is the ONLY viewport media query
-     in the layout layer  -  components adapt via container queries. */
+  /* Viewport fallback: on a genuinely narrow viewport the sidebar collapses to
+     the icon rail so navigation stays keyboard-reachable; opt into hiding
+     completely via data-pl-sidebar="autohide" (or data-sidebar="autohide").
+     This is the ONLY viewport media query in the layout layer. */
   @media (width < 60rem) {
-    :where(.pl-l-app-shell) {
+    :where(
+      .pl-l-app-shell:has(
+        > .pl-l-app-shell__sidebar:is(
+            [data-sidebar="autohide"],
+            [data-pl-sidebar="autohide"]
+          )
+      )
+    ) {
       grid-template:
         "topbar" auto
         "main" minmax(0, 1fr)
         / minmax(0, 1fr);
     }
 
-    :where(.pl-l-app-shell__sidebar) {
+    :where(
+      .pl-l-app-shell__sidebar:is(
+        [data-sidebar="autohide"],
+        [data-pl-sidebar="autohide"]
+      )
+    ) {
       display: none;
+    }
+
+    :where(
+      .pl-l-app-shell__sidebar:not(
+        [data-sidebar="autohide"],
+        [data-pl-sidebar="autohide"]
+      )
+    ) {
+      inline-size: var(--pl-app-sidebar-collapsed, 3.5rem);
     }
   }
 
   /* --------------------------------------------------------------------- */
 
-  /* Multi-column masonry  -  card walls, search results, image grids. Uses
-     CSS multi-column layout (simpler than grid masonry and works in all
-     browsers). Items break-inside avoid so cards don't split across
-     columns. Tune column count via --pl-l-columns-count or let it auto. */
+  /* Multi-column masonry  -  card walls, image galleries. Uses CSS Grid Level 3
+     masonry where supported for row-major reading order, falling back to CSS
+     multi-column layout (note: multicol flows down each column, so prefer
+     .pl-l-grid for ordered/interactive content in fallback browsers). */
   :where(.pl-l-columns) {
     --pl-l-columns-width: 16rem;
 
@@ -225,6 +247,22 @@
   :where(.pl-l-columns > *) {
     break-inside: avoid;
     margin-block-end: var(--pl-l-columns-gap, var(--pl-space-4));
+  }
+
+  @supports (grid-template-rows: masonry) {
+    :where(.pl-l-columns) {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%, var(--pl-l-columns-width, 16rem)), 1fr)
+      );
+      grid-template-rows: masonry;
+      gap: var(--pl-l-columns-gap, var(--pl-space-4));
+    }
+
+    :where(.pl-l-columns > *) {
+      margin-block-end: 0;
+    }
   }
 
   /* Centered max-width container  -  general-purpose wrapper for app

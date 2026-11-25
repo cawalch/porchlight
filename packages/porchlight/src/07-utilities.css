@@ -43,6 +43,7 @@
     position: static !important;
     inline-size: auto !important;
     block-size: auto !important;
+    overflow: visible !important;
     clip-path: none !important;
     white-space: normal !important;
     margin: 0 !important;
@@ -149,11 +150,20 @@
     min-inline-size: 0;
   }
 
-  /* Full-bleed: break an element out to the viewport edges inside a
-     constrained container (e.g. a wide table or image in a prose column). */
+  /* Full-bleed: break an element out to the edges of its container or
+     viewport. Inside .pl-l-page / .pl-l-container, compute the bleed from
+     the container's padding token so classic scrollbars never cause overflow. */
   :where(.pl-u-full-bleed) {
     inline-size: 100vi;
     margin-inline: calc(50% - 50vi);
+  }
+
+  :where(.pl-l-page > .pl-u-full-bleed, .pl-l-container > .pl-u-full-bleed) {
+    box-sizing: content-box;
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-inline: calc(-1 * var(--pl-l-container-pad, var(--pl-space-4)));
+    padding-inline: var(--pl-l-container-pad, var(--pl-space-4));
   }
 
   /* Tabular numbers: ensure monospaced numerical figures in stats, counters, and telemetry tables. */
@@ -167,27 +177,32 @@
   }
 
   /* Opt-in boundary for Element.startViewTransition(); the application owns
-     updates, feature detection, focus, and reduced-motion bypass. */
+     updates, feature detection, focus, and reduced-motion bypass. Opt into
+     overflow clipping via data-pl-transition-scope="clip". */
   :where(.pl-u-transition-scope) {
     --pl-u-transition-duration: var(--pl-duration-2);
+  }
 
+  :where(
+    .pl-u-transition-scope:is(
+      [data-transition-scope="clip"],
+      [data-pl-transition-scope="clip"]
+    )
+  ) {
     isolation: isolate;
     overflow: clip;
-    view-transition-scope: all;
   }
 
-  :where(.pl-u-transition-scope)::view-transition-group(*),
-  :where(.pl-u-transition-scope)::view-transition-old(*),
-  :where(.pl-u-transition-scope)::view-transition-new(*) {
-    animation-duration: var(--pl-u-transition-duration);
-    animation-timing-function: var(--pl-ease-standard);
-  }
+  @supports (view-transition-scope: all) {
+    :where(.pl-u-transition-scope) {
+      view-transition-scope: all;
+    }
 
-  @media (prefers-reduced-motion: reduce) {
     :where(.pl-u-transition-scope)::view-transition-group(*),
     :where(.pl-u-transition-scope)::view-transition-old(*),
     :where(.pl-u-transition-scope)::view-transition-new(*) {
-      animation-duration: 0s;
+      animation-duration: var(--pl-u-transition-duration);
+      animation-timing-function: var(--pl-ease-standard);
     }
   }
 }
