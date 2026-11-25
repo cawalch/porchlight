@@ -7,17 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.0] - 2026-11-25
+
 ### Added
 
+- Add `06-components/swatch.css` with base `.pl-c-swatch` geometry, border, and token-derived fallback background (`--pl-c-swatch-size`, `--pl-c-swatch-color`), keeping the typed `attr(data-color type(<color>))` upgrade in `08-enhancements.css` (#230).
+- Add `--pl-color-text-disabled` semantic token in `02-tokens.css`, applied to disabled field controls and mapped to `GrayText` (with `--pl-opacity-disabled: 1`) under `@media (forced-colors: active)` (#232).
+- Add `data-pl-sidebar="autohide"` (and `data-sidebar="autohide"`) opt-in on `.pl-l-app-shell__sidebar` for narrow viewports below `60rem` (#227).
+- Add `data-pl-transition-scope="clip"` opt-in on `.pl-u-transition-scope` for `isolation: isolate; overflow: clip;` (#234).
+- Add `@layer porchlight.print` baseline rule in `04-base.css` and `@media (prefers-reduced-transparency: reduce)` frosted-surface fallback in `03-themes.css` (#236).
+- Add bare `[data-*]` attribute selector allow-list enforcement in `scripts/check-namespace.mjs` so new unprefixed `data-*` attributes in framework CSS fail CI (#237).
 - Add keyboard navigation and selection to the tree preview.
-
 - Add a working assignee lookup to the combobox docs with copyable source and a keyboard test covering selection, cancellation, and the submitted person ID.
+- Add audit coverage tests: `reduced-motion.spec.ts`, `layout-utilities-fixes.spec.ts`, `audit-liveness.spec.ts`, symmetric density nesting matrix in `density.spec.ts`, 500px app-shell navigation in `sidebar-container.spec.ts`, and `accent-hover`/`accent-subtle`/`--pl-focus-color` assertions in `contrast.spec.ts` (#238).
 
 ### Changed
 
+- Promote `@supports (grid-template-rows: masonry)` for `.pl-l-columns` in `05-layout.css` so supporting browsers get row-major reading order with CSS multi-column as the fallback (#231).
+- Consolidate `--pl-density` style container queries into `03-themes.css` alongside `[data-pl-density]` and have `[data-pl-density]` set `--pl-density`, so attribute and custom-property nesting resolve symmetrically (#226).
+- Remove dead tokens (`--pl-space-0`, `--pl-radius-3xl`, `--pl-ease-emphasized`, `--pl-color-border-overlay`), move `@property --pl-gauge-value` into `06-components/gauge.css`, give `--pl-z-fixed` its own `500` step, drop Inter-private `cv02`/`cv11` from `--pl-font-feature-code`, collapse duplicate card subgrid rules, use `--pl-backdrop-blur`/`--pl-backdrop-saturate` on the glass topbar, and fix overbroad `[data-reading-flow]` selectors (#236).
 - Replace em-dashes with `:`/`,`/`.` per context across framework CSS comments, docs guides, preview pages, test comments, and repo meta files (~145 lines in 59 files), closing the punctuation style debt flagged in project memory. Docs search index section titles change from `Page — Section` to `Page: Section`, with the command-palette detail heuristic (`includes(" — ")`) updated to match; the guides index separator and the layout preview's "not applicable" table cell change accordingly (`: `, `n/a`).
 - Bump dev dependencies to current minor/patch releases: `astro` 7.4.13, `@astrojs/mdx` 8.1.6, `@playwright/test` 1.65.1, `prettier` 3.10.1, `@biomejs/biome` 2.6.8 (including the `biome.json` `$schema` pin), `stylelint-declaration-strict-value` 1.13.0, and `stylelint-plugin-defensive-css` 2.10.0. TypeScript intentionally stays on 5.x; semver-major updates are ignored per the existing dependabot policy. Lint, format, build, and the QC suite all pass on the new versions.
 - Raise the CI Playwright browser-install step timeout (6 → 12 minutes) and the Playwright Tests job timeout (15 → 25 minutes). Each Playwright version bump invalidates the version-keyed browser cache and forces a one-time cold install, which a slow apt mirror can push past the old 6-minute cap.
+
+### Fixed
+
+- Stop smooth scrolling on all elements (including `.pl-c-tabs__list` and `.pl-c-miller-columns`) under `@media (prefers-reduced-motion: reduce)` (#225).
+- Collapse `.pl-l-app-shell__sidebar` to the `3.5rem` icon rail below `60rem` instead of hiding it with `display: none` (#227).
+- Use `light-dark()` for `--pl-color-accent-hover` so dark mode lightens away from the surface instead of darkening toward it (#228).
+- Derive `--pl-focus-color` from `--pl-brand-6`/`--pl-brand-4` on `:where(:root, [data-pl-palette])` so palette presets no longer keep the amber focus ring (#229).
+- Drop the dead `.pl-c-calendar__popover` selector from `08-enhancements.css` (#230).
+- Compute `.pl-l-page > .pl-u-full-bleed` and `.pl-l-container > .pl-u-full-bleed` from `--pl-l-container-pad` without `100vi` so classic scrollbars do not cause horizontal overflow (#233).
+- Gate `view-transition-scope: all` and its pseudo-element rules behind `@supports (view-transition-scope: all)`, remove default `overflow: clip` from `.pl-u-transition-scope`, and drop the redundant reduced-motion override (#234).
+- Reset `overflow: visible !important` on `.pl-u-focusable-sr-only` / `.pl-u-visually-hidden` focus reveal (#235).
 
 ## [0.18.0] - 2026-11-11
 
