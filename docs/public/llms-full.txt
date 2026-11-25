@@ -421,6 +421,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - toolbar: /components/toolbar
 - tooltip: /components/tooltip
 - tree: /components/tree
+- undo: /components/undo
 - workflow-board: /components/workflow-board
 
 ## Application pattern reference
@@ -548,6 +549,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/toolbar
 - /preview/tooltip
 - /preview/tree
+- /preview/undo
 - /preview/utilities
 - /preview/workflow-board
 

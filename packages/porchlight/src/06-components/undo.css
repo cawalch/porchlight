@@ -1,0 +1,100 @@
+/*
+ * Porchlight: undo bar
+ * ===========================================================================
+ * Reversible action feedback for destructive changes, bulk edits, and AI
+ * applies. Use inline after the affected region, or floating at the bottom of
+ * the viewport when the action has no natural anchor.
+ *
+ * Structure: .pl-c-undo > __message (text + optional meta) + __actions
+ * (Undo / dismiss) + optional __timer. The application owns the timeout,
+ * rollback, and persistence; the CSS owns the surface and state affordances.
+ */
+@layer porchlight.components {
+  @scope (.pl-c-undo) {
+    :scope {
+      --pl-c-undo-tone: var(--pl-color-accent);
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-2) var(--pl-space-3);
+      padding-block: var(--pl-space-2);
+      padding-inline: var(--pl-space-3);
+      border: 1px solid
+        color-mix(in oklab, var(--pl-c-undo-tone), var(--pl-color-border) 65%);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      box-shadow: var(--pl-shadow-3);
+      color: var(--pl-color-text);
+    }
+
+    :scope[data-tone="danger"] {
+      --pl-c-undo-tone: var(--pl-color-danger);
+    }
+
+    :scope[data-tone="success"] {
+      --pl-c-undo-tone: var(--pl-color-success);
+    }
+
+    :scope[data-variant="floating"] {
+      position: fixed;
+      inset-block-end: var(--pl-space-4);
+      inset-inline: var(--pl-space-4);
+      z-index: var(--pl-z-toast);
+      inline-size: min(36rem, calc(100dvi - 2 * var(--pl-space-4)));
+      margin-inline: auto;
+    }
+
+    .pl-c-undo__message {
+      flex: 1 1 14rem;
+      min-inline-size: 0;
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .pl-c-undo__meta {
+      display: block;
+      margin-block-start: var(--pl-space-1);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+    }
+
+    .pl-c-undo__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-1);
+      margin-inline-start: auto;
+    }
+
+    .pl-c-undo__timer {
+      flex: 1 0 100%;
+      block-size: 2px;
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface-2);
+      overflow: hidden;
+    }
+
+    .pl-c-undo__timer::before {
+      content: "";
+      display: block;
+      block-size: 100%;
+      inline-size: var(--pl-c-undo-progress, 100%);
+      border-radius: inherit;
+      background: var(--pl-c-undo-tone);
+      transition: inline-size linear var(--pl-c-undo-duration, 10s);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.pl-c-undo) .pl-c-undo__timer::before {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-undo) {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Undo bar · Porchlight">
+  <h1>Undo bar</h1>
+  <p>
+    Reversible action feedback for destructive changes, bulk edits, and AI
+    applies. The application owns the timeout and rollback; the CSS owns the
+    surface and the optional countdown.
+  </p>
+
+  <h2>Inline undo</h2>
+  <div class="pl-c-undo">
+    <p class="pl-c-undo__message" role="status">
+      3 records moved to Archive.
+      <span class="pl-c-undo__meta">You can undo this for 10 seconds.</span>
+    </p>
+    <div class="pl-c-undo__actions">
+      <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Dismiss</button>
+      <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">Undo</button>
+    </div>
+    <div class="pl-c-undo__timer" style="--pl-c-undo-progress: 64%;" aria-hidden="true"></div>
+  </div>
+
+  <h2>Action states in context</h2>
+  <p>
+    Pending, saved, and error states reuse the existing status primitives. Keep
+    the original value visible and do not blank the whole region.
+  </p>
+  <div class="pl-c-table-wrap">
+    <table class="pl-c-table">
+      <thead>
+        <tr>
+          <th>Invoice</th>
+          <th>Owner</th>
+          <th>State</th>
+          <th data-align="end">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr aria-busy="true">
+          <td><strong>INV-1042</strong></td>
+          <td>Acme Ops</td>
+          <td>
+            <span class="pl-c-inline-loading" role="status">
+              <span class="pl-c-spinner" aria-hidden="true"></span>
+              <span>Saving…</span>
+            </span>
+          </td>
+          <td data-align="end" class="pl-u-tabular-nums">$12,400</td>
+        </tr>
+        <tr>
+          <td><strong>INV-1041</strong></td>
+          <td>Northwind</td>
+          <td><span class="pl-c-badge" data-tone="success">Saved</span></td>
+          <td data-align="end" class="pl-u-tabular-nums">$8,200</td>
+        </tr>
+        <tr>
+          <td><strong>INV-1040</strong></td>
+          <td>Globex</td>
+          <td>
+            <span class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+              <span class="pl-c-badge" data-tone="danger">Failed</span>
+              <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Retry</button>
+            </span>
+          </td>
+          <td data-align="end" class="pl-u-tabular-nums">$4,900</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</BaseLayout>
