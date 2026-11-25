@@ -14,10 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add the missing `swatch` reference page and preview so every component stylesheet has a documented, testable surface.
 - Add a docs parity test that fails when a component stylesheet, reference page, or preview is missing.
 
+### Fixed
+
+- Use the current `position-visibility: anchor-visible` value in the enhancement layer, with a gated fallback for Chromium 125-156, and document that Firefox does not implement `position-visibility` yet.
+- Document the Safari 26.0-26.3 `@scope` form-control caveat in the browser-support guide so the support floor is accurate for field-heavy screens.
+
 ### Changed
 
 - Rewrite the homepage hero around the desktop SaaS positioning, replace the generic project snapshot with runtime, bundle, examples, and density proof points, and group the guide index into Start, Build, Design system, and CSS layer.
-- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build: 60 component stylesheets, 4.0 KB gzip core, and 36.5 KB gzip full.
+- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build: 60 component stylesheets, 3.9 KB gzip core, and 35.3 KB gzip full.
 
 ## [0.19.0] - 2026-11-25
 

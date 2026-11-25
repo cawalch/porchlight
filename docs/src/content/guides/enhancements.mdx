@@ -102,8 +102,13 @@ Inputs and query builder tokens automatically expand and shrink to fit their typ
 
 Popovers, tooltips, and floating inspection brackets automatically adapt to viewport boundaries using native anchor positioning enhancements:
 
-- `position-visibility: anchors-visible`: Automatically conceals the overlay when its anchor element scrolls outside viewport bounds, preventing orphan floating artifacts.
+- `position-visibility: anchor-visible`: Automatically conceals the overlay when its anchor element scrolls outside viewport bounds, preventing orphan floating artifacts.
 - `position-try-order: most-block-size`: Instructs the layout engine to evaluate position fallbacks and pick the one providing the largest vertical block-size, maximizing visible menu rows in cramped viewports.
+
+Chrome 157 renamed the `position-visibility` values from `anchors-visible` to
+`anchor-visible` (and `anchors-valid` to `anchor-valid`). The enhancement layer
+uses the current value and keeps a gated fallback for Chromium 125-156. Firefox
+does not implement `position-visibility` yet, so the block remains opt-in.
 
 ## Pure-CSS Dynamic Stagger (`sibling-index()` & `sibling-count()`)
 

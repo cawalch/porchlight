@@ -21,13 +21,13 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
-| `core.min.css`                        | 18.5 KB  | 4.0 KB  | 3.3 KB  | Layers, reset, design tokens, themes, base styles                   |
-| `layout.min.css`                      | 3.7 KB   | 1.1 KB  | 919 B   | Primitives: stack, cluster, grid, sidebar, center                   |
-| `utilities.min.css`                   | 3.0 KB   | 968 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
+| `core.min.css`                        | 18.0 KB  | 3.9 KB  | 3.3 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `layout.min.css`                      | 3.6 KB   | 1.1 KB  | 919 B   | Primitives: stack, cluster, grid, sidebar, center                   |
+| `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
-| `experimental.min.css`                | 2.5 KB   | 714 B   | 575 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 246.0 KB | 35.1 KB | 27.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 255.2 KB | 36.5 KB | 28.4 KB | Full framework (all 60 components, layout, utilities, enhancements) |
+| `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
+| `compat.min.css`                      | 240.0 KB | 33.9 KB | 27.0 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 249.4 KB | 35.3 KB | 27.8 KB | Full framework (all 60 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 

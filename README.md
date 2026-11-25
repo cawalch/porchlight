@@ -23,7 +23,7 @@ a tested accessibility floor without a JavaScript runtime or a build step.
   audit streams, command palette, and telemetry surfaces.
 - **Framework neutral**: use it with Rails, Django, Laravel, PHP, Astro, HTMX,
   Alpine, React, or plain HTML.
-- **Small and modular**: about 4.0 KB gzip for core, 35.7 KB gzip for the full
+- **Small and modular**: about 3.9 KB gzip for core, 35.3 KB gzip for the full
   bundle, or core plus only the components you render.
 
 Read the [comparison with Bootstrap, Tailwind and shadcn, Pico, DaisyUI, Bulma,
@@ -65,7 +65,7 @@ Or import only the parts you use:
 @import "@cawalch/porchlight/utilities.css";
 ```
 
-`core.css` includes layer order, reset, tokens, themes, and base styles (only **4.0 KB gzip**).
+`core.css` includes layer order, reset, tokens, themes, and base styles (only **3.9 KB gzip**).
 When bundled with your app bundler, selective imports ship between **4.9 KB and 6.8 KB gzip**
 (less than half of legacy 14 KB monolithic stylesheets).
 The full stylesheet and modular entries build cleanly under Bun 1.4.4, Vite, Webpack, and esbuild.

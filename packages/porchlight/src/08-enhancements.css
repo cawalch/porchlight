@@ -300,8 +300,23 @@
     }
   }
 
-  /* 9. Anchor-tethered visibility: auto-hide popover when anchor scrolls offscreen. */
-  @supports (position-visibility: anchors-visible) {
+  /* 9. Anchor-tethered visibility: auto-hide popover when anchor scrolls offscreen.
+     Chrome 157+ uses the de-pluralized `anchor-visible` value. Chromium 125-156
+     used the pre-standard `anchors-visible`; keep a gated fallback until those
+     versions age out. Firefox does not implement position-visibility yet. */
+  @supports (position-visibility: anchor-visible) {
+    :where(
+      .pl-c-tooltip__body,
+      .pl-c-menu__popover,
+      .pl-c-dropdown__menu,
+      .pl-c-inspector[data-tether="true"]
+    ) {
+      position-visibility: anchor-visible;
+    }
+  }
+
+  @supports (position-visibility: anchors-visible) and
+    (not (position-visibility: anchor-visible)) {
     :where(
       .pl-c-tooltip__body,
       .pl-c-menu__popover,

@@ -11,6 +11,9 @@ const componentDocs = fileURLToPath(
 const componentPreviews = fileURLToPath(
   new URL("../src/pages/preview/", import.meta.url),
 );
+const enhancementsSource = fileURLToPath(
+  new URL("../../packages/porchlight/src/08-enhancements.css", import.meta.url),
+);
 
 const componentSlugs = readdirSync(componentSource)
   .filter((file) => file.endsWith(".css"))
@@ -51,4 +54,9 @@ test("every component reference page has a component stylesheet", () => {
     missing,
     "Add the component stylesheet or move the page to a pattern.",
   ).toEqual([]);
+});
+
+test("enhancements use the current position-visibility value", () => {
+  const source = readFileSync(enhancementsSource, "utf8");
+  expect(source).toContain("position-visibility: anchor-visible;");
 });
