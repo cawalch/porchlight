@@ -1,4 +1,27 @@
 import { test, expect, type Page } from "@playwright/test";
+import { readdirSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { previewRoutes } from "./lib/preview-routes";
+
+const componentDocsDir = fileURLToPath(
+  new URL("../src/content/components/", import.meta.url),
+);
+const componentDocKinds = readdirSync(componentDocsDir)
+  .filter((file) => file.endsWith(".mdx"))
+  .map((file) =>
+    /^kind:\s*pattern\s*$/m.test(
+      readFileSync(`${componentDocsDir}${file}`, "utf8"),
+    )
+      ? "pattern"
+      : "component",
+  );
+const componentCount = componentDocKinds.filter(
+  (kind) => kind === "component",
+).length;
+const patternCount = componentDocKinds.filter(
+  (kind) => kind === "pattern",
+).length;
+const previewTotal = previewRoutes.length - 1;
 
 async function expectDocumentScrollsOver(page: Page, selector: string) {
   const target = await page.evaluate((targetSelector) => {
@@ -131,7 +154,7 @@ test.describe("docs scaffold", () => {
     const componentsStat = page.locator("[data-stat-components]");
     const patternsStat = page.locator("[data-stat-patterns]");
 
-    await expect(totalStat).toHaveText("87");
+    await expect(totalStat).toHaveText(String(previewTotal));
 
     // Filter by 'audit'
     await input.fill("audit");
@@ -145,9 +168,9 @@ test.describe("docs scaffold", () => {
     // Clear with Escape
     await input.press("Escape");
     await expect(input).toHaveValue("");
-    await expect(totalStat).toHaveText("87");
-    await expect(componentsStat).toHaveText("59");
-    await expect(patternsStat).toHaveText("9");
+    await expect(totalStat).toHaveText(String(previewTotal));
+    await expect(componentsStat).toHaveText(String(componentCount));
+    await expect(patternsStat).toHaveText(String(patternCount));
   });
 
   test("reset preview page renders and lists the layers", async ({ page }) => {
