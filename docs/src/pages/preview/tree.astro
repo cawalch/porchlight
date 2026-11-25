@@ -26,7 +26,7 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
         </button>
       </header>
 
-      <div class="pl-c-tree" role="tree" aria-label="Claims automation library" data-actions="persistent">
+      <div class="pl-c-tree" role="tree" aria-label="Claims automation library">
         <div class="pl-c-tree__item" role="treeitem" aria-expanded="true" tabindex="0">
           <div class="pl-c-tree__item-row">
             <span class="pl-c-tree__expander" aria-hidden="true">
@@ -47,11 +47,6 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
                 </span>
                 <span class="pl-c-tree__label">FNOL triage</span>
                 <span class="pl-c-tree__meta">v18</span>
-                <span class="pl-c-tree__actions">
-                  <button class="pl-c-tree__action" type="button" aria-label="Open FNOL triage actions">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 12h.01"/><path d="M19 12h.01"/><path d="M5 12h.01"/></svg>
-                  </button>
-                </span>
               </div>
             </div>
             <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
@@ -287,27 +282,72 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
 </style>
 
 <script>
-  // Docs-only interactive demo script for tree expansion and selection.
-  document.querySelectorAll<HTMLElement>('.pl-c-tree').forEach((tree) => {
-    tree.addEventListener('click', (e) => {
-      const row = (e.target as HTMLElement).closest<HTMLElement>('.pl-c-tree__item-row');
-      if (!row) return;
+  document.addEventListener('astro:page-load', () => {
+    const tree = document.querySelector<HTMLElement>('.pl-c-tree');
+    if (!tree) return;
 
-      const item = row.parentElement as HTMLElement | null;
-      if (!item || !item.classList.contains('pl-c-tree__item')) return;
+    const itemSelector = '[role="treeitem"]';
+    const items = [...tree.querySelectorAll<HTMLElement>(itemSelector)];
 
-      const hasGroup = !!item.querySelector(':scope > .pl-c-tree__group');
-      if (hasGroup) {
-        const isExpanded = item.getAttribute('aria-expanded') === 'true';
-        item.setAttribute('aria-expanded', String(!isExpanded));
+    function focusItem(item: HTMLElement) {
+      for (const candidate of items) candidate.tabIndex = candidate === item ? 0 : -1;
+      item.focus();
+    }
+
+    function selectItem(item: HTMLElement) {
+      if (item.getAttribute('aria-disabled') === 'true') return;
+      tree?.querySelector('[aria-selected="true"]')?.setAttribute('aria-selected', 'false');
+      item.setAttribute('aria-selected', 'true');
+    }
+
+    tree.onclick = (event) => {
+      const row = (event.target as Element).closest('.pl-c-tree__item-row');
+      const item = row?.closest<HTMLElement>(itemSelector);
+      if (!item) return;
+
+      focusItem(item);
+      if (item.hasAttribute('aria-expanded')) {
+        item.setAttribute('aria-expanded', String(item.getAttribute('aria-expanded') !== 'true'));
+      }
+      selectItem(item);
+    };
+
+    tree.onkeydown = (event) => {
+      const item = event.target as HTMLElement;
+      if (!item.matches(itemSelector) || event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+
+      const visible = items.filter((candidate) => candidate.getClientRects().length > 0);
+      const index = visible.indexOf(item);
+      const expanded = item.getAttribute('aria-expanded');
+      const rtl = getComputedStyle(tree).direction === 'rtl';
+      let next: HTMLElement | null | undefined;
+
+      switch (event.key) {
+        case 'ArrowDown': next = visible[index + 1]; break;
+        case 'ArrowUp': next = visible[index - 1]; break;
+        case 'Home': next = visible[0]; break;
+        case 'End': next = visible.at(-1); break;
+        case rtl ? 'ArrowLeft' : 'ArrowRight':
+          if (expanded === 'false') item.setAttribute('aria-expanded', 'true');
+          if (expanded === 'true') next = item.querySelector<HTMLElement>(':scope > [role="group"] > [role="treeitem"]');
+          break;
+        case rtl ? 'ArrowRight' : 'ArrowLeft':
+          if (expanded === 'true') item.setAttribute('aria-expanded', 'false');
+          else next = item.parentElement?.closest<HTMLElement>(itemSelector);
+          break;
+        case 'Enter':
+        case ' ': selectItem(item); break;
+        default: {
+          if (event.key.length !== 1) return;
+          const key = event.key.toLowerCase();
+          next = [...visible.slice(index + 1), ...visible.slice(0, index + 1)].find((candidate) =>
+            candidate.querySelector(':scope > .pl-c-tree__item-row > .pl-c-tree__label')?.textContent?.toLowerCase().startsWith(key),
+          );
+        }
       }
 
-      tree.querySelectorAll('.pl-c-tree__item[aria-selected="true"]').forEach((selected) => {
-        selected.setAttribute('aria-selected', 'false');
-        selected.setAttribute('tabindex', '-1');
-      });
-      item.setAttribute('aria-selected', 'true');
-      item.setAttribute('tabindex', '0');
-    });
+      event.preventDefault();
+      if (next) focusItem(next);
+    };
   });
 </script>
