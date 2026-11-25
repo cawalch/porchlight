@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `06-components/checklist.css` for persistent setup checklists with native checkboxes, progress, current-step emphasis, and forced-colors support.
 - Add an activation variant to `.pl-c-empty` with left-aligned steps and a sample-data slot, plus the corresponding docs and preview.
 - Add `06-components/undo.css` for reversible action feedback with inline and floating variants, an optional countdown, and documented pending/saved/error recipes.
+- Add `06-components/shortcut-sheet.css` for a native-dialog keyboard reference, plus a command-first desktop workspace example that combines the command palette and shortcut sheet.
 
 ### Fixed
 

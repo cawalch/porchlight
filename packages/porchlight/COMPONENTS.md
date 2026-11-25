@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 62 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 63 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 246.7 KB | 34.9 KB | 27.8 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 256.1 KB | 36.3 KB | 28.5 KB | Full framework (all 62 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 249.1 KB | 35.2 KB | 28.0 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 258.5 KB | 36.7 KB | 28.7 KB | Full framework (all 63 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -102,6 +102,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [scroll-region](#scroll-region)       | `.pl-c-scroll-region`    | 924 B    | 404 B  | 333 B  | None         | Bounded, keyboard-operable scrollport. State indicators live in enhancements so compat.css and this component remain consumable by older CSS parsers.                                                                                                                                                                                                                                                                                    |
 | [section-nav](#section-nav)           | `.pl-c-section-nav`      | 1.3 KB   | 544 B  | 414 B  | None         | In-page navigation stays ordinary fragment links without scroll-target-group. Applications own sticky positioning and scroll offsets for their headers.                                                                                                                                                                                                                                                                                  |
 | [segmented](#segmented)               | `.pl-c-segmented`        | 1.9 KB   | 679 B  | 557 B  | None         | A compact inline switcher for binary/ternary toggles (list/grid/table view, day/week/month). Built on native radio inputs - CSS-only, keyboard accessible, no JavaScript.                                                                                                                                                                                                                                                                |
+| [shortcut-sheet](#shortcut-sheet)     | `.pl-c-shortcut-sheet`   | 2.5 KB   | 841 B  | 691 B  | None         | A native <dialog> reference for keyboard shortcuts. Grouped rows, real <dl> semantics, and the existing .pl-c-kbd keycaps. The application owns the `?` binding, focus return, and platform-specific modifier labels.                                                                                                                                                                                                                    |
 | [skeleton](#skeleton)                 | `.pl-c-skeleton`         | 961 B    | 427 B  | 355 B  | None         | Loading placeholders that mimic the shape of real content. A pulsing shimmer communicates "something is loading" without a spinner (which implies an indeterminate wait). Used in cards, lists, and tables while data fetches.                                                                                                                                                                                                           |
 | [split-button](#split-button)         | `.pl-c-split`            | 3.8 KB   | 1.1 KB | 998 B  | `button`     | A composite action control: a primary button (the default action) paired with a dropdown toggle that opens a menu of alternative actions. The canonical "Save ▼" pattern - click the label to do the default, click the chevron to pick a variant.                                                                                                                                                                                       |
 | [split-pane](#split-pane)             | `.pl-c-split-pane`       | 6.2 KB   | 1.3 KB | 1.1 KB | None         | CSS-only split panes for app shells, object explorers, editors, inspectors, and process builders. Apps own pointer/keyboard resize behavior and persist sizes by updating custom properties or data attributes.                                                                                                                                                                                                                          |
@@ -840,6 +841,22 @@ A compact inline switcher for binary/ternary toggles (list/grid/table view, day/
 
 ```css
 @import "@cawalch/porchlight/components/segmented.css";
+```
+
+### shortcut-sheet
+
+A native <dialog> reference for keyboard shortcuts. Grouped rows, real <dl> semantics, and the existing .pl-c-kbd keycaps. The application owns the `?` binding, focus return, and platform-specific modifier labels.
+
+- **Primary Selector**: `.pl-c-shortcut-sheet`
+- **Import**: `@cawalch/porchlight/components/shortcut-sheet.css`
+- **Minified Import**: `@cawalch/porchlight/components/shortcut-sheet.min.css`
+- **Dist File**: `dist/components/shortcut-sheet.css`
+- **Minified Dist File**: `dist/components/shortcut-sheet.min.css`
+- **Sizes**: 2.5 KB minified, 841 B gzip, 691 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/shortcut-sheet.css";
 ```
 
 ### skeleton
