@@ -35,19 +35,23 @@ const b = import.meta.env.BASE_URL;
 const link = (path: string) => `${b}${path.replace(/^\//, '')}`;
 
 const nav = [
-  { href: link('guides'), label: 'Guides', external: false },
+  { href: link('guides/why-porchlight'), label: 'Why', external: false },
+  { href: link('guides'), label: 'Docs', external: false },
   { href: link('components'), label: 'Components', external: false },
-  { href: link('tokens'), label: 'Tokens', external: false },
   { href: link('preview'), label: 'Examples', external: false },
+  { href: link('tokens'), label: 'Tokens', external: false },
   { href: 'https://github.com/cawalch/porchlight', label: 'GitHub', external: true },
 ];
 
 const here = Astro.url.pathname.replace(/\/$/, '');
+const whyPath = link('guides/why-porchlight').replace(/\/$/, '');
 const isActive = (href: string) => {
   if (href.startsWith('http')) return false;
   const clean = href.replace(/\/$/, '');
   // Exact match, or prefix match for nav sections.
   if (here === clean) return true;
+  // The "Why" page lives under /guides/. Do not also mark "Docs" current.
+  if (clean.endsWith('/guides') && here === whyPath) return false;
   return here.startsWith(`${clean}/`);
 };
 ---

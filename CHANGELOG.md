@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `guides/why-porchlight` with the product positioning, an honest comparison against Bootstrap 6, Tailwind 4 with shadcn/ui, Pico, DaisyUI, Bulma, and Radix Themes, and migration guidance.
+- Add a "Why" entry to the docs navigation and a homepage proof section so the framework's zero-runtime, no-build, app-depth positioning is visible on first load.
+
+### Changed
+
+- Rewrite the homepage hero around the desktop SaaS positioning, replace the generic project snapshot with runtime, bundle, examples, and density proof points, and group the guide index into Start, Build, Design system, and CSS layer.
+- Align the README component count and core bundle size with the current source: 60 component stylesheets and 4.0 KB gzip core.
+
 ## [0.19.0] - 2026-11-25
 
 ### Added
