@@ -56,6 +56,81 @@ const checks = [
   },
 ];
 
+const allowedBareDataAttrs = new Set([
+  "data-actions",
+  "data-active",
+  "data-align",
+  "data-calc-size",
+  "data-collapse",
+  "data-conditional-trigger",
+  "data-controls",
+  "data-delay",
+  "data-diff",
+  "data-direction",
+  "data-disabled",
+  "data-dividers",
+  "data-dragging",
+  "data-drop-target",
+  "data-elastic",
+  "data-elevated",
+  "data-feedback",
+  "data-flush",
+  "data-frozen",
+  "data-glass",
+  "data-hover",
+  "data-icon-only",
+  "data-in-range",
+  "data-indeterminate",
+  "data-interactive",
+  "data-invalid",
+  "data-layout",
+  "data-line",
+  "data-line-numbers",
+  "data-lines",
+  "data-loading",
+  "data-markers",
+  "data-masonry",
+  "data-match-trigger",
+  "data-max-rows",
+  "data-numeric",
+  "data-open",
+  "data-operator",
+  "data-orientation",
+  "data-outside-month",
+  "data-overdue",
+  "data-overflow",
+  "data-placement",
+  "data-position",
+  "data-priority",
+  "data-range-end",
+  "data-range-start",
+  "data-reactive",
+  "data-reading-flow",
+  "data-scroll",
+  "data-selected",
+  "data-selection-region",
+  "data-shape",
+  "data-side",
+  "data-sidebar",
+  "data-size",
+  "data-sort",
+  "data-stagger",
+  "data-state",
+  "data-status",
+  "data-sticky",
+  "data-subgrid",
+  "data-surface",
+  "data-tether",
+  "data-today",
+  "data-tone",
+  "data-transition",
+  "data-transition-scope",
+  "data-truncate",
+  "data-variant",
+  "data-visible",
+  "data-zebra",
+]);
+
 function extname(path) {
   const dot = path.lastIndexOf(".");
   return dot === -1 ? "" : path.slice(dot);
@@ -117,6 +192,24 @@ for (const file of files) {
         name: check.name,
         value: match[0],
       });
+    }
+  }
+
+  if (file.startsWith("packages/porchlight/src/") && file.endsWith(".css")) {
+    const bareDataPattern = /\[data-([a-z0-9-]+)(?=[\]=~\s|*$^])/g;
+    let attrMatch;
+    while ((attrMatch = bareDataPattern.exec(source)) !== null) {
+      const attr = `data-${attrMatch[1]}`;
+      if (!attr.startsWith("data-pl-") && !allowedBareDataAttrs.has(attr)) {
+        const { line, column } = lineAndColumn(source, attrMatch.index + 1);
+        violations.push({
+          file,
+          line,
+          column,
+          name: "undeclared bare data-* attribute (use data-pl-*)",
+          value: attr,
+        });
+      }
     }
   }
 }

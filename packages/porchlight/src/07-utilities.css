@@ -6,11 +6,12 @@
  * no utility for every CSS property. Each utility earns its place by serving
  * a recurring need a component shouldn't own.
  *
- * Allow-list for !important: utilities is the SECOND place it's permitted
- * (after reset [hidden] and themes reduced-motion). The screen-reader helpers
- * use it because the rule MUST win over any component/context. Hiding text
- * from sighted users while keeping it for AT is an a11y guarantee that can't
- * be accidentally overridden.
+ * Allow-list for !important: utilities is one of three places it's permitted
+ * (alongside reset [hidden] and themes reduced-motion). Note that with @layer,
+ * !important reverses layer precedence (earlier layers beat later ones), so
+ * an unlayered rule or an earlier @layer app still outranks utilities. The
+ * screen-reader helpers use it so component rules in the same layer cannot
+ * accidentally un-hide screen-reader-only text.
  *
  * Naming: .pl-u-* (utility); --pl-u-* are instance-config tokens
  * (e.g. --pl-u-flow-space).
@@ -129,7 +130,6 @@
   /* Tabular lining numerals with slashed zeros for ledgers and telemetry. */
   :where(.pl-u-num-tabular) {
     font-variant-numeric: tabular-nums lining-nums slashed-zero;
-    font-feature-settings: var(--pl-font-feature-numeric);
   }
 
   /* Leading icon + title pattern. Keeps the icon with the first line while

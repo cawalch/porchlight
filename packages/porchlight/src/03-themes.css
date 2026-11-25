@@ -509,4 +509,14 @@
       --pl-shadow-4: none;
     }
   }
+
+  /* Reduced transparency: swap frosted surfaces for opaque surface fills. */
+  @media (prefers-reduced-transparency: reduce) {
+    :root {
+      --pl-overlay-popover-bg: var(--pl-color-surface);
+      --pl-backdrop-blur: 0px;
+      --pl-backdrop-blur-strong: 0px;
+      --pl-backdrop-blur-scrim: 0px;
+    }
+  }
 }

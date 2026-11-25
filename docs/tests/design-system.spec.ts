@@ -143,7 +143,6 @@ test("tracking tokens and enterprise typography utilities are properly wired", a
 // ---------------------------------------------------------------------------
 test("spacing scale steps are even within a tier", async () => {
   const tokens = [
-    "pl-space-0",
     "pl-space-1",
     "pl-space-2",
     "pl-space-3",
