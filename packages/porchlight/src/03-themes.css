@@ -26,6 +26,12 @@
     color-scheme: dark;
   }
 
+  /* Dark-first convenience preset: equivalent to data-pl-theme="dark" plus
+     data-pl-palette="midnight", with the palette tokens defined below. */
+  :where([data-pl-preset="midnight"]) {
+    color-scheme: dark;
+  }
+
   /* Enterprise Theme Palette Presets
    * ===========================================================================
    * Pre-baked colorways steer brand and surface tokens across light and dark modes.
@@ -103,7 +109,7 @@
     --pl-color-accent-text: light-dark(white, oklch(15% 0 0deg));
   }
 
-  :where([data-pl-palette="midnight"]) {
+  :where([data-pl-palette="midnight"], [data-pl-preset="midnight"]) {
     --pl-brand-1: oklch(97% 0.02 275deg);
     --pl-brand-2: oklch(88% 0.05 275deg);
     --pl-brand-3: oklch(78% 0.09 275deg);
@@ -292,7 +298,7 @@
    *
    * This is the color-mix fallback (mirrors 02-tokens.css) for browsers without
    * relative color syntax; the @supports block below upgrades it where available. */
-  :where([data-pl-palette]) {
+  :where([data-pl-palette], [data-pl-preset="midnight"]) {
     --pl-color-accent-hover: light-dark(
       color-mix(in oklab, var(--pl-color-accent), oklch(16% 0.01 55deg) 10%),
       color-mix(in oklab, var(--pl-color-accent), white 12%)
@@ -309,7 +315,7 @@
   /* Relative Color Syntax enhancements where supported. Targets :root as well
      as palette containers so the default palette receives the same treatment. */
   @supports (color: oklch(from red l c h)) {
-    :where(:root, [data-pl-palette]) {
+    :where(:root, [data-pl-palette], [data-pl-preset="midnight"]) {
       --pl-color-accent-hover: light-dark(
         oklch(from var(--pl-color-accent) calc(l * 0.92) c h),
         oklch(from var(--pl-color-accent) calc(l / 0.92) c h)
@@ -474,7 +480,7 @@
        tokens instead of hardcoding warm hues. This keeps palette presets
        intact (a global palette otherwise loses its hue in high-contrast
        mode) and lets scoped palettes strengthen their own values. */
-    :where(:root, [data-pl-palette]) {
+    :where(:root, [data-pl-palette], [data-pl-preset="midnight"]) {
       --pl-color-surface-2: light-dark(
         color-mix(in oklab, var(--pl-color-surface), var(--pl-color-text) 12%),
         color-mix(in oklab, var(--pl-color-surface), var(--pl-color-text) 15%)

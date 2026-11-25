@@ -21,13 +21,13 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
-| `core.min.css`                        | 18.0 KB  | 3.9 KB  | 3.3 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `core.min.css`                        | 18.2 KB  | 3.9 KB  | 3.3 KB  | Layers, reset, design tokens, themes, base styles                   |
 | `layout.min.css`                      | 5.3 KB   | 1.4 KB  | 1.2 KB  | Primitives: stack, cluster, grid, sidebar, center                   |
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 254.7 KB | 36.1 KB | 28.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 264.1 KB | 37.5 KB | 29.4 KB | Full framework (all 65 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 254.9 KB | 36.1 KB | 28.6 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 264.2 KB | 37.5 KB | 29.4 KB | Full framework (all 65 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -35,10 +35,10 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 
 | Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
 | :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
-| **Minimal Controls**          | `core` + `button` + `field`                                                | 30.5 KB | **6.3 KB** | **5.4 KB** | **-55% smaller**  |
-| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 43.8 KB | **8.6 KB** | **7.5 KB** | **-39% smaller**  |
-| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 43.8 KB | **8.4 KB** | **7.3 KB** | **-40% smaller**  |
-| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 40.3 KB | **8.0 KB** | **7.0 KB** | **-43% smaller**  |
+| **Minimal Controls**          | `core` + `button` + `field`                                                | 30.7 KB | **6.3 KB** | **5.4 KB** | **-55% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 43.9 KB | **8.6 KB** | **7.5 KB** | **-39% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 43.9 KB | **8.4 KB** | **7.3 KB** | **-40% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 40.5 KB | **8.0 KB** | **7.0 KB** | **-43% smaller**  |
 
 ```css
 /* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */

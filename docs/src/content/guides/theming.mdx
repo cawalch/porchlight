@@ -202,6 +202,23 @@ Porchlight provides seven pre-baked enterprise palette presets via the `data-pl-
 | `crimson`  | Vivid ruby/crimson       | Security, incident response, high-risk SOC triage         | Ruby crimson (`oklch(43% 0.15 25deg)` / `oklch(71% 0.15 25deg)`)      |
 | `cyan`     | Electric cyan/teal       | Cloud infrastructure, Kubernetes clusters, telemetry      | Electric cyan (`oklch(42% 0.11 195deg)` / `oklch(71% 0.12 195deg)`)   |
 
+### Dark-first midnight preset
+
+Use `data-pl-preset="midnight"` when the product should open dark-first without
+requiring two attributes. It is equivalent to `data-pl-theme="dark"` plus
+`data-pl-palette="midnight"`, including the derived accent, focus ring, and
+contrast behavior:
+
+```html
+<html data-pl-preset="midnight">
+  ...
+</html>
+```
+
+Use the explicit `data-pl-theme` and `data-pl-palette` pair when the user can
+choose light mode or another palette. Use the preset when the product identity
+is intentionally nocturnal, such as a SOC, telemetry, or trading console.
+
 ### Applying a palette globally
 
 Set `data-pl-palette` on the `<html>` or `<body>` element:
@@ -280,3 +297,24 @@ to fine-tune a specific component without touching the global palette:
 ## Token reference
 
 For the complete list of tokens with live values, see the <a href={`${import.meta.env.BASE_URL}tokens`}>token reference pages</a>.
+
+## Visual language
+
+Porchlight's visual identity is carried by tokens rather than one-off classes.
+Use these as the signature when customizing a product:
+
+- **Focus:** `--pl-focus-color`, `--pl-focus-size`, and `--pl-shadow-glow`.
+  Keep the focus ring visible over every surface; do not remove it.
+- **Accent:** `--pl-color-accent`, `--pl-color-accent-hover`, and
+  `--pl-color-accent-subtle`. The accent is functional: primary action, active
+  navigation, and focus. It is not a decorative fill.
+- **Elevation:** `--pl-shadow-1` through `--pl-shadow-3`, plus the surface
+  ladder `--pl-color-bg` to `--pl-color-surface-2`. Depth should separate
+  layers, not decorate every card.
+- **Motion:** `--pl-duration-*`, `--pl-ease-*`, and `--pl-motion-scale`.
+  Motion confirms an action or guides attention. It should not run ambiently.
+- **Density:** `compact`, `comfortable`, and `touch`. Choose density from the
+  workflow, not the screen size alone.
+
+A distinctive Porchlight surface should feel calm and dense: one obvious primary
+action, quiet borders, tabular numbers, and a focus ring that is always visible.
