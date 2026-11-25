@@ -379,6 +379,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - combobox: /components/combobox
 - command-palette: /components/command-palette
 - data-table: /components/data-table
+- data-viz: /components/data-viz
 - description-list: /components/description-list
 - dialog: /components/dialog
 - drawer: /components/drawer
@@ -503,6 +504,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/css-modules
 - /preview/dashboard
 - /preview/data-table
+- /preview/data-viz
 - /preview/description-list
 - /preview/dialog
 - /preview/drawer

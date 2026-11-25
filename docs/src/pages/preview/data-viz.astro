@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const bars = [
+  { label: 'Mon', value: 42 },
+  { label: 'Tue', value: 68 },
+  { label: 'Wed', value: 54 },
+  { label: 'Thu', value: 81 },
+  { label: 'Fri', value: 72 },
+  { label: 'Sat', value: 36 },
+  { label: 'Sun', value: 28 },
+];
+
+const heatmap = [
+  [12, 24, 38, 52, 70, 44, 20],
+  [18, 32, 48, 64, 88, 58, 26],
+  [14, 28, 42, 56, 76, 50, 22],
+  [8, 18, 30, 44, 62, 38, 16],
+];
+---
+<BaseLayout title="Data visualization · Porchlight">
+  <h1>Data visualization</h1>
+  <p>
+    Small, CSS-only chart primitives for dashboards. The application supplies
+    the values and the accessible fallback; Porchlight supplies the geometry
+    and tones. This is not a charting engine.
+  </p>
+
+  <h2>Sparkline</h2>
+  <div class="pl-c-card" data-surface="app">
+    <div class="pl-c-stat">
+      <span class="pl-c-stat__label">Monthly revenue</span>
+      <div class="pl-c-stat__value">
+        $48,200<span class="pl-c-stat__unit">/mo</span>
+      </div>
+      <span class="pl-c-stat__trend" data-direction="up">12.4%</span>
+    </div>
+    <span
+      class="pl-c-sparkline"
+      data-tone="success"
+      aria-hidden="true"
+      style="--pl-c-sparkline-size: 10rem; --pl-c-sparkline-height: 2.5rem;"
+    >
+      <svg viewBox="0 0 100 32" preserveAspectRatio="none">
+        <path class="pl-c-sparkline__area" d="M0 28 L20 22 L40 24 L60 12 L80 16 L100 4 V32 H0 Z" />
+        <path class="pl-c-sparkline__line" d="M0 28 L20 22 L40 24 L60 12 L80 16 L100 4" />
+        <circle class="pl-c-sparkline__dot" cx="100" cy="4" r="2.5" />
+      </svg>
+    </span>
+    <span class="pl-u-sr-only">Revenue trend: up 12.4% over the last 7 days.</span>
+  </div>
+
+  <h2>Bar chart</h2>
+  <div class="pl-c-card" data-surface="app">
+    <div class="pl-c-bar-chart" aria-hidden="true" style="--pl-c-bar-chart-height: 9rem;">
+      {bars.map((bar) => (
+        <div class="pl-c-bar-chart__item">
+          <div class="pl-c-bar-chart__fill" style={`--pl-c-bar-value: ${bar.value}`}></div>
+          <span class="pl-c-bar-chart__label">{bar.label}</span>
+        </div>
+      ))}
+    </div>
+    <table class="pl-u-sr-only">
+      <caption>Requests by day</caption>
+      <tbody>
+        {bars.map((bar) => (
+          <tr><th scope="row">{bar.label}</th><td>{bar.value}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Heatmap</h2>
+  <div class="pl-c-card" data-surface="app">
+    <div class="pl-c-heatmap" aria-hidden="true" style="--pl-c-heatmap-columns: 7;">
+      {heatmap.flatMap((row) => row.map((value) => (
+        <span class="pl-c-heatmap__cell" style={`--pl-c-heat-value: ${value}`}></span>
+      )))}
+    </div>
+    <table class="pl-u-sr-only">
+      <caption>Activity by day and week</caption>
+      <tbody>
+        {heatmap.map((row, index) => (
+          <tr>
+            <th scope="row">Week {index + 1}</th>
+            {row.map((value) => <td>{value}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</BaseLayout>

@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 63 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 64 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 249.1 KB | 35.2 KB | 28.0 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 258.5 KB | 36.7 KB | 28.7 KB | Full framework (all 63 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 251.5 KB | 35.6 KB | 28.3 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 260.9 KB | 37.1 KB | 29.0 KB | Full framework (all 64 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -75,6 +75,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [combobox](#combobox)                 | `.pl-c-combobox`         | 7.6 KB   | 1.8 KB | 1.6 KB | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
 | [command-palette](#command-palette)   | `.pl-c-command-palette`  | 6.7 KB   | 1.6 KB | 1.3 KB | None         | A Cmd+K quick-action search overlay. Search input at top, grouped action list below, keyboard navigation (JS responsibility). Supports both declarative Popover API (<div popover class="pl-c-command">) and native modal dialogs (<dialog class="pl-c-command-palette" closedby="any">) with zero-JS Invoker Commands:                                                                                                                  |
 | [data-table](#data-table)             | `.pl-c-table-wrap`       | 10.4 KB  | 2.2 KB | 2.0 KB | None         | An enterprise data table: sticky headers, horizontal scroll with a stable scrollbar gutter, container-query padding, hover/selection affordances, sortable columns, row selection (checkbox column), expandable detail rows, sticky first column, and density modes.                                                                                                                                                                     |
+| [data-viz](#data-viz)                 | `.pl-c-sparkline`        | 2.5 KB   | 827 B  | 706 B  | None         | Small, CSS-only chart primitives for dashboards. The application supplies the values; Porchlight supplies the geometry, tokens, and accessible fallback contract. This is not a charting engine: no axes, tooltips, zoom, or large dataset layout. Use a dedicated chart library when those are required.                                                                                                                                |
 | [description-list](#description-list) | `.pl-c-description`      | 1.8 KB   | 611 B  | 525 B  | None         | A label + value grid for detail panels, metadata displays, and summary cards. Wraps the native <dl> element so semantics and accessibility come for free. The #1 most-rebuilt pattern in SaaS apps after page headers.                                                                                                                                                                                                                   |
 | [dialog](#dialog)                     | `.pl-c-dialog`           | 3.4 KB   | 1.1 KB | 912 B  | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                                               |
 | [drawer](#drawer)                     | `.pl-c-drawer`           | 3.8 KB   | 1.1 KB | 972 B  | None         | An off-canvas panel that slides in from a viewport edge. Supports both declarative Popover API (<aside popover="auto"> or <div popover>) and native modal dialogs (<dialog closedby="any">) with zero-JS Invoker Commands:                                                                                                                                                                                                               |
@@ -409,6 +410,22 @@ An enterprise data table: sticky headers, horizontal scroll with a stable scroll
 
 ```css
 @import "@cawalch/porchlight/components/data-table.css";
+```
+
+### data-viz
+
+Small, CSS-only chart primitives for dashboards. The application supplies the values; Porchlight supplies the geometry, tokens, and accessible fallback contract. This is not a charting engine: no axes, tooltips, zoom, or large dataset layout. Use a dedicated chart library when those are required.
+
+- **Primary Selector**: `.pl-c-sparkline`
+- **Import**: `@cawalch/porchlight/components/data-viz.css`
+- **Minified Import**: `@cawalch/porchlight/components/data-viz.min.css`
+- **Dist File**: `dist/components/data-viz.css`
+- **Minified Dist File**: `dist/components/data-viz.min.css`
+- **Sizes**: 2.5 KB minified, 827 B gzip, 706 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/data-viz.css";
 ```
 
 ### description-list
