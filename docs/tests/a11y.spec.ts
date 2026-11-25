@@ -17,6 +17,7 @@ import { previewRedirectRoutes, previewRoutes } from "./lib/preview-routes";
 const PAGES = [
   "/",
   "/guides/",
+  "/guides/why-porchlight",
   "/guides/getting-started",
   "/guides/integrations",
   "/guides/theming",

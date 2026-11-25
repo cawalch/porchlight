@@ -8,17 +8,19 @@ const documentedEntries = (await getCollection('components')).sort((a, z) =>
   a.data.title.localeCompare(z.data.title),
 );
 const components = documentedEntries.filter((entry) => entry.data.kind === 'component');
-const patterns = documentedEntries.filter((entry) => entry.data.kind === 'pattern');
 const guides = (await getCollection('guides')).sort((a, z) =>
   (a.data.order ?? 0) - (z.data.order ?? 0),
 );
-const tokens = await getCollection('tokens');
 const previewModules = import.meta.glob('./preview/*.astro');
 const previewCount = Object.keys(previewModules).filter((path) => !path.endsWith('/index.astro')).length;
 
-const stableCount = components.filter((component) => component.data.status === 'stable').length;
 
 const startLinks = [
+  {
+    label: 'Why Porchlight',
+    href: `${b}guides/why-porchlight`,
+    detail: 'The positioning, the tradeoffs, and how it compares with Bootstrap, Tailwind, and Pico.',
+  },
   {
     label: 'Install Porchlight',
     href: `${b}guides/getting-started`,
@@ -34,17 +36,16 @@ const startLinks = [
     href: `${b}preview`,
     detail: `${previewCount} examples, from individual controls to complete application layouts.`,
   },
-  {
-    label: 'Check tokens',
-    href: `${b}tokens`,
-    detail: `${tokens.length} token reference pages backed by the framework source.`,
-  },
 ];
 
 const guideGroups = [
   {
+    title: 'Start',
+    links: guides.filter((guide) => ['why-porchlight', 'getting-started', 'browser-support'].includes(guide.id)),
+  },
+  {
     title: 'Build',
-    links: guides.filter((guide) => ['getting-started', 'theming', 'browser-support'].includes(guide.id)),
+    links: guides.filter((guide) => ['theming', 'integrations', 'upstream-integration'].includes(guide.id)),
   },
   {
     title: 'Design system',
@@ -52,7 +53,7 @@ const guideGroups = [
   },
   {
     title: 'CSS layer',
-    links: guides.filter((guide) => ['utilities', 'enhancements'].includes(guide.id)),
+    links: guides.filter((guide) => ['utilities', 'enhancements', 'dialog-and-popover'].includes(guide.id)),
   },
 ];
 
@@ -70,14 +71,16 @@ const entryHighlights = [
 <BaseLayout>
   <section class="home-dashboard" aria-labelledby="home-title">
     <div class="home-hero">
-      <p class="home-eyebrow">Native CSS design system</p>
-      <h1 id="home-title">Porchlight</h1>
+      <p class="home-eyebrow">Native CSS for product teams</p>
+      <h1 id="home-title">Dense product UI, native CSS.</h1>
       <p>
-        Build accessible interfaces with HTML and CSS. Install Porchlight,
-        browse components, and try the examples.
+        Porchlight is a design system for desktop-class SaaS: 60 semantic
+        components, Linear-grade density, and a tested accessibility floor.
+        No runtime. No build step. Any server.
       </p>
       <div class="home-actions">
-        <a class="home-action home-action--primary" href={`${b}guides/getting-started`}>Get started</a>
+        <a class="home-action home-action--primary" href={`${b}guides/why-porchlight`}>Why Porchlight</a>
+        <a class="home-action" href={`${b}guides/getting-started`}>Get started</a>
         <a class="home-action" href={`${b}preview`}>Browse examples</a>
       </div>
     </div>
@@ -85,23 +88,51 @@ const entryHighlights = [
     <aside class="home-snapshot" aria-label="Project snapshot">
       <dl>
         <div>
-          <dt>Components</dt>
-          <dd>{components.length}</dd>
+          <dt>Runtime</dt>
+          <dd>0 KB JS</dd>
         </div>
         <div>
-          <dt>Patterns</dt>
-          <dd>{patterns.length}</dd>
+          <dt>Full CSS</dt>
+          <dd>35.7 KB</dd>
         </div>
         <div>
-          <dt>Stable components</dt>
-          <dd>{stableCount}</dd>
-        </div>
-        <div>
-          <dt>Previews</dt>
+          <dt>Examples</dt>
           <dd>{previewCount}</dd>
+        </div>
+        <div>
+          <dt>Density</dt>
+          <dd>3 modes</dd>
         </div>
       </dl>
     </aside>
+  </section>
+
+  <section class="home-panel home-panel--why" aria-labelledby="home-why">
+    <div class="home-section-header">
+      <div>
+        <p class="home-eyebrow">Why Porchlight</p>
+        <h2 id="home-why">Built for the app surface, not the landing page.</h2>
+      </div>
+      <a class="home-inline-link" href={`${b}guides/why-porchlight`}>Read the comparison</a>
+    </div>
+    <div class="home-paths">
+      <a class="home-path" href={`${b}guides/why-porchlight`}>
+        <span>Zero JavaScript runtime</span>
+        <small>Stable HTML and CSS contracts. No hydration boundary, no CSS-in-JS cache, no plugin lifecycle.</small>
+      </a>
+      <a class="home-path" href={`${b}guides/getting-started`}>
+        <span>No build step required</span>
+        <small>Link the prebuilt stylesheet, or import only the modules you use through your bundler.</small>
+      </a>
+      <a class="home-path" href={`${b}components`}>
+        <span>App-depth components</span>
+        <small>App shell, dense tables, filters, inspectors, audit streams, command palette, and telemetry surfaces.</small>
+      </a>
+      <a class="home-path" href={`${b}guides/browser-support`}>
+        <span>Native platform features</span>
+        <small>Cascade layers, @scope, container queries, light-dark(), popovers, and anchor positioning.</small>
+      </a>
+    </div>
   </section>
 
   <section class="home-panel home-panel--start" aria-labelledby="home-start">
@@ -388,7 +419,7 @@ const entryHighlights = [
 
   .home-guide-groups {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
     gap: var(--pl-space-4);
   }
 

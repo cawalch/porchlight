@@ -97,7 +97,10 @@ test.describe("docs scaffold", () => {
     await page.goto("./");
     await expect(page).toHaveTitle(/Porchlight/);
     await expect(
-      page.getByRole("heading", { name: "Porchlight", level: 1 }),
+      page.getByRole("heading", {
+        name: "Dense product UI, native CSS.",
+        level: 1,
+      }),
     ).toBeVisible();
   });
 
@@ -836,9 +839,15 @@ test.describe("docs scaffold", () => {
   test("homepage shows feature highlights and stats", async ({ page }) => {
     await page.goto("./");
     await expect(
-      page.getByRole("heading", { name: "Porchlight", exact: true }),
+      page.getByRole("heading", {
+        name: "Dense product UI, native CSS.",
+        exact: true,
+      }),
     ).toBeVisible();
     await expect(page.getByText("Find what you need")).toBeVisible();
+    await expect(
+      page.getByText("Built for the app surface, not the landing page."),
+    ).toBeVisible();
     await expect(page.getByText("See the components in use")).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Browse examples", exact: true }).first(),

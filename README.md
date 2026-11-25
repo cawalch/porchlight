@@ -12,6 +12,23 @@ Use stable classes in server templates, HTMX fragments, and Alpine components.
 See the [integration guide](https://cawalch.github.io/porchlight/guides/integrations)
 for those workflows and optional CSS Modules customization.
 
+## Why Porchlight
+
+Porchlight is a native-CSS design system for desktop-class, server-rendered SaaS.
+It gives you dense app surfaces, 60 semantic components, token-driven theming, and
+a tested accessibility floor without a JavaScript runtime or a build step.
+
+- **0 KB runtime JavaScript**, no hydration boundary, and no plugin lifecycle.
+- **App depth**, not just buttons: app shell, data tables, filters, inspectors,
+  audit streams, command palette, and telemetry surfaces.
+- **Framework neutral**: use it with Rails, Django, Laravel, PHP, Astro, HTMX,
+  Alpine, React, or plain HTML.
+- **Small and modular**: about 4.0 KB gzip for core, 35.7 KB gzip for the full
+  bundle, or core plus only the components you render.
+
+Read the [comparison with Bootstrap, Tailwind and shadcn, Pico, DaisyUI, Bulma,
+and Radix Themes](https://cawalch.github.io/porchlight/guides/why-porchlight).
+
 ## Install
 
 ```sh
@@ -48,7 +65,7 @@ Or import only the parts you use:
 @import "@cawalch/porchlight/utilities.css";
 ```
 
-`core.css` includes layer order, reset, tokens, themes, and base styles (only **2.6 KB gzip**).
+`core.css` includes layer order, reset, tokens, themes, and base styles (only **4.0 KB gzip**).
 When bundled with your app bundler, selective imports ship between **4.9 KB and 6.8 KB gzip**
 (less than half of legacy 14 KB monolithic stylesheets).
 The full stylesheet and modular entries build cleanly under Bun 1.4.4, Vite, Webpack, and esbuild.
@@ -119,7 +136,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/core.min.css`         | Minified core stylesheet                |
 | `@cawalch/porchlight/layout.css`           | `.pl-l-*` layout primitives             |
 | `@cawalch/porchlight/layout.min.css`       | Minified layout primitives              |
-| `@cawalch/porchlight/components.css`       | All 59 `.pl-c-*` component stylesheets  |
+| `@cawalch/porchlight/components.css`       | All 60 `.pl-c-*` component stylesheets  |
 | `@cawalch/porchlight/components.min.css`   | Minified components bundle              |
 | `@cawalch/porchlight/components/*.css`     | Individual component CSS files          |
 | `@cawalch/porchlight/components/*.min.css` | Individual minified component CSS files |
@@ -131,7 +148,7 @@ Layout primitives use the same pattern:
 | `@cawalch/porchlight/tokens.json`          | Token metadata JSON                     |
 | `@cawalch/porchlight/manifest.json`        | Static-copy manifest                    |
 
-For an offline reference documenting all 59 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
+For an offline reference documenting all 60 components (primary selectors, modular import paths, minified bundles, dependencies, and descriptions), see [`COMPONENTS.md`](packages/porchlight/COMPONENTS.md).
 
 ## CLI tools
 

@@ -1,0 +1,203 @@
+---
+title: Why Porchlight
+description: A native-CSS design system for dense, keyboard-first product UI, and an honest comparison with Bootstrap, Tailwind and shadcn, Pico, DaisyUI, Bulma, and Radix Themes.
+order: -1
+---
+
+Porchlight is a native-CSS design system for **desktop-class, server-rendered SaaS**. It gives you
+Linear-style density, 60 semantic components, token-driven theming, and a tested accessibility
+floor without a JavaScript runtime or a build step.
+
+It is not a React component library, a utility framework, or a classless theme. It is a set of
+**HTML and CSS contracts**: stable classes, native elements, and design tokens that any rendering
+layer can emit.
+
+## The short version
+
+| Property           | Porchlight                                                                     |
+| :----------------- | :----------------------------------------------------------------------------- |
+| Runtime JavaScript | **0 KB**                                                                       |
+| Build step         | Optional. Link the prebuilt CSS or import the modules.                         |
+| Public API         | Stable `.pl-*` classes, native HTML, and `--pl-*` tokens                       |
+| Component coverage | 60 app-focused components, plus 9 documented application patterns              |
+| Full bundle        | About **35.7 KB gzip** minified                                                |
+| Core bundle        | About **4.0 KB gzip** minified                                                 |
+| Best fit           | SaaS consoles, admin tools, inboxes, dashboards, operations and audit surfaces |
+| Rendering layers   | Server templates, Astro, HTMX, Alpine, React, Vue, plain HTML                  |
+
+The design goal is not "a component for every widget". It is a small, predictable vocabulary for
+the surfaces that product teams rebuild constantly: app shells, toolbars, data tables, filters,
+forms, inspectors, command palettes, audit streams, and dense detail pages.
+
+## What "native CSS" means here
+
+Porchlight ships CSS, not behavior. A tab list is a real `role="tablist"` with real buttons. A
+dialog is a native `<dialog>`. A popover is the native Popover API. A table is a `<table>` inside a
+scroll wrapper. The application owns state, data fetching, focus management, and keyboard
+controllers.
+
+That boundary is deliberate:
+
+- **Server rendering stays simple.** A Rails, Django, Laravel, PHP, Astro, or HTMX response can
+  emit the same markup the docs show.
+- **No hydration boundary.** There is no framework runtime to mount, no CSS-in-JS cache, and no
+  class-name hashing.
+- **Upgrades are CSS upgrades.** You can adopt a new Porchlight release without rewriting
+  component state or reconciling a React tree.
+- **The design system stays neutral.** React, Vue, Svelte, and server templates can all consume the
+  same contracts.
+
+If you want a component library to own behavior as well as styling, choose a behavior library.
+Porchlight is the layer underneath, or the whole layer when the platform already provides the
+behavior.
+
+## Where Porchlight fits
+
+Choose Porchlight when:
+
+- you are building a **server-rendered SaaS or internal tool** and want a real design system without
+  adding a JavaScript framework
+- your interface is **dense and keyboard-first**, not a marketing page or a simple blog
+- you need a **neutral CSS layer** under React, Vue, Astro, HTMX, Alpine, or server templates
+- you want **tokens, density modes, forced-colors, RTL, and reduced-motion** handled consistently
+- you care about a **small payload** and a predictable browser-support floor
+- you want an **agent-friendly vocabulary** with strict class names and documented HTML contracts
+
+Choose something else when:
+
+- you want a **React component library with behavior included**: shadcn/ui plus Base UI, Radix
+  Themes, Mantine, or React Aria Components are a better fit
+- you need a **classless content site**: Pico CSS is smaller and simpler for docs, blogs, and
+  prototypes
+- you need **Bootstrap's theme ecosystem, plugins, or familiarity**: Bootstrap 6 is modernizing fast
+  and remains the safer organizational default for some teams
+- you need a **charting engine, virtualized data grid, or rich text editor** out of the box: pair
+  Porchlight with a dedicated library instead of expecting the CSS layer to own that complexity
+- you need **legacy browser support or a no-modern-CSS fallback**: Porchlight requires cascade
+  layers, `@scope`, `:has()`, `light-dark()`, and container queries
+
+## Comparison at a glance
+
+The table below reflects the state of the major options in **November 2026**. Bundle sizes are
+approximate and depend on the build, theme, and components used.
+
+| Framework                     | Model                                       | Runtime JS                   | Build step          | App depth                                          | Approx. CSS                    | Best fit                                                      |
+| :---------------------------- | :------------------------------------------ | :--------------------------- | :------------------ | :------------------------------------------------- | :----------------------------- | :------------------------------------------------------------ |
+| **Porchlight**                | Native CSS contracts                        | None                         | Optional            | High: app shell, density, tables, audit, telemetry | 35.7 KB gzip full, 4.0 KB core | Server-rendered, desktop-class SaaS without React or Tailwind |
+| **Bootstrap 6 alpha**         | Components plus JS plugins                  | Required for some components | Optional (Sass)     | Medium, broad and generic                          | About 50 KB gzip               | Teams that want a familiar component kit and plugins          |
+| **Tailwind 4 plus shadcn/ui** | Utility engine plus copy-paste React source | React                        | Required            | High in React, framework-coupled                   | Depends on build               | React SaaS teams that want to own styled source               |
+| **Pico CSS**                  | Classless semantic CSS                      | None                         | None                | Low                                                | About 10 KB gzip               | Docs, blogs, prototypes, content-first pages                  |
+| **DaisyUI 5**                 | Tailwind component plugin                   | None                         | Required (Tailwind) | Medium                                             | Small addition to Tailwind     | Tailwind teams that want named components and themes          |
+| **Bulma**                     | CSS-only components                         | None                         | Optional (Sass)     | Low to medium                                      | About 27 KB gzip               | Simple CSS-only sites and older projects                      |
+| **Radix Themes**              | Styled React primitives                     | React                        | npm                 | Medium                                             | React app                      | React teams that want a polished, prebuilt look               |
+
+Two data points explain why this category still matters. In the
+[State of CSS 2026 survey](https://2026.stateofcss.com/en-US/other-tools/), Tailwind was the most
+used framework, but **"None" was second**: 1,042 respondents said they use no CSS framework at all,
+ahead of Bootstrap at 982 and shadcn/ui at 802. Native CSS is no longer a niche choice. The
+question is whether you want to rebuild the same contracts on every project.
+
+## How it differs from Bootstrap 6
+
+Bootstrap 6 Alpha 2 (November 2026) is a serious modernization: cascade layers, `oklch()`,
+`light-dark()`, container queries, native `<dialog>` and `<details>`, and `@property`. If your team
+already knows Bootstrap, that upgrade is worth evaluating.
+
+The difference is the center of gravity:
+
+- **Bootstrap still owns behavior.** Dropdowns, dialogs, drawers, and other plugins ship
+  JavaScript. Porchlight ships the CSS contract and leaves the controller to your platform.
+- **Bootstrap is broad and generic.** It is designed to cover marketing sites, dashboards, and
+  forms. Porchlight is narrower and deeper on app surfaces: data tables, filters, audit streams,
+  inspectors, split panes, workflow boards, and density modes.
+- **Bootstrap carries more CSS.** The v6 alpha is roughly 50 KB gzip for the full stylesheet.
+  Porchlight is about 35.7 KB gzip for the full bundle, or 4.0 KB for core plus selected components.
+- **Porchlight is framework-neutral by construction.** There is no Bootstrap JS object to
+  initialize, no plugin lifecycle, and no `data-bs-*` controller contract.
+
+### Bootstrap migration map
+
+| Bootstrap          | Porchlight                                   |
+| :----------------- | :------------------------------------------- |
+| `.btn.btn-primary` | `.pl-c-button` with `data-variant="primary"` |
+| `.card`            | `.pl-c-card`                                 |
+| `.modal`           | `.pl-c-dialog`, built on native `<dialog>`   |
+| `.offcanvas`       | `.pl-c-drawer`, popover or dialog based      |
+| `.dropdown-menu`   | `.pl-c-menu` or `.pl-c-dropdown`             |
+| `.form-control`    | `.pl-c-field__control`                       |
+| `.table`           | `.pl-c-table` inside `.pl-c-table-wrap`      |
+| `.badge`           | `.pl-c-badge` with `data-tone`               |
+| `.toast`           | `.pl-c-toast`                                |
+| `.spinner-border`  | `.pl-c-inline-loading` or `.pl-c-skeleton`   |
+
+Start with the <a href={`${import.meta.env.BASE_URL}guides/getting-started`}>Getting started guide</a>
+and the <a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>composition recipes</a>.
+Keep your existing JavaScript controllers until you have replaced each behavior deliberately.
+
+## How it differs from Tailwind and shadcn/ui
+
+Tailwind is an excellent utility engine. shadcn/ui is an excellent way to own a React component's
+source. Neither is a framework-neutral CSS contract layer, and that is the gap Porchlight fills.
+
+- **Tailwind is optimized for composing in markup.** Porchlight is optimized for stable semantic
+  classes that a server template, a design system, and an AI agent can all emit consistently.
+- **shadcn/ui assumes React and Tailwind.** Porchlight works with any renderer and does not require
+  a build step.
+- **They can coexist.** Put Porchlight and Tailwind in explicit layers and decide which one wins:
+
+```css
+@layer porchlight, tailwind, app;
+
+@import "@cawalch/porchlight/core.css";
+@import "@cawalch/porchlight/layout.css";
+@import "@cawalch/porchlight/components/button.css";
+@import "tailwindcss";
+```
+
+Use Porchlight for the app shell, data regions, forms, and overlays. Use Tailwind for local layout
+glue if your team already has it. Avoid mixing utility classes into the internals of a Porchlight
+component: override the component's tokens in `@layer app` instead.
+
+## How it differs from Pico, DaisyUI, Bulma, and Radix Themes
+
+- **Pico CSS** is classless and content-first. It is the right choice for a docs site or a blog. It
+  is not trying to be an app shell, a data table, or a command palette.
+- **DaisyUI** is a Tailwind plugin with named components and many themes. It is a good fit if you
+  have already committed to Tailwind. Porchlight is standalone and ships the app-specific
+  components DaisyUI does not.
+- **Bulma** is a CSS-only component framework with a smaller modern-CSS and accessibility story.
+  Porchlight is the better choice for new app work.
+- **Radix Themes** is a styled React library. It gives you a polished look and React ergonomics.
+  Porchlight gives you framework neutrality and a tighter CSS-only contract.
+
+## What Porchlight does not do
+
+Porchlight deliberately stops at the CSS layer. It does not provide:
+
+- tab keyboard navigation, combobox filtering, command-palette search, or focus traps
+- data fetching, caching, optimistic mutations, or state management
+- a charting engine, virtualized data grid, or rich text editor
+- old-browser polyfills or a fallback for browsers without modern CSS
+
+The docs call out which behaviors the application owns for every interactive component. If that
+split is not a good fit for your team, a behavior library will be a better starting point.
+
+## Next steps
+
+- <a href={`${import.meta.env.BASE_URL}guides/getting-started`}>
+    Getting started
+  </a>
+  : install the package or link the CSS.
+- <a href={`${import.meta.env.BASE_URL}components`}>Components</a>: browse the
+  HTML and CSS contracts.
+- <a href={`${import.meta.env.BASE_URL}preview`}>Examples</a>: open complete
+  application surfaces.
+- <a href={`${import.meta.env.BASE_URL}guides/browser-support`}>
+    Browser support
+  </a>
+  : check the required platform features.
+- <a href={`${import.meta.env.BASE_URL}guides/composition-recipes`}>
+    Composition recipes
+  </a>
+  : assemble app shells, dashboards, data regions, settings pages, and inline
+  edit flows.
