@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `06-components/thread.css` for comment threads, nested replies, mentions, reactions, resolved state, and inline-edit state hooks.
 - Add generated `contracts/components.json` and `contracts/components.schema.json`, a `porchlight contracts` CLI command, and a package `SKILL.md` for agent-assisted HTML/CSS generation.
 - Add `contracts:generate` / `contracts:check` scripts and a CI drift check, and link the public `components.json` from `llms.txt` and the integrations guide.
+- Add the dark-first `data-pl-preset="midnight"` alias (dark theme plus midnight palette) and document the visual language tokens for focus, accent, elevation, motion, and density.
 
 ### Fixed
 

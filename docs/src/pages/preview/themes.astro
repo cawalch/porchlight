@@ -86,6 +86,32 @@ const densities = ['compact', 'comfortable', 'touch'] as const;
     </ul>
   </section>
 
+  <h2>Dark-first midnight preset</h2>
+  <p>
+    <code>data-pl-preset="midnight"</code> combines the dark color scheme with
+    the midnight palette, including derived accent and focus tokens.
+  </p>
+  <section class="pl-c-card" data-pl-preset="midnight">
+    <header class="pl-c-card__header">
+      <div>
+        <h3 class="pl-c-card__title">Incident command</h3>
+        <p class="pl-c-card__subtitle">Dark-first operations surface</p>
+      </div>
+      <span class="pl-c-badge" data-tone="danger">3 open</span>
+    </header>
+    <div class="pl-c-card__body pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
+      <p class="pl-u-muted">
+        The preset applies the midnight surfaces, cobalt accent, and focus ring
+        without a second attribute.
+      </p>
+      <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+        <button class="pl-c-button" data-variant="primary" type="button">Declare incident</button>
+        <button class="pl-c-button" data-variant="secondary" type="button">Open runbook</button>
+        <span class="pl-c-badge" data-tone="success">Healthy</span>
+      </div>
+    </div>
+  </section>
+
   <h2>Reduced motion, contrast &amp; forced colors</h2>
   <p>
     <code>prefers-reduced-motion</code> zeroes <code>--pl-motion-scale</code>.

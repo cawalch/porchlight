@@ -110,3 +110,32 @@ test("every palette preset remaps --pl-color-text-faint", async ({ page }) => {
     );
   }
 });
+
+test("midnight preset combines dark scheme, palette, and focus tokens", async ({
+  page,
+}) => {
+  await page.goto("./preview/base");
+
+  const state = await page.evaluate(() => {
+    const root = document.documentElement;
+    const el = document.createElement("div");
+    el.setAttribute("data-pl-preset", "midnight");
+    document.body.append(el);
+    const cs = getComputedStyle(el);
+    const result = {
+      rootAccent: getComputedStyle(root)
+        .getPropertyValue("--pl-color-accent")
+        .trim(),
+      accent: cs.getPropertyValue("--pl-color-accent").trim(),
+      focus: cs.getPropertyValue("--pl-focus-color").trim(),
+      scheme: cs.colorScheme,
+    };
+    el.remove();
+    return result;
+  });
+
+  expect(state.scheme).toBe("dark");
+  expect(state.accent).not.toBe("");
+  expect(state.accent).not.toBe(state.rootAccent);
+  expect(state.focus).not.toBe("");
+});
