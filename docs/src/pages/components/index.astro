@@ -12,6 +12,7 @@ const headings = groups.map(group => ({ depth: 2, slug: group.slug, text: group.
 <DocsLayout title="Components · Porchlight" description="Find a control, surface, or application pattern for your interface." sectionLabel="Reference" headings={headings} sourceHref="https://github.com/cawalch/porchlight/tree/main/docs/src/content/components">
   <article class="prose">
     <p>Each reference explains the HTML structure, supported states, design tokens, and accessibility responsibilities. Your application supplies behavior and state where a component needs them.</p>
+    <p><strong>Stable</strong> components are covered by the full test suite and follow the deprecation policy. <strong>Experimental</strong> components have documented contracts and previews, but their markup or tokens may still change before 1.0.</p>
     {groups.map(group => (
       <section>
         <h2 id={group.slug}>{group.title}</h2>
