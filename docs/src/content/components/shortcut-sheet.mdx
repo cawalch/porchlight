@@ -1,0 +1,133 @@
+---
+title: Shortcut sheet
+description: A native dialog reference for keyboard shortcuts, grouped by context with tactile keycaps.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-shortcut-sheet` is a native `<dialog>` that lists keyboard shortcuts
+by context. It is the `?` overlay for desktop apps: one place to discover the
+commands that the command palette already exposes.
+
+The application owns the `?` binding, platform-specific modifier labels, and
+focus return. The CSS owns the dialog surface, groups, rows, and keycaps.
+
+## Semantic HTML
+
+```html
+<button
+  class="pl-c-button"
+  data-variant="ghost"
+  type="button"
+  commandfor="shortcut-sheet"
+  command="show-modal"
+  aria-keyshortcuts="?"
+>
+  Keyboard shortcuts
+</button>
+
+<dialog
+  class="pl-c-shortcut-sheet"
+  id="shortcut-sheet"
+  aria-labelledby="shortcut-sheet-title"
+  closedby="any"
+>
+  <header class="pl-c-shortcut-sheet__header">
+    <div>
+      <h2 class="pl-c-shortcut-sheet__title" id="shortcut-sheet-title">
+        Keyboard shortcuts
+      </h2>
+      <p class="pl-c-shortcut-sheet__description">
+        Press <kbd class="pl-c-kbd">?</kbd> anywhere to open this sheet.
+      </p>
+    </div>
+    <form method="dialog">
+      <button class="pl-c-button" data-variant="ghost" data-size="sm">
+        Close
+      </button>
+    </form>
+  </header>
+
+  <div class="pl-c-shortcut-sheet__body">
+    <section
+      class="pl-c-shortcut-sheet__group"
+      aria-labelledby="shortcuts-navigation"
+    >
+      <h3 class="pl-c-shortcut-sheet__group-title" id="shortcuts-navigation">
+        Navigation
+      </h3>
+      <dl class="pl-c-shortcut-sheet__list">
+        <div class="pl-c-shortcut-sheet__row">
+          <dt class="pl-c-shortcut-sheet__label">Open command palette</dt>
+          <dd class="pl-c-shortcut-sheet__keys">
+            <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
+          </dd>
+        </div>
+        <div class="pl-c-shortcut-sheet__row">
+          <dt class="pl-c-shortcut-sheet__label">Go to inbox</dt>
+          <dd class="pl-c-shortcut-sheet__keys">
+            <kbd class="pl-c-kbd">G</kbd><kbd class="pl-c-kbd">I</kbd>
+          </dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+
+  <footer class="pl-c-shortcut-sheet__footer">
+    <span>Shortcuts are app-owned. Do not override browser-reserved keys.</span>
+  </footer>
+</dialog>
+```
+
+`commandfor` + `command="show-modal"` gives the trigger zero-JS dialog opening
+where invoker commands are supported. Keep an app-side fallback (`showModal()`)
+for older browsers.
+
+## Platform labels
+
+Render the modifier that matches the user's platform. Do not hard-code `⌘` for
+Windows or Linux users. A common mapping is:
+
+| Platform        | Primary modifier | Example  |
+| :-------------- | :--------------- | :------- |
+| macOS           | `⌘`              | `⌘ K`    |
+| Windows / Linux | `Ctrl`           | `Ctrl K` |
+
+Keep the keycaps visually consistent with `.pl-c-kbd`; the component does not
+choose the labels for you.
+
+## Class contract
+
+| Selector                            | Role                                  |
+| :---------------------------------- | :------------------------------------ |
+| `.pl-c-shortcut-sheet`              | Native `<dialog>` root.               |
+| `.pl-c-shortcut-sheet__header`      | Title, description, and close action. |
+| `.pl-c-shortcut-sheet__title`       | Dialog heading.                       |
+| `.pl-c-shortcut-sheet__description` | Short instruction.                    |
+| `.pl-c-shortcut-sheet__body`        | Scrollable two-column group grid.     |
+| `.pl-c-shortcut-sheet__group`       | One context group.                    |
+| `.pl-c-shortcut-sheet__group-title` | Group label.                          |
+| `.pl-c-shortcut-sheet__list`        | `<dl>` of shortcut rows.              |
+| `.pl-c-shortcut-sheet__row`         | One label plus key cluster.           |
+| `.pl-c-shortcut-sheet__label`       | `<dt>` description.                   |
+| `.pl-c-shortcut-sheet__keys`        | `<dd>` key cluster.                   |
+| `.pl-c-shortcut-sheet__footer`      | Optional footnote.                    |
+
+## Accessibility
+
+- Use a real `<dialog>` and open it with `showModal()` or the invoker command.
+- Give the dialog an accessible name with `aria-labelledby`.
+- Use `<dl>` for label/key pairs. Do not build the sheet from divs.
+- Add `aria-keyshortcuts` to the trigger when the `?` binding is active.
+- Do not hijack browser-reserved shortcuts. Test with the browser's own
+  shortcut list open.
+- Return focus to the trigger when the sheet closes. Native dialog focus return
+  handles the common case; verify it in the host app.
+- The shortcut sheet is a reference, not the only way to discover an action.
+  Every command must also be reachable through the command palette or normal UI.
+
+## Theme and RTL
+
+The sheet uses framework tokens and logical properties. The body collapses to
+one column under 40rem, and the scrim uses the shared dialog tokens. Forced
+colors keeps a system border.

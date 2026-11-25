@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Shortcut sheet · Porchlight">
+  <h1>Shortcut sheet</h1>
+  <p>
+    A native dialog reference for keyboard shortcuts, grouped by context. The
+    application owns the <code>?</code> binding, platform modifier labels, and
+    focus return.
+  </p>
+
+  <dialog
+    class="pl-c-shortcut-sheet"
+    id="shortcut-sheet"
+    aria-labelledby="shortcut-sheet-title"
+    open
+  >
+    <header class="pl-c-shortcut-sheet__header">
+      <div>
+        <h2 class="pl-c-shortcut-sheet__title" id="shortcut-sheet-title">
+          Keyboard shortcuts
+        </h2>
+        <p class="pl-c-shortcut-sheet__description">
+          Press <kbd class="pl-c-kbd">?</kbd> anywhere to open this sheet.
+        </p>
+      </div>
+      <form method="dialog">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm">Close</button>
+      </form>
+    </header>
+
+    <div class="pl-c-shortcut-sheet__body">
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="shortcuts-navigation">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="shortcuts-navigation">Navigation</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Open command palette</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Go to inbox</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">G</kbd><kbd class="pl-c-kbd">I</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Open the audit log</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">G</kbd><kbd class="pl-c-kbd">A</kbd>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="shortcuts-editing">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="shortcuts-editing">Editing</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Save changes</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">S</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Inline edit</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">E</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Cancel</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">Esc</kbd>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="shortcuts-data">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="shortcuts-data">Data</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Filter the current view</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">F</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Select row</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">X</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Export selection</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">E</kbd>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="shortcuts-global">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="shortcuts-global">Global</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Show shortcuts</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">?</kbd>
+            </dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Toggle theme</dt>
+            <dd class="pl-c-shortcut-sheet__keys">
+              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">L</kbd>
+            </dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+
+    <footer class="pl-c-shortcut-sheet__footer">
+      <span>Shortcuts are app-owned. Do not override browser-reserved keys.</span>
+    </footer>
+  </dialog>
+</BaseLayout>

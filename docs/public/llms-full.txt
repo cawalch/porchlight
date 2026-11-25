@@ -406,6 +406,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - scroll-region: /components/scroll-region
 - section-nav: /components/section-nav
 - segmented: /components/segmented
+- shortcut-sheet: /components/shortcut-sheet
 - skeleton: /components/skeleton
 - split-button: /components/split-button
 - split-pane: /components/split-pane
@@ -468,6 +469,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-asset-inventory
 - /preview/app-audit-studio
 - /preview/app-cases
+- /preview/app-command-first
 - /preview/app-command-workspace
 - /preview/app-dashboard
 - /preview/app-dense
@@ -532,6 +534,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/section-nav
 - /preview/segmented
 - /preview/settings
+- /preview/shortcut-sheet
 - /preview/skeleton
 - /preview/split-button
 - /preview/split-pane

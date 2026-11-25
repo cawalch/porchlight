@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
+
+const nav = ['Overview', 'Incidents', 'Services', 'On-call', 'Audit log'];
+const rows = [
+  { id: 'INC-4821', service: 'checkout-api', state: 'Investigating', tone: 'danger', owner: 'JD' },
+  { id: 'INC-4818', service: 'billing-worker', state: 'Monitoring', tone: 'warning', owner: 'SC' },
+  { id: 'INC-4814', service: 'search-index', state: 'Mitigated', tone: 'accent', owner: 'MW' },
+];
+---
+<BaseLayout title="Command-first workspace · Porchlight" density="compact">
+  <PreviewToolbar palette="zinc" theme="dark" density="compact" title="Command-First Workspace" />
+  <h1>Command-first workspace</h1>
+  <p>
+    A desktop shell where the command palette is the primary navigation. The
+    topbar search trigger opens the palette with zero custom CSS; the shortcut
+    sheet is a native dialog opened with the invoker command.
+  </p>
+
+  <div class="pl-l-desktop-shell" style="--pl-desktop-titlebar-size: 2.75rem;">
+    <header class="pl-l-desktop-shell__titlebar" data-pl-traffic-lights>
+      <span class="pl-l-cluster" aria-hidden="true" style="--pl-l-cluster-gap: var(--pl-space-1);">
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-danger);"></span>
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-warning);"></span>
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-success);"></span>
+      </span>
+      <span class="pl-u-muted-sm">Acme Ops</span>
+      <span class="pl-l-cluster" style="margin-inline-start: auto; --pl-l-cluster-gap: var(--pl-space-2);">
+        <button
+          class="pl-c-button"
+          data-variant="ghost"
+          data-size="sm"
+          type="button"
+          commandfor="command-shortcuts"
+          command="show-modal"
+          aria-keyshortcuts="?"
+        >
+          Keyboard shortcuts
+        </button>
+        <div class="pl-c-avatar" data-size="sm">JD</div>
+      </span>
+    </header>
+
+    <div class="pl-l-app-shell">
+      <header class="pl-l-app-shell__topbar">
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+          <button
+            class="pl-c-button"
+            data-variant="secondary"
+            data-size="sm"
+            type="button"
+            popovertarget="command-first-palette"
+            aria-haspopup="dialog"
+            aria-controls="command-first-palette"
+          >
+            <span class="pl-u-muted-sm">Search or jump to</span>
+            <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
+          </button>
+        </div>
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+          <span class="pl-c-badge" data-tone="danger">3 open</span>
+          <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">Declare incident</button>
+        </div>
+      </header>
+
+      <aside class="pl-l-app-shell__sidebar" data-sidebar="expanded">
+        <nav class="pl-c-nav" aria-label="Primary">
+          {nav.map((label, index) => (
+            <a class="pl-c-nav__item" href="#" aria-current={index === 1 ? 'page' : undefined}>
+              <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+              </svg>
+              <span class="pl-c-nav__label">{label}</span>
+            </a>
+          ))}
+        </nav>
+      </aside>
+
+      <main class="pl-l-app-shell__main">
+        <div class="pl-l-container pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-5);">
+          <div class="pl-c-page-header">
+            <div class="pl-c-page-header__heading">
+              <h2 class="pl-c-page-header__title">Incidents</h2>
+              <span class="pl-c-page-header__subtitle">Type to navigate, act, and switch context</span>
+            </div>
+            <div class="pl-c-page-header__actions">
+              <button class="pl-c-button" data-variant="secondary" data-size="sm" type="button">Filter</button>
+              <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">New incident</button>
+            </div>
+          </div>
+
+          <div class="pl-c-table-wrap" tabindex="0">
+            <table class="pl-c-table">
+              <thead>
+                <tr>
+                  <th>Incident</th>
+                  <th>Service</th>
+                  <th>State</th>
+                  <th>Owner</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr>
+                    <td><strong>{row.id}</strong></td>
+                    <td><code>{row.service}</code></td>
+                    <td><span class="pl-c-badge" data-tone={row.tone}>{row.state}</span></td>
+                    <td><span class="pl-c-avatar" data-size="sm">{row.owner}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div
+    popover
+    class="pl-c-command"
+    id="command-first-palette"
+    role="dialog"
+    aria-labelledby="command-first-title"
+  >
+    <h2 id="command-first-title" class="pl-u-sr-only">Command palette</h2>
+    <input
+      class="pl-c-command__search"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="command-first-list"
+      aria-activedescendant="command-first-open"
+      aria-label="Search commands"
+      placeholder="Type a command..."
+    />
+    <div class="pl-c-command__body" id="command-first-list" role="listbox" aria-label="Commands">
+      <div class="pl-c-command__group" role="group" aria-labelledby="command-first-actions">
+        <h3 class="pl-c-command__heading" id="command-first-actions" role="presentation">Actions</h3>
+        <button class="pl-c-command__item" id="command-first-open" type="button" role="option" aria-selected="true" data-selected>
+          <span>Open incident</span>
+          <span class="pl-c-command__shortcut">I</span>
+        </button>
+        <button class="pl-c-command__item" type="button" role="option" aria-selected="false">
+          <span>Page on-call</span>
+          <span class="pl-c-command__shortcut">P</span>
+        </button>
+        <button class="pl-c-command__item" type="button" role="option" aria-selected="false">
+          <span>Declare major incident</span>
+          <span class="pl-c-command__shortcut">D</span>
+        </button>
+      </div>
+      <div class="pl-c-command__group" role="group" aria-labelledby="command-first-navigation">
+        <h3 class="pl-c-command__heading" id="command-first-navigation" role="presentation">Go to</h3>
+        <button class="pl-c-command__item" type="button" role="option" aria-selected="false">
+          <span>Audit log</span>
+          <span class="pl-c-command__shortcut">G A</span>
+        </button>
+        <button class="pl-c-command__item" type="button" role="option" aria-selected="false">
+          <span>On-call schedule</span>
+          <span class="pl-c-command__shortcut">G O</span>
+        </button>
+      </div>
+    </div>
+    <footer class="pl-c-command__footer">
+      <span>↑↓ navigate</span>
+      <span>↵ select</span>
+      <span>esc close</span>
+    </footer>
+  </div>
+
+  <dialog
+    class="pl-c-shortcut-sheet"
+    id="command-shortcuts"
+    aria-labelledby="command-shortcuts-title"
+    closedby="any"
+  >
+    <header class="pl-c-shortcut-sheet__header">
+      <div>
+        <h2 class="pl-c-shortcut-sheet__title" id="command-shortcuts-title">Keyboard shortcuts</h2>
+        <p class="pl-c-shortcut-sheet__description">The same commands, without leaving the keyboard.</p>
+      </div>
+      <form method="dialog">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm">Close</button>
+      </form>
+    </header>
+    <div class="pl-c-shortcut-sheet__body">
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="command-shortcuts-navigation">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="command-shortcuts-navigation">Navigation</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Command palette</dt>
+            <dd class="pl-c-shortcut-sheet__keys"><kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd></dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Audit log</dt>
+            <dd class="pl-c-shortcut-sheet__keys"><kbd class="pl-c-kbd">G</kbd><kbd class="pl-c-kbd">A</kbd></dd>
+          </div>
+        </dl>
+      </section>
+      <section class="pl-c-shortcut-sheet__group" aria-labelledby="command-shortcuts-actions">
+        <h3 class="pl-c-shortcut-sheet__group-title" id="command-shortcuts-actions">Actions</h3>
+        <dl class="pl-c-shortcut-sheet__list">
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Open incident</dt>
+            <dd class="pl-c-shortcut-sheet__keys"><kbd class="pl-c-kbd">I</kbd></dd>
+          </div>
+          <div class="pl-c-shortcut-sheet__row">
+            <dt class="pl-c-shortcut-sheet__label">Page on-call</dt>
+            <dd class="pl-c-shortcut-sheet__keys"><kbd class="pl-c-kbd">P</kbd></dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+    <footer class="pl-c-shortcut-sheet__footer">
+      <span>Shortcuts are app-owned. Do not override browser-reserved keys.</span>
+    </footer>
+  </dialog>
+</BaseLayout>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>('[commandfor][command="show-modal"]')
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const dialog = document.getElementById(
+          button.getAttribute("commandfor") ?? "",
+        );
+        if (dialog instanceof HTMLDialogElement && !dialog.open) {
+          dialog.showModal();
+        }
+      });
+    });
+</script>
