@@ -225,6 +225,116 @@
 
   /* --------------------------------------------------------------------- */
 
+  /* Desktop shell: a titlebar plus the existing app shell. The titlebar is a
+     drag region for installed PWAs, Electron, and Tauri. The app shell keeps
+     its browser-tab layout; this wrapper only adds the window chrome row. */
+  :where(.pl-l-desktop-shell) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    block-size: 100dvb;
+    min-block-size: 0;
+  }
+
+  :where(.pl-l-desktop-shell > .pl-l-app-shell) {
+    block-size: 100%;
+    min-block-size: 0;
+  }
+
+  :where(.pl-l-desktop-shell__titlebar) {
+    display: flex;
+    align-items: center;
+    gap: var(--pl-space-2);
+    min-block-size: var(--pl-desktop-titlebar-size, 2.5rem);
+    padding-block: env(safe-area-inset-top, 0);
+    padding-inline: var(--pl-space-3);
+    border-block-end: 1px solid var(--pl-color-border);
+    background: var(--pl-color-surface);
+    color: var(--pl-color-text);
+    user-select: none;
+    -webkit-user-select: none;
+    app-region: drag;
+    -webkit-app-region: drag;
+  }
+
+  @supports (window-drag: move) {
+    :where(.pl-l-desktop-shell__titlebar) {
+      window-drag: move;
+    }
+  }
+
+  :where(.pl-l-desktop-shell__titlebar[data-pl-traffic-lights]) {
+    padding-inline-start: max(
+      var(--pl-desktop-traffic-inset, 4.5rem),
+      env(titlebar-area-x, 0)
+    );
+  }
+
+  :where(.pl-l-desktop-shell__titlebar)
+    :is(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [tabindex],
+      [contenteditable],
+      [role="button"],
+      [role="menuitem"],
+      [role="tab"]
+    ) {
+    app-region: no-drag;
+    -webkit-app-region: no-drag;
+  }
+
+  @supports (window-drag: move) {
+    :where(.pl-l-desktop-shell__titlebar)
+      :is(
+        a,
+        button,
+        input,
+        select,
+        textarea,
+        summary,
+        [tabindex],
+        [contenteditable],
+        [role="button"],
+        [role="menuitem"],
+        [role="tab"]
+      ) {
+      window-drag: none;
+    }
+  }
+
+  /* Window Controls Overlay: the OS keeps the window controls as an overlay.
+     Reserve the titlebar rectangle and the control strip on either side.
+     Fallbacks keep the normal browser layout when the env vars are absent. */
+  @media (display-mode: window-controls-overlay) {
+    :where(.pl-l-desktop-shell__titlebar) {
+      min-block-size: max(
+        var(--pl-desktop-titlebar-size, 2.5rem),
+        env(titlebar-area-height, 2.5rem)
+      );
+      padding-inline: max(var(--pl-space-3), env(titlebar-area-x, 0))
+        max(
+          var(--pl-space-3),
+          calc(
+            100dvi - env(titlebar-area-x, 0) -
+              env(titlebar-area-width, 100dvi) + var(--pl-space-3)
+          )
+        );
+    }
+
+    :where(.pl-l-desktop-shell__titlebar[data-pl-traffic-lights]) {
+      padding-inline-start: max(
+        var(--pl-desktop-traffic-inset, 4.5rem),
+        env(titlebar-area-x, 0)
+      );
+    }
+  }
+
+  /* --------------------------------------------------------------------- */
+
   /* Multi-column masonry  -  card walls, image galleries. Uses CSS Grid Level 3
      masonry where supported for row-major reading order, falling back to CSS
      multi-column layout (note: multicol flows down each column, so prefer

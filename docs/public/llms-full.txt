@@ -469,6 +469,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/app-command-workspace
 - /preview/app-dashboard
 - /preview/app-dense
+- /preview/app-desktop
 - /preview/app-inbox
 - /preview/app-list-detail
 - /preview/app-marketing

@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PreviewToolbar from '../../components/PreviewToolbar.astro';
+
+const nav = [
+  { label: 'Overview', current: false },
+  { label: 'Incidents', current: true, badge: '4' },
+  { label: 'Services', current: false },
+  { label: 'On-call', current: false },
+  { label: 'Audit log', current: false },
+  { label: 'Settings', current: false },
+];
+
+const metrics = [
+  { label: 'Open incidents', value: '4', delta: '+2', direction: 'down', tone: 'danger' },
+  { label: 'Error rate', value: '0.42', unit: '%', delta: '-0.11', direction: 'up', tone: 'success' },
+  { label: 'p95 latency', value: '184', unit: 'ms', delta: '+12', direction: 'down', tone: 'warning' },
+  { label: 'Uptime', value: '99.98', unit: '%', delta: '30d', direction: 'flat', tone: 'accent' },
+];
+
+const incidents = [
+  { id: 'INC-4821', service: 'checkout-api', state: 'Investigating', tone: 'danger', owner: 'JD', age: '12m' },
+  { id: 'INC-4818', service: 'billing-worker', state: 'Monitoring', tone: 'warning', owner: 'SC', age: '48m' },
+  { id: 'INC-4814', service: 'search-index', state: 'Mitigated', tone: 'accent', owner: 'MW', age: '2h' },
+  { id: 'INC-4809', service: 'notifications', state: 'Resolved', tone: 'success', owner: 'LP', age: '5h' },
+];
+---
+<BaseLayout title="Desktop app shell · Porchlight" density="compact">
+  <PreviewToolbar palette="zinc" theme="dark" density="compact" title="Desktop App Shell" />
+  <h1>Desktop app shell</h1>
+  <p>
+    A titlebar plus the existing app shell for installed PWAs, Electron, and
+    Tauri. The titlebar is a window drag region; interactive controls inside it
+    opt out automatically. In a Window Controls Overlay install, the padding is
+    derived from <code>env(titlebar-area-*)</code>.
+  </p>
+
+  <div class="pl-l-desktop-shell" style="--pl-desktop-titlebar-size: 2.75rem;">
+    <header class="pl-l-desktop-shell__titlebar" data-pl-traffic-lights>
+      <span class="pl-l-cluster" aria-hidden="true" style="--pl-l-cluster-gap: var(--pl-space-1);">
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-danger);"></span>
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-warning);"></span>
+        <span class="pl-c-swatch" style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-success);"></span>
+      </span>
+      <span class="pl-u-muted-sm">Acme Ops · Incident #4821</span>
+      <span class="pl-l-cluster" style="margin-inline-start: auto; --pl-l-cluster-gap: var(--pl-space-2);">
+        <button type="button" class="pl-c-button pl-c-menu__trigger" data-variant="ghost" data-size="sm" popovertarget="desktop-quick-actions">
+          Quick actions
+          <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
+        </button>
+        <div class="pl-c-avatar" data-size="sm">JD</div>
+      </span>
+    </header>
+
+    <div class="pl-l-app-shell">
+      <header class="pl-l-app-shell__topbar">
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+          <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <span class="pl-u-muted-sm">Operations</span>
+          <span class="pl-u-muted-sm">/</span>
+          <strong>Incidents</strong>
+        </div>
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+          <span class="pl-c-badge" data-tone="danger">4 open</span>
+          <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">Export</button>
+          <button type="button" class="pl-c-button" data-variant="primary" data-size="sm">Declare incident</button>
+        </div>
+      </header>
+
+      <aside class="pl-l-app-shell__sidebar" data-sidebar="expanded">
+        <nav class="pl-c-nav" aria-label="Primary">
+          {nav.map((item) => (
+            <a class="pl-c-nav__item" href="#" aria-current={item.current ? 'page' : undefined}>
+              <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+              </svg>
+              <span class="pl-c-nav__label">{item.label}</span>
+              {item.badge && <span class="pl-c-badge pl-c-nav__badge" data-tone="danger">{item.badge}</span>}
+            </a>
+          ))}
+        </nav>
+      </aside>
+
+      <main class="pl-l-app-shell__main">
+        <div class="pl-l-container pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-5);">
+          <div class="pl-c-page-header">
+            <div class="pl-c-page-header__heading">
+              <h2 class="pl-c-page-header__title">Incident response</h2>
+              <span class="pl-c-page-header__subtitle">Live operations for the checkout path</span>
+            </div>
+            <div class="pl-c-page-header__actions">
+              <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">View runbook</button>
+              <button type="button" class="pl-c-button" data-variant="primary" data-size="sm">New incident</button>
+            </div>
+          </div>
+
+          <div class="pl-c-banner" data-tone="danger">
+            <div class="pl-c-banner__content">
+              <div class="pl-c-banner__main">
+                <div class="pl-c-banner__message">
+                  <strong>INC-4821 is investigating elevated checkout errors.</strong>
+                  <span class="pl-u-muted-sm">Owner: Jane Doe · Started 12 minutes ago · Customer impact confirmed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-l-grid" style="--pl-l-grid-min: 12rem; --pl-l-grid-gap: var(--pl-space-3);">
+            {metrics.map((metric) => (
+              <article class="pl-c-kpi-card" data-tone={metric.tone}>
+                <header class="pl-c-kpi-card__header">
+                  <span class="pl-c-kpi-card__label">{metric.label}</span>
+                  <span class="pl-c-badge" data-tone={metric.tone}>{metric.direction === 'flat' ? 'Stable' : metric.delta}</span>
+                </header>
+                <div class="pl-c-kpi-card__metric">
+                  <span class="pl-c-kpi-card__value pl-u-tabular-nums">{metric.value}</span>
+                  {metric.unit && <span class="pl-c-kpi-card__suffix">{metric.unit}</span>}
+                </div>
+                <footer class="pl-c-kpi-card__footer">
+                  <span class="pl-u-muted-sm">vs previous 30m</span>
+                </footer>
+              </article>
+            ))}
+          </div>
+
+          <div class="pl-c-card" data-surface="app" data-variant="flush">
+            <div class="pl-c-toolbar">
+              <div class="pl-c-toolbar__group">
+                <strong>Active incidents</strong>
+                <span class="pl-u-muted-sm">4 records</span>
+              </div>
+              <div class="pl-c-toolbar__group">
+                <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">Filter</button>
+                <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">Columns</button>
+              </div>
+            </div>
+            <div class="pl-c-table-wrap" tabindex="0">
+              <table class="pl-c-table">
+                <thead>
+                  <tr>
+                    <th>Incident</th>
+                    <th>Service</th>
+                    <th>State</th>
+                    <th>Owner</th>
+                    <th data-align="end">Age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {incidents.map((incident) => (
+                    <tr>
+                      <td><strong>{incident.id}</strong></td>
+                      <td><code>{incident.service}</code></td>
+                      <td><span class="pl-c-badge" data-tone={incident.tone}>{incident.state}</span></td>
+                      <td><span class="pl-c-avatar" data-size="sm">{incident.owner}</span></td>
+                      <td data-align="end" class="pl-u-tabular-nums">{incident.age}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div popover class="pl-c-menu__popover" id="desktop-quick-actions">
+    <a class="pl-c-menu__item" href="#">
+      <span class="pl-c-menu__item-body">
+        <span class="pl-c-menu__item-label">Open incident</span>
+        <span class="pl-c-menu__item-description">Jump to INC-4821</span>
+      </span>
+      <kbd class="pl-c-menu__item-shortcut">I</kbd>
+    </a>
+    <a class="pl-c-menu__item" href="#">
+      <span class="pl-c-menu__item-body">
+        <span class="pl-c-menu__item-label">Page on-call</span>
+        <span class="pl-c-menu__item-description">Notify the current rotation</span>
+      </span>
+      <kbd class="pl-c-menu__item-shortcut">P</kbd>
+    </a>
+    <button class="pl-c-menu__item" type="button" data-tone="danger">
+      <span class="pl-c-menu__item-body">
+        <span class="pl-c-menu__item-label">Declare major incident</span>
+        <span class="pl-c-menu__item-description">Open a new severity-one record</span>
+      </span>
+    </button>
+  </div>
+</BaseLayout>

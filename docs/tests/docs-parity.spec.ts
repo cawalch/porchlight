@@ -14,6 +14,9 @@ const componentPreviews = fileURLToPath(
 const enhancementsSource = fileURLToPath(
   new URL("../../packages/porchlight/src/08-enhancements.css", import.meta.url),
 );
+const layoutSource = fileURLToPath(
+  new URL("../../packages/porchlight/src/05-layout.css", import.meta.url),
+);
 
 const componentSlugs = readdirSync(componentSource)
   .filter((file) => file.endsWith(".css"))
@@ -59,4 +62,11 @@ test("every component reference page has a component stylesheet", () => {
 test("enhancements use the current position-visibility value", () => {
   const source = readFileSync(enhancementsSource, "utf8");
   expect(source).toContain("position-visibility: anchor-visible;");
+});
+
+test("desktop shell keeps the drag and Window Controls Overlay contract", () => {
+  const source = readFileSync(layoutSource, "utf8");
+  expect(source).toContain("window-drag: move");
+  expect(source).toContain("env(titlebar-area-x");
+  expect(source).toContain("display-mode: window-controls-overlay");
 });
