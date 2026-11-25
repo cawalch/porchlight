@@ -487,7 +487,7 @@ async function emitComponentsDoc(componentNames, sizeBudget = null) {
       `| \`enhancements.min.css\` | ${formatBytes(sizeBudget.bundles.enhancements?.raw)} | ${formatBytes(sizeBudget.bundles.enhancements?.gzip)} | ${formatBytes(sizeBudget.bundles.enhancements?.brotli)} | Opt-in Progressive Enhancements (@supports) |`,
       `| \`experimental.min.css\` | ${formatBytes(sizeBudget.bundles.experimental?.raw)} | ${formatBytes(sizeBudget.bundles.experimental?.gzip)} | ${formatBytes(sizeBudget.bundles.experimental?.brotli)} | Bleeding-edge Chrome 133+ scroll-state queries |`,
       `| \`compat.min.css\` | ${formatBytes(sizeBudget.bundles.compat?.raw)} | ${formatBytes(sizeBudget.bundles.compat?.gzip)} | ${formatBytes(sizeBudget.bundles.compat?.brotli)} | Complete framework without experimental enhancement syntax |`,
-      `| \`porchlight.min.css\` / \`full.min.css\` | ${formatBytes(sizeBudget.bundles.porchlight?.raw)} | ${formatBytes(sizeBudget.bundles.porchlight?.gzip)} | ${formatBytes(sizeBudget.bundles.porchlight?.brotli)} | Full framework (all 59 components, layout, utilities, enhancements) |`,
+      `| \`porchlight.min.css\` / \`full.min.css\` | ${formatBytes(sizeBudget.bundles.porchlight?.raw)} | ${formatBytes(sizeBudget.bundles.porchlight?.gzip)} | ${formatBytes(sizeBudget.bundles.porchlight?.brotli)} | Full framework (all ${components.length} components, layout, utilities, enhancements) |`,
       "",
       '### "Core + N Components" Real-World Recipes',
       "",

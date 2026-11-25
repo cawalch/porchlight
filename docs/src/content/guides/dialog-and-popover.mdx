@@ -115,15 +115,20 @@ Porchlight couples the Popover API with CSS Anchor Positioning to tether menus a
 
 ### Tethered auto-hiding with `position-visibility`
 
-When an anchor button scrolls offscreen inside a table or container, the attached popover or tooltip should not hover orphaned in the viewport. Porchlight uses `position-visibility: anchors-visible`:
+When an anchor button scrolls offscreen inside a table or container, the attached popover or tooltip should not hover orphaned in the viewport. Porchlight uses the current `position-visibility: anchor-visible` value:
 
 ```css
-@supports (position-visibility: anchors-visible) {
+@supports (position-visibility: anchor-visible) {
   :where(.pl-c-tooltip__body, .pl-c-menu__popover, .pl-c-dropdown__menu) {
-    position-visibility: anchors-visible;
+    position-visibility: anchor-visible;
   }
 }
 ```
+
+Chrome 157 renamed the values from `anchors-visible` / `anchors-valid` to
+`anchor-visible` / `anchor-valid`. The framework keeps a gated fallback for
+Chromium 125-156. Firefox does not implement `position-visibility` yet, so the
+behavior is an enhancement rather than a baseline guarantee.
 
 ## Accessibility requirements and focus management
 
