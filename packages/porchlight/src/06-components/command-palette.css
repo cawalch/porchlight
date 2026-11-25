@@ -57,8 +57,6 @@
       );
       backdrop-filter: blur(var(--pl-backdrop-blur-strong))
         saturate(var(--pl-backdrop-saturate-strong));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong))
-        saturate(var(--pl-backdrop-saturate-strong));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
       overflow: hidden;
@@ -214,7 +212,7 @@
 
     :is(.pl-c-command__body, .pl-c-command-palette__body) {
       max-block-size: calc(var(--pl-c-command-max-block) - 4rem);
-      overflow-y: auto;
+      overflow-block: auto;
       padding: var(--pl-space-2);
     }
 

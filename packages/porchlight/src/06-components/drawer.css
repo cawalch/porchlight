@@ -60,8 +60,6 @@
       );
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
-        saturate(var(--pl-backdrop-saturate));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 
@@ -209,7 +207,7 @@
 
     .pl-c-drawer__body {
       padding: var(--pl-c-drawer-pad);
-      overflow-y: auto;
+      overflow-block: auto;
     }
 
     .pl-c-drawer__footer {

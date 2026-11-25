@@ -45,8 +45,6 @@
       );
       backdrop-filter: blur(var(--pl-backdrop-blur-strong))
         saturate(var(--pl-backdrop-saturate-strong));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur-strong))
-        saturate(var(--pl-backdrop-saturate-strong));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-3);
 

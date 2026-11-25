@@ -59,8 +59,6 @@
       background: var(--pl-overlay-popover-bg);
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
-        saturate(var(--pl-backdrop-saturate));
       color: var(--pl-color-text);
       box-shadow: var(--pl-shadow-4);
 

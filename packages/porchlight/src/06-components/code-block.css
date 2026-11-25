@@ -158,7 +158,7 @@
       background: transparent;
       padding-block: var(--pl-c-code-pad-block);
       padding-inline: 0;
-      overflow-x: auto;
+      overflow-inline: auto;
       scrollbar-gutter: stable;
       font-family: var(--pl-c-code-font);
       font-size: var(--pl-c-code-font-size);

@@ -77,7 +77,7 @@
         /* Cap the growth so very long text scrolls instead of growing
            indefinitely. */
         max-block-size: var(--pl-c-textarea-max-block);
-        overflow-y: auto;
+        overflow-block: auto;
       }
     }
   }

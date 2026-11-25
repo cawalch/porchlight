@@ -151,8 +151,6 @@
     background: color-mix(in oklab, var(--pl-color-surface), transparent 18%);
     backdrop-filter: blur(var(--pl-backdrop-blur))
       saturate(var(--pl-backdrop-saturate));
-    -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
-      saturate(var(--pl-backdrop-saturate));
     border-block-end: 1px solid
       color-mix(in oklab, var(--pl-color-border), transparent 50%);
   }

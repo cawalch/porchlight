@@ -44,7 +44,7 @@
       min-block-size: var(--pl-c-miller-min-block-size);
       background: var(--pl-color-surface);
       color: var(--pl-color-text);
-      overflow-x: auto;
+      overflow-inline: auto;
       scroll-behavior: smooth;
       border: 1px solid var(--pl-c-miller-border-color);
       border-radius: var(--pl-radius-xl);
@@ -125,7 +125,7 @@
 
     .pl-c-miller-columns__column-body {
       flex: 1 1 auto;
-      overflow-y: auto;
+      overflow-block: auto;
       overscroll-behavior: contain;
       scrollbar-gutter: stable;
       padding: var(--pl-space-2);
