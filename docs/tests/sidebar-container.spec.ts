@@ -62,3 +62,34 @@ test("app shell keeps a keyboard-reachable navigation target at 500px width", as
   await navTarget.focus();
   await expect(navTarget).toBeFocused();
 });
+
+test("collapsed sidebar nav meta drops outer card chrome and does not overflow icon", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 500, height: 800 });
+  await page.goto("./preview/app-command-workspace");
+
+  const meta = page.locator(".pl-c-nav__meta");
+  const icon = page.locator(".pl-c-nav__meta-icon");
+  await expect(meta).toBeVisible();
+  await expect(icon).toBeVisible();
+
+  const metrics = await meta.evaluate((el) => {
+    const iconEl = el.querySelector(".pl-c-nav__meta-icon")!;
+    const metaRect = el.getBoundingClientRect();
+    const iconRect = iconEl.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    return {
+      borderStyle: cs.borderTopStyle,
+      backgroundColor: cs.backgroundColor,
+      metaLeft: metaRect.left,
+      metaRight: metaRect.right,
+      iconLeft: iconRect.left,
+      iconRight: iconRect.right,
+    };
+  });
+
+  expect(metrics.borderStyle).toBe("none");
+  expect(metrics.iconLeft).toBeGreaterThanOrEqual(metrics.metaLeft - 0.5);
+  expect(metrics.iconRight).toBeLessThanOrEqual(metrics.metaRight + 0.5);
+});
