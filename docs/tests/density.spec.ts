@@ -231,6 +231,75 @@ test.describe("compact and dense browser coverage", () => {
     expect(parseFloat(menuPad)).toBe(0.5);
   });
 
+  test("density attribute and --pl-density nest symmetrically with nearest winning", async ({
+    page,
+  }) => {
+    await page.goto("./preview/button");
+    await expect(
+      page.getByRole("heading", { name: "Button", exact: true, level: 1 }),
+    ).toBeVisible();
+
+    const expectedSizes: Record<string, string> = {
+      comfortable: "2.5rem",
+      compact: "2rem",
+      dense: "1.75rem",
+      touch: "2.75rem",
+    };
+
+    const failures = await page.evaluate((expected) => {
+      const tiers = Object.keys(expected);
+      const issues: string[] = [];
+
+      for (const outer of tiers) {
+        for (const inner of tiers) {
+          // Direction 1: --pl-density outer > [data-pl-density] inner
+          const host1 = document.createElement("div");
+          host1.style.setProperty("--pl-density", outer);
+          const child1 = document.createElement("div");
+          child1.setAttribute("data-pl-density", inner);
+          const btn1 = document.createElement("button");
+          btn1.className = "pl-c-button";
+          child1.append(btn1);
+          host1.append(child1);
+          document.body.append(host1);
+          const actual1 = getComputedStyle(btn1)
+            .getPropertyValue("--pl-control-block-size")
+            .trim();
+          if (actual1 !== expected[inner]) {
+            issues.push(
+              `--pl-density:${outer} > [data-pl-density=${inner}] got ${actual1}, expected ${expected[inner]}`,
+            );
+          }
+          host1.remove();
+
+          // Direction 2: [data-pl-density] outer > --pl-density inner
+          const host2 = document.createElement("div");
+          host2.setAttribute("data-pl-density", outer);
+          const child2 = document.createElement("div");
+          child2.style.setProperty("--pl-density", inner);
+          const btn2 = document.createElement("button");
+          btn2.className = "pl-c-button";
+          child2.append(btn2);
+          host2.append(child2);
+          document.body.append(host2);
+          const actual2 = getComputedStyle(btn2)
+            .getPropertyValue("--pl-control-block-size")
+            .trim();
+          if (actual2 !== expected[inner]) {
+            issues.push(
+              `[data-pl-density=${outer}] > --pl-density:${inner} got ${actual2}, expected ${expected[inner]}`,
+            );
+          }
+          host2.remove();
+        }
+      }
+
+      return issues;
+    }, expectedSizes);
+
+    expect(failures).toEqual([]);
+  });
+
   for (const density of densities) {
     test(`core component previews stay usable in ${density} mode`, async ({
       page,
