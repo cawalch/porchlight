@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 59 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 60 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -21,13 +21,13 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 
 | Bundle                                | Raw      | Gzip    | Brotli  | Contents / Purpose                                                  |
 | :------------------------------------ | :------- | :------ | :------ | :------------------------------------------------------------------ |
-| `core.min.css`                        | 17.9 KB  | 3.9 KB  | 3.2 KB  | Layers, reset, design tokens, themes, base styles                   |
-| `layout.min.css`                      | 3.2 KB   | 1.0 KB  | 866 B   | Primitives: stack, cluster, grid, sidebar, center                   |
-| `utilities.min.css`                   | 2.8 KB   | 885 B   | 755 B   | Accessibility, typography, tabular nums, flow                       |
+| `core.min.css`                        | 18.0 KB  | 3.9 KB  | 3.3 KB  | Layers, reset, design tokens, themes, base styles                   |
+| `layout.min.css`                      | 3.8 KB   | 1.1 KB  | 951 B   | Primitives: stack, cluster, grid, sidebar, center                   |
+| `utilities.min.css`                   | 3.0 KB   | 964 B   | 822 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.3 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 238.9 KB | 33.7 KB | 26.9 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 248.2 KB | 35.1 KB | 27.6 KB | Full framework (all 59 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 240.2 KB | 34.0 KB | 27.0 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 249.4 KB | 35.3 KB | 27.8 KB | Full framework (all 59 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -35,10 +35,10 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 
 | Recipe / Use Case             | Modules & Components Included                                              | Raw     | Gzip       | Brotli     | vs 14 KB Monolith |
 | :---------------------------- | :------------------------------------------------------------------------- | :------ | :--------- | :--------- | :---------------- |
-| **Minimal Controls**          | `core` + `button` + `field`                                                | 30.3 KB | **6.3 KB** | **5.4 KB** | **-55% smaller**  |
-| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 41.6 KB | **8.2 KB** | **7.2 KB** | **-41% smaller**  |
-| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 41.4 KB | **8.0 KB** | **6.9 KB** | **-43% smaller**  |
-| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 38.2 KB | **7.6 KB** | **6.6 KB** | **-46% smaller**  |
+| **Minimal Controls**          | `core` + `button` + `field`                                                | 30.5 KB | **6.3 KB** | **5.4 KB** | **-55% smaller**  |
+| **SaaS CRUD / Form Admin**    | `core` + `layout` + `button` + `field` + `card` + `badge` + `alert`        | 42.3 KB | **8.3 KB** | **7.3 KB** | **-40% smaller**  |
+| **Analytics & KPI Dashboard** | `core` + `layout` + `stat` + `kpi-card` + `badge` + `data-table` + `gauge` | 42.1 KB | **8.1 KB** | **7.0 KB** | **-42% smaller**  |
+| **Docs & Marketing Content**  | `core` + `layout` + `card` + `tabs` + `accordion` + `alert` + `code-block` | 38.9 KB | **7.7 KB** | **6.7 KB** | **-45% smaller**  |
 
 ```css
 /* Example: SaaS CRUD / Form Admin stylesheet (only ~6.8 KB gzip!) */
@@ -80,7 +80,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [dropdown](#dropdown)                 | `.pl-c-dropdown`         | 3.7 KB   | 1.1 KB | 968 B  | None         | A button-triggered option menu using the Popover API + anchor positioning. Use it for sort/filter/action choices that need richer rendering than a native select. For form submission, keep a native select or sync a hidden input in app JavaScript.                                                                                                                                                                                    |
 | [empty-state](#empty-state)           | `.pl-c-empty`            | 1.2 KB   | 490 B  | 397 B  | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
 | [entity-inspector](#entity-inspector) | `.pl-c-entity-inspector` | 1.9 KB   | 671 B  | 552 B  | None         | A native non-modal record popover. popovertarget provides the implicit anchor; repeated instances need unique HTML ids, never per-instance CSS anchor names.                                                                                                                                                                                                                                                                             |
-| [field](#field)                       | `.pl-c-field`            | 9.5 KB   | 2.2 KB | 1.9 KB | None         | A labeled form control: label, native input, hint/messages, and zero-JS anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native <input>/<select>/<textarea> so we inherit all their behavior (constraint validation, autofill, IME, spellcheck). No JS, no custom widgets.                                                                                                                                            |
+| [field](#field)                       | `.pl-c-field`            | 9.6 KB   | 2.2 KB | 1.9 KB | None         | A labeled form control: label, native input, hint/messages, and zero-JS anchor-positioned validation balloons (.pl-c-field__balloon). Wraps native <input>/<select>/<textarea> so we inherit all their behavior (constraint validation, autofill, IME, spellcheck). No JS, no custom widgets.                                                                                                                                            |
 | [file-upload](#file-upload)           | `.pl-c-file-upload`      | 1.7 KB   | 680 B  | 536 B  | None         | A drag-and-drop file upload zone. The native <input type="file"> is visually hidden; the zone is the click target. Uses :has() for the drag-over state (set [data-dragging] via JS) and disabled state.                                                                                                                                                                                                                                  |
 | [filter-builder](#filter-builder)     | `.pl-c-filter-builder`   | 10.9 KB  | 2.2 KB | 1.9 KB | None         | CSS-only UI contracts for query builders, query chips, and saved views. Apps own query grammar, validation, persistence, and execution.                                                                                                                                                                                                                                                                                                  |
 | [form](#form)                         | `.pl-c-form`             | 10.8 KB  | 2.1 KB | 1.8 KB | None         | SaaS form composition helpers built on native controls: sections, grids, subgrid alignment, pure-CSS conditional field disclosures (.pl-c-form__conditional), and reactive validation summary banners (.pl-c-form__summary) driven by form:has(:user-invalid). These classes do not replace semantic HTML: use real <form>, <fieldset>, <legend>, <label>, <input>, <select>, and <textarea>; Porchlight only handles layout and chrome. |
@@ -106,6 +106,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [split-pane](#split-pane)             | `.pl-c-split-pane`       | 6.2 KB   | 1.3 KB | 1.1 KB | None         | CSS-only split panes for app shells, object explorers, editors, inspectors, and process builders. Apps own pointer/keyboard resize behavior and persist sizes by updating custom properties or data attributes.                                                                                                                                                                                                                          |
 | [stat](#stat)                         | `.pl-c-stat`             | 2.4 KB   | 704 B  | 601 B  | None         | A KPI / metric tile - the workhorse of SaaS dashboards. Displays a single number with a label, an optional unit, a trend indicator (up/down/flat), and an optional sparkline slot. Designed to sit inside .pl-l-grid (auto-fitting dashboard widgets) or inside .pl-c-card bodies.                                                                                                                                                       |
 | [stepper](#stepper)                   | `.pl-c-stepper`          | 2.9 KB   | 906 B  | 739 B  | None         | A horizontal (default) or vertical (container-query collapse) multi-step indicator. Each step has a visual marker (circle with number or check) and a label. Connectors between steps are CSS-only (no SVG).                                                                                                                                                                                                                             |
+| [swatch](#swatch)                     | `.pl-c-swatch`           | 409 B    | 236 B  | 167 B  | None         | Static color chip. Base geometry and token-derived fallback live here so .pl-c-swatch renders a visible box in all browsers; 08-enhancements upgrades the fill via typed attr(data-color type(<color>)) where supported.                                                                                                                                                                                                                 |
 | [switch](#switch)                     | `.pl-c-switch`           | 2.5 KB   | 795 B  | 650 B  | None         | A CSS-only toggle switch built on a native checkbox. No JavaScript for the toggle itself: <input type="checkbox" role="switch"> + <label>.                                                                                                                                                                                                                                                                                               |
 | [tabs](#tabs)                         | `.pl-c-tabs`             | 3.8 KB   | 1.2 KB | 984 B  | None         | A tabbed region: a [role="tablist"] of [role="tab"] controls that switch between [role="tabpanel"]s. The canonical master-detail / settings / dashboard-sectioning primitive. Wraps real <button> tabs.                                                                                                                                                                                                                                  |
 | [tag-input](#tag-input)               | `.pl-c-tag-input`        | 1.3 KB   | 563 B  | 465 B  | None         | A text input that accepts multiple values as removable chips. The CSS handles the layout (wrapping chips + inline input); JS handles tokenization (enter/comma to add, backspace to remove).                                                                                                                                                                                                                                             |
@@ -496,7 +497,7 @@ A labeled form control: label, native input, hint/messages, and zero-JS anchor-p
 - **Minified Import**: `@cawalch/porchlight/components/field.min.css`
 - **Dist File**: `dist/components/field.css`
 - **Minified Dist File**: `dist/components/field.min.css`
-- **Sizes**: 9.5 KB minified, 2.2 KB gzip, 1.9 KB brotli
+- **Sizes**: 9.6 KB minified, 2.2 KB gzip, 1.9 KB brotli
 - **Dependencies**: None
 
 ```css
@@ -901,6 +902,22 @@ A horizontal (default) or vertical (container-query collapse) multi-step indicat
 
 ```css
 @import "@cawalch/porchlight/components/stepper.css";
+```
+
+### swatch
+
+Static color chip. Base geometry and token-derived fallback live here so .pl-c-swatch renders a visible box in all browsers; 08-enhancements upgrades the fill via typed attr(data-color type(<color>)) where supported.
+
+- **Primary Selector**: `.pl-c-swatch`
+- **Import**: `@cawalch/porchlight/components/swatch.css`
+- **Minified Import**: `@cawalch/porchlight/components/swatch.min.css`
+- **Dist File**: `dist/components/swatch.css`
+- **Minified Dist File**: `dist/components/swatch.min.css`
+- **Sizes**: 409 B minified, 236 B gzip, 167 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/swatch.css";
 ```
 
 ### switch

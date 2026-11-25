@@ -1,0 +1,18 @@
+/*
+ * Porchlight: swatch
+ * ===========================================================================
+ * Static color chip. Base geometry and token-derived fallback live here so
+ * .pl-c-swatch renders a visible box in all browsers; 08-enhancements upgrades
+ * the fill via typed attr(data-color type(<color>)) where supported.
+ */
+@layer porchlight.components {
+  :where(.pl-c-swatch) {
+    display: inline-block;
+    inline-size: var(--pl-c-swatch-size, 2rem);
+    block-size: var(--pl-c-swatch-size, 2rem);
+    border: 1px solid var(--pl-color-border);
+    border-radius: var(--pl-radius-md);
+    background: var(--pl-c-swatch-color, var(--pl-color-surface-2));
+    vertical-align: middle;
+  }
+}

@@ -341,7 +341,6 @@
       .pl-c-menu__popover,
       .pl-c-dropdown__menu,
       .pl-c-split__menu,
-      .pl-c-calendar__popover,
       .pl-c-date-picker__popover
     ) {
       position-try-order: most-block-size;
