@@ -410,6 +410,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - split-pane: /components/split-pane
 - stat: /components/stat
 - stepper: /components/stepper
+- swatch: /components/swatch
 - switch: /components/switch
 - tabs: /components/tabs
 - tag-input: /components/tag-input
@@ -532,6 +533,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/split-pane
 - /preview/stat
 - /preview/stepper
+- /preview/swatch
 - /preview/switch
 - /preview/tabs
 - /preview/tag-input
