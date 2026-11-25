@@ -1,0 +1,131 @@
+---
+title: Swatch
+description: A static color chip for palettes, token previews, and color metadata.
+status: stable
+since: 0.19.0
+---
+
+The `.pl-c-swatch` is a static color chip. It gives a palette, a token reference,
+or a color-valued data field a visible target without turning the color into a
+form control. The base rule renders a bordered box in every browser; the
+optional typed `attr()` enhancement reads `data-color` where supported.
+
+## Semantic HTML
+
+```html
+<span
+  class="pl-c-swatch"
+  role="img"
+  aria-label="Brand accent"
+  style="--pl-c-swatch-color: var(--pl-color-accent);"
+></span>
+```
+
+For a decorative chip next to a visible label, remove the role and label and
+hide the chip from assistive technology:
+
+```html
+<span class="pl-l-cluster">
+  <span
+    class="pl-c-swatch"
+    aria-hidden="true"
+    style="--pl-c-swatch-color: var(--pl-color-success);"
+  ></span>
+  <span>Healthy</span>
+</span>
+```
+
+## Sizes
+
+Set `--pl-c-swatch-size` on the instance. The default is `2rem`.
+
+```html
+<span
+  class="pl-c-swatch"
+  style="--pl-c-swatch-size: 1rem;"
+  aria-hidden="true"
+></span>
+<span class="pl-c-swatch" aria-hidden="true"></span>
+<span
+  class="pl-c-swatch"
+  style="--pl-c-swatch-size: 3rem;"
+  aria-hidden="true"
+></span>
+```
+
+## Fill
+
+The base component uses `--pl-c-swatch-color` and falls back to
+`--pl-color-surface-2`:
+
+```html
+<span
+  class="pl-c-swatch"
+  style="--pl-c-swatch-color: var(--pl-color-warning);"
+  aria-hidden="true"
+></span>
+```
+
+Where typed `attr()` is supported, the enhancement layer reads `data-color`
+directly. Keep a `--pl-c-swatch-color` fallback for browsers without typed
+`attr()`:
+
+```html
+<span
+  class="pl-c-swatch"
+  data-color="oklch(58% 0.18 260deg)"
+  style="--pl-c-swatch-color: oklch(58% 0.18 260deg);"
+  aria-hidden="true"
+></span>
+```
+
+## In context
+
+Swatches work well in palette rows, token documentation, property lists, and
+table cells that represent a stored color. Pair them with a visible label or a
+description list term so the color is not the only carrier of meaning.
+
+```html
+<dl class="pl-c-description">
+  <div class="pl-c-description__row">
+    <dt class="pl-c-description__term">Production</dt>
+    <dd class="pl-c-description__detail">
+      <span
+        class="pl-c-swatch"
+        aria-hidden="true"
+        style="--pl-c-swatch-color: var(--pl-color-danger);"
+      ></span>
+      #D14343
+    </dd>
+  </div>
+</dl>
+```
+
+## Class contract
+
+| Selector              | Role                                                      |
+| :-------------------- | :-------------------------------------------------------- |
+| `.pl-c-swatch`        | The chip (`<span>`).                                      |
+| `--pl-c-swatch-size`  | Instance size. Defaults to `2rem`.                        |
+| `--pl-c-swatch-color` | Base fill. Defaults to `var(--pl-color-surface-2)`.       |
+| `[data-color]`        | Optional typed `attr()` enhancement. Accepts a `<color>`. |
+
+## Tokens consumed
+
+`--pl-color-border`, `--pl-color-surface-2`, `--pl-radius-md`, and the optional
+`--pl-c-swatch-size` / `--pl-c-swatch-color` instance tokens.
+
+## Accessibility
+
+- A swatch is decorative unless it carries meaning. Pair it with a visible label,
+  or give it `role="img"` and an `aria-label`.
+- Do not use color alone to communicate status. Keep a text label or icon next to
+  the chip.
+- The swatch has no text, so its own contrast is not a text-contrast requirement.
+  Check the contrast of the label and surrounding text instead.
+
+## Theme and RTL
+
+The default fill uses theme tokens, so it flips with light/dark mode. The
+component uses logical properties and inline-block geometry, so it works in RTL
+without a direction-specific override.
