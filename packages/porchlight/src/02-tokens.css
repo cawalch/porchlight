@@ -182,10 +182,9 @@
     --pl-color-border-overlay: transparent;
     --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
     --pl-color-accent-text: light-dark(white, oklch(16% 0.01 55deg));
-    --pl-color-accent-hover: color-mix(
-      in oklab,
-      var(--pl-color-accent),
-      oklch(16% 0.01 55deg) 10%
+    --pl-color-accent-hover: light-dark(
+      color-mix(in oklab, var(--pl-color-accent), oklch(16% 0.01 55deg) 10%),
+      color-mix(in oklab, var(--pl-color-accent), white 12%)
     );
 
     /* 15% accent wash for selected/active backgrounds. Kept in the base token

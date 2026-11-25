@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { contrast } from "./lib/color";
+import { compositeOver, contrast, toOklab } from "./lib/color";
 
 /**
  * WCAG 2.2 contrast guard for Porchlight's semantic color pairs.
@@ -41,6 +41,11 @@ const pairs = [
   {
     name: "accent-text on accent (btn)",
     bg: "var(--pl-color-accent)",
+    fg: "var(--pl-color-accent-text)",
+  },
+  {
+    name: "accent-text on accent-hover (btn hover)",
+    bg: "var(--pl-color-accent-hover)",
     fg: "var(--pl-color-accent-text)",
   },
   {
@@ -106,6 +111,59 @@ async function expectPairsAA(
       `${name} in ${label}: ${ratio.toFixed(2)}:1`,
     ).toBeGreaterThanOrEqual(AA);
   }
+
+  const subtleResult = await page.evaluate(
+    ([theme, palette]) => {
+      const root = document.querySelector(".playground") as HTMLElement;
+      root.setAttribute("data-pl-theme", theme);
+      if (palette) root.setAttribute("data-pl-palette", palette);
+      else root.removeAttribute("data-pl-palette");
+      const host = document.createElement("div");
+      host.style.background = "var(--pl-color-bg)";
+      const subtle = document.createElement("div");
+      subtle.style.background = "var(--pl-color-accent-subtle)";
+      const text = document.createElement("span");
+      text.style.color = "var(--pl-color-text)";
+      const accent = document.createElement("span");
+      accent.style.background = "var(--pl-color-accent)";
+      const hover = document.createElement("span");
+      hover.style.background = "var(--pl-color-accent-hover)";
+      subtle.append(text, accent, hover);
+      host.append(subtle);
+      root.append(host);
+      const res = {
+        bg: getComputedStyle(host).backgroundColor,
+        subtle: getComputedStyle(subtle).backgroundColor,
+        fg: getComputedStyle(text).color,
+        accent: getComputedStyle(accent).backgroundColor,
+        hover: getComputedStyle(hover).backgroundColor,
+      };
+      host.remove();
+      return res;
+    },
+    [theme, palette] as const,
+  );
+
+  const compositedSubtle = compositeOver(subtleResult.subtle, subtleResult.bg);
+  const subtleRatio = contrast(subtleResult.fg, compositedSubtle);
+  expect(
+    subtleRatio,
+    `text on accent-subtle in ${label}: ${subtleRatio.toFixed(2)}:1`,
+  ).toBeGreaterThanOrEqual(AA);
+
+  const accentL = toOklab(subtleResult.accent).L;
+  const hoverL = toOklab(subtleResult.hover).L;
+  if (theme === "light") {
+    expect(
+      hoverL,
+      `accent-hover should darken in light mode (${label})`,
+    ).toBeLessThan(accentL);
+  } else {
+    expect(
+      hoverL,
+      `accent-hover should lighten in dark mode (${label})`,
+    ).toBeGreaterThan(accentL);
+  }
 }
 
 const palettes = [
@@ -149,4 +207,33 @@ test("selected theme toggle has readable text in dark mode", async ({
     return { fg: style.color, bg: style.backgroundColor };
   });
   expect(contrast(colors.fg, colors.bg)).toBeGreaterThanOrEqual(AA);
+});
+
+test("palette presets derive distinct --pl-focus-color from their brand ramp", async ({
+  page,
+}) => {
+  await page.goto("./preview/themes");
+  const focusColors = await page.evaluate((paletteList) => {
+    const root = document.querySelector(".playground") as HTMLElement;
+    const read = (palette: string) => {
+      if (palette) root.setAttribute("data-pl-palette", palette);
+      else root.removeAttribute("data-pl-palette");
+      const probe = document.createElement("span");
+      probe.style.outlineColor = "var(--pl-focus-color)";
+      root.append(probe);
+      const val = getComputedStyle(probe).outlineColor;
+      probe.remove();
+      return val;
+    };
+    const base = read("");
+    const entries = paletteList.map((p) => [p, read(p)] as const);
+    return { base, entries };
+  }, palettes);
+
+  for (const [palette, color] of focusColors.entries) {
+    expect(
+      color,
+      `palette ${palette} should not keep default amber focus ring`,
+    ).not.toBe(focusColors.base);
+  }
 });
