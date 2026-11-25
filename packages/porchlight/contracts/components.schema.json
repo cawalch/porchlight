@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cawalch.github.io/porchlight/components.schema.json",
+  "title": "Porchlight component contracts",
+  "type": "object",
+  "required": ["name", "version", "rules", "components"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "generatedBy": { "type": "string" },
+    "rules": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "selector",
+          "import",
+          "docs",
+          "preview",
+          "status",
+          "title"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "selector": { "type": "string", "pattern": "^\\.pl-" },
+          "import": { "type": "string" },
+          "importMinified": { "type": "string" },
+          "docs": { "type": "string" },
+          "preview": { "type": "string" },
+          "status": { "enum": ["stable", "experimental", "planned"] },
+          "since": { "type": ["string", "null"] },
+          "title": { "type": "string" },
+          "description": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

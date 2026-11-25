@@ -503,3 +503,21 @@ imported mapping is useful.
 </a>
 to compare a default card with the same component customized through an actual
 module import.
+
+## Machine-readable component contracts
+
+Agent and code-generation workflows can read the same contracts the docs use.
+The package ships `contracts/components.json` with each component's primary
+selector, import path, docs route, preview route, status, and `since` version.
+The docs site serves the same file at `/components.json`.
+
+```sh
+npx porchlight contracts
+npx porchlight contracts --json
+```
+
+The package also includes a `SKILL.md` with the non-negotiable rules: use only
+public `pl-*` classes and `--pl-*` tokens, keep real HTML semantics, and leave
+application state to the application. When an agent needs a behavior the
+contract does not provide, it should say so rather than hiding a controller in
+CSS.

@@ -85,3 +85,18 @@ test("every component stylesheet is imported by the source entry", () => {
     "Add the component import to packages/porchlight/porchlight.css.",
   ).toEqual([]);
 });
+
+test("public component contracts cover every documented component", () => {
+  const contract = JSON.parse(
+    readFileSync(new URL("../public/components.json", import.meta.url), "utf8"),
+  );
+  expect(contract.components).toHaveLength(componentSlugs.length);
+
+  for (const component of contract.components) {
+    expect(component.selector).toMatch(/^\.pl-/);
+    expect(existsSync(`${componentDocs}${component.name}.mdx`)).toBe(true);
+    expect(existsSync(`${componentPreviews}${component.name}.astro`)).toBe(
+      true,
+    );
+  }
+});

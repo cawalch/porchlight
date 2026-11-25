@@ -34,7 +34,9 @@
     "lint:js": "biome lint .",
     "lint:all": "pnpm lint && pnpm lint:js && pnpm namespace:check",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "contracts:generate": "node scripts/emit-component-contracts.mjs",
+    "contracts:check": "node scripts/emit-component-contracts.mjs --check"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.8",

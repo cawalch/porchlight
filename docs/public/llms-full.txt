@@ -354,6 +354,7 @@ Use the prebuilt stylesheet where possible. If a bundler cannot parse modern CSS
 - Browser support: /guides/browser-support
 - Component reference: /components
 - Preview gallery: /preview
+- Component contracts (JSON): /components.json
 - Full model pack: /llms-full.txt
 
 ## Component reference
@@ -570,4 +571,5 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - Browser support: https://cawalch.github.io/porchlight/guides/browser-support
 - Component reference: https://cawalch.github.io/porchlight/components
 - Preview gallery: https://cawalch.github.io/porchlight/preview
+- Component contracts (JSON): https://cawalch.github.io/porchlight/components.json
 - Full model pack: https://cawalch.github.io/porchlight/llms-full.txt

@@ -14,6 +14,7 @@ Use this short file to route quickly. Use /llms-full.txt when generating or refa
 - Browser support: /guides/browser-support
 - Component reference: /components
 - Preview gallery: /preview
+- Component contracts (JSON): /components.json
 - Full model pack: /llms-full.txt
 
 ## Core composition rules
