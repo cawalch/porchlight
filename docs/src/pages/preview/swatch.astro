@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Swatch · Porchlight">
+  <h1>Swatch</h1>
+  <p>
+    A static color chip for palettes, token previews, and color metadata. The
+    base rule renders a bordered box everywhere; the typed
+    <code>attr()</code> enhancement reads <code>data-color</code> where
+    supported.
+  </p>
+
+  <h2>Token fills</h2>
+  <p>
+    Set <code>--pl-c-swatch-color</code> to any token. These chips are
+    decorative and sit next to visible labels.
+  </p>
+  <div class="pl-l-cluster">
+    <span class="pl-l-cluster">
+      <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-accent);"></span>
+      <span>Accent</span>
+    </span>
+    <span class="pl-l-cluster">
+      <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-success);"></span>
+      <span>Success</span>
+    </span>
+    <span class="pl-l-cluster">
+      <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-warning);"></span>
+      <span>Warning</span>
+    </span>
+    <span class="pl-l-cluster">
+      <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-danger);"></span>
+      <span>Danger</span>
+    </span>
+  </div>
+
+  <h2>Sizes</h2>
+  <p>Set <code>--pl-c-swatch-size</code> on the instance.</p>
+  <div class="pl-l-cluster">
+    <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-size: 1rem; --pl-c-swatch-color: var(--pl-color-accent);"></span>
+    <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-accent);"></span>
+    <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-size: 3rem; --pl-c-swatch-color: var(--pl-color-accent);"></span>
+  </div>
+
+  <h2>Typed data-color enhancement</h2>
+  <p>
+    Where typed <code>attr()</code> is supported, <code>data-color</code> supplies
+    the fill directly. Keep the token fallback for browsers without the
+    enhancement.
+  </p>
+  <div class="pl-l-cluster">
+    <span
+      class="pl-c-swatch"
+      data-color="oklch(58% 0.18 260deg)"
+      style="--pl-c-swatch-color: oklch(58% 0.18 260deg);"
+      role="img"
+      aria-label="Indigo"
+    ></span>
+    <span
+      class="pl-c-swatch"
+      data-color="oklch(56% 0.16 150deg)"
+      style="--pl-c-swatch-color: oklch(56% 0.16 150deg);"
+      role="img"
+      aria-label="Emerald"
+    ></span>
+    <span
+      class="pl-c-swatch"
+      data-color="oklch(58% 0.2 25deg)"
+      style="--pl-c-swatch-color: oklch(58% 0.2 25deg);"
+      role="img"
+      aria-label="Coral"
+    ></span>
+  </div>
+
+  <h2>In context</h2>
+  <p>Swatches pair with descriptions, property lists, and table cells.</p>
+  <dl class="pl-c-description">
+    <div class="pl-c-description__row">
+      <dt class="pl-c-description__term">Production</dt>
+      <dd class="pl-c-description__detail">
+        <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-danger);"></span>
+        <span class="pl-u-tabular-nums">#D14343</span>
+      </dd>
+    </div>
+    <div class="pl-c-description__row">
+      <dt class="pl-c-description__term">Staging</dt>
+      <dd class="pl-c-description__detail">
+        <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-warning);"></span>
+        <span class="pl-u-tabular-nums">#B7791F</span>
+      </dd>
+    </div>
+    <div class="pl-c-description__row">
+      <dt class="pl-c-description__term">Healthy</dt>
+      <dd class="pl-c-description__detail">
+        <span class="pl-c-swatch" aria-hidden="true" style="--pl-c-swatch-color: var(--pl-color-success);"></span>
+        <span class="pl-u-tabular-nums">#2F855A</span>
+      </dd>
+    </div>
+  </dl>
+</BaseLayout>
