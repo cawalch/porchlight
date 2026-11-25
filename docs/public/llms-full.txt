@@ -418,6 +418,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - tabs: /components/tabs
 - tag-input: /components/tag-input
 - textarea-auto: /components/textarea-auto
+- thread: /components/thread
 - timeline: /components/timeline
 - toast: /components/toast
 - toolbar: /components/toolbar
@@ -548,6 +549,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/tag-input
 - /preview/textarea-auto
 - /preview/themes
+- /preview/thread
 - /preview/timeline
 - /preview/toast
 - /preview/tokens

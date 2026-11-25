@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 64 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 65 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 251.5 KB | 35.6 KB | 28.3 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 260.9 KB | 37.1 KB | 29.0 KB | Full framework (all 64 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 254.7 KB | 36.1 KB | 28.6 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 264.1 KB | 37.5 KB | 29.4 KB | Full framework (all 65 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -114,6 +114,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [tabs](#tabs)                         | `.pl-c-tabs`             | 3.8 KB   | 1.2 KB | 984 B  | None         | A tabbed region: a [role="tablist"] of [role="tab"] controls that switch between [role="tabpanel"]s. The canonical master-detail / settings / dashboard-sectioning primitive. Wraps real <button> tabs.                                                                                                                                                                                                                                  |
 | [tag-input](#tag-input)               | `.pl-c-tag-input`        | 1.3 KB   | 563 B  | 465 B  | None         | A text input that accepts multiple values as removable chips. The CSS handles the layout (wrapping chips + inline input); JS handles tokenization (enter/comma to add, backspace to remove).                                                                                                                                                                                                                                             |
 | [textarea-auto](#textarea-auto)       | `.pl-c-textarea-auto`    | 1.5 KB   | 596 B  | 478 B  | None         | A textarea that grows to fit its content automatically using field-sizing: content (Chrome 123+). No JavaScript auto-resize needed.                                                                                                                                                                                                                                                                                                      |
+| [thread](#thread)                     | `.pl-c-thread`           | 3.3 KB   | 982 B  | 808 B  | None         | Threaded collaboration for records, incidents, approvals, and AI reasoning. Native lists and articles carry the semantics; the application owns replies, edits, mentions, reactions, and resolved state.                                                                                                                                                                                                                                 |
 | [timeline](#timeline)                 | `.pl-c-timeline`         | 2.3 KB   | 801 B  | 646 B  | None         | A vertical activity feed with markers, connector lines, and per-item content. Each item has a dot/marker on a vertical line, with the content to the side.                                                                                                                                                                                                                                                                               |
 | [toast](#toast)                       | `.pl-c-toast`            | 3.7 KB   | 1.2 KB | 1.0 KB | None         | A transient notification that slides in from a screen edge. Unlike alerts (inline), toasts are overlay-level and auto-dismiss (via JS timer; the CSS handles the visual entrance/exit).                                                                                                                                                                                                                                                  |
 | [toolbar](#toolbar)                   | `.pl-c-toolbar`          | 2.2 KB   | 711 B  | 601 B  | None         | A horizontal bar grouping actions above a data region - the SaaS "action bar" on top of tables, lists, and canvases. Pairs a leading cluster (search, filters, bulk actions) with a trailing cluster (primary actions, overflow menu). On narrow containers the two halves wrap independently.                                                                                                                                           |
@@ -1034,6 +1035,22 @@ A textarea that grows to fit its content automatically using field-sizing: conte
 
 ```css
 @import "@cawalch/porchlight/components/textarea-auto.css";
+```
+
+### thread
+
+Threaded collaboration for records, incidents, approvals, and AI reasoning. Native lists and articles carry the semantics; the application owns replies, edits, mentions, reactions, and resolved state.
+
+- **Primary Selector**: `.pl-c-thread`
+- **Import**: `@cawalch/porchlight/components/thread.css`
+- **Minified Import**: `@cawalch/porchlight/components/thread.min.css`
+- **Dist File**: `dist/components/thread.css`
+- **Minified Dist File**: `dist/components/thread.min.css`
+- **Sizes**: 3.3 KB minified, 982 B gzip, 808 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/thread.css";
 ```
 
 ### timeline
