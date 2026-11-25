@@ -1,0 +1,202 @@
+/*
+ * Porchlight: thread
+ * ===========================================================================
+ * Threaded collaboration for records, incidents, approvals, and AI reasoning.
+ * Native lists and articles carry the semantics; the application owns replies,
+ * edits, mentions, reactions, and resolved state.
+ *
+ * Structure: .pl-c-thread > __items (ol) > __item > .pl-c-comment
+ * Comment: __avatar + __body (__header, __content, __actions) + __replies
+ */
+@layer porchlight.components {
+  @scope (.pl-c-thread) {
+    :scope {
+      display: grid;
+      gap: var(--pl-space-4);
+    }
+
+    .pl-c-thread__items,
+    .pl-c-thread__replies {
+      display: grid;
+      gap: var(--pl-space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pl-c-thread__replies {
+      margin-block-start: var(--pl-space-3);
+      padding-inline-start: var(--pl-space-4);
+      border-inline-start: 1px solid var(--pl-color-border);
+    }
+
+    .pl-c-thread[data-pl-resolved="true"] .pl-c-comment {
+      opacity: 0.82;
+    }
+  }
+
+  @scope (.pl-c-comment) {
+    :scope {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--pl-space-2);
+      align-items: start;
+    }
+
+    .pl-c-comment__avatar {
+      inline-size: 2rem;
+      block-size: 2rem;
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text-muted);
+      display: grid;
+      place-items: center;
+      font-size: var(--pl-text-xs);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .pl-c-comment__body {
+      min-inline-size: 0;
+      padding: var(--pl-space-3);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+    }
+
+    .pl-c-comment__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--pl-space-2);
+      margin-block-end: var(--pl-space-2);
+    }
+
+    .pl-c-comment__author {
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      font-weight: var(--pl-font-weight-semibold);
+    }
+
+    .pl-c-comment__time {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pl-c-comment__content {
+      margin: 0;
+      color: var(--pl-color-text);
+      font-size: var(--pl-text-sm);
+      line-height: var(--pl-leading-normal);
+      overflow-wrap: anywhere;
+    }
+
+    .pl-c-comment__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--pl-space-1);
+      margin-block-start: var(--pl-space-2);
+    }
+
+    .pl-c-comment[data-state="resolved"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-success),
+        transparent 55%
+      );
+    }
+  }
+
+  @scope (.pl-c-mention) {
+    :scope {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15em;
+      padding-inline: 0.35em;
+      border-radius: var(--pl-radius-sm);
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 88%);
+      color: var(--pl-color-accent);
+      font-weight: var(--pl-font-weight-medium);
+      text-decoration: none;
+    }
+
+    :scope:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @scope (.pl-c-reaction) {
+    :scope {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pl-space-1);
+      min-block-size: 1.75rem;
+      padding-inline: var(--pl-space-2);
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-pill);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text-muted);
+      font: inherit;
+      font-size: var(--pl-text-xs);
+      cursor: pointer;
+    }
+
+    :scope:hover {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        var(--pl-color-border) 55%
+      );
+      color: var(--pl-color-text);
+    }
+
+    :scope[aria-pressed="true"] {
+      border-color: color-mix(
+        in oklab,
+        var(--pl-color-accent),
+        transparent 45%
+      );
+      background: color-mix(in oklab, var(--pl-color-accent), transparent 90%);
+      color: var(--pl-color-accent);
+    }
+
+    :scope::before {
+      content: attr(data-emoji);
+      font-size: var(--pl-text-sm);
+      line-height: 1;
+    }
+  }
+
+  /* Inline edit states are attribute hooks. Use aria-busy + inline-loading for
+     the wait, and the normal badge/alert contract for saved and error. */
+  @scope ([data-pl-inline-edit]) {
+    :scope[data-state="saving"] {
+      cursor: progress;
+    }
+
+    :scope[data-state="saved"] {
+      outline: 1px solid
+        color-mix(in oklab, var(--pl-color-success), transparent 55%);
+      outline-offset: 2px;
+    }
+
+    :scope[data-state="error"] {
+      outline: 1px solid
+        color-mix(in oklab, var(--pl-color-danger), transparent 45%);
+      outline-offset: 2px;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-comment__body),
+    :where(.pl-c-reaction) {
+      border-color: CanvasText;
+    }
+
+    :where(.pl-c-reaction[aria-pressed="true"]) {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+  }
+}

@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Thread · Porchlight">
+  <h1>Thread</h1>
+  <p>
+    Threaded comments, mentions, reactions, and inline-edit state for records,
+    approvals, and AI reasoning. The application owns replies, edits, mentions,
+    and resolved state.
+  </p>
+
+  <h2>Comment thread</h2>
+  <section class="pl-c-thread" aria-labelledby="thread-activity">
+    <h2 class="pl-u-sr-only" id="thread-activity">Activity</h2>
+    <ol class="pl-c-thread__items">
+      <li>
+        <article class="pl-c-comment">
+          <div class="pl-c-comment__avatar" aria-hidden="true">SC</div>
+          <div class="pl-c-comment__body">
+            <header class="pl-c-comment__header">
+              <span class="pl-c-comment__author">Sarah Chen</span>
+              <time class="pl-c-comment__time" datetime="2026-11-25T09:42">9:42 AM</time>
+            </header>
+            <p class="pl-c-comment__content">
+              I reviewed the proposal. <a class="pl-c-mention" href="#jane">@Jane</a>,
+              can you confirm the rollout window?
+            </p>
+            <footer class="pl-c-comment__actions">
+              <button class="pl-c-reaction" type="button" aria-pressed="true" data-emoji="👍">3</button>
+              <button class="pl-c-reaction" type="button" aria-pressed="false" data-emoji="🎉">1</button>
+            </footer>
+
+            <ol class="pl-c-thread__replies">
+              <li>
+                <article class="pl-c-comment">
+                  <div class="pl-c-comment__avatar" aria-hidden="true">JD</div>
+                  <div class="pl-c-comment__body">
+                    <header class="pl-c-comment__header">
+                      <span class="pl-c-comment__author">Jane Doe</span>
+                      <time class="pl-c-comment__time" datetime="2026-11-25T10:04">10:04 AM</time>
+                    </header>
+                    <p class="pl-c-comment__content">Confirmed for Thursday. I will post the runbook update before the window.</p>
+                    <footer class="pl-c-comment__actions">
+                      <button class="pl-c-reaction" type="button" aria-pressed="false" data-emoji="✅">Acknowledge</button>
+                    </footer>
+                  </div>
+                </article>
+              </li>
+            </ol>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="pl-c-comment">
+          <div class="pl-c-comment__avatar" aria-hidden="true">MW</div>
+          <div class="pl-c-comment__body">
+            <header class="pl-c-comment__header">
+              <span class="pl-c-comment__author">Marcus Webb</span>
+              <time class="pl-c-comment__time" datetime="2026-11-25T10:18">10:18 AM</time>
+            </header>
+            <p class="pl-c-comment__content">
+              The policy diff is clean. I left one note on the retention clause.
+            </p>
+            <footer class="pl-c-comment__actions">
+              <button class="pl-c-reaction" type="button" aria-pressed="false" data-emoji="👀">2</button>
+            </footer>
+          </div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <h2>Resolved thread</h2>
+  <section class="pl-c-thread" data-pl-resolved="true" aria-labelledby="thread-resolved">
+    <h2 class="pl-u-sr-only" id="thread-resolved">Resolved activity</h2>
+    <ol class="pl-c-thread__items">
+      <li>
+        <article class="pl-c-comment" data-state="resolved">
+          <div class="pl-c-comment__avatar" aria-hidden="true">LP</div>
+          <div class="pl-c-comment__body">
+            <header class="pl-c-comment__header">
+              <span class="pl-c-comment__author">Lisa Park</span>
+              <time class="pl-c-comment__time" datetime="2026-11-24T16:20">Yesterday</time>
+            </header>
+            <p class="pl-c-comment__content">Resolved after the cache warm-up. No follow-up needed.</p>
+          </div>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <h2>Inline edit states</h2>
+  <div class="pl-l-grid" style="--pl-l-grid-min: 16rem;">
+    <div class="pl-c-card" data-pl-inline-edit data-state="saving" aria-busy="true">
+      <label class="pl-c-field">
+        <span class="pl-c-field__label">Workspace name</span>
+        <input class="pl-c-field__control" value="Acme Operations" />
+      </label>
+      <span class="pl-c-inline-loading" role="status">
+        <span class="pl-c-spinner" aria-hidden="true"></span>
+        <span>Saving…</span>
+      </span>
+    </div>
+
+    <div class="pl-c-card" data-pl-inline-edit data-state="saved">
+      <span class="pl-c-badge" data-tone="success">Saved</span>
+      <p class="pl-u-muted-sm">Workspace name saved.</p>
+    </div>
+
+    <div class="pl-c-card" data-pl-inline-edit data-state="error">
+      <span class="pl-c-badge" data-tone="danger">Failed</span>
+      <p class="pl-u-muted-sm">Could not save. Check the name and try again.</p>
+      <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">Retry</button>
+    </div>
+  </div>
+</BaseLayout>

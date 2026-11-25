@@ -1,0 +1,157 @@
+---
+title: Thread
+description: Threaded comments, mentions, reactions, and inline-edit state for records, approvals, and AI reasoning.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-thread` is a threaded collaboration surface for records, incidents,
+approvals, and AI reasoning. Comments are articles inside an ordered list.
+Replies are nested lists. Mentions are links. Reactions are toggle buttons.
+
+The application owns replies, edits, mentions, reactions, and resolved state.
+The CSS owns the layout, surfaces, and state affordances.
+
+## Semantic HTML
+
+```html
+<section class="pl-c-thread" aria-labelledby="thread-title">
+  <h2 id="thread-title">Activity</h2>
+  <ol class="pl-c-thread__items">
+    <li>
+      <article class="pl-c-comment">
+        <div class="pl-c-comment__avatar" aria-hidden="true">SC</div>
+        <div class="pl-c-comment__body">
+          <header class="pl-c-comment__header">
+            <span class="pl-c-comment__author">Sarah Chen</span>
+            <time class="pl-c-comment__time" datetime="2026-11-25T09:42"
+              >9:42 AM</time
+            >
+          </header>
+          <p class="pl-c-comment__content">
+            I reviewed the proposal.
+            <a class="pl-c-mention" href="#jane">@Jane</a>, can you confirm the
+            rollout window?
+          </p>
+          <footer class="pl-c-comment__actions">
+            <button
+              class="pl-c-reaction"
+              type="button"
+              aria-pressed="true"
+              data-emoji="👍"
+            >
+              3
+            </button>
+            <button
+              class="pl-c-reaction"
+              type="button"
+              aria-pressed="false"
+              data-emoji="🎉"
+            >
+              1
+            </button>
+          </footer>
+
+          <ol class="pl-c-thread__replies">
+            <li>
+              <article class="pl-c-comment">
+                <div class="pl-c-comment__avatar" aria-hidden="true">JD</div>
+                <div class="pl-c-comment__body">
+                  <header class="pl-c-comment__header">
+                    <span class="pl-c-comment__author">Jane Doe</span>
+                    <time class="pl-c-comment__time" datetime="2026-11-25T10:04"
+                      >10:04 AM</time
+                    >
+                  </header>
+                  <p class="pl-c-comment__content">Confirmed for Thursday.</p>
+                </div>
+              </article>
+            </li>
+          </ol>
+        </div>
+      </article>
+    </li>
+  </ol>
+</section>
+```
+
+## Resolved threads
+
+Add `data-pl-resolved="true"` to `.pl-c-thread` to soften the thread, and
+`data-state="resolved"` to an individual comment when only one comment is
+resolved. Keep the resolved state visible in text too; do not rely on the
+muted color alone.
+
+## Inline edit states
+
+Use `data-pl-inline-edit` on the editable region and `data-state` for the action
+state. The CSS adds a progress cursor, a success outline, or a danger outline.
+The application still owns the real state and the rollback:
+
+```html
+<div data-pl-inline-edit data-state="saving" aria-busy="true">
+  <label class="pl-c-field">
+    <span class="pl-c-field__label">Workspace name</span>
+    <input class="pl-c-field__control" value="Acme Operations" />
+  </label>
+  <span class="pl-c-inline-loading" role="status">
+    <span class="pl-c-spinner" aria-hidden="true"></span>
+    <span>Saving…</span>
+  </span>
+</div>
+```
+
+For saved and error, keep the original value visible and use a short status:
+
+```html
+<div data-pl-inline-edit data-state="saved">
+  <p role="status">Workspace name saved.</p>
+</div>
+
+<div data-pl-inline-edit data-state="error">
+  <p role="alert">Could not save. Check the name and try again.</p>
+  <button class="pl-c-button" data-variant="primary" data-size="sm">
+    Retry
+  </button>
+</div>
+```
+
+## Class contract
+
+| Selector                                | Role                                |
+| :-------------------------------------- | :---------------------------------- |
+| `.pl-c-thread`                          | Root section.                       |
+| `.pl-c-thread__items`                   | Top-level `<ol>` of comments.       |
+| `.pl-c-thread__replies`                 | Nested `<ol>` of replies.           |
+| `.pl-c-thread[data-pl-resolved="true"]` | Resolved thread treatment.          |
+| `.pl-c-comment`                         | One comment article.                |
+| `.pl-c-comment__avatar`                 | Initials or avatar slot.            |
+| `.pl-c-comment__body`                   | Bordered comment surface.           |
+| `.pl-c-comment__header`                 | Author and time row.                |
+| `.pl-c-comment__author`                 | Author name.                        |
+| `.pl-c-comment__time`                   | Timestamp.                          |
+| `.pl-c-comment__content`                | Comment text.                       |
+| `.pl-c-comment__actions`                | Reactions and actions.              |
+| `.pl-c-comment[data-state="resolved"]`  | Resolved comment border.            |
+| `.pl-c-mention`                         | Inline mention link.                |
+| `.pl-c-reaction`                        | Reaction toggle button.             |
+| `[data-pl-inline-edit]`                 | Inline-edit region.                 |
+| `[data-pl-inline-edit][data-state]`     | `saving`, `saved`, or `error` hook. |
+
+## Accessibility
+
+- Use a real `<ol>` for the thread and replies; comments are `<article>`s.
+- Give the thread an accessible name with `aria-labelledby`.
+- Use `<time datetime>` for timestamps.
+- Mention links must be real links with readable text.
+- Reaction buttons use `aria-pressed`; the count is text, not only an emoji.
+- Announce inline-edit results with `role="status"` for success and
+  `role="alert"` for errors. Keep focus stable on success.
+- Do not rely on color alone for resolved, saved, or error states.
+- Keep reply nesting shallow. Deep indentation is hard to scan on mobile.
+
+## Theme and RTL
+
+The thread uses logical properties and framework tokens. Replies indent on the
+inline-start edge, so they mirror in RTL. Forced-colors mode keeps comment and
+reaction borders visible.
