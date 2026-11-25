@@ -1,0 +1,147 @@
+---
+title: Undo bar
+description: Reversible action feedback for destructive changes, bulk edits, and AI applies, with inline and floating variants.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-undo` surface confirms an action and offers a short reversal window.
+Use it after archive, delete, bulk edit, assignment, or an AI apply. It is not a
+toast: a toast reports, an undo bar gives the user a way back.
+
+The application owns the timeout, rollback, and persistence. The CSS owns the
+surface, the optional countdown, and the layout.
+
+## Semantic HTML
+
+```html
+<div class="pl-c-undo">
+  <p class="pl-c-undo__message" role="status">
+    3 records moved to Archive.
+    <span class="pl-c-undo__meta">You can undo this for 10 seconds.</span>
+  </p>
+  <div class="pl-c-undo__actions">
+    <button
+      class="pl-c-button"
+      data-variant="ghost"
+      data-size="sm"
+      type="button"
+    >
+      Dismiss
+    </button>
+    <button
+      class="pl-c-button"
+      data-variant="primary"
+      data-size="sm"
+      type="button"
+    >
+      Undo
+    </button>
+  </div>
+  <div
+    class="pl-c-undo__timer"
+    style="--pl-c-undo-progress: 64%;"
+    aria-hidden="true"
+  ></div>
+</div>
+```
+
+Keep `role="status"` on the short message, not on the whole bar. The Undo button
+stays a normal button with a normal focus ring.
+
+## Floating variant
+
+Use `data-variant="floating"` when the action has no natural anchor in the page,
+such as a bulk edit from a table toolbar:
+
+```html
+<div class="pl-c-undo" data-variant="floating">
+  <p class="pl-c-undo__message" role="status">Invoice archived.</p>
+  <div class="pl-c-undo__actions">
+    <button
+      class="pl-c-button"
+      data-variant="primary"
+      data-size="sm"
+      type="button"
+    >
+      Undo
+    </button>
+  </div>
+</div>
+```
+
+The floating variant pins to the inline edges with a maximum width and uses the
+toast layer. Do not show more than one floating undo bar at a time.
+
+## Countdown
+
+Set `--pl-c-undo-progress` to the remaining fraction and `--pl-c-undo-duration`
+to the window. The bar animates its inline size; reduced-motion removes the
+transition. The application still owns the actual timer and must expire or
+commit the action even if the bar is dismissed.
+
+```html
+<div
+  class="pl-c-undo__timer"
+  style="--pl-c-undo-progress: 40%; --pl-c-undo-duration: 8s;"
+  aria-hidden="true"
+></div>
+```
+
+## Pending, saved, and error states
+
+Use the existing status primitives for the action itself. Do not invent a second
+state vocabulary:
+
+- **Pending**: add `aria-busy="true"` and use `.pl-c-inline-loading` or a busy
+  button. Keep the row readable; do not blank the whole table.
+- **Saved**: use a short `role="status"` message or a success badge that fades
+  after the acknowledgement.
+- **Error**: use a danger badge, an inline message, and a retry action. Keep the
+  original value visible so the user can correct it.
+
+```html
+<tr aria-busy="true">
+  <td>INV-1042</td>
+  <td>
+    <span class="pl-c-inline-loading" role="status">
+      <span class="pl-c-spinner" aria-hidden="true"></span>
+      <span>Saving…</span>
+    </span>
+  </td>
+</tr>
+```
+
+## Class contract
+
+| Selector                    | Role                                                   |
+| :-------------------------- | :----------------------------------------------------- |
+| `.pl-c-undo`                | Root surface.                                          |
+| `.pl-c-undo__message`       | Short result text and optional meta line.              |
+| `.pl-c-undo__meta`          | Secondary timeout or context.                          |
+| `.pl-c-undo__actions`       | Undo and dismiss cluster.                              |
+| `.pl-c-undo__timer`         | Optional countdown bar.                                |
+| `[data-variant="floating"]` | Fixed bottom viewport variant.                         |
+| `[data-tone]`               | `danger` or `success` accent for the border and timer. |
+| `--pl-c-undo-progress`      | Remaining fraction, for example `64%`.                 |
+| `--pl-c-undo-duration`      | Countdown duration, default `10s`.                     |
+
+## Accessibility
+
+- Announce the short result via `role="status"` on the message. Do not move focus
+  into the bar.
+- Keep Undo keyboard reachable and do not use a link for the action.
+- Give the user enough time to act. Ten seconds is a common default; do not
+  shorten it for screen-reader users.
+- Never rely on color alone: the text says what happened, and the action says
+  Undo.
+- If the action is not reversible, do not show an undo bar. Use a confirmation
+  dialog instead.
+- Under reduced motion, the countdown should be a static fraction or a simple
+  update, not a sweeping animation.
+
+## Theme and RTL
+
+The surface uses framework tokens and logical properties. The floating variant
+uses inline insets, so it mirrors in RTL. Forced-colors mode keeps a system
+border.

@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 61 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 62 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 245.1 KB | 34.7 KB | 27.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 254.4 KB | 36.1 KB | 28.3 KB | Full framework (all 61 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 246.7 KB | 34.9 KB | 27.8 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 256.1 KB | 36.3 KB | 28.5 KB | Full framework (all 62 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -117,6 +117,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [toolbar](#toolbar)                   | `.pl-c-toolbar`          | 2.2 KB   | 711 B  | 601 B  | None         | A horizontal bar grouping actions above a data region - the SaaS "action bar" on top of tables, lists, and canvases. Pairs a leading cluster (search, filters, bulk actions) with a trailing cluster (primary actions, overflow menu). On narrow containers the two halves wrap independently.                                                                                                                                           |
 | [tooltip](#tooltip)                   | `.pl-c-tooltip`          | 3.4 KB   | 824 B  | 685 B  | None         | A hover/focus tooltip anchored to its trigger using CSS Anchor Positioning. Zero JavaScript for positioning. Auto-flips when near viewport edges via position-try-fallbacks.                                                                                                                                                                                                                                                             |
 | [tree](#tree)                         | `.pl-c-tree`             | 6.3 KB   | 1.5 KB | 1.3 KB | None         | A CSS-only tree view for app navigation, object explorers, process folders, rule libraries, and other nested SaaS/BPM structures.                                                                                                                                                                                                                                                                                                        |
+| [undo](#undo)                         | `.pl-c-undo`             | 1.8 KB   | 709 B  | 594 B  | None         | Reversible action feedback for destructive changes, bulk edits, and AI applies. Use inline after the affected region, or floating at the bottom of the viewport when the action has no natural anchor.                                                                                                                                                                                                                                   |
 | [workflow-board](#workflow-board)     | `.pl-c-workflow-board`   | 7.9 KB   | 1.8 KB | 1.6 KB | None         | A CSS-only board shell for BPM/SaaS work queues: lanes, cards, swimlanes, WIP/count metadata, and visual state hooks for app-owned drag/drop.                                                                                                                                                                                                                                                                                            |
 
 ## Component Details
@@ -1079,6 +1080,22 @@ A CSS-only tree view for app navigation, object explorers, process folders, rule
 
 ```css
 @import "@cawalch/porchlight/components/tree.css";
+```
+
+### undo
+
+Reversible action feedback for destructive changes, bulk edits, and AI applies. Use inline after the affected region, or floating at the bottom of the viewport when the action has no natural anchor.
+
+- **Primary Selector**: `.pl-c-undo`
+- **Import**: `@cawalch/porchlight/components/undo.css`
+- **Minified Import**: `@cawalch/porchlight/components/undo.min.css`
+- **Dist File**: `dist/components/undo.css`
+- **Minified Dist File**: `dist/components/undo.min.css`
+- **Sizes**: 1.8 KB minified, 709 B gzip, 594 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/undo.css";
 ```
 
 ### workflow-board

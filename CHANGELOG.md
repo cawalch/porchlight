@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add the `guides/desktop-apps` guide and a `preview/app-desktop` composition with a titlebar, app shell, KPI cards, incident table, and quick-action menu.
 - Add `06-components/checklist.css` for persistent setup checklists with native checkboxes, progress, current-step emphasis, and forced-colors support.
 - Add an activation variant to `.pl-c-empty` with left-aligned steps and a sample-data slot, plus the corresponding docs and preview.
+- Add `06-components/undo.css` for reversible action feedback with inline and floating variants, an optional countdown, and documented pending/saved/error recipes.
 
 ### Fixed
 
