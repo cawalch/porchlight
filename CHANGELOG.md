@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add a working assignee lookup to the combobox docs with copyable source and a keyboard test covering selection, cancellation, and the submitted person ID.
+
 ### Changed
 
 - Replace em-dashes with `:`/`,`/`.` per context across framework CSS comments, docs guides, preview pages, test comments, and repo meta files (~145 lines in 59 files), closing the punctuation style debt flagged in project memory. Docs search index section titles change from `Page — Section` to `Page: Section`, with the command-palette detail heuristic (`includes(" — ")`) updated to match; the guides index separator and the layout preview's "not applicable" table cell change accordingly (`: `, `n/a`).

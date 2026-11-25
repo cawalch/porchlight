@@ -5,6 +5,9 @@ status: stable
 since: 0.8.0
 ---
 
+import AssigneeRecipe from "../../examples/assignee-combobox.html";
+import recipeSource from "../../examples/assignee-combobox.html?raw";
+
 The `.pl-c-combobox` component styles a WAI-ARIA-style combobox/listbox contract
 for modern app lookup fields: assignees, customers, process definitions,
 vendors, statuses, and other remote entities. Porchlight provides the control,
@@ -15,6 +18,27 @@ keyboard behavior, selection, hidden values, validation timing, and DOM updates.
 Use this component when a native `<select>` is not enough because the option set
 is large, remote, richly rendered, or filtered as the user types. Prefer a
 native `<select>` for short static choices.
+
+## Try the assignee lookup
+
+Type **Nia**, press **↓** to highlight Nia Gomez, then **Enter** to choose her.
+Press **↓** to reopen the list, **↓** again to highlight Nia Patel, and **Escape**
+to keep Nia Gomez. Press **Tab**, then **Enter** on **Assign case** to see the
+form value `assignee_id=usr_124`.
+
+<AssigneeRecipe />
+
+The text input holds the search while a hidden field holds the chosen person's
+ID. Moving through suggestions updates `aria-activedescendant` and keeps focus
+in the input. Choosing a person updates the hidden field. Leaving the input or
+pressing Escape restores the last chosen name.
+
+<details>
+  <summary>View the recipe HTML and JavaScript</summary>
+  <pre>
+    <code>{recipeSource.trim()}</code>
+  </pre>
+</details>
 
 ## Semantic HTML
 
