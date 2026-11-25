@@ -353,8 +353,7 @@
   @supports (reading-flow: grid-rows) {
     :where(
       .pl-l-grid[data-reading-flow="rows"],
-      .pl-l-grid[data-reading-flow="true"],
-      .pl-l-grid[data-reading-flow]
+      .pl-l-grid[data-reading-flow="true"]
     ) {
       reading-flow: grid-rows;
     }
@@ -368,7 +367,6 @@
     :where(
       .pl-l-cluster[data-reading-flow="visual"],
       .pl-l-cluster[data-reading-flow="true"],
-      .pl-l-cluster[data-reading-flow],
       .pl-c-workflow-board[data-reading-flow],
       .pl-c-workflow-board__lanes[data-reading-flow]
     ) {

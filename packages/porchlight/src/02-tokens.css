@@ -36,12 +36,6 @@
     initial-value: 2px;
   }
 
-  @property --pl-gauge-value {
-    syntax: "<percentage>";
-    inherits: true;
-    initial-value: 0%;
-  }
-
   :root {
     /* Fonts */
     --pl-font-sans:
@@ -87,10 +81,9 @@
 
     /* Font features */
     --pl-font-feature-numeric: "tnum" 1, "lnum" 1, "zero" 1;
-    --pl-font-feature-code: "zero" 1, "cv02" 1, "cv11" 1;
+    --pl-font-feature-code: "zero" 1;
 
     /* Spacing */
-    --pl-space-0: 0;
     --pl-space-1: 0.25rem;
     --pl-space-2: 0.5rem;
     --pl-space-3: 0.75rem;
@@ -108,7 +101,6 @@
     --pl-radius-lg: 0.75rem;
     --pl-radius-xl: 1rem;
     --pl-radius-2xl: 1.5rem;
-    --pl-radius-3xl: 2rem;
     --pl-radius-pill: 999rem;
     --pl-radius-control: var(--pl-radius-md);
 
@@ -121,7 +113,6 @@
     --pl-duration-enter: calc(220ms * var(--pl-motion-scale));
     --pl-duration-exit: calc(160ms * var(--pl-motion-scale));
     --pl-ease-standard: cubic-bezier(0.2, 0, 0, 1);
-    --pl-ease-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
     --pl-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* subtle overshoot */
     --pl-ease-decelerate: cubic-bezier(0, 0, 0.2, 1); /* enter: fast → slow */
     --pl-ease-accelerate: cubic-bezier(0.4, 0, 1, 1); /* exit: slow → fast */
@@ -130,8 +121,8 @@
     --pl-z-base: 0;
     --pl-z-raised: 10;
     --pl-z-sticky: 100;
+    --pl-z-fixed: 500;
     --pl-z-overlay: 1000;
-    --pl-z-fixed: var(--pl-z-overlay);
     --pl-z-toast: 1100;
 
     /* Brand  -  raw OKLCH ramp at hue 82 (porchlight amber-gold); scale 1
@@ -176,14 +167,11 @@
       oklch(58% 0.01 55deg)
     );
 
-    /* Border: reduced opacity so it reads as a hint, not a cage.
-       Overlay contexts (dialogs, drawers) use --pl-color-border-overlay
-       which resolves to transparent: shadow + backdrop do the job there. */
+    /* Border: reduced opacity so it reads as a hint, not a cage. */
     --pl-color-border: light-dark(
       oklch(80% 0.015 55deg / 75%),
       oklch(45% 0.012 55deg / 30%)
     );
-    --pl-color-border-overlay: transparent;
     --pl-color-accent: light-dark(var(--pl-brand-7), var(--pl-brand-4));
     --pl-color-accent-text: light-dark(white, oklch(16% 0.01 55deg));
     --pl-color-accent-hover: light-dark(

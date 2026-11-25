@@ -24,6 +24,12 @@
  *           [data-variant="meter"] (240-degree open telemetry dial)
  */
 @layer porchlight.components {
+  @property --pl-gauge-value {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+  }
+
   @scope (.pl-c-gauge) {
     :scope {
       --pl-c-gauge-size: 6.25rem;
