@@ -337,13 +337,14 @@ const settingsNav: SettingsNavItem[] = [
     </main>
   </div>
 
-  <div class="pl-c-toast" data-tone="success" role="status" style="position: fixed; inset-block-end: var(--pl-space-4); inset-inline-end: var(--pl-space-4); z-index: 100;">
+  <div class="pl-c-toast" data-tone="success" role="status" style="position: fixed; inset-block-end: var(--pl-space-4); inset-inline-end: var(--pl-space-4); z-index: var(--pl-z-sticky);">
     <span class="pl-c-toast__icon" aria-hidden="true">✓</span>
     <span class="pl-c-toast__message">Workspace security baseline active</span>
   </div>
 </BaseLayout>
 
 <style>
+  /* Demo-only chrome. Not part of the framework contract. */
   .settings-console-shell {
     --pl-app-sidebar-size: 17rem;
   }

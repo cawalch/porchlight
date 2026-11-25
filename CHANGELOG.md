@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add generated `contracts/components.json` and `contracts/components.schema.json`, a `porchlight contracts` CLI command, and a package `SKILL.md` for agent-assisted HTML/CSS generation.
 - Add `contracts:generate` / `contracts:check` scripts and a CI drift check, and link the public `components.json` from `llms.txt` and the integrations guide.
 - Add the dark-first `data-pl-preset="midnight"` alias (dark theme plus midnight palette) and document the visual language tokens for focus, accent, elevation, motion, and density.
+- Add a canonical preview contract (`preview:check`), mark the six application previews' demo-only CSS, replace raw inline letter-spacing/z-index values with tokens, and add a Copy HTML action to the preview toolbar.
 
 ### Fixed
 

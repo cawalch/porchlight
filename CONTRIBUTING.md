@@ -48,6 +48,22 @@ The docs site imports the tracked workspace CSS source. Build and test the
 packaged artifacts separately with `pnpm --filter @cawalch/porchlight test:package`;
 a working source preview alone does not verify published exports.
 
+### Preview example contract
+
+The canonical application previews (`app-dashboard`, `app-inbox`,
+`app-telemetry-cockpit`, `app-audit-studio`, `app-record-detail`, and
+`app-settings-console`) follow an example contract:
+
+- Page-local `<style>` blocks are demo-only chrome and start with a
+  `Demo-only chrome` comment.
+- Inline styles use `--pl-*` custom properties or `var(--pl-*)` values. Raw
+  colors, spacing, and z-index values are rejected.
+- Framework markup stays in the copyable fragment. The preview toolbar's
+  **Copy HTML** action copies the rendered example markup without the docs
+  chrome, scripts, or styles.
+
+Run `pnpm preview:check` after editing a canonical preview.
+
 ### Documentation
 
 Follow the [Google developer documentation style guide](https://developers.google.com/style/highlights).
