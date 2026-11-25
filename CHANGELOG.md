@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `06-components/shortcut-sheet.css` for a native-dialog keyboard reference, plus a command-first desktop workspace example that combines the command palette and shortcut sheet.
 - Add `06-components/data-viz.css` with CSS-only sparkline, bar-chart, and heatmap primitives, tokenized tones, and accessible table fallbacks.
 - Add `06-components/thread.css` for comment threads, nested replies, mentions, reactions, resolved state, and inline-edit state hooks.
+- Add generated `contracts/components.json` and `contracts/components.schema.json`, a `porchlight contracts` CLI command, and a package `SKILL.md` for agent-assisted HTML/CSS generation.
+- Add `contracts:generate` / `contracts:check` scripts and a CI drift check, and link the public `components.json` from `llms.txt` and the integrations guide.
 
 ### Fixed
 

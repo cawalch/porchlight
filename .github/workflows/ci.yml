@@ -59,6 +59,9 @@ jobs:
       - name: Check LLM docs
         run: node docs/scripts/generate-llms.mjs --check
 
+      - name: Check component contracts
+        run: pnpm contracts:check
+
       - name: Type-check docs
         run: pnpm --filter ./docs astro:check
 

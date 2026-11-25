@@ -431,11 +431,14 @@ async function emitComponentsDoc(componentNames, sizeBudget = null) {
 
     const scopeMatch = content.match(/@scope\s*\(\s*([^)]+?)\s*\)/);
     const classMatch = content.match(new RegExp(`\\.pl-c-${name}\\b`));
+    const fallbackMatch = content
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .match(/\.pl-c-[a-z0-9-]+/);
     const primarySelector = classMatch
       ? `.pl-c-${name}`
       : scopeMatch
         ? scopeMatch[1].split(",")[0].trim()
-        : `.pl-c-${name}`;
+        : (fallbackMatch?.[0] ?? `.pl-c-${name}`);
 
     const deps = componentDependencies[name] ?? [];
     const sizes = sizeBudget?.components?.[name] ?? null;

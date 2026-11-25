@@ -24,6 +24,7 @@ const primaryLinks = [
   ["Browser support", "/guides/browser-support"],
   ["Component reference", "/components"],
   ["Preview gallery", "/preview"],
+  ["Component contracts (JSON)", "/components.json"],
   ["Full model pack", "/llms-full.txt"],
 ];
 

@@ -66,7 +66,9 @@
     "./tokens.json": "./dist/tokens.json",
     "./manifest.json": "./dist/porchlight.manifest.json",
     "./size-budget.json": "./dist/size-budget.json",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./contracts/components.json": "./contracts/components.json",
+    "./contracts/components.schema.json": "./contracts/components.schema.json"
   },
   "files": [
     "bin",
@@ -75,7 +77,9 @@
     "dist",
     "README.md",
     "CHANGELOG.md",
-    "COMPONENTS.md"
+    "COMPONENTS.md",
+    "contracts",
+    "SKILL.md"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

@@ -16,6 +16,7 @@ Commands:
   copy       Copy selected Porchlight CSS and manifest files to an output directory
   init       Scaffold a starter HTML page configured with Porchlight
   tokens     Inspect and query Porchlight design tokens
+  contracts  Print the machine-readable component contracts
 
 Options:
   --help, -h       Show this help
@@ -65,6 +66,18 @@ Examples:
   porchlight init
   porchlight init --out src/index.html --local
   porchlight init --stdout > app.html
+`;
+
+const contractsUsage = `Usage:
+  porchlight contracts [options]
+
+Options:
+  --json                   Output the full component contract JSON
+  --help, -h               Show this help
+
+Examples:
+  porchlight contracts
+  porchlight contracts --json
 `;
 
 const tokensUsage = `Usage:
@@ -455,6 +468,39 @@ async function runInit(argv) {
   );
 }
 
+async function runContracts(argv) {
+  if (argv.includes("--help") || argv.includes("-h")) {
+    console.log(contractsUsage);
+    return;
+  }
+
+  const contractPath = resolve(packageRoot, "contracts/components.json");
+  let contract;
+  try {
+    contract = JSON.parse(await readFile(contractPath, "utf8"));
+  } catch {
+    fail(
+      `unable to read contracts from ${contractPath}. Is the package complete?`,
+      contractsUsage,
+    );
+  }
+
+  if (argv.includes("--json")) {
+    console.log(JSON.stringify(contract, null, 2));
+    return;
+  }
+
+  console.log(
+    `Porchlight ${contract.version}: ${contract.components.length} component contracts`,
+  );
+  for (const component of contract.components) {
+    console.log(
+      `  ${component.selector.padEnd(32)} ${component.title} (${component.docs})`,
+    );
+  }
+  console.log("\nUse --json for the full contract.");
+}
+
 async function runTokens(argv) {
   let query = "";
   let groupFilter = "";
@@ -582,6 +628,8 @@ if (firstArg === "copy") {
   await runInit(args.slice(1));
 } else if (firstArg === "tokens") {
   await runTokens(args.slice(1));
+} else if (firstArg === "contracts") {
+  await runContracts(args.slice(1));
 } else if (firstArg.startsWith("--out") || firstArg.startsWith("-")) {
   const options = parseCopyArgs(args);
   const manifest = await readManifest();
