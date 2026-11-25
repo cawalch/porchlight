@@ -219,6 +219,33 @@ test.describe("modern app component contracts", () => {
     await expect(page.locator(".pl-c-combobox--multi .pl-c-chip")).toHaveCount(
       2,
     );
+
+    const popupPlacementIssues = await page.evaluate(() => {
+      const issues: string[] = [];
+      for (const panel of document.querySelectorAll(".demo-panel")) {
+        const ctrl = panel
+          .querySelector(".pl-c-combobox__control")
+          ?.getBoundingClientRect();
+        const popup = panel
+          .querySelector(".pl-c-combobox__popup:not([hidden])")
+          ?.getBoundingClientRect();
+        const panelRect = panel.getBoundingClientRect();
+        if (ctrl && popup) {
+          if (popup.top < ctrl.bottom - 1) {
+            issues.push(
+              `popup flipped above control in "${panel.querySelector("h2")?.textContent?.trim()}"`,
+            );
+          }
+          if (popup.bottom > panelRect.bottom + 1) {
+            issues.push(
+              `popup overflowed panel bottom in "${panel.querySelector("h2")?.textContent?.trim()}"`,
+            );
+          }
+        }
+      }
+      return issues;
+    });
+    expect(popupPlacementIssues).toEqual([]);
   });
 
   test("tree and split panes expose APG-aligned state hooks", async ({
