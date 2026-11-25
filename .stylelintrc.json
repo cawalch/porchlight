@@ -22,7 +22,9 @@
           "rule-visibility-items",
           "reading-flow",
           "position-try-order",
-          "view-transition-class"
+          "view-transition-class",
+          "window-drag",
+          "app-region"
         ]
       }
     ],
@@ -45,14 +47,12 @@
     "value-keyword-case": null,
     "property-no-vendor-prefix": null,
     "import-notation": "string",
-
     "csstools/use-logical": [
       true,
       {
         "severity": "error"
       }
     ],
-
     "declaration-property-value-no-unknown": [
       true,
       {
@@ -66,11 +66,12 @@
           "block-size": ["/.*calc-size.*/"],
           "max-block-size": ["/.*calc-size.*/"],
           "max-inline-size": ["/.*calc-size.*/"],
-          "grid-template-rows": ["/.*masonry.*/"]
+          "grid-template-rows": ["/.*masonry.*/"],
+          "window-drag": ["/.*/"],
+          "app-region": ["/.*/"]
         }
       }
     ],
-
     "scale-unlimited/declaration-strict-value": [
       ["/color/", "fill", "stroke"],
       {
@@ -84,9 +85,16 @@
         ]
       }
     ],
-
     "defensive-css/require-forced-colors-focus": true,
-    "defensive-css/require-focus-visible": true
+    "defensive-css/require-focus-visible": true,
+    "media-feature-name-value-no-unknown": [
+      true,
+      {
+        "ignoreMediaFeatureNameValues": {
+          "display-mode": ["window-controls-overlay"]
+        }
+      }
+    ]
   },
   "overrides": [
     {

@@ -20,7 +20,7 @@ layer can emit.
 | Build step         | Optional. Link the prebuilt CSS or import the modules.                         |
 | Public API         | Stable `.pl-*` classes, native HTML, and `--pl-*` tokens                       |
 | Component coverage | 60 app-focused components, plus 9 documented application patterns              |
-| Full bundle        | About **35.3 KB gzip** minified                                                |
+| Full bundle        | About **35.6 KB gzip** minified                                                |
 | Core bundle        | About **3.9 KB gzip** minified                                                 |
 | Best fit           | SaaS consoles, admin tools, inboxes, dashboards, operations and audit surfaces |
 | Rendering layers   | Server templates, Astro, HTMX, Alpine, React, Vue, plain HTML                  |
@@ -83,7 +83,7 @@ approximate and depend on the build, theme, and components used.
 
 | Framework                     | Model                                       | Runtime JS                   | Build step          | App depth                                          | Approx. CSS                    | Best fit                                                      |
 | :---------------------------- | :------------------------------------------ | :--------------------------- | :------------------ | :------------------------------------------------- | :----------------------------- | :------------------------------------------------------------ |
-| **Porchlight**                | Native CSS contracts                        | None                         | Optional            | High: app shell, density, tables, audit, telemetry | 35.3 KB gzip full, 3.9 KB core | Server-rendered, desktop-class SaaS without React or Tailwind |
+| **Porchlight**                | Native CSS contracts                        | None                         | Optional            | High: app shell, density, tables, audit, telemetry | 35.6 KB gzip full, 3.9 KB core | Server-rendered, desktop-class SaaS without React or Tailwind |
 | **Bootstrap 6 alpha**         | Components plus JS plugins                  | Required for some components | Optional (Sass)     | Medium, broad and generic                          | About 50 KB gzip               | Teams that want a familiar component kit and plugins          |
 | **Tailwind 4 plus shadcn/ui** | Utility engine plus copy-paste React source | React                        | Required            | High in React, framework-coupled                   | Depends on build               | React SaaS teams that want to own styled source               |
 | **Pico CSS**                  | Classless semantic CSS                      | None                         | None                | Low                                                | About 10 KB gzip               | Docs, blogs, prototypes, content-first pages                  |
@@ -111,7 +111,7 @@ The difference is the center of gravity:
   forms. Porchlight is narrower and deeper on app surfaces: data tables, filters, audit streams,
   inspectors, split panes, workflow boards, and density modes.
 - **Bootstrap carries more CSS.** The v6 alpha is roughly 50 KB gzip for the full stylesheet.
-  Porchlight is about 35.3 KB gzip for the full bundle, or 3.9 KB for core plus selected components.
+  Porchlight is about 35.6 KB gzip for the full bundle, or 3.9 KB for core plus selected components.
 - **Porchlight is framework-neutral by construction.** There is no Bootstrap JS object to
   initialize, no plugin lifecycle, and no `data-bs-*` controller contract.
 

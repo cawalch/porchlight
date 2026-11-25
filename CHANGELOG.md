@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a "Why" entry to the docs navigation and a homepage proof section so the framework's zero-runtime, no-build, app-depth positioning is visible on first load.
 - Add the missing `swatch` reference page and preview so every component stylesheet has a documented, testable surface.
 - Add a docs parity test that fails when a component stylesheet, reference page, or preview is missing.
+- Add `.pl-l-desktop-shell` and `.pl-l-desktop-shell__titlebar` for installed PWAs, Electron, and Tauri: `window-drag` with `app-region` fallbacks, automatic no-drag resets for interactive descendants, Window Controls Overlay env padding, and `data-traffic-lights` leading inset.
+- Add the `guides/desktop-apps` guide and a `preview/app-desktop` composition with a titlebar, app shell, KPI cards, incident table, and quick-action menu.
 
 ### Fixed
 
@@ -22,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Rewrite the homepage hero around the desktop SaaS positioning, replace the generic project snapshot with runtime, bundle, examples, and density proof points, and group the guide index into Start, Build, Design system, and CSS layer.
-- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build: 60 component stylesheets, 3.9 KB gzip core, and 35.3 KB gzip full.
+- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build: 60 component stylesheets, 3.9 KB gzip core, and 35.6 KB gzip full.
+- Allow the standard `window-drag` property and the `app-region` compatibility alias in the stylelint configuration.
 
 ## [0.19.0] - 2026-11-25
 

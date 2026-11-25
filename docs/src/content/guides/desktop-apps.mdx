@@ -1,0 +1,186 @@
+---
+title: Desktop apps and installed PWAs
+description: Add a native-feeling titlebar and window drag region to Electron, Tauri, and Window Controls Overlay PWAs with Porchlight's desktop shell.
+order: 1.8
+---
+
+Porchlight's `.pl-l-app-shell` assumes a browser tab. When the same app runs inside
+an installed PWA, Electron, or Tauri window, you need one more row: a titlebar
+that moves the window and respects the operating system's window controls.
+
+`.pl-l-desktop-shell` adds that row without changing the app shell contract:
+
+```html
+<div class="pl-l-desktop-shell" style="--pl-desktop-titlebar-size: 2.75rem;">
+  <header class="pl-l-desktop-shell__titlebar" data-pl-traffic-lights>
+    <span
+      class="pl-c-swatch"
+      aria-hidden="true"
+      style="--pl-c-swatch-size: 0.75rem; --pl-c-swatch-color: var(--pl-color-danger);"
+    ></span>
+    <span class="pl-u-muted-sm">Acme Ops</span>
+    <button class="pl-c-button" data-variant="ghost" data-size="sm">
+      Quick actions
+    </button>
+  </header>
+
+  <div class="pl-l-app-shell">
+    <header class="pl-l-app-shell__topbar">...</header>
+    <aside class="pl-l-app-shell__sidebar">...</aside>
+    <main class="pl-l-app-shell__main">...</main>
+  </div>
+</div>
+```
+
+The wrapper is a two-row grid: the titlebar takes its intrinsic block size, and
+the app shell fills the remaining window height.
+
+## Drag regions
+
+The titlebar opts into a window drag region in that order:
+
+1. `window-drag: move` where the standardized property is supported.
+2. `app-region: drag` and `-webkit-app-region: drag` as compatibility fallbacks.
+
+Interactive descendants inside the titlebar opt out automatically:
+
+```css
+:is(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex],
+  [contenteditable],
+  [role="button"],
+  [role="menuitem"],
+  [role="tab"]
+) {
+  window-drag: none;
+  app-region: no-drag;
+  -webkit-app-region: no-drag;
+}
+```
+
+Porchlight applies that reset for you. Do not nest a menu trigger inside a drag
+region without testing it in the installed window: a drag gesture must not win
+over a click.
+
+## Window Controls Overlay
+
+For a Chromium-based installed PWA, opt into Window Controls Overlay in the web
+app manifest:
+
+```json
+{
+  "display_override": ["window-controls-overlay"],
+  "display": "standalone",
+  "theme_color": "#0f172a"
+}
+```
+
+The browser keeps the minimize, maximize, and close controls as an overlay and
+exposes the remaining titlebar rectangle through CSS environment variables. The
+desktop shell uses them in `@media (display-mode: window-controls-overlay)`:
+
+- `env(titlebar-area-x, 0)`
+- `env(titlebar-area-y, 0)`
+- `env(titlebar-area-width, 100dvi)`
+- `env(titlebar-area-height, 2.5rem)`
+
+The titlebar reserves the control strip on the inline end, so app content does
+not slide under the window controls. When the environment variables are absent,
+the fallbacks keep the normal browser layout.
+
+Use `data-pl-traffic-lights` on macOS when the application draws its own traffic
+lights, or when Electron/Tauri reserves space for the native ones:
+
+```html
+<header class="pl-l-desktop-shell__titlebar" data-pl-traffic-lights>...</header>
+```
+
+`--pl-desktop-traffic-inset` defaults to `4.5rem` and controls the leading
+inset. Adjust it per app if your titlebar controls are wider or narrower.
+
+## Electron
+
+Use a hidden titlebar and let the web content provide the chrome:
+
+```js
+const win = new BrowserWindow({
+  titleBarStyle: "hidden",
+  titleBarOverlay: process.platform === "darwin" ? false : true,
+});
+```
+
+On Windows and Linux, set `titleBarOverlay` to expose the system controls. On
+macOS, `titleBarStyle: "hidden"` keeps the traffic lights and lets the titlebar
+draw behind them; use `data-pl-traffic-lights` so Porchlight reserves the inset.
+
+## Tauri
+
+Disable the native decorations and keep the window draggable through the
+titlebar:
+
+```json
+{
+  "app": {
+    "windows": [
+      {
+        "title": "Acme Ops",
+        "decorations": false,
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  }
+}
+```
+
+Add your own window controls to the titlebar when decorations are disabled, or
+keep the platform controls with a platform-specific configuration.
+
+## Tokens
+
+| Token                        | Default  | Use                                                     |
+| :--------------------------- | :------- | :------------------------------------------------------ |
+| `--pl-desktop-titlebar-size` | `2.5rem` | Minimum titlebar block size.                            |
+| `--pl-desktop-traffic-inset` | `4.5rem` | Leading inset when `data-pl-traffic-lights` is present. |
+
+The titlebar itself consumes the framework surface, border, text, spacing, and
+radius tokens. It does not introduce new colors.
+
+## Testing checklist
+
+- Drag the titlebar in the installed window and confirm the window moves.
+- Click every control inside the titlebar and confirm the drag region does not
+  swallow the click.
+- Resize the window in Window Controls Overlay mode and confirm the titlebar
+  padding tracks the control strip.
+- Confirm the app shell still fills the remaining height and its main region
+  scrolls independently.
+- Check light, dark, forced-colors, reduced-motion, and 200% zoom.
+- Verify keyboard focus reaches every titlebar control.
+
+## Accessibility
+
+- The titlebar is chrome, not a landmark. Keep the app's real navigation in the
+  app shell.
+- Give icon-only window controls an accessible name.
+- Do not put essential instructions only inside the drag region.
+- Keep focus indicators visible; the titlebar's `user-select: none` does not
+  remove focus styles.
+- A drag region is a pointer affordance, not a keyboard interaction. Every
+  action must also be available through a normal control.
+
+## Browser support
+
+`window-drag` is a Chromium 152+ standard. Electron and Tauri builds that do not
+support it fall back to `app-region` and `-webkit-app-region`. Window Controls
+Overlay environment variables are Chromium-only; the desktop shell keeps the
+normal titlebar layout when they are absent.
+
+See the <a href={`${import.meta.env.BASE_URL}preview/app-desktop`}>desktop app shell example</a>
+for a complete composition.

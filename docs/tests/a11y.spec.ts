@@ -20,6 +20,7 @@ const PAGES = [
   "/guides/why-porchlight",
   "/guides/getting-started",
   "/guides/integrations",
+  "/guides/desktop-apps",
   "/guides/theming",
   "/guides/browser-support",
   "/guides/architecture",
