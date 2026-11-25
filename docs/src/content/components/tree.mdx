@@ -117,6 +117,15 @@ Actions are optional. Keep destructive or editing actions as real buttons with
 durable accessible names. `data-actions="persistent"` keeps row actions visible;
 otherwise they appear on hover or focus.
 
+## Try keyboard navigation
+
+Open the <a href={`${import.meta.env.BASE_URL}preview/tree`}>tree preview</a>.
+Tab into the tree and use Up and Down to move through visible items. Use Right
+to expand a branch or enter its first child, and Left to collapse a branch or
+return to its parent. The horizontal keys reverse in right-to-left layouts.
+Home and End jump to the first and last visible items. Type a letter to jump
+to a matching item, or press Enter or Space to select the focused item.
+
 ## Accessibility responsibilities
 
 Porchlight does not ship a tree controller. The app should implement the WAI-ARIA

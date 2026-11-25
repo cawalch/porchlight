@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add keyboard navigation and selection to the tree preview.
+
 - Add a working assignee lookup to the combobox docs with copyable source and a keyboard test covering selection, cancellation, and the submitted person ID.
 
 ### Changed
