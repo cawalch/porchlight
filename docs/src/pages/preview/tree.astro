@@ -27,7 +27,7 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
       </header>
 
       <div class="pl-c-tree" role="tree" aria-label="Claims automation library">
-        <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-intake-processes" aria-expanded="true" tabindex="0">
+        <div class="pl-c-tree__item" role="treeitem" aria-expanded="true" tabindex="0">
           <div class="pl-c-tree__item-row">
             <span class="pl-c-tree__expander" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
@@ -35,34 +35,34 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
             <span class="pl-c-tree__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={folderIcon} />
             </span>
-            <span class="pl-c-tree__label" id="tree-intake-processes">Intake processes</span>
+            <span class="pl-c-tree__label">Intake processes</span>
             <span class="pl-c-tree__badge">8</span>
           </div>
           <div class="pl-c-tree__group" role="group">
-            <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-fnol-triage" aria-current="page" aria-selected="true" tabindex="-1">
+            <div class="pl-c-tree__item" role="treeitem" aria-current="page" aria-selected="true" tabindex="-1">
               <div class="pl-c-tree__item-row">
                 <span class="pl-c-tree__expander" aria-hidden="true"></span>
                 <span class="pl-c-tree__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={processIcon} />
                 </span>
-                <span class="pl-c-tree__label" id="tree-fnol-triage">FNOL triage</span>
+                <span class="pl-c-tree__label">FNOL triage</span>
                 <span class="pl-c-tree__meta">v18</span>
               </div>
             </div>
-            <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-coverage-verification" tabindex="-1">
+            <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
               <div class="pl-c-tree__item-row">
                 <span class="pl-c-tree__expander" aria-hidden="true"></span>
                 <span class="pl-c-tree__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={processIcon} />
                 </span>
-                <span class="pl-c-tree__label" id="tree-coverage-verification">Coverage verification</span>
+                <span class="pl-c-tree__label">Coverage verification</span>
                 <span class="pl-c-tree__meta">draft</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-rule-sets" aria-expanded="true" tabindex="-1">
+        <div class="pl-c-tree__item" role="treeitem" aria-expanded="true" tabindex="-1">
           <div class="pl-c-tree__item-row">
             <span class="pl-c-tree__expander" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
@@ -70,34 +70,34 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
             <span class="pl-c-tree__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={folderIcon} />
             </span>
-            <span class="pl-c-tree__label" id="tree-rule-sets">Rule sets</span>
+            <span class="pl-c-tree__label">Rule sets</span>
             <span class="pl-c-tree__badge">24</span>
           </div>
           <div class="pl-c-tree__group" role="group">
-            <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-high-value-loss-routing" tabindex="-1">
+            <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
               <div class="pl-c-tree__item-row">
                 <span class="pl-c-tree__expander" aria-hidden="true"></span>
                 <span class="pl-c-tree__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ruleIcon} />
                 </span>
-                <span class="pl-c-tree__label" id="tree-high-value-loss-routing">High-value loss routing</span>
+                <span class="pl-c-tree__label">High-value loss routing</span>
                 <span class="pl-c-tree__meta">3 changed</span>
               </div>
             </div>
-            <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-regulatory-hold-rules" aria-disabled="true" tabindex="-1">
+            <div class="pl-c-tree__item" role="treeitem" aria-disabled="true" tabindex="-1">
               <div class="pl-c-tree__item-row">
                 <span class="pl-c-tree__expander" aria-hidden="true"></span>
                 <span class="pl-c-tree__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={ruleIcon} />
                 </span>
-                <span class="pl-c-tree__label" id="tree-regulatory-hold-rules">Regulatory hold rules</span>
+                <span class="pl-c-tree__label">Regulatory hold rules</span>
                 <span class="pl-c-tree__meta">locked</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-archived-experiments" aria-expanded="false" tabindex="-1">
+        <div class="pl-c-tree__item" role="treeitem" aria-expanded="false" tabindex="-1">
           <div class="pl-c-tree__item-row">
             <span class="pl-c-tree__expander" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={chevron} />
@@ -105,25 +105,25 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
             <span class="pl-c-tree__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={folderIcon} />
             </span>
-            <span class="pl-c-tree__label" id="tree-archived-experiments">Archived experiments</span>
+            <span class="pl-c-tree__label">Archived experiments</span>
             <span class="pl-c-tree__badge">6</span>
           </div>
           <div class="pl-c-tree__group" role="group">
-            <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-legacy-routing-pilot" tabindex="-1">
+            <div class="pl-c-tree__item" role="treeitem" tabindex="-1">
               <div class="pl-c-tree__item-row">
-                <span class="pl-c-tree__label" id="tree-legacy-routing-pilot">Legacy routing pilot</span>
+                <span class="pl-c-tree__label">Legacy routing pilot</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="pl-c-tree__item" role="treeitem" aria-labelledby="tree-shared-templates" aria-busy="true" tabindex="-1">
+        <div class="pl-c-tree__item" role="treeitem" aria-busy="true" tabindex="-1">
           <div class="pl-c-tree__item-row">
             <span class="pl-c-tree__expander" aria-hidden="true"></span>
             <span class="pl-c-tree__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={folderIcon} />
             </span>
-            <span class="pl-c-tree__label" id="tree-shared-templates">Shared templates</span>
+            <span class="pl-c-tree__label">Shared templates</span>
           </div>
         </div>
       </div>
@@ -341,7 +341,7 @@ const chevron = '<path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin=
           if (event.key.length !== 1) return;
           const key = event.key.toLowerCase();
           next = [...visible.slice(index + 1), ...visible.slice(0, index + 1)].find((candidate) =>
-            document.getElementById(candidate.getAttribute('aria-labelledby') ?? '')?.textContent?.toLowerCase().startsWith(key),
+            candidate.querySelector(':scope > .pl-c-tree__item-row > .pl-c-tree__label')?.textContent?.toLowerCase().startsWith(key),
           );
         }
       }
