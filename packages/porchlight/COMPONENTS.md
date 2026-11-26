@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 67 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 68 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 260.3 KB | 36.7 KB | 29.1 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 269.7 KB | 38.1 KB | 29.8 KB | Full framework (all 67 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 265.1 KB | 37.3 KB | 29.5 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 274.5 KB | 38.6 KB | 30.2 KB | Full framework (all 68 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -59,6 +59,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | :------------------------------------ | :---------------------- | :------- | :----- | :----- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [accordion](#accordion)               | `.pl-c-accordion`       | 2.8 KB   | 901 B  | 730 B  | None         | A collapsible disclosure built on native <details>/<summary>. Animates open/close to/from height: auto using interpolate-size: allow-keywords (scoped to the panel). As a universal fallback, uses the grid-template-rows: 0fr -> 1fr technique which works without it.                                                                                                                                                                  |
 | [action-bar](#action-bar)             | `.pl-c-action-bar`      | 4.1 KB   | 1.2 KB | 1002 B | None         | A floating batch action bar for tables, card grids, and mass-selection workflows. Surfaces actions (Export, Tag, Move, Delete) and selection counts without occupying permanent screen real estate.                                                                                                                                                                                                                                      |
+| [ai](#ai)                             | `.pl-c-composer`        | 5.0 KB   | 1.3 KB | 1.1 KB | None         | Primitives for embedded AI workflows: .pl-c-composer prompt input, context chips, model/action bar .pl-c-reasoning collapsible plan/tool trace with approve and undo .pl-c-citation inline source reference with an optional preview popover                                                                                                                                                                                             |
 | [alert](#alert)                       | `.pl-c-alert`           | 1.7 KB   | 638 B  | 526 B  | None         | An inline notification - contextual feedback within the page flow (not an overlay like toast). Four tones via [data-tone]: info (default), success, warning, danger. Each consumes the semantic -bg/-text pairs for WCAG-AA.                                                                                                                                                                                                             |
 | [audit-stream](#audit-stream)         | `.pl-c-audit-stream`    | 2.8 KB   | 825 B  | 698 B  | None         | An enterprise audit trail and security activity stream. Provides scannable, high-density rows with actor avatars, millisecond-precision timestamps, semantic action badges, and target entity references.                                                                                                                                                                                                                                |
 | [avatar](#avatar)                     | `.pl-c-avatar`          | 2.0 KB   | 603 B  | 500 B  | None         | A user identity chip - initials in a colored circle, or an image. Used in headers, lists, comments, and mentions. Three sizes via [data-size]: "sm" (1.5rem), default (2.5rem), "lg" (3rem).                                                                                                                                                                                                                                             |
@@ -157,6 +158,22 @@ A floating batch action bar for tables, card grids, and mass-selection workflows
 
 ```css
 @import "@cawalch/porchlight/components/action-bar.css";
+```
+
+### ai
+
+Primitives for embedded AI workflows: .pl-c-composer prompt input, context chips, model/action bar .pl-c-reasoning collapsible plan/tool trace with approve and undo .pl-c-citation inline source reference with an optional preview popover
+
+- **Primary Selector**: `.pl-c-composer`
+- **Import**: `@cawalch/porchlight/components/ai.css`
+- **Minified Import**: `@cawalch/porchlight/components/ai.min.css`
+- **Dist File**: `dist/components/ai.css`
+- **Minified Dist File**: `dist/components/ai.min.css`
+- **Sizes**: 5.0 KB minified, 1.3 KB gzip, 1.1 KB brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/ai.css";
 ```
 
 ### alert

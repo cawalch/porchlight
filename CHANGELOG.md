@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `06-components/ai.css` with a prompt composer, reasoning/trust block, and inline citation previews for embedded AI workflows.
+
 - Add `06-components/choice.css` for standalone checkbox/radio rows and selectable radio/checkbox cards with native inputs and `:has(:checked)` selected treatment.
 - Add `06-components/diff.css` for unified and split diff surfaces with line numbers, add/remove context rows, and forced-colors cues.
 
