@@ -4,6 +4,7 @@ import type { MarkdownHeading } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import DocsNavigation from '../components/DocsNavigation.astro';
 import DocsContents from '../components/DocsContents.astro';
+import DocsSearch from '../components/DocsSearch.astro';
 import '../styles/prose.css';
 import '../styles/docs.css';
 
@@ -37,8 +38,10 @@ const sections = [
   { title: 'Patterns', links: entries.filter(e => e.data.kind === 'pattern').map(e => ({ href: `${b}components/${e.id}`, label: e.data.title })) },
 ];
 const contents = headings.filter(h => h.depth === 2 || h.depth === 3);
+// Every page already links its full example once: inline pages in the example
+// caption, other pages in the title block. Keep the footer for source links so
+// the same preview link does not appear twice on one page.
 const actions = [
-  previewHref && { href: previewHref, label: 'Open full example' },
   sourceHref && { href: sourceHref.replace('/blob/', '/edit/'), label: sourceHref.includes('/blob/') ? 'Edit this page' : 'Content source' },
   styleHref && { href: styleHref, label: 'CSS source' },
 ].filter(Boolean) as { href: string; label: string }[];
@@ -71,8 +74,14 @@ const actions = [
           </details>
         )}
         {inlineExample && previewHref && (
-          <figure class="docs-example">
-            <figcaption>Example <a href={previewHref}>Open in a new page</a></figcaption>
+          <figure class="docs-example" data-example>
+            <figcaption>
+              <span>Example</span>
+              <span class="docs-example__meta">
+                <span class="docs-example__scroll-hint">Scroll inside to see more</span>
+                <a href={previewHref}>Open in a new page</a>
+              </span>
+            </figcaption>
             <iframe src={`${previewHref}?embed=1`} title={`${pageName} example`} loading="lazy"></iframe>
           </figure>
         )}
@@ -90,14 +99,5 @@ const actions = [
       </aside>
     )}
   </div>
-  <dialog class="docs-search-dialog" id="docs-search-dialog" aria-labelledby="docs-search-title" closedby="any" data-docs-command-dialog data-search-url={`${b}search.json`}>
-    <header><h2 id="docs-search-title">Search Porchlight</h2><button class="pl-c-button" type="button" data-docs-command-close>Close</button></header>
-    <label for="docs-command-filter">Search docs</label>
-    <input id="docs-command-filter" class="pl-c-field__control" type="search" placeholder="Search pages, CSS classes, and tokens" autocomplete="off" data-docs-command-filter />
-    <p class="docs-search-status" role="status" data-docs-search-status></p>
-    <nav aria-label="Search results"><ul class="docs-search-results" data-docs-search-results></ul></nav>
-  </dialog>
+  <DocsSearch />
 </BaseLayout>
-<script>
-  import '../scripts/docs';
-</script>

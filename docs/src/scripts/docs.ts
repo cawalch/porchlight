@@ -127,27 +127,90 @@ function bindDocs() {
   for (const table of document.querySelectorAll<HTMLTableElement>(
     ".prose table",
   )) {
-    if (table.scrollWidth > table.clientWidth) {
+    const scrollable = table.scrollWidth > table.clientWidth + 2;
+    const previous = table.previousElementSibling;
+    const hint =
+      previous instanceof HTMLElement &&
+      previous.classList.contains("docs-table-hint")
+        ? previous
+        : null;
+
+    if (scrollable) {
       table.tabIndex = 0;
+      table.dataset.scrollable = "true";
       table.setAttribute(
         "aria-label",
         table.caption?.textContent?.trim() || "Scrollable table",
       );
+      if (!hint) {
+        const notice = document.createElement("p");
+        notice.className = "docs-table-hint";
+        notice.textContent = "Scroll horizontally to see all columns.";
+        table.before(notice);
+      }
     } else {
       table.removeAttribute("tabindex");
       table.removeAttribute("aria-label");
+      delete table.dataset.scrollable;
+      hint?.remove();
     }
   }
+
+  for (const figure of document.querySelectorAll<HTMLElement>(
+    "[data-example]",
+  )) {
+    const frame = figure.querySelector("iframe");
+    if (!frame) continue;
+    const measure = () => {
+      let doc: Document | null = null;
+      try {
+        doc = frame.contentDocument;
+      } catch {
+        return;
+      }
+      if (!doc?.documentElement) return;
+      const overflow =
+        doc.documentElement.scrollHeight - doc.documentElement.clientHeight > 2;
+      if (overflow) figure.dataset.scrollable = "true";
+      else delete figure.dataset.scrollable;
+    };
+
+    if (!frame.dataset.exampleOverflowBound) {
+      frame.dataset.exampleOverflowBound = "true";
+      frame.addEventListener("load", measure);
+    }
+    measure();
+  }
 }
+
+// Close the mobile menu and mobile disclosure panels when the reader taps
+// outside them or presses Escape. Native <details> has no light dismiss.
+document.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof Node)) return;
+  for (const details of document.querySelectorAll<HTMLDetailsElement>(
+    ".site-menu[open], .docs-mobile-navigation[open], .docs-mobile-contents[open]",
+  )) {
+    if (!details.contains(target)) details.open = false;
+  }
+});
 
 bindDocs();
 document.addEventListener("astro:page-load", bindDocs);
 window.addEventListener("resize", bindDocs);
+void document.fonts.ready.then(bindDocs);
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && elements().dialog?.open) {
     event.preventDefault();
     elements().dialog?.close();
     return;
+  }
+  if (event.key === "Escape") {
+    for (const details of document.querySelectorAll<HTMLDetailsElement>(
+      ".site-menu[open], .docs-mobile-navigation[open], .docs-mobile-contents[open]",
+    )) {
+      details.open = false;
+    }
   }
   if (
     (event.metaKey || event.ctrlKey) &&

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DocsSearch from '../components/DocsSearch.astro';
+import '../styles/prose.css';
+import '../styles/docs.css';
+
+const b = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Page not found · Porchlight" search>
+  <article class="prose docs-not-found">
+    <p class="docs-section-label">404</p>
+    <h1>Page not found</h1>
+    <p>
+      That page does not exist. It may have moved, or the link may be out of
+      date. Start from the documentation index or jump to a section below.
+    </p>
+    <div class="pl-l-cluster">
+      <a class="pl-c-button" data-variant="primary" href={`${b}guides`}
+        >Browse guides</a
+      >
+      <a class="pl-c-button" href={`${b}components`}>Components</a>
+      <a class="pl-c-button" href={`${b}preview`}>Examples</a>
+      <a class="pl-c-button" href={`${b}tokens`}>Tokens</a>
+    </div>
+  </article>
+  <DocsSearch />
+</BaseLayout>
