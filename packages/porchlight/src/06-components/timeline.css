@@ -34,7 +34,7 @@
 
       /* Inline-start padding accounts for the dot's box-shadow ring which
          extends 2px past the first grid column. Without this, a scrollable
-         timeline (overflow-y:auto forces overflow-x:auto per spec) clips
+         timeline (overflow-block: auto forces the inline axis to auto per spec) clips
          the ring. Inline-end stays 0 so the scrollbar sits flush. */
       padding-inline: var(--pl-space-1) 0;
       list-style: none;

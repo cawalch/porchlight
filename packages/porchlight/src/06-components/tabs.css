@@ -40,7 +40,7 @@
       list-style: none;
       border-block-end: 1px solid
         color-mix(in oklab, var(--pl-color-border), transparent 20%);
-      overflow-x: auto;
+      overflow-inline: auto;
       scrollbar-width: none; /* Hide scrollbar in Firefox */
       scrollbar-color: transparent transparent;
 
@@ -179,7 +179,7 @@
 
     :where(.pl-c-tabs[data-markers="scroll"] .pl-c-tabs__panels) {
       display: flex;
-      overflow-x: auto;
+      overflow-inline: auto;
       scroll-snap-type: inline mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;

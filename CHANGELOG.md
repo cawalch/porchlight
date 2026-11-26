@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Replace physical `overflow-x` / `overflow-y` with logical `overflow-inline` / `overflow-block` across scrollers, menus, drawers, command palettes, code blocks, and tab strips.
+- Scope the nav section-trigger transition to `background-color` and `color` instead of `transition: all`.
+- Drop redundant `-webkit-backdrop-filter` declarations now that `backdrop-filter` is Baseline.
+
 ### Added
 
 - Add `guides/why-porchlight` with the product positioning, an honest comparison against Bootstrap 6, Tailwind 4 with shadcn/ui, Pico, DaisyUI, Bulma, and Radix Themes, and migration guidance.

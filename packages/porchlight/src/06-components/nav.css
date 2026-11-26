@@ -346,7 +346,9 @@
       cursor: pointer;
       user-select: none;
       list-style: none;
-      transition: all var(--pl-duration-1) var(--pl-ease-standard);
+      transition:
+        background-color var(--pl-duration-1) var(--pl-ease-standard),
+        color var(--pl-duration-1) var(--pl-ease-standard);
 
       &::-webkit-details-marker {
         display: none;

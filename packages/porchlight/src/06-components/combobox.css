@@ -140,7 +140,7 @@
       border-radius: var(--pl-radius-lg);
       background: var(--pl-overlay-popover-bg);
       box-shadow: var(--pl-shadow-3);
-      overflow-y: auto;
+      overflow-block: auto;
       overscroll-behavior: contain;
     }
 

@@ -97,8 +97,6 @@
       );
       backdrop-filter: blur(var(--pl-backdrop-blur))
         saturate(var(--pl-backdrop-saturate));
-      -webkit-backdrop-filter: blur(var(--pl-backdrop-blur))
-        saturate(var(--pl-backdrop-saturate));
       box-shadow: var(--pl-c-toast-shadow);
       pointer-events: auto;
 
