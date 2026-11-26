@@ -1,7 +1,7 @@
 {
   "$schema": "./components.schema.json",
   "name": "@cawalch/porchlight",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "generatedBy": "scripts/emit-component-contracts.mjs",
   "rules": {
     "useOnlyPublicClasses": "Use only pl-l-*, pl-c-*, pl-u-* classes documented in the component contract. Never invent utility or component classes.",
