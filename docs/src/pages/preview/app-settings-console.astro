@@ -19,17 +19,17 @@ const settingsNav: SettingsNavItem[] = [
 ---
 <BaseLayout title="Settings console · Porchlight" palette="zinc" density="compact">
   <PreviewToolbar palette="zinc" theme="light" density="compact" title="Enterprise Admin & Settings Console" />
-  <div class="pl-l-app-shell settings-console-shell">
+  <div class="pl-l-app-shell" style="--pl-app-sidebar-size: 17rem;">
     <header class="pl-l-app-shell__topbar pl-c-toolbar">
       <div class="pl-c-toolbar__group">
         <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Open main menu">
-          <svg class="settings-console-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" /></svg>
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" /></svg>
         </button>
         <strong>Northstar Admin</strong>
         <span class="pl-c-badge" data-tone="success"><span class="pl-c-badge__dot"></span>Healthy</span>
       </div>
       <div class="pl-c-toolbar__group">
-        <label class="pl-c-field pl-c-field--inline settings-console-search">
+        <label class="pl-c-field pl-c-field--inline pl-c-field--search">
           <span class="pl-u-sr-only">Search settings</span>
           <input class="pl-c-field__control" type="search" data-elastic="true" placeholder="Search settings" />
         </label>
@@ -39,7 +39,7 @@ const settingsNav: SettingsNavItem[] = [
     </header>
 
     <aside class="pl-l-app-shell__sidebar">
-      <nav class="pl-c-nav settings-console-nav" aria-label="Settings">
+      <nav class="pl-c-nav" aria-label="Settings">
         <div class="pl-c-nav__group">
           <span class="pl-c-nav__group-label">Settings</span>
         </div>
@@ -73,7 +73,7 @@ const settingsNav: SettingsNavItem[] = [
     </aside>
 
     <main class="pl-l-app-shell__main">
-      <div class="pl-l-container settings-console-container">
+      <div class="pl-l-container" style="--pl-l-container-max: 76rem; padding-block: var(--pl-space-6);">
         <div class="pl-c-page-header">
           <div class="pl-c-page-header__heading">
             <h1 class="pl-c-page-header__title">Settings</h1>
@@ -86,7 +86,7 @@ const settingsNav: SettingsNavItem[] = [
           </div>
         </div>
 
-        <div class="pl-l-stack settings-console-stack">
+        <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-5);">
           <div class="pl-c-alert" data-tone="warning" role="status">
             <div class="pl-c-alert__icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke-linejoin="round" /></svg>
@@ -234,7 +234,7 @@ const settingsNav: SettingsNavItem[] = [
                     <p>Controls that protect every workspace sign-in.</p>
                   </div>
                   <div class="pl-c-form__body">
-                    <div class="pl-l-stack settings-console-security-stack">
+                    <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
                       <label class="pl-c-switch">
                         <input class="pl-c-switch__input" type="checkbox" role="switch" name="sso-required" checked />
                         <span class="pl-c-switch__track"><span class="pl-c-switch__thumb"></span></span>
@@ -343,36 +343,3 @@ const settingsNav: SettingsNavItem[] = [
   </div>
 </BaseLayout>
 
-<style>
-  /* Demo-only chrome. Not part of the framework contract. */
-  .settings-console-shell {
-    --pl-app-sidebar-size: 17rem;
-  }
-
-  .settings-console-menu-icon {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-  }
-
-  .settings-console-search {
-    min-inline-size: min(100%, 20rem);
-  }
-
-  .settings-console-nav {
-    padding: var(--pl-space-3);
-  }
-
-  .settings-console-container {
-    --pl-l-container-max: 76rem;
-
-    padding-block: var(--pl-space-6);
-  }
-
-  .settings-console-stack {
-    --pl-l-stack-gap: var(--pl-space-5);
-  }
-
-  .settings-console-security-stack {
-    --pl-l-stack-gap: var(--pl-space-3);
-  }
-</style>
