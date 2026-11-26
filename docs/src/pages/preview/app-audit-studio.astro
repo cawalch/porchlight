@@ -1,717 +1,138 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PreviewToolbar from '../../components/PreviewToolbar.astro';
----
 
+const kpis = [
+  { label: 'CET1 ratio', value: '14.2', unit: '%', tone: 'success', trend: '+0.4' },
+  { label: 'Liquidity coverage', value: '132', unit: '%', tone: 'accent', trend: '+6' },
+  { label: 'FRTB capital', value: '$1.84', unit: 'B', tone: 'warning', trend: '+2.1%' },
+  { label: 'Open findings', value: '7', unit: '', tone: 'danger', trend: '-3' },
+];
+
+const ledger = [
+  { actor: 'MODEL RISK', action: 'APPROVED', target: 'SA-CCR v4.2', time: '09:42:18', tone: 'success' },
+  { actor: 'POLICY', action: 'BLOCKED', target: 'limit override', time: '09:38:04', tone: 'danger' },
+  { actor: 'AUDIT', action: 'SIGNED', target: 'evidence-8841', time: '09:31:22', tone: 'accent' },
+  { actor: 'TREASURY', action: 'SUBMITTED', target: 'FRTB pack', time: '09:22:10', tone: 'neutral' },
+  { actor: 'MODEL RISK', action: 'RECALIBRATED', target: 'IRRBB shocks', time: '09:14:55', tone: 'warning' },
+];
+---
 <BaseLayout title="Financial Risk & Regulatory Audit Studio · Porchlight" palette="slate" density="compact">
   <PreviewToolbar palette="slate" theme="light" density="compact" title="Financial Risk & Regulatory Audit Studio" />
-  <!-- Pinned Top Regulatory Advisory Banner with Scroll-State Active Horizon Elevation -->
-  <aside
-    class="pl-c-banner"
-    data-tone="warning"
-    data-sticky="true"
-    role="region"
-    aria-label="Basel III regulatory capital stress advisory"
+  <div
+    class="pl-l-container pl-l-stack"
+    style="--pl-l-container-max: 88rem; --pl-l-stack-gap: var(--pl-space-5); padding-block: var(--pl-space-6);"
   >
-    <div class="pl-c-banner__content">
-      <div class="pl-c-banner__main">
-        <span class="pl-c-banner__icon" aria-hidden="true">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
-            ></path>
-            <line x1="12" y1="9" x2="12" y2="13"></line>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-          </svg>
-        </span>
-        <div class="pl-c-banner__message">
-          <strong>Basel III / FRTB Stress Window Active:</strong> European Sovereign Debt &amp;
-          Energy Futures margin multipliers enforced across Tier 1 counterparties. Mandatory daily
-          settlement buffer threshold: <span class="pl-u-tabular-nums">$150.0M</span>.
+    <div class="pl-c-page-header">
+      <div class="pl-c-page-header__heading">
+        <h1 class="pl-c-page-header__title">Apex Risk Studio</h1>
+        <span class="pl-c-page-header__subtitle">Capital adequacy, immutable evidence, and policy review</span>
+      </div>
+      <div class="pl-c-page-header__actions">
+        <label class="pl-c-field pl-c-field--inline pl-c-field--search">
+          <span class="pl-u-sr-only">Search the risk studio</span>
+          <input class="pl-c-field__control studio-query-input" type="search" placeholder="Search models, policies, or evidence" />
+        </label>
+        <button class="pl-c-button" data-variant="secondary" data-size="sm">Export evidence</button>
+        <button class="pl-c-button" data-variant="primary" data-size="sm">New assessment</button>
+      </div>
+    </div>
+
+    <div class="pl-c-banner" data-tone="warning">
+      <div class="pl-c-banner__content">
+        <div class="pl-c-banner__main">
+          <div class="pl-c-banner__message">
+            <strong>Two policy findings are waiting for owner sign-off.</strong>
+            <span class="pl-u-muted-sm">The retention clause and the limit override require dual approval.</span>
+          </div>
+        </div>
+        <div class="pl-c-banner__actions">
+          <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">A</kbd>
         </div>
       </div>
-      <div class="pl-c-banner__actions">
-        <button
-          type="button"
-          class="pl-c-banner__close"
-          aria-label="Dismiss regulatory stress advisory"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
     </div>
-  </aside>
 
-  <!-- Sticky Studio Navigation Toolbar -->
-  <header
-    class="pl-c-toolbar"
-    data-sticky="true"
-    data-surface="flush"
-    style="border-block-end: 1px solid var(--pl-color-border); margin-block-end: var(--pl-space-4);"
-  >
-    <div class="pl-c-toolbar__group" style="align-items: center; gap: var(--pl-space-2);">
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-      </svg>
-      <div>
-        <h1
-          style="font-size: var(--pl-text-sm); font-weight: 700; letter-spacing: var(--pl-tracking-wider); text-transform: uppercase; margin: 0; line-height: 1.2;"
-        >
-          Apex Risk Studio
-        </h1>
-        <div
-          class="pl-u-muted"
-          style="font-size: var(--pl-text-xs); font-family: var(--pl-font-mono);"
-        >
-          SOVEREIGN VAULT // DESK: DERIVATIVES-T1
+    <div class="pl-l-grid" style="--pl-l-grid-min: 14rem; --pl-l-grid-gap: var(--pl-space-3);">
+      {kpis.map((kpi) => (
+        <article class="pl-c-kpi-card" data-tone={kpi.tone}>
+          <header class="pl-c-kpi-card__header">
+            <span class="pl-c-kpi-card__label">{kpi.label}</span>
+            <span class="pl-c-badge" data-tone={kpi.tone}>{kpi.trend}</span>
+          </header>
+          <div class="pl-c-kpi-card__metric">
+            <span class="pl-c-kpi-card__value pl-u-tabular-nums">{kpi.value}</span>
+            {kpi.unit && <span class="pl-c-kpi-card__suffix">{kpi.unit}</span>}
+          </div>
+          <footer class="pl-c-kpi-card__footer">
+            <span class="pl-u-muted-sm">vs prior quarter</span>
+          </footer>
+        </article>
+      ))}
+    </div>
+
+    <div class="pl-c-split-pane studio-split" data-orientation="horizontal" data-collapse="stack">
+      <section class="pl-c-split-pane__pane pl-c-split-pane__pane--start">
+        <div class="pl-c-split-pane__header">
+          <h2 class="pl-c-split-pane__title">Regulatory ledger</h2>
         </div>
-      </div>
-      <span class="pl-c-badge" data-tone="accent">BASEL-III SECURED</span>
-    </div>
-
-    <!-- Center: Elastic Query Input -->
-    <div class="pl-c-toolbar__group studio-search-group">
-      <div class="studio-search">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="studio-search-icon"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input
-          type="text"
-          class="pl-c-field__control pl-c-field__input studio-query-input"
-          data-elastic="true"
-          placeholder="Filter counterparty, LEI, ISIN, risk tier (field-sizing: content)..."
-          value="counterparty:BNP-PARIBAS margin:stressed"
-          aria-label="Filter counterparties, LEI codes, and risk parameters"
-        />
-      </div>
-    </div>
-
-    <!-- Right: Hotkey Trigger and Actions -->
-    <div class="pl-c-toolbar__group" style="align-items: center; gap: var(--pl-space-2);">
-      <button type="button" class="pl-c-button" data-variant="ghost" data-size="sm">
-        <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
-      </button>
-      <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm" id="btn-upload-evidence" commandfor="evidence-dialog" command="show-modal">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="17 8 12 3 7 8"></polyline>
-          <line x1="12" y1="3" x2="12" y2="15"></line>
-        </svg>
-        Evidence Pack
-      </button>
-      <button type="button" class="pl-c-button" data-variant="secondary" data-size="sm">
-        Export FINREP
-      </button>
-      <button type="button" class="pl-c-button" data-variant="primary" data-size="sm">
-        Execute Margin Call
-      </button>
-    </div>
-  </header>
-
-  <!-- Evidence Upload & Attestation Modal Dialog -->
-  <dialog class="pl-c-dialog" id="evidence-dialog" closedby="any" aria-labelledby="dialog-evidence-title">
-    <div class="pl-c-dialog__header">
-      <h2 class="pl-c-dialog__title" id="dialog-evidence-title">Submit Regulatory Evidence Pack</h2>
-      <button type="button" class="pl-c-dialog__close" commandfor="evidence-dialog" command="close" aria-label="Close dialog">✕</button>
-    </div>
-    <div class="pl-c-dialog__body pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
-      <p class="pl-u-muted" style="font-size: var(--pl-text-sm);">
-        Deposit cryptographically signed ISDA Master Agreement schedules, FINMA disclosure reports, or SWIFT MT569 collateral statements.
-      </p>
-      <label class="pl-c-file-upload">
-        <input type="file" class="pl-c-file-upload__input" multiple />
-        <span class="pl-c-file-upload__zone">
-          <svg class="pl-c-file-upload__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          <span class="pl-c-file-upload__text">
-            <strong>Drop audit evidence files here</strong> or click to browse
-          </span>
-        </span>
-      </label>
-      <div class="pl-c-field">
-        <label class="pl-c-field__label" for="attest-memo">Attestation Note</label>
-        <textarea id="attest-memo" class="pl-c-field__control pl-c-field__textarea" rows="2" placeholder="e.g. Verified by European Desk CRO - Hash committed to Merkle ledger"></textarea>
-      </div>
-    </div>
-    <div class="pl-c-dialog__footer pl-l-cluster" style="justify-content: flex-end; gap: var(--pl-space-2);">
-      <button type="button" class="pl-c-button" data-variant="ghost" commandfor="evidence-dialog" command="close">Cancel</button>
-      <button type="button" class="pl-c-button" data-variant="primary" commandfor="evidence-dialog" command="close">Commit to Ledger</button>
-    </div>
-  </dialog>
-
-  <div class="pl-l-container studio-container">
-    <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-4);">
-      <!-- Executive Capital Adequacy & VaR KPI Cards -->
-      <section aria-labelledby="kpi-heading">
-        <h2 id="kpi-heading" class="pl-u-sr-only">
-          Executive Capital Adequacy and Risk Performance Indicators
-        </h2>
-        <div class="pl-l-grid" style="--pl-l-grid-min: 15rem; gap: var(--pl-space-3);">
-        <!-- Metric 1: Value at Risk (VaR 99.0% 1d) -->
-        <article class="pl-c-kpi-card" data-tone="accent">
-          <header class="pl-c-kpi-card__header">
-            <span class="pl-c-kpi-card__label">Value-at-Risk (VaR 99% 1d)</span>
-            <span class="pl-c-badge" data-tone="accent">Basel Floor</span>
-          </header>
-          <div class="pl-c-kpi-card__metric">
-            <span class="pl-c-kpi-card__value">42.85</span>
-            <span class="pl-c-kpi-card__suffix">M</span>
-          </div>
-          <footer class="pl-c-kpi-card__footer">
-            <span class="pl-c-kpi-card__delta" data-tone="success" data-direction="down">
-              -1.42M
-            </span>
-            <span class="pl-c-kpi-card__comparison">vs $48.00M statutory cap</span>
-          </footer>
-          <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
-            <svg
-              viewBox="0 0 100 24"
-              preserveAspectRatio="none"
-              style="width: 100%; height: 28px; stroke: var(--pl-color-accent); fill: none; stroke-width: 2;"
-            >
-              <polyline points="0,6 15,9 30,8 45,14 60,11 75,18 90,16 100,20"></polyline>
-            </svg>
-          </div>
-        </article>
-
-        <!-- Metric 2: Tier 1 Capital Adequacy Ratio -->
-        <article class="pl-c-kpi-card" data-tone="success">
-          <header class="pl-c-kpi-card__header">
-            <span class="pl-c-kpi-card__label">Tier 1 Capital Ratio</span>
-            <span class="pl-c-badge" data-tone="success">Compliant</span>
-          </header>
-          <div class="pl-c-kpi-card__metric">
-            <span class="pl-c-kpi-card__value">14.82</span>
-            <span class="pl-c-kpi-card__suffix">%</span>
-          </div>
-          <footer class="pl-c-kpi-card__footer">
-            <span class="pl-c-kpi-card__delta" data-tone="success" data-direction="up">
-              +0.35%
-            </span>
-            <span class="pl-c-kpi-card__comparison">vs 10.50% Basel III floor</span>
-          </footer>
-          <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
-            <svg
-              viewBox="0 0 100 24"
-              preserveAspectRatio="none"
-              style="width: 100%; height: 28px; stroke: var(--pl-color-success); fill: none; stroke-width: 2;"
-            >
-              <polyline points="0,20 15,18 30,19 45,12 60,14 75,8 90,6 100,4"></polyline>
-            </svg>
-          </div>
-        </article>
-
-        <!-- Metric 3: Overnight Liquidity Coverage (LCR) -->
-        <article class="pl-c-kpi-card" data-tone="accent">
-          <header class="pl-c-kpi-card__header">
-            <span class="pl-c-kpi-card__label">Liquidity Coverage (LCR)</span>
-            <span class="pl-c-badge" data-tone="accent">Optimum</span>
-          </header>
-          <div class="pl-c-kpi-card__metric">
-            <span class="pl-c-kpi-card__value">138.4</span>
-            <span class="pl-c-kpi-card__suffix">%</span>
-          </div>
-          <footer class="pl-c-kpi-card__footer">
-            <span class="pl-c-kpi-card__delta" data-tone="accent" data-direction="down">
-              -2.10%
-            </span>
-            <span class="pl-c-kpi-card__comparison">vs 100.0% regulatory minimum</span>
-          </footer>
-          <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
-            <svg
-              viewBox="0 0 100 24"
-              preserveAspectRatio="none"
-              style="width: 100%; height: 28px; stroke: var(--pl-color-accent); fill: none; stroke-width: 2;"
-            >
-              <polyline points="0,10 20,12 40,9 60,13 80,11 100,12"></polyline>
-            </svg>
-          </div>
-        </article>
-
-        <!-- Metric 4: Stressed Counterparty Exposure -->
-        <article class="pl-c-kpi-card" data-tone="danger">
-          <header class="pl-c-kpi-card__header">
-            <span class="pl-c-kpi-card__label">Stressed Exposure</span>
-            <span class="pl-c-badge" data-tone="danger">Action Required</span>
-          </header>
-          <div class="pl-c-kpi-card__metric">
-            <span class="pl-c-kpi-card__value">8.40</span>
-            <span class="pl-c-kpi-card__suffix">M</span>
-          </div>
-          <footer class="pl-c-kpi-card__footer">
-            <span class="pl-c-kpi-card__delta" data-tone="danger" data-direction="up">
-              +$3.10M
-            </span>
-            <span class="pl-c-kpi-card__comparison">3 counterparties over limit</span>
-          </footer>
-          <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
-            <svg
-              viewBox="0 0 100 24"
-              preserveAspectRatio="none"
-              style="width: 100%; height: 28px; stroke: var(--pl-color-danger); fill: none; stroke-width: 2;"
-            >
-              <polyline points="0,22 20,22 40,20 60,16 80,12 100,4"></polyline>
-            </svg>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Financial Risk Workstation Split Pane with CSS Gap Dividers -->
-    <section aria-labelledby="studio-workstation-heading" class="studio-workstation-section">
-      <h2 id="studio-workstation-heading" class="pl-u-sr-only">
-        Financial Audit Workstation: Trade Ledger and Counterparty Inspector
-      </h2>
-      <div
-        class="pl-c-split-pane studio-split"
-        data-orientation="horizontal"
-        data-collapse="stack"
-        data-dividers="true"
-      >
-        <!-- Left Pane: Immutable Regulatory & Trade Audit Ledger -->
-        <section
-          class="pl-c-split-pane__pane pl-c-split-pane__pane--start"
-          aria-label="Immutable Regulatory and Trade Ledger"
-        >
-          <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
-            <header
-              class="pl-l-cluster"
-              style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3);"
-            >
-              <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-2);">
-                <h3
-                  style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: var(--pl-tracking-wide);"
-                >
-                  Immutable Regulatory Ledger
-                </h3>
-                <span class="pl-c-badge" data-tone="accent">FINMA / SEC 17a-4</span>
-              </div>
-              <span
-                class="pl-u-muted pl-u-tabular-nums"
-                style="font-size: var(--pl-text-xs); font-family: var(--pl-font-mono);"
-              >
-                SYNC: 15:42:01.842 UTC
-              </span>
-            </header>
-
-            <ol
-              class="pl-c-audit-stream"
-              tabindex="0"
-              aria-label="Trade and regulatory audit log"
-            >
+        <div class="pl-c-split-pane__pane-inner">
+          <ol class="pl-c-audit-stream" role="list" aria-label="Regulatory audit stream">
+            {ledger.map((event) => (
               <li class="pl-c-audit-stream__item">
-                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">RE</div>
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">{event.actor.slice(0, 2)}</div>
                 <div class="pl-c-audit-stream__body">
                   <div class="pl-c-audit-stream__header">
-                    <span class="pl-c-audit-stream__actor">risk-engine/auto-hedge</span>
-                    <span class="pl-c-badge" data-tone="danger">LIMIT_BREACH</span>
-                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">15:42:01.842</time>
+                    <span class="pl-c-audit-stream__actor">{event.actor}</span>
+                    <span class="pl-c-badge" data-tone={event.tone} data-size="sm">{event.action}</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">{event.time}</time>
                   </div>
-                  <div class="pl-c-audit-stream__summary">
-                    Automated delta-neutral hedge execution triggered on EUR/USD swap book.
-                    Counterparty BNP Paribas gross notional exceeded internal risk horizon of <span
-                      class="pl-u-tabular-nums">$140,000,000 USD</span
-                    >.
-                  </div>
+                  <div class="pl-c-audit-stream__target"><code class="pl-c-audit-stream__mono">{event.target}</code></div>
                 </div>
               </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-              <li class="pl-c-audit-stream__item">
-                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">HL</div>
-                <div class="pl-c-audit-stream__body">
-                  <div class="pl-c-audit-stream__header">
-                    <span class="pl-c-audit-stream__actor">cro/h.lindqvist</span>
-                    <span class="pl-c-badge" data-tone="warning">MARGIN_CALL</span>
-                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">15:38:12.605</time>
-                  </div>
-                  <div class="pl-c-audit-stream__summary">
-                    Dispatched bilateral variation margin call of <span class="pl-u-tabular-nums"
-                      >$12,500,000 USD</span
-                    > via SWIFT MT569 collateral messaging to Morgan Stanley Europe.
-                  </div>
-                </div>
-              </li>
+      <div class="pl-c-split-pane__separator" aria-hidden="true"></div>
 
-              <li class="pl-c-audit-stream__item">
-                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">SC</div>
-                <div class="pl-c-audit-stream__body">
-                  <div class="pl-c-audit-stream__header">
-                    <span class="pl-c-audit-stream__actor">compliance/s.chen</span>
-                    <span class="pl-c-badge" data-tone="accent">VARIANCE_GRANT</span>
-                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">15:24:48.310</time>
-                  </div>
-                  <div class="pl-c-audit-stream__summary">
-                    Approved 48-hour Dodd-Frank Section 165 bilateral netting variance for sovereign
-                    bond repo basket (<code class="pl-u-mono">CUSIP: 912828ZG8</code>).
-                  </div>
-                </div>
-              </li>
-
-              <li class="pl-c-audit-stream__item">
-                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">SG</div>
-                <div class="pl-c-audit-stream__body">
-                  <div class="pl-c-audit-stream__header">
-                    <span class="pl-c-audit-stream__actor">settlement/swift-gw</span>
-                    <span class="pl-c-badge" data-tone="success">COLLATERAL_ACK</span>
-                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">15:15:30.119</time>
-                  </div>
-                  <div class="pl-c-audit-stream__summary">
-                    Confirmed settlement receipt of <span class="pl-u-tabular-nums"
-                      >$15,000,000 USD</span
-                    > in sovereign US Treasury bills (<code class="pl-u-mono"
-                      >Fedwire: 20261101-NY-8821</code
-                    >).
-                  </div>
-                </div>
-              </li>
-
-              <li class="pl-c-audit-stream__item">
-                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">PW</div>
-                <div class="pl-c-audit-stream__body">
-                  <div class="pl-c-audit-stream__header">
-                    <span class="pl-c-audit-stream__actor">audit/pwc-regtech</span>
-                    <span class="pl-c-badge" data-tone="default">MERKLE_SEAL</span>
-                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">15:00:00.000</time>
-                  </div>
-                  <div class="pl-c-audit-stream__summary">
-                    Cryptographically verified and sealed Q3 FRTB capital adequacy epoch. Root
-                    Merkle proof hash committed to immutable regulatory ledger.
-                  </div>
-                </div>
-              </li>
-            </ol>
-          </div>
-        </section>
-
-        <!-- Vertical Separator -->
-        <div class="pl-c-split-pane__separator" role="separator" aria-orientation="vertical"></div>
-
-        <!-- Right Pane: Counterparty & Position Inspector with CSS Subgrid -->
-        <section
-          class="pl-c-split-pane__pane pl-c-split-pane__pane--end"
-          aria-label="Counterparty Position Inspector"
-        >
-          <div class="pl-c-split-pane__pane-inner" style="padding: var(--pl-space-4);">
-            <header
-              class="pl-l-cluster"
-              style="justify-content: space-between; align-items: center; margin-block-end: var(--pl-space-3); gap: var(--pl-space-2);"
-            >
-              <h3
-                style="font-size: var(--pl-text-sm); font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: var(--pl-tracking-wide); min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-              >
-                Counterparty Inspector
-              </h3>
-              <span class="pl-c-badge" data-tone="warning" style="flex-shrink: 0;">STRESSED EXPOSURE</span>
-            </header>
-
-            <!-- Property List using CSS Subgrid -->
-            <dl
-              class="pl-c-property-list"
-              data-subgrid="true"
-              data-pl-density="dense"
-              style="margin-block-end: var(--pl-space-4); --pl-c-property-key-w: minmax(9.5rem, 11.5rem);"
-            >
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Legal Entity ID (LEI)</dt>
-                <dd class="pl-c-property-list__value pl-u-mono">
-                  <span>ROMMUMJRVRVUWH4051</span>
-                  <button
-                    type="button"
-                    class="pl-c-property-list__copy"
-                    aria-label="Copy LEI identifier"
-                  >
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                  </button>
-                </dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Counterparty Entity</dt>
-                <dd class="pl-c-property-list__value">BNP Paribas SA (Paris Desk)</dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Regulatory Jurisdiction</dt>
-                <dd class="pl-c-property-list__value pl-u-mono">ECB / PRA Sovereign Vault</dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Credit Rating / Outlook</dt>
-                <dd class="pl-c-property-list__value pl-u-mono">Aa3 (Moody's) / A+ (S&amp;P)</dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Net Derivative Exposure</dt>
-                <dd class="pl-c-property-list__value pl-u-tabular-nums">
-                  $142,650,000 USD (Gross $890.4M)
-                </dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Pledged Collateral Buffer</dt>
-                <dd class="pl-c-property-list__value pl-u-tabular-nums">
-                  $154,200,000 USD (108.1% of req)
-                </dd>
-              </div>
-              <div class="pl-c-property-list__item">
-                <dt class="pl-c-property-list__key">Cryptographic Audit Hash</dt>
-                <dd
-                  class="pl-c-property-list__value pl-u-mono"
-                  style="font-size: var(--pl-text-xs);"
-                >
-                  <span>0x9d4a88b1f23c7e09</span>
-                  <button
-                    type="button"
-                    class="pl-c-property-list__copy"
-                    aria-label="Copy cryptographic audit hash"
-                  >
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                  </button>
-                </dd>
-              </div>
-            </dl>
-
-            <!-- Monospaced Code Block with Basel III / FRTB Regulatory Diff -->
-            <div class="pl-c-code-block" data-language="yaml" data-line-numbers="true">
-              <div class="pl-c-code-block__header">
-                <div class="pl-c-code-block__meta">
-                  <span class="pl-c-code-block__title">frtb-capital-ruleset-v4.yaml</span>
-                  <span class="pl-c-badge" data-size="sm">YAML</span>
-                </div>
-                <button
-                  type="button"
-                  class="pl-c-code-block__copy"
-                  aria-label="Copy frtb-capital-ruleset-v4.yaml"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                    ><rect width="14" height="14" x="8" y="8" rx="2"></rect><path
-                      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg
-                  >
-                  <span>Copy</span>
-                </button>
-              </div>
-              <pre
-                class="pl-c-code-block__pre"
-                tabindex="0"
-                aria-label="FRTB capital regulatory policy ruleset"><code class="pl-c-code-block__code"><span class="pl-c-code-block__line">apiVersion: regulatory.finance/v3</span>
-<span class="pl-c-code-block__line">kind: FRTBCapitalRule</span>
-<span class="pl-c-code-block__line">metadata:</span>
-<span class="pl-c-code-block__line">  regulation: Basel-III-Reform</span>
-<span class="pl-c-code-block__line">  desk: EuropeanSovereignDerivatives</span>
-<span class="pl-c-code-block__line">spec:</span>
-<span class="pl-c-code-block__line">  stressMultiplier: 1.25</span>
-<span class="pl-c-code-block__line" data-diff="remove">-  minimumHaircutPct: 2.50</span>
-<span class="pl-c-code-block__line" data-diff="remove">-  intradayMarginCalls: false</span>
-<span class="pl-c-code-block__line" data-diff="remove">-  settlementGracePeriodHours: 24</span>
-<span class="pl-c-code-block__line" data-diff="add">+  minimumHaircutPct: 4.80</span>
-<span class="pl-c-code-block__line" data-diff="add">+  intradayMarginCalls: true</span>
-<span class="pl-c-code-block__line" data-diff="add">+  settlementGracePeriodHours: 4</span>
-<span class="pl-c-code-block__line" data-diff="add">+  quarantineOnBreach: true</span></code></pre>
+      <section class="pl-c-split-pane__pane pl-c-split-pane__pane--end">
+        <div class="pl-c-split-pane__header">
+          <h2 class="pl-c-split-pane__title">Counterparty inspector</h2>
+        </div>
+        <div class="pl-c-split-pane__pane-inner pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-3);">
+          <dl class="pl-c-property-list" data-subgrid="true">
+            <div class="pl-c-property-list__item">
+              <dt class="pl-c-property-list__key">Legal entity</dt>
+              <dd class="pl-c-property-list__value">Apex Clearing Europe SA</dd>
             </div>
-          </div>
-        </section>
-      </div>
-    </section>
+            <div class="pl-c-property-list__item">
+              <dt class="pl-c-property-list__key">Exposure</dt>
+              <dd class="pl-c-property-list__value pl-u-tabular-nums">$184.2M</dd>
+            </div>
+            <div class="pl-c-property-list__item">
+              <dt class="pl-c-property-list__key">Risk rating</dt>
+              <dd class="pl-c-property-list__value"><span class="pl-c-badge" data-tone="warning">Watch</span></dd>
+            </div>
+          </dl>
 
-      <!-- Tactile Keyboard Shortcuts Strip -->
-      <footer
-        class="pl-c-card"
-        data-variant="flat"
-        style="padding: var(--pl-space-3); margin-block: var(--pl-space-2) 0; overflow: hidden;"
-      >
-        <div
-          class="pl-l-cluster"
-          style="justify-content: space-between; align-items: center; font-size: var(--pl-text-xs);"
-        >
-          <div class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-3);">
-            <span
-              class="pl-u-muted"
-              style="font-weight: 700; text-transform: uppercase; letter-spacing: var(--pl-tracking-wider);"
-            >
-              Tactile Shortcuts
-            </span>
-            <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-              <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd> Risk Search
-            </span>
-            <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-              <kbd class="pl-c-kbd">⌥</kbd><kbd class="pl-c-kbd">R</kbd> Re-evaluate VaR
-            </span>
-            <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-              <kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">S</kbd> Stress Test
-            </span>
-            <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-              <kbd class="pl-c-kbd">⌥</kbd><kbd class="pl-c-kbd">D</kbd> Diff Inspector
-            </span>
-            <span class="pl-l-cluster" style="align-items: center; gap: var(--pl-space-1);">
-              <kbd class="pl-c-kbd">Esc</kbd> Reset Focus
-            </span>
+          <div class="pl-c-code-block" data-language="yaml" data-line-numbers="true">
+            <div class="pl-c-code-block__header">
+              <div class="pl-c-code-block__meta">
+                <span class="pl-c-code-block__title">retention-policy.diff</span>
+              </div>
+            </div>
+            <pre class="pl-c-code-block__pre"><code class="pl-c-code-block__code"><span class="pl-c-code-block__line" data-line="1">retention:</span>
+<span class="pl-c-code-block__line" data-line="2" data-diff="remove">- days: 30</span>
+<span class="pl-c-code-block__line" data-line="3" data-diff="add">+ days: 90</span>
+<span class="pl-c-code-block__line" data-line="4" data-diff="add">+ legal_hold: true</span></code></pre>
           </div>
-          <div class="pl-u-muted" style="font-family: var(--pl-font-mono);">
-            PORCHLIGHT SWISS RISK &amp; AUDIT STUDIO V0.14.0
+          <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+            <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">⇧</kbd><kbd class="pl-c-kbd">A</kbd>
+            <span class="pl-u-muted-sm">Approve finding</span>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   </div>
 </BaseLayout>
-
-<style>
-  /* Demo-only chrome. Not part of the framework contract. */
-  .studio-container {
-    --pl-l-container-max: 90rem;
-    padding-inline: var(--pl-space-4);
-    padding-block-end: var(--pl-space-6);
-  }
-  .studio-search-group {
-    flex: 1 1 14rem;
-    max-inline-size: 28rem;
-    min-inline-size: 0;
-  }
-  .studio-search {
-    position: relative;
-    display: flex;
-    align-items: center;
-    inline-size: 100%;
-    min-inline-size: 0;
-  }
-  .studio-search-icon {
-    position: absolute;
-    inset-inline-start: var(--pl-space-3);
-    pointer-events: none;
-    color: var(--pl-color-text-muted);
-    flex-shrink: 0;
-  }
-  .studio-query-input {
-    inline-size: 100%;
-    min-inline-size: 0;
-    padding-inline-start: calc(var(--pl-space-3) + 14px + var(--pl-space-2));
-    font-family: var(--pl-font-mono);
-    font-size: var(--pl-text-xs);
-  }
-  .studio-workstation-section {
-    container-type: inline-size;
-    margin-block-start: var(--pl-space-4);
-  }
-  .studio-split {
-    --pl-c-split-pane-start-size: minmax(28rem, 1.35fr);
-    --pl-c-split-pane-end-size: minmax(24rem, 1fr);
-    border: 1px solid var(--pl-color-border);
-    border-radius: var(--pl-radius-xl);
-    background: var(--pl-color-surface);
-    box-shadow: var(--pl-shadow-1);
-  }
-  @container (inline-size < 66rem) {
-    .studio-split {
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-template-rows: minmax(18rem, auto) var(--pl-c-split-pane-separator-size) minmax(20rem, 1fr) !important;
-    }
-    .studio-split > .pl-c-split-pane__pane--start {
-      grid-area: 1 / 1 !important;
-    }
-    .studio-split > .pl-c-split-pane__separator {
-      grid-area: 2 / 1 !important;
-      cursor: row-resize !important;
-    }
-    .studio-split > .pl-c-split-pane__separator::before {
-      inline-size: 100% !important;
-      block-size: var(--pl-c-split-pane-separator-line-size, 1px) !important;
-    }
-    .studio-split > .pl-c-split-pane__separator::after {
-      inline-size: 2rem !important;
-      block-size: 0.1875rem !important;
-    }
-    .studio-split > .pl-c-split-pane__pane--end {
-      grid-area: 3 / 1 !important;
-    }
-  }
-</style>
-
-<script>
-  // Ensure dialog works even in browsers without native commandfor support
-  const dialog = document.getElementById('evidence-dialog') as HTMLDialogElement | null;
-  document.getElementById('btn-upload-evidence')?.addEventListener('click', () => {
-    if (typeof dialog?.showModal === 'function') {
-      dialog.showModal();
-    }
-  });
-  dialog?.querySelectorAll('[command="close"]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      if (typeof dialog?.close === 'function') {
-        dialog.close();
-      }
-    });
-  });
-</script>
