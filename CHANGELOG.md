@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Scope fixed anchor positioning to top-layer `[popover]` surfaces in combobox and date-picker; inline popups use absolute positioning so ancestor transforms, filters, and containment do not trap them in viewport coordinates. Tooltips intentionally remain fixed to escape clipped overflow and stay hoverable.
 - Use the current `position-visibility: anchor-visible` value in the enhancement layer, with a gated fallback for Chromium 125-156, and document that Firefox does not implement `position-visibility` yet.
 - Document the Safari 26.0-26.3 `@scope` form-control caveat in the browser-support guide so the support floor is accurate for field-heavy screens.
 

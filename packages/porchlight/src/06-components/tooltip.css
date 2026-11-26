@@ -85,6 +85,9 @@
 
     /* Anchor positioning: tether above the trigger, try flipping below. */
     @supports (position-anchor: --x) {
+      /* Tooltips intentionally stay fixed: they must escape clipped overflow
+         containers and remain hoverable for WCAG 1.4.13. Unlike menus and
+         listboxes, there is no inline absolute mode that preserves both. */
       .pl-c-tooltip__body {
         position: fixed;
         position-anchor: var(--pl-c-tooltip-anchor);
