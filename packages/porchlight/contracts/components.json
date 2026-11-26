@@ -36,6 +36,18 @@
       "description": "Floating batch action bar for tables, card grids, and mass-selection workflows with pure-CSS reactive auto-reveal."
     },
     {
+      "name": "ai",
+      "selector": ".pl-c-composer",
+      "import": "@cawalch/porchlight/components/ai.css",
+      "importMinified": "@cawalch/porchlight/components/ai.min.css",
+      "docs": "/components/ai",
+      "preview": "/preview/ai",
+      "status": "stable",
+      "since": "0.20.0",
+      "title": "AI workspace",
+      "description": "Prompt composer, reasoning/trust block, and inline citations for embedded AI workflows."
+    },
+    {
       "name": "alert",
       "selector": ".pl-c-alert",
       "import": "@cawalch/porchlight/components/alert.css",

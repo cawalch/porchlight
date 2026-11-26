@@ -364,6 +364,7 @@ list tracks CSS component contracts rather than composed application recipes.
 
 - accordion: /components/accordion
 - action-bar: /components/action-bar
+- ai: /components/ai
 - alert: /components/alert
 - audit-stream: /components/audit-stream
 - avatar: /components/avatar
@@ -469,6 +470,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 
 - /preview/accordion
 - /preview/action-bar
+- /preview/ai
 - /preview/alert
 - /preview/app-approvals
 - /preview/app-asset-inventory

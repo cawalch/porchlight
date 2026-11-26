@@ -1,0 +1,175 @@
+---
+title: AI workspace
+description: Prompt composer, reasoning/trust block, and inline citations for embedded AI workflows.
+status: stable
+since: 0.20.0
+---
+
+The AI workspace primitives cover the three surfaces most embedded assistants
+need: a prompt composer, a reasoning/trust block, and inline citations. The
+application owns streaming, model calls, tool execution, approvals, and citation
+targets. The CSS owns the surface and state affordances.
+
+## Prompt composer
+
+```html
+<form class="pl-c-composer">
+  <div class="pl-c-composer__context">
+    <span class="pl-c-chip" data-tone="accent">INC-4821</span>
+    <span class="pl-c-chip">checkout-api</span>
+  </div>
+  <label class="pl-u-sr-only" for="ai-prompt">Ask about this incident</label>
+  <textarea
+    class="pl-c-composer__input"
+    id="ai-prompt"
+    placeholder="Ask for a summary, a runbook step, or a policy check..."
+  ></textarea>
+  <footer class="pl-c-composer__footer">
+    <div class="pl-c-composer__tools">
+      <select
+        class="pl-c-field__control pl-c-composer__model"
+        aria-label="Model"
+      >
+        <option>Fast</option>
+        <option>Reasoning</option>
+      </select>
+      <span class="pl-c-composer__hint">⌘ Enter to send</span>
+    </div>
+    <div class="pl-c-composer__actions">
+      <button
+        class="pl-c-button"
+        data-variant="ghost"
+        data-size="sm"
+        type="button"
+      >
+        Stop
+      </button>
+      <button
+        class="pl-c-button"
+        data-variant="primary"
+        data-size="sm"
+        type="submit"
+      >
+        Send
+      </button>
+    </div>
+  </footer>
+</form>
+```
+
+Use `field-sizing: content` where supported so the textarea grows with the
+prompt. Keep the send and stop actions as real buttons; the application owns the
+streaming state.
+
+## Reasoning and trust
+
+```html
+<details class="pl-c-reasoning" open>
+  <summary class="pl-c-reasoning__summary">
+    <span class="pl-c-reasoning__status" data-state="done"
+      >Reasoning complete</span
+    >
+    <span class="pl-u-muted-sm">3 steps · 4.2s</span>
+  </summary>
+  <div class="pl-c-reasoning__body">
+    <ol class="pl-c-reasoning__steps">
+      <li class="pl-c-reasoning__step" data-state="done">
+        Read the incident timeline.
+      </li>
+      <li class="pl-c-reasoning__step" data-state="done">
+        Checked the deploy window.
+      </li>
+      <li class="pl-c-reasoning__step" data-state="done">
+        Proposed a rollback.
+      </li>
+    </ol>
+    <div class="pl-c-reasoning__actions">
+      <button
+        class="pl-c-button"
+        data-variant="secondary"
+        data-size="sm"
+        type="button"
+      >
+        Undo
+      </button>
+      <button
+        class="pl-c-button"
+        data-variant="primary"
+        data-size="sm"
+        type="button"
+      >
+        Approve
+      </button>
+    </div>
+  </div>
+</details>
+```
+
+Use `data-state="thinking"`, `"done"`, or `"error"` on the status. The status
+includes text, not just a colored dot. Keep approvals and undo as real buttons,
+and announce streaming changes outside the disclosure with `role="status"`.
+
+## Citations
+
+```html
+<p>
+  The retention window changed in the
+  <a class="pl-c-citation" href="#source-1" popovertarget="source-1">
+    <span class="pl-c-citation__index">1</span>
+    <span>Retention policy</span>
+  </a>
+  update.
+</p>
+
+<div popover="hint" class="pl-c-citation__preview" id="source-1">
+  <span class="pl-c-citation__title">policies/retention.yaml</span>
+  <span>Changed from 30 days to 90 days on 2026-11-24.</span>
+  <span class="pl-c-citation__meta">Source: audit log · 2 hours ago</span>
+</div>
+```
+
+Citations are real links first. The popover preview is an enhancement; the link
+target should remain useful without it.
+
+## Class contract
+
+| Selector                   | Role                                 |
+| :------------------------- | :----------------------------------- |
+| `.pl-c-composer`           | Prompt composer surface.             |
+| `.pl-c-composer__context`  | Attached context chips.              |
+| `.pl-c-composer__input`    | Auto-growing prompt textarea.        |
+| `.pl-c-composer__footer`   | Tool and action row.                 |
+| `.pl-c-composer__tools`    | Model, attachment, and hint cluster. |
+| `.pl-c-composer__actions`  | Stop and send cluster.               |
+| `.pl-c-composer__model`    | Model selector.                      |
+| `.pl-c-composer__hint`     | Keyboard or mode hint.               |
+| `.pl-c-reasoning`          | Native `<details>` block.            |
+| `.pl-c-reasoning__summary` | Status and step summary.             |
+| `.pl-c-reasoning__status`  | Thinking/done/error label.           |
+| `.pl-c-reasoning__body`    | Expandable trace.                    |
+| `.pl-c-reasoning__steps`   | Ordered step list.                   |
+| `.pl-c-reasoning__step`    | One step.                            |
+| `.pl-c-reasoning__actions` | Approve and undo row.                |
+| `.pl-c-citation`           | Inline citation link.                |
+| `.pl-c-citation__index`    | Numbered badge.                      |
+| `.pl-c-citation__preview`  | Optional source popover.             |
+| `.pl-c-citation__title`    | Source title.                        |
+| `.pl-c-citation__meta`     | Source metadata.                     |
+
+## Accessibility
+
+- Label the composer textarea. Keep the send action a real submit button.
+- Announce streaming or completion with a short `role="status"` message, not the
+  whole reasoning block.
+- Reasoning is a disclosure, not a live region. Let the user open it.
+- Approve and undo must be keyboard reachable and remain visible when the trace
+  is collapsed if the decision is still pending.
+- Citations are links with readable names. Do not rely on the hover preview.
+- Do not hide a destructive or irreversible action behind an AI-only control;
+  keep the normal confirmation path.
+
+## Theme and RTL
+
+The primitives use framework tokens and logical properties. The composer grows
+with `field-sizing: content` where available, and the citation preview uses the
+shared overlay shadow.

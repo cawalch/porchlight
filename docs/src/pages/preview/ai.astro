@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="AI workspace · Porchlight">
+  <h1>AI workspace</h1>
+  <p>
+    Prompt composer, reasoning/trust block, and inline citations for embedded AI
+    workflows. The application owns streaming, tool calls, approvals, and source
+    targets.
+  </p>
+
+  <h2>Prompt composer</h2>
+  <form class="pl-c-composer">
+    <div class="pl-c-composer__context">
+      <span class="pl-c-chip" data-tone="accent">INC-4821</span>
+      <span class="pl-c-chip">checkout-api</span>
+      <span class="pl-c-chip">production</span>
+    </div>
+    <label class="pl-u-sr-only" for="ai-prompt">Ask about this incident</label>
+    <textarea
+      class="pl-c-composer__input"
+      id="ai-prompt"
+      placeholder="Ask for a summary, a runbook step, or a policy check..."
+    ></textarea>
+    <footer class="pl-c-composer__footer">
+      <div class="pl-c-composer__tools">
+        <select class="pl-c-field__control pl-c-composer__model" aria-label="Model">
+          <option>Fast</option>
+          <option>Reasoning</option>
+        </select>
+        <span class="pl-c-composer__hint">⌘ Enter to send</span>
+      </div>
+      <div class="pl-c-composer__actions">
+        <button class="pl-c-button" data-variant="ghost" data-size="sm" type="button">Stop</button>
+        <button class="pl-c-button" data-variant="primary" data-size="sm" type="submit">Send</button>
+      </div>
+    </footer>
+  </form>
+
+  <h2>Reasoning and trust</h2>
+  <details class="pl-c-reasoning" open>
+    <summary class="pl-c-reasoning__summary">
+      <span class="pl-c-reasoning__status" data-state="done">Reasoning complete</span>
+      <span class="pl-u-muted-sm">3 steps · 4.2s</span>
+    </summary>
+    <div class="pl-c-reasoning__body">
+      <ol class="pl-c-reasoning__steps">
+        <li class="pl-c-reasoning__step" data-state="done">Read the incident timeline.</li>
+        <li class="pl-c-reasoning__step" data-state="done">Checked the deploy window and recent migrations.</li>
+        <li class="pl-c-reasoning__step" data-state="done">Proposed a rollback with a verification step.</li>
+      </ol>
+      <div class="pl-c-reasoning__actions">
+        <button class="pl-c-button" data-variant="secondary" data-size="sm" type="button">Undo</button>
+        <button class="pl-c-button" data-variant="primary" data-size="sm" type="button">Approve</button>
+      </div>
+    </div>
+  </details>
+
+  <h2>Citations</h2>
+  <p>
+    The retention window changed in the
+    <a class="pl-c-citation" href="#source-1" {...({ popovertarget: "source-1" } as Record<string, string>)}>
+      <span class="pl-c-citation__index">1</span>
+      <span>Retention policy</span>
+    </a>
+    update, and the rollout note was attached to
+    <a class="pl-c-citation" href="#source-2" {...({ popovertarget: "source-2" } as Record<string, string>)}>
+      <span class="pl-c-citation__index">2</span>
+      <span>Deploy log</span>
+    </a>.
+  </p>
+
+  <div popover="hint" class="pl-c-citation__preview" id="source-1">
+    <span class="pl-c-citation__title">policies/retention.yaml</span>
+    <span>Changed from 30 days to 90 days on 2026-11-24.</span>
+    <span class="pl-c-citation__meta">Source: audit log · 2 hours ago</span>
+  </div>
+
+  <div popover="hint" class="pl-c-citation__preview" id="source-2">
+    <span class="pl-c-citation__title">deploy.yaml</span>
+    <span>Image moved from app:1.8.2 to app:1.9.0.</span>
+    <span class="pl-c-citation__meta">Source: deploy log · 18 minutes ago</span>
+  </div>
+</BaseLayout>
