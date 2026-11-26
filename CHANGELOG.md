@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `contracts:generate` / `contracts:check` scripts and a CI drift check, and link the public `components.json` from `llms.txt` and the integrations guide.
 - Add the dark-first `data-pl-preset="midnight"` alias (dark theme plus midnight palette) and document the visual language tokens for focus, accent, elevation, motion, and density.
 - Add a canonical preview contract (`preview:check`), mark the six application previews' demo-only CSS, replace raw inline letter-spacing/z-index values with tokens, and add a Copy HTML action to the preview toolbar.
+- Rebuild the dashboard and inbox previews from framework primitives only, removing their demo-only `<style>` blocks and bespoke composition classes.
 
 ### Fixed
 
