@@ -110,6 +110,29 @@ test("token tables fit the desktop reading column and wrap long values", async (
   expect(codeSize).toBeGreaterThanOrEqual(12);
 });
 
+test("prose diagrams fit the desktop reading column", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+
+  for (const [route, text] of [
+    ["./guides/deprecation-policy", "Active Stable"],
+    ["./guides/upstream-integration", "flowchart TD"],
+    ["./guides/upstream-integration", "graph TD"],
+  ] as const) {
+    await page.goto(route);
+    const diagram = page
+      .locator(".prose pre")
+      .filter({ hasText: text })
+      .first();
+    await expect(diagram).toBeVisible();
+    expect(
+      await diagram.evaluate(
+        (element) => element.scrollWidth - element.clientWidth,
+      ),
+      `${route} diagram`,
+    ).toBeLessThanOrEqual(2);
+  }
+});
+
 test("wide prose tables explain the clipped columns", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("./guides/browser-support");
