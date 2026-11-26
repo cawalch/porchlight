@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL;
       </div>
     </header>
 
-    <div class="pl-l-app-shell__main record-main">
+    <div class="pl-l-app-shell__main">
       <div class="pl-c-page-header">
         <div class="pl-c-page-header__heading">
           <h1 class="pl-c-page-header__title">Acme Research</h1>
@@ -40,7 +40,10 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
 
-      <div class="record-layout">
+      <div
+        class="pl-l-page pl-l-sidebar"
+        style="--pl-l-sidebar-size: 12rem; --pl-l-sidebar-gap: var(--pl-space-6); padding-block: var(--pl-space-5);"
+      >
         <nav class="pl-c-section-nav record-nav" aria-label="Record sections">
           <ul>
             {sections.map(label => (
@@ -51,9 +54,9 @@ const base = import.meta.env.BASE_URL;
           </ul>
         </nav>
 
-        <div class="pl-l-stack record-content">
+        <div class="pl-l-stack" style="--pl-l-stack-gap: var(--pl-space-6);">
           <!-- Section 1: Overview -->
-          <section class="pl-c-card record-section" id="record-overview" tabindex="-1" aria-labelledby="overview-title">
+          <section class="pl-c-card record-section" id="record-overview" tabindex="-1" aria-labelledby="overview-title" style="scroll-margin-block-start: calc(var(--doc-header-size, 4rem) + var(--pl-space-4));">
             <header class="pl-c-card__header">
               <h2 class="pl-c-card__title" id="overview-title">Overview</h2>
               <p class="pl-c-card__subtitle">Account health, primary stakeholders, and operational metrics</p>
@@ -112,7 +115,7 @@ const base = import.meta.env.BASE_URL;
           </section>
 
           <!-- Section 2: Activity Timeline -->
-          <section class="pl-c-card record-section" id="record-activity" tabindex="-1" aria-labelledby="activity-title">
+          <section class="pl-c-card record-section" id="record-activity" tabindex="-1" aria-labelledby="activity-title" style="scroll-margin-block-start: calc(var(--doc-header-size, 4rem) + var(--pl-space-4));">
             <header class="pl-c-card__header">
               <h2 class="pl-c-card__title" id="activity-title">Activity</h2>
               <p class="pl-c-card__subtitle">Chronological customer journey touchpoints</p>
@@ -136,7 +139,7 @@ const base = import.meta.env.BASE_URL;
           </section>
 
           <!-- Section 3: Permissions -->
-          <section class="pl-c-card record-section" id="record-permissions" tabindex="-1" aria-labelledby="permissions-title">
+          <section class="pl-c-card record-section" id="record-permissions" tabindex="-1" aria-labelledby="permissions-title" style="scroll-margin-block-start: calc(var(--doc-header-size, 4rem) + var(--pl-space-4));">
             <header class="pl-c-card__header">
               <h2 class="pl-c-card__title" id="permissions-title">Permissions</h2>
               <p class="pl-c-card__subtitle">Role-based access control and identity governance</p>
@@ -147,7 +150,7 @@ const base = import.meta.env.BASE_URL;
                 { role: 'Platform Responders', count: '18 members', status: 'Active', desc: 'Can acknowledge incidents, trigger runbooks, and drain workers.' },
                 { role: 'Compliance Auditors', count: '7 members', status: 'Read-only', desc: 'Read-only access to immutable audit streams and evidence export.' },
               ].map(item => (
-                <div class="record-role pl-c-card" data-surface="panel" style="padding: var(--pl-space-3);">
+                <div class="pl-c-card pl-l-stack" data-surface="panel" style="padding: var(--pl-space-3); --pl-l-stack-gap: var(--pl-space-1);">
                   <div class="pl-l-cluster" style="justify-content: space-between; align-items: center;">
                     <strong>{item.role} · {item.count}</strong>
                     <span class="pl-c-badge" data-tone="success">{item.status}</span>
@@ -160,7 +163,7 @@ const base = import.meta.env.BASE_URL;
           </section>
 
           <!-- Section 4: Billing & Accordion Contracts -->
-          <section class="pl-c-card record-section" id="record-billing" tabindex="-1" aria-labelledby="billing-title">
+          <section class="pl-c-card record-section" id="record-billing" tabindex="-1" aria-labelledby="billing-title" style="scroll-margin-block-start: calc(var(--doc-header-size, 4rem) + var(--pl-space-4));">
             <header class="pl-c-card__header">
               <h2 class="pl-c-card__title" id="billing-title">Billing</h2>
               <p class="pl-c-card__subtitle">Annual enterprise subscription and master service agreement</p>
@@ -200,21 +203,6 @@ const base = import.meta.env.BASE_URL;
   </div>
 </BaseLayout>
 
-<style>
-  /* Demo-only chrome. Not part of the framework contract. */
-  .record-main { container-name: record-page; padding: var(--pl-space-6); }
-  .record-layout { display: grid; gap: var(--pl-space-6); }
-  .record-content { --pl-l-stack-gap: var(--pl-space-6); min-inline-size: 0; }
-  .record-nav { align-self: start; }
-  .record-section { scroll-margin-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
-  .record-section p { margin: 0; }
-  .record-section > .pl-c-card__header { display: grid; gap: var(--pl-space-2); }
-  .record-role { display: grid; gap: var(--pl-space-1); }
-  @container record-page (inline-size >= 48rem) {
-    .record-layout { grid-template-columns: 12rem minmax(0, 1fr); }
-    .record-nav { position: sticky; inset-block-start: calc(var(--record-docs-header, 7rem) + var(--pl-space-4)); }
-  }
-</style>
 
 <script>
   // Docs chrome can wrap or resize. This measures its header; native CSS
