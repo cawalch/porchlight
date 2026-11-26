@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Document the disclosure, overlay, key-value, loading, and notification primitive boundaries in the composition recipes and agent cheat sheet, closing the overlap audit without deprecating any public component.
+
 - Replace physical `overflow-x` / `overflow-y` with logical `overflow-inline` / `overflow-block` across scrollers, menus, drawers, command palettes, code blocks, and tab strips.
 - Scope the nav section-trigger transition to `background-color` and `color` instead of `transition: all`.
 - Drop redundant `-webkit-backdrop-filter` declarations now that `backdrop-filter` is Baseline.

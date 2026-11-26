@@ -52,6 +52,16 @@ Porchlight is a **pure native-CSS, semantic HTML framework** with zero runtime J
 
 ---
 
+## 3b. Overlapping Primitive Selection
+
+- **Disclosure:** `.pl-c-accordion` for real open/closed sections; `.pl-c-reveal` only for scroll-entry effects; `.pl-c-form__conditional` for fields that depend on another control.
+- **Overlays:** `.pl-c-drawer` for persistent edge panels; `.pl-c-entity-inspector` for anchored non-modal record previews; `.pl-c-dialog` for blocking confirmations and short forms.
+- **Key-value metadata:** `.pl-c-description` for semantic `<dl>` label/value pairs; `.pl-c-property-list` for dense technical metadata with copy and mono values.
+- **Loading:** `.pl-c-inline-loading` for local indeterminate waits; `.pl-c-skeleton` when the incoming shape is known; `.pl-c-progress` for measurable completion.
+- **Notifications:** `.pl-c-toast` for transient overlay results; `.pl-c-alert` for inline contextual feedback; `.pl-c-banner` for page-wide system announcements.
+
+If a task fits two, choose the one that owns the state contract, not the one that looks closest.
+
 ## 4. The Canonical Search + Multi-Filter Toolbar Pattern
 
 Whenever generating a search bar with filters, output this complete, unbreakable structure:
