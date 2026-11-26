@@ -376,6 +376,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - chart: /components/chart
 - checklist: /components/checklist
 - chip: /components/chip
+- choice: /components/choice
 - code-block: /components/code-block
 - combobox: /components/combobox
 - command-palette: /components/command-palette
@@ -383,6 +384,7 @@ list tracks CSS component contracts rather than composed application recipes.
 - data-viz: /components/data-viz
 - description-list: /components/description-list
 - dialog: /components/dialog
+- diff: /components/diff
 - drawer: /components/drawer
 - dropdown: /components/dropdown
 - empty-state: /components/empty-state
@@ -500,6 +502,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/chart
 - /preview/checklist
 - /preview/chip
+- /preview/choice
 - /preview/code-block
 - /preview/combobox
 - /preview/command-palette
@@ -509,6 +512,7 @@ Generated from docs/src/pages/preview so this list tracks rendered examples.
 - /preview/data-viz
 - /preview/description-list
 - /preview/dialog
+- /preview/diff
 - /preview/drawer
 - /preview/dropdown
 - /preview/empty-state

@@ -1,0 +1,110 @@
+---
+title: Diff
+description: A unified or split diff viewer for config, policy, and code-review surfaces.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-diff` renders a unified diff with old/new line numbers, a sign
+column, and add/remove/context treatments. The application supplies the line
+data and optional syntax highlighting; the CSS supplies the geometry.
+
+## Unified diff
+
+```html
+<section class="pl-c-diff" aria-label="Policy diff">
+  <header class="pl-c-diff__header">
+    <span class="pl-c-diff__file">policies/retention.yaml</span>
+    <span class="pl-c-diff__stat">+2 −1</span>
+  </header>
+
+  <div
+    class="pl-c-diff__body"
+    role="group"
+    aria-label="Retention policy changes"
+  >
+    <div class="pl-c-diff__hunk">
+      <div class="pl-c-diff__hunk-header">@@ -12,6 +12,7 @@</div>
+
+      <div class="pl-c-diff__line" data-pl-kind="context">
+        <span class="pl-c-diff__old" aria-hidden="true">12</span>
+        <span class="pl-c-diff__new" aria-hidden="true">12</span>
+        <span class="pl-c-diff__sign" aria-hidden="true"> </span>
+        <code class="pl-c-diff__code">retention:</code>
+      </div>
+
+      <div class="pl-c-diff__line" data-pl-kind="remove">
+        <span class="pl-c-diff__old" aria-hidden="true">13</span>
+        <span class="pl-c-diff__new" aria-hidden="true"></span>
+        <span class="pl-c-diff__sign" aria-hidden="true">−</span>
+        <code class="pl-c-diff__code"> days: 30</code>
+      </div>
+
+      <div class="pl-c-diff__line" data-pl-kind="add">
+        <span class="pl-c-diff__old" aria-hidden="true"></span>
+        <span class="pl-c-diff__new" aria-hidden="true">13</span>
+        <span class="pl-c-diff__sign" aria-hidden="true">+</span>
+        <code class="pl-c-diff__code"> days: 90</code>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+## Split view
+
+Compose two panes inside `.pl-c-diff__split`. Each pane uses the same line
+anatomy and can omit the line-number column it does not need.
+
+```html
+<section class="pl-c-diff" aria-label="Configuration diff">
+  <header class="pl-c-diff__header">
+    <span class="pl-c-diff__file">deploy.yaml</span>
+    <span class="pl-c-diff__stat">before / after</span>
+  </header>
+  <div class="pl-c-diff__body">
+    <div class="pl-c-diff__split">
+      <div class="pl-c-diff__pane">...</div>
+      <div class="pl-c-diff__pane">...</div>
+    </div>
+  </div>
+</section>
+```
+
+## Class contract
+
+| Selector                    | Role                        |
+| :-------------------------- | :-------------------------- |
+| `.pl-c-diff`                | Root surface.               |
+| `.pl-c-diff__header`        | File name and change stats. |
+| `.pl-c-diff__file`          | File path.                  |
+| `.pl-c-diff__stat`          | Add/remove summary.         |
+| `.pl-c-diff__body`          | Scrollable diff body.       |
+| `.pl-c-diff__hunk`          | One hunk.                   |
+| `.pl-c-diff__hunk-header`   | `@@` range and context.     |
+| `.pl-c-diff__line`          | One line row.               |
+| `.pl-c-diff__old` / `__new` | Line numbers.               |
+| `.pl-c-diff__sign`          | Add/remove/context sign.    |
+| `.pl-c-diff__code`          | Line content.               |
+| `.pl-c-diff__split`         | Two-pane layout.            |
+| `.pl-c-diff__pane`          | One side of a split diff.   |
+| `[data-pl-kind="add"]`      | Added line.                 |
+| `[data-pl-kind="remove"]`   | Removed line.               |
+| `[data-pl-kind="context"]`  | Unchanged line.             |
+
+## Accessibility
+
+- Give the root an accessible name with `aria-label` or `aria-labelledby`.
+- Mark line numbers and signs `aria-hidden="true"`; they are visual coordinates,
+  not content.
+- Keep the code text in the reading order.
+- Add a short summary of the change outside the diff when the decision depends
+  on it.
+- Do not use color alone: the sign column and `data-pl-kind` carry the meaning.
+- Syntax highlighting is application-owned; keep it token-based.
+
+## Theme and RTL
+
+Add/remove tints use `color-mix()` with the success and danger tokens, so they
+adapt to light, dark, and custom palettes. The line grid uses logical padding and
+collapses to a narrower number column under 48rem.

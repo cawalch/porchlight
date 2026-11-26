@@ -180,6 +180,18 @@
       "description": "Compact tag/pill with optional remove button. Uses relative color syntax for derived tints."
     },
     {
+      "name": "choice",
+      "selector": ".pl-c-choice",
+      "import": "@cawalch/porchlight/components/choice.css",
+      "importMinified": "@cawalch/porchlight/components/choice.min.css",
+      "docs": "/components/choice",
+      "preview": "/preview/choice",
+      "status": "stable",
+      "since": "0.20.0",
+      "title": "Choice",
+      "description": "Standalone checkbox/radio rows and selectable choice cards for onboarding, plan pickers, and settings."
+    },
+    {
       "name": "code-block",
       "selector": ".pl-c-code-block",
       "import": "@cawalch/porchlight/components/code-block.css",
@@ -262,6 +274,18 @@
       "since": "0.1.0",
       "title": "Dialog",
       "description": "A modal dialog using the native dialog element  -  confirmation, forms, detail views. ::backdrop scrim, @starting-style entry/exit, header/body/footer."
+    },
+    {
+      "name": "diff",
+      "selector": ".pl-c-diff",
+      "import": "@cawalch/porchlight/components/diff.css",
+      "importMinified": "@cawalch/porchlight/components/diff.min.css",
+      "docs": "/components/diff",
+      "preview": "/preview/diff",
+      "status": "stable",
+      "since": "0.20.0",
+      "title": "Diff",
+      "description": "A unified or split diff viewer for config, policy, and code-review surfaces."
     },
     {
       "name": "drawer",

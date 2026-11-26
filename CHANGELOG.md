@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `06-components/choice.css` for standalone checkbox/radio rows and selectable radio/checkbox cards with native inputs and `:has(:checked)` selected treatment.
+- Add `06-components/diff.css` for unified and split diff surfaces with line numbers, add/remove context rows, and forced-colors cues.
+
 - Add `guides/why-porchlight` with the product positioning, an honest comparison against Bootstrap 6, Tailwind 4 with shadcn/ui, Pico, DaisyUI, Bulma, and Radix Themes, and migration guidance.
 - Add a "Why" entry to the docs navigation and a homepage proof section so the framework's zero-runtime, no-build, app-depth positioning is visible on first load.
 - Add the missing `swatch` reference page and preview so every component stylesheet has a documented, testable surface.
