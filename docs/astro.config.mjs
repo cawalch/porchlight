@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
+import remarkBaseLinks from "./scripts/remark-base-links.mjs";
 
 // GitHub Pages hosts Porchlight at https://cawalch.github.io/porchlight/.
 // PR previews are nested one level deeper (/pr-preview/pr-<n>/), so the base path is
@@ -12,7 +13,7 @@ export default defineConfig({
   site,
   base,
   trailingSlash: "ignore",
-  integrations: [mdx()],
+  integrations: [mdx({ remarkPlugins: [[remarkBaseLinks, { base }]] })],
   build: { format: "directory" },
   vite: {
     build: {

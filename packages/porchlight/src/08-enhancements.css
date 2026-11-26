@@ -65,8 +65,11 @@
      data-color attribute, type-checked as <color> (with a token fallback).
      Removes the need for inline style="" for static color chips. */
   @supports (background: attr(data-color type(<color>))) {
-    .pl-c-swatch {
-      background: attr(data-color type(<color>), var(--pl-color-border));
+    .pl-c-swatch[data-color] {
+      background: attr(
+        data-color type(<color>),
+        var(--pl-c-swatch-color, var(--pl-color-border))
+      );
     }
   }
 

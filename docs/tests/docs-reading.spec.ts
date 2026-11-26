@@ -230,3 +230,21 @@ test("documentation navigation retains focus indicators in forced colors", async
     page.getByRole("dialog", { name: "Search Porchlight" }),
   ).toBeVisible();
 });
+
+test("guide next-step lists keep links inline with their descriptions", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("./guides/why-porchlight");
+
+  const list = page
+    .getByRole("heading", { name: "Next steps" })
+    .locator("xpath=following-sibling::ul[1]");
+  const first = list.locator("li").first();
+
+  await expect(first.locator("p")).toHaveCount(0);
+  await expect(first.locator("a")).toBeVisible();
+  const box = await first.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.height).toBeLessThan(50);
+});
