@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Diff · Porchlight">
+  <h1>Diff</h1>
+  <p>
+    A unified or split diff viewer for config, policy, and code-review surfaces.
+    The application supplies line data and optional syntax highlighting.
+  </p>
+
+  <h2>Unified diff</h2>
+  <section class="pl-c-diff" aria-label="Retention policy diff">
+    <header class="pl-c-diff__header">
+      <span class="pl-c-diff__file">policies/retention.yaml</span>
+      <span class="pl-c-diff__stat">+2 −1</span>
+    </header>
+
+    <div class="pl-c-diff__body" role="group" aria-label="Retention policy changes">
+      <div class="pl-c-diff__hunk">
+        <div class="pl-c-diff__hunk-header">@@ -12,6 +12,7 @@</div>
+
+        <div class="pl-c-diff__line" data-pl-kind="context">
+          <span class="pl-c-diff__old" aria-hidden="true">12</span>
+          <span class="pl-c-diff__new" aria-hidden="true">12</span>
+          <span class="pl-c-diff__sign" aria-hidden="true"> </span>
+          <code class="pl-c-diff__code">retention:</code>
+        </div>
+        <div class="pl-c-diff__line" data-pl-kind="context">
+          <span class="pl-c-diff__old" aria-hidden="true">13</span>
+          <span class="pl-c-diff__new" aria-hidden="true">13</span>
+          <span class="pl-c-diff__sign" aria-hidden="true"> </span>
+          <code class="pl-c-diff__code">  owner: security</code>
+        </div>
+        <div class="pl-c-diff__line" data-pl-kind="remove">
+          <span class="pl-c-diff__old" aria-hidden="true">14</span>
+          <span class="pl-c-diff__new" aria-hidden="true"></span>
+          <span class="pl-c-diff__sign" aria-hidden="true">−</span>
+          <code class="pl-c-diff__code">  days: 30</code>
+        </div>
+        <div class="pl-c-diff__line" data-pl-kind="add">
+          <span class="pl-c-diff__old" aria-hidden="true"></span>
+          <span class="pl-c-diff__new" aria-hidden="true">14</span>
+          <span class="pl-c-diff__sign" aria-hidden="true">+</span>
+          <code class="pl-c-diff__code">  days: 90</code>
+        </div>
+        <div class="pl-c-diff__line" data-pl-kind="add">
+          <span class="pl-c-diff__old" aria-hidden="true"></span>
+          <span class="pl-c-diff__new" aria-hidden="true">15</span>
+          <span class="pl-c-diff__sign" aria-hidden="true">+</span>
+          <code class="pl-c-diff__code">  legal_hold: true</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h2>Split view</h2>
+  <section class="pl-c-diff" aria-label="Deploy configuration diff">
+    <header class="pl-c-diff__header">
+      <span class="pl-c-diff__file">deploy.yaml</span>
+      <span class="pl-c-diff__stat">before / after</span>
+    </header>
+    <div class="pl-c-diff__body">
+      <div class="pl-c-diff__split">
+        <div class="pl-c-diff__pane">
+          <div class="pl-c-diff__hunk">
+            <div class="pl-c-diff__hunk-header">before</div>
+            <div class="pl-c-diff__line" data-pl-kind="context">
+              <span class="pl-c-diff__old" aria-hidden="true">1</span>
+              <span class="pl-c-diff__new" aria-hidden="true">1</span>
+              <span class="pl-c-diff__sign" aria-hidden="true"> </span>
+              <code class="pl-c-diff__code">replicas: 2</code>
+            </div>
+            <div class="pl-c-diff__line" data-pl-kind="remove">
+              <span class="pl-c-diff__old" aria-hidden="true">2</span>
+              <span class="pl-c-diff__new" aria-hidden="true"></span>
+              <span class="pl-c-diff__sign" aria-hidden="true">−</span>
+              <code class="pl-c-diff__code">image: app:1.8.2</code>
+            </div>
+          </div>
+        </div>
+        <div class="pl-c-diff__pane">
+          <div class="pl-c-diff__hunk">
+            <div class="pl-c-diff__hunk-header">after</div>
+            <div class="pl-c-diff__line" data-pl-kind="context">
+              <span class="pl-c-diff__old" aria-hidden="true">1</span>
+              <span class="pl-c-diff__new" aria-hidden="true">1</span>
+              <span class="pl-c-diff__sign" aria-hidden="true"> </span>
+              <code class="pl-c-diff__code">replicas: 3</code>
+            </div>
+            <div class="pl-c-diff__line" data-pl-kind="add">
+              <span class="pl-c-diff__old" aria-hidden="true"></span>
+              <span class="pl-c-diff__new" aria-hidden="true">2</span>
+              <span class="pl-c-diff__sign" aria-hidden="true">+</span>
+              <code class="pl-c-diff__code">image: app:1.9.0</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

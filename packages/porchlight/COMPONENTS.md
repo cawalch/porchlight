@@ -1,6 +1,6 @@
 # Porchlight Components Reference
 
-Offline reference for all 65 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
+Offline reference for all 67 CSS-only and semantic HTML components included in `@cawalch/porchlight`.
 
 ## Architecture & Modular Usage
 
@@ -26,8 +26,8 @@ Porchlight is engineered for modular efficiency. Instead of shipping a monolithi
 | `utilities.min.css`                   | 3.0 KB   | 950 B   | 809 B   | Accessibility, typography, tabular nums, flow                       |
 | `enhancements.min.css`                | 9.5 KB   | 1.9 KB  | 1.6 KB  | Opt-in Progressive Enhancements (@supports)                         |
 | `experimental.min.css`                | 2.4 KB   | 689 B   | 574 B   | Bleeding-edge Chrome 133+ scroll-state queries                      |
-| `compat.min.css`                      | 255.0 KB | 36.1 KB | 28.6 KB | Complete framework without experimental enhancement syntax          |
-| `porchlight.min.css` / `full.min.css` | 264.4 KB | 37.5 KB | 29.4 KB | Full framework (all 65 components, layout, utilities, enhancements) |
+| `compat.min.css`                      | 260.3 KB | 36.7 KB | 29.1 KB | Complete framework without experimental enhancement syntax          |
+| `porchlight.min.css` / `full.min.css` | 269.7 KB | 38.1 KB | 29.8 KB | Full framework (all 67 components, layout, utilities, enhancements) |
 
 ### "Core + N Components" Real-World Recipes
 
@@ -71,6 +71,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [chart](#chart)                       | `.pl-c-chart`           | 5.3 KB   | 1.4 KB | 1.2 KB | None         | An accessible frame for app-owned charts. Porchlight provides metric headers, legends, plotting slots, loading/empty/error states, and a table fallback container. It does not draw charts or prescribe a charting engine.                                                                                                                                                                                                               |
 | [checklist](#checklist)               | `.pl-c-checklist`       | 2.3 KB   | 770 B  | 623 B  | None         | A persistent setup checklist for SaaS activation: native checkboxes, a progress summary, and optional current-step emphasis. The application owns completion state and persistence; the CSS owns the layout and affordances.                                                                                                                                                                                                             |
 | [chip](#chip)                         | `.pl-c-chip`            | 2.9 KB   | 938 B  | 769 B  | None         | A compact tag/pill with an optional remove button. Uses relative color syntax (oklch(from ...)) to derive tinted backgrounds from the accent token.                                                                                                                                                                                                                                                                                      |
+| [choice](#choice)                     | `.pl-c-choice`          | 2.7 KB   | 797 B  | 667 B  | None         | Standalone checkbox/radio rows and selectable choice cards for onboarding, plan pickers, settings, and permission matrices.                                                                                                                                                                                                                                                                                                              |
 | [code-block](#code-block)             | `.pl-c-code-block`      | 3.9 KB   | 1.1 KB | 996 B  | None         | A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.                                                                                                                                     |
 | [combobox](#combobox)                 | `.pl-c-combobox`        | 7.7 KB   | 1.8 KB | 1.6 KB | None         | A framework-neutral combobox/autocomplete contract for entity lookup, async search, select-only triggers, and optional multi-select chips.                                                                                                                                                                                                                                                                                               |
 | [command-palette](#command-palette)   | `.pl-c-command-palette` | 6.7 KB   | 1.5 KB | 1.3 KB | None         | A Cmd+K quick-action search overlay. Search input at top, grouped action list below, keyboard navigation (JS responsibility). Supports both declarative Popover API (<div popover class="pl-c-command">) and native modal dialogs (<dialog class="pl-c-command-palette" closedby="any">) with zero-JS Invoker Commands:                                                                                                                  |
@@ -78,6 +79,7 @@ When bundled together with your application bundler (or pre-bundled via Lightnin
 | [data-viz](#data-viz)                 | `.pl-c-sparkline`       | 2.5 KB   | 827 B  | 706 B  | None         | Small, CSS-only chart primitives for dashboards. The application supplies the values; Porchlight supplies the geometry, tokens, and accessible fallback contract. This is not a charting engine: no axes, tooltips, zoom, or large dataset layout. Use a dedicated chart library when those are required.                                                                                                                                |
 | [description-list](#description-list) | `.pl-c-description`     | 1.8 KB   | 611 B  | 525 B  | None         | A label + value grid for detail panels, metadata displays, and summary cards. Wraps the native <dl> element so semantics and accessibility come for free. The #1 most-rebuilt pattern in SaaS apps after page headers.                                                                                                                                                                                                                   |
 | [dialog](#dialog)                     | `.pl-c-dialog`          | 3.4 KB   | 1.0 KB | 896 B  | None         | A modal dialog for confirmations, forms, and detail views. Uses the native <dialog> element (top-layer, modal focus trap, Esc to close). The ::backdrop pseudo-element provides the scrim.                                                                                                                                                                                                                                               |
+| [diff](#diff)                         | `.pl-c-diff`            | 2.8 KB   | 862 B  | 710 B  | None         | Unified diff viewer for config, policy, and code-review surfaces. The application supplies the line data and syntax highlighting; the CSS provides the hunk, line-number, sign, and add/remove geometry.                                                                                                                                                                                                                                 |
 | [drawer](#drawer)                     | `.pl-c-drawer`          | 3.8 KB   | 1.1 KB | 987 B  | None         | An off-canvas panel that slides in from a viewport edge. Supports both declarative Popover API (<aside popover="auto"> or <div popover>) and native modal dialogs (<dialog closedby="any">) with zero-JS Invoker Commands:                                                                                                                                                                                                               |
 | [dropdown](#dropdown)                 | `.pl-c-dropdown`        | 3.7 KB   | 1.1 KB | 960 B  | None         | A button-triggered option menu using the Popover API + anchor positioning. Use it for sort/filter/action choices that need richer rendering than a native select. For form submission, keep a native select or sync a hidden input in app JavaScript.                                                                                                                                                                                    |
 | [empty-state](#empty-state)           | `.pl-c-empty`           | 2.4 KB   | 793 B  | 663 B  | None         | The "no data yet" placeholder - what users see in a table, list, or chart before there is anything to show. A centered illustration or icon, a title, a description, and an optional call-to-action. The psychological anchor that turns a blank screen into an invitation.                                                                                                                                                              |
@@ -349,6 +351,22 @@ A compact tag/pill with an optional remove button. Uses relative color syntax (o
 @import "@cawalch/porchlight/components/chip.css";
 ```
 
+### choice
+
+Standalone checkbox/radio rows and selectable choice cards for onboarding, plan pickers, settings, and permission matrices.
+
+- **Primary Selector**: `.pl-c-choice`
+- **Import**: `@cawalch/porchlight/components/choice.css`
+- **Minified Import**: `@cawalch/porchlight/components/choice.min.css`
+- **Dist File**: `dist/components/choice.css`
+- **Minified Dist File**: `dist/components/choice.min.css`
+- **Sizes**: 2.7 KB minified, 797 B gzip, 667 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/choice.css";
+```
+
 ### code-block
 
 A developer-grade code and diff viewer shell for API payloads, CLI terminal commands, config files, and audit changes. Distinct from bare <pre><code>: .pl-c-code-block provides an architectural header, integrated CSS-counter line numbers, unified diff highlights, and accessible copy actions.
@@ -459,6 +477,22 @@ A modal dialog for confirmations, forms, and detail views. Uses the native <dial
 
 ```css
 @import "@cawalch/porchlight/components/dialog.css";
+```
+
+### diff
+
+Unified diff viewer for config, policy, and code-review surfaces. The application supplies the line data and syntax highlighting; the CSS provides the hunk, line-number, sign, and add/remove geometry.
+
+- **Primary Selector**: `.pl-c-diff`
+- **Import**: `@cawalch/porchlight/components/diff.css`
+- **Minified Import**: `@cawalch/porchlight/components/diff.min.css`
+- **Dist File**: `dist/components/diff.css`
+- **Minified Dist File**: `dist/components/diff.min.css`
+- **Sizes**: 2.8 KB minified, 862 B gzip, 710 B brotli
+- **Dependencies**: None
+
+```css
+@import "@cawalch/porchlight/components/diff.css";
 ```
 
 ### drawer

@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Choice · Porchlight">
+  <h1>Choice</h1>
+  <p>
+    Standalone checkbox and radio rows plus selectable choice cards. The native
+    input stays the source of truth; the card adds hit area and a selected
+    treatment.
+  </p>
+
+  <h2>Standalone rows</h2>
+  <fieldset class="pl-l-stack">
+    <legend>Notifications</legend>
+
+    <label class="pl-c-choice">
+      <input class="pl-c-choice__control" type="checkbox" name="notify" checked />
+      <span class="pl-c-choice__body">
+        <span class="pl-c-choice__label">Deployment failures</span>
+        <span class="pl-c-choice__hint">Notify the on-call channel immediately.</span>
+      </span>
+    </label>
+
+    <label class="pl-c-choice">
+      <input class="pl-c-choice__control" type="checkbox" name="notify" />
+      <span class="pl-c-choice__body">
+        <span class="pl-c-choice__label">Weekly digest</span>
+        <span class="pl-c-choice__hint">A Monday summary of resolved incidents.</span>
+      </span>
+    </label>
+
+    <label class="pl-c-choice">
+      <input class="pl-c-choice__control" type="checkbox" name="notify" disabled />
+      <span class="pl-c-choice__body">
+        <span class="pl-c-choice__label">Legacy pager rotation</span>
+        <span class="pl-c-choice__hint">Unavailable for this workspace.</span>
+      </span>
+    </label>
+  </fieldset>
+
+  <h2>Choice cards</h2>
+  <fieldset class="pl-l-grid" style="--pl-l-grid-min: 17rem;">
+    <legend>Plan</legend>
+
+    <label class="pl-c-choice-card">
+      <input class="pl-c-choice-card__control" type="radio" name="plan" value="team" />
+      <span class="pl-c-choice-card__body">
+        <span class="pl-c-choice-card__header">
+          <span class="pl-c-choice-card__title">Team</span>
+        </span>
+        <span class="pl-c-choice-card__description">Shared views, saved filters, and 10 seats.</span>
+        <span class="pl-c-choice-card__meta">$29 / seat / month</span>
+      </span>
+    </label>
+
+    <label class="pl-c-choice-card">
+      <input class="pl-c-choice-card__control" type="radio" name="plan" value="business" checked />
+      <span class="pl-c-choice-card__body">
+        <span class="pl-c-choice-card__header">
+          <span class="pl-c-choice-card__title">Business</span>
+          <span class="pl-c-badge" data-tone="accent">Popular</span>
+        </span>
+        <span class="pl-c-choice-card__description">Audit log, SSO, and unlimited seats.</span>
+        <span class="pl-c-choice-card__meta">$59 / seat / month</span>
+      </span>
+    </label>
+
+    <label class="pl-c-choice-card">
+      <input class="pl-c-choice-card__control" type="radio" name="plan" value="enterprise" />
+      <span class="pl-c-choice-card__body">
+        <span class="pl-c-choice-card__header">
+          <span class="pl-c-choice-card__title">Enterprise</span>
+        </span>
+        <span class="pl-c-choice-card__description">Private deployment, SCIM, and custom retention.</span>
+        <span class="pl-c-choice-card__meta">Contact sales</span>
+      </span>
+    </label>
+  </fieldset>
+</BaseLayout>

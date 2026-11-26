@@ -1,0 +1,119 @@
+---
+title: Choice
+description: Standalone checkbox/radio rows and selectable choice cards for onboarding, plan pickers, and settings.
+status: stable
+since: 0.20.0
+---
+
+The `.pl-c-choice` row and `.pl-c-choice-card` card keep the native checkbox or
+radio as the source of truth. They add alignment, hit area, hint text, and a
+selected-card treatment without replacing form semantics.
+
+## Standalone rows
+
+```html
+<fieldset class="pl-l-stack">
+  <legend>Notifications</legend>
+
+  <label class="pl-c-choice">
+    <input class="pl-c-choice__control" type="checkbox" name="notify" checked />
+    <span class="pl-c-choice__body">
+      <span class="pl-c-choice__label">Deployment failures</span>
+      <span class="pl-c-choice__hint"
+        >Notify the on-call channel immediately.</span
+      >
+    </span>
+  </label>
+
+  <label class="pl-c-choice">
+    <input class="pl-c-choice__control" type="checkbox" name="notify" />
+    <span class="pl-c-choice__body">
+      <span class="pl-c-choice__label">Weekly digest</span>
+      <span class="pl-c-choice__hint"
+        >A Monday summary of resolved incidents.</span
+      >
+    </span>
+  </label>
+</fieldset>
+```
+
+## Choice cards
+
+Use radio cards for mutually exclusive plans or modes, and checkbox cards for
+multi-select permissions. The card is a `<label>`; the input stays visible to
+assistive technology and keyboard users.
+
+```html
+<fieldset class="pl-l-grid" style="--pl-l-grid-min: 16rem;">
+  <legend>Plan</legend>
+
+  <label class="pl-c-choice-card">
+    <input
+      class="pl-c-choice-card__control"
+      type="radio"
+      name="plan"
+      value="team"
+    />
+    <span class="pl-c-choice-card__body">
+      <span class="pl-c-choice-card__header">
+        <span class="pl-c-choice-card__title">Team</span>
+      </span>
+      <span class="pl-c-choice-card__description"
+        >Shared views and 10 seats.</span
+      >
+      <span class="pl-c-choice-card__meta">$29 / seat / month</span>
+    </span>
+  </label>
+
+  <label class="pl-c-choice-card">
+    <input
+      class="pl-c-choice-card__control"
+      type="radio"
+      name="plan"
+      value="business"
+      checked
+    />
+    <span class="pl-c-choice-card__body">
+      <span class="pl-c-choice-card__header">
+        <span class="pl-c-choice-card__title">Business</span>
+        <span class="pl-c-badge" data-tone="accent">Popular</span>
+      </span>
+      <span class="pl-c-choice-card__description"
+        >Audit log, SSO, and unlimited seats.</span
+      >
+      <span class="pl-c-choice-card__meta">$59 / seat / month</span>
+    </span>
+  </label>
+</fieldset>
+```
+
+## Class contract
+
+| Selector                         | Role                                       |
+| :------------------------------- | :----------------------------------------- |
+| `.pl-c-choice`                   | Standalone checkbox/radio row (`<label>`). |
+| `.pl-c-choice__control`          | Native checkbox or radio.                  |
+| `.pl-c-choice__body`             | Label and hint stack.                      |
+| `.pl-c-choice__label`            | Primary label.                             |
+| `.pl-c-choice__hint`             | Secondary explanation.                     |
+| `.pl-c-choice-card`              | Selectable card (`<label>`).               |
+| `.pl-c-choice-card__control`     | Native radio or checkbox.                  |
+| `.pl-c-choice-card__body`        | Card content stack.                        |
+| `.pl-c-choice-card__header`      | Title and optional badge row.              |
+| `.pl-c-choice-card__title`       | Card title.                                |
+| `.pl-c-choice-card__description` | Supporting copy.                           |
+| `.pl-c-choice-card__meta`        | Price, quota, or other metadata.           |
+
+## Accessibility
+
+- Use a real `<fieldset>` and `<legend>` for grouped choices.
+- Keep the native input visible. Do not hide it and replace it with a div.
+- The card is a `<label>`; clicking anywhere in the card selects the input.
+- Selected and focus states come from `:has(input:checked)` and
+  `:has(input:focus-visible)`, with a forced-colors outline.
+- Disabled choices use the native `disabled` attribute and a muted row.
+
+## Theme and RTL
+
+The components use logical properties and framework tokens. Cards mirror in RTL,
+and the selected treatment uses the active accent token.

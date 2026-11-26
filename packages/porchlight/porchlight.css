@@ -27,6 +27,8 @@
 @import "src/06-components/field.css";
 @import "src/06-components/form.css";
 @import "src/06-components/card.css";
+@import "src/06-components/choice.css";
+@import "src/06-components/diff.css";
 @import "src/06-components/checklist.css";
 @import "src/06-components/badge.css";
 @import "src/06-components/popover-menu.css";

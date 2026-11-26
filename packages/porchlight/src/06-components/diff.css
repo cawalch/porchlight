@@ -1,0 +1,154 @@
+/*
+ * Porchlight: diff
+ * ===========================================================================
+ * Unified diff viewer for config, policy, and code-review surfaces. The
+ * application supplies the line data and syntax highlighting; the CSS provides
+ * the hunk, line-number, sign, and add/remove geometry.
+ *
+ * Structure: .pl-c-diff > __header + __body (__hunk > __hunk-header + __line)
+ */
+@layer porchlight.components {
+  @scope (.pl-c-diff) {
+    :scope {
+      border: 1px solid var(--pl-color-border);
+      border-radius: var(--pl-radius-lg);
+      background: var(--pl-color-surface);
+      color: var(--pl-color-text);
+      overflow: hidden;
+    }
+
+    .pl-c-diff__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--pl-space-3);
+      padding: var(--pl-space-2) var(--pl-space-3);
+      border-block-end: 1px solid var(--pl-color-border);
+      background: var(--pl-color-surface-2);
+      font-size: var(--pl-text-sm);
+    }
+
+    .pl-c-diff__file {
+      font-family: var(--pl-font-mono);
+      font-size: var(--pl-text-xs);
+      color: var(--pl-color-text);
+      overflow-wrap: anywhere;
+    }
+
+    .pl-c-diff__stat {
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pl-c-diff__body {
+      max-block-size: var(--pl-c-diff-max-block, 28rem);
+      overflow: auto;
+      overscroll-behavior: contain;
+      font-family: var(--pl-font-mono);
+      font-size: var(--pl-text-xs);
+      line-height: var(--pl-leading-normal);
+    }
+
+    .pl-c-diff__hunk + .pl-c-diff__hunk {
+      border-block-start: 1px solid var(--pl-color-border);
+    }
+
+    .pl-c-diff__hunk-header {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 1;
+      padding: var(--pl-space-1) var(--pl-space-3);
+      background: var(--pl-color-surface-2);
+      color: var(--pl-color-text-muted);
+      font-size: var(--pl-text-2xs);
+      white-space: pre;
+    }
+
+    .pl-c-diff__line {
+      display: grid;
+      grid-template-columns: 3.25rem 3.25rem 1.25rem minmax(0, 1fr);
+      align-items: start;
+      min-block-size: 1.5rem;
+    }
+
+    .pl-c-diff__old,
+    .pl-c-diff__new {
+      padding-inline: var(--pl-space-2);
+      color: var(--pl-color-text-muted);
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+
+    .pl-c-diff__sign {
+      text-align: center;
+      user-select: none;
+    }
+
+    .pl-c-diff__code {
+      padding-inline: var(--pl-space-2);
+      white-space: pre;
+    }
+
+    .pl-c-diff__line[data-pl-kind="add"] {
+      background: color-mix(in oklab, var(--pl-color-success), transparent 88%);
+    }
+
+    .pl-c-diff__line[data-pl-kind="add"] .pl-c-diff__sign {
+      color: var(--pl-color-success);
+    }
+
+    .pl-c-diff__line[data-pl-kind="remove"] {
+      background: color-mix(in oklab, var(--pl-color-danger), transparent 90%);
+    }
+
+    .pl-c-diff__line[data-pl-kind="remove"] .pl-c-diff__sign {
+      color: var(--pl-color-danger);
+    }
+
+    .pl-c-diff__line[data-pl-kind="context"] {
+      color: var(--pl-color-text);
+    }
+
+    /* Split view: two panes, each using the same line anatomy. */
+    .pl-c-diff__split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pl-c-diff__pane + .pl-c-diff__pane {
+      border-inline-start: 1px solid var(--pl-color-border);
+    }
+
+    @media (width < 48rem) {
+      .pl-c-diff__split {
+        grid-template-columns: 1fr;
+      }
+
+      .pl-c-diff__pane + .pl-c-diff__pane {
+        border-inline-start: 0;
+        border-block-start: 1px solid var(--pl-color-border);
+      }
+
+      .pl-c-diff__line {
+        grid-template-columns: 2.5rem 2.5rem 1rem minmax(0, 1fr);
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.pl-c-diff) {
+      border-color: CanvasText;
+    }
+
+    :where(.pl-c-diff__line[data-pl-kind="add"]) {
+      border-inline-start: 3px solid Highlight;
+    }
+
+    :where(.pl-c-diff__line[data-pl-kind="remove"]) {
+      border-inline-start: 3px solid GrayText;
+    }
+  }
+}
