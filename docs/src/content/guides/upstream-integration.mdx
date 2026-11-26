@@ -130,9 +130,13 @@ Porchlight is built on modern web standards without JavaScript polyfills.
 
 ```mermaid
 flowchart TD
-  UserAgent["Browser Engine"] --> CheckA{"Supports @scope, :has(), OKLCH, <dialog>?"}
-  CheckA -- Yes --> TierA["Tier A: Modern Baseline (2024–2026)<br/>Chrome 120+, Safari 17.4+, Firefox 146+<br/>Full fidelity, native tokens, scoped component styling"]
-  CheckA -- No --> TierB["Tier B: Graceful Degradation<br/>Legacy Evergreen & Enterprise Browsers<br/>Semantic HTML remains accessible and functional"]
+  UserAgent["Browser Engine"] --> Check{"Modern CSS support?"}
+  Check -- Yes --> Modern["Tier A: Modern Baseline"]
+  Modern --> ModernBrowsers["Chrome 120+ · Safari 17.4+ · Firefox 146+"]
+  Modern --> ModernResult["Full fidelity, native tokens, scoped styling"]
+  Check -- No --> Legacy["Tier B: Graceful Degradation"]
+  Legacy --> LegacyBrowsers["Legacy evergreen & enterprise"]
+  Legacy --> LegacyResult["Semantic HTML remains accessible"]
 ```
 
 ### Feature Fallback Matrix
@@ -470,9 +474,14 @@ Porchlight encapsulates all styles into semantically stable CSS custom propertie
 
 ```mermaid
 graph TD
-  Prims["Primitive Values<br/>(OKLCH shades, rem steps)"] --> Semantics["Semantic Tokens<br/>(--pl-color-bg, --pl-color-surface, --pl-color-text)"]
-  Semantics --> ComponentTokens["Component Tokens<br/>(--pl-c-button-bg, --pl-c-card-padding)"]
-  ComponentTokens --> Rendered["Rendered CSS Selectors<br/>(.pl-c-button, .pl-c-card)"]
+  Prims["Primitive Values<br/>(OKLCH shades, rem steps)"]
+  Semantics["Semantic Tokens<br/>(bg, surface, text, border)"]
+  ComponentTokens["Component Tokens<br/>(button-bg, card-padding)"]
+  Rendered["Rendered CSS Selectors<br/>(.pl-c-button, .pl-c-card)"]
+
+  Prims --> Semantics
+  Semantics --> ComponentTokens
+  ComponentTokens --> Rendered
 ```
 
 - **Surface & Background**: `--pl-color-bg`, `--pl-color-surface`, `--pl-color-surface-2`, `--pl-color-border`.
