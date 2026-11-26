@@ -62,6 +62,7 @@ const allowedBareDataAttrs = new Set([
   "data-align",
   "data-calc-size",
   "data-collapse",
+  "data-color",
   "data-conditional-trigger",
   "data-controls",
   "data-delay",

@@ -5,6 +5,13 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.1] - 2026-11-25
+
+### Fixed
+
+- Scope the typed `attr()` swatch enhancement to `.pl-c-swatch[data-color]` and fall back to `--pl-c-swatch-color` before the border color. Token-filled swatches no longer render as dark border chips in browsers that support typed `attr()`.
+- Render guide link lists with ordinary Markdown links and a remark base-path plugin, so MDX no longer splits a link and its description into separate block paragraphs.
+
 ## [0.20.0] - 2026-11-25
 
 ### Highlights
