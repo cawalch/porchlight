@@ -399,6 +399,48 @@ real table semantics.
 </main>
 ```
 
+## Choosing the right primitive
+
+Several Porchlight components overlap on purpose. Pick by the job, not by the
+visual shape:
+
+| Need                                                       | Use                                     | Do not use                           |
+| :--------------------------------------------------------- | :-------------------------------------- | :----------------------------------- |
+| One collapsible section, FAQ, or settings group            | `.pl-c-accordion` on native `<details>` | `.pl-c-reveal` for disclosure        |
+| Content that fades in as it enters the viewport            | `.pl-c-reveal`                          | Accordion or dialog                  |
+| A field that appears only when another field has a value   | `.pl-c-form__conditional` with `:has()` | Custom JavaScript visibility toggles |
+| A persistent side panel for navigation or record detail    | `.pl-c-drawer`                          | Full-screen modal dialog             |
+| A non-modal record preview anchored to a trigger           | `.pl-c-entity-inspector`                | Drawer or dialog                     |
+| Read-only label/value metadata                             | `.pl-c-description` on `<dl>`           | Div-based two-column grids           |
+| Dense technical metadata with copy buttons and mono values | `.pl-c-property-list`                   | Description list for every record    |
+| A short local wait inside a control or row                 | `.pl-c-inline-loading`                  | Page skeleton or full-page spinner   |
+| Loading content whose shape is known                       | `.pl-c-skeleton`                        | Indeterminate spinner                |
+| Measurable task completion                                 | `.pl-c-progress`                        | Skeleton                             |
+| Transient confirmation after an action                     | `.pl-c-toast`                           | Inline alert for a global result     |
+| Contextual feedback inside the page flow                   | `.pl-c-alert`                           | Toast for validation errors          |
+| A page-wide system announcement                            | `.pl-c-banner`                          | Alert for a global incident          |
+| Modal confirmation or a short form                         | `.pl-c-dialog` with `showModal()`       | Drawer for a blocking decision       |
+| A button-triggered action menu                             | `.pl-c-menu` or `.pl-c-dropdown`        | Native `<select>` for actions        |
+| A form value from a known option list                      | Native `<select>` or `.pl-c-combobox`   | Menu for form submission             |
+| Search across commands, pages, and records                 | `.pl-c-command`                         | Dropdown or combobox                 |
+
+### Consolidation boundaries
+
+- **Accordion vs. reveal.** Accordion changes disclosure state and owns the
+  open/closed contract. Reveal is a scroll-entry effect only; it must not hide
+  essential content.
+- **Drawer vs. entity inspector.** Drawer is a persistent edge panel. Entity
+  inspector is an anchored, non-modal record popover for quick context. Neither
+  replaces a blocking dialog.
+- **Description list vs. property list.** Description is the semantic default
+  for `<dl>` metadata. Property list is the dense, technical variant with copy
+  affordances and monospaced tokens.
+- **Inline loading vs. skeleton vs. progress.** Inline loading is local and
+  indeterminate. Skeleton previews the shape of incoming content. Progress is
+  for measurable completion. The combobox status is internal to that component.
+- **Toast vs. alert vs. banner.** Toast is transient and overlay-level. Alert is
+  inline and contextual. Banner is a full-width system announcement.
+
 ## Useful references
 
 - <a href={`${import.meta.env.BASE_URL}guides/layout`}>
