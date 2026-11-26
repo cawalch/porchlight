@@ -101,20 +101,47 @@
   margin-block: var(--pl-space-5);
 }
 
+.prose :where(caption) {
+  padding-block: var(--pl-space-2);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
+  font-weight: var(--pl-font-weight-semibold);
+  text-align: start;
+}
+
 .prose :where(table:focus-visible) {
   outline: var(--pl-focus-size) solid var(--pl-focus-color);
   outline-offset: var(--pl-focus-offset);
 }
 
 .prose :where(th, td) {
-  padding: var(--pl-space-3) var(--pl-space-4);
+  padding: var(--pl-space-2) var(--pl-space-3);
   border-block-end: 1px solid var(--pl-color-border);
   text-align: start;
   vertical-align: top;
 }
 
+/* Long token values (font stacks, light-dark() pairs, color-mix() recipes)
+   must wrap instead of being clipped at the table edge. */
 .prose :where(th, td) code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.prose :where(th) code {
+  /* Header cells set 14px; the shared `code` rule's 0.85em would push these
+     below the 12px readable floor. Keep headers at the cell size. */
+  font-size: 1em;
   white-space: nowrap;
+}
+
+/* The first column is usually a token, selector, or property name. Keep the
+   identifier in one piece while there is room; narrow viewports need to wrap
+   or the table becomes wider than the reading column. */
+@media (width >= 48rem) {
+  .prose :where(td:first-child) code {
+    white-space: nowrap;
+  }
 }
 
 .prose :where(th) {
@@ -134,6 +161,13 @@
 
 .prose :where(blockquote) :where(p:last-child) {
   margin-block-end: 0;
+}
+
+/* Links used as buttons must keep the component's foreground color; the
+   prose link rule would otherwise paint accent text on the accent fill. */
+.prose a.pl-c-button {
+  color: var(--pl-c-button-fg);
+  text-decoration: none;
 }
 
 .prose :where(a) {

@@ -99,6 +99,17 @@ main:has(> .docs-layout) {
   padding-inline-start: var(--pl-space-3);
 }
 
+.docs-not-found {
+  max-inline-size: 44rem;
+  margin-inline: auto;
+  padding-block-start: var(--pl-space-6);
+}
+
+.docs-not-found .pl-l-cluster {
+  justify-content: flex-start;
+  margin-block-start: var(--pl-space-5);
+}
+
 .docs-title {
   margin-block-end: var(--pl-space-6);
 }
@@ -136,11 +147,31 @@ main:has(> .docs-layout) {
 }
 
 .docs-example {
+  position: relative;
   margin: 0 0 var(--pl-space-6);
   border: 1px solid var(--pl-color-border);
   border-radius: var(--pl-radius-lg);
   overflow: hidden;
   background: var(--pl-color-surface);
+}
+
+/* The inline preview is a fixed-height viewport. When its content is taller,
+   soften the cut edge and say so in the caption instead of letting the frame
+   end halfway through a control or table row. */
+.docs-example[data-scrollable="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 1px;
+  inset-block-end: 1px;
+  block-size: 2.5rem;
+  border-end-start-radius: calc(var(--pl-radius-lg) - 1px);
+  border-end-end-radius: calc(var(--pl-radius-lg) - 1px);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklab, var(--pl-color-surface), transparent 5%)
+  );
+  pointer-events: none;
 }
 
 .docs-example figcaption {
@@ -154,11 +185,36 @@ main:has(> .docs-layout) {
   font-size: var(--pl-text-sm);
 }
 
+.docs-example__meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--pl-space-1) var(--pl-space-4);
+}
+
+.docs-example__scroll-hint {
+  display: none;
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-xs);
+}
+
+.docs-example[data-scrollable="true"] .docs-example__scroll-hint {
+  display: inline;
+}
+
 .docs-example iframe {
   display: block;
   inline-size: 100%;
   block-size: 24rem;
   border: 0;
+}
+
+/* Wide prose tables cannot show every column on a phone. The table remains a
+   single keyboard-focusable scroll region; this notice explains the cut. */
+.docs-table-hint {
+  margin-block: 0 var(--pl-space-2);
+  color: var(--pl-color-text-muted);
+  font-size: var(--pl-text-sm);
 }
 
 .docs-page-links {
@@ -188,12 +244,9 @@ main:has(> .docs-layout) {
 
 .docs-mobile-navigation .docs-nav,
 .docs-mobile-contents .docs-toc {
-  padding-block-start: var(--pl-space-4);
-}
-
-.docs-mobile-navigation .docs-nav {
   max-block-size: 65dvb;
   overflow-y: auto;
+  padding-block-start: var(--pl-space-4);
 }
 
 .docs-search-dialog {
