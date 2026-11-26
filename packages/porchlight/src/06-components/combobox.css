@@ -152,12 +152,19 @@
       .pl-c-combobox__listbox,
       .pl-c-combobox__popup {
         inset: auto;
-        position: fixed;
+        position: absolute;
         position-anchor: var(--pl-c-combobox-anchor);
         position-area: block-end span-inline-end;
         position-try-fallbacks: flip-block, flip-inline;
         inline-size: anchor-size(self-inline);
         margin-block-start: var(--pl-space-1);
+      }
+
+      /* Only top-layer popovers use viewport coordinates. Inline popups stay
+         absolute so transforms, filters, and containment do not trap them. */
+      .pl-c-combobox__listbox[popover],
+      .pl-c-combobox__popup[popover] {
+        position: fixed;
       }
     }
 

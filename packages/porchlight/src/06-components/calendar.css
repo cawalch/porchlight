@@ -378,7 +378,7 @@
     }
 
     @supports (position-anchor: --x) {
-      .pl-c-date-picker__popover {
+      .pl-c-date-picker__popover[popover] {
         inset: auto;
         position: absolute;
         position-anchor: var(--pl-c-date-picker-anchor, auto);
@@ -389,14 +389,14 @@
     }
 
     @media (width < 52rem) {
-      .pl-c-date-picker__popover {
+      .pl-c-date-picker__popover[popover] {
         position: fixed;
         inset: var(--pl-space-4);
         margin: auto;
       }
 
       @supports (position-anchor: --x) {
-        .pl-c-date-picker__popover {
+        .pl-c-date-picker__popover[popover] {
           position-anchor: auto;
           position-area: center;
           position-try-fallbacks: none;

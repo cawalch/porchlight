@@ -85,3 +85,32 @@ test("assignee lookup works after returning through docs navigation", async ({
   await input.fill("Lee");
   await expect(page.getByRole("option", { name: "Lee Chen" })).toBeVisible();
 });
+
+test("combobox positioning is scoped to top-layer popovers", async ({
+  page,
+}) => {
+  await page.goto("./preview/combobox");
+
+  const positions = await page.evaluate(() => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "pl-c-combobox";
+    const inline = document.createElement("div");
+    inline.className = "pl-c-combobox__popup";
+    inline.setAttribute("role", "listbox");
+    wrapper.append(inline);
+    document.body.append(wrapper);
+    const inlinePosition = getComputedStyle(inline).position;
+
+    const popover = document.createElement("div");
+    popover.className = "pl-c-combobox__popup";
+    popover.setAttribute("popover", "");
+    wrapper.append(popover);
+    const popoverPosition = getComputedStyle(popover).position;
+
+    wrapper.remove();
+    return { inlinePosition, popoverPosition };
+  });
+
+  expect(positions.inlinePosition).toBe("absolute");
+  expect(positions.popoverPosition).toBe("fixed");
+});

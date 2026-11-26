@@ -75,6 +75,37 @@ test.describe("modern HTML platform enhancements", () => {
     expect(result.hasShadow).toBe(true);
   });
 
+  test("tooltip positioning is scoped to top-layer popovers", async ({
+    page,
+  }) => {
+    await page.goto("./preview/tooltip");
+
+    const positions = await page.evaluate(() => {
+      const wrapper = document.createElement("span");
+      wrapper.className = "pl-c-tooltip";
+      const inline = document.createElement("span");
+      inline.className = "pl-c-tooltip__body";
+      inline.setAttribute("role", "tooltip");
+      inline.textContent = "Inline";
+      wrapper.append(inline);
+      document.body.append(wrapper);
+      const inlinePosition = getComputedStyle(inline).position;
+
+      const popover = document.createElement("span");
+      popover.className = "pl-c-tooltip__body";
+      popover.setAttribute("popover", "hint");
+      popover.textContent = "Popover";
+      wrapper.append(popover);
+      const popoverPosition = getComputedStyle(popover).position;
+
+      wrapper.remove();
+      return { inlinePosition, popoverPosition };
+    });
+
+    expect(positions.inlinePosition).toBe("fixed");
+    expect(positions.popoverPosition).toBe("fixed");
+  });
+
   test("customizable select styles base-select and options", async ({
     page,
   }) => {

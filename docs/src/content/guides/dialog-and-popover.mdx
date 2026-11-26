@@ -113,6 +113,16 @@ Porchlight couples the Popover API with CSS Anchor Positioning to tether menus a
 </div>
 ```
 
+### Top-layer versus inline positioning
+
+Porchlight scopes `position: fixed` anchor positioning to `[popover]` surfaces,
+where the browser's top layer guarantees viewport coordinates. Inline popups use
+`position: absolute` so an ancestor with `transform`, `filter`, or `contain` does
+not trap them in the wrong coordinate space. Combobox listboxes and date-picker
+popovers follow that split automatically. Tooltips are the deliberate exception:
+they stay fixed so they can escape clipped overflow containers and remain
+hoverable for WCAG 1.4.13.
+
 ### Tethered auto-hiding with `position-visibility`
 
 When an anchor button scrolls offscreen inside a table or container, the attached popover or tooltip should not hover orphaned in the viewport. Porchlight uses the current `position-visibility: anchor-visible` value:
