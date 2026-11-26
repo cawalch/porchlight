@@ -5,23 +5,21 @@ All notable changes to Porchlight are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.20.0] - 2026-11-25
 
-### Changed
+### Highlights
 
-- Document the disclosure, overlay, key-value, loading, and notification primitive boundaries in the composition recipes and agent cheat sheet, closing the overlap audit without deprecating any public component.
-
-- Replace physical `overflow-x` / `overflow-y` with logical `overflow-inline` / `overflow-block` across scrollers, menus, drawers, command palettes, code blocks, and tab strips.
-- Scope the nav section-trigger transition to `background-color` and `color` instead of `transition: all`.
-- Drop redundant `-webkit-backdrop-filter` declarations now that `backdrop-filter` is Baseline.
+- Desktop app shell with titlebar drag regions for installed PWAs, Electron, and Tauri.
+- New app primitives: checklist, undo bar, shortcut sheet, choice cards, diff viewer, data visualization, threads, and AI composer/reasoning/citations.
+- Agent-ready component contracts, JSON Schema, the `porchlight contracts` command, and a package `SKILL.md`.
+- Docs repositioned around desktop-class SaaS, with a Why Porchlight comparison and framework-only application previews.
+- Browser-support and anchor-positioning accuracy fixes, plus logical CSS hygiene.
 
 ### Added
 
 - Add `06-components/ai.css` with a prompt composer, reasoning/trust block, and inline citation previews for embedded AI workflows.
-
 - Add `06-components/choice.css` for standalone checkbox/radio rows and selectable radio/checkbox cards with native inputs and `:has(:checked)` selected treatment.
 - Add `06-components/diff.css` for unified and split diff surfaces with line numbers, add/remove context rows, and forced-colors cues.
-
 - Add `guides/why-porchlight` with the product positioning, an honest comparison against Bootstrap 6, Tailwind 4 with shadcn/ui, Pico, DaisyUI, Bulma, and Radix Themes, and migration guidance.
 - Add a "Why" entry to the docs navigation and a homepage proof section so the framework's zero-runtime, no-build, app-depth positioning is visible on first load.
 - Add the missing `swatch` reference page and preview so every component stylesheet has a documented, testable surface.
@@ -38,6 +36,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `contracts:generate` / `contracts:check` scripts and a CI drift check, and link the public `components.json` from `llms.txt` and the integrations guide.
 - Add the dark-first `data-pl-preset="midnight"` alias (dark theme plus midnight palette) and document the visual language tokens for focus, accent, elevation, motion, and density.
 - Add a canonical preview contract (`preview:check`), mark the six application previews' demo-only CSS, replace raw inline letter-spacing/z-index values with tokens, and add a Copy HTML action to the preview toolbar.
+
+### Changed
+
+- Document the disclosure, overlay, key-value, loading, and notification primitive boundaries in the composition recipes and agent cheat sheet, closing the overlap audit without deprecating any public component.
+- Replace physical `overflow-x` / `overflow-y` with logical `overflow-inline` / `overflow-block` across scrollers, menus, drawers, command palettes, code blocks, and tab strips.
+- Scope the nav section-trigger transition to `background-color` and `color` instead of `transition: all`.
+- Drop redundant `-webkit-backdrop-filter` declarations now that `backdrop-filter` is Baseline.
+- Rewrite the homepage hero around the desktop SaaS positioning, replace the generic project snapshot with runtime, bundle, examples, and density proof points, and group the guide index into Start, Build, Design system, and CSS layer.
+- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build.
+- Allow the standard `window-drag` property and the `app-region` compatibility alias in the stylelint configuration.
 - Rebuild the dashboard and inbox previews from framework primitives only, removing their demo-only `<style>` blocks and bespoke composition classes.
 - Rebuild the customer record and settings console previews with `pl-l-sidebar`, `pl-l-stack`, `pl-l-page`, and token instances; remove their demo-only `<style>` blocks.
 - Rebuild the telemetry cockpit and audit studio previews with page headers, banners, KPI cards, split panes, audit streams, property lists, and code blocks; remove their demo-only `<style>` blocks. All six canonical application previews are now framework-only.
@@ -47,12 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scope fixed anchor positioning to top-layer `[popover]` surfaces in combobox and date-picker; inline popups use absolute positioning so ancestor transforms, filters, and containment do not trap them in viewport coordinates. Tooltips intentionally remain fixed to escape clipped overflow and stay hoverable.
 - Use the current `position-visibility: anchor-visible` value in the enhancement layer, with a gated fallback for Chromium 125-156, and document that Firefox does not implement `position-visibility` yet.
 - Document the Safari 26.0-26.3 `@scope` form-control caveat in the browser-support guide so the support floor is accurate for field-heavy screens.
-
-### Changed
-
-- Rewrite the homepage hero around the desktop SaaS positioning, replace the generic project snapshot with runtime, bundle, examples, and density proof points, and group the guide index into Start, Build, Design system, and CSS layer.
-- Align the README and `COMPONENTS.md` component count, bundle sizes, and status explanation with the current build: 60 component stylesheets, 3.9 KB gzip core, and about 36 KB gzip full.
-- Allow the standard `window-drag` property and the `app-region` compatibility alias in the stylelint configuration.
 
 ## [0.19.0] - 2026-11-25
 

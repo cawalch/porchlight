@@ -23,7 +23,7 @@ a tested accessibility floor without a JavaScript runtime or a build step.
   audit streams, command palette, and telemetry surfaces.
 - **Framework neutral**: use it with Rails, Django, Laravel, PHP, Astro, HTMX,
   Alpine, React, or plain HTML.
-- **Small and modular**: about 3.9 KB gzip for core, about 36 KB gzip for the full
+- **Small and modular**: about 3.9 KB gzip for core, about 39 KB gzip for the full
   bundle, or core plus only the components you render.
 
 Read the [comparison with Bootstrap, Tailwind and shadcn, Pico, DaisyUI, Bulma,
