@@ -1514,12 +1514,12 @@ test.describe("docs scaffold", () => {
     // Folder nav exists.
     await expect(page.locator(".pl-c-nav").first()).toBeVisible();
     // Master-detail sidebar layout.
-    await expect(page.locator(".pl-l-sidebar")).toBeVisible();
+    await expect(page.locator(".pl-l-sidebar").first()).toBeVisible();
     // Message list items.
-    const msgs = page.locator(".msg-item");
+    const msgs = page.locator(".pl-c-table tbody tr");
     expect(await msgs.count()).toBeGreaterThanOrEqual(5);
     // Message detail exists.
-    await expect(page.locator(".msg-detail")).toBeVisible();
+    await expect(page.locator("[data-inbox-detail]")).toBeVisible();
     // Search field exists.
     await expect(page.locator("input[type='search']")).toBeVisible();
   });

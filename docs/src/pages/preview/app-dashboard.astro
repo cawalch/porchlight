@@ -17,55 +17,78 @@ const accounts = [
   { name: 'Umbrella', plan: 'Enterprise', status: 'Active', mrr: '$2,400', seats: 60 },
 ];
 
-const toneFor = (s: string) =>
-  ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[s] ?? 'accent');
+const toneFor = (status: string) =>
+  ({ Active: 'success', Trialing: 'accent', 'Past due': 'danger' }[status] ?? 'accent');
 ---
 <BaseLayout title="Responsive dashboard · Porchlight" palette="emerald" density="compact">
   <PreviewToolbar palette="emerald" theme="light" density="compact" title="SaaS Metrics & Revenue Dashboard" />
   <div class="pl-l-app-shell">
-    <!-- Topbar -->
-    <header class="pl-l-app-shell__topbar app-topbar">
-      <div class="app-topbar__left">
-        <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
-          <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
-        </button>
-        <strong>Porchlight</strong>
-      </div>
-      <div class="app-topbar__right">
-        <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo">
-          <svg class="dashboard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span class="pl-u-muted dashboard-shortcut-label">Search</span>
-          <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
-        </button>
-        <div class="pl-c-avatar dashboard-avatar" data-size="sm">JD</div>
+    <header class="pl-l-app-shell__topbar" data-glass>
+      <div
+        class="pl-l-cluster"
+        style="--pl-l-cluster-justify: space-between; padding-inline: var(--pl-space-4); min-block-size: var(--pl-control-block-size);"
+      >
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-2);">
+          <button class="pl-c-button" data-variant="ghost" data-size="sm" aria-label="Toggle sidebar" data-toggle="sidebar">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <strong>Porchlight</strong>
+        </div>
+        <div class="pl-l-cluster" style="--pl-l-cluster-gap: var(--pl-space-1);">
+          <button class="pl-c-button" data-variant="ghost" data-size="sm" popovertarget="cmdk-demo">
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <span class="pl-u-muted-sm">Search</span>
+            <kbd class="pl-c-kbd">⌘</kbd><kbd class="pl-c-kbd">K</kbd>
+          </button>
+          <div class="pl-c-avatar" data-size="sm" style="background: var(--pl-color-accent); color: var(--pl-color-accent-text);">JD</div>
+        </div>
       </div>
     </header>
 
-    <!-- Sidebar nav -->
     <aside class="pl-l-app-shell__sidebar" id="app-sidebar" data-sidebar="expanded">
       <nav class="pl-c-nav" aria-label="Main navigation">
         <a href="#" class="pl-c-nav__item" aria-current="page">
-          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+          </svg>
           <span class="pl-c-nav__label">Dashboard</span>
         </a>
         <a href="#" class="pl-c-nav__item">
-          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 21a8 8 0 0 1 16 0"></path>
+          </svg>
           <span class="pl-c-nav__label">Accounts</span>
           <span class="pl-c-badge pl-c-nav__badge" data-tone="accent">3</span>
         </a>
         <a href="#" class="pl-c-nav__item">
-          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <path d="M2 10h20"></path>
+          </svg>
           <span class="pl-c-nav__label">Billing</span>
         </a>
         <a href="#" class="pl-c-nav__item">
-          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+          <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M3 3v18h18"></path>
+            <path d="m7 14 4-4 4 4 5-6"></path>
+          </svg>
           <span class="pl-c-nav__label">Analytics</span>
         </a>
         <details class="pl-c-nav__section" open>
           <summary class="pl-c-nav__section-trigger">
-            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <svg class="pl-c-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
             <span>Projects</span>
-            <svg class="pl-c-nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </summary>
           <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Active</span></a>
           <a href="#" class="pl-c-nav__item pl-c-nav__item--child"><span class="pl-c-nav__label">Archived</span></a>
@@ -73,163 +96,154 @@ const toneFor = (s: string) =>
       </nav>
     </aside>
 
-    <!-- Main content -->
     <main class="pl-l-app-shell__main">
-      <div class="pl-l-container dashboard-shell">
-        <div class="pl-l-stack dashboard-stack">
-          <!-- Heading + segmented view toggle -->
-          <div class="dash-header">
-            <div>
-              <h1>Dashboard</h1>
-              <p class="pl-u-muted">Overview of your workspace activity</p>
-            </div>
+      <div
+        class="pl-l-container pl-l-stack"
+        style="--pl-l-container-max: 80rem; --pl-l-stack-gap: var(--pl-space-4); padding-block: var(--pl-space-4);"
+      >
+        <div class="pl-c-page-header">
+          <div class="pl-c-page-header__heading">
+            <h1 class="pl-c-page-header__title">Dashboard</h1>
+            <span class="pl-c-page-header__subtitle">Overview of your workspace activity</span>
+          </div>
+          <div class="pl-c-page-header__actions">
             <div class="pl-c-segmented" role="radiogroup" aria-label="Time range">
               <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>Day</span></label>
               <label class="pl-c-segmented__item"><input type="radio" name="range" checked /><span>Week</span></label>
               <label class="pl-c-segmented__item"><input type="radio" name="range" /><span>Month</span></label>
             </div>
           </div>
+        </div>
 
-          <!-- Modern KPI Cards -->
-          <div class="pl-l-grid dashboard-kpi-grid" style="--pl-l-grid-min: 220px; gap: var(--pl-space-3);">
-            {stats.map((s) => (
-              <article class="pl-c-kpi-card" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
-                <header class="pl-c-kpi-card__header">
-                  <span class="pl-c-kpi-card__label">{s.label}</span>
-                  <span class="pl-c-badge" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
-                    {s.direction === 'up' ? 'Growth' : s.direction === 'down' ? 'Dip' : 'Stable'}
-                  </span>
-                </header>
-                <div class="pl-c-kpi-card__metric">
-                  <span class="pl-c-kpi-card__value pl-u-tabular-nums">{s.value}</span>
-                  {s.unit && <span class="pl-c-kpi-card__suffix">{s.unit}</span>}
-                </div>
-                <footer class="pl-c-kpi-card__footer">
-                  <span class="pl-c-kpi-card__delta" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'} data-direction={s.direction}>
-                    {s.trend}
-                  </span>
-                  <span class="pl-c-kpi-card__comparison">vs prev 7d</span>
-                </footer>
-                <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
-                  <svg viewBox="0 0 70 36" preserveAspectRatio="none" style="width: 100%; height: 28px; fill: none; stroke: currentColor; stroke-width: 2;">
-                    <path d={s.spark} stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </article>
-            ))}
-          </div>
+        <div class="pl-l-grid" style="--pl-l-grid-min: 14rem; --pl-l-grid-gap: var(--pl-space-3);">
+          {stats.map((s) => (
+            <article class="pl-c-kpi-card" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
+              <header class="pl-c-kpi-card__header">
+                <span class="pl-c-kpi-card__label">{s.label}</span>
+                <span class="pl-c-badge" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'}>
+                  {s.direction === 'up' ? 'Growth' : s.direction === 'down' ? 'Dip' : 'Stable'}
+                </span>
+              </header>
+              <div class="pl-c-kpi-card__metric">
+                <span class="pl-c-kpi-card__value pl-u-tabular-nums">{s.value}</span>
+                {s.unit && <span class="pl-c-kpi-card__suffix">{s.unit}</span>}
+              </div>
+              <footer class="pl-c-kpi-card__footer">
+                <span class="pl-c-kpi-card__delta" data-tone={s.direction === 'up' ? 'success' : s.direction === 'down' ? 'danger' : 'accent'} data-direction={s.direction}>
+                  {s.trend}
+                </span>
+                <span class="pl-c-kpi-card__comparison">vs prev 7d</span>
+              </footer>
+              <div class="pl-c-kpi-card__sparkline" aria-hidden="true">
+                <svg viewBox="0 0 70 36" preserveAspectRatio="none" width="100%" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d={s.spark} stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+            </article>
+          ))}
+        </div>
 
-          <!-- Data table with toolbar -->
-          <div class="pl-c-card" data-surface="app" data-variant="flush">
-            <div class="pl-c-toolbar">
-              <div class="pl-c-toolbar__group">
-                <span class="pl-u-muted dashboard-text-sm">5 accounts</span>
-              </div>
-              <div class="pl-c-toolbar__group">
-                <div class="pl-c-segmented" role="radiogroup" aria-label="View">
-                  <label class="pl-c-segmented__item"><input type="radio" name="view" checked /><span>Table</span></label>
-                  <label class="pl-c-segmented__item"><input type="radio" name="view" /><span>Cards</span></label>
-                </div>
-                <button class="pl-c-button" data-variant="secondary" data-size="sm">Export</button>
-              </div>
+        <div class="pl-c-card" data-surface="app" data-variant="flush">
+          <div class="pl-c-toolbar">
+            <div class="pl-c-toolbar__group">
+              <span class="pl-u-muted-sm">5 accounts</span>
             </div>
-            <div class="pl-c-table-wrap dashboard-table-wrap" tabindex="0">
-              <table class="pl-c-table dashboard-table">
-                <thead>
-                  <tr>
-                    <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all"/></th>
-                    <th class="pl-c-table__sticky-col" data-sort="asc">Account <span class="pl-c-table__sort-icon"></span></th>
-                    <th>Plan</th>
-                    <th>Status</th>
-                    <th data-align="end" data-sort>Seats <span class="pl-c-table__sort-icon"></span></th>
-                    <th data-align="end" data-sort="desc">MRR <span class="pl-c-table__sort-icon"></span></th>
+            <div class="pl-c-toolbar__group">
+              <div class="pl-c-segmented" role="radiogroup" aria-label="View">
+                <label class="pl-c-segmented__item"><input type="radio" name="view" checked /><span>Table</span></label>
+                <label class="pl-c-segmented__item"><input type="radio" name="view" /><span>Cards</span></label>
+              </div>
+              <button class="pl-c-button" data-variant="secondary" data-size="sm">Export</button>
+            </div>
+          </div>
+          <div class="pl-c-table-wrap" tabindex="0">
+            <table class="pl-c-table" style="--pl-c-table-min: 36rem;">
+              <thead>
+                <tr>
+                  <th class="pl-c-table__check"><input type="checkbox" aria-label="Select all" /></th>
+                  <th class="pl-c-table__sticky-col" data-sort="asc">Account <span class="pl-c-table__sort-icon"></span></th>
+                  <th>Plan</th>
+                  <th>Status</th>
+                  <th data-align="end" data-sort>Seats <span class="pl-c-table__sort-icon"></span></th>
+                  <th data-align="end" data-sort="desc">MRR <span class="pl-c-table__sort-icon"></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {accounts.map((account, index) => (
+                  <tr aria-selected={index === 0 ? 'true' : undefined}>
+                    <td class="pl-c-table__check"><input type="checkbox" checked={index === 0} aria-label={`Select ${account.name}`} /></td>
+                    <td class="pl-c-table__sticky-col">{account.name}</td>
+                    <td>{account.plan}</td>
+                    <td><span class="pl-c-badge" data-tone={toneFor(account.status)}>{account.status}</span></td>
+                    <td data-align="end" class="pl-u-tabular-nums">{account.seats}</td>
+                    <td data-align="end" class="pl-u-tabular-nums">{account.mrr}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {accounts.map((a, i) => (
-                    <tr aria-selected={i === 0 ? 'true' : undefined}>
-                      <td class="pl-c-table__check"><input type="checkbox" checked={i === 0} aria-label={`Select ${a.name}`}/></td>
-                      <td class="pl-c-table__sticky-col">{a.name}</td>
-                      <td>{a.plan}</td>
-                      <td><span class="pl-c-badge" data-tone={toneFor(a.status)}>{a.status}</span></td>
-                      <td data-align="end" class="pl-u-tabular-nums">{a.seats}</td>
-                      <td data-align="end" class="pl-u-tabular-nums">{a.mrr}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div class="pl-c-toolbar">
+            <div class="pl-c-toolbar__group">
+              <span class="pl-u-muted-sm">Page 1 of 12</span>
             </div>
-            <div class="pl-c-toolbar dashboard-pagination-toolbar">
-              <div class="pl-c-toolbar__group">
-                <span class="pl-u-muted dashboard-text-sm">Page 1 of 12</span>
-              </div>
-              <div class="pl-c-toolbar__group">
-                <nav class="pl-c-pagination" aria-label="Pagination">
-                  <button class="pl-c-pagination__nav" disabled>Prev</button>
-                  <button class="pl-c-pagination__page" aria-current="page">1</button>
-                  <button class="pl-c-pagination__page">2</button>
-                  <button class="pl-c-pagination__page">3</button>
-                  <button class="pl-c-pagination__nav">Next</button>
-                </nav>
-              </div>
+            <div class="pl-c-toolbar__group">
+              <nav class="pl-c-pagination" aria-label="Pagination">
+                <button class="pl-c-pagination__nav" disabled>Prev</button>
+                <button class="pl-c-pagination__page" aria-current="page">1</button>
+                <button class="pl-c-pagination__page">2</button>
+                <button class="pl-c-pagination__page">3</button>
+                <button class="pl-c-pagination__nav">Next</button>
+              </nav>
             </div>
           </div>
+        </div>
 
-          <!-- Activity Audit Stream -->
-          <div class="pl-c-card" data-surface="app">
-            <div class="pl-c-card__header"><h2 class="pl-c-card__title">Recent Activity Audit</h2></div>
-            <div class="pl-c-card__body" style="padding: var(--pl-space-2);">
-              <ol class="pl-c-audit-stream" role="list" aria-label="Recent activity stream" style="border: 0;">
-                <li class="pl-c-audit-stream__item">
-                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">UC</div>
-                  <div class="pl-c-audit-stream__body">
-                    <div class="pl-c-audit-stream__header">
-                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Umbrella Corp</span>
-                      <span class="pl-c-badge" data-tone="success" data-size="sm">UPGRADE</span>
-                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">2m ago</time>
-                    </div>
-                    <div class="pl-c-audit-stream__target">
-                      Subscribed to <code class="pl-c-audit-stream__mono">Enterprise Tier (60 seats)</code>
-                    </div>
+        <div class="pl-c-card" data-surface="app">
+          <div class="pl-c-card__header"><h2 class="pl-c-card__title">Recent Activity Audit</h2></div>
+          <div class="pl-c-card__body">
+            <ol class="pl-c-audit-stream" role="list" aria-label="Recent activity stream" data-variant="flush">
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">UC</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">Umbrella Corp</span>
+                    <span class="pl-c-badge" data-tone="success" data-size="sm">UPGRADE</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">2m ago</time>
                   </div>
-                </li>
-                <li class="pl-c-audit-stream__item">
-                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">AO</div>
-                  <div class="pl-c-audit-stream__body">
-                    <div class="pl-c-audit-stream__header">
-                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Acme Ops</span>
-                      <span class="pl-c-badge" data-tone="accent" data-size="sm">KEY ROTATION</span>
-                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">1h ago</time>
-                    </div>
-                    <div class="pl-c-audit-stream__target">
-                      Generated new production API key <code class="pl-c-audit-stream__mono">pk_live_***84f</code>
-                    </div>
+                  <div class="pl-c-audit-stream__target">Subscribed to <code class="pl-c-audit-stream__mono">Enterprise Tier (60 seats)</code></div>
+                </div>
+              </li>
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">AO</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">Acme Ops</span>
+                    <span class="pl-c-badge" data-tone="accent" data-size="sm">KEY ROTATION</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">1h ago</time>
                   </div>
-                </li>
-                <li class="pl-c-audit-stream__item">
-                  <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">IT</div>
-                  <div class="pl-c-audit-stream__body">
-                    <div class="pl-c-audit-stream__header">
-                      <span class="pl-c-audit-stream__actor" style="font-size: var(--pl-text-xs);">Initech</span>
-                      <span class="pl-c-badge" data-tone="danger" data-size="sm">PAYMENT FAILED</span>
-                      <time class="pl-c-audit-stream__time pl-u-tabular-nums">3h ago</time>
-                    </div>
-                    <div class="pl-c-audit-stream__target">
-                      Primary payment method was declined on recurring invoice <code class="pl-c-audit-stream__mono">inv-2026-110</code>
-                    </div>
+                  <div class="pl-c-audit-stream__target">Generated new production API key <code class="pl-c-audit-stream__mono">pk_live_***84f</code></div>
+                </div>
+              </li>
+              <li class="pl-c-audit-stream__item">
+                <div class="pl-c-avatar pl-c-audit-stream__avatar" data-size="sm">IT</div>
+                <div class="pl-c-audit-stream__body">
+                  <div class="pl-c-audit-stream__header">
+                    <span class="pl-c-audit-stream__actor">Initech</span>
+                    <span class="pl-c-badge" data-tone="danger" data-size="sm">PAYMENT FAILED</span>
+                    <time class="pl-c-audit-stream__time pl-u-tabular-nums">3h ago</time>
                   </div>
-                </li>
-              </ol>
-            </div>
+                  <div class="pl-c-audit-stream__target">Primary payment method was declined on recurring invoice <code class="pl-c-audit-stream__mono">inv-2026-110</code></div>
+                </div>
+              </li>
+            </ol>
           </div>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Command palette demo -->
   <div popover class="pl-c-command" id="cmdk-demo">
-    <input class="pl-c-command__search" placeholder="Search..." aria-label="Search"/>
+    <input class="pl-c-command__search" placeholder="Search..." aria-label="Search" />
     <div class="pl-c-command__body">
       <div class="pl-c-command__group">
         <h3 class="pl-c-command__heading">Pages</h3>
@@ -242,105 +256,20 @@ const toneFor = (s: string) =>
   </div>
 
   <script>
-    // Docs-only: toggle sidebar collapse.
     document.querySelector('[data-toggle="sidebar"]')?.addEventListener('click', () => {
       const sidebar = document.getElementById('app-sidebar');
       const nav = sidebar?.querySelector('.pl-c-nav');
       const collapsed = sidebar?.getAttribute('data-sidebar') === 'collapsed';
       sidebar?.setAttribute('data-sidebar', collapsed ? 'expanded' : 'collapsed');
-      if (collapsed) {
-        nav?.removeAttribute('data-variant');
-      } else {
-        nav?.setAttribute('data-variant', 'icons');
-      }
+      if (collapsed) nav?.removeAttribute('data-variant');
+      else nav?.setAttribute('data-variant', 'icons');
     });
-    // Cmd+K shortcut.
-    document.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
+
+    document.addEventListener('keydown', (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
         document.getElementById('cmdk-demo')?.showPopover();
       }
     });
   </script>
-
-  <style>
-  /* Demo-only chrome. Not part of the framework contract. */
-    .app-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--pl-space-3);
-      padding: var(--pl-space-2) var(--pl-space-4);
-      background: color-mix(in oklab, var(--pl-color-surface), transparent 12%);
-      backdrop-filter: blur(8px);
-      border-block-end: 1px solid var(--pl-color-border);
-    }
-    .app-topbar__left, .app-topbar__right {
-      display: flex;
-      align-items: center;
-      gap: var(--pl-space-2);
-      min-inline-size: 0;
-    }
-    .app-topbar__right {
-      justify-content: flex-end;
-    }
-    .dashboard-icon {
-      inline-size: 1.25rem;
-      block-size: 1.25rem;
-      flex-shrink: 0;
-    }
-    .dashboard-shortcut-label {
-      font-size: var(--pl-text-xs);
-    }
-    .dashboard-avatar {
-      background: var(--pl-color-accent);
-    }
-    .dashboard-shell {
-      --pl-l-container-max: 80rem;
-      padding-block: var(--pl-space-4);
-    }
-    .dashboard-stack {
-      --pl-l-stack-gap: var(--pl-space-4);
-    }
-    .dash-header h1 {
-      margin-block: 0 var(--pl-space-1);
-    }
-    .dash-header p {
-      margin-block: 0;
-    }
-    .dash-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--pl-space-4);
-      flex-wrap: wrap;
-    }
-    .dashboard-kpi-grid {
-      --pl-l-grid-min: 14rem;
-    }
-    .dashboard-text-sm {
-      font-size: var(--pl-text-sm);
-    }
-    .dashboard-table-wrap {
-      border: 0;
-      border-radius: 0;
-    }
-    .dashboard-table {
-      --pl-c-table-min: 36rem;
-    }
-    .dashboard-pagination-toolbar {
-      border-block-start: 1px solid var(--pl-color-border);
-      border-block-end: 0;
-    }
-    @media (width < 40rem) {
-      .dashboard-shortcut-label {
-        display: none;
-      }
-      .app-topbar__right {
-        gap: var(--pl-space-1);
-      }
-    }
-    /* Break out of main constraint to a wider layout
-       (handled centrally in global.css via main:has(> .pl-l-app-shell)). */
-  </style>
 </BaseLayout>

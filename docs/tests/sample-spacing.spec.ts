@@ -129,9 +129,9 @@ for (const width of [390, 1440]) {
     });
 
     for (const [route, selector] of [
-      ["app-inbox", ".msg-detail__header h2"],
+      ["app-inbox", ".pl-c-page-header__title"],
       ["app-shell", ".main__header h2"],
-      ["app-dashboard", ".dash-header p"],
+      ["app-dashboard", ".pl-c-page-header__title"],
       ["app-cases", ".cases-header p"],
     ]) {
       test(`${route} keeps prose margins out of composed headers`, async ({
